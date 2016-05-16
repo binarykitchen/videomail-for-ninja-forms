@@ -80,6 +80,7 @@ if( version_compare( get_option( 'ninja_forms_version', '0.0.0' ), '3.0', '>' ) 
         {
             add_filter( 'ninja_forms_register_fields', array($this, 'register_fields'));
             add_filter( 'ninja_forms_register_actions', array($this, 'register_actions'));
+            add_filter( 'ninja_forms_field_template_file_paths', array( $this, 'custom_template_path' ) );
         }
 
         /**
@@ -91,7 +92,7 @@ if( version_compare( get_option( 'ninja_forms_version', '0.0.0' ), '3.0', '>' ) 
          */
         public function register_fields($actions)
         {
-            $actions[ 'videomail' ] = new NF_Videomail_Fields_VideomailExample(); // includes/Fields/VideomailExample.php
+            $actions[ 'videomail' ] = new NF_Videomail_Fields_Videomail();
 
             return $actions;
         }
@@ -108,6 +109,13 @@ if( version_compare( get_option( 'ninja_forms_version', '0.0.0' ), '3.0', '>' ) 
             $actions[ 'videomail' ] = new NF_Videomail_Actions_VideomailExample(); // includes/Actions/VideomailExample.php
 
             return $actions;
+        }
+
+        public function custom_template_path( $paths )
+        {
+            $paths[] = NF_Videomail::$dir . '/includes/Templates/';
+
+            return $paths;
         }
 
         /**
