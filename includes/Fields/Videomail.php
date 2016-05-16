@@ -1,17 +1,19 @@
 <?php if ( ! defined( 'ABSPATH' ) ) exit;
 
-if( ! class_exists( 'NF_Fields_Textbox' ) ) return;
+if( ! class_exists( 'NF_Abstracts_Input' ) ) return;
 
 /**
  * Class NF_Field_Videomail
  */
-class NF_Videomail_Fields_Videomail extends NF_Fields_Textbox
+class NF_Videomail_Fields_Videomail extends NF_Abstracts_Input
 {
     protected $_name = 'videomail';
 
     protected $_section = 'common';
 
     protected $_type = 'videomail';
+
+    protected $_icon = 'video-camera';
 
     protected $_templates = 'videomail';
 
