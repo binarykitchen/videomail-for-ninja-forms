@@ -1,5 +1,22 @@
 <script id="nf-tmpl-field-videomail" type="text/template">
     <div id="nf-field-<%= id %>" name="nf-field-<%= id %>" class="<%= classes %> nf-element videomail">
-        <div id="videomail"></div>
+
+        <form id="videomail">
+            <div class="buttons">
+                <button class="record" type="button">Record</button>
+                <button class="pause hide" disabled="" type="button">Pause</button>
+                <button class="resume hide" disabled="" type="button">Resume</button>
+                <button class="preview hide" disabled="" type="button">Stop</button>
+                <button class="recordAgain hide" disabled="" type="button">Record</button>
+                <button class="submit" disabled="" type="submit">Save</button>
+            </div>
+        </form>
+
+        <div id="viewVideo" class="hide">
+            <video class="replay"></video>
+            <button id='startOver'>Start over</button>
+        </div>
+
+
     </div>
 </script>
