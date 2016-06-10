@@ -28,7 +28,7 @@ class NF_Videomail_Fields_Videomail extends NF_Abstracts_Input
 
     public function enqueue_scripts()
     {
-        wp_enqueue_script( 'nf-videomail-client', NF_Videomail::$url . '/assets/js/videomail-client.js', false );
+        wp_enqueue_script( 'nf-videomail-client', NF_Videomail::$url . '/assets/js/videomail-client.min.js', false );
         wp_enqueue_script( 'nf-videomail', NF_Videomail::$url . '/assets/js/videomail.js', array( 'nf-front-end', 'nf-videomail-client' ) );
     }
 
