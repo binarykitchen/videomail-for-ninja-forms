@@ -29,6 +29,8 @@ class NF_Videomail_Fields_Videomail extends NF_Abstracts_Field
         $this->_settings = array_merge( $this->_settings, $settings );
 
         add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
+
+        add_filter( 'ninja_forms_custom_columns', array( $this, 'custom_columns' ), 10, 2 );
     }
 
     public function process( $field, $data )
@@ -52,6 +54,14 @@ class NF_Videomail_Fields_Videomail extends NF_Abstracts_Field
     {
         wp_enqueue_script( 'nf-videomail-client', NF_Videomail::$url . '/assets/js/videomail-client.min.js', false );
         wp_enqueue_script( 'nf-videomail', NF_Videomail::$url . '/assets/js/videomail.js', array( 'nf-front-end', 'nf-videomail-client' ) );
+    }
+
+    public function custom_columns( $value, $field )
+    {
+        if( $this->_name == $field->get_setting( 'type' ) ){
+            $value = '<a href="' . $value . '">' . __( 'View Video', 'ninja-forms-videomail' ) . '</a>';
+        }
+        return $value;
     }
 
 } // END CLASS NF_Field_Videomail
