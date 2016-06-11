@@ -13,12 +13,13 @@ var VideomailFieldController = Marionette.Object.extend({
 
         var videomailClient = new VideomailClient(
             {
-                verbose: model.get( 'verbose' ) || false,
+                siteName: model.get( 'site_name' ),
                 video: {
                     limitSeconds: model.get( 'limit_seconds' ) || 80,
                     width: model.get( 'width' ) || 320,
                     countdown: ( model.get( 'countdown' ) ) || false
-                }
+                },
+                verbose: model.get( 'verbose' ) || false,
             }
         );
 
