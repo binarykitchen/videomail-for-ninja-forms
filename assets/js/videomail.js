@@ -7,15 +7,17 @@ var VideomailFieldController = Marionette.Object.extend({
 
     register: function( model ) {
 
+        console.log( model );
+        
         var VideomailClient = require('videomail-client');
 
         var videomailClient = new VideomailClient(
             {
-                verbose: false,
+                verbose: model.get( 'verbose' ) || false,
                 video: {
-                    limitSeconds: 80,
-                    width: 240,
-                    countdown: false
+                    limitSeconds: model.get( 'limit_seconds' ) || 80,
+                    width: model.get( 'width' ) || 320,
+                    countdown: ( model.get( 'countdown' ) ) || false
                 }
             }
         );

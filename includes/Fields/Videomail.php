@@ -5,7 +5,7 @@ if( ! class_exists( 'NF_Abstracts_Input' ) ) return;
 /**
  * Class NF_Field_Videomail
  */
-class NF_Videomail_Fields_Videomail extends NF_Abstracts_Input
+class NF_Videomail_Fields_Videomail extends NF_Abstracts_Field
 {
     protected $_name = 'videomail';
 
@@ -17,11 +17,16 @@ class NF_Videomail_Fields_Videomail extends NF_Abstracts_Input
 
     protected $_templates = 'videomail';
 
+    protected $_settings = array( 'label', 'label_pos', 'key' );
+
     public function __construct()
     {
         parent::__construct();
 
         $this->_nicename = __( 'Videomail', 'ninja-forms' );
+
+        $settings = NF_Videomail::config( 'VideomailFieldSettings' );
+        $this->_settings = array_merge( $this->_settings, $settings );
 
         add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
     }
