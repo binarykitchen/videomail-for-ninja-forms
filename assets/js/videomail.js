@@ -2,6 +2,7 @@ var VideomailFieldController = Marionette.Object.extend({
 
     initialize: function() {
         this.listenTo( Backbone.Radio.channel( 'videomail' ), 'init:model', this.register );
+        Backbone.Radio.channel( 'videomail' ).reply( 'get:submitData',  this.getSubmitData );
     },
 
     register: function( model ) {
@@ -22,20 +23,10 @@ var VideomailFieldController = Marionette.Object.extend({
         var startOverButton = document.getElementById('startOver');
 
         var onSubmitted = function(videomail) {
-
-            if( videomail[ 'url' ] ) {
-                model.set( 'url', videomail[ 'url' ] ); // Submit the Video URL with the form.
-                model.set( 'value', videomail[ 'url' ] );
-            }
-
-            if( videomail[ 'webm' ] ) {
-                model.set( 'webm', videomail[ 'webm' ] );
-            }
-
-            if( videomail[ 'mp4' ] ) {
-                model.set( 'mp4', videomail[ 'mp4' ] );
-            }
-
+            model.set( 'url', videomail[ 'url' ] );
+            model.set( 'webm', videomail[ 'webm' ] );
+            model.set( 'mp4', videomail[ 'mp4' ] );
+            model.set( 'poster', videomail[ 'poster' ] );
             this.replay(videomail, 'viewVideo');
             startOverButton.onclick = this.startOver
         };
@@ -46,6 +37,15 @@ var VideomailFieldController = Marionette.Object.extend({
         );
         videomailClient.show()
     },
+
+    getSubmitData: function( fieldData, fieldModel ) {
+        fieldData.value = fieldModel.get( 'url' );
+        fieldData.url = fieldModel.get( 'url' );
+        fieldData.webm = fieldModel.get( 'webm' );
+        fieldData.mp4 = fieldModel.get( 'mp4' );
+        fieldData.poster = fieldModel.get( 'poster' );
+        return fieldData;
+    }
 
 });
 

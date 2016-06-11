@@ -78,9 +78,15 @@ if( version_compare( get_option( 'ninja_forms_version', '0.0.0' ), '3.0', '>' ) 
          */
         public function __construct()
         {
-            add_filter( 'ninja_forms_register_fields', array($this, 'register_fields'));
+            add_action( 'ninja_forms_loaded', array( $this, 'ninja_forms_loaded' ) );
+            add_filter( 'ninja_forms_register_fields', array($this, 'register_fields' ) );
             add_filter( 'ninja_forms_register_actions', array($this, 'register_actions'));
             add_filter( 'ninja_forms_field_template_file_paths', array( $this, 'custom_template_path' ) );
+        }
+
+        public function ninja_forms_loaded()
+        {
+            new NF_Videomail_Admin_Metaboxes_Submission();
         }
 
         /**

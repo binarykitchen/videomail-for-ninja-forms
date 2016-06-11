@@ -26,6 +26,23 @@ class NF_Videomail_Fields_Videomail extends NF_Abstracts_Input
         add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
     }
 
+    public function process( $field, $data )
+    {
+        $data[ 'extra' ][ 'videomail' ][] = array(
+            'url' => $field[ 'url' ],
+            'webm' => $field[ 'webm' ],
+            'mp4' => $field[ 'mp4' ],
+            'poster' => $field[ 'poster' ]
+        );
+
+        return $data;
+    }
+
+    public function admin_form_element( $id, $value )
+    {
+        NF_Videomail::template( 'admin-form-element.html.php', compact( 'value' ) );
+    }
+
     public function enqueue_scripts()
     {
         wp_enqueue_script( 'nf-videomail-client', NF_Videomail::$url . '/assets/js/videomail-client.min.js', false );
