@@ -47,6 +47,8 @@ class NF_Videomail_Fields_Videomail extends NF_Abstracts_Field
 
     public function admin_form_element( $id, $value )
     {
+        if( empty( $value ) ) return __( 'No Video Recorded' );
+
         NF_Videomail::template( 'admin-form-element.html.php', compact( 'value' ) );
     }
 
@@ -58,10 +60,11 @@ class NF_Videomail_Fields_Videomail extends NF_Abstracts_Field
 
     public function custom_columns( $value, $field )
     {
-        if( $this->_name == $field->get_setting( 'type' ) ){
-            $value = '<a href="' . $value . '">' . __( 'View Video', 'ninja-forms-videomail' ) . '</a>';
-        }
-        return $value;
+        if( $this->_name != $field->get_setting( 'type' ) ) return $value;
+
+        if( empty( $value ) ) return __( 'No Video Recorded' );
+
+        return '<a href="' . $value . '">' . __('View Video', 'ninja-forms-videomail') . '</a>';
     }
 
 } // END CLASS NF_Field_Videomail
