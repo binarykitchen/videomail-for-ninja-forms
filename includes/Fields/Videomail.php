@@ -39,7 +39,9 @@ class NF_Videomail_Fields_Videomail extends NF_Abstracts_Field
             'url' => $field[ 'url' ],
             'webm' => $field[ 'webm' ],
             'mp4' => $field[ 'mp4' ],
-            'poster' => $field[ 'poster' ]
+            'poster' => $field[ 'poster' ],
+            'alias' => $field[ 'alias' ],
+            'key' => $field[ 'key' ]
         );
 
         return $data;

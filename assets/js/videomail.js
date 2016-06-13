@@ -26,10 +26,12 @@ var VideomailFieldController = Marionette.Object.extend({
         var startOverButton = document.getElementById('startOver');
 
         var onSubmitted = function(videomail) {
-            model.set( 'url', videomail[ 'url' ] );
-            model.set( 'webm', videomail[ 'webm' ] );
-            model.set( 'mp4', videomail[ 'mp4' ] );
-            model.set( 'poster', videomail[ 'poster' ] );
+            model.set( 'videomail-url', videomail[ 'url' ] );
+            model.set( 'videomail-webm', videomail[ 'webm' ] );
+            model.set( 'videomail-mp4', videomail[ 'mp4' ] );
+            model.set( 'videomail-poster', videomail[ 'poster' ] );
+            model.set( 'videomail-alias', videomail[ 'alias' ] );
+            model.set( 'videomail-key', videomail[ 'key' ] );
             this.replay(videomail, 'viewVideo');
             startOverButton.onclick = this.startOver
         };
@@ -42,11 +44,13 @@ var VideomailFieldController = Marionette.Object.extend({
     },
 
     getSubmitData: function( fieldData, fieldModel ) {
-        fieldData.value = fieldModel.get( 'url' );
-        fieldData.url = fieldModel.get( 'url' );
-        fieldData.webm = fieldModel.get( 'webm' );
-        fieldData.mp4 = fieldModel.get( 'mp4' );
-        fieldData.poster = fieldModel.get( 'poster' );
+        fieldData.value = fieldModel.get( 'videomail-url' );
+        fieldData.url = fieldModel.get( 'videomail-url' );
+        fieldData.webm = fieldModel.get( 'videomail-webm' );
+        fieldData.mp4 = fieldModel.get( 'videomail-mp4' );
+        fieldData.poster = fieldModel.get( 'videomail-poster' );
+        fieldData.alias = fieldModel.get( 'videomail-alias' );
+        fieldData.key = fieldModel.get( 'videomail-key' );
         return fieldData;
     }
 
