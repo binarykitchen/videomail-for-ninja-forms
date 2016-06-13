@@ -25,6 +25,7 @@ final class NF_Videomail_Admin_Metaboxes_Submission extends NF_Abstracts_Submiss
                 'poster' => $item[ 'poster' ],
                 'source' => array(
                     'video/webm' => $item[ 'webm' ],
+                    'video/mp4' => 'https://videomail.io/videomail/' . $item[ 'alias' ] . '/type/mp4',
                 ),
                 'text' => array(
                     'download' => __( 'Download', 'ninja-forms-videomail' )
