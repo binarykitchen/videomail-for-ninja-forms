@@ -1,46 +1,51 @@
 var VideomailFieldController = Marionette.Object.extend({
 
     initialize: function() {
+
+        // Radio Listeners
         this.listenTo( Backbone.Radio.channel( 'videomail' ), 'init:model', this.register );
-        Backbone.Radio.channel( 'videomail' ).reply( 'get:submitData',  this.getSubmitData );
+
+        // Radio Responses
+        Backbone.Radio.channel( 'videomail' ).reply( 'get:submitData',    this.getSubmitData    );
         Backbone.Radio.channel( 'videomail' ).reply( 'validate:required', this.validateRequired );
     },
 
-    register: function( model ) {
+    register: function( fieldModel ) {
         
         var VideomailClient = require('videomail-client');
 
         var videomailClient = new VideomailClient(
             {
-                siteName: model.get( 'site_name' ),
+                siteName: fieldModel.get( 'site_name' ),
                 video: {
-                    limitSeconds: model.get( 'limit_seconds' ) || 80,
-                    width: model.get( 'width' ) || 320,
-                    countdown: ( model.get( 'countdown' ) ) || false
+                    limitSeconds: fieldModel.get( 'limit_seconds' ) || 80,
+                    width: fieldModel.get( 'width' ) || 320,
+                    countdown: ( fieldModel.get( 'countdown' ) ) || false
                 },
-                verbose: model.get( 'verbose' ) || false,
+                verbose: fieldModel.get( 'verbose' ) || false
             }
         );
 
-        var startOverButton = document.getElementById('startOver');
+        var startOverButton = document.getElementById( 'startOver' );
 
-        var onSubmitted = function(videomail) {
-            model.set( 'videomail-url', videomail[ 'url' ] );
-            model.set( 'videomail-webm', videomail[ 'webm' ] );
-            model.set( 'videomail-mp4', videomail[ 'mp4' ] );
-            model.set( 'videomail-poster', videomail[ 'poster' ] );
-            model.set( 'videomail-alias', videomail[ 'alias' ] );
-            model.set( 'videomail-key', videomail[ 'key' ] );
-            this.replay(videomail, 'viewVideo');
-            startOverButton.onclick = this.startOver
+        var onSubmitted = function( videomail ) {
+            fieldModel.set( 'videomail-url',    videomail[ 'url' ]    );
+            fieldModel.set( 'videomail-webm',   videomail[ 'webm' ]   );
+            fieldModel.set( 'videomail-mp4',    videomail[ 'mp4' ]    );
+            fieldModel.set( 'videomail-poster', videomail[ 'poster' ] );
+            fieldModel.set( 'videomail-alias',  videomail[ 'alias' ]  );
+            fieldModel.set( 'videomail-key',    videomail[ 'key' ]    );
+
+            this.replay( videomail, 'viewVideo' );
+            startOverButton.onclick = this.startOver;
         };
 
-        var formID = model.get( 'formID' );
+        var formID = fieldModel.get( 'formID' );
 
         var that = this;
 
         videomailClient.on( videomailClient.events.FORM_READY, function() {
-            if( 1 == model.get( 'required' ) ) {
+            if( 1 == fieldModel.get( 'required' ) ) {
                 that.disableSubmit(formID);
             }
         } );
@@ -58,7 +63,7 @@ var VideomailFieldController = Marionette.Object.extend({
             onSubmitted.bind( videomailClient );
         } );
 
-        videomailClient.show()
+        videomailClient.show();
     },
 
     enableSubmit: function( formID ) {
@@ -69,7 +74,7 @@ var VideomailFieldController = Marionette.Object.extend({
         Backbone.Radio.channel( 'form-' + formID ).trigger( 'disable:submit' );
     },
 
-    validateRequired: function( el, fieldModel ) {
+    validateRequired: function() {
         /*
          * Override Custom Required Validation.
          * Enable/Disable the submit button instead.
@@ -79,18 +84,18 @@ var VideomailFieldController = Marionette.Object.extend({
     },
 
     getSubmitData: function( fieldData, fieldModel ) {
-        fieldData.value = fieldModel.get( 'videomail-url' );
-        fieldData.url = fieldModel.get( 'videomail-url' );
-        fieldData.webm = fieldModel.get( 'videomail-webm' );
-        fieldData.mp4 = fieldModel.get( 'videomail-mp4' );
+        fieldData.value  = fieldModel.get( 'videomail-url' );
+        fieldData.url    = fieldModel.get( 'videomail-url' );
+        fieldData.webm   = fieldModel.get( 'videomail-webm' );
+        fieldData.mp4    = fieldModel.get( 'videomail-mp4' );
         fieldData.poster = fieldModel.get( 'videomail-poster' );
-        fieldData.alias = fieldModel.get( 'videomail-alias' );
-        fieldData.key = fieldModel.get( 'videomail-key' );
+        fieldData.alias  = fieldModel.get( 'videomail-alias' );
+        fieldData.key    = fieldModel.get( 'videomail-key' );
         return fieldData;
     }
 
 });
 
-jQuery( document ).ready( function( $ ) {
+jQuery( document ).ready( function() {
     new VideomailFieldController();
 });
