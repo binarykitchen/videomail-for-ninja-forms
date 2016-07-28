@@ -57,5 +57,5 @@ var VideomailFieldController = Marionette.Object.extend({
 });
 
 jQuery( document ).ready( function( $ ) {
-    var videomailFieldController = new VideomailFieldController();
+    new VideomailFieldController();
 });
