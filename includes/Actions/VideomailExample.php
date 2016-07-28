@@ -29,11 +29,11 @@ final class NF_Videomail_Actions_VideomailExample extends NF_Abstracts_Action
      * Constructor
      */
     public function __construct()
-{
-    parent::__construct();
+    {
+        parent::__construct();
 
-    $this->_nicename = __( 'Videomail Example Action', 'ninja-forms' );
-}
+        $this->_nicename = __( 'Videomail Example Action', 'ninja-forms' );
+    }
 
     /*
     * PUBLIC METHODS
