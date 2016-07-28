@@ -3,11 +3,10 @@ var VideomailFieldController = Marionette.Object.extend({
     initialize: function() {
         this.listenTo( Backbone.Radio.channel( 'videomail' ), 'init:model', this.register );
         Backbone.Radio.channel( 'videomail' ).reply( 'get:submitData',  this.getSubmitData );
+        Backbone.Radio.channel( 'videomail' ).reply( 'validate:required', this.validateRequired );
     },
 
     register: function( model ) {
-
-        console.log( model );
         
         var VideomailClient = require('videomail-client');
 
@@ -40,6 +39,12 @@ var VideomailFieldController = Marionette.Object.extend({
 
         var that = this;
 
+        videomailClient.on( videomailClient.events.FORM_READY, function() {
+            if( 1 == model.get( 'required' ) ) {
+                that.disableSubmit(formID);
+            }
+        } );
+
         videomailClient.on( videomailClient.events.COUNTDOWN, function() {
             that.disableSubmit( formID );
         } );
@@ -49,7 +54,7 @@ var VideomailFieldController = Marionette.Object.extend({
         } );
 
         videomailClient.on( videomailClient.events.SUBMITTED, function() {
-            that.enableSubmit( formID );
+            that.enableSubmit(formID);
             onSubmitted.bind( videomailClient );
         } );
 
@@ -62,6 +67,15 @@ var VideomailFieldController = Marionette.Object.extend({
 
     disableSubmit: function( formID ) {
         Backbone.Radio.channel( 'form-' + formID ).trigger( 'disable:submit' );
+    },
+
+    validateRequired: function( el, fieldModel ) {
+        /*
+         * Override Custom Required Validation.
+         * Enable/Disable the submit button instead.
+         * Since a value is not available until submission, this avoids the nagging field error.
+         */
+        return true;
     },
 
     getSubmitData: function( fieldData, fieldModel ) {

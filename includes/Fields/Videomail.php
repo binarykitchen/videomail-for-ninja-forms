@@ -17,7 +17,7 @@ class NF_Videomail_Fields_Videomail extends NF_Abstracts_Field
 
     protected $_templates = 'videomail';
 
-    protected $_settings = array( 'label', 'label_pos', 'key' );
+    protected $_settings = array( 'label', 'label_pos', 'required', 'key' );
 
     public function __construct()
     {
