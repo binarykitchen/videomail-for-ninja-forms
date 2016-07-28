@@ -36,11 +36,32 @@ var VideomailFieldController = Marionette.Object.extend({
             startOverButton.onclick = this.startOver
         };
 
-        videomailClient.on(
-            videomailClient.events.SUBMITTED,
-            onSubmitted.bind( videomailClient )
-        );
+        var formID = model.get( 'formID' );
+
+        var that = this;
+
+        videomailClient.on( videomailClient.events.COUNTDOWN, function() {
+            that.disableSubmit( formID );
+        } );
+
+        videomailClient.on( videomailClient.events.RECORDING, function () {
+            that.disableSubmit( formID );
+        } );
+
+        videomailClient.on( videomailClient.events.SUBMITTED, function() {
+            that.enableSubmit( formID );
+            onSubmitted.bind( videomailClient );
+        } );
+
         videomailClient.show()
+    },
+
+    enableSubmit: function( formID ) {
+        Backbone.Radio.channel( 'form-' + formID ).trigger( 'enable:submit' );
+    },
+
+    disableSubmit: function( formID ) {
+        Backbone.Radio.channel( 'form-' + formID ).trigger( 'disable:submit' );
     },
 
     getSubmitData: function( fieldData, fieldModel ) {
