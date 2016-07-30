@@ -39,7 +39,6 @@ var VideomailFieldController = Marionette.Object.extend({
         } );
 
         videomailClient.on( videomailClient.events.SUBMITTED, function( videomail ) {
-            fieldModel.set( 'submitted', true );
             fieldModel.set( 'value',            videomail[ 'url' ]    );
             fieldModel.set( 'videomail-url',    videomail[ 'url' ]    );
             fieldModel.set( 'videomail-webm',   videomail[ 'webm' ]   );
