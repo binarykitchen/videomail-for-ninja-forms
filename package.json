@@ -2,7 +2,7 @@
   "name": "ninja-forms-videomail",
   "version": "1.0.0",
   "dependencies": {
-    "videomail-client": "1.11.0"
+    "videomail-client": "1.13.12"
   },
   "devDependencies": {
     "gulp": "3.9.1",
