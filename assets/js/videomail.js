@@ -26,29 +26,9 @@ var VideomailFieldController = Marionette.Object.extend({
             }
         );
 
-        var startOverButton = document.getElementById( 'startOver' );
-
-        var onSubmitted = function( videomail ) {
-            fieldModel.set( 'videomail-url',    videomail[ 'url' ]    );
-            fieldModel.set( 'videomail-webm',   videomail[ 'webm' ]   );
-            fieldModel.set( 'videomail-mp4',    videomail[ 'mp4' ]    );
-            fieldModel.set( 'videomail-poster', videomail[ 'poster' ] );
-            fieldModel.set( 'videomail-alias',  videomail[ 'alias' ]  );
-            fieldModel.set( 'videomail-key',    videomail[ 'key' ]    );
-
-            this.replay( videomail, 'viewVideo' );
-            startOverButton.onclick = this.startOver;
-        };
-
         var formID = fieldModel.get( 'formID' );
 
         var that = this;
-
-        videomailClient.on( videomailClient.events.FORM_READY, function() {
-            if( 1 == fieldModel.get( 'required' ) ) {
-                that.disableSubmit(formID);
-            }
-        } );
 
         videomailClient.on( videomailClient.events.COUNTDOWN, function() {
             that.disableSubmit( formID );
@@ -58,9 +38,17 @@ var VideomailFieldController = Marionette.Object.extend({
             that.disableSubmit( formID );
         } );
 
-        videomailClient.on( videomailClient.events.SUBMITTED, function() {
-            that.enableSubmit(formID);
-            onSubmitted.bind( videomailClient );
+        videomailClient.on( videomailClient.events.SUBMITTED, function( videomail ) {
+            fieldModel.set( 'submitted', true );
+            fieldModel.set( 'value',            videomail[ 'url' ]    );
+            fieldModel.set( 'videomail-url',    videomail[ 'url' ]    );
+            fieldModel.set( 'videomail-webm',   videomail[ 'webm' ]   );
+            fieldModel.set( 'videomail-mp4',    videomail[ 'mp4' ]    );
+            fieldModel.set( 'videomail-poster', videomail[ 'poster' ] );
+            fieldModel.set( 'videomail-alias',  videomail[ 'alias' ]  );
+            fieldModel.set( 'videomail-key',    videomail[ 'key' ]    );
+
+            that.enableSubmit( formID );
         } );
 
         videomailClient.show();
@@ -76,8 +64,7 @@ var VideomailFieldController = Marionette.Object.extend({
 
     validateRequired: function() {
         /*
-         * Override Custom Required Validation.
-         * Enable/Disable the submit button instead.
+         * Override required validation, in favor of a submission error.
          * Since a value is not available until submission, this avoids the nagging field error.
          */
         return true;
