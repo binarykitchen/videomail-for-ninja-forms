@@ -6,5 +6,3 @@ node_modules
 .idea/
 
 # Project Stuff
-assets/js/min
-!assets/js/min/.gitkeep
