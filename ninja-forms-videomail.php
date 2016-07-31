@@ -6,7 +6,9 @@
  * Description: Express yourself in more than just words. Record and send a short video from your webcam.
  * Version: 3.0.0
  * Author: Kyle B. Johnson
- * Author URI: http://kylebjohnson.me/
+ * Author: Michael Heuberger
+ * Author URI: http://kylebjohnson.me
+ * Author URI: https://binarykitchen.com
  * Text Domain: ninja-forms-videomail
  *
  * Copyright 2016 Kyle B. Johnson.
@@ -143,7 +145,7 @@ if( version_compare( get_option( 'ninja_forms_version', '0.0.0' ), '3.0', '>' ) 
                 require_once $classes_dir . $class_file;
             }
         }
-        
+
         /**
          * Template
          *
@@ -158,7 +160,7 @@ if( version_compare( get_option( 'ninja_forms_version', '0.0.0' ), '3.0', '>' ) 
 
             include self::$dir . 'includes/Templates/' . $file_name;
         }
-        
+
         /**
          * Config
          *
