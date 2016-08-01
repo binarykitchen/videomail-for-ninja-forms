@@ -11,7 +11,7 @@
  * Author URI: https://binarykitchen.com
  * Text Domain: ninja-forms-videomail
  *
- * Copyright 2016 Kyle B. Johnson.
+ * Copyright 2016 Kyle B. Johnson + Michael Heuberger
  */
 
 if( version_compare( get_option( 'ninja_forms_version', '0.0.0' ), '3.0', '>' ) || get_option( 'ninja_forms_load_deprecated', FALSE ) ) {
@@ -28,7 +28,7 @@ if( version_compare( get_option( 'ninja_forms_version', '0.0.0' ), '3.0', '>' ) 
         const VERSION = '3.0.0';
         const SLUG    = 'videomail';
         const NAME    = 'Videomail';
-        const AUTHOR  = 'Kyle B. Johnson';
+        const AUTHOR  = 'Kyle B. Johnson + Michael Heuberger';
         const PREFIX  = 'NF_Videomail';
 
         /**

@@ -6,6 +6,9 @@
   },
   "devDependencies": {
     "gulp": "3.9.1",
+    "gulp-autoprefixer": "^3.1.0",
+    "gulp-bytediff": "^1.0.0",
+    "gulp-cssnano": "^2.1.2",
     "gulp-load-plugins": "^1.2.4",
     "gulp-rename": "1.2.2",
     "gulp-todo": "4.1.0",
