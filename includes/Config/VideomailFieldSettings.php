@@ -1,5 +1,7 @@
 <?php
 
+// todo add new option to switch on/off audio
+
 return apply_filters( 'ninja_forms_videomail_field_settings', array(
 
     /*
@@ -14,7 +16,7 @@ return apply_filters( 'ninja_forms_videomail_field_settings', array(
         'label' => __( 'Site Name ID', 'ninja-forms-videomail' ),
         'width' => 'full',
         'group' => 'primary',
-        'value' => 'videomail-client-demo',
+        'value' => 'videomail-client-demo', // todo test what's like when it's different (the error handling)
         'help' => __( 'A valid site-name ID must be registered with Videomail.', 'ninja-forms-videomail' ),
     ),
 
@@ -77,6 +79,5 @@ return apply_filters( 'ninja_forms_videomail_field_settings', array(
         'group' => 'advanced',
         'value' => FALSE,
         'help' => __( 'Show verbose comments in the developer console.', 'ninja-forms-videomail' ),
-    ),
-
+    )
 ));

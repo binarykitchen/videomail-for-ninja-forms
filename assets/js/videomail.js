@@ -11,7 +11,7 @@ var VideomailFieldController = Marionette.Object.extend({
     },
 
     register: function( fieldModel ) {
-        
+
         var VideomailClient = require('videomail-client');
 
         var videomailClient = new VideomailClient(
