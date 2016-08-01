@@ -5,8 +5,7 @@
  * Plugin URI:
  * Description: Express yourself in more than just words. Record and send a short video from your webcam.
  * Version: 3.0.0
- * Author: Kyle B. Johnson
- * Author: Michael Heuberger
+ * Author: Kyle B. Johnson + Michael Heuberger
  * Author URI: http://kylebjohnson.me
  * Author URI: https://binarykitchen.com
  * Text Domain: ninja-forms-videomail
@@ -80,10 +79,10 @@ if( version_compare( get_option( 'ninja_forms_version', '0.0.0' ), '3.0', '>' ) 
          */
         public function __construct()
         {
-            add_action( 'ninja_forms_loaded', array( $this, 'ninja_forms_loaded' ) );
-            add_filter( 'ninja_forms_register_fields', array($this, 'register_fields' ) );
-            add_filter( 'ninja_forms_register_actions', array($this, 'register_actions'));
-            add_filter( 'ninja_forms_field_template_file_paths', array( $this, 'custom_template_path' ) );
+            add_action('ninja_forms_loaded', array($this, 'ninja_forms_loaded'));
+            add_filter('ninja_forms_register_fields', array($this, 'register_fields'));
+            add_filter('ninja_forms_register_actions', array($this, 'register_actions'));
+            add_filter('ninja_forms_field_template_file_paths', array($this, 'custom_template_path'));
         }
 
         public function ninja_forms_loaded()
