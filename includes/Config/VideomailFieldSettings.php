@@ -16,8 +16,8 @@ return apply_filters( 'ninja_forms_videomail_field_settings', array(
         'label' => __( 'Site Name ID', 'ninja-forms-videomail' ),
         'width' => 'full',
         'group' => 'primary',
-        'value' => 'videomail-client-demo', // todo test what's like when it's different (the error handling)
-        'help' => __( 'A valid site-name ID must be registered with Videomail.', 'ninja-forms-videomail' ),
+        'value' => 'videomail-client-demo',
+        'help' => __( 'A valid site-name ID must be registered with the developer at www.videomail.io. The default one, videomail-client-demo, always works for local development/testing.', 'ninja-forms-videomail' ),
     ),
 
     /*

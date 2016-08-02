@@ -7,7 +7,7 @@
  * Version: 3.0.0
  * Author: Kyle B. Johnson + Michael Heuberger
  * Author URI: http://kylebjohnson.me
- * Author URI: https://binarykitchen.com
+ * Author URI: https://videomail.io
  * Text Domain: ninja-forms-videomail
  *
  * Copyright 2016 Kyle B. Johnson + Michael Heuberger
