@@ -14,11 +14,12 @@ Requires the [Ninja Forms v3 plugin](https://github.com/wpninjas/ninja-forms).
 
 ## Development
 
-1. `git clone git@github.com:kjohnson/ninja-forms-videomail.git`
-2. Install latest nodejs, best with [nvm](https://github.com/creationix/nvm)
-3. `npm install` to install npm dependencies
-4. `gulp watch` to rebuild assets when changes are made
-5. open local WordPress site in your browser
+1. Install Bitnami's Wordpress Stack
+2. Install Ninja Forms Plugin
+3. `git clone git@github.com:kjohnson/ninja-forms-videomail.git`
+4. Install latest nodejs, best with [nvm](https://github.com/creationix/nvm)
+5. `npm install` to install npm dependencies
+6. `gulp watch` which will open Google Chrome and automatically reloads upon changes (PHP, JS and CSS)
 
 ## Options
 

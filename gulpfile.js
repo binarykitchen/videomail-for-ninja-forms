@@ -2,8 +2,29 @@ var gulp    = require('gulp')
 var nib     = require('nib')
 var plugins = require('gulp-load-plugins')()
 
+// Reloads browser and injects CSS. Time-saving synchronised browser testing.
+var browserSync = require('browser-sync').create()
+
+// For manual browser reload.
+var reload = browserSync.reload
+
+// Using Bitnami's Wordpress Stack which serves local WP at this address
+var PROJECT_URL = "http://localhost:8080/wordpress/wp-admin/admin.php?page=ninja-forms"
+
+gulp.task('browser-sync', function() {
+    browserSync.init({
+        // http://www.browsersync.io/docs/options/
+
+        proxy:          PROJECT_URL,
+        browser:        ["google-chrome"],
+        port:           8080,
+        open:           true,
+        injectChanges:  true,
+    })
+})
+
 gulp.task('js', function() {
-    return gulp.src('assets/js/videomail.js')
+    gulp.src('assets/js/videomail.js')
         .pipe(plugins.bytediff.start())
         .pipe(plugins.uglify())
         .pipe(plugins.rename({suffix: '.min'}))
@@ -12,7 +33,7 @@ gulp.task('js', function() {
 })
 
 gulp.task('css', function() {
-    return gulp.src('assets/css/videomail.styl')
+    gulp.src('assets/css/videomail.styl')
         .pipe(plugins.plumber()) // with the plumber the gulp task won't crash on errors
         .pipe(plugins.stylus({
             use:    [nib()],
@@ -31,21 +52,23 @@ gulp.task('css', function() {
         .pipe(plugins.cssnano())
         .pipe(plugins.rename({suffix: '.min'}))
         .pipe(plugins.bytediff.stop())
+        .pipe(browserSync.stream())
         .pipe(gulp.dest('assets/css/min'))
 })
 
 
-gulp.task('watch', ['default'], function() {
-    gulp.watch('assets/js/*.js', ['js'])
+gulp.task('watch', ['default', 'browser-sync'], function() {
+    gulp.watch('includes/**/*.php', reload)
+    gulp.watch('assets/js/*.js', ['js', reload])
     gulp.watch('assets/css/*.styl', ['css'])
 })
 
 gulp.task('todo', function() {
-    return gulp.src([ 'includes/**/*.php',
-                      'assets/**/*.{js, styl}',
-                      'gulpfile.js',
-                      'ninja-forms-videomail.php',
-                      'tests/*.php'])
+    gulp.src(['includes/**/*.php',
+              'assets/**/*.{js, styl}',
+              'gulpfile.js',
+              'ninja-forms-videomail.php',
+              'tests/*.php'])
         .pipe(plugins.todo())
         .pipe(gulp.dest('./'))
 })
