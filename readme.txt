@@ -4,7 +4,7 @@ Tags:
 Requires at least: 4.3
 Tested up to: 4.5.2
 Stable tag: 3.0.0
-License: GPLv2 or later
+License: CC0-1.0
 
 == Description ==
 
