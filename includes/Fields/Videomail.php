@@ -28,6 +28,8 @@ class NF_Videomail_Fields_Videomail extends NF_Abstracts_Field
         $settings = NF_Videomail::config( 'VideomailFieldSettings' );
         $this->_settings = array_merge( $this->_settings, $settings );
 
+        $this->_settings[ 'label' ][ 'value' ] = __( 'Video Message', 'ninja-forms-videomail' );
+
         add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 
         add_filter( 'ninja_forms_custom_columns', array( $this, 'custom_columns' ), 10, 2 );
