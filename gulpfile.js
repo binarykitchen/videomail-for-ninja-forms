@@ -1,5 +1,6 @@
 var gulp    = require('gulp')
 var nib     = require('nib')
+var stylish = require('jshint-stylish')
 var plugins = require('gulp-load-plugins')()
 
 // Reloads browser and injects CSS. Time-saving synchronised browser testing.
@@ -23,8 +24,15 @@ gulp.task('browser-sync', function() {
     })
 })
 
-gulp.task('js', function() {
-    gulp.src('assets/js/videomail.js')
+gulp.task('jshint', function() {
+    return gulp.src('assets/js/videomail.js')
+        .pipe(plugins.jshint())
+        .pipe(plugins.jshint.reporter(stylish))
+        .pipe(plugins.jshint.reporter('fail'))
+})
+
+gulp.task('js', ['jshint'], function() {
+    return gulp.src('assets/js/videomail.js')
         .pipe(plugins.bytediff.start())
         .pipe(plugins.uglify())
         .pipe(plugins.rename({suffix: '.min'}))

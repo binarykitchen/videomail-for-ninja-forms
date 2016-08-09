@@ -12,6 +12,10 @@ var VideomailFieldController = Marionette.Object.extend({
 
     register: function( fieldModel ) {
 
+        var that = this;
+
+        var formID = 'form-' + fieldModel.get('formID');
+
         var VideomailClient = require('videomail-client');
 
         var videomailClient = new VideomailClient(
@@ -26,39 +30,35 @@ var VideomailFieldController = Marionette.Object.extend({
             }
         );
 
-        var formID = fieldModel.get( 'formID' );
-
-        var that = this;
-
         videomailClient.on( videomailClient.events.COUNTDOWN, function() {
-            that.disableSubmit( formID );
+            that.disableSubmit(formID);
         } );
 
         videomailClient.on( videomailClient.events.RECORDING, function () {
-            that.disableSubmit( formID );
+            that.disableSubmit(formID);
         } );
 
         videomailClient.on( videomailClient.events.SUBMITTED, function( videomail ) {
-            fieldModel.set( 'value',            videomail[ 'url' ]    );
-            fieldModel.set( 'videomail-url',    videomail[ 'url' ]    );
-            fieldModel.set( 'videomail-webm',   videomail[ 'webm' ]   );
-            fieldModel.set( 'videomail-mp4',    videomail[ 'mp4' ]    );
-            fieldModel.set( 'videomail-poster', videomail[ 'poster' ] );
-            fieldModel.set( 'videomail-alias',  videomail[ 'alias' ]  );
-            fieldModel.set( 'videomail-key',    videomail[ 'key' ]    );
+            fieldModel.set( 'value',            videomail.url    );
+            fieldModel.set( 'videomail-url',    videomail.url    );
+            fieldModel.set( 'videomail-webm',   videomail.webm   );
+            fieldModel.set( 'videomail-mp4',    videomail.mp4    );
+            fieldModel.set( 'videomail-poster', videomail.poster );
+            fieldModel.set( 'videomail-alias',  videomail.alias  );
+            fieldModel.set( 'videomail-key',    videomail.key    );
 
-            that.enableSubmit( formID );
+            that.enableSubmit(formID);
         } );
 
         videomailClient.show();
     },
 
     enableSubmit: function( formID ) {
-        Backbone.Radio.channel( 'form-' + formID ).trigger( 'enable:submit' );
+        Backbone.Radio.channel(formID).trigger( 'enable:submit' );
     },
 
     disableSubmit: function( formID ) {
-        Backbone.Radio.channel( 'form-' + formID ).trigger( 'disable:submit' );
+        Backbone.Radio.channel(formID).trigger( 'disable:submit' );
     },
 
     validateRequired: function() {
