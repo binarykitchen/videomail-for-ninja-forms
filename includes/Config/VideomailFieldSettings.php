@@ -4,11 +4,7 @@
 
 return apply_filters( 'ninja_forms_videomail_field_settings', array(
 
-    /*
-    |--------------------------------------------------------------------------
-    | Site Name
-    |--------------------------------------------------------------------------
-    */
+    // SITE NAME
 
     'site_name' => array(
         'name' => 'site_name',
@@ -20,11 +16,7 @@ return apply_filters( 'ninja_forms_videomail_field_settings', array(
         'help' => __( 'A valid site-name ID must be registered with the developer at www.videomail.io. The default one, videomail-client-demo, always works for local development/testing.', 'ninja-forms-videomail' ),
     ),
 
-    /*
-    |--------------------------------------------------------------------------
-    | Limit Seconds
-    |--------------------------------------------------------------------------
-    */
+    // LIMIT SECONDS
 
     'limit_seconds' => array(
         'name' => 'limit_seconds',
@@ -35,11 +27,19 @@ return apply_filters( 'ninja_forms_videomail_field_settings', array(
         'value' => 80,
     ),
 
-    /*
-    |--------------------------------------------------------------------------
-    | Show Countdown
-    |--------------------------------------------------------------------------
-    */
+    // AUDIO ENABLED
+
+    'audio_enabled' => array(
+        'name' => 'audio_enabled',
+        'type' => 'toggle',
+        'label' => __( 'Enable Audio (in Beta)', 'ninja-forms-videomail' ),
+        'width' => 'full',
+        'group' => 'restrictions',
+        'value' => FALSE,
+        'help' => __('The audio fetaure is in beta and needs feedback for improvement. Otherwise leave it disabled and stick to Sign Language, grins'),
+    ),
+
+    // SHOW COUNTDOWN
 
     'countdown' => array(
         'name' => 'countdown',
@@ -50,11 +50,7 @@ return apply_filters( 'ninja_forms_videomail_field_settings', array(
         'value' => 3,
     ),
 
-    /*
-    |--------------------------------------------------------------------------
-    | Video Width
-    |--------------------------------------------------------------------------
-    */
+    // VIDEO WIDTH
 
     'width' => array(
         'name' => 'width',
@@ -65,11 +61,7 @@ return apply_filters( 'ninja_forms_videomail_field_settings', array(
         'value' => 320,
     ),
 
-    /*
-    |--------------------------------------------------------------------------
-    | Debug Mode
-    |--------------------------------------------------------------------------
-    */
+    // DEBUG MODE
 
     'verbose' => array(
         'name' => 'verbose',
