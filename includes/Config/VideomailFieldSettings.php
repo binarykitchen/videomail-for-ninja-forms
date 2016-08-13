@@ -1,7 +1,5 @@
 <?php
 
-// todo add new option to switch on/off audio
-
 return apply_filters( 'ninja_forms_videomail_field_settings', array(
 
     // SITE NAME
@@ -14,6 +12,50 @@ return apply_filters( 'ninja_forms_videomail_field_settings', array(
         'group' => 'primary',
         'value' => 'videomail-client-demo',
         'help' => __( 'A valid site-name ID must be registered with the developer at www.videomail.io. The default one, videomail-client-demo, always works for local development/testing.', 'ninja-forms-videomail' ),
+    ),
+
+    'email_from' => array(
+        'name' => 'email_from',
+        'type' => 'textbox',
+        'group' => 'primary',
+        'label' => __( 'From', 'ninja-forms-videomail' ),
+        'placeholder' => __( 'Email address or search for a field', 'ninja-forms-videomail' ),
+        'value' => '',
+        'width' => 'full',
+        'use_merge_tags' => TRUE,
+    ),
+
+    'email_to' => array(
+        'name' => 'email_to',
+        'type' => 'textbox',
+        'group' => 'primary',
+        'label' => __( 'To', 'ninja-forms-videomail' ),
+        'placeholder' => __( 'Email address or search for a field', 'ninja-forms-videomail' ),
+        'value' => '',
+        'width' => 'full',
+        'use_merge_tags' => TRUE,
+    ),
+
+    'email_subject' => array(
+        'name' => 'email_subject',
+        'type' => 'textbox',
+        'group' => 'primary',
+        'label' => __( 'Subject', 'ninja-forms-videomail' ),
+        'placeholder' => __( 'Subject Text or search for a field', 'ninja-forms-videomail' ),
+        'value' => '',
+        'width' => 'full',
+        'use_merge_tags' => TRUE,
+    ),
+
+    'email_body' => array(
+        'name' => 'email_body',
+        'type' => 'textbox',
+        'group' => 'primary',
+        'label' => __( 'Body', 'ninja-forms-videomail' ),
+        'placeholder' => __( 'Body Text or search for a field', 'ninja-forms-videomail' ),
+        'value' => '',
+        'width' => 'full',
+        'use_merge_tags' => TRUE,
     ),
 
     // LIMIT SECONDS

@@ -66,6 +66,7 @@ class NF_Videomail_Fields_Videomail extends NF_Abstracts_Field
         );
 
         $videomail_client = ( $dev ) ? 'videomail-client.js' : 'videomail-client.min.js';
+
         wp_enqueue_script(
             'nf-videomail-client',
             NF_Videomail::$url . '/node_modules/videomail-client/dist/' . $videomail_client,

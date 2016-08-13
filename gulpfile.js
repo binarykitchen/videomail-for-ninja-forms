@@ -28,7 +28,6 @@ gulp.task('jshint', function() {
     return gulp.src('assets/js/videomail.js')
         .pipe(plugins.jshint())
         .pipe(plugins.jshint.reporter(stylish))
-        .pipe(plugins.jshint.reporter('fail'))
 })
 
 gulp.task('js', ['jshint'], function() {

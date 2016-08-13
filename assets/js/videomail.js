@@ -5,7 +5,11 @@ var VideomailFieldController = Marionette.Object.extend({
     initialize: function() {
 
         // Radio Listeners
-        this.listenTo(Backbone.Radio.channel('videomail'), 'init:model', this.register);
+        this.listenTo(
+            Backbone.Radio.channel('videomail'),
+            'init:model',
+            this.register
+        );
 
         // Radio Responses
         Backbone.Radio.channel('videomail').reply('get:submitData', this.getSubmitData);
@@ -16,7 +20,19 @@ var VideomailFieldController = Marionette.Object.extend({
 
         var that = this;
 
-        var formID = 'form-' + fieldModel.get('formID');
+        var formID = 'form-' + fieldModel.get('formID')
+
+        var adjustFormDataBeforePosting = function(videomail, cb) {
+            var email_from = fieldModel.get('email_from')
+            var email_to = fieldModel.get('email_to')
+            var email_subject = fieldModel.get('email_subject')
+            var email_body = fieldModel.get('email_body')
+
+            // todo figure out how to resolve those four fields above into
+            // real values before assigning them to the videomail object
+
+            cb(null, videomail)
+        }
 
         this.videomailClient = new VideomailClient({
             siteName: fieldModel.get('site_name'),
@@ -25,18 +41,33 @@ var VideomailFieldController = Marionette.Object.extend({
                 width:          fieldModel.get('width') || 320,
                 countdown:      fieldModel.get('countdown') || false
             },
+            selectors: {
+                submitButtonId:     null, // todo
+                subjectInputName:   null, // todo
+                toInputName:        null, // todo
+                bodyInputName:      null, // todo
+                fromInputName:      null  // todo
+            },
             audio: {
                 enabled: fieldModel.get('audio_enabled') || false
+            },
+            callbacks: {
+                adjustFormDataBeforePosting: adjustFormDataBeforePosting // todo
+            },
+            defaults: {
+                from: null // todo set to default contact admin email address
             },
             verbose: fieldModel.get('verbose') || false
         });
 
+        // is that really needed?
         this.videomailClient.on(this.videomailClient.events.COUNTDOWN, function() {
-            that.disableSubmit(formID);
+            that.disableSubmit('form-' + formID);
         });
 
+        // is that really needed?
         this.videomailClient.on(this.videomailClient.events.RECORDING, function() {
-            that.disableSubmit(formID);
+            that.disableSubmit('form-' + formID);
         });
 
         this.videomailClient.on(this.videomailClient.events.SUBMITTED, function(videomail) {
