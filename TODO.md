@@ -1,5 +1,5 @@
 ### TODOs
 | Filename | line # | TODO
 |:------|:------:|:------
-| Config/VideomailFieldSettings.php | 3 | add new option to switch on/off audio
+| js/videomail.js | 36 | figure out how to resolve those four fields above into
 | test-sample.php | 3 | add more unit tests
