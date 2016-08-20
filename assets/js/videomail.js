@@ -1,129 +1,152 @@
 var VideomailClient = require('videomail-client')
 
+var DEBUG = false
+
 var VideomailFieldController = Marionette.Object.extend({
 
-    initialize: function() {
+    formId:             null,
+    submitButtonId:     null,
+    videomailClient:    null,
+    fieldModel:         null,
 
-        // Radio Listeners
+    initialize: function() {
+        Backbone.Radio.DEBUG = DEBUG
+
+        var submitChannel    = Backbone.Radio.channel('submit')
+        var videomailChannel = Backbone.Radio.channel('videomail')
+
+        // Backbone Radio Listeners
+        // see https://github.com/marionettejs/backbone.radio
+
         this.listenTo(
-            Backbone.Radio.channel('videomail'),
+            submitChannel,
             'init:model',
-            this.register
+            this.registerSubmit
         )
 
-        // Radio Responses
-        Backbone.Radio.channel('videomail').reply('get:submitData', this.getSubmitData)
-        Backbone.Radio.channel('videomail').reply('validate:required', this.validateRequired)
+        this.listenTo(
+            videomailChannel,
+            'init:model',
+            this.registerVideomailClient
+        )
+
+        // Radio Responses, see http://developer.ninjaforms.com/codex/field-submission-data/
+        videomailChannel.reply('get:submitData',        this.getSubmitData.bind(this))
+        videomailChannel.reply('validate:modelData',    this.validateModelData.bind(this))
+        videomailChannel.reply('validate:required',     this.validateRequired.bind(this))
     },
 
-    // is called every time a ‘videomail’ field is initialized.
-    register: function(fieldModel) {
+    // is called every time a ‘videomail’ field is initialized
+    // but since we only have one instance per form, it is okay to do it like that for
+    // todo add new ninja form configuration to limit instances to 1
+    registerVideomailClient: function(videomailFieldModel) {
+        this.fieldModel = videomailFieldModel
+    },
 
-        var that = this
+    // called when submit button has been laid out internally.
+    // we have to listen to that to obtain its ID before we can initialize
+    // the videomail client
+    registerSubmit: function(submitFieldModel) {
+        this.formID         = "form-"     + submitFieldModel.get('formID')
+        this.submitButtonId = "nf-field-" + submitFieldModel.get('id')
 
-        var formID = 'form-' + fieldModel.get('formID')
+        if (this.fieldModel)
+            this.loadVideomailClient()
+        else
+            console.error('Videomail field has not been initialized.')
+    },
 
-        var getFieldName = function(fieldKey) {
-            return fieldModel.get(fieldKey)
-        }
+    getOption: function(name, defaultOption) {
+        return this.fieldModel.get(name) || defaultOption
+    },
 
-        var adjustFormDataBeforePosting = function(videomail, cb) {
-            var emailFromFieldName    = getFieldName('email_from')
-            var emailToFieldName      = getFieldName('email_to')
-            var emailSubjectFieldName = getFieldName('email_subject')
-            var emailBodyFieldName    = getFieldName('email_body')
-
-            // todo figure out how to resolve those four fields above into
-            // real values before assigning them to the videomail object??
-            // for example emailFromFieldName has the value "{field:email_2}"
-            // --> how to get its value???
-            // @see https://github.com/kjohnson/ninja-forms-videomail/issues/24
-
-            // videomail.from = emailFromValue?????
-
-            // tried anything possible, but still dont get the value :(
-            // var test1 = getFieldName(emailFromFieldName)
-            // var test2 = getFieldName('email_from')
-            // var test3 = fieldModel.toJSON()
-            // var test4 = fieldModel.values()
-            // var test5 = fieldModel.keys()
-
-            cb(null, videomail)
-        }
-
+    loadVideomailClient: function() {
         this.videomailClient = new VideomailClient({
-            siteName: fieldModel.get('site_name'),
+            siteName: this.getOption('site_name'),
             video: {
-                limitSeconds:   fieldModel.get('limit_seconds') || 80,
-                width:          fieldModel.get('width') || 320,
-                countdown:      fieldModel.get('countdown') || false
+                limitSeconds:   this.getOption('limit_seconds', 80),
+                width:          this.getOption('width', 320),
+                countdown:      this.getOption('countdown', false)
             },
             selectors: {
-                // todo: how can i set the submit button id here???
-                // @see issue https://github.com/kjohnson/ninja-forms-videomail/issues/16
-                submitButtonId: null
+                submitButtonId: this.submitButtonId
             },
             audio: {
-                enabled: fieldModel.get('audio_enabled') || false
+                enabled: this.getOption('audio_enabled', false)
             },
             callbacks: {
-                adjustFormDataBeforePosting: adjustFormDataBeforePosting // todo
+                adjustFormDataBeforePosting: this.adjustFormDataBeforePosting
             },
             defaults: {
-                from: null // todo set to default contact admin email address
+                to: null // todo set to default contact admin email address
             },
-            verbose: fieldModel.get('verbose') || false
-        });
-
-        // is that really needed?
-        this.videomailClient.on(this.videomailClient.events.COUNTDOWN, function() {
-            that.disableSubmit('form-' + formID)
+            verbose: this.getOption('verbose', DEBUG)
         })
 
-        // is that really needed?
-        this.videomailClient.on(this.videomailClient.events.RECORDING, function() {
-            that.disableSubmit('form-' + formID)
-        })
-
-        this.videomailClient.on(this.videomailClient.events.SUBMITTED, function(videomail) {
-            fieldModel.set('value', videomail.url)
-            fieldModel.set('videomail-url', videomail.url)
-            fieldModel.set('videomail-webm', videomail.webm)
-            fieldModel.set('videomail-mp4', videomail.mp4)
-            fieldModel.set('videomail-poster', videomail.poster)
-            fieldModel.set('videomail-alias', videomail.alias)
-            fieldModel.set('videomail-key', videomail.key)
-
-            that.enableSubmit(formID)
-        })
+        this.videomailClient.on(
+            this.videomailClient.events.PREVIEW,
+            this.setVideomailKey.bind(this)
+        )
 
         this.videomailClient.show()
     },
 
-    enableSubmit: function(formID) {
-        Backbone.Radio.channel(formID).trigger('enable:submit')
+    setVideomailKey: function(key) {
+        this.fieldModel.set('videomail-key', key)
     },
 
-    disableSubmit: function(formID) {
-        Backbone.Radio.channel(formID).trigger('disable:submit')
+    validateModelData: function() {
+        var videomailKey = this.fieldModel.get('videomail-key')
+
+        return !!videomailKey
+    },
+
+    getVideomailFieldName: function(fieldKey) {
+        return this.fieldModel.get(fieldKey)
+    },
+
+    adjustFormDataBeforePosting: function(videomail, cb) {
+        var emailFromFieldName    = this.getVideomailFieldName('email_from')
+        var emailToFieldName      = this.getVideomailFieldName('email_to')
+        var emailSubjectFieldName = this.getVideomailFieldName('email_subject')
+        var emailBodyFieldName    = this.getVideomailFieldName('email_body')
+
+        // todo figure out how to resolve those four fields above into
+        // real values before assigning them to the videomail object??
+        // for example emailFromFieldName has the value "{field:email_2}"
+        // --> how to get its value???
+        // @see https://github.com/kjohnson/ninja-forms-videomail/issues/24
+
+        // videomail.from = emailFromValue?????
+
+        // tried anything possible, but still dont get the value :(
+        // var test1 = getFieldName(emailFromFieldName)
+        // var test2 = getFieldName('email_from')
+        // var test3 = fieldModel.toJSON()
+        // var test4 = fieldModel.values()
+        // var test5 = fieldModel.keys()
+
+        cb(null, videomail)
     },
 
     validateRequired: function() {
         /*
          * Override required validation, in favor of a submission error.
-         * Since a value is not available until submission, this avoids the nagging field error.
+         * Since a value is not available until submission,
+         * this avoids the nagging field error.
          */
-        return true;
+        return true
     },
 
     getSubmitData: function(fieldData, fieldModel) {
-        fieldData.value = fieldModel.get('videomail-url')
-        fieldData.url = fieldModel.get('videomail-url')
-        fieldData.webm = fieldModel.get('videomail-webm')
-        fieldData.mp4 = fieldModel.get('videomail-mp4')
-        fieldData.poster = fieldModel.get('videomail-poster')
-        fieldData.alias = fieldModel.get('videomail-alias')
-        fieldData.key = fieldModel.get('videomail-key')
+        fieldData.value     = fieldModel.get('videomail-key')
+        fieldData.key       = fieldModel.get('videomail-key')
+        fieldData.url       = fieldModel.get('videomail-url')
+        fieldData.webm      = fieldModel.get('videomail-webm')
+        fieldData.mp4       = fieldModel.get('videomail-mp4')
+        fieldData.poster    = fieldModel.get('videomail-poster')
+        fieldData.alias     = fieldModel.get('videomail-alias')
+
         return fieldData
     },
 
