@@ -11,6 +11,7 @@ var VideomailFieldController = Marionette.Object.extend({
     submitButtonId:     null,
     videomailClient:    null,
     fieldModel:         null,
+    formModel:          null,
 
     initialize: function() {
         Backbone.Radio.DEBUG = DEBUG
@@ -56,6 +57,9 @@ var VideomailFieldController = Marionette.Object.extend({
         } else {
             var formID = "form-" + submitFieldModel.get('formID')
 
+            // remember it first
+            this.submitButtonId = "nf-field-" + submitFieldModel.get('id')
+
             Backbone.Radio.channel(formID).reply(
                 'maybe:submit',
                 this.beforeSubmit,
@@ -63,107 +67,8 @@ var VideomailFieldController = Marionette.Object.extend({
                 formID
             )
 
-            this.loadVideomailClient(submitFieldModel)
+            this.loadVideomailClient()
         }
-    },
-
-    // how to start/stop submission?
-    // http://developer.ninjaforms.com/codex/startstop-submission/
-    beforeSubmit: function(formID) {
-        var formModel = nfRadio.channel('app').request('get:form', formID)
-
-        if (formModel.getExtra('processed'))
-            return true
-
-        this.otherProcessing(formModel)
-
-        // halt form submission
-        return false
-    },
-
-    otherProcessing: function(formModel) {
-        var formID = 'form-' + formModel.get('id')
-
-        // set re-start flag
-        nfRadio.channel(formID).request('add:extra', 'processed', true)
-
-        // re-start submission
-        nfRadio.channel(formID).request('submit', formModel)
-    },
-
-    getOption: function(name, defaultOption) {
-        return this.fieldModel.get(name) || defaultOption
-    },
-
-    loadVideomailClient: function(submitFieldModel) {
-        var submitButtonId = "nf-field-" + submitFieldModel.get('id')
-
-        this.videomailClient = new VideomailClient({
-            siteName: this.getOption('site_name'),
-            video: {
-                limitSeconds:   this.getOption('limit_seconds', 80),
-                width:          this.getOption('width', 320),
-                countdown:      this.getOption('countdown', false)
-            },
-            selectors: {
-                submitButtonId: submitButtonId
-            },
-            audio: {
-                enabled: this.getOption('audio_enabled', false)
-            },
-            callbacks: {
-                adjustFormDataBeforePosting: this.adjustFormDataBeforePosting.bind(this)
-            },
-            defaults: {
-                to: null // todo set to default contact admin email address
-            },
-            verbose: this.getOption('verbose', DEBUG)
-        })
-
-        this.videomailClient.on(
-            this.videomailClient.events.PREVIEW,
-            this.setVideomailKey.bind(this)
-        )
-
-        this.videomailClient.show()
-    },
-
-    setVideomailKey: function(key) {
-        this.fieldModel.set('videomail-key', key)
-    },
-
-    validateModelData: function() {
-        var videomailKey = this.fieldModel.get('videomail-key')
-
-        return !!videomailKey
-    },
-
-    getVideomailFieldName: function(fieldKey) {
-        return this.fieldModel.get(fieldKey)
-    },
-
-    adjustFormDataBeforePosting: function(videomail, cb) {
-        var emailFromFieldName    = this.getVideomailFieldName('email_from')
-        var emailToFieldName      = this.getVideomailFieldName('email_to')
-        var emailSubjectFieldName = this.getVideomailFieldName('email_subject')
-        var emailBodyFieldName    = this.getVideomailFieldName('email_body')
-
-        // todo figure out how to resolve those four fields above into
-        // real values before assigning them to the videomail object??
-        // for example emailFromFieldName has the value "{field:email_2}"
-        // --> how to get its value???
-        // @see https://github.com/kjohnson/ninja-forms-videomail/issues/24
-
-        // videomail.from = emailFromValue?????
-
-        // tried anything possible, but still dont get the value :(
-        // var test1 = getFieldName(emailFromFieldName)
-        // var test2 = getFieldName('email_from')
-        // var test3 = fieldModel.toJSON()
-        // var test4 = fieldModel.values()
-        // var test5 = fieldModel.keys()
-
-        cb(null, videomail)
     },
 
     validateRequired: function() {
@@ -175,9 +80,136 @@ var VideomailFieldController = Marionette.Object.extend({
         return true
     },
 
+    // how to start/stop submission?
+    // http://developer.ninjaforms.com/codex/startstop-submission/
+    beforeSubmit: function(formID) {
+        // remember form model for some submission-related functions further below
+        this.formModel = nfRadio.channel('app').request('get:form', formID)
+
+        if (this.formModel.getExtra('videomail_submitted')) {
+            // yes, videomail is on the videomail server, so
+            // proceed with the normal ninja form submission routine
+            return true
+        } else {
+            // manually trigger mouse click event on ninja form submit button
+            // the videomail client itself is listening to as well.
+            // this will automtically trigger the whole videomail submission
+            document.getElementById(this.submitButtonId).click()
+
+            // important :halt the normal ninja form submission
+            return false
+        }
+    },
+
+    getOption: function(name, defaultOption) {
+        return this.fieldModel.get(name) || defaultOption
+    },
+
+    loadVideomailClient: function() {
+        this.videomailClient = new VideomailClient({
+            siteName: this.getOption('site_name'),
+            video: {
+                limitSeconds:   this.getOption('limit_seconds', 80),
+                width:          this.getOption('width', 320),
+                countdown:      this.getOption('countdown', false)
+            },
+            selectors: {
+                submitButtonId: this.submitButtonId
+            },
+            audio: {
+                enabled: this.getOption('audio_enabled', false)
+            },
+            callbacks: {
+                adjustFormDataBeforePosting:
+                // ugly name eh?
+                this.adjustFormDataBeforePostingToVideomailServer.bind(this)
+            },
+            defaults: {
+                to: null // todo set to default wordpress contact admin email address
+            },
+            verbose: this.getOption('verbose', DEBUG)
+        })
+
+        // needed to get the videomail key which is required before submission
+        this.videomailClient.on(
+            this.videomailClient.events.PREVIEW,
+            this.setVideomailKey.bind(this)
+        )
+
+        this.videomailClient.on(
+            this.videomailClient.events.SUBMITTED,
+            this.videomailSubmitted.bind(this)
+        )
+
+        this.videomailClient.show()
+    },
+
+    setVideomailKey: function(key) {
+        this.fieldModel.set('videomail-key', key)
+    },
+
+    getFormID: function() {
+        return 'form-' + this.formModel.get('id')
+    },
+
+    validateModelData: function() {
+        var videomailKey = this.fieldModel.get('videomail-key')
+
+        return !!videomailKey
+    },
+
+    getFieldValueByKey: function(key) {
+        var field = Backbone.Radio.channel(this.getFormID()).request('get:fieldByKey', key)
+
+        return field.get('value')
+    },
+
+    getVideomailValue: function(fieldKey) {
+        var fieldValue = this.fieldModel.get(fieldKey)
+
+        // extract the key from the merge tag.
+        var rawValue = fieldValue.replace('{field:', '').replace('}', '')
+
+        if (rawValue != fieldValue) {
+            // yes it was a merge tag, so resolve it again
+            rawValue = this.getFieldValueByKey(rawValue)
+        }
+
+        return rawValue
+    },
+
+    adjustFormDataBeforePostingToVideomailServer: function(videomail, cb) {
+        videomail.from    = this.getVideomailValue('email_from')
+        videomail.to      = this.getVideomailValue('email_to')
+        videomail.subject = this.getVideomailValue('email_subject')
+        videomail.body    = this.getVideomailValue('email_body')
+
+        cb(null, videomail)
+    },
+
+    videomailSubmitted: function(videomail) {
+        // pass on some videomail attributes to the field model
+        this.fieldModel.set('value', videomail.url)
+        this.fieldModel.set('videomail-url', videomail.url)
+        this.fieldModel.set('videomail-webm', videomail.webm)
+        this.fieldModel.set('videomail-mp4', videomail.mp4)
+        this.fieldModel.set('videomail-poster', videomail.poster)
+        this.fieldModel.set('videomail-alias', videomail.alias)
+        this.fieldModel.set('videomail-key', videomail.key)
+
+        var formID = this.getFormID()
+
+        // set re-videomail_submitted flag so that we can continue
+        // with the normal ninja form submission
+        nfRadio.channel(formID).request('add:extra', 'videomail_submitted', true)
+
+        // re-start submission
+        nfRadio.channel(formID).request('submit', this.formModel)
+    },
+
     getSubmitData: function(fieldData, fieldModel) {
-        fieldData.value     = fieldModel.get('videomail-key')
         fieldData.key       = fieldModel.get('videomail-key')
+        fieldData.value     = fieldModel.get('videomail-url')
         fieldData.url       = fieldModel.get('videomail-url')
         fieldData.webm      = fieldModel.get('videomail-webm')
         fieldData.mp4       = fieldModel.get('videomail-mp4')
