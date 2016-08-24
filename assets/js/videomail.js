@@ -1,10 +1,13 @@
 var VideomailClient = require('videomail-client')
 
+// manual switch to have more stuff printed to console
 var DEBUG = false
+
+// good documentation on backbone event handling
+// http://backbonejs.org/#Events
 
 var VideomailFieldController = Marionette.Object.extend({
 
-    formId:             null,
     submitButtonId:     null,
     videomailClient:    null,
     fieldModel:         null,
@@ -21,46 +24,80 @@ var VideomailFieldController = Marionette.Object.extend({
         this.listenTo(
             submitChannel,
             'init:model',
-            this.registerSubmit
+            this.registerSubmitModel
         )
 
         this.listenTo(
             videomailChannel,
             'init:model',
-            this.registerVideomailClient
+            this.registerFieldModel
         )
 
         // Radio Responses, see http://developer.ninjaforms.com/codex/field-submission-data/
-        videomailChannel.reply('get:submitData',        this.getSubmitData.bind(this))
-        videomailChannel.reply('validate:modelData',    this.validateModelData.bind(this))
-        videomailChannel.reply('validate:required',     this.validateRequired.bind(this))
+        videomailChannel.reply('get:submitData',     this.getSubmitData, this)
+        videomailChannel.reply('validate:modelData', this.validateModelData, this)
+        videomailChannel.reply('validate:required',  this.validateRequired, this)
     },
 
     // is called every time a ‘videomail’ field is initialized
     // but since we only have one instance per form, it is okay to do it like that for
     // todo add new ninja form configuration to limit instances to 1
-    registerVideomailClient: function(videomailFieldModel) {
+    registerFieldModel: function(videomailFieldModel) {
         this.fieldModel = videomailFieldModel
     },
 
     // called when submit button has been laid out internally.
     // we have to listen to that to obtain its ID before we can initialize
     // the videomail client
-    registerSubmit: function(submitFieldModel) {
-        this.formID         = "form-"     + submitFieldModel.get('formID')
-        this.submitButtonId = "nf-field-" + submitFieldModel.get('id')
-
-        if (this.fieldModel)
-            this.loadVideomailClient()
-        else
+    registerSubmitModel: function(submitFieldModel) {
+        if (!this.fieldModel) {
+            // can happen when order of events is not correct
             console.error('Videomail field has not been initialized.')
+        } else {
+            var formID = "form-" + submitFieldModel.get('formID')
+
+            Backbone.Radio.channel(formID).reply(
+                'maybe:submit',
+                this.beforeSubmit,
+                this,
+                formID
+            )
+
+            this.loadVideomailClient(submitFieldModel)
+        }
+    },
+
+    // how to start/stop submission?
+    // http://developer.ninjaforms.com/codex/startstop-submission/
+    beforeSubmit: function(formID) {
+        var formModel = nfRadio.channel('app').request('get:form', formID)
+
+        if (formModel.getExtra('processed'))
+            return true
+
+        this.otherProcessing(formModel)
+
+        // halt form submission
+        return false
+    },
+
+    otherProcessing: function(formModel) {
+        var formID = 'form-' + formModel.get('id')
+
+        // set re-start flag
+        nfRadio.channel(formID).request('add:extra', 'processed', true)
+
+        // re-start submission
+        nfRadio.channel(formID).request('submit', formModel)
     },
 
     getOption: function(name, defaultOption) {
         return this.fieldModel.get(name) || defaultOption
     },
 
-    loadVideomailClient: function() {
+    loadVideomailClient: function(submitFieldModel) {
+        var submitButtonId = "nf-field-" + submitFieldModel.get('id')
+
         this.videomailClient = new VideomailClient({
             siteName: this.getOption('site_name'),
             video: {
@@ -69,13 +106,13 @@ var VideomailFieldController = Marionette.Object.extend({
                 countdown:      this.getOption('countdown', false)
             },
             selectors: {
-                submitButtonId: this.submitButtonId
+                submitButtonId: submitButtonId
             },
             audio: {
                 enabled: this.getOption('audio_enabled', false)
             },
             callbacks: {
-                adjustFormDataBeforePosting: this.adjustFormDataBeforePosting
+                adjustFormDataBeforePosting: this.adjustFormDataBeforePosting.bind(this)
             },
             defaults: {
                 to: null // todo set to default contact admin email address

@@ -2,7 +2,7 @@
   "name": "ninja-forms-videomail",
   "version": "3.0.0",
   "dependencies": {
-    "videomail-client": "1.16.0"
+    "videomail-client": "1.17.2"
   },
   "repository": {
     "type": "git",
@@ -22,7 +22,7 @@
     "gulp-stylus": "2.5.0",
     "gulp-todo": "4.1.0",
     "gulp-uglify": "2.0.0",
-    "jshint": "2.9.2",
+    "jshint": "2.9.3",
     "jshint-stylish": "2.2.1",
     "nib": "1.1.2"
   }
