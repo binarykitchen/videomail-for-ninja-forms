@@ -209,10 +209,10 @@ var VideomailFieldController = Marionette.Object.extend({
 
         // set re-videomail_submitted flag so that we can continue
         // with the normal ninja form submission
-        nfRadio.channel(formID).request('add:extra', 'videomail_submitted', true)
+        Backbone.Radio.channel(formID).request('add:extra', 'videomail_submitted', true)
 
         // re-start submission
-        nfRadio.channel(formID).request('submit', this.formModel)
+        Backbone.Radio.channel(formID).request('submit', this.formModel)
     },
 
     getSubmitData: function(fieldData, fieldModel) {
