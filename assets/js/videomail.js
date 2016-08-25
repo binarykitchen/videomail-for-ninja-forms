@@ -55,6 +55,14 @@ var VideomailFieldController = Marionette.Object.extend({
             // can happen when order of events is not correct
             console.error('Videomail field has not been initialized.')
         } else {
+
+            // abort when already initialized.
+            // shouldnt' happen but for stability does not hurt.
+            // also solves this one bug:
+            // https://github.com/wpninjas/ninja-forms/issues/1639
+            if (this.videomailClient)
+                return
+
             var formID = "form-" + submitFieldModel.get('formID')
 
             // remember it first
@@ -84,7 +92,7 @@ var VideomailFieldController = Marionette.Object.extend({
     // http://developer.ninjaforms.com/codex/startstop-submission/
     beforeSubmit: function(formID) {
         // remember form model for some submission-related functions further below
-        this.formModel = nfRadio.channel('app').request('get:form', formID)
+        this.formModel = Backbone.Radio.channel('app').request('get:form', formID)
 
         if (this.formModel.getExtra('videomail_submitted')) {
             // yes, videomail is on the videomail server, so
