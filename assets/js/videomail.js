@@ -1,7 +1,7 @@
 var VideomailClient = require('videomail-client')
 
 // manual switch to have more stuff printed to console
-var DEBUG = false
+var DEBUG = true
 
 // good documentation on backbone event handling
 // http://backbonejs.org/#Events
@@ -147,7 +147,7 @@ var VideomailFieldController = Marionette.Object.extend({
         )
 
         this.videomailClient.on(
-            this.videomailClient.events.RESETTING,
+            this.videomailClient.events.GOING_BACK,
             this.removeVideomailKey.bind(this)
         )
 
