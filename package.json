@@ -2,7 +2,7 @@
   "name": "ninja-forms-videomail",
   "version": "3.0.0",
   "dependencies": {
-    "videomail-client": "1.17.2"
+    "videomail-client": "1.18.0"
   },
   "repository": {
     "type": "git",

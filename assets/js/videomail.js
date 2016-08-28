@@ -56,10 +56,9 @@ var VideomailFieldController = Marionette.Object.extend({
             console.error('Videomail field has not been initialized.')
         } else {
 
-            // abort when already initialized.
-            // shouldnt' happen but for stability does not hurt.
-            // also solves this one bug:
-            // https://github.com/wpninjas/ninja-forms/issues/1639
+            // abort when already initialized - can also be adjusted
+            // in a form setting in the Advanced domain of the form builder,
+            // under Display Settings, that allows you to clear/hide the form after submission
             if (this.videomailClient)
                 return
 
@@ -99,10 +98,10 @@ var VideomailFieldController = Marionette.Object.extend({
             // proceed with the normal ninja form submission routine
             return true
         } else {
-            // manually trigger mouse click event on ninja form submit button
-            // the videomail client itself is listening to as well.
-            // this will automtically trigger the whole videomail submission
-            document.getElementById(this.submitButtonId).click()
+            // manually trigger the whole videomail submission
+            // we cant be using the submit button click event since it's too
+            // deep wrapped within backbone containers :(
+            this.videomailClient.submit()
 
             // important :halt the normal ninja form submission
             return false
@@ -135,6 +134,9 @@ var VideomailFieldController = Marionette.Object.extend({
             defaults: {
                 to: null // todo set to default wordpress contact admin email address
             },
+            // leave it to ninja form to validate the inputs
+            enableAutoValidation: false,
+            // log actions/events to console
             verbose: this.getOption('verbose', DEBUG)
         })
 
@@ -142,6 +144,11 @@ var VideomailFieldController = Marionette.Object.extend({
         this.videomailClient.on(
             this.videomailClient.events.PREVIEW,
             this.setVideomailKey.bind(this)
+        )
+
+        this.videomailClient.on(
+            this.videomailClient.events.RESETTING,
+            this.removeVideomailKey.bind(this)
         )
 
         this.videomailClient.on(
@@ -154,6 +161,10 @@ var VideomailFieldController = Marionette.Object.extend({
 
     setVideomailKey: function(key) {
         this.fieldModel.set('videomail-key', key)
+    },
+
+    removeVideomailKey: function() {
+        this.setVideomailKey(null)
     },
 
     getFormID: function() {
