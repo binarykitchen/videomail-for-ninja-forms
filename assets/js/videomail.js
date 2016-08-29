@@ -8,7 +8,6 @@ var DEBUG = true
 
 var VideomailFieldController = Marionette.Object.extend({
 
-    submitButtonId:     null,
     videomailClient:    null,
     fieldModel:         null,
     formModel:          null,
@@ -23,21 +22,21 @@ var VideomailFieldController = Marionette.Object.extend({
         // see https://github.com/marionettejs/backbone.radio
 
         this.listenTo(
-            submitChannel,
-            'init:model',
-            this.registerSubmitModel
-        )
-
-        this.listenTo(
             videomailChannel,
             'init:model',
             this.registerFieldModel
         )
 
+        this.listenTo(
+            submitChannel,
+            'init:model',
+            this.registerSubmitModel
+        )
+
         // Radio Responses, see http://developer.ninjaforms.com/codex/field-submission-data/
         videomailChannel.reply('get:submitData',     this.getSubmitData, this)
-        videomailChannel.reply('validate:modelData', this.validateModelData, this)
         videomailChannel.reply('validate:required',  this.validateRequired, this)
+        videomailChannel.reply('validate:modelData', this.hasVideomail, this)
     },
 
     // is called every time a ‘videomail’ field is initialized
@@ -47,25 +46,21 @@ var VideomailFieldController = Marionette.Object.extend({
         this.fieldModel = videomailFieldModel
     },
 
-    // called when submit button has been laid out internally.
-    // we have to listen to that to obtain its ID before we can initialize
-    // the videomail client
+    // called when submit button has been laid out internally
     registerSubmitModel: function(submitFieldModel) {
-        if (!this.fieldModel) {
-            // can happen when order of events is not correct
-            console.error('Videomail field has not been initialized.')
-        } else {
 
-            // abort when already initialized - can also be adjusted
-            // in a form setting in the Advanced domain of the form builder,
-            // under Display Settings, that allows you to clear/hide the form after submission
-            if (this.videomailClient)
-                return
+        // precaution: proceed only when not initialised yet otherwise
+        // videomail client is loaded again after submission.
+        //
+        // can also be prevented in a form setting in the Advanced domain
+        // of the form builder, under Display Settings,
+        // that allows you to clear/hide the form after submission
+        if (!this.videomailClientLoaded()) {
 
-            var formID = "form-" + submitFieldModel.get('formID')
+            var formID         = "form-" + submitFieldModel.get('formID')
+            var submitButtonId = "nf-field-" + submitFieldModel.get('id')
 
-            // remember it first
-            this.submitButtonId = "nf-field-" + submitFieldModel.get('id')
+            this.loadVideomailClient({submitButtonId: submitButtonId})
 
             Backbone.Radio.channel(formID).reply(
                 'maybe:submit',
@@ -73,8 +68,6 @@ var VideomailFieldController = Marionette.Object.extend({
                 this,
                 formID
             )
-
-            this.loadVideomailClient()
         }
     },
 
@@ -87,32 +80,39 @@ var VideomailFieldController = Marionette.Object.extend({
         return true
     },
 
-    // how to start/stop submission?
+    // called when about to start a submission
+    // how to stop a submission? see:
     // http://developer.ninjaforms.com/codex/startstop-submission/
     beforeSubmit: function(formID) {
+        // halt the normal ninja form submission by default
+        var proceed = false
+
         // remember form model for some submission-related functions further below
         this.formModel = Backbone.Radio.channel('app').request('get:form', formID)
 
         if (this.formModel.getExtra('videomail_submitted')) {
             // yes, videomail is on the videomail server, so
             // proceed with the normal ninja form submission routine
-            return true
+            proceed = true
         } else {
             // manually trigger the whole videomail submission
             // we cant be using the submit button click event since it's too
             // deep wrapped within backbone containers :(
             this.videomailClient.submit()
-
-            // important :halt the normal ninja form submission
-            return false
         }
+
+        return proceed
     },
 
     getOption: function(name, defaultOption) {
         return this.fieldModel.get(name) || defaultOption
     },
 
-    loadVideomailClient: function() {
+    videomailClientLoaded: function() {
+        return !!this.videomailClient
+    },
+
+    loadVideomailClient: function(options) {
         this.videomailClient = new VideomailClient({
             siteName: this.getOption('site_name'),
             video: {
@@ -121,7 +121,7 @@ var VideomailFieldController = Marionette.Object.extend({
                 countdown:      this.getOption('countdown', false)
             },
             selectors: {
-                submitButtonId: this.submitButtonId
+                submitButtonId: options.submitButtonId
             },
             audio: {
                 enabled: this.getOption('audio_enabled', false)
@@ -146,6 +146,7 @@ var VideomailFieldController = Marionette.Object.extend({
             this.setVideomailKey.bind(this)
         )
 
+        // needed to invalidate form
         this.videomailClient.on(
             this.videomailClient.events.GOING_BACK,
             this.removeVideomailKey.bind(this)
@@ -171,7 +172,7 @@ var VideomailFieldController = Marionette.Object.extend({
         return 'form-' + this.formModel.get('id')
     },
 
-    validateModelData: function() {
+    hasVideomail: function() {
         var videomailKey = this.fieldModel.get('videomail-key')
 
         return !!videomailKey
