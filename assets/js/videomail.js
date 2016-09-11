@@ -46,6 +46,10 @@ var VideomailFieldController = Marionette.Object.extend({
         this.fieldModel = videomailFieldModel
     },
 
+    videomailClientLoaded: function() {
+        return !!this.videomailClient
+    },
+
     // called when submit button has been laid out internally
     registerSubmitModel: function(submitFieldModel) {
 
@@ -106,10 +110,6 @@ var VideomailFieldController = Marionette.Object.extend({
 
     getOption: function(name, defaultOption) {
         return this.fieldModel.get(name) || defaultOption
-    },
-
-    videomailClientLoaded: function() {
-        return !!this.videomailClient
     },
 
     loadVideomailClient: function(options) {
@@ -179,7 +179,9 @@ var VideomailFieldController = Marionette.Object.extend({
     },
 
     getFieldValueByKey: function(key) {
-        var field = Backbone.Radio.channel(this.getFormID()).request('get:fieldByKey', key)
+        var field =
+            Backbone.Radio.channel(this.getFormID())
+                .request('get:fieldByKey', key)
 
         return field.get('value')
     },
