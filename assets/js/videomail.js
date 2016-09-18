@@ -27,12 +27,6 @@ var VideomailFieldController = Marionette.Object.extend({
             this.registerFieldModel
         )
 
-        // this never gets fired/called
-        this.listenTo(videomailChannel,
-            'change:field',
-            this.hasVideomail
-        )
-
         this.listenTo(
             submitChannel,
             'init:model',
