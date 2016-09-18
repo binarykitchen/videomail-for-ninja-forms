@@ -27,6 +27,12 @@ var VideomailFieldController = Marionette.Object.extend({
             this.registerFieldModel
         )
 
+        // this never gets fired/called
+        this.listenTo(videomailChannel,
+            'change:field',
+            this.hasVideomail
+        )
+
         this.listenTo(
             submitChannel,
             'init:model',
@@ -36,6 +42,9 @@ var VideomailFieldController = Marionette.Object.extend({
         // Radio Responses, see http://developer.ninjaforms.com/codex/field-submission-data/
         videomailChannel.reply('get:submitData',     this.getSubmitData, this)
         videomailChannel.reply('validate:required',  this.validateRequired, this)
+
+        // needed to validate when submitting
+        videomailChannel.reply('validate:modelData', this.hasVideomail, this)
     },
 
     // is called every time a ‘videomail’ field is initialized
