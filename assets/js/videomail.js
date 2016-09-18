@@ -27,20 +27,11 @@ var VideomailFieldController = Marionette.Object.extend({
             this.registerFieldModel
         )
 
-        // this never gets fired/called
-        this.listenTo(videomailChannel,
-            'change:field',
-            this.hasVideomail
-        )
-
         this.listenTo(
             submitChannel,
             'init:model',
             this.registerSubmitModel
         )
-
-        // this too never gets fired/called
-        videomailChannel.reply('validate:modelData', this.hasVideomail, this)
 
         // Radio Responses, see http://developer.ninjaforms.com/codex/field-submission-data/
         videomailChannel.reply('get:submitData',     this.getSubmitData, this)
@@ -71,10 +62,11 @@ var VideomailFieldController = Marionette.Object.extend({
 
             var formID         = "form-" + submitFieldModel.get('formID')
             var submitButtonId = "nf-field-" + submitFieldModel.get('id')
+            var formChannel    = Backbone.Radio.channel(formID)
 
             this.loadVideomailClient({submitButtonId: submitButtonId})
 
-            Backbone.Radio.channel(formID).reply(
+            formChannel.reply(
                 'maybe:submit',
                 this.beforeSubmit,
                 this,
@@ -89,7 +81,7 @@ var VideomailFieldController = Marionette.Object.extend({
          * Since a value is not available until submission,
          * this avoids the nagging field error.
          */
-        return true
+        return this.hasVideomail()
     },
 
     // called when about to start a submission
@@ -139,9 +131,6 @@ var VideomailFieldController = Marionette.Object.extend({
                 // ugly name eh?
                 this.adjustFormDataBeforePostingToVideomailServer.bind(this)
             },
-            defaults: {
-                to: null // todo set to default wordpress contact admin email address
-            },
             // leave it to ninja form to validate the inputs
             enableAutoValidation: false,
             // log actions/events to console
@@ -170,6 +159,12 @@ var VideomailFieldController = Marionette.Object.extend({
 
     setVideomailKey: function(key) {
         this.fieldModel.set('videomail-key', key)
+
+        Backbone.Radio.channel('fields').request(
+            'remove:error',
+            this.fieldModel.get('id'),
+            'required-error'
+        )
     },
 
     removeVideomailKey: function() {

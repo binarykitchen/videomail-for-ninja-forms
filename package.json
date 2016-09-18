@@ -1,8 +1,8 @@
 {
   "name": "ninja-forms-videomail",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "dependencies": {
-    "videomail-client": "1.19.7"
+    "videomail-client": "1.20.5"
   },
   "repository": {
     "type": "git",
@@ -10,7 +10,7 @@
   },
   "license": "CC0-1.0",
   "devDependencies": {
-    "browser-sync": "2.15.0",
+    "browser-sync": "2.16.0",
     "gulp": "3.9.1",
     "gulp-autoprefixer": "3.1.1",
     "gulp-bytediff": "1.0.0",
