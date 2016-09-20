@@ -79,23 +79,30 @@ var VideomailFieldController = Marionette.Object.extend({
     },
 
     validateRequired: function() {
-        /*
-         * Override required validation, in favor of a submission error.
-         * Since a value is not available until submission,
-         * this avoids the nagging field error.
-         */
-        return this.hasVideomail()
+        var valid = this.hasVideomail()
+
+        // override default behaviour so that we can set our own error text here
+        if (!valid) {
+            Backbone.Radio.channel('fields').request(
+                'add:error',
+                this.fieldModel.get('id'),
+                'required-error',
+                "Please record a videomail"
+            )
+        }
+
+        return valid
     },
 
     // called when about to start a submission
     // how to stop a submission? see:
     // http://developer.ninjaforms.com/codex/startstop-submission/
-    beforeSubmit: function(formID) {
+    beforeSubmit: function(formModel) {
         // halt the normal ninja form submission by default
         var proceed = false
 
         // remember form model for some submission-related functions further below
-        this.formModel = Backbone.Radio.channel('app').request('get:form', formID)
+        this.formModel = formModel
 
         if (this.formModel.getExtra('videomail_submitted')) {
             // yes, videomail is on the videomail server, so
