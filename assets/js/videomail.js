@@ -71,7 +71,7 @@ var VideomailFieldController = Marionette.Object.extend({
 
             formChannel.reply(
                 'maybe:submit',
-                this.beforeSubmit,
+                this.maybeSubmit,
                 this,
                 formID
             )
@@ -87,7 +87,7 @@ var VideomailFieldController = Marionette.Object.extend({
                 'add:error',
                 this.fieldModel.get('id'),
                 'required-error',
-                "Please record a videomail"
+                "Continue recording and click on stop to see preview ..."
             )
         }
 
@@ -97,7 +97,7 @@ var VideomailFieldController = Marionette.Object.extend({
     // called when about to start a submission
     // how to stop a submission? see:
     // http://developer.ninjaforms.com/codex/startstop-submission/
-    beforeSubmit: function(formModel) {
+    maybeSubmit: function(formModel) {
         // halt the normal ninja form submission by default
         var proceed = false
 

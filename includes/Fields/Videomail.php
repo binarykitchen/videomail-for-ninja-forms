@@ -83,11 +83,11 @@ class NF_Videomail_Fields_Videomail extends NF_Abstracts_Field
 
     public function custom_columns( $value, $field )
     {
-        if( $this->_name != $field->get_setting( 'type' ) ) return $value;
+        if ($this->_name != $field->get_setting('type')) return $value;
 
-        if( empty( $value ) ) return __( 'No Video Recorded' );
+        if (empty($value)) return __('No Video Recorded');
 
-        return '<a href="' . $value . '">' . __('View Video', 'ninja-forms-videomail') . '</a>';
+        return '<a href="' . $value . '">' . __('View Online', 'ninja-forms-videomail') . '</a>';
     }
 
 } // END CLASS NF_Field_Videomail
