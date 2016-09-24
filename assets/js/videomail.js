@@ -87,7 +87,7 @@ var VideomailFieldController = Marionette.Object.extend({
                 'add:error',
                 this.fieldModel.get('id'),
                 'required-error',
-                "Continue recording and click on stop to see preview ..."
+                "Record and click on stop to see a preview video."
             )
         }
 
