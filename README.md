@@ -23,6 +23,13 @@ In short: this add-on runs on the Ninja Forms plugin engine where you can config
 5. `npm install` to install npm dependencies
 6. `gulp watch` which will open Google Chrome and automatically reloads upon changes (PHP, JS and CSS)
 
+For custom hosts or ports, you can customize gulp watch like that:
+
+`gulp watch --https --port=8890 --host=wp` and that will open this page for you:
+https://wp:8890/wordpress/wp-admin/admin.php?page=ninja-forms
+
+(for exactly these parameters, there is a short cut: `npm run wp`)
+
 ## Options
 
 That new recordable video field comes with many options you can configure yourself such as duration, width, audio on/off and much more.

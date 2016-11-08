@@ -1,6 +1,6 @@
 {
   "name": "ninja-forms-videomail",
-  "version": "3.0.2",
+  "version": "3.0.3",
   "dependencies": {
     "videomail-client": "1.20.14"
   },
@@ -9,6 +9,9 @@
     "url": "https://ggit@github.com:kjohnson/ninja-forms-videomail.git"
   },
   "license": "CC0-1.0",
+  "scripts": {
+    "wp": "gulp watch --https --port=8890 --host=wp"
+  },
   "devDependencies": {
     "browser-sync": "2.17.5",
     "gulp": "3.9.1",
@@ -16,14 +19,15 @@
     "gulp-bytediff": "1.0.0",
     "gulp-cssnano": "2.1.2",
     "gulp-jshint": "2.0.2",
-    "gulp-load-plugins": "1.3.0",
+    "gulp-load-plugins": "1.4.0",
     "gulp-plumber": "1.1.0",
     "gulp-rename": "1.2.2",
-    "gulp-stylus": "2.5.0",
+    "gulp-stylus": "2.6.0",
     "gulp-todo": "5.1.0",
     "gulp-uglify": "2.0.0",
     "jshint": "2.9.4",
     "jshint-stylish": "2.2.1",
-    "nib": "1.1.2"
+    "nib": "1.1.2",
+    "yargs": "6.3.0"
   }
 }

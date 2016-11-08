@@ -2,6 +2,7 @@ var gulp    = require('gulp')
 var nib     = require('nib')
 var stylish = require('jshint-stylish')
 var plugins = require('gulp-load-plugins')()
+var argv    = require('yargs').argv
 
 // Reloads browser and injects CSS. Time-saving synchronised browser testing.
 var browserSync = require('browser-sync').create()
@@ -13,12 +14,19 @@ var reload = browserSync.reload
 var PROJECT_URL = "http://localhost:8080/wordpress/wp-admin/admin.php?page=ninja-forms"
 
 gulp.task('browser-sync', function() {
+    var port  = argv.port   || 8080
+    var https = argv.https || false
+    var host  = argv.host || null
+
+
     browserSync.init({
         // http://www.browsersync.io/docs/options/
 
         proxy:          PROJECT_URL,
         browser:        ["google-chrome"],
-        port:           8080,
+        port:           port,
+        https:          https,
+        host:           host,
         open:           true,
         injectChanges:  true,
     })
