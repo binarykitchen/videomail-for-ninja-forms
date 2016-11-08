@@ -23,12 +23,14 @@ In short: this add-on runs on the Ninja Forms plugin engine where you can config
 5. `npm install` to install npm dependencies
 6. `gulp watch` which will open Google Chrome and automatically reloads upon changes (PHP, JS and CSS)
 
+### Customise host or port
+
 For custom hosts or ports, you can customize gulp watch like that:
 
 `gulp watch --https --port=8890 --host=wp` and that will open this page for you:
 https://wp:8890/wordpress/wp-admin/admin.php?page=ninja-forms
 
-(for exactly these parameters, there is a short cut: `npm run wp`)
+(for exactly these parameters, there is a short cut: `npm run wp` and `wp:8890` is already whitelisted)
 
 ## Options
 
@@ -36,7 +38,7 @@ That new recordable video field comes with many options you can configure yourse
 
 ## Whitelisting
 
-For local development, everthing will work right away because the localhost URL is already whitelisted on the videomail server. But once you deploy your Wordpress site out in the wild, we will have to whitelist your production URL. For that, just contact [https://binarykitchen.com](https://binarykitchen.com). Very easy.
+For local development, everthing will work right away because the localhost URL is already whitelisted on the videomail server. But once you deploy your Wordpress site out in the wild, we will have to whitelist your production URL. For that, just submit a [Whitelist Request](https://videomail.io/whitelist). Very easy.
 
 ## Videomail-client library
 
