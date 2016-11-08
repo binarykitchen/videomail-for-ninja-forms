@@ -1,6 +1,13 @@
 # Ninja Forms - Videomail
 
-[![Build Status](https://travis-ci.org/kjohnson/ninja-forms-videomail.svg?branch=master)](https://travis-ci.org/kjohnson/ninja-forms-videomail)
+[![npm][npm-image]][npm-url]
+[![downloads][downloads-image]][downloads-url]
+
+[npm-image]: https://img.shields.io/npm/v/ninja-forms-videomail.svg?style=flat
+[npm-url]: https://npmjs.org/package/ninja-forms-videomail
+
+[downloads-image]: https://img.shields.io/npm/dm/ninja-forms-videomail.svg?style=flat
+[downloads-url]: https://www.npmjs.com/package/ninja-forms-videomail
 
 Record videos in Ninja Forms!
 
@@ -25,7 +32,7 @@ In short: this add-on runs on the Ninja Forms plugin engine where you can config
 
 ### Customise host or port
 
-For custom hosts or ports, you can customize gulp watch like that:
+For custom hosts or ports, you can customize `gulp watch` like that:
 
 `gulp watch --https --port=8890 --host=wp` and that will open this page for you:
 https://wp:8890/wordpress/wp-admin/admin.php?page=ninja-forms
@@ -38,7 +45,9 @@ That new recordable video field comes with many options you can configure yourse
 
 ## Whitelisting
 
-For local development, everthing will work right away because the localhost URL is already whitelisted on the videomail server. But once you deploy your Wordpress site out in the wild, we will have to whitelist your production URL. For that, just submit a [Whitelist Request](https://videomail.io/whitelist). Very easy.
+For local development, everthing will work right away because the localhost URL is already whitelisted on the videomail server.
+
+But once you deploy your Wordpress site out in the wild, we will have to whitelist your production URL. For that, just submit a [Whitelist Request](https://videomail.io/whitelist). Very easy.
 
 ## Videomail-client library
 
