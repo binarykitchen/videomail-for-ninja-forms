@@ -113,7 +113,7 @@ if( version_compare( get_option( 'ninja_forms_version', '0.0.0' ), '3', '<' ) ||
          */
         public function register_actions($actions)
         {
-            $actions[ 'videomail' ] = new NF_Videomail_Actions_VideomailExample(); // includes/Actions/VideomailExample.php
+            // This section intentionally left blank.
 
             return $actions;
         }
