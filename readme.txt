@@ -1,9 +1,9 @@
 === Ninja Forms ===
-Contributors: kbjohnson90, binarykitchen
+Contributors: binarykitchen, kbjohnson90
 Tags:
 Requires at least: 4.3
 Tested up to: 4.5.2
-Stable tag: 3.0.0
+Stable tag: 3.0.5
 License: CC0-1.0
 
 == Description ==

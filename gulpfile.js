@@ -33,13 +33,13 @@ gulp.task('browser-sync', function() {
 })
 
 gulp.task('jshint', function() {
-    return gulp.src('assets/js/videomail.js')
+    return gulp.src('assets/js/main.js')
         .pipe(plugins.jshint())
         .pipe(plugins.jshint.reporter(stylish))
 })
 
 gulp.task('js', ['jshint'], function() {
-    return gulp.src('assets/js/videomail.js')
+    return gulp.src('assets/js/main.js')
         .pipe(plugins.bytediff.start())
         .pipe(plugins.uglify())
         .pipe(plugins.rename({suffix: '.min'}))
