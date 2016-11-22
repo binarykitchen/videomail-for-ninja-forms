@@ -15,6 +15,12 @@ var VideomailFieldController = Marionette.Object.extend({
     initialize: function() {
         Backbone.Radio.DEBUG = DEBUG
 
+        // TODO do not load anything, nor do any event handling
+        // when no fields are of type videomail
+        // easy to reproduce: create a default contact form without
+        // videomail and it's still loaded ...
+        // see https://github.com/wpninjas/ninja-forms-videomail/issues/29
+
         var submitChannel    = Backbone.Radio.channel('submit')
         var videomailChannel = Backbone.Radio.channel('videomail')
 
@@ -119,7 +125,9 @@ var VideomailFieldController = Marionette.Object.extend({
     },
 
     getOption: function(name, defaultOption) {
-        return this.fieldModel.get(name) || defaultOption
+        // todo the this.fieldModel check is temporary until
+        // https://github.com/wpninjas/ninja-forms-videomail/issues/29 is resolved
+        return this.fieldModel && this.fieldModel.get(name) || defaultOption
     },
 
     loadVideomailClient: function(options) {
@@ -196,18 +204,30 @@ var VideomailFieldController = Marionette.Object.extend({
             Backbone.Radio.channel(this.getFormID())
                 .request('get:fieldByKey', key)
 
-        return field.get('value')
+        if (field) {
+            return field.get('value')
+        } else {
+            // must have been a bad config from the user - in that case just do nothing
+            return null
+        }
     },
 
     getVideomailValue: function(fieldKey) {
         var fieldValue = this.fieldModel.get(fieldKey)
+        var rawValue   = null
 
-        // extract the key from the merge tag.
-        var rawValue = fieldValue.replace('{field:', '').replace('}', '')
+        // it can happen that the user has configured something wrong,
+        // i.E. an empty email_from. in that case just ignore ...
+        if (fieldValue) {
+            // extract the key from the merge tag.
+            // todo: make it work for i.E. {system:admin_email} as well, see
+            // https://github.com/wpninjas/ninja-forms-videomail/issues/30
+            rawValue = fieldValue.replace('{field:', '').replace('}', '')
 
-        if (rawValue != fieldValue) {
-            // yes it was a merge tag, so resolve it again
-            rawValue = this.getFieldValueByKey(rawValue)
+            if (rawValue != fieldValue) {
+                // yes it was a merge tag, so resolve it again
+                rawValue = this.getFieldValueByKey(rawValue)
+            }
         }
 
         return rawValue

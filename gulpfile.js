@@ -11,7 +11,7 @@ var browserSync = require('browser-sync').create()
 var reload = browserSync.reload
 
 // Using Bitnami's Wordpress Stack which serves local WP at this address
-var PROJECT_URL = "http://localhost:8080/wordpress/wp-admin/admin.php?page=ninja-forms"
+var PROJECT_URL = "http://127.0.0.1:8081/wordpress/wp-admin/admin.php?page=ninja-forms"
 
 gulp.task('browser-sync', function() {
     var port  = argv.port   || 8080
