@@ -18,7 +18,6 @@ gulp.task('browser-sync', function() {
     var https = argv.https || false
     var host  = argv.host || null
 
-
     browserSync.init({
         // http://www.browsersync.io/docs/options/
         proxy:          PROJECT_URL,
@@ -70,17 +69,15 @@ gulp.task('css', function() {
         .pipe(gulp.dest('assets/css/min'))
 })
 
-
 gulp.task('watch', ['default', 'browser-sync'], function() {
     gulp.watch('includes/**/*.php', reload)
-    gulp.watch('assets/js/main.js', ['js', reload])
-    gulp.watch('assets/css/main.styl', ['css'])
+    gulp.watch('assets/js/*.js', ['js', reload])
+    gulp.watch('assets/css/*.styl', ['css'])
 })
 
 gulp.task('todo', function() {
     gulp.src(['includes/**/*.php',
-              'assets/js/main.js',
-              'assets/css/main.styl',
+              'assets/**/*.{js, styl}',
               'gulpfile.js',
               'ninja-forms-videomail.php',
               'tests/*.php'])
