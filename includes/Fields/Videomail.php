@@ -61,8 +61,8 @@ class NF_Videomail_Fields_Videomail extends NF_Abstracts_Field
         $dev = ( defined( 'NF_DEV' ) && NF_DEV );
 
         wp_enqueue_style(
-            'nf-videomail',
-            NF_Videomail::$url . 'assets/css/min/videomail.min.css'
+            'nf-videomail-main',
+            NF_Videomail::$url . 'assets/css/min/main.min.css'
         );
 
         $videomail_client = ( $dev ) ? 'videomail-client.js' : 'videomail-client.min.js';
@@ -73,10 +73,11 @@ class NF_Videomail_Fields_Videomail extends NF_Abstracts_Field
             false
         );
 
-        $videomail = ( $dev ) ? 'main.js' : 'min/main.min.js';
+        $videomail_main = ( $dev ) ? 'videomail.js' : 'min/videomail.min.js';
+
         wp_enqueue_script(
-            'nf-videomail',
-            NF_Videomail::$url . 'assets/js/' . $videomail,
+            'nf-videomail-main',
+            NF_Videomail::$url . 'assets/js/' . $videomail_main,
             array('nf-front-end', 'nf-videomail-client')
         );
     }

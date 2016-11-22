@@ -1,4 +1,4 @@
-=== Ninja Forms ===
+=== Ninja Forms Videomail ===
 Contributors: binarykitchen, kbjohnson90
 Tags:
 Requires at least: 4.3

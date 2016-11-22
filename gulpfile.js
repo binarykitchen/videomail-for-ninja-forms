@@ -21,7 +21,6 @@ gulp.task('browser-sync', function() {
 
     browserSync.init({
         // http://www.browsersync.io/docs/options/
-
         proxy:          PROJECT_URL,
         browser:        ["google-chrome"],
         port:           port,
@@ -48,7 +47,7 @@ gulp.task('js', ['jshint'], function() {
 })
 
 gulp.task('css', function() {
-    gulp.src('assets/css/videomail.styl')
+    gulp.src('assets/css/main.styl')
         .pipe(plugins.plumber()) // with the plumber the gulp task won't crash on errors
         .pipe(plugins.stylus({
             use:    [nib()],
@@ -74,13 +73,14 @@ gulp.task('css', function() {
 
 gulp.task('watch', ['default', 'browser-sync'], function() {
     gulp.watch('includes/**/*.php', reload)
-    gulp.watch('assets/js/*.js', ['js', reload])
-    gulp.watch('assets/css/*.styl', ['css'])
+    gulp.watch('assets/js/main.js', ['js', reload])
+    gulp.watch('assets/css/main.styl', ['css'])
 })
 
 gulp.task('todo', function() {
     gulp.src(['includes/**/*.php',
-              'assets/**/*.{js, styl}',
+              'assets/js/main.js',
+              'assets/css/main.styl',
               'gulpfile.js',
               'ninja-forms-videomail.php',
               'tests/*.php'])
