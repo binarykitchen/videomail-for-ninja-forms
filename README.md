@@ -7,7 +7,7 @@
 [npm-url]: https://npmjs.org/package/ninja-forms-videomail
 
 [downloads-image]: https://img.shields.io/npm/dm/ninja-forms-videomail.svg?style=flat
-[downloads-url]: https://www.npmjs.com/package/ninja-forms-videomail
+[downloads-url]: https://npmjs.com/package/ninja-forms-videomail
 
 Record videos in Ninja Forms!
 
