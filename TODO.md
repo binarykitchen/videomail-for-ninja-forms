@@ -4,4 +4,5 @@
 | js/main.js | 18 | do not load anything, nor do any event handling
 | js/main.js | 52 | add new ninja form configuration to limit instances to 1
 | js/main.js | 128 | the this.fieldModel check is temporary until
+| js/main.js | 223 | make it work for i.E. {system:admin_email} as well, see
 | test-sample.php | 3 | add more unit tests
