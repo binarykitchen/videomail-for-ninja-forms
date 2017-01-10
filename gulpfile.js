@@ -85,5 +85,11 @@ gulp.task('todo', function() {
         .pipe(gulp.dest('./'))
 })
 
+gulp.task('zip', function() {
+    return gulp.src(['*', '!node_modules/'])
+        .pipe(plugins.zip('ninja-forms-videomail.zip'))
+        .pipe(gulp.dest('dist'))
+})
+
 // just builds assets once, nothing else
-gulp.task('default', ['css', 'js', 'todo'])
+gulp.task('default', ['css', 'js', 'zip', 'todo'])
