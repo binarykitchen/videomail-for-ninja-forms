@@ -56,3 +56,7 @@ This WordPress plugin is based on the open sourced npm package [videomail-client
 ## Live example
 
 There is also the live site [videomail.io](https://videomail.io) where you can see the videomail-client in action and use it right away for free, anytime, anywhere. Many people, especially Deafs and Sign Language users, already use it for their everyday communication.
+
+## Templates
+
+In the `/templates` folder you can see some ready-to-import Ninja Forms templates for re-use. They might inspire you ...
