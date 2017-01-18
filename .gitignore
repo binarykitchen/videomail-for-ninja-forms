@@ -1,5 +1,6 @@
 # Node Stuff
 node_modules
+npm-debug.log
 
 # IDE Stuff
 ## phpStorm
