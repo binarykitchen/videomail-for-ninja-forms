@@ -1,8 +1,9 @@
-var gulp    = require('gulp')
-var nib     = require('nib')
-var stylish = require('jshint-stylish')
-var plugins = require('gulp-load-plugins')()
-var argv    = require('yargs').argv
+var gulp       = require('gulp')
+var nib        = require('nib')
+var stylish    = require('jshint-stylish')
+var plugins    = require('gulp-load-plugins')()
+var argv       = require('yargs').argv
+var sourcemaps = require('gulp-sourcemaps');
 
 // Reloads browser and injects CSS. Time-saving synchronised browser testing.
 var browserSync = require('browser-sync').create()
@@ -38,10 +39,10 @@ gulp.task('jshint', function() {
 
 gulp.task('js', ['jshint'], function() {
     return gulp.src('assets/js/main.js')
-        .pipe(plugins.bytediff.start())
+        .pipe(sourcemaps.init())
         .pipe(plugins.uglify())
         .pipe(plugins.rename({suffix: '.min'}))
-        .pipe(plugins.bytediff.stop())
+        .pipe( sourcemaps.write( '/' ) )
         .pipe(gulp.dest('assets/js/min'))
 })
 
