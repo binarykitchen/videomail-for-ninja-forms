@@ -13,6 +13,7 @@ var VideomailFieldController = Marionette.Object.extend({
     initialize: function() {
         Backbone.Radio.DEBUG = DEBUG;
 
+        // Listen to Videomail fieldModel `init`, before setting up Videomail-Client.
         this.listenTo( Backbone.Radio.channel( 'videomail' ), 'init:model', this.registerVideomailField );
     },
 
@@ -22,12 +23,23 @@ var VideomailFieldController = Marionette.Object.extend({
 
         this.loadVideomailClient( fieldModel );
 
+        // Custom field validation, since we aren't using a standard `value`.
         Backbone.Radio.channel( 'videomail'      ).reply( 'validate:required',  this.validateRequired,  this             );
         Backbone.Radio.channel( 'videomail'      ).reply( 'validate:modelData', this.validateVideomail, this             );
+
+        // Pause submission so that we can POST to the Videomail server.
         Backbone.Radio.channel( 'form-' + formID ).reply( 'maybe:submit',       this.maybeSubmit,       this, fieldModel );
+
+        // Append additional field data to the submission. By default, only `value` is sent.
         Backbone.Radio.channel( 'videomail'      ).reply( 'get:submitData',     this.getSubmitData,     this             );
     },
 
+    /*
+     * Load Videomail Client
+     * Use the fieldModel's settings to init the Videomail Client.
+     *
+     * @param fieldModel
+     */
     loadVideomailClient: function( fieldModel ) {
         this.videomailClient = new VideomailClient({
             siteName: fieldModel.get( 'site_name' ),
@@ -71,6 +83,12 @@ var VideomailFieldController = Marionette.Object.extend({
         this.videomailClient.show()
     },
 
+    /*
+     * Validate Requried
+     *
+     * @channel videomail fieldType
+     * @request validate:required
+     */
     validateRequired: function() {
         var valid = this.hasVideomail()
 
@@ -87,10 +105,24 @@ var VideomailFieldController = Marionette.Object.extend({
         return valid
     },
 
+    /*
+     * Validate Videomail
+     *
+     * @channel videomail fieldType
+     * @request validate:modelData
+     * @param   fieldModel
+     */
     validateVideomail: function( fieldModel ) {
         return fieldModel.get('videomail-key') || false;
     },
 
+    /*
+     * Maybe Submit
+     *
+     * @channel form-{formID}
+     * @request maybe:submit
+     * @param   formModel
+     */
     maybeSubmit: function(formModel) {
         if ( ! formModel.getExtra( 'videomail_submitted' ) ) {
             this.videomailClient.submit();
@@ -99,6 +131,14 @@ var VideomailFieldController = Marionette.Object.extend({
         return true;
     },
 
+    /*
+     * Maybe Submit
+     *
+     * @channel videomail fieldType
+     * @request get:submitData
+     * @param   fieldData
+     * @param   fieldModel
+     */
     getSubmitData: function(fieldData, fieldModel) {
         fieldData.key       = fieldModel.get('videomail-key')
         fieldData.value     = fieldModel.get('videomail-url')
@@ -111,6 +151,7 @@ var VideomailFieldController = Marionette.Object.extend({
         return fieldData
     },
 
+    // Removed for testing. -KBJ
     // videomailSubmitted: function(videomail) {
     //     // pass on some videomail attributes to the field model
     //     this.fieldModel.set('value', videomail.url)
