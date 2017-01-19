@@ -55,6 +55,7 @@ var VideomailFieldController = Marionette.Object.extend({
             console.log( 'VIDEOMAIL: PREVIEW' );
             console.log( key );
             fieldModel.set( 'videomail-key', key );
+            Backbone.Radio.channel('fields').request( 'remove:error', this.fieldModel.get('id'), 'required-error' ); // Clear any previous errors.
         });
 
         // needed to invalidate form
