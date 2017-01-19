@@ -38,11 +38,13 @@ gulp.task('jshint', function() {
 })
 
 gulp.task('js', ['jshint'], function() {
-    return gulp.src('assets/js/main.js')
+    return gulp.src('assets/js/main.js')        
         .pipe(sourcemaps.init())
+        .pipe(plugins.bytediff.start())
         .pipe(plugins.uglify())
         .pipe(plugins.rename({suffix: '.min'}))
-        .pipe( sourcemaps.write( '/' ) )
+        .pipe(plugins.bytediff.stop())
+        .pipe(sourcemaps.write( '/' ))        
         .pipe(gulp.dest('assets/js/min'))
 })
 
