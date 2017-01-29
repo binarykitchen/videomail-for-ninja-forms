@@ -14,6 +14,8 @@ if [[ `git status --porcelain` ]]; then
     die "Aborting the bump! You have uncommitted changes."
 fi
 
+VERSION=$(sed -nE 's/^\s*"version": "(.*?)",$/\1/p' package.json)
+
 # Ensures nothing is broken
 # todo add unit tests for JS code
 # npm test
@@ -33,11 +35,18 @@ npm install
 # Rebuild all assets + zip with default task
 gulp
 
+echo "here"
+
 # Ensures again that nothing is broken with the build
 # npm test
 
 git add -A
+
+echo "there"
+
 git commit -am "Final commit of version $VERSION" --no-edit
+
+echo "where"
 
 # Complete the previous release
 git flow release finish $VERSION -m "Completing release of $VERSION" # This will also tag it
