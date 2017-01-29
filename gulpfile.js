@@ -100,5 +100,14 @@ gulp.task('zip', ['css', 'js', 'todo'], function() {
         .pipe(gulp.dest('dist'))
 })
 
+gulp.task('bumpPHPVersion', function() {
+  var currentVersion = argv.currentVersion
+  var newVersion = argv.newVersion
+  
+  gulp.src(["ninja-forms-videomail.php"])
+    .pipe(plugins.stringReplace(currentVersion, newVersion))
+    .pipe(gulp.dest('./'))
+})
+
 // just builds assets once, nothing else
 gulp.task('default', ['css', 'js', 'todo', 'zip'])

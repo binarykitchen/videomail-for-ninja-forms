@@ -31,7 +31,9 @@
   "scripts": {
     "wp": "gulp watch --https --port=8890 --host=wp",
     "postinstall": "./bin/postinstall.sh",
-    "release": "./bin/release.sh"
+    "patch": "./bin/release.sh --importance=patch",
+    "minor": "./bin/release.sh --importance=minor",
+    "major": "./bin/release.sh --importance=major"
   },
   "dependencies": {
     "videomail-client": "1.22.11"
@@ -46,6 +48,8 @@
     "gulp-load-plugins": "1.4.0",
     "gulp-plumber": "1.1.0",
     "gulp-rename": "1.2.2",
+    "gulp-sourcemaps": "2.4.0",
+    "gulp-string-replace": "^0.4.0",
     "gulp-stylus": "2.6.0",
     "gulp-todo": "5.2.0",
     "gulp-uglify": "2.0.1",
@@ -53,7 +57,6 @@
     "jshint": "2.9.4",
     "jshint-stylish": "2.2.1",
     "nib": "1.1.2",
-    "yargs": "6.6.0",
-    "gulp-sourcemaps": "2.4.0"
+    "yargs": "6.6.0"
   }
 }
