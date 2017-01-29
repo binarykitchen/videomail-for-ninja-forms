@@ -4,7 +4,7 @@ set -e
 export GIT_MERGE_AUTOEDIT=no
 
 die() {
-    use unset GIT_MERGE_AUTOEDIT
+    unset GIT_MERGE_AUTOEDIT
     echo >&2 "☠ ☠ ☠ ☠ ☠ ☠ ☠  $@  ☠ ☠ ☠ ☠ ☠ ☠ ☠"
     exit 1
 }
@@ -31,8 +31,10 @@ if [[ `git status --porcelain` ]]; then
     die "Aborting the bump! You have uncommitted changes."
 fi
 
-read CURRENT_VERSION=$(sed -nE 's/^\s*"version": "(.*?)",$/\1/p' package.json)
+CURRENT_VERSION=$(sed -nE 's/^\s*"version": "(.*?)",$/\1/p' package.json)
 read VERSION <<< $(gulp bumpVersion --importance=$IMPORTANCE | awk '/to/ {print $5}')
+
+echo "Going to bump from $CURRENT_VERSION to $VERSION ..."
 
 # Ensures nothing is broken
 # todo add unit tests for js code
@@ -56,17 +58,14 @@ gulp bumpPHPVersion --currentVersion=$CURRENT_VERSION --newVersion $VERSION
 npm prune
 npm install
 
-# Rebuild all assets
-gulp build --minify
+# Rebuild all assets and zip
+gulp
 
 # Ensures again that nothing is broken with the build
 # npm test
 
 git add -A
 git commit -am "Final commit of version $VERSION" --no-edit
-
-echo "Publishing to npm ..."
-npm publish
 
 # Complete the previous release
 git flow release finish $VERSION -m "Completing release of $VERSION" # This will also tag it
