@@ -98,6 +98,25 @@ gulp.task('zip', ['css', 'js', 'todo'], function() {
         ])
         .pipe(plugins.zip('ninja-forms-videomail.zip'))
         .pipe(gulp.dest('dist'))
+        .on('error', plugins.util.log)
+})
+
+// get inspired by
+// https://www.npmjs.com/package/gulp-tag-version and
+// https://github.com/nicksrandall/gulp-release-tasks/blob/master/tasks/release.js
+gulp.task('bumpVersion', function() {
+    var bumpOptions = {}
+
+    if (argv.version)
+        bumpOptions.version = argv.version
+
+    else if (argv.importance)
+        bumpOptions.type = argv.importance
+
+    return gulp.src(['./package.json'])
+        .pipe(plugins.bump(bumpOptions))
+        .pipe(plugins.if(argv.write, gulp.dest('./')))
+        .on('error', plugins.util.log)
 })
 
 gulp.task('bumpPHPVersion', function() {
@@ -107,6 +126,7 @@ gulp.task('bumpPHPVersion', function() {
   gulp.src(["ninja-forms-videomail.php"])
     .pipe(plugins.stringReplace(currentVersion, newVersion))
     .pipe(gulp.dest('./'))
+    .on('error', plugins.util.log)
 })
 
 // just builds assets once, nothing else
