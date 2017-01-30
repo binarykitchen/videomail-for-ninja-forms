@@ -58,7 +58,7 @@ class NF_Videomail_Fields_Videomail extends NF_Abstracts_Field
 
     public function enqueue_scripts()
     {
-        $dev = ( defined( 'NF_DEV' ) && NF_DEV );
+        $dev = true; // ( defined( 'NF_DEV' ) && NF_DEV );
 
         wp_enqueue_style(
             'nf-videomail-main',

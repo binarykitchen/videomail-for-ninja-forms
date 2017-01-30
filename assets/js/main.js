@@ -1,7 +1,7 @@
 var VideomailClient = require('videomail-client')
 
 // manual switch to have more stuff printed to console
-var DEBUG = true
+var DEBUG = false;
 
 // good documentation on backbone event handling
 // http://backbonejs.org/#Events
@@ -60,14 +60,14 @@ var VideomailFieldController = Marionette.Object.extend({
             enableAutoValidation: false,
             // log actions/events to console
             verbose: fieldModel.get( 'verbose' ) || DEBUG
-        })
+        });
 
         // needed to get the videomail key which is required before submission
         this.videomailClient.on( this.videomailClient.events.PREVIEW, function( key ){
             console.log( 'VIDEOMAIL: PREVIEW' );
             console.log( key );
             fieldModel.set( 'videomail-key', key );
-            Backbone.Radio.channel('fields').request( 'remove:error', this.fieldModel.get('id'), 'required-error' ); // Clear any previous errors.
+            Backbone.Radio.channel('fields').request( 'remove:error', fieldModel.get('id'), 'required-error' ); // Clear any previous errors.
         });
 
         // needed to invalidate form
@@ -78,6 +78,11 @@ var VideomailFieldController = Marionette.Object.extend({
         this.videomailClient.on( this.videomailClient.events.SUBMITTED, function( videomail ){
             console.log( 'VIDEOMAIL: SUBMITTED' );
             console.log( videomail );
+            console.log( fieldModel );
+            // Restart Submission
+            var formID = fieldModel.get( 'formID' );
+            var formModel = nfRadio.channel( 'app' ).request( 'get:form', formID );
+            nfRadio.channel( 'form-' + formID ).request( 'submit', formModel );
         });
 
         this.videomailClient.show()
@@ -89,14 +94,14 @@ var VideomailFieldController = Marionette.Object.extend({
      * @channel videomail fieldType
      * @request validate:required
      */
-    validateRequired: function() {
-        var valid = this.hasVideomail()
+    validateRequired: function( el, fieldModel ) {
+        var valid = this.validateVideomail( fieldModel );
 
         // override default behaviour so that we can set our own error text here
         if (!valid) {
             Backbone.Radio.channel('fields').request(
                 'add:error',
-                this.fieldModel.get('id'),
+                fieldModel.get('id'),
                 'required-error',
                 "Record and click on stop to see a preview video."
             )
@@ -113,7 +118,7 @@ var VideomailFieldController = Marionette.Object.extend({
      * @param   fieldModel
      */
     validateVideomail: function( fieldModel ) {
-        return fieldModel.get('videomail-key') || false;
+        return fieldModel.get( 'videomail-key' ) || false;
     },
 
     /*
@@ -166,7 +171,7 @@ var VideomailFieldController = Marionette.Object.extend({
     //
     //     // set re-videomail_submitted flag so that we can continue
     //     // with the normal ninja form submission
-    //     Backbone.Radio.channel(formID).request('add:extra', 'videomail_submitted', true)
+    //     `Backbone.Radio.channel(formID).request('add:extra', 'videomail_submitted', true)`
     //
     //     // re-start submission
     //     Backbone.Radio.channel(formID).request('submit', this.formModel)
