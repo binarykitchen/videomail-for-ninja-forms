@@ -51,6 +51,9 @@ var VideomailFieldController = Marionette.Object.extend({
             audio: {
                 enabled: fieldModel.get( 'audio_enabled' ) || false,
             },
+            selectors: {
+                submitButtonSelector: '.submit-container input[type="button"]'
+            },
             // callbacks: {
             //     adjustFormDataBeforePosting:
             //     // ugly name eh?
@@ -82,6 +85,9 @@ var VideomailFieldController = Marionette.Object.extend({
             // Restart Submission
             var formID = fieldModel.get( 'formID' );
             var formModel = nfRadio.channel( 'app' ).request( 'get:form', formID );
+            
+            // set a temporary videomail indicating that it has been submitted successfully
+            nfRadio.channel( 'form-' + formModel.get( 'id' ) ).request( 'add:extra', 'generatedVideomail', videomail );
             nfRadio.channel( 'form-' + formID ).request( 'submit', formModel );
         });
 
@@ -129,7 +135,7 @@ var VideomailFieldController = Marionette.Object.extend({
      * @param   formModel
      */
     maybeSubmit: function(formModel) {
-        if ( ! formModel.getExtra( 'videomail_submitted' ) ) {
+        if ( ! formModel.getExtra( 'generatedVideomail' ) ) {
             this.videomailClient.submit();
             return false;
         }
@@ -171,7 +177,7 @@ var VideomailFieldController = Marionette.Object.extend({
     //
     //     // set re-videomail_submitted flag so that we can continue
     //     // with the normal ninja form submission
-    //     `Backbone.Radio.channel(formID).request('add:extra', 'videomail_submitted', true)`
+    //     `Backbone.Radio.channel(formID).request('add:extra', 'generatedVideomail', true)`
     //
     //     // re-start submission
     //     Backbone.Radio.channel(formID).request('submit', this.formModel)
