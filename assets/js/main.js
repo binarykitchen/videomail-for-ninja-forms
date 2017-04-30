@@ -79,15 +79,13 @@ var VideomailFieldController = Marionette.Object.extend({
         });
 
         this.videomailClient.on( this.videomailClient.events.SUBMITTED, function( videomail ){
-            console.log( 'VIDEOMAIL: SUBMITTED' );
-            console.log( videomail );
-            console.log( fieldModel );
             // Restart Submission
             var formID = fieldModel.get( 'formID' );
             var formModel = nfRadio.channel( 'app' ).request( 'get:form', formID );
-            
+
             // set a temporary videomail indicating that it has been submitted successfully
             nfRadio.channel( 'form-' + formModel.get( 'id' ) ).request( 'add:extra', 'generatedVideomail', videomail );
+
             nfRadio.channel( 'form-' + formID ).request( 'submit', formModel );
         });
 
@@ -141,47 +139,6 @@ var VideomailFieldController = Marionette.Object.extend({
         }
         return true;
     },
-
-    /*
-     * Maybe Submit
-     *
-     * @channel videomail fieldType
-     * @request get:submitData
-     * @param   fieldData
-     * @param   fieldModel
-     */
-    getSubmitData: function(fieldData, fieldModel) {
-        fieldData.key       = fieldModel.get('videomail-key')
-        fieldData.value     = fieldModel.get('videomail-url')
-        fieldData.url       = fieldModel.get('videomail-url')
-        fieldData.webm      = fieldModel.get('videomail-webm')
-        fieldData.mp4       = fieldModel.get('videomail-mp4')
-        fieldData.poster    = fieldModel.get('videomail-poster')
-        fieldData.alias     = fieldModel.get('videomail-alias')
-
-        return fieldData
-    },
-
-    // Removed for testing. -KBJ
-    // videomailSubmitted: function(videomail) {
-    //     // pass on some videomail attributes to the field model
-    //     this.fieldModel.set('value', videomail.url)
-    //     this.fieldModel.set('videomail-url', videomail.url)
-    //     this.fieldModel.set('videomail-webm', videomail.webm)
-    //     this.fieldModel.set('videomail-mp4', videomail.mp4)
-    //     this.fieldModel.set('videomail-poster', videomail.poster)
-    //     this.fieldModel.set('videomail-alias', videomail.alias)
-    //     this.fieldModel.set('videomail-key', videomail.key)
-    //
-    //     var formID = this.getFormID()
-    //
-    //     // set re-videomail_submitted flag so that we can continue
-    //     // with the normal ninja form submission
-    //     `Backbone.Radio.channel(formID).request('add:extra', 'generatedVideomail', true)`
-    //
-    //     // re-start submission
-    //     Backbone.Radio.channel(formID).request('submit', this.formModel)
-    // },
 
     onBeforeDestroy: function() {
         this.videomailClient.unload()

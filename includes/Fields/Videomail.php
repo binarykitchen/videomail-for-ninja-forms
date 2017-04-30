@@ -37,20 +37,34 @@ class NF_Videomail_Fields_Videomail extends NF_Abstracts_Field
 
     public function process( $field, $data )
     {
-        $data[ 'extra' ][ 'videomail' ][] = array(
-            'url' => $field[ 'url' ],
-            'webm' => $field[ 'webm' ],
-            'mp4' => $field[ 'mp4' ],
-            'poster' => $field[ 'poster' ],
-            'alias' => $field[ 'alias' ],
-            'key' => $field[ 'key' ]
-        );
+        $generatedVideomail = $data['extra']['generatedVideomail'];
+
+        $videomailFieldId = $field['id'];
+        $data['fields'][$videomailFieldId]['value'] = $generatedVideomail;
+
+
+        // $data['videomail'] = $generatedVideomail;
+        //
+        // $data[ 'extra' ][ 'videomail' ][] = array(
+        //     'url' => $field[ 'url' ],
+        //     'webm' => $field[ 'webm' ],
+        //     'mp4' => $field[ 'mp4' ],
+        //     'poster' => $field[ 'poster' ],
+        //     'alias' => $field[ 'alias' ],
+        //     'key' => $field[ 'key' ]
+        // );
 
         return $data;
     }
 
     public function admin_form_element( $id, $value )
     {
+        // var_export ('id=' . $id);
+        // var_export ('value=' . $value);
+        echo("admin_form_element");
+        var_dump($id);
+        var_dump($value);
+
         if( empty( $value ) ) return __( 'No Video Recorded' );
 
         NF_Videomail::template( 'admin-form-element.html.php', compact( 'value' ) );
@@ -84,6 +98,10 @@ class NF_Videomail_Fields_Videomail extends NF_Abstracts_Field
 
     public function custom_columns( $value, $field )
     {
+        echo("custom_columns");
+        var_export ($value);
+        var_export ($field);
+
         if ($this->_name != $field->get_setting('type')) return $value;
 
         if (empty($value)) return __('No Video Recorded');
