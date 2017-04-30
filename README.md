@@ -23,7 +23,7 @@ In short: this add-on runs on the Ninja Forms plugin engine where you can config
 
 ## Development
 
-1. Install Bitnami's Wordpress Stack
+1. Install WordPress locally or if your lazy, use the Bitnami's Wordpress Stack
 2. Install Ninja Forms Plugin
 3. `git clone git@github.com:kjohnson/ninja-forms-videomail.git`
 4. Install latest nodejs, best with [nvm](https://github.com/creationix/nvm)
