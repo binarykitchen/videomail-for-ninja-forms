@@ -1,11 +1,6 @@
 <?php
 final class NF_Videomail {
 
-  // todo check if those fields are every used???
-  const VERSION = '3.2.0';
-  const SLUG = 'videomail';
-  const NAME = 'Videomail';
-  const AUTHOR = 'Michael Heuberger + Kyle B. Johnson';
   const PREFIX = 'NF_Videomail';
 
   private static $instance;

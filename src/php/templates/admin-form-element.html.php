@@ -1,1 +1,1 @@
-<a href="<?php echo $value; ?>">View Online</a>
+<a href="<?php echo $value['url']; ?>">View Online</a>

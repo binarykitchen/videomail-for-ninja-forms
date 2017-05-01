@@ -13,7 +13,9 @@
  * Copyright 2017 Michael Heuberger + Kyle B. Johnson
  */
 
-if (version_compare(get_option('ninja_forms_version', '0.0.0'), '3', '<') || get_option('ninja_forms_load_deprecated', FALSE)) {
+if (version_compare(get_option('ninja_forms_version', '0.0.0'), '3', '<') ||
+    get_option('ninja_forms_load_deprecated', FALSE)) {
+
   return;
 
 } else {

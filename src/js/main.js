@@ -21,19 +21,23 @@ var VideomailFieldController = Marionette.Object.extend({
   },
 
   registerVideomailField: function (fieldModel) {
-    var formID = fieldModel.get('formID')
+    // workaround for https://github.com/wpninjas/ninja-forms/issues/2675
+    // also prevents from event emitter leaks under race conditions
+    if (!this.videomailClient) {
+      this.loadVideomailClient(fieldModel)
 
-    this.loadVideomailClient(fieldModel)
+      // custom field validation, since we aren't using a standard `value`
+      Backbone.Radio.channel('videomail').reply('validate:required', this.validateRequired, this)
+      Backbone.Radio.channel('videomail').reply('validate:modelData', this.validateVideomail, this)
 
-    // custom field validation, since we aren't using a standard `value`
-    Backbone.Radio.channel('videomail').reply('validate:required', this.validateRequired, this)
-    Backbone.Radio.channel('videomail').reply('validate:modelData', this.validateVideomail, this)
+      var formID = fieldModel.get('formID')
 
-    // pause submission so that we can POST to the Videomail server first
-    Backbone.Radio.channel('form-' + formID).reply('maybe:submit', this.maybeSubmit, this, fieldModel)
+      // pause submission so that we can POST to the Videomail server first
+      Backbone.Radio.channel('form-' + formID).reply('maybe:submit', this.maybeSubmit, this, fieldModel)
 
-    // at last, append additional field data to the submission
-    Backbone.Radio.channel('videomail').reply('get:submitData', this.getSubmitData, this)
+      // at last, append additional field data to the submission
+      Backbone.Radio.channel('videomail').reply('get:submitData', this.getSubmitData, this)
+    }
   },
 
   loadVideomailClient: function (fieldModel) {
@@ -65,19 +69,12 @@ var VideomailFieldController = Marionette.Object.extend({
         .request('remove:error', fieldModel.get('id'), 'required-error')
     })
 
-    // needed to invalidate form
-    this.videomailClient.on(this.videomailClient.events.GOING_BACK, function () {
-      console.log('VIDEOMAIL: GOING BACK')
-    })
-
     this.videomailClient.on(this.videomailClient.events.SUBMITTED, function (videomail) {
       // restart submission
       var formID = fieldModel.get('formID')
       var formModel = nfRadio.channel('app').request('get:form', formID)
 
-      // set a temporary videomail indicating that it has been submitted successfully
-      nfRadio.channel('form-' + formModel.get('id')).request('add:extra', 'generatedVideomail', videomail)
-
+      nfRadio.channel('form-' + formModel.get('id')).request('add:extra', 'videomail', videomail)
       nfRadio.channel('form-' + formID).request('submit', formModel)
     })
 
@@ -105,15 +102,19 @@ var VideomailFieldController = Marionette.Object.extend({
   },
 
   maybeSubmit: function (formModel) {
-    if (!formModel.getExtra('generatedVideomail')) {
+    if (!formModel.getExtra('videomail')) {
       this.videomailClient.submit()
       return false
+    } else {
+      return true
     }
-    return true
   },
 
+  // never gets called, why?
+  // related to https://github.com/wpninjas/ninja-forms/issues/2675
   onBeforeDestroy: function () {
     this.videomailClient.unload()
+    delete this.videomailClient
   }
 })
 

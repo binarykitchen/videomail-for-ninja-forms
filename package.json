@@ -30,10 +30,10 @@
     "url": "https://github.com/wpninjas/ninja-forms-videomail.git"
   },
   "scripts": {
-    "wp": "gulp watch --https --port=8890 --host=wp"
+    "wp": "gulp watch --port=8890 --host=wp"
   },
   "dependencies": {
-    "videomail-client": "1.26.19"
+    "videomail-client": "1.26.20"
   },
   "devDependencies": {
     "browser-sync": "2.18.8",

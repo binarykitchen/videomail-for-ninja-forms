@@ -11,19 +11,24 @@ const browserSync = require('browser-sync').create()
 // for manual browser reload
 const reload = browserSync.reload
 
-const PROJECT_URL = 'https://localhost:8890/wordpress/wp-admin/admin.php?page=ninja-forms'
-
 gulp.task('browser-sync', function () {
   const port = argv.port || 8890
-  const https = argv.https || false
-  const host = argv.host || null
+  const host = argv.host || 'localhost'
 
+  var projectUrl = 'https://' + host
+
+  if (port) {
+    projectUrl += ':' + port
+  }
+
+  projectUrl += '/wordpress/wp-admin/admin.php?page=ninja-forms'
+
+  // http://www.browsersync.io/docs/options/
   browserSync.init({
-    // http://www.browsersync.io/docs/options/
-    proxy: PROJECT_URL,
+    proxy: projectUrl,
     browser: ['google-chrome'],
     port: port,
-    https: https,
+    https: true,
     host: host,
     open: true,
     injectChanges: true
@@ -92,7 +97,7 @@ gulp.task('php', ['clean:php'], function () {
 gulp.task('watch', ['default', 'browser-sync'], function () {
   gulp.watch('src/**/*.{php,html}', ['php', reload])
   gulp.watch('src/js/**/*.js', ['js', reload])
-  gulp.watch('src/css/**/*.styl', ['css'])
+  gulp.watch('src/styl/**/*.styl', ['css'])
 })
 
 gulp.task('todo', function () {

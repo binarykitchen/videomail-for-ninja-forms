@@ -11,7 +11,7 @@ class NF_Videomail_Fields_Videomail extends NF_Abstracts_Field {
   protected $_templates = 'videomail';
   protected $_settings = array('label', 'label_pos', 'required', 'key');
 
-  public function __construct() {
+  public function __construct () {
     parent::__construct();
 
     $this->_nicename = __('Videomail', 'ninja-forms');
@@ -22,18 +22,20 @@ class NF_Videomail_Fields_Videomail extends NF_Abstracts_Field {
     $this->_settings['label']['value'] = __('Video Message', 'ninja-forms-videomail');
 
     add_action('wp_enqueue_scripts', array($this, 'enqueue_scripts'));
-
     add_filter('ninja_forms_custom_columns', array($this, 'custom_columns' ), 10, 2);
   }
 
-  public function process( $field, $data ) {
-    $generatedVideomail = $data['extra']['generatedVideomail'];
+  public function process ($field, $data) {
+    $videomail = $data['extra']['videomail'];
 
     $videomailFieldId = $field['id'];
-    $data['fields'][$videomailFieldId]['value'] = $generatedVideomail;
+    $data['fields'][$videomailFieldId]['value'] = $videomail;
 
+    var_export($field);
+    var_export($data);
+    die('here');
 
-    // $data['videomail'] = $generatedVideomail;
+    // $data['videomail'] = $videomail;
     //
     // $data[ 'extra' ][ 'videomail' ][] = array(
     //     'url' => $field[ 'url' ],
@@ -47,7 +49,7 @@ class NF_Videomail_Fields_Videomail extends NF_Abstracts_Field {
     return $data;
   }
 
-  public function admin_form_element( $id, $value ) {
+  public function admin_form_element ($id, $value) {
     if (empty($value)) return __('No Video Recorded');
 
     NF_Videomail::template('admin-form-element.html.php', compact('value'));
@@ -72,11 +74,13 @@ class NF_Videomail_Fields_Videomail extends NF_Abstracts_Field {
     );
   }
 
-  public function custom_columns( $value, $field ) {
+  public function custom_columns ($value, $field) {
     if ($this->_name != $field->get_setting('type')) return $value;
 
     if (empty($value)) return __('No Video Recorded');
 
-    return '<a href="' . $value . '">' . __('View Online', 'ninja-forms-videomail') . '</a>';
+    // ok, value is a videomail
+
+    return '<a href="' . $value['url'] . '">' . __('View Online', 'ninja-forms-videomail') . '</a>';
   }
 }
