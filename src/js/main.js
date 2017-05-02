@@ -44,7 +44,7 @@ var VideomailFieldController = Marionette.Object.extend({
     this.videomailClient = new VideomailClient({
       siteName: fieldModel.get('site_name'),
       video: {
-        limitSeconds: fieldModel.get('limit_seconds') || 80,
+        limitSeconds: fieldModel.get('limit_seconds') || 90,
         width: fieldModel.get('width') || 320,
         countdown: fieldModel.get('countdown') || false
       },

@@ -31,21 +31,6 @@ class NF_Videomail_Fields_Videomail extends NF_Abstracts_Field {
     $videomailFieldId = $field['id'];
     $data['fields'][$videomailFieldId]['value'] = $videomail;
 
-    var_export($field);
-    var_export($data);
-    die('here');
-
-    // $data['videomail'] = $videomail;
-    //
-    // $data[ 'extra' ][ 'videomail' ][] = array(
-    //     'url' => $field[ 'url' ],
-    //     'webm' => $field[ 'webm' ],
-    //     'mp4' => $field[ 'mp4' ],
-    //     'poster' => $field[ 'poster' ],
-    //     'alias' => $field[ 'alias' ],
-    //     'key' => $field[ 'key' ]
-    // );
-
     return $data;
   }
 
@@ -80,7 +65,6 @@ class NF_Videomail_Fields_Videomail extends NF_Abstracts_Field {
     if (empty($value)) return __('No Video Recorded');
 
     // ok, value is a videomail
-
     return '<a href="' . $value['url'] . '">' . __('View Online', 'ninja-forms-videomail') . '</a>';
   }
 }
