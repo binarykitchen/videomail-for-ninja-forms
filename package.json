@@ -33,7 +33,7 @@
     "wp": "gulp watch --port=8890 --host=wp"
   },
   "dependencies": {
-    "videomail-client": "1.26.22"
+    "videomail-client": "1.27.2"
   },
   "devDependencies": {
     "browser-sync": "2.18.8",
@@ -53,6 +53,6 @@
     "gulp-zip": "4.0.0",
     "nib": "1.1.2",
     "standard": "10.0.2",
-    "yargs": "7.1.0"
+    "yargs": "8.0.1"
   }
 }

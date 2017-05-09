@@ -1,7 +1,7 @@
 var VideomailClient = require('videomail-client')
 var Marionette = window.Marionette
 var Backbone = window.Backbone
-var nfRadio = window.nfRadio
+var nfRadio = window.nfRadio // todo is this the same as Backbone.Radio ??
 var jQuery = window.jQuery
 
 // manual switch to have more stuff printed to console
@@ -14,9 +14,17 @@ var VideomailFieldController = Marionette.Object.extend({
 
   videomailClient: null,
 
+  // not sure if this is a good idea, but i need a reference to it
+  formID: null,
+
   initialize: function () {
     Backbone.Radio.DEBUG = DEBUG
 
+    // TODO do not load anything, nor do any event handling
+    // when no fields are of type videomail
+    // easy to reproduce: create a default contact form without
+    // videomail and it's still loaded ...
+    // see https://github.com/wpninjas/ninja-forms-videomail/issues/29
     this.listenTo(Backbone.Radio.channel('videomail'), 'init:model', this.registerVideomailField)
   },
 
@@ -30,13 +38,15 @@ var VideomailFieldController = Marionette.Object.extend({
       Backbone.Radio.channel('videomail').reply('validate:required', this.validateRequired, this)
       Backbone.Radio.channel('videomail').reply('validate:modelData', this.validateVideomail, this)
 
-      var formID = fieldModel.get('formID')
+      this.formID = fieldModel.get('formID')
 
       // pause submission so that we can POST to the Videomail server first
-      Backbone.Radio.channel('form-' + formID).reply('maybe:submit', this.maybeSubmit, this, fieldModel)
+      Backbone.Radio.channel('form-' + this.formID).reply('maybe:submit', this.maybeSubmit, this, fieldModel)
 
       // at last, append additional field data to the submission
-      Backbone.Radio.channel('videomail').reply('get:submitData', this.getSubmitData, this)
+      Backbone.Radio.channel('videomail').reply('get:submitData', function () {
+        console.log('get:submitData callback here!')
+      }, this)
     }
   },
 
@@ -53,6 +63,10 @@ var VideomailFieldController = Marionette.Object.extend({
       },
       selectors: {
         submitButtonSelector: '.submit-container input[type="button"]'
+      },
+      callbacks: {
+        // ugly name eh?
+        adjustFormDataBeforePosting: this.adjustFormDataBeforePostingToVideomailServer.bind(this)
       },
       // leave it to ninja form to validate the inputs
       enableAutoValidation: false,
@@ -71,11 +85,11 @@ var VideomailFieldController = Marionette.Object.extend({
 
     this.videomailClient.on(this.videomailClient.events.SUBMITTED, function (videomail) {
       // restart submission
-      var formID = fieldModel.get('formID')
-      var formModel = nfRadio.channel('app').request('get:form', formID)
+      var formModel = nfRadio.channel('app').request('get:form', this.formID)
 
+      // todo isnt 'form-' + formModel.get('id') the same as the formID already?
       nfRadio.channel('form-' + formModel.get('id')).request('add:extra', 'videomail', videomail)
-      nfRadio.channel('form-' + formID).request('submit', formModel)
+      nfRadio.channel('form-' + this.formID).request('submit', formModel)
     })
 
     this.videomailClient.show()
@@ -108,6 +122,61 @@ var VideomailFieldController = Marionette.Object.extend({
     } else {
       return true
     }
+  },
+
+  // TODO UNTESTED, CHECK THIS
+  // PROBABLY BROKEN OR OBSOLETE
+  // COPIED FROM OLD COMMIT AT https://github.com/wpninjas/ninja-forms-videomail/blob/4ed9a5f433ee9e9a8c9bde9a001b1f0ed73c53f3/assets/js/main.js
+  getVideomailValue: function (fieldKey) {
+    var fieldValue = this.fieldModel.get(fieldKey)
+    var rawValue = null
+
+    // it can happen that the user has configured something wrong,
+    // i.E. an empty email_from. in that case just ignore ...
+    if (fieldValue) {
+      // extract the key from the merge tag.
+      // todo: make it work for i.E. {system:admin_email} as well, see
+      // https://github.com/wpninjas/ninja-forms-videomail/issues/30
+      rawValue = fieldValue.replace('{field:', '').replace('}', '')
+
+      if (rawValue !== fieldValue) {
+        // yes it was a merge tag, so resolve it again
+        rawValue = this.getFieldValueByKey(rawValue)
+      }
+    }
+
+    return rawValue
+  },
+
+  getFormValues: function () {
+    var formModel = Backbone.Radio.channel('app').request('get:form', this.formID)
+    var fieldsCollection = formModel.get('fields')
+
+    return fieldsCollection.reduce(function (memo, field) {
+      console.log(field.attributes)
+      memo[field.get('key')] = field.get('value')
+      return memo
+    }, {})
+  },
+
+  getVideomailField: function () {
+    var formModel = Backbone.Radio.channel('app').request('get:form', this.formID)
+    var anything = Backbone.Radio.channel('form-' + formModel.get('id')).request('get:extra', 'videomail')
+
+    // stuck here and have asked questions on slack
+    console.log(anything)
+  },
+
+  // TODO UNTESTED, CHECK THIS
+  adjustFormDataBeforePostingToVideomailServer: function (videomail, cb) {
+    this.getVideomailField()
+    console.log(this.getFormValues())
+    // videomail.from = this.getVideomailValue('email_from')
+    // videomail.to = this.getVideomailValue('email_to')
+    // videomail.subject = this.getVideomailValue('email_subject')
+    // videomail.body = this.getVideomailValue('email_body')
+
+    // cb(null, videomail)
   },
 
   // never gets called, why?
