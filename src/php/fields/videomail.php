@@ -58,7 +58,7 @@ class NF_Videomail_Fields_Videomail extends NF_Abstracts_Field {
       array('nf-front-end', 'nf-videomail-client')
     );
     wp_localize_script( 'nf-videomail-main', 'nfVideomail', array(
-        'admin_url' => get_option( 'admin_email' )
+        'admin_email' => get_option( 'admin_email' )
     ));
   }
 
