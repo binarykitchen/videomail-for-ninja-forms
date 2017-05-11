@@ -57,6 +57,9 @@ class NF_Videomail_Fields_Videomail extends NF_Abstracts_Field {
       NF_Videomail::$jsUrl . 'main.min.js',
       array('nf-front-end', 'nf-videomail-client')
     );
+    wp_localize_script( 'nf-videomail-main', 'nfVideomail', array(
+        'admin_url' => get_option( 'admin_email' )
+    ));
   }
 
   public function custom_columns ($value, $field) {
