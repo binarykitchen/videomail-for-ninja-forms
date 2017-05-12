@@ -21,7 +21,7 @@ gulp.task('browser-sync', function () {
     projectUrl += ':' + port
   }
 
-  projectUrl += '/wordpress/wp-admin/admin.php?page=ninja-forms'
+  projectUrl += '/wp-admin/admin.php?page=ninja-forms'
 
   // http://www.browsersync.io/docs/options/
   browserSync.init({
@@ -30,7 +30,7 @@ gulp.task('browser-sync', function () {
     port: port,
     https: true,
     host: host,
-    open: true,
+    open: 'external',
     injectChanges: true
   })
 })
@@ -49,7 +49,7 @@ gulp.task('js', ['standard'], function () {
     .pipe(sourcemaps.init())
     .pipe(plugins.uglify())
     .pipe(plugins.rename({suffix: '.min'}))
-    .pipe(sourcemaps.write('/'))
+    .pipe(sourcemaps.write())
     .pipe(gulp.dest('target/js'))
 })
 

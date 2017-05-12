@@ -134,14 +134,18 @@ var VideomailFieldController = Marionette.Object.extend({
     // it can happen that the user has configured something wrong,
     // i.E. an empty email_from. in that case just ignore ...
     if (value) {
-      // extract the key from the merge tag.
-      // todo: make it work for other merge tag types, i.E. {wp:admin_email} as well, see
+      // admin email localized from backend, a bit ugly
+      // todo ask for an endpoint to process those special merge tags
       // https://github.com/wpninjas/ninja-forms-videomail/issues/30
-      var rawFieldKey = value.replace('{field:', '').replace('}', '')
+      if (value === '{wp:admin_email}') {
+        value = window.nfVideomail.admin_email
+      } else {
+        var rawFieldKey = value.replace('{field:', '').replace('}', '')
 
-      if (rawFieldKey !== value) {
-        // yes it was a merge tag, so use it
-        value = formValues[rawFieldKey]
+        if (rawFieldKey !== value) {
+          // yes it was a merge tag, so use it
+          value = formValues[rawFieldKey]
+        }
       }
     }
 
