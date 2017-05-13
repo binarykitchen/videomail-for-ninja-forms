@@ -34,7 +34,7 @@
     "mh": "gulp watch --port=9890 --host=infernal.darkness.com"
   },
   "dependencies": {
-    "videomail-client": "1.27.5"
+    "videomail-client": "1.27.6"
   },
   "devDependencies": {
     "browser-sync": "2.18.8",

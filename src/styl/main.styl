@@ -1,36 +1,45 @@
 border-radius = 2px
 
-.nf-error .ninja-forms-field
-  &.videomail
+.nf-form-content
+
+  .nf-error .ninja-forms-field
+    &.videomail
       border none
 
-.videomail
-  .visuals
-    border-radius border-radius
+  .ninja-forms-field
+    &.videomail
+      padding 0
 
-    .notifier
-      padding    1em
-      background rgba(30, 30, 30, .1)
+      &:after
+        bottom 40px
 
-      h2
-        font-size 125%
-
-      p
-        margin-bottom 0
-
-    video
-    .notifier
-    .recordNote
-    .recordTimer
+      .visuals
         border-radius border-radius
 
-  .buttons
-    white-space nowrap
+        .notifier
+          padding    1em
+          background rgba(30, 30, 30, .1)
 
-    button
-    input[type=button]
-      margin-top 5px
-      min-width  7em
+          h2
+            font-size 125%
 
-      &:focus
-        outline 0
+          p
+            margin-bottom 0
+
+        video
+        .notifier
+        .recordNote
+        .recordTimer
+            border-radius border-radius
+
+      .buttons
+        white-space nowrap
+
+        button
+        input[type=button]
+          margin-top 5px
+          min-width  7em
+          margin-right 0.5em
+
+          &:focus
+            outline 0
