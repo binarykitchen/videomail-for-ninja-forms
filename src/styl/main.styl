@@ -2,44 +2,51 @@ border-radius = 2px
 
 .nf-form-content
 
-  .nf-error .ninja-forms-field
-    &.videomail
-      border none
+  .field-wrap.videomail-wrap
 
-  .ninja-forms-field
-    &.videomail
-      padding 0
+    &.nf-error
+    &.nf-pass
+      .nf-field-element
+        &::after
+          // no need to display an error or valid icon over the video
+          // also messes with the visuals we have, i.E. overlaps with timer etc.
+          display none
 
-      &:after
-        bottom 40px
+        .ninja-forms-field
+          &.videomail
+            border none
 
-      .visuals
-        border-radius border-radius
+    .ninja-forms-field
+      &.videomail
+        padding 0
 
-        .notifier
-          padding    1em
-          background rgba(30, 30, 30, .1)
+        .visuals
+          border-radius border-radius
 
-          h2
-            font-size 125%
+          .notifier
+            padding    1em
+            background rgba(30, 30, 30, .1)
 
-          p
-            margin-bottom 0
+            h2
+              font-size 125%
 
-        video
-        .notifier
-        .recordNote
-        .recordTimer
-            border-radius border-radius
+            p
+              margin-bottom 0
 
-      .buttons
-        white-space nowrap
+          video
+          .notifier
+          .recordNote
+          .recordTimer
+              border-radius border-radius
 
-        button
-        input[type=button]
-          margin-top 5px
-          min-width  7em
-          margin-right 0.5em
+        .buttons
+          white-space nowrap
 
-          &:focus
-            outline 0
+          button
+          input[type=button]
+            margin-top 5px
+            min-width  7em
+            margin-right 0.5em
+
+            &:focus
+              outline 0

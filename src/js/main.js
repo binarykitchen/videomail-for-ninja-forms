@@ -75,6 +75,7 @@ var VideomailFieldController = Marionette.Object.extend({
 
     this.videomailClient.on(this.videomailClient.events.PREVIEW, this.onPreview.bind(this))
     this.videomailClient.on(this.videomailClient.events.SUBMITTED, this.onSubmitted.bind(this))
+    this.videomailClient.on(this.videomailClient.events.GOING_BACK, this.onGoingBack.bind(this))
 
     this.videomailClient.show()
   },
@@ -99,20 +100,29 @@ var VideomailFieldController = Marionette.Object.extend({
     nfRadio.channel('form-' + this.getFormId()).request('submit', formModel)
   },
 
+  onGoingBack: function () {
+    this.fieldModel.set('videomail-key', null)
+    this.invalidate()
+  },
+
   validateRequired: function (el, fieldModel) {
     var valid = this.validateVideomail(fieldModel)
 
-    // override default behaviour so that we can set our own error text here
     if (!valid) {
-      Backbone.Radio.channel('fields').request(
-        'add:error',
-        fieldModel.get('id'),
-        'required-error',
-        'Record and click on stop to see a preview video.'
-      )
+      this.invalidate()
     }
 
     return valid
+  },
+
+  invalidate: function () {
+    // override default behaviour so that we can set our own error text here
+    Backbone.Radio.channel('fields').request(
+      'add:error',
+      this.fieldModel.get('id'),
+      'required-error',
+      'Record and click on stop to see a preview video.'
+    )
   },
 
   validateVideomail: function (fieldModel) {
