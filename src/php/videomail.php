@@ -56,6 +56,8 @@ final class NF_Videomail {
 
   public function ninja_forms_loaded() {
     new NF_Videomail_Admin_Metaboxes_Submission();
+
+    Ninja_Forms()->merge_tags['video'] = new NF_Videomail_Tags_Merge_Video();
   }
 
   public function register_fields($actions) {

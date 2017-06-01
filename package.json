@@ -29,15 +29,19 @@
     "type": "git",
     "url": "https://github.com/wpninjas/ninja-forms-videomail.git"
   },
+  "engines": {
+    "node": ">=7.7.2",
+    "yarn": ">=0.24.0"
+  },
   "scripts": {
     "wp": "gulp watch --host=wp",
     "mh": "gulp watch --port=9890 --host=infernal.darkness.com"
   },
   "dependencies": {
-    "videomail-client": "1.27.6"
+    "videomail-client": "1.28.9"
   },
   "devDependencies": {
-    "browser-sync": "2.18.8",
+    "browser-sync": "2.18.12",
     "del": "2.2.2",
     "gulp": "3.9.1",
     "gulp-autoprefixer": "4.0.0",
@@ -49,7 +53,7 @@
     "gulp-sourcemaps": "2.6.0",
     "gulp-standard": "10.0.0",
     "gulp-stylus": "2.6.0",
-    "gulp-todo": "5.3.0",
+    "gulp-todo": "5.4.0",
     "gulp-uglify": "2.1.2",
     "gulp-zip": "4.0.0",
     "nib": "1.1.2",
