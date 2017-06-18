@@ -1,14 +1,5 @@
 # Ninja Forms - Videomail
 
-[![npm][npm-image]][npm-url]
-[![downloads][downloads-image]][downloads-url]
-
-[npm-image]: https://img.shields.io/npm/v/ninja-forms-videomail.svg?style=flat
-[npm-url]: https://npmjs.org/package/ninja-forms-videomail
-
-[downloads-image]: https://img.shields.io/npm/dm/ninja-forms-videomail.svg?style=flat
-[downloads-url]: https://npmjs.com/package/ninja-forms-videomail
-
 Record videos in Ninja Forms!
 
 > Finally you can encode any webcam recordings from modern browsers and mobiles into MP4 + WebM within seconds. This without the need for Flash, Java nor any other plugins / addons. Just JavaScript.
@@ -60,4 +51,4 @@ There is also the live site [videomail.io](https://videomail.io) where you can s
 
 ## Examples
 
-In the `/examples` folder you can see some ready-to-import Ninja Forms templates for re-use. They might inspire you ...
+In the `/examples` folder you can see some ready-to-import Ninja Forms templates and HTML examples for re-use. They might inspire you ...
