@@ -9,7 +9,7 @@ class NF_Videomail_Tags_Merge_Video extends NF_Abstracts_MergeTags {
   public function __construct() {
     parent::__construct();
 
-    $this->title = __('Video Merge Tags', 'ninja-forms');
+    $this->title = __('Videomail', 'ninja-forms');
 
     $this->merge_tags = array(
       'alias' => array(
@@ -17,17 +17,43 @@ class NF_Videomail_Tags_Merge_Video extends NF_Abstracts_MergeTags {
         'tag' => '{videomail:alias}',
         'label' => __('Alias'),
         'callback' => 'alias'
+      ),
+      'url' => array(
+        'id' => 'url',
+        'tag' => '{videomail:url}',
+        'label' => __('URL'),
+        'callback' => 'url'
+      ),
+      'replyUrl' => array(
+        'id' => 'replyUrl',
+        'tag' => '{videomail:replyUrl}',
+        'label' => __('Reply URL'),
+        'callback' => 'replyUrl'
       )
     );
   }
 
   public function alias() {
-    $this->alias;
+    return $this->alias;
   }
 
-  // Call this method to set the value, so that the merge tag has access later.
-  // ie Ninja_Forms()->merge_tags[ 'video' ]->set_alias( 'foo' );
-  public function set_alias( $alias ) {
+  public function setAlias($alias) {
     $this->alias = $alias;
+  }
+
+  public function url() {
+    return $this->url;
+  }
+
+  public function setUrl($url) {
+    $this->url = $url;
+  }
+
+  public function replyUrl() {
+    return $this->replyUrl;
+  }
+
+  public function setReplyUrl($replyUrl) {
+    $this->replyUrl = $replyUrl;
   }
 }

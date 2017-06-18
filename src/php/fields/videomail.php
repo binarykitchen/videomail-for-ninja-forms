@@ -68,37 +68,31 @@ class NF_Videomail_Fields_Videomail extends NF_Abstracts_Field {
 
     $this->_settings['label']['value'] = __('Video Message', 'ninja-forms-videomail');
 
-    add_action('wp_enqueue_scripts', array($this, 'enqueue_scripts'));
-    add_filter('ninja_forms_custom_columns', array($this, 'custom_columns' ), 10, 2);
+    add_action('wp_enqueue_scripts', array($this, 'enqueueScripts'));
+    add_filter('ninja_forms_custom_columns', array($this, 'customColumns' ), 10, 2);
   }
 
   public function process ($field, $data) {
-    $fieldMergeTags = Ninja_Forms()->merge_tags['fields'];
-
     $videomail = $data['extra']['videomail'];
 
     $videomailFieldId = $field['id'];
     $data['fields'][$videomailFieldId]['value'] = $videomail;
 
-    // should i mention 'tag' => '{videomail:alias}', here too??
-    // this does not seem to be working ...
-    $fieldMergeTags->add_field(array(
-      'id' => 'alias',
-      'key' => 'alias',
-      'type' => 'string',
-      'value' => $videomail['alias']
-    ));
+    // now set some merge tag values for the videomail object itself
+    Ninja_Forms()->merge_tags['video']->setUrl($videomail['url']);
+    Ninja_Forms()->merge_tags['video']->setAlias($videomail['alias']);
+    Ninja_Forms()->merge_tags['video']->setReplyUrl($videomail['replyUrl']);
 
     return $data;
   }
 
-  public function admin_form_element ($id, $value) {
+  public function admin_form_element($id, $value) {
     if (empty($value)) return __('No Video Recorded');
 
     NF_Videomail::template('admin-form-element.html.php', compact('value'));
   }
 
-  public function enqueue_scripts() {
+  public function enqueueScripts() {
     wp_enqueue_style(
       'nf-videomail-main',
       NF_Videomail::$cssUrl . 'main.min.css'
@@ -121,7 +115,7 @@ class NF_Videomail_Fields_Videomail extends NF_Abstracts_Field {
     ));
   }
 
-  public function custom_columns ($value, $field) {
+  public function customColumns($value, $field) {
     if ($this->_name != $field->get_setting('type')) return $value;
 
     if (empty($value)) return __('No Video Recorded');
