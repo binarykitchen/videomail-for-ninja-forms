@@ -31,18 +31,18 @@
   },
   "engines": {
     "node": ">=7.7.2",
-    "yarn": ">=0.24.0"
+    "npm": ">=5.0.3"
   },
   "scripts": {
     "wp": "gulp watch --host=wp",
     "mh": "gulp watch --port=9890 --host=infernal.darkness.com"
   },
   "dependencies": {
-    "videomail-client": "1.28.9"
+    "videomail-client": "1.28.11"
   },
   "devDependencies": {
     "browser-sync": "2.18.12",
-    "del": "2.2.2",
+    "del": "3.0.0",
     "gulp": "3.9.1",
     "gulp-autoprefixer": "4.0.0",
     "gulp-bytediff": "1.0.0",
@@ -58,6 +58,6 @@
     "gulp-zip": "4.0.0",
     "nib": "1.1.2",
     "standard": "10.0.2",
-    "yargs": "8.0.1"
+    "yargs": "8.0.2"
   }
 }

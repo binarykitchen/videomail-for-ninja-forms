@@ -1,4 +1,4 @@
-sh b<?php if (!defined('ABSPATH')) exit;
+<?php if (!defined('ABSPATH')) exit;
 
 if (!class_exists( 'NF_Abstracts_Input')) return;
 
