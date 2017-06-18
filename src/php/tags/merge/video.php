@@ -29,6 +29,12 @@ class NF_Videomail_Tags_Merge_Video extends NF_Abstracts_MergeTags {
   // thanks!
   //
   public function alias() {
-    return 'some alias'; // <-- what to use here??
+    $this->alias
+  }
+  
+  // Call this method to set the value, so that the merge tag has access later.
+  // ie Ninja_Forms()->merge_tags[ 'video' ]->set_alias( 'foo' );
+  public function set_alias( $alias ) {
+    $this->alias = $alias;
   }
 }
