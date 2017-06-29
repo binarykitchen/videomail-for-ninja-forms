@@ -1,7 +1,7 @@
 {
   "name": "ninja-forms-videomail",
-  "version": "3.1.7",
-  "description": "With this add-on recording videos in Wordpress forms comes true.",
+  "version": "3.2.0",
+  "description": "With this add-on recording videos in Wordpress Ninja Forms comes true.",
   "author": "Michael Heuberger <michael.heuberger@binarykitchen.com>",
   "contributors": [
     {
@@ -9,7 +9,8 @@
       "email": "michael.heuberger@binarykitchen.com"
     },
     {
-      "name": "Kyle B. Johnson"
+      "name": "Kyle B. Johnson",
+      "email": "kyle@wpninjas.com"
     }
   ],
   "homepage": "https://videomail.io",
@@ -28,38 +29,35 @@
     "type": "git",
     "url": "https://github.com/wpninjas/ninja-forms-videomail.git"
   },
+  "engines": {
+    "node": ">=8.1.0",
+    "npm": ">=5.0.3"
+  },
   "scripts": {
-    "wp": "gulp watch --https --port=8890 --host=wp",
-    "postinstall": "./bin/postinstall.sh",
-    "patch": "./bin/release.sh --importance=patch",
-    "minor": "./bin/release.sh --importance=minor",
-    "major": "./bin/release.sh --importance=major"
+    "wp": "gulp watch --host=wp",
+    "mh": "gulp watch --port=9890 --host=infernal.darkness.com"
   },
   "dependencies": {
-    "videomail-client": "1.23.3"
+    "videomail-client": "1.28.12"
   },
   "devDependencies": {
-    "browser-sync": "2.18.7",
+    "browser-sync": "2.18.12",
+    "del": "3.0.0",
     "gulp": "3.9.1",
-    "gulp-autoprefixer": "3.1.1",
-    "gulp-bump": "2.6.1",
+    "gulp-autoprefixer": "4.0.0",
     "gulp-bytediff": "1.0.0",
     "gulp-cssnano": "2.1.2",
-    "gulp-if": "2.0.2",
-    "gulp-jshint": "2.0.4",
     "gulp-load-plugins": "1.5.0",
     "gulp-plumber": "1.1.0",
     "gulp-rename": "1.2.2",
-    "gulp-sourcemaps": "2.4.1",
-    "gulp-string-replace": "0.4.0",
+    "gulp-sourcemaps": "2.6.0",
+    "gulp-standard": "10.0.0",
     "gulp-stylus": "2.6.0",
-    "gulp-todo": "5.3.0",
-    "gulp-uglify": "2.0.1",
-    "gulp-util": "3.0.8",
+    "gulp-todo": "5.4.0",
+    "gulp-uglify": "2.1.2",
     "gulp-zip": "4.0.0",
-    "jshint": "2.9.4",
-    "jshint-stylish": "2.2.1",
     "nib": "1.1.2",
-    "yargs": "6.6.0"
+    "standard": "10.0.2",
+    "yargs": "8.0.2"
   }
 }

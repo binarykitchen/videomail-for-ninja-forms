@@ -1,133 +1,119 @@
-var gulp       = require('gulp')
-var nib        = require('nib')
-var stylish    = require('jshint-stylish')
-var plugins    = require('gulp-load-plugins')()
-var argv       = require('yargs').argv
-var sourcemaps = require('gulp-sourcemaps');
+const gulp = require('gulp')
+const nib = require('nib')
+const plugins = require('gulp-load-plugins')()
+const argv = require('yargs').argv
+const sourcemaps = require('gulp-sourcemaps')
+const del = require('del')
 
-// Reloads browser and injects CSS. Time-saving synchronised browser testing.
-var browserSync = require('browser-sync').create()
+// reloads browser and injects CSS
+const browserSync = require('browser-sync').create()
 
-// For manual browser reload.
-var reload = browserSync.reload
+// for manual browser reload
+const reload = browserSync.reload
 
-// Using Bitnami's Wordpress Stack which serves local WP at this address
-var PROJECT_URL = "http://127.0.0.1:8081/wordpress/wp-admin/admin.php?page=ninja-forms"
+gulp.task('browser-sync', function () {
+  const port = argv.port || 8890
+  const host = argv.host || 'localhost'
 
-gulp.task('browser-sync', function() {
-    var port  = argv.port   || 8080
-    var https = argv.https || false
-    var host  = argv.host || null
+  var projectUrl = 'https://' + host
 
-    browserSync.init({
-        // http://www.browsersync.io/docs/options/
-        proxy:          PROJECT_URL,
-        browser:        ["google-chrome"],
-        port:           port,
-        https:          https,
-        host:           host,
-        open:           true,
-        injectChanges:  true,
-    })
+  if (port) {
+    projectUrl += ':' + port
+  }
+
+  projectUrl += '/wp-admin/admin.php?page=ninja-forms'
+
+  // http://www.browsersync.io/docs/options/
+  browserSync.init({
+    proxy: projectUrl,
+    browser: ['google-chrome'],
+    port: port,
+    https: true,
+    host: host,
+    open: 'external',
+    injectChanges: true
+  })
 })
 
-gulp.task('jshint', function() {
-    return gulp.src('assets/js/main.js')
-        .pipe(plugins.jshint())
-        .pipe(plugins.jshint.reporter(stylish))
+gulp.task('standard', function () {
+  return gulp.src(['src/js/main.js'])
+    .pipe(plugins.standard())
+    .pipe(plugins.standard.reporter('default', {
+      breakOnError: true,
+      quiet: true
+    }))
 })
 
-gulp.task('js', ['jshint'], function() {
-    return gulp.src('assets/js/main.js')        
-        .pipe(sourcemaps.init())
-        .pipe(plugins.bytediff.start())
-        .pipe(plugins.uglify())
-        .pipe(plugins.rename({suffix: '.min'}))
-        .pipe(plugins.bytediff.stop())
-        .pipe(sourcemaps.write( '/' ))        
-        .pipe(gulp.dest('assets/js/min'))
+gulp.task('js', ['standard'], function () {
+  return gulp.src('src/js/main.js')
+    .pipe(sourcemaps.init())
+    .pipe(plugins.uglify())
+    .pipe(plugins.rename({suffix: '.min'}))
+    .pipe(sourcemaps.write('.')) // todo fix, sourcemaps do not seem to work (switch to webpack?)
+    .pipe(gulp.dest('target/js'))
 })
 
-gulp.task('css', function() {
-    gulp.src('assets/css/main.styl')
-        .pipe(plugins.plumber()) // with the plumber the gulp task won't crash on errors
-        .pipe(plugins.stylus({
-            use:    [nib()],
-            errors: true
-        }))
-        .pipe(plugins.autoprefixer(
-            'last 5 versions',
-            '> 2%',
-            'Explorer >= 10',
-            'Chrome >= 41',
-            'Firefox >= 41',
-            'iOS >= 8',
-            'android >= 4'
-        ))
-        .pipe(plugins.bytediff.start())
-        .pipe(plugins.cssnano())
-        .pipe(plugins.rename({suffix: '.min'}))
-        .pipe(plugins.bytediff.stop())
-        .pipe(browserSync.stream())
-        .pipe(gulp.dest('assets/css/min'))
+gulp.task('copy-videomail-client', function () {
+  gulp
+    .src('node_modules/videomail-client/dist/videomail-client.min.*')
+    .pipe(gulp.dest('target/js/videomail-client'))
 })
 
-gulp.task('watch', ['default', 'browser-sync'], function() {
-    gulp.watch('includes/**/*.php', reload)
-    gulp.watch('assets/js/*.js', ['js', reload])
-    gulp.watch('assets/css/*.styl', ['css'])
+gulp.task('css', function () {
+  gulp.src('src/styl/main.styl')
+    .pipe(plugins.plumber())
+    .pipe(plugins.stylus({
+      use: [nib()],
+      errors: true
+    }))
+    .pipe(plugins.autoprefixer(
+      'last 5 versions',
+      '> 2%',
+      'Explorer >= 10',
+      'Chrome >= 41',
+      'Firefox >= 41',
+      'iOS >= 8',
+      'android >= 4'
+    ))
+    .pipe(plugins.bytediff.start())
+    .pipe(plugins.cssnano())
+    .pipe(plugins.rename({suffix: '.min'}))
+    .pipe(plugins.bytediff.stop())
+    .pipe(browserSync.stream())
+    .pipe(gulp.dest('target/css'))
 })
 
-gulp.task('todo', function() {
-    gulp.src(['includes/**/*.php',
-              'assets/**/*.{js, styl}',
-              'gulpfile.js',
-              'ninja-forms-videomail.php',
-              'tests/*.php'])
-        .pipe(plugins.todo())
-        .pipe(gulp.dest('./'))
+gulp.task('clean:php', function () {
+  return del([
+    'target/**/*.{php,html}'
+  ])
 })
 
-gulp.task('zip', ['css', 'js', 'todo'], function() {
-    return gulp.src([
-          '**',
-          '!node_modules',
-          '!node_modules/**',
-          '!dist',
-          '!dist/**'
-        ])
-        .pipe(plugins.zip('ninja-forms-videomail.zip'))
-        .pipe(gulp.dest('dist'))
-        .on('error', plugins.util.log)
+gulp.task('php', ['clean:php'], function () {
+  return gulp.src('src/**/*.{php,html}')
+    .pipe(gulp.dest('target'))
 })
 
-// get inspired by
-// https://www.npmjs.com/package/gulp-tag-version and
-// https://github.com/nicksrandall/gulp-release-tasks/blob/master/tasks/release.js
-gulp.task('bumpVersion', function() {
-    var bumpOptions = {}
-
-    if (argv.version)
-        bumpOptions.version = argv.version
-
-    else if (argv.importance)
-        bumpOptions.type = argv.importance
-
-    return gulp.src(['./package.json'])
-        .pipe(plugins.bump(bumpOptions))
-        .pipe(plugins.if(argv.write, gulp.dest('./')))
-        .on('error', plugins.util.log)
+gulp.task('watch', ['default', 'browser-sync'], function () {
+  gulp.watch('src/**/*.{php,html}', ['php', reload])
+  gulp.watch('src/js/**/*.js', ['js', reload])
+  gulp.watch('src/styl/**/*.styl', ['css'])
 })
 
-gulp.task('bumpPHPVersion', function() {
-  var currentVersion = argv.currentVersion
-  var newVersion = argv.newVersion
-  
-  gulp.src(["ninja-forms-videomail.php"])
-    .pipe(plugins.stringReplace(currentVersion, newVersion))
-    .pipe(gulp.dest('./'))
-    .on('error', plugins.util.log)
+gulp.task('todo', function () {
+  gulp.src([
+    'src/**/*.{php,js,styl}',
+    'gulpfile.js'
+  ])
+  .pipe(plugins.todo())
+  .pipe(gulp.dest('./'))
+})
+
+gulp.task('zip', ['css', 'js', 'copy-videomail-client', 'todo', 'php'], function () {
+  return gulp.src(['target/**'])
+    .pipe(plugins.zip('ninja-forms-videomail.zip'))
+    .pipe(gulp.dest('dist'))
 })
 
 // just builds assets once, nothing else
-gulp.task('default', ['css', 'js', 'todo', 'zip'])
+gulp.task('default', ['css', 'js', 'copy-videomail-client', 'todo', 'php', 'zip'])
