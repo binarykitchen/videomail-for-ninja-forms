@@ -1,0 +1,26 @@
+<p>Your video message was sent successfully to {wp:admin_email}</p>
+<p style="margin-top: 20px;">Here again all the details of that video message:</p>
+<table style="border: 2px #ccc solid;" cellpadding="0" cellspacing="12">
+  <tbody>
+    <tr>
+      <td align="left" valign="top" style="padding-right:0.6em">First and Last Name</td>
+      <td align="left" valign="top">{field:from_name}</td>
+    </tr>
+    <tr>
+      <td align="left" valign="top" style="padding-right:0.6em">Your email</td>
+      <td align="left" valign="top">{field:from_email}</td>
+    </tr>
+    <tr>
+      <td align="left" valign="top" style="padding-right:0.6em">Subject</td>
+      <td align="left" valign="top">{field:subject}</td>
+    </tr>
+    <tr>
+      <td align="left" valign="top" style="padding-right:0.6em">Video Message URL</td>
+      <td align="left" valign="top"><a href="{videomail:url}">{videomail:url}</a></td>
+    </tr>
+    <tr>
+      <td align="left" valign="top" style="padding-right:0.6em">Message (text)</td>
+      <td align="left" valign="top">{field:message}</td>
+    </tr>
+  </tbody>
+</table>

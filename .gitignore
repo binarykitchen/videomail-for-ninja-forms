@@ -1,9 +1,6 @@
-# Node Stuff
 node_modules
-npm-debug.log
-
-# IDE Stuff
-## phpStorm
-.idea/
-
-# Project Stuff
+target
+dist
+dist/*
+yarn.lock
+package-lock.json
