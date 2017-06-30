@@ -1,6 +1,4 @@
 node_modules
 target
-dist
-dist/*
 yarn.lock
 package-lock.json

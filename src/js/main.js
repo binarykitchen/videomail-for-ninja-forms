@@ -5,7 +5,7 @@ var nfRadio = window.nfRadio // todo is this the same as Backbone.Radio ??
 var jQuery = window.jQuery
 
 // manual switch to have more stuff printed to console
-var DEBUG = true
+var DEBUG = false
 
 // good documentation on backbone event handling
 // http://backbonejs.org/#Events
@@ -20,11 +20,6 @@ var VideomailFieldController = Marionette.Object.extend({
   initialize: function () {
     Backbone.Radio.DEBUG = DEBUG
 
-    // TODO do not load anything, nor do any event handling
-    // when no fields are of type videomail
-    // easy to reproduce: create a default contact form without
-    // videomail and it's still loaded ...
-    // see https://github.com/wpninjas/ninja-forms-videomail/issues/29
     this.listenTo(Backbone.Radio.channel('videomail'), 'init:model', this.registerVideomailField)
   },
 
@@ -36,6 +31,7 @@ var VideomailFieldController = Marionette.Object.extend({
     // workaround for https://github.com/wpninjas/ninja-forms/issues/2675
     // also prevents from event emitter leaks under race conditions
     if (!this.videomailClient) {
+      console.log('registering vm')
       this.fieldModel = fieldModel
 
       this.loadVideomailClient()
