@@ -20,7 +20,7 @@ In short: this add-on runs on the Ninja Forms plugin engine where you can config
 4. Symlink ninja-forms-videomail into WordPress plugins folder
 4. Install latest nodejs, best with [nvm](https://github.com/creationix/nvm)
 5. `npm install` to install npm dependencies
-6. `gulp watch` which will open Google Chrome and automatically reloads upon changes (PHP, JS and CSS)
+6. `gulp watch --host x --port y` which will open Google Chrome and automatically reloads upon changes (PHP, JS and CSS). Defaults to https://localhost:8890
 
 ### Customise host or port
 
