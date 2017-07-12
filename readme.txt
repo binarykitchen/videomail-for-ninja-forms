@@ -1,9 +1,9 @@
 === Ninja Forms Videomail ===
 Contributors: binarykitchen, kbjohnson90
-Tags: video, email
+Tags: video, email, audio, webcam, recorder
 Requires at least: 4.3
-Tested up to: 4.5.2
-Stable tag: 3.0.6
+Tested up to: 4.7.0
+Stable tag: 3.1.6
 License: CC0-1.0
 
 == Description ==
