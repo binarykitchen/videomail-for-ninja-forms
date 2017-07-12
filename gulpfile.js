@@ -4,6 +4,15 @@ const plugins = require('gulp-load-plugins')()
 const argv = require('yargs').argv
 const sourcemaps = require('gulp-sourcemaps')
 const del = require('del')
+const minimist = require('minimist')
+const path = require('path')
+
+const defaultOptions = {
+  importance: null,
+  version: null
+}
+
+const options = minimist(process.argv.slice(2), {default: defaultOptions})
 
 // reloads browser and injects CSS
 const browserSync = require('browser-sync').create()
@@ -54,24 +63,24 @@ gulp.task('js', ['standard'], function () {
 })
 
 gulp.task('copy-videomail-client', function () {
-  gulp
+  return gulp
     .src('node_modules/videomail-client/dist/videomail-client.min.*')
     .pipe(gulp.dest('target/js/videomail-client'))
 })
 
 gulp.task('css', function () {
-  gulp.src('src/styl/main.styl')
+  return gulp.src('src/styl/main.styl')
     .pipe(plugins.plumber())
     .pipe(plugins.stylus({
       use: [nib()],
       errors: true
     }))
     .pipe(plugins.autoprefixer(
-      'last 5 versions',
+      'last 4 versions',
       '> 2%',
-      'Explorer >= 10',
-      'Chrome >= 41',
-      'Firefox >= 41',
+      'Explorer >= 11',
+      'Chrome >= 43',
+      'Firefox >= 45',
       'iOS >= 8',
       'android >= 4'
     ))
@@ -101,7 +110,7 @@ gulp.task('watch', ['default', 'browser-sync'], function () {
 })
 
 gulp.task('todo', function () {
-  gulp.src([
+  return gulp.src([
     'src/**/*.{php,js,styl}',
     'gulpfile.js'
   ])
@@ -113,6 +122,26 @@ gulp.task('zip', ['css', 'js', 'copy-videomail-client', 'todo', 'php'], function
   return gulp.src(['target/**'])
     .pipe(plugins.zip('ninja-forms-videomail.zip'))
     .pipe(gulp.dest('dist'))
+})
+
+// get inspired by
+// https://www.npmjs.com/package/gulp-tag-version and
+// https://github.com/nicksrandall/gulp-release-tasks/blob/master/tasks/release.js
+gulp.task('bumpVersion', () => {
+  const bumpOptions = {}
+
+  if (options.version) {
+    bumpOptions.version = options.version
+  } else if (options.importance) {
+    bumpOptions.type = options.importance
+  }
+
+  return gulp.src(['./package.json', './src/ninja-forms-videomail.php'])
+    .pipe(plugins.bump(bumpOptions))
+    .pipe(plugins.if(options.write, gulp.dest(function (file) {
+      return path.dirname(file.path)
+    })))
+    .on('error', plugins.util.log)
 })
 
 // just builds assets once, nothing else
