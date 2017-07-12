@@ -36,7 +36,8 @@ if [[ `git status --porcelain` ]]; then
     die "Aborting the bump! You have uncommitted changes."
 fi
 
-read VERSION <<< $(gulp bumpVersion --importance=$IMPORTANCE | awk '/to/ {print $5}')
+# https://stackoverflow.com/questions/45047976/how-to-awk-extract-the-newer-version-number/45048086#45048086
+read VERSION <<< $(gulp bumpVersion --importance=$IMPORTANCE | awk '!a{if(match($0,/to [0-9]\.[0-9]\.[0-9]/)){print substr($0,RSTART+3,RLENGTH-3);a=1}}')
 
 # Ensures nothing is broken
 # yarn test
@@ -45,6 +46,8 @@ git checkout master
 git push
 git checkout develop
 git push
+
+echo "Starting new release branch with version $VERSION..."
 
 # Start a new release
 git flow release start $VERSION
@@ -56,17 +59,14 @@ gulp bumpVersion --write --version=$VERSION
 yarn clean
 yarn install
 
-# Rebuild all assets
-gulp build --minify
+# Rebuild all assets and zip them all into dist
+gulp zip
 
 # Ensures again that nothing is broken with the build
 # yarn test
 
 git add -A
 git commit -am "Final commit of version $VERSION" --no-edit
-
-echo "Publishing to npm ..."
-yarn publish --new-version $VERSION
 
 # Complete the previous release
 git flow release finish $VERSION -m "Completing release of $VERSION" # This will also tag it

@@ -1,6 +1,6 @@
 {
   "name": "ninja-forms-videomail",
-  "version": "3.3.0",
+  "version": "3.3.1",
   "description": "With this add-on recording videos in Wordpress Ninja Forms comes true.",
   "author": "Michael Heuberger <michael.heuberger@binarykitchen.com>",
   "contributors": [
@@ -36,18 +36,23 @@
   },
   "scripts": {
     "wp": "gulp watch --host=wp",
-    "mh": "gulp watch --port=9890 --host=infernal.darkness.com"
+    "mh": "gulp watch --port=9890 --host=infernal.darkness.com",
+    "patch": "./env/dev/release.sh --importance=patch",
+    "minor": "./env/dev/release.sh --importance=minor",
+    "major": "./env/dev/release.sh --importance=major"
   },
   "dependencies": {
-    "videomail-client": "1.28.12"
+    "videomail-client": "1.28.16"
   },
   "devDependencies": {
     "browser-sync": "2.18.12",
     "del": "3.0.0",
     "gulp": "3.9.1",
     "gulp-autoprefixer": "4.0.0",
+    "gulp-bump": "2.7.0",
     "gulp-bytediff": "1.0.0",
     "gulp-cssnano": "2.1.2",
+    "gulp-if": "2.0.2",
     "gulp-load-plugins": "1.5.0",
     "gulp-plumber": "1.1.0",
     "gulp-rename": "1.2.2",
@@ -56,7 +61,9 @@
     "gulp-stylus": "2.6.0",
     "gulp-todo": "5.4.0",
     "gulp-uglify": "2.1.2",
+    "gulp-util": "3.0.8",
     "gulp-zip": "4.0.0",
+    "minimist": "1.2.0",
     "nib": "1.1.2",
     "standard": "10.0.2",
     "yargs": "8.0.2"
