@@ -36,8 +36,10 @@ if [[ `git status --porcelain` ]]; then
     die "Aborting the bump! You have uncommitted changes."
 fi
 
-# https://stackoverflow.com/questions/45047976/how-to-awk-extract-the-newer-version-number/45048086#45048086
-read VERSION <<< $(gulp bumpVersion --importance=$IMPORTANCE | awk '!a{if(match($0,/to [0-9]\.[0-9]\.[0-9]/)){print substr($0,RSTART+3,RLENGTH-3);a=1}}')
+# https://stackoverflow.com/questions/45047976/how-to-awk-extract-the-newer-version-number/45049299#45049299
+# \K : To match everything on left to it but not print it.
+# -m1: It to make grep stop after printing one match.
+read VERSION <<< $(gulp bumpVersion --importance=$IMPORTANCE | grep -oP -m1 'Bumped\s\d+.\d+.\d+\sto\s\K[^ ]+')
 
 # Ensures nothing is broken
 # yarn test
