@@ -31,7 +31,6 @@ var VideomailFieldController = Marionette.Object.extend({
     // workaround for https://github.com/wpninjas/ninja-forms/issues/2675
     // also prevents from event emitter leaks under race conditions
     if (!this.videomailClient) {
-      console.log('registering vm')
       this.fieldModel = fieldModel
 
       this.loadVideomailClient()

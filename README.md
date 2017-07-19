@@ -37,7 +37,7 @@ That new recordable video field comes with many options you can configure yourse
 
 ## Whitelisting
 
-For local development, everthing will work right away because the localhost URL is already whitelisted on the videomail server.
+For local development, everything will work right away because the localhost URL is already whitelisted on the videomail server.
 
 But once you deploy your Wordpress site out in the wild, we will have to whitelist your production URL. For that, just submit a [Whitelist Request](https://videomail.io/whitelist). Very easy.
 
@@ -52,3 +52,7 @@ There is also the live site [videomail.io](https://videomail.io) where you can s
 ## Examples
 
 In the `/examples` folder you can see some ready-to-import Ninja Forms templates and HTML examples for re-use. They might inspire you ...
+
+## Documentation
+
+In the `/doc` folder we place in all text and images for the public documentation which is also available on https://ninjaforms.com/docs/videomail/
