@@ -1,10 +1,12 @@
-# Ninja Forms - Videomail
+# Ninja Forms - Videomail (developer documentation)
 
 Record videos in Ninja Forms!
 
 > Finally you can encode any webcam recordings from modern browsers and mobiles into MP4 + WebM within seconds. This without the need for Flash, Java nor any other plugins / addons. Just JavaScript.
 
 With this add-on recording videos in Wordpress forms comes true. No further coding required. Just install + configure a bit, that's all.
+
+More documentation, aimed at the mortal user, is in the readme.txt - this here is for developers only.
 
 ## Dependencies
 
@@ -31,24 +33,14 @@ https://wp:8890/wordpress/wp-admin/admin.php?page=ninja-forms
 
 (for exactly these parameters, there is a short cut: `npm run wp` and `wp:8890` is already whitelisted)
 
-## Options
-
-That new recordable video field comes with many options you can configure yourself such as duration, width, audio on/off and much more.
-
-## Whitelisting
-
-For local development, everthing will work right away because the localhost URL is already whitelisted on the videomail server.
-
-But once you deploy your Wordpress site out in the wild, we will have to whitelist your production URL. For that, just submit a [Whitelist Request](https://videomail.io/whitelist). Very easy.
-
-## videomail-client library
-
-This WordPress plugin is based on the open sourced npm package [videomail-client](https://github.com/binarykitchen/videomail-client). There you can find more information on the technical side of things.
-
-## Live example
-
-There is also the live site [videomail.io](https://videomail.io) where you can see the videomail-client in action and use it right away for free, anytime, anywhere. Many people, especially Deafs and Sign Language users, already use it for their everyday communication.
-
 ## Examples
 
 In the `/examples` folder you can see some ready-to-import Ninja Forms templates and HTML examples for re-use. They might inspire you ...
+
+## Documentation
+
+In the `/doc` folder we place in all text and images for the public documentation which is also available on https://ninjaforms.com/docs/videomail/
+
+## Support
+
+Here: https://ninjaforms.com/contact/

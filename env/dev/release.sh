@@ -39,9 +39,6 @@ fi
 # https://stackoverflow.com/questions/45047976/how-to-awk-extract-the-newer-version-number/45048086#45048086
 read VERSION <<< $(gulp bumpVersion --importance=$IMPORTANCE | awk '!a{if(match($0,/to [0-9]\.[0-9]\.[0-9]/)){print substr($0,RSTART+3,RLENGTH-3);a=1}}')
 
-# Ensures nothing is broken
-# yarn test
-
 git checkout master
 git push
 git checkout develop
@@ -56,14 +53,11 @@ git flow release start $VERSION
 gulp bumpVersion --write --version=$VERSION
 
 # Ensure dependencies are okay
-yarn clean
-yarn install
+npm prune
+npm install
 
 # Rebuild all assets and zip them all into dist
 gulp zip
-
-# Ensures again that nothing is broken with the build
-# yarn test
 
 git add -A
 git commit -am "Final commit of version $VERSION" --no-edit
