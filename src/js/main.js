@@ -1,9 +1,3 @@
-var VideomailClient = require('videomail-client')
-var Marionette = window.Marionette
-var Backbone = window.Backbone
-var nfRadio = window.nfRadio // todo is this the same as Backbone.Radio ??
-var jQuery = window.jQuery
-
 // manual switch to have more stuff printed to console
 var DEBUG = false
 
@@ -31,7 +25,6 @@ var VideomailFieldController = Marionette.Object.extend({
     // workaround for https://github.com/wpninjas/ninja-forms/issues/2675
     // also prevents from event emitter leaks under race conditions
     if (!this.videomailClient) {
-      console.log('registering vm')
       this.fieldModel = fieldModel
 
       this.loadVideomailClient()
