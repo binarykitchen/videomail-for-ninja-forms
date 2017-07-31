@@ -41,6 +41,9 @@
     "minor": "./env/dev/release.sh --importance=minor",
     "major": "./env/dev/release.sh --importance=major"
   },
+  "standard": {
+    "globals": ["Marionette", "Backbone", "jQuery", "VideomailClient", "nfRadio"]
+  },
   "dependencies": {
     "videomail-client": "2.0.8"
   },
