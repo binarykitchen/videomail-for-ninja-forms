@@ -30,9 +30,9 @@
     "url": "https://github.com/wpninjas/ninja-forms-videomail.git"
   },
   "engines": {
-    "node": ">=8.1.0",
-    "npm": ">=5.3.0",
-    "yarn": ">=0.27.5"
+    "node": "8.2.1",
+    "npm": "5.3.0",
+    "yarn": "0.27.5"
   },
   "scripts": {
     "wp": "gulp watch --host=wp",
@@ -42,7 +42,7 @@
     "major": "./env/dev/release.sh --importance=major"
   },
   "dependencies": {
-    "videomail-client": "2.0.7"
+    "videomail-client": "2.0.8"
   },
   "devDependencies": {
     "browser-sync": "2.18.13",
