@@ -51,7 +51,7 @@
     ]
   },
   "dependencies": {
-    "videomail-client": "2.0.8"
+    "videomail-client": "2.0.17"
   },
   "devDependencies": {
     "browser-sync": "2.18.13",
@@ -66,7 +66,7 @@
     "gulp-plumber": "1.1.0",
     "gulp-rename": "1.2.2",
     "gulp-sourcemaps": "2.6.0",
-    "gulp-standard": "10.0.0",
+    "gulp-standard": "10.1.0",
     "gulp-stylus": "2.6.0",
     "gulp-todo": "5.4.0",
     "gulp-uglify": "3.0.0",
@@ -74,7 +74,7 @@
     "gulp-zip": "4.0.0",
     "minimist": "1.2.0",
     "nib": "1.1.2",
-    "standard": "10.0.2",
+    "standard": "10.0.3",
     "yargs": "8.0.2"
   }
 }
