@@ -16,7 +16,7 @@ In short: this add-on runs on the Ninja Forms plugin engine where you can config
 
 ## Development
 
-1. Install WordPress locally
+1. Install WordPress locally or use [Local by Flywheel](https://local.getflywheel.com/)
 2. Install Ninja Forms Plugin
 3. `git clone git@github.com:wpninjas/ninja-forms-videomail.git`
 4. Symlink ninja-forms-videomail into WordPress plugins folder
@@ -43,4 +43,4 @@ In the `/doc` folder we place in all text and images for the public documentatio
 
 ## Support
 
-Here: https://ninjaforms.com/contact/
+https://ninjaforms.com/contact/
