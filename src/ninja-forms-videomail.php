@@ -2,7 +2,7 @@
 
 /*
  * Plugin Name: Ninja Forms - Videomail
- * Plugin URI: https://github.com/kjohnson/ninja-forms-videomail
+ * Plugin URI: https://ninjaforms.com/extensions/videomail/
  * Description: Express yourself in more than just words. Record and send a short video from your webcam.
  * Version: 3.3.2
  * Author: Michael Heuberger + Kyle B. Johnson
