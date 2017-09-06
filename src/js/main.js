@@ -1,5 +1,5 @@
 // manual switch to have more stuff printed to console
-var DEBUG = false
+var DEBUG = true
 
 // good documentation on backbone event handling
 // http://backbonejs.org/#Events
@@ -8,13 +8,17 @@ var VideomailFieldController = Marionette.Object.extend({
 
   videomailClient: null,
 
-  // not sure if this is a good idea, but i need a reference to i
+  // not sure if this is a good idea, but i need a reference to it
   fieldModel: null,
 
   initialize: function () {
     Backbone.Radio.DEBUG = DEBUG
 
-    this.listenTo(Backbone.Radio.channel('videomail'), 'init:model', this.registerVideomailField)
+    this.listenTo(
+      Backbone.Radio.channel('videomail'),
+      'init:model',
+      this.registerVideomailField
+    )
   },
 
   getFormId: function () {
@@ -30,11 +34,27 @@ var VideomailFieldController = Marionette.Object.extend({
       this.loadVideomailClient()
 
       // custom field validation, since we aren't using a standard `value`
-      Backbone.Radio.channel('videomail').reply('validate:required', this.validateRequired, this)
-      Backbone.Radio.channel('videomail').reply('validate:modelData', this.validateVideomail, this)
+      // for the videomail input
+      Backbone.Radio.channel('videomail').reply(
+        'validate:required',
+        this.validateRequired,
+        this
+      )
 
-      // pause submission so that we can POST to the Videomail server first
-      Backbone.Radio.channel('form-' + this.getFormId()).reply('maybe:submit', this.maybeSubmit, this, fieldModel)
+      Backbone.Radio.channel('videomail').reply(
+        'validate:modelData',
+        this.validateVideomail,
+        this
+      )
+
+      // control submission progress,
+      // so that we can POST to the Videomail server first
+      Backbone.Radio.channel('form-' + this.getFormId()).reply(
+        'maybe:submit',
+        this.maybeSubmit,
+        this,
+        fieldModel
+      )
     }
   },
 
@@ -118,8 +138,14 @@ var VideomailFieldController = Marionette.Object.extend({
     return fieldModel.get('videomail-key') || false
   },
 
+  hasErrors: function (formModel) {
+    return formModel.get('errors').length > 0
+  },
+
   maybeSubmit: function (formModel) {
-    if (!formModel.getExtra('videomail')) {
+    // only when a videomail has been recorded and no other form errors
+    // exist, submit the final video to the videomail server
+    if (!formModel.getExtra('videomail') && !this.hasErrors(formModel)) {
       this.videomailClient.submit()
       return false
     } else {
@@ -172,8 +198,6 @@ var VideomailFieldController = Marionette.Object.extend({
     cb(null, videomail)
   },
 
-  // never gets called, why?
-  // related to https://github.com/wpninjas/ninja-forms/issues/2675
   onBeforeDestroy: function () {
     this.videomailClient.unload()
     delete this.videomailClient
