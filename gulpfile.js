@@ -59,7 +59,7 @@ gulp.task('js', ['standard'], function () {
     .pipe(plugins.uglify())
     .pipe(plugins.rename({suffix: '.min'}))
      // todo fix, sourcemaps do not seem to work (switch to webpack?)
-    .pipe(sourcemaps.write('.'))
+    .pipe(sourcemaps.write())
     .pipe(gulp.dest('target/js'))
 })
 
