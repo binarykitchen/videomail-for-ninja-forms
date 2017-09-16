@@ -51,6 +51,12 @@ This WordPress plugin is based on the open sourced npm package [videomail-client
 
 == Changelog ==
 
+= 3.3.3 (9 September 2017) =
+
+*Bugs:*
+
+* Make it work again on all Edge browsers
+
 = 3.3.2 (27 July 2017) =
 
 *Bugs:*

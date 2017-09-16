@@ -41,6 +41,10 @@ In the `/examples` folder you can see some ready-to-import Ninja Forms templates
 
 In the `/doc` folder we place in all text and images for the public documentation which is also available on https://ninjaforms.com/docs/videomail/
 
-## Support
+## Bug reporting
 
 https://ninjaforms.com/contact/
+
+## Support system
+
+https://wpninjas.kustomerapp.com/app/customers
