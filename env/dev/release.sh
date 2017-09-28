@@ -53,8 +53,7 @@ git flow release start $VERSION
 gulp bumpVersion --write --version=$VERSION
 
 # Ensure dependencies are okay
-npm prune
-npm install
+yarn
 
 # Rebuild all assets and zip them all into dist
 gulp zip

@@ -80,9 +80,9 @@ gulp.task('css', function () {
       'last 4 versions',
       '> 2%',
       'Explorer >= 11',
-      'Chrome >= 43',
+      'Chrome >= 44',
       'Firefox >= 45',
-      'iOS >= 8',
+      'iOS >= 9',
       'android >= 4'
     ))
     .pipe(plugins.bytediff.start())
@@ -137,12 +137,16 @@ gulp.task('bumpVersion', () => {
     bumpOptions.type = options.importance
   }
 
-  return gulp.src(['./package.json', './src/ninja-forms-videomail.php'])
-    .pipe(plugins.bump(bumpOptions))
-    .pipe(plugins.if(options.write, gulp.dest(function (file) {
-      return path.dirname(file.path)
-    })))
-    .on('error', plugins.util.log)
+  return gulp.src([
+    './package.json',
+    './src/ninja-forms-videomail.php',
+    './readme.txt'
+  ])
+  .pipe(plugins.bump(bumpOptions))
+  .pipe(plugins.if(options.write, gulp.dest(function (file) {
+    return path.dirname(file.path)
+  })))
+  .on('error', plugins.util.log)
 })
 
 // just builds assets once, nothing else
