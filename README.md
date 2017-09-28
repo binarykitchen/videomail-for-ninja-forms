@@ -34,6 +34,14 @@ https://wp:8890/wordpress/wp-admin/admin.php?page=ninja-forms
 
 (for exactly these parameters, there is a short cut: `yarn run wp` and `wp:8890` is already whitelisted)
 
+## Directory structure
+
+In `src` you do the normal development work. When gulp watches for changes, they get recompiled into the `target` folder and will be served from there.
+
+This is needed so that this repository can be used right away as a plugin folder without the need to run any other commands. This is a requirement for automatic Ninja Forms plugin releases.
+
+In `dist` you can find a latest verison in a zip file for easier distribution. Can be useful sometimes. `env` contains code depending on environment, such as bash scripts for building releases.
+
 ## Examples
 
 In the `/examples` folder you can see some ready-to-import Ninja Forms templates and HTML examples for re-use. They might inspire you ...
