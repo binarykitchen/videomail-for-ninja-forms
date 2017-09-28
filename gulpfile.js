@@ -112,6 +112,7 @@ gulp.task('watch', ['default', 'browser-sync'], function () {
 
 gulp.task('todo', function () {
   return gulp.src([
+    'ninja-forms-videomail.php',
     'src/**/*.{php,js,styl}',
     'gulpfile.js'
   ])
@@ -120,9 +121,12 @@ gulp.task('todo', function () {
 })
 
 gulp.task('zip', ['css', 'js', 'copy-videomail-client', 'todo', 'php'], function () {
-  return gulp.src(['target/**'])
-    .pipe(plugins.zip('ninja-forms-videomail.zip'))
-    .pipe(gulp.dest('dist'))
+  return gulp.src([
+    'ninja-forms-videomail.php',
+    'target/**'
+  ], {base: './'})
+  .pipe(plugins.zip('ninja-forms-videomail.zip'))
+  .pipe(gulp.dest('dist'))
 })
 
 // get inspired by
@@ -139,7 +143,7 @@ gulp.task('bumpVersion', () => {
 
   return gulp.src([
     './package.json',
-    './src/ninja-forms-videomail.php',
+    './ninja-forms-videomail.php',
     './readme.txt'
   ])
   .pipe(plugins.bump(bumpOptions))
