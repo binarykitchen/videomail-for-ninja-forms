@@ -80,9 +80,9 @@ gulp.task('css', function () {
       'last 4 versions',
       '> 2%',
       'Explorer >= 11',
-      'Chrome >= 43',
+      'Chrome >= 44',
       'Firefox >= 45',
-      'iOS >= 8',
+      'iOS >= 9',
       'android >= 4'
     ))
     .pipe(plugins.bytediff.start())
@@ -112,6 +112,7 @@ gulp.task('watch', ['default', 'browser-sync'], function () {
 
 gulp.task('todo', function () {
   return gulp.src([
+    'ninja-forms-videomail.php',
     'src/**/*.{php,js,styl}',
     'gulpfile.js'
   ])
@@ -120,9 +121,14 @@ gulp.task('todo', function () {
 })
 
 gulp.task('zip', ['css', 'js', 'copy-videomail-client', 'todo', 'php'], function () {
-  return gulp.src(['target/**'])
-    .pipe(plugins.zip('ninja-forms-videomail.zip'))
-    .pipe(gulp.dest('dist'))
+  return gulp.src([
+    'index.php',
+    'readme.txt',
+    'ninja-forms-videomail.php',
+    'target/**'
+  ], {base: './'})
+  .pipe(plugins.zip('ninja-forms-videomail.zip'))
+  .pipe(gulp.dest('dist'))
 })
 
 // get inspired by
@@ -137,12 +143,16 @@ gulp.task('bumpVersion', () => {
     bumpOptions.type = options.importance
   }
 
-  return gulp.src(['./package.json', './src/ninja-forms-videomail.php'])
-    .pipe(plugins.bump(bumpOptions))
-    .pipe(plugins.if(options.write, gulp.dest(function (file) {
-      return path.dirname(file.path)
-    })))
-    .on('error', plugins.util.log)
+  return gulp.src([
+    './package.json',
+    // './readme.txt', // todo
+    './ninja-forms-videomail.php'
+  ])
+  .pipe(plugins.bump(bumpOptions))
+  .pipe(plugins.if(options.write, gulp.dest(function (file) {
+    return path.dirname(file.path)
+  })))
+  .on('error', plugins.util.log)
 })
 
 // just builds assets once, nothing else

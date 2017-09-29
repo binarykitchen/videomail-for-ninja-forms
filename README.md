@@ -21,7 +21,8 @@ In short: this add-on runs on the Ninja Forms plugin engine where you can config
 3. `git clone git@github.com:wpninjas/ninja-forms-videomail.git`
 4. Symlink ninja-forms-videomail into WordPress plugins folder
 4. Install latest nodejs, best with [nvm](https://github.com/creationix/nvm)
-5. `npm install` to install npm dependencies
+5. Install [yarn](https://yarnpkg.com/en/docs/install)
+5. `yarn install` to install dependencies
 6. `gulp watch --host x --port y` which will open Google Chrome and automatically reloads upon changes (PHP, JS and CSS). Defaults to https://localhost:8890
 
 ### Customise host or port
@@ -31,7 +32,15 @@ For custom hosts or ports, you can customize `gulp watch` like that:
 `gulp watch --port=8890 --host=wp` and that will open this page for you:
 https://wp:8890/wordpress/wp-admin/admin.php?page=ninja-forms
 
-(for exactly these parameters, there is a short cut: `npm run wp` and `wp:8890` is already whitelisted)
+(for exactly these parameters, there is a short cut: `yarn run wp` and `wp:8890` is already whitelisted)
+
+## Directory structure
+
+In `src` you do the normal development work. When gulp watches for changes, they get recompiled into the `target` folder and will be served from there.
+
+This is needed so that this repository can be used right away as a plugin folder without the need to run any other commands. This is a requirement for automatic Ninja Forms plugin releases.
+
+In `dist` you can find a latest verison in a zip file for easier distribution. Can be useful sometimes. `env` contains code depending on environment, such as bash scripts for building releases.
 
 ## Examples
 
@@ -41,6 +50,10 @@ In the `/examples` folder you can see some ready-to-import Ninja Forms templates
 
 In the `/doc` folder we place in all text and images for the public documentation which is also available on https://ninjaforms.com/docs/videomail/
 
-## Support
+## Bug reporting
 
 https://ninjaforms.com/contact/
+
+## Support system
+
+https://wpninjas.kustomerapp.com/app/customers
