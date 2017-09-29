@@ -6,6 +6,8 @@ Tested up to: 4.7
 Stable tag: 3.3.3
 License: CC0-1.0
 
+Record videos in Ninja Forms!
+
 == Requirements ==
 
 WordPress: 4.6 or higher
@@ -13,8 +15,6 @@ NinjaForms: 3.1.6 or higher
 PHP: 7.0 or higher
 
 == Description ==
-
-Record videos in Ninja Forms!
 
 With this add-on recording and sending videos in WordPress finally comes true. No further coding required. Just install + configure a bit (like duration, width or enable audio etc) and that’s all. Wicked.
 
