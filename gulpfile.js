@@ -122,6 +122,8 @@ gulp.task('todo', function () {
 
 gulp.task('zip', ['css', 'js', 'copy-videomail-client', 'todo', 'php'], function () {
   return gulp.src([
+    'index.php',
+    'readme.txt',
     'ninja-forms-videomail.php',
     'target/**'
   ], {base: './'})
