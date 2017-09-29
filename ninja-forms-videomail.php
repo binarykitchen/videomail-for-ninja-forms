@@ -19,7 +19,7 @@ if (version_compare(get_option('ninja_forms_version', '0.0.0'), '3', '<') ||
 
 } else {
   $targetDir = plugin_dir_path(__FILE__) . 'target' . DIRECTORY_SEPARATOR;
-  $url = plugin_dir_url(__FILE__);
+  $url = plugin_dir_url(__FILE__) . 'target' . DIRECTORY_SEPARATOR;
 
   require_once $targetDir . 'php' . DIRECTORY_SEPARATOR . 'videomail.php';
 
