@@ -3,8 +3,10 @@ Contributors: binarykitchen, kbjohnson90
 Tags: video, email, audio, webcam, recorder
 Requires at least: 4.6
 Tested up to: 4.7
-Stable tag: 3.3.2
+Stable tag: 3.3.4
 License: CC0-1.0
+
+Record videos in Ninja Forms!
 
 == Requirements ==
 
@@ -13,8 +15,6 @@ NinjaForms: 3.1.6 or higher
 PHP: 7.0 or higher
 
 == Description ==
-
-Record videos in Ninja Forms!
 
 With this add-on recording and sending videos in WordPress finally comes true. No further coding required. Just install + configure a bit (like duration, width or enable audio etc) and that’s all. Wicked.
 
@@ -50,6 +50,12 @@ There is also the live site [videomail.io](https://videomail.io) where you can s
 This WordPress plugin is based on the open sourced npm package [videomail-client](https://github.com/binarykitchen/videomail-client). There you can find more information on the technical side of things.
 
 == Changelog ==
+
+= 3.3.3 (9 September 2017) =
+
+*Bugs:*
+
+* Make it work again on all Edge browsers
 
 = 3.3.2 (27 July 2017) =
 
