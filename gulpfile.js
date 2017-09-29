@@ -145,8 +145,8 @@ gulp.task('bumpVersion', () => {
 
   return gulp.src([
     './package.json',
-    './ninja-forms-videomail.php',
-    './readme.txt'
+    // './readme.txt', // todo
+    './ninja-forms-videomail.php'
   ])
   .pipe(plugins.bump(bumpOptions))
   .pipe(plugins.if(options.write, gulp.dest(function (file) {
