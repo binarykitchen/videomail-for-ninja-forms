@@ -135,7 +135,9 @@ gulp.task('zip', ['css', 'js', 'copy-videomail-client', 'todo', 'php'], function
 // https://www.npmjs.com/package/gulp-tag-version and
 // https://github.com/nicksrandall/gulp-release-tasks/blob/master/tasks/release.js
 gulp.task('bumpVersion', () => {
-  const bumpOptions = {}
+  const bumpOptions = {
+    keys: ['version', 'Stable tag']
+  }
 
   if (options.version) {
     bumpOptions.version = options.version
@@ -145,7 +147,7 @@ gulp.task('bumpVersion', () => {
 
   return gulp.src([
     './package.json',
-    // './readme.txt', // todo
+    './readme.txt',
     './ninja-forms-videomail.php'
   ])
   .pipe(plugins.bump(bumpOptions))
