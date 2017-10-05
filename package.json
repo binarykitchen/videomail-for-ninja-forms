@@ -50,7 +50,7 @@
     ]
   },
   "dependencies": {
-    "videomail-client": "2.1.16"
+    "videomail-client": "2.1.17"
   },
   "devDependencies": {
     "browser-sync": "2.18.13",

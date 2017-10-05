@@ -1,5 +1,5 @@
 // manual switch to have more stuff printed to console
-var DEBUG = true
+var DEBUG = false
 
 // good documentation on backbone event handling
 // http://backbonejs.org/#Events
