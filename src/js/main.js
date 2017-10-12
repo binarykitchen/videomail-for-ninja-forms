@@ -78,6 +78,8 @@ var VideomailFieldController = Marionette.Object.extend({
       },
       // leave it to ninja form to validate the inputs
       enableAutoValidation: false,
+      // leave it to ninja form to deal with form submissions
+      enableAutoSubmission: false,
       // log actions/events to console
       verbose: this.fieldModel.get('verbose') || DEBUG
     })
@@ -135,6 +137,7 @@ var VideomailFieldController = Marionette.Object.extend({
   },
 
   validateVideomail: function (fieldModel) {
+    fieldModel = fieldModel || this.fieldModel
     return fieldModel.get('videomail-key') || false
   },
 
@@ -143,14 +146,19 @@ var VideomailFieldController = Marionette.Object.extend({
   },
 
   maybeSubmit: function (formModel) {
-    // only when a videomail has been recorded and no other form errors
-    // exist, submit the final video to the videomail server
-    if (!formModel.getExtra('videomail') && !this.hasErrors(formModel)) {
+    var maybe = true
+    var videomailSubmitted = formModel.getExtra('videomail')
+    var videomailRecorded = this.validateVideomail()
+    var errorneous = this.hasErrors(formModel)
+
+    // hold on with final form submission when one was recorded
+    // but hasn't been submitted to the videomail server yet
+    if (!videomailSubmitted && !errorneous && videomailRecorded) {
       this.videomailClient.submit()
-      return false
-    } else {
-      return true
+      maybe = false
     }
+
+    return maybe
   },
 
   getMergeTagValue: function (fieldKey, formValues) {

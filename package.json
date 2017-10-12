@@ -1,6 +1,6 @@
 {
   "name": "ninja-forms-videomail",
-  "version": "3.3.6",
+  "version": "3.4.0",
   "description": "With this add-on recording videos in Wordpress Ninja Forms comes true.",
   "author": "Michael Heuberger <michael.heuberger@binarykitchen.com>",
   "contributors": [
@@ -30,8 +30,8 @@
     "url": "https://github.com/wpninjas/ninja-forms-videomail.git"
   },
   "engines": {
-    "node": ">=8.1.0",
-    "yarn": ">=1.0.1"
+    "node": "^8.1.0",
+    "yarn": "^1.0.1"
   },
   "scripts": {
     "wp": "gulp watch --host=wp",
@@ -50,7 +50,7 @@
     ]
   },
   "dependencies": {
-    "videomail-client": "2.1.17"
+    "videomail-client": "2.1.22"
   },
   "devDependencies": {
     "browser-sync": "2.18.13",
