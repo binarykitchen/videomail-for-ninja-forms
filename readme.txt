@@ -51,6 +51,16 @@ This WordPress plugin is based on the open sourced npm package [videomail-client
 
 == Changelog ==
 
+= 3.4.0 (12 October 2017) =
+
+*Features:*
+
+* Now works on iPhones running on iOS11 and on Safari v11, yay.
+
+*Bugs:*
+
+* Now works as an optional input (= not as a required field)
+
 = 3.3.3 (9 September 2017) =
 
 *Bugs:*
