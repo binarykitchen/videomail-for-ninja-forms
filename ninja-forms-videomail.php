@@ -18,10 +18,16 @@ if (version_compare(get_option('ninja_forms_version', '0.0.0'), '3', '<') ||
   return;
 
 } else {
-  $targetDir = plugin_dir_path(__FILE__) . 'target' . DIRECTORY_SEPARATOR;
-  $url = plugin_dir_url(__FILE__) . 'target' . DIRECTORY_SEPARATOR;
+  $entryFile = __FILE__;
+
+  $targetDir = plugin_dir_path($entryFile) . 'target' . DIRECTORY_SEPARATOR;
+  $url = plugin_dir_url($entryFile) . 'target' . DIRECTORY_SEPARATOR;
 
   require_once $targetDir . 'php' . DIRECTORY_SEPARATOR . 'videomail.php';
 
-  NF_Videomail::instance($targetDir, $url);
+  NF_Videomail::instance(
+    $entryFile,
+    $targetDir,
+    $url
+  );
 }

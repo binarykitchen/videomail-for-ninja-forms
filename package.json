@@ -31,7 +31,7 @@
   },
   "engines": {
     "node": "^8.1.0",
-    "yarn": "^1.0.1"
+    "yarn": "^1.1.0"
   },
   "scripts": {
     "wp": "gulp watch --host=wp",
@@ -50,7 +50,7 @@
     ]
   },
   "dependencies": {
-    "videomail-client": "2.1.22"
+    "videomail-client": "2.1.28"
   },
   "devDependencies": {
     "browser-sync": "2.18.13",
@@ -74,6 +74,6 @@
     "minimist": "1.2.0",
     "nib": "1.1.2",
     "standard": "10.0.3",
-    "yargs": "9.0.1"
+    "yargs": "10.0.3"
   }
 }

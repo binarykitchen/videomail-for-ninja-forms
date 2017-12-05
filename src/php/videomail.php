@@ -1,9 +1,15 @@
 <?php
 final class NF_Videomail {
 
+  const NAME = 'Videomail';
+  const VERSION = '3.4.1';
+  const AUTHOR = 'Michael Heuberger + Kyle B. Johnson';
+  const SLUG = 'videomail';
   const PREFIX = 'NF_Videomail';
 
   private static $instance;
+  private static $entryFile = '';
+
   public static $targetDir = '';
   public static $phpDir = '';
   public static $templatesDir = '';
@@ -17,15 +23,17 @@ final class NF_Videomail {
    * Ensures that only one instance of a plugin class exists in memory at any one
    * time. Also prevents needing to define globals all over the place.
    */
-  public static function instance($targetDir, $url) {
+  public static function instance($entryFile, $targetDir, $url) {
     if (!isset(self::$instance) && !(self::$instance instanceof NF_Videomail)) {
       self::$instance = new NF_Videomail();
+      self::$entryFile = $entryFile;
       self::$targetDir = $targetDir;
       self::$phpDir = $targetDir . 'php' . DIRECTORY_SEPARATOR;
       self::$templatesDir = self::$phpDir . 'templates' . DIRECTORY_SEPARATOR;
       self::$url = $url;
       self::$jsUrl = $url . 'js/';
       self::$cssUrl = $url . 'css/';
+
       spl_autoload_register(array(self::$instance, 'autoloader'));
     }
 
@@ -48,6 +56,7 @@ final class NF_Videomail {
   }
 
   public function __construct() {
+    add_action('admin_init', array($this, 'setup_license'));
     add_action('ninja_forms_loaded', array($this, 'ninja_forms_loaded'));
     add_filter('ninja_forms_register_fields', array($this, 'register_fields'));
     add_filter('ninja_forms_register_actions', array($this, 'register_actions'));
@@ -86,5 +95,22 @@ final class NF_Videomail {
 
   public static function config($file_name) {
     return include self::$phpDir . 'config' . DIRECTORY_SEPARATOR . $file_name . '.php';
+  }
+
+  /**
+   * Setup License
+   *
+   * Registers the plugin with the extension updater.
+   */
+  public function setup_license() {
+      if (!class_exists('NF_Extension_Updater')) return;
+
+      new NF_Extension_Updater(
+        self::NAME,
+        self::VERSION,
+        self::AUTHOR,
+        self::$entryFile,
+        self::SLUG
+      );
   }
 }

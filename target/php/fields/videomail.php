@@ -95,19 +95,23 @@ class NF_Videomail_Fields_Videomail extends NF_Abstracts_Field {
   public function enqueueScripts() {
     wp_enqueue_style(
       'nf-videomail-main',
-      NF_Videomail::$cssUrl . 'main.min.css'
+      NF_Videomail::$cssUrl . 'main.min.css',
+      array(),
+      NF_Videomail::VERSION
     );
 
     wp_enqueue_script(
       'nf-videomail-client',
       NF_Videomail::$jsUrl . 'videomail-client/videomail-client.min.js',
-      false
+      array(),
+      NF_Videomail::VERSION
     );
 
     wp_enqueue_script(
       'nf-videomail-main',
       NF_Videomail::$jsUrl . 'main.min.js',
-      array('nf-front-end', 'nf-videomail-client')
+      array('nf-front-end', 'nf-videomail-client'),
+      NF_Videomail::VERSION
     );
 
     wp_localize_script('nf-videomail-main', 'nfVideomail', array(
