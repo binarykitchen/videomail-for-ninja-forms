@@ -51,6 +51,12 @@ This WordPress plugin is based on the open sourced npm package [videomail-client
 
 == Changelog ==
 
+= 3.4.3 (21 December 2017) =
+
+*Bugs:*
+
+* Now it does not mess with other rich content text editors anymore.
+
 = 3.4.2 (12 December 2017) =
 
 *Bugs:*
