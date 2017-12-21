@@ -4549,9 +4549,9 @@ stylus@0.54.5, stylus@^0.54.0:
     sax "0.5.x"
     source-map "0.1.x"
 
-superagent@3.8.1:
-  version "3.8.1"
-  resolved "https://registry.yarnpkg.com/superagent/-/superagent-3.8.1.tgz#2571fd921f3fcdba43ac68c3b35c91951532701f"
+superagent@3.8.2:
+  version "3.8.2"
+  resolved "https://registry.yarnpkg.com/superagent/-/superagent-3.8.2.tgz#e4a11b9d047f7d3efeb3bbe536d9ec0021d16403"
   dependencies:
     component-emitter "^1.2.0"
     cookiejar "^2.1.0"
@@ -4852,9 +4852,9 @@ verror@1.3.6:
   dependencies:
     extsprintf "1.0.2"
 
-videomail-client@2.1.28:
-  version "2.1.28"
-  resolved "https://registry.yarnpkg.com/videomail-client/-/videomail-client-2.1.28.tgz#ae5a47e888390a6326319d95a068613d93fc9293"
+videomail-client@2.1.30:
+  version "2.1.30"
+  resolved "https://registry.yarnpkg.com/videomail-client/-/videomail-client-2.1.30.tgz#d082a9bbba99d5655d58d7403371e8bf2061696e"
   dependencies:
     add-eventlistener-with-options "1.25.0"
     animitter "3.0.0"
@@ -4880,7 +4880,7 @@ videomail-client@2.1.28:
     number-is-integer "1.0.1"
     readystate "0.3.0"
     request-frame "1.5.3"
-    superagent "3.8.1"
+    superagent "3.8.2"
     ua-parser-js "0.7.17"
     websocket-stream "5.1.1"
 
