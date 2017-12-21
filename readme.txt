@@ -3,7 +3,7 @@ Contributors: binarykitchen, kbjohnson90
 Tags: video, email, audio, webcam, recorder
 Requires at least: 4.6
 Tested up to: 4.7
-Stable tag: 3.4.2
+Stable tag: 3.4.3
 License: CC0-1.0
 
 Record videos in Ninja Forms!
@@ -50,6 +50,18 @@ There is also the live site [videomail.io](https://videomail.io) where you can s
 This WordPress plugin is based on the open sourced npm package [videomail-client](https://github.com/binarykitchen/videomail-client). There you can find more information on the technical side of things.
 
 == Changelog ==
+
+= 3.4.3 (21 December 2017) =
+
+*Bugs:*
+
+* Now it does not mess with other rich content text editors anymore.
+
+= 3.4.2 (12 December 2017) =
+
+*Bugs:*
+
+* Added missing licensing field under settings
 
 = 3.4.0 (12 October 2017) =
 
