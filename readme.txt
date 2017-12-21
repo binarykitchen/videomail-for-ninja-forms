@@ -51,6 +51,12 @@ This WordPress plugin is based on the open sourced npm package [videomail-client
 
 == Changelog ==
 
+= 3.4.2 (12 December 2017) =
+
+*Bugs:*
+
+* Added missing licensing field under settings
+
 = 3.4.0 (12 October 2017) =
 
 *Features:*
