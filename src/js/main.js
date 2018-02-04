@@ -69,6 +69,9 @@ var VideomailFieldController = Marionette.Object.extend({
       audio: {
         enabled: this.fieldModel.get('audio_enabled') || false
       },
+      image: {
+        quality: this.fieldModel.get('image_quality') || 0.4
+      },
       selectors: {
         submitButtonSelector: '.submit-wrap input'
       },

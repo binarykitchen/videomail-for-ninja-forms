@@ -79,7 +79,6 @@ return apply_filters('ninja_forms_videomail_field_settings', array(
     'name' => 'countdown',
     'type' => 'number',
     'label' => __('Countdown Time', 'ninja-forms-videomail'),
-    'width' => 'full',
     'group' => 'display',
     'value' => 3
   ),
@@ -88,9 +87,17 @@ return apply_filters('ninja_forms_videomail_field_settings', array(
     'name' => 'width',
     'type' => 'number',
     'label' => __('Video Width', 'ninja-forms-videomail'),
-    'width' => 'full',
     'group' => 'display',
     'value' => 320
+  ),
+
+  'image_quality' => array(
+    'name' => 'image_quality',
+    'type' => 'number',
+    'label' => __('Image Quality', 'ninja-forms-videomail'),
+    'group' => 'display',
+    'value' => 0.4,
+    'help' => __('Must be between 0.1 and 1.0 - Beware that higher values results into a sharper video but encoding and transport will be slower. Be thoughtful of users with low bandwidth.', 'ninja-forms-videomail')
   ),
 
   'verbose' => array(
