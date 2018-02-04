@@ -77,11 +77,11 @@ gulp.task('css', function () {
       errors: true
     }))
     .pipe(plugins.autoprefixer(
-      'last 4 versions',
+      'last 3 versions',
       '> 2%',
       'Explorer >= 11',
-      'Chrome >= 44',
-      'Firefox >= 45',
+      'Chrome >= 46',
+      'Firefox >= 52',
       'iOS >= 9',
       'android >= 4'
     ))
