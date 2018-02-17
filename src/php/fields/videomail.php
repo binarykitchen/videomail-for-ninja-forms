@@ -83,7 +83,56 @@ class NF_Videomail_Fields_Videomail extends NF_Abstracts_Field {
     Ninja_Forms()->merge_tags['video']->setAlias($videomail['alias']);
     Ninja_Forms()->merge_tags['video']->setReplyUrl($videomail['replyUrl']);
 
+    if ($field['media_library']) {
+      register_shutdown_function(array($this, 'downloadVideomailToMediaLibrary'), $videomail);
+    }
+
     return $data;
+  }
+
+  public function downloadVideomailToMediaLibrary($videomail) {
+    if ($videomail['webm']) {
+      $videoUrl = $videomail['webm'];
+    } else if ($videomail['mp4']) {
+      $videoUrl = $videomail['mp4'];
+    }
+
+    if ($videoUrl) {
+      $tempFile = download_url($videoUrl, 300);
+
+      if (is_wp_error($tempFile)) {
+        @unlink($tempFile);
+        return $tempFile;
+      } else {
+        // Need to require these files
+      	if (!function_exists('media_handle_upload')) {
+      		require_once(ABSPATH . "wp-admin" . '/includes/image.php');
+      		require_once(ABSPATH . "wp-admin" . '/includes/file.php');
+      		require_once(ABSPATH . "wp-admin" . '/includes/media.php');
+      	}
+
+        $videoType = $videomail['recordingStats']['videoType'];
+        $subject = $videomail['subject'];
+
+        // Array based on $_FILE as seen in PHP file uploads
+      	$file = array(
+      		'name' => $subject . '.' . $videoType,
+      		'type' => wp_check_filetype($tempFile),
+      		'tmp_name' => $tempFile,
+      		'error' => 0,
+      		'size' => filesize($tempFile),
+      	);
+
+      	// Move the temporary file into the uploads directory
+      	$results = media_handle_sideload($file, 0, $subject);
+
+        // If error storing permanently, unlink
+      	if (is_wp_error($results)) {
+      		@unlink($tempFile);
+      		return $results;
+      	}
+      }
+    }
   }
 
   public function admin_form_element($id, $value) {
