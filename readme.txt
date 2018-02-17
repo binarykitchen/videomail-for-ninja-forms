@@ -3,7 +3,7 @@ Contributors: binarykitchen, kbjohnson90
 Tags: video, email, audio, webcam, recorder
 Requires at least: 4.6
 Tested up to: 4.7
-Stable tag: 3.4.3
+Stable tag: 3.5.0
 License: CC0-1.0
 
 Record videos in Ninja Forms!
