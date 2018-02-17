@@ -59,6 +59,14 @@ var VideomailFieldController = Marionette.Object.extend({
   },
 
   loadVideomailClient: function () {
+    var imageQualityPercentage = this.fieldModel.get('image_quality') || 40
+
+    if (imageQualityPercentage > 100) {
+      imageQualityPercentage = 100
+    } else if (imageQualityPercentage < 1) {
+      imageQualityPercentage = 1
+    }
+
     this.videomailClient = new VideomailClient({
       siteName: this.fieldModel.get('site_name'),
       video: {
@@ -70,7 +78,7 @@ var VideomailFieldController = Marionette.Object.extend({
         enabled: this.fieldModel.get('audio_enabled') || false
       },
       image: {
-        quality: this.fieldModel.get('image_quality') || 0.4
+        quality: imageQualityPercentage / 100 // must be a float
       },
       selectors: {
         submitButtonSelector: '.submit-wrap input'

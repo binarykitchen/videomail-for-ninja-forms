@@ -51,6 +51,17 @@ This WordPress plugin is based on the open sourced npm package [videomail-client
 
 == Changelog ==
 
+= 3.5.0 (17 February 2018) =
+
+*Features:*
+
+* New option: save to media library - so that you can reuse the video for posts or pages yay!
+* New option: image quality - with this you can improve video in cost of bandwidth
+
+*Bugs:*
+
+* Much better error handling
+
 = 3.4.3 (21 December 2017) =
 
 *Bugs:*
