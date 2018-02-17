@@ -2,6 +2,16 @@
 
 return apply_filters('ninja_forms_videomail_field_settings', array(
 
+  'media_library' => array(
+		'name'  => 'media_library',
+		'type'  => 'toggle',
+		'value' => 'false',
+		'label' => __('Save to Media Library', 'ninja-forms-videomail'),
+		'group' => 'primary',
+		'width' => 'one-half',
+		'help'  => __('Save to Media Library.', 'ninja-forms-videomail'),
+	),
+
   'site_name' => array(
     'name' => 'site_name',
     'type' => 'textbox',
@@ -60,7 +70,7 @@ return apply_filters('ninja_forms_videomail_field_settings', array(
     'name' => 'limit_seconds',
     'type' => 'number',
     'label' => __('Limit Recording (in Seconds)', 'ninja-forms-videomail'),
-    'width' => 'full',
+    'width' => 'one-half',
     'group' => 'restrictions',
     'value' => 80
   ),
@@ -69,7 +79,7 @@ return apply_filters('ninja_forms_videomail_field_settings', array(
     'name' => 'audio_enabled',
     'type' => 'toggle',
     'label' => __('Enable Audio (in Beta)', 'ninja-forms-videomail'),
-    'width' => 'full',
+    'width' => 'one-half',
     'group' => 'restrictions',
     'value' => FALSE,
     'help' => __('The audio fetaure is in beta and needs feedback for improvement. Otherwise leave it disabled and stick to Sign Language, grins')
@@ -96,15 +106,17 @@ return apply_filters('ninja_forms_videomail_field_settings', array(
     'type' => 'number',
     'label' => __('Image Quality', 'ninja-forms-videomail'),
     'group' => 'display',
-    'value' => 0.4,
-    'help' => __('Must be between 0.1 and 1.0 - Beware that higher values results into a sharper video but encoding and transport will be slower. Be thoughtful of users with low bandwidth.', 'ninja-forms-videomail')
+    'value' => 40,
+    'min' => 1,
+    'max' => 100,
+    'help' => __('Must be a percentage between 1 and 100 - Beware that higher values results into a sharper video but encoding and transport will be slower. Be thoughtful of users with low bandwidth.', 'ninja-forms-videomail')
   ),
 
   'verbose' => array(
     'name' => 'verbose',
     'type' => 'toggle',
     'label' => __('Debug Mode', 'ninja-forms-videomail'),
-    'width' => 'full',
+    'width' => 'one-half',
     'group' => 'advanced',
     'value' => FALSE,
     'help' => __('Show verbose comments in the developer console.', 'ninja-forms-videomail')
