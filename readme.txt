@@ -1,4 +1,4 @@
-=== Ninja Forms Videomail ===
+=== Videomail for Ninja Forms===
 Contributors: binarykitchen, kbjohnson90
 Tags: video, email, audio, webcam, recorder
 Requires at least: 4.6
@@ -20,16 +20,17 @@ With this add-on recording and sending videos in WordPress finally comes true. N
 
 Requires the Ninja Forms plugin so that this extension can be added there.
 
-Can be purchased from here:
-https://ninjaforms.com/extensions/videomail/
+Latest version (zip file) can be downloaded for free anytime from
+https://github.com/binarykitchen/Videomail-for-Ninja-Forms/blob/master/dist/ninja-forms-videomail.zip
 
 More documentation on setup and configuration see:
-https://ninjaforms.com/docs/videomail/
+https://github.com/binarykitchen/Videomail-for-Ninja-Forms/tree/master/doc/faq/ninja-forms-videomail-faq.pdf
 
 == Options ==
 
 That new recordable video field comes with many options you can configure yourself such as duration, width, audio on/off and much more.
-Each option is explained well at bottom of https://ninjaforms.com/docs/videomail/
+Each option is explained well at bottom of this PDF file
+https://github.com/binarykitchen/Videomail-for-Ninja-Forms/tree/master/doc/faq/ninja-forms-videomail-faq.pdf
 
 == Whitelisting ==
 
@@ -39,7 +40,8 @@ But once you deploy your Wordpress site out in the wild, we will have to whiteli
 
 == Support ==
 
-To get help, just go to https://ninjaforms.com/contact/
+To get help, just use any of these contacts at
+https://binarykitchen.com
 
 == Live example ==
 
@@ -50,6 +52,12 @@ There is also the live site [videomail.io](https://videomail.io) where you can s
 This WordPress plugin is based on the open sourced npm package [videomail-client](https://github.com/binarykitchen/videomail-client). There you can find more information on the technical side of things.
 
 == Changelog ==
+
+= 3.6.0 (17 March 2018) =
+
+*Change:*
+
+* Moved to a new, public repository and free now
 
 = 3.5.0 (17 February 2018) =
 

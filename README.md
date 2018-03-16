@@ -1,4 +1,4 @@
-# Ninja Forms - Videomail (developer documentation)
+# Videomail for Ninja Forms (developer documentation)
 
 Record videos in Ninja Forms!
 
@@ -18,8 +18,8 @@ In short: this add-on runs on the Ninja Forms plugin engine where you can config
 
 1. Install WordPress locally or use [Local by Flywheel](https://local.getflywheel.com/)
 2. Install Ninja Forms Plugin
-3. `git clone git@github.com:wpninjas/ninja-forms-videomail.git`
-4. Symlink ninja-forms-videomail into WordPress plugins folder
+3. `git clone git@github.com:binarykitchen/Videomail-for-Ninja-Forms.git`
+4. Symlink Videomail-for-Ninja-Forms into WordPress plugins folder
 4. Install latest nodejs, best with [nvm](https://github.com/creationix/nvm)
 5. Install [yarn](https://yarnpkg.com/en/docs/install)
 5. `yarn install` to install dependencies
@@ -50,10 +50,10 @@ In the `/examples` folder you can see some ready-to-import Ninja Forms templates
 
 In the `/doc` folder we place in all text and images for the public documentation which is also available on https://ninjaforms.com/docs/videomail/
 
-## Bug reporting
+## Report bugs
 
-https://ninjaforms.com/contact/
+https://github.com/binarykitchen/Videomail-for-Ninja-Forms/issues
 
-## Support system
+## Ask for help
 
-https://wpninjas.kustomerapp.com/app/customers
+https://binarykitchen.com
