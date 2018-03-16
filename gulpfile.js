@@ -58,7 +58,7 @@ gulp.task('js', ['standard'], function () {
     .pipe(sourcemaps.init())
     .pipe(plugins.uglify())
     .pipe(plugins.rename({suffix: '.min'}))
-     // todo fix, sourcemaps do not seem to work (switch to webpack?)
+    // todo fix, sourcemaps do not seem to work (switch to webpack?)
     .pipe(sourcemaps.write())
     .pipe(gulp.dest('target/js'))
 })
@@ -116,19 +116,19 @@ gulp.task('todo', function () {
     'src/**/*.{php,js,styl}',
     'gulpfile.js'
   ])
-  .pipe(plugins.todo())
-  .pipe(gulp.dest('./'))
+    .pipe(plugins.todo())
+    .pipe(gulp.dest('./'))
 })
 
 gulp.task('zip', ['css', 'js', 'copy-videomail-client', 'todo', 'php'], function () {
   return gulp.src([
     'index.php',
     'readme.txt',
-    'ninja-forms-videomail.php',
+    'videomail-for-ninja-forms.php',
     'target/**'
   ], {base: './'})
-  .pipe(plugins.zip('ninja-forms-videomail.zip'))
-  .pipe(gulp.dest('dist'))
+    .pipe(plugins.zip('videomail-for-ninja-forms.zip'))
+    .pipe(gulp.dest('dist'))
 })
 
 // get inspired by
@@ -148,14 +148,14 @@ gulp.task('bumpVersion', () => {
   return gulp.src([
     './package.json',
     './readme.txt',
-    './ninja-forms-videomail.php',
+    './videomail-for-ninja-forms.php',
     './src/php/videomail.php'
   ])
-  .pipe(plugins.bump(bumpOptions))
-  .pipe(plugins.if(options.write, gulp.dest(function (file) {
-    return path.dirname(file.path)
-  })))
-  .on('error', plugins.util.log)
+    .pipe(plugins.bump(bumpOptions))
+    .pipe(plugins.if(options.write, gulp.dest(function (file) {
+      return path.dirname(file.path)
+    })))
+    .on('error', plugins.util.log)
 })
 
 // just builds assets once, nothing else

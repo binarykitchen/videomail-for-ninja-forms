@@ -21,16 +21,16 @@ With this add-on recording and sending videos in WordPress finally comes true. N
 Requires the Ninja Forms plugin so that this extension can be added there.
 
 Latest version (zip file) can be downloaded for free anytime from
-https://github.com/binarykitchen/Videomail-for-Ninja-Forms/blob/master/dist/ninja-forms-videomail.zip
+https://github.com/binarykitchen/Videomail-for-Ninja-Forms/blob/master/dist/videomail-for-ninja-forms.zip
 
 More documentation on setup and configuration see:
-https://github.com/binarykitchen/Videomail-for-Ninja-Forms/tree/master/doc/faq/ninja-forms-videomail-faq.pdf
+https://github.com/binarykitchen/Videomail-for-Ninja-Forms/tree/master/doc/faq/videomail-for-ninja-forms-faq.pdf
 
 == Options ==
 
 That new recordable video field comes with many options you can configure yourself such as duration, width, audio on/off and much more.
 Each option is explained well at bottom of this PDF file
-https://github.com/binarykitchen/Videomail-for-Ninja-Forms/tree/master/doc/faq/ninja-forms-videomail-faq.pdf
+https://github.com/binarykitchen/Videomail-for-Ninja-Forms/tree/master/doc/faq/videomail-for-ninja-forms-faq.pdf
 
 == Whitelisting ==
 

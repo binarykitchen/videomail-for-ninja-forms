@@ -48,7 +48,7 @@ In the `/examples` folder you can see some ready-to-import Ninja Forms templates
 
 ## Documentation
 
-In the `/doc` folder we place in all text and images for the public documentation which is also available on https://ninjaforms.com/docs/videomail/
+In the `/doc` folder we place in all text and images for the public documentation.
 
 ## Report bugs
 
