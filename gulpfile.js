@@ -112,7 +112,7 @@ gulp.task('watch', ['default', 'browser-sync'], function () {
 
 gulp.task('todo', function () {
   return gulp.src([
-    'ninja-forms-videomail.php',
+    'videomail-for-ninja-forms.php',
     'src/**/*.{php,js,styl}',
     'gulpfile.js'
   ])

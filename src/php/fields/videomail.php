@@ -24,7 +24,7 @@ if (!class_exists( 'NF_Abstracts_Input')) return;
 //   'to' => 'michael.heuberger@binarykitchen.com',
 //   'subject' => 'sdfsdf',
 //   'body' => 'sdfsdf',
-//   'siteName' => 'ninja-forms-videomail-local',
+//   'siteName' => 'videomail-for-ninja-forms-local',
 //   'alias' => 'sdfsdf-678717118615',
 //   'dateCreated' => 1496456989820,
 //   'url' => 'https://videomail.io/videomail/sdfsdf-678717118615',
@@ -66,7 +66,7 @@ class NF_Videomail_Fields_Videomail extends NF_Abstracts_Field {
     $settings = NF_Videomail::config('videomail-field-settings');
     $this->_settings = array_merge($this->_settings, $settings);
 
-    $this->_settings['label']['value'] = __('Video Message', 'ninja-forms-videomail');
+    $this->_settings['label']['value'] = __('Video Message', 'videomail-for-ninja-forms');
 
     add_action('wp_enqueue_scripts', array($this, 'enqueueScripts'));
     add_filter('ninja_forms_custom_columns', array($this, 'customColumns' ), 10, 2);
@@ -174,6 +174,6 @@ class NF_Videomail_Fields_Videomail extends NF_Abstracts_Field {
     if (empty($value)) return __('No Video Recorded');
 
     // ok, value is a videomail
-    return '<a href="' . $value['url'] . '">' . __('View Online', 'ninja-forms-videomail') . '</a>';
+    return '<a href="' . $value['url'] . '">' . __('View Online', 'videomail-for-ninja-forms') . '</a>';
   }
 }

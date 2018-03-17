@@ -180,7 +180,7 @@ var VideomailFieldController = Marionette.Object.extend({
     if (value) {
       // admin email localized from backend, a bit ugly
       // todo ask for an endpoint to process those special merge tags
-      // https://github.com/wpninjas/ninja-forms-videomail/issues/30
+      // https://github.com/binarykitchen/videomail-for-ninja-forms/issues/30
       if (value === '{wp:admin_email}') {
         value = window.nfVideomail.admin_email
       } else {
