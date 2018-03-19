@@ -1,9 +1,11 @@
 === Videomail for Ninja Forms===
 Contributors: binarykitchen, kbjohnson90
-Tags: video, email, audio, webcam, recorder
-Requires at least: 4.6
-Tested up to: 4.7
+Tags: video, email, audio, webcam, recorder, getusermedia, email
+Donate link: https://videomail.io/faq
+Requires at least: 3.6
+Tested up to: 3.6
 Stable tag: 3.6.0
+Requires PHP: 7.0.0 or higher
 License: CC0-1.0
 
 Record videos in Ninja Forms!
@@ -21,22 +23,42 @@ With this add-on recording and sending videos in WordPress finally comes true. N
 Requires the Ninja Forms plugin so that this extension can be added there.
 
 Latest version (zip file) can be downloaded for free anytime from
-https://github.com/binarykitchen/Videomail-for-Ninja-Forms/blob/master/dist/videomail-for-ninja-forms.zip
+https://github.com/binarykitchen/videomail-for-ninja-forms/blob/master/dist/videomail-for-ninja-forms.zip
 
 More documentation on setup and configuration see:
-https://github.com/binarykitchen/Videomail-for-Ninja-Forms/tree/master/doc/faq/videomail-for-ninja-forms-faq.pdf
+https://github.com/binarykitchen/videomail-for-ninja-forms/tree/master/doc/faq/videomail-for-ninja-forms-faq.pdf
+
+== Installation ==
+
+Just upload the zip and install the plugin. Simple as that.
+
+Probably you also want to whitelist additional domains besides localhost. See chapter Whitelisting below.
+
+== Screenshots ==
+
+1. There will be a new Ninja Form Fields in the common section called Videomail
+2. Once you have assembled a form and preview it, any browser will ask for webcam access first
 
 == Options ==
 
 That new recordable video field comes with many options you can configure yourself such as duration, width, audio on/off and much more.
 Each option is explained well at bottom of this PDF file
-https://github.com/binarykitchen/Videomail-for-Ninja-Forms/tree/master/doc/faq/videomail-for-ninja-forms-faq.pdf
+https://github.com/binarykitchen/videomail-for-ninja-f..orms/tree/master/doc/faq/videomail-for-ninja-forms-faq.pdf
 
 == Whitelisting ==
 
 For local development, everything will work right away because the localhost URL is already whitelisted on the videomail server.
 
 But once you deploy your Wordpress site out in the wild, we will have to whitelist your production URL. For that, just submit a [Whitelist Request](https://videomail.io/whitelist). Very easy.
+
+== Frequently Asked Questions ==
+
+See Common Questions near bottom of
+https://ninjaforms.com/docs/videomail/
+
+== Upgrade Notice ==
+
+N/A - none needed for now.
 
 == Support ==
 
