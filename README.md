@@ -18,8 +18,8 @@ In short: this add-on runs on the Ninja Forms plugin engine where you can config
 
 1. Install WordPress locally or use [Local by Flywheel](https://local.getflywheel.com/)
 2. Install Ninja Forms Plugin
-3. `git clone git@github.com:binarykitchen/Videomail-for-Ninja-Forms.git`
-4. Symlink Videomail-for-Ninja-Forms into WordPress plugins folder
+3. `git clone git@github.com:binarykitchen/videomail-for-ninja-forms.git`
+4. Symlink videomail-for-ninja-forms into WordPress plugins folder
 4. Install latest nodejs, best with [nvm](https://github.com/creationix/nvm)
 5. Install [yarn](https://yarnpkg.com/en/docs/install)
 5. `yarn install` to install dependencies
