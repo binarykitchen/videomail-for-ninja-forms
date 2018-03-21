@@ -4,3 +4,5 @@ yarn-error.log
 .DS_Store
 Thumbs.db
 .git
+env/dev/git
+env/dev/svn
