@@ -62,8 +62,7 @@ To get help, just use any of these contacts at [https://binarykitchen.com](https
 == Live example ==
 
 There is also the live site [videomail.io](https://videomail.io). Have a look and play.
-Y
-ou can see the videomail-client in action and use it right away for free, anytime, anywhere. Many people, especially Deafs and Sign Language users, already use it for their everyday communication.
+You can see the videomail-client in action and use it right away for free, anytime, anywhere. Many people, especially Deafs and Sign Language users, already use it for their everyday communication.
 
 == Low level videomail-client library ==
 
