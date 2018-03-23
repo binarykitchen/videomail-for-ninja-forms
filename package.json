@@ -34,6 +34,7 @@
     "yarn": ">=1.3.0"
   },
   "scripts": {
+    "sync": "./env/dev/sync-wp.sh",
     "wp": "gulp watch --host=wp",
     "mh": "gulp watch --port=9890 --host=infernal.darkness.com",
     "patch": "./env/dev/release.sh --importance=patch",

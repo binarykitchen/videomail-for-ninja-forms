@@ -3,7 +3,7 @@ Contributors: michael.heuberger, kbjohnson90
 Tags: video, email, audio, webcam, recorder, getusermedia, form
 Donate link: https://videomail.io/faq
 Requires at least: 4.0
-Tested up to: 4.6
+Tested up to: 4.9
 Stable tag: 3.6.2
 Requires PHP: 7.0.0 or higher
 License: CC0-1.0
@@ -21,13 +21,13 @@ PHP: 7.0 or higher
 With this add-on recording and sending videos in WordPress *finally* comes true. No further coding required. Just install + configure a bit (like duration, width or enable audio etc) and that’s all. Wicked.
 
 * Record from webcam, simple
-* Allow video and audio inputs in your forms, wow!
+* Allow *video* and *audio* inputs in your forms, wow!
 * World first solution
 * Very easy to add with Ninja Forms
 
 All you need is the Ninja Forms plugin so that this extension can be added there.
 
-Latest version (zip file) also can be downloaded for free anytime from GitHub
+Latest version (zip file) also can be downloaded for free anytime from GitHub:
 [https://github.com/binarykitchen/videomail-for-ninja-forms/blob/master/dist/videomail-for-ninja-forms.zip](https://github.com/binarykitchen/videomail-for-ninja-forms/blob/master/dist/videomail-for-ninja-forms.zip)
 
 More documentation on setup and configuration see:
@@ -42,7 +42,7 @@ More documentation on setup and configuration see:
 
 That new recordable video field comes with many options you can configure yourself such as duration, width, audio on/off and much more.
 
-Each option is explained well at bottom of this PDF file
+Each option is explained well at bottom of this PDF file:
 [https://github.com/binarykitchen/videomail-for-ninja-f..orms/tree/master/doc/faq/videomail-for-ninja-forms-faq.pdf](https://github.com/binarykitchen/videomail-for-ninja-f..orms/tree/master/doc/faq/videomail-for-ninja-forms-faq.pdf)
 
 == Whitelisting ==
@@ -57,12 +57,13 @@ N/A - none needed for now.
 
 == Support ==
 
-To get help, just use any of these contacts at
-[https://binarykitchen.com](https://binarykitchen.com)
+To get help, just use any of these contacts at [https://binarykitchen.com](https://binarykitchen.com)
 
 == Live example ==
 
-There is also the live site [videomail.io](https://videomail.io) where you can see the videomail-client in action and use it right away for free, anytime, anywhere. Many people, especially Deafs and Sign Language users, already use it for their everyday communication.
+There is also the live site [videomail.io](https://videomail.io). Have a look and play.
+Y
+ou can see the videomail-client in action and use it right away for free, anytime, anywhere. Many people, especially Deafs and Sign Language users, already use it for their everyday communication.
 
 == Low level videomail-client library ==
 
@@ -70,8 +71,7 @@ This WordPress plugin is based on the open sourced npm package [videomail-client
 
 == Frequently Asked Questions ==
 
-See Common Questions near bottom of
-[https://ninjaforms.com/docs/videomail/](https://ninjaforms.com/docs/videomail/)
+See Common Questions near bottom of [https://ninjaforms.com/docs/videomail/](https://ninjaforms.com/docs/videomail/)
 
 == Installation ==
 
