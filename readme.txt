@@ -1,6 +1,6 @@
 === Videomail for Ninja Forms===
 Contributors: michael.heuberger, kbjohnson90
-Tags: video, email, audio, webcam, recorder, getusermedia, form
+Tags: video, email, audio, webcam, recorder, getusermedia, form, sign language, deaf
 Donate link: https://videomail.io/faq
 Requires at least: 4.0
 Tested up to: 4.9
