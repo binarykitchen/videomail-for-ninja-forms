@@ -1,10 +1,10 @@
 === Videomail for Ninja Forms===
-Contributors: binarykitchen, kbjohnson90
-Tags: video, email, audio, webcam, recorder, getusermedia, email
+Contributors: michael.heuberger, kbjohnson90
+Tags: video, email, audio, webcam, recorder, getusermedia, form
 Donate link: https://videomail.io/faq
-Requires at least: 3.6
-Tested up to: 3.6
-Stable tag: 3.6.1
+Requires at least: 4.0
+Tested up to: 4.6
+Stable tag: 3.6.2
 Requires PHP: 7.0.0 or higher
 License: CC0-1.0
 
@@ -18,43 +18,38 @@ PHP: 7.0 or higher
 
 == Description ==
 
-With this add-on recording and sending videos in WordPress finally comes true. No further coding required. Just install + configure a bit (like duration, width or enable audio etc) and that’s all. Wicked.
+With this add-on recording and sending videos in WordPress *finally* comes true. No further coding required. Just install + configure a bit (like duration, width or enable audio etc) and that’s all. Wicked.
 
-Requires the Ninja Forms plugin so that this extension can be added there.
+* Record from webcam, simple
+* Allow video and audio inputs in your forms, wow!
+* World first solution
+* Very easy to add with Ninja Forms
 
-Latest version (zip file) can be downloaded for free anytime from
-https://github.com/binarykitchen/videomail-for-ninja-forms/blob/master/dist/videomail-for-ninja-forms.zip
+All you need is the Ninja Forms plugin so that this extension can be added there.
+
+Latest version (zip file) also can be downloaded for free anytime from GitHub
+[https://github.com/binarykitchen/videomail-for-ninja-forms/blob/master/dist/videomail-for-ninja-forms.zip](https://github.com/binarykitchen/videomail-for-ninja-forms/blob/master/dist/videomail-for-ninja-forms.zip)
 
 More documentation on setup and configuration see:
-https://github.com/binarykitchen/videomail-for-ninja-forms/tree/master/doc/faq/videomail-for-ninja-forms-faq.pdf
-
-== Installation ==
-
-Just upload the zip and install the plugin. Simple as that.
-
-Probably you also want to whitelist additional domains besides localhost. See chapter Whitelisting below.
+[https://github.com/binarykitchen/videomail-for-ninja-forms/tree/master/doc/faq/videomail-for-ninja-forms-faq.pdf](https://github.com/binarykitchen/videomail-for-ninja-forms/tree/master/doc/faq/videomail-for-ninja-forms-faq.pdf)
 
 == Screenshots ==
 
-1. There will be a new Ninja Form Fields in the common section called Videomail
-2. Once you have assembled a form and preview it, any browser will ask for webcam access first
+1. There will be a new Ninja Form Fields in the common section called Videomail.
+2. Once you have assembled a form and preview it, any browser will ask for webcam access first.
 
 == Options ==
 
 That new recordable video field comes with many options you can configure yourself such as duration, width, audio on/off and much more.
+
 Each option is explained well at bottom of this PDF file
-https://github.com/binarykitchen/videomail-for-ninja-f..orms/tree/master/doc/faq/videomail-for-ninja-forms-faq.pdf
+[https://github.com/binarykitchen/videomail-for-ninja-f..orms/tree/master/doc/faq/videomail-for-ninja-forms-faq.pdf](https://github.com/binarykitchen/videomail-for-ninja-f..orms/tree/master/doc/faq/videomail-for-ninja-forms-faq.pdf)
 
 == Whitelisting ==
 
 For local development, everything will work right away because the localhost URL is already whitelisted on the videomail server.
 
 But once you deploy your Wordpress site out in the wild, we will have to whitelist your production URL. For that, just submit a [Whitelist Request](https://videomail.io/whitelist). Very easy.
-
-== Frequently Asked Questions ==
-
-See Common Questions near bottom of
-https://ninjaforms.com/docs/videomail/
 
 == Upgrade Notice ==
 
@@ -63,7 +58,7 @@ N/A - none needed for now.
 == Support ==
 
 To get help, just use any of these contacts at
-https://binarykitchen.com
+[https://binarykitchen.com](https://binarykitchen.com)
 
 == Live example ==
 
@@ -72,6 +67,17 @@ There is also the live site [videomail.io](https://videomail.io) where you can s
 == Low level videomail-client library ==
 
 This WordPress plugin is based on the open sourced npm package [videomail-client](https://github.com/binarykitchen/videomail-client). There you can find more information on the technical side of things.
+
+== Frequently Asked Questions ==
+
+See Common Questions near bottom of
+[https://ninjaforms.com/docs/videomail/](https://ninjaforms.com/docs/videomail/)
+
+== Installation ==
+
+Just upload the zip and install the plugin. Simple as that.
+
+Probably you also want to whitelist additional domains besides localhost. See chapter Whitelisting.
 
 == Changelog ==
 

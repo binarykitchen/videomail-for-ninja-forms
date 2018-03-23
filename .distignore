@@ -4,3 +4,15 @@ yarn-error.log
 .DS_Store
 Thumbs.db
 .git
+env
+dist
+src
+.distignore
+.gitignore
+.gitmodules
+gulpfile.js
+LICENSE
+package.json
+README.md
+TODO.md
+yarn.lock
