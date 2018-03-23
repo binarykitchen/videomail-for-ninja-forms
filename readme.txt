@@ -4,7 +4,7 @@ Tags: video, email, audio, webcam, recorder, getusermedia, form
 Donate link: https://videomail.io/faq
 Requires at least: 4.0
 Tested up to: 4.9
-Stable tag: 3.6.2
+Stable tag: 3.6.3
 Requires PHP: 7.0.0 or higher
 License: CC0-1.0
 
