@@ -359,11 +359,11 @@ atob@~1.1.0:
   version "1.1.3"
   resolved "https://registry.yarnpkg.com/atob/-/atob-1.1.3.tgz#95f13629b12c3a51a5d215abdce2aa9f32f80773"
 
-audio-sample@1.0.4:
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/audio-sample/-/audio-sample-1.0.4.tgz#a7387446fdcd01a07ea4d65f501d37dd88b9bba5"
+audio-sample@1.0.5:
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/audio-sample/-/audio-sample-1.0.5.tgz#c64ea8a705976ddc35786f642546a1638c692d2a"
   dependencies:
-    typedarray-to-buffer "3.1.4"
+    typedarray-to-buffer "3.1.5"
     validate.io-float32array "1.0.0"
 
 autoprefixer@^6.3.1:
@@ -556,6 +556,10 @@ buffer-crc32@~0.2.3:
   version "0.2.13"
   resolved "https://registry.yarnpkg.com/buffer-crc32/-/buffer-crc32-0.2.13.tgz#0d333e3f00eac50aa1454abd30ef8c2a5d9a7242"
 
+buffer-from@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/buffer-from/-/buffer-from-1.0.0.tgz#4cb8832d23612589b0406e9e2956c17f06fdf531"
+
 builtin-modules@^1.0.0, builtin-modules@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/builtin-modules/-/builtin-modules-1.1.1.tgz#270f076c5a72c02f5b65a47df94c5fe3a278892f"
@@ -621,12 +625,12 @@ caniuse-lite@^1.0.30000809, caniuse-lite@^1.0.30000810:
   version "1.0.30000813"
   resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30000813.tgz#7b25e27fdfb8d133f3c932b01f77452140fcc6c9"
 
-canvas-to-buffer@1.0.12:
-  version "1.0.12"
-  resolved "https://registry.yarnpkg.com/canvas-to-buffer/-/canvas-to-buffer-1.0.12.tgz#d98196031724aa54796ecfc986109597099a00c9"
+canvas-to-buffer@1.0.13:
+  version "1.0.13"
+  resolved "https://registry.yarnpkg.com/canvas-to-buffer/-/canvas-to-buffer-1.0.13.tgz#5d626f1fa416bad6bd0eeeaed0810152046a0a67"
   dependencies:
     atob "2.0.3"
-    typedarray-to-buffer "3.1.4"
+    typedarray-to-buffer "3.1.5"
 
 caseless@~0.12.0:
   version "0.12.0"
@@ -2308,13 +2312,14 @@ gulp-bytediff@1.0.0:
     gulp-util "~3.0.6"
     map-stream "~0.0.6"
 
-gulp-cssnano@2.1.2:
-  version "2.1.2"
-  resolved "https://registry.yarnpkg.com/gulp-cssnano/-/gulp-cssnano-2.1.2.tgz#e08a09771ec5454a549f1a005bdd256cb8e5e0a3"
+gulp-cssnano@2.1.3:
+  version "2.1.3"
+  resolved "https://registry.yarnpkg.com/gulp-cssnano/-/gulp-cssnano-2.1.3.tgz#02007e2817af09b3688482b430ad7db807aebf72"
   dependencies:
+    buffer-from "^1.0.0"
     cssnano "^3.0.0"
-    gulp-util "^3.0.6"
     object-assign "^4.0.1"
+    plugin-error "^1.0.1"
     vinyl-sourcemaps-apply "^0.2.1"
 
 gulp-if@2.0.2:
@@ -2418,7 +2423,7 @@ gulp-uglify@3.0.0:
     uglify-js "^3.0.5"
     vinyl-sourcemaps-apply "^0.2.0"
 
-gulp-util@3.0.8, gulp-util@^3.0.0, gulp-util@^3.0.6, gulp-util@^3.0.8, gulp-util@~3.0.6:
+gulp-util@3.0.8, gulp-util@^3.0.0, gulp-util@^3.0.8, gulp-util@~3.0.6:
   version "3.0.8"
   resolved "https://registry.yarnpkg.com/gulp-util/-/gulp-util-3.0.8.tgz#0054e1e744502e27c04c187c3ecc505dd54bbb4f"
   dependencies:
@@ -2599,9 +2604,9 @@ http-signature@~1.1.0:
     jsprim "^1.2.2"
     sshpk "^1.7.0"
 
-humanize-duration@3.12.1:
-  version "3.12.1"
-  resolved "https://registry.yarnpkg.com/humanize-duration/-/humanize-duration-3.12.1.tgz#e9a531519d001ee600b6400fc353fed4fa3b235f"
+humanize-duration@3.14.0:
+  version "3.14.0"
+  resolved "https://registry.yarnpkg.com/humanize-duration/-/humanize-duration-3.14.0.tgz#1c4972a1a187a5ff6814e8182a8653bc472f87b3"
 
 hyperscript@2.0.2:
   version "2.0.2"
@@ -5277,9 +5282,9 @@ type-check@~0.3.2:
   dependencies:
     prelude-ls "~1.1.2"
 
-typedarray-to-buffer@3.1.4:
-  version "3.1.4"
-  resolved "https://registry.yarnpkg.com/typedarray-to-buffer/-/typedarray-to-buffer-3.1.4.tgz#010b582f7366b351ea7cadcb052f1a5e2d4c6e9f"
+typedarray-to-buffer@3.1.5:
+  version "3.1.5"
+  resolved "https://registry.yarnpkg.com/typedarray-to-buffer/-/typedarray-to-buffer-3.1.5.tgz#a97ee7a9ff42691b9f783ff1bc5112fe3fca9080"
   dependencies:
     is-typedarray "^1.0.0"
 
@@ -5416,14 +5421,14 @@ verror@1.3.6:
   dependencies:
     extsprintf "1.0.2"
 
-videomail-client@2.4.1:
-  version "2.4.1"
-  resolved "https://registry.yarnpkg.com/videomail-client/-/videomail-client-2.4.1.tgz#9b46b446dd1cc30734acf1735a526182b2e065fa"
+videomail-client@2.4.2:
+  version "2.4.2"
+  resolved "https://registry.yarnpkg.com/videomail-client/-/videomail-client-2.4.2.tgz#808455970a0f994a8e4d57c5fcba5e66f7798ad3"
   dependencies:
     add-eventlistener-with-options "1.25.0"
     animitter "3.0.0"
-    audio-sample "1.0.4"
-    canvas-to-buffer "1.0.12"
+    audio-sample "1.0.5"
+    canvas-to-buffer "1.0.13"
     classlist.js "1.1.20150312"
     contains "0.1.1"
     create-error "0.3.1"
@@ -5435,7 +5440,7 @@ videomail-client@2.4.1:
     filesize "3.6.0"
     get-form-data "2.0.0"
     hidden "1.1.1"
-    humanize-duration "3.12.1"
+    humanize-duration "3.14.0"
     hyperscript "2.0.2"
     insert-css "2.0.0"
     iphone-inline-video "2.2.2"
