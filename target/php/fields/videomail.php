@@ -91,6 +91,9 @@ class NF_Videomail_Fields_Videomail extends NF_Abstracts_Field {
   }
 
   public function downloadVideomailToMediaLibrary($videomail) {
+    // TODO investigage why this fails with newer ninja form versions
+    // probably something broken, a php error i am not seeing. also check in the logs
+
     if ($videomail['webm']) {
       $videoUrl = $videomail['webm'];
     } else if ($videomail['mp4']) {

@@ -41,8 +41,7 @@ More documentation on setup and configuration see:
 
 That new recordable video field comes with many options you can configure yourself such as duration, width, audio on/off and much more.
 
-Each option is explained well at bottom of this PDF file:
-[https://github.com/binarykitchen/videomail-for-ninja-forms/tree/master/doc/faq/videomail-for-ninja-forms-faq.pdf](https://github.com/binarykitchen/videomail-for-ninja-forms/tree/master/doc/faq/videomail-for-ninja-forms-faq.pdf)
+Each option is explained well at bottom of this PDF file: [Videomail FAQ](https://github.com/binarykitchen/videomail-for-ninja-forms/tree/master/doc/faq/videomail-for-ninja-forms-faq.pdf)
 
 == Whitelisting ==
 
