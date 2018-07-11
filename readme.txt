@@ -1,11 +1,10 @@
-=== Videomail for Ninja Forms===
+=== Videomail for Ninja Forms ===
 Contributors: michael.heuberger, kbjohnson90
-Tags: video, email, audio, webcam, recorder, getusermedia, form, sign language, deaf
+Tags: form, video, email, audio, webcam, recorder, sign language, deaf
+Requires at least: 4.7
 Donate link: https://videomail.io/faq
-Requires at least: 4.0
 Tested up to: 4.9
-Stable tag: 3.6.4
-Requires PHP: 7.0.0 or higher
+Stable tag: 3.6.5
 License: CC0-1.0
 
 Record videos in Ninja Forms!
@@ -42,8 +41,7 @@ More documentation on setup and configuration see:
 
 That new recordable video field comes with many options you can configure yourself such as duration, width, audio on/off and much more.
 
-Each option is explained well at bottom of this PDF file:
-[https://github.com/binarykitchen/videomail-for-ninja-f..orms/tree/master/doc/faq/videomail-for-ninja-forms-faq.pdf](https://github.com/binarykitchen/videomail-for-ninja-f..orms/tree/master/doc/faq/videomail-for-ninja-forms-faq.pdf)
+Each option is explained well at bottom of this PDF file: [Videomail FAQ](https://github.com/binarykitchen/videomail-for-ninja-forms/tree/master/doc/faq/videomail-for-ninja-forms-faq.pdf)
 
 == Whitelisting ==
 
