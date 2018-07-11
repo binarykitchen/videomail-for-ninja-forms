@@ -75,6 +75,12 @@ class NF_Videomail_Fields_Videomail extends NF_Abstracts_Field {
   public function process ($field, $data) {
     $videomail = $data['extra']['videomail'];
 
+    if (!$videomail['subject']) {
+      // use alias as the subject instead so that there are no errors
+      // further down when processing stuff
+      $videomail['subject'] = $videomail['alias'];
+    }
+
     $videomailFieldId = $field['id'];
     $data['fields'][$videomailFieldId]['value'] = $videomail;
 
@@ -91,9 +97,6 @@ class NF_Videomail_Fields_Videomail extends NF_Abstracts_Field {
   }
 
   public function downloadVideomailToMediaLibrary($videomail) {
-    // TODO investigage why this fails with newer ninja form versions
-    // probably something broken, a php error i am not seeing. also check in the logs
-
     if ($videomail['webm']) {
       $videoUrl = $videomail['webm'];
     } else if ($videomail['mp4']) {
@@ -108,11 +111,11 @@ class NF_Videomail_Fields_Videomail extends NF_Abstracts_Field {
         return $tempFile;
       } else {
         // Need to require these files
-      	if (!function_exists('media_handle_upload')) {
-      		require_once(ABSPATH . "wp-admin" . '/includes/image.php');
-      		require_once(ABSPATH . "wp-admin" . '/includes/file.php');
-      		require_once(ABSPATH . "wp-admin" . '/includes/media.php');
-      	}
+        if (!function_exists('media_handle_upload')) {
+          require_once(ABSPATH . "wp-admin" . '/includes/image.php');
+          require_once(ABSPATH . "wp-admin" . '/includes/file.php');
+          require_once(ABSPATH . "wp-admin" . '/includes/media.php');
+        }
 
         $videoType = $videomail['recordingStats']['videoType'];
         $subject = $videomail['subject'];
@@ -126,13 +129,13 @@ class NF_Videomail_Fields_Videomail extends NF_Abstracts_Field {
       		'size' => filesize($tempFile),
       	);
 
-      	// Move the temporary file into the uploads directory
-      	$results = media_handle_sideload($file, 0, $subject);
+        // Move the temporary file into the uploads directory
+        $results = media_handle_sideload($file, 0, $subject);
 
         // If error storing permanently, unlink
-      	if (is_wp_error($results)) {
-      		@unlink($tempFile);
-      		return $results;
+        if (is_wp_error($results)) {
+          @unlink($tempFile);
+          return $results;
       	}
       }
     }
