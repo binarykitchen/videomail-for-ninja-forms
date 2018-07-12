@@ -75,12 +75,6 @@ class NF_Videomail_Fields_Videomail extends NF_Abstracts_Field {
   public function process ($field, $data) {
     $videomail = $data['extra']['videomail'];
 
-    if (!$videomail['subject']) {
-      // use alias as the subject instead so that there are no errors
-      // further down when processing stuff
-      $videomail['subject'] = $videomail['alias'];
-    }
-
     $videomailFieldId = $field['id'];
     $data['fields'][$videomailFieldId]['value'] = $videomail;
 
@@ -118,16 +112,20 @@ class NF_Videomail_Fields_Videomail extends NF_Abstracts_Field {
         }
 
         $videoType = $videomail['recordingStats']['videoType'];
-        $subject = $videomail['subject'];
+
+        if (!$videomail['subject']) {
+          // use alias as the subject instead
+          $videomail['subject'] = $videomail['alias'];
+        }
 
         // Array based on $_FILE as seen in PHP file uploads
-      	$file = array(
-      		'name' => $subject . '.' . $videoType,
-      		'type' => wp_check_filetype($tempFile),
-      		'tmp_name' => $tempFile,
-      		'error' => 0,
-      		'size' => filesize($tempFile),
-      	);
+        $file = array(
+          'name' => $subject . '.' . $videoType,
+          'type' => wp_check_filetype($tempFile),
+          'tmp_name' => $tempFile,
+          'error' => 0,
+          'size' => filesize($tempFile),
+        );
 
         // Move the temporary file into the uploads directory
         $results = media_handle_sideload($file, 0, $subject);
