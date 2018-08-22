@@ -116,7 +116,9 @@ class NF_Videomail_Fields_Videomail extends NF_Abstracts_Field {
 
         if (!$videomail['subject']) {
           // use alias as the subject instead
-          $videomail['subject'] = $videomail['alias'];
+          $subject = $videomail['alias'];
+        } else {
+          $subject = $videomail['subject'];
         }
 
         // Array based on $_FILE as seen in PHP file uploads
