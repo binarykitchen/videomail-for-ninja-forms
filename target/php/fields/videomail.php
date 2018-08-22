@@ -76,7 +76,6 @@ class NF_Videomail_Fields_Videomail extends NF_Abstracts_Field {
     $videomail = $data['extra']['videomail'];
 
     $videomailFieldId = $field['id'];
-    $data['fields'][$videomailFieldId]['value'] = $videomail;
 
     // now set some merge tag values for the videomail object itself
     Ninja_Forms()->merge_tags['video']->setUrl($videomail['url']);
@@ -86,6 +85,8 @@ class NF_Videomail_Fields_Videomail extends NF_Abstracts_Field {
     if ($field['media_library']) {
       register_shutdown_function(array($this, 'downloadVideomailToMediaLibrary'), $videomail);
     }
+
+    $data['fields'][$videomailFieldId]['value'] = $videomail['url'];
 
     return $data;
   }
@@ -178,6 +179,6 @@ class NF_Videomail_Fields_Videomail extends NF_Abstracts_Field {
     if (empty($value)) return __('No Video Recorded');
 
     // ok, value is a videomail
-    return '<a href="' . $value['url'] . '">' . __('View Online', 'videomail-for-ninja-forms') . '</a>';
+    return '<a href="' . $value . '">' . __('View Online', 'videomail-for-ninja-forms') . '</a>';
   }
 }
