@@ -12,7 +12,7 @@ const defaultOptions = {
   version: null
 }
 
-const options = minimist(process.argv.slice(2), {default: defaultOptions})
+const options = minimist(process.argv.slice(2), { default: defaultOptions })
 
 // reloads browser and injects CSS
 const browserSync = require('browser-sync').create()
@@ -57,7 +57,7 @@ gulp.task('js', ['standard'], function () {
   return gulp.src('src/js/main.js')
     .pipe(sourcemaps.init())
     .pipe(plugins.uglify())
-    .pipe(plugins.rename({suffix: '.min'}))
+    .pipe(plugins.rename({ suffix: '.min' }))
     // todo fix, sourcemaps do not seem to work (switch to webpack?)
     .pipe(sourcemaps.write())
     .pipe(gulp.dest('target/js'))
@@ -87,7 +87,7 @@ gulp.task('css', function () {
     ))
     .pipe(plugins.bytediff.start())
     .pipe(plugins.cssnano())
-    .pipe(plugins.rename({suffix: '.min'}))
+    .pipe(plugins.rename({ suffix: '.min' }))
     .pipe(plugins.bytediff.stop())
     .pipe(browserSync.stream())
     .pipe(gulp.dest('target/css'))
@@ -126,7 +126,7 @@ gulp.task('zip', ['css', 'js', 'copy-videomail-client', 'todo', 'php'], function
     'readme.txt',
     'videomail-for-ninja-forms.php',
     'target/**'
-  ], {base: './'})
+  ], { base: './' })
     .pipe(plugins.zip('videomail-for-ninja-forms.zip'))
     .pipe(gulp.dest('dist'))
 })
