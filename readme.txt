@@ -4,7 +4,7 @@ Tags: form, video, email, audio, webcam, recorder, sign language, deaf
 Requires at least: 4.7
 Donate link: https://videomail.io/faq
 Tested up to: 4.9
-Stable tag: 3.6.7
+Stable tag: 3.7.0
 License: CC0-1.0
 
 Record videos in Ninja Forms!
@@ -68,7 +68,7 @@ This WordPress plugin is based on the open sourced npm package [videomail-client
 
 == Frequently Asked Questions ==
 
-See Common Questions near bottom of [https://ninjaforms.com/docs/videomail/](https://ninjaforms.com/docs/videomail/)
+Check out that pretty online PDF at [https://github.com/binarykitchen/videomail-for-ninja-forms/blob/master/doc/faq/videomail-for-ninja-forms-faq.pdf](https://github.com/binarykitchen/videomail-for-ninja-forms/blob/master/doc/faq/videomail-for-ninja-forms-faq.pdf)
 
 == Installation ==
 

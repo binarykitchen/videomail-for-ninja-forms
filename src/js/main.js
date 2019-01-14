@@ -75,7 +75,7 @@ var VideomailFieldController = Marionette.Object.extend({
         countdown: this.fieldModel.get('countdown') || false
       },
       audio: {
-        enabled: this.fieldModel.get('audio_enabled') || false
+        enabled: this.fieldModel.get('audio_enabled') || true
       },
       image: {
         quality: imageQualityPercentage / 100 // must be a float
