@@ -78,6 +78,18 @@ Probably you also want to whitelist additional domains besides localhost. See ch
 
 == Changelog ==
 
+= 3.7.1 (14 Jan 2019) =
+
+*Change:*
+
+* Audio now enabled by default
+* Improved documentation
+
+*Bugs:*
+
+* More robust with exotic browsers
+* Correct bad spelling
+
 = 3.6.0 (17 March 2018) =
 
 *Change:*

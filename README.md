@@ -54,6 +54,12 @@ In the `/doc` folder we place in all text and images for the public documentatio
 
 https://github.com/binarykitchen/videomail-for-ninja-forms/issues
 
+## Releasing
+
+1. Update changelog in readme.txt
+2. `yarn run patch` (or minor or major)
+3. `yarn run sync` to sync with the public WordPress site (can take a long time)
+
 ## Ask for help
 
 https://binarykitchen.com
