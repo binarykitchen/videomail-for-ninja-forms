@@ -10,7 +10,7 @@ More documentation, aimed at the mortal user, is in the readme.txt - this here i
 
 ## Dependencies
 
-Requires the [Ninja Forms v3 plugin](https://github.com/wpninjas/ninja-forms).
+Requires the [Ninja Forms plugin](https://github.com/wpninjas/ninja-forms).
 
 In short: this add-on runs on the Ninja Forms plugin engine where you can configure forms very easily. Upon installation, a new type will be added to enable recordable videos.
 
