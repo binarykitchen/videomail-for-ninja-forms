@@ -78,6 +78,14 @@ Probably you also want to whitelist additional domains besides localhost. See ch
 
 == Changelog ==
 
+= 3.7.2 (8 May 2019) =
+
+*Change:*
+
+* Better readystate handling for faster page loads
+* Improved error messages for iOS on Chrome
+* Faster websocket streams
+
 = 3.7.1 (14 Jan 2019) =
 
 *Change:*
