@@ -3,8 +3,8 @@ Contributors: michael.heuberger, kbjohnson90
 Tags: form, video, email, audio, webcam, recorder, sign language, deaf
 Requires at least: 4.7
 Donate link: https://videomail.io/faq
-Tested up to: 4.9
-Stable tag: 3.7.1
+Tested up to: 5.0.3
+Stable tag: 3.7.2
 License: CC0-1.0
 
 Record videos in Ninja Forms!
@@ -77,6 +77,14 @@ Just upload the zip and install the plugin. Simple as that.
 Probably you also want to whitelist additional domains besides localhost. See chapter Whitelisting.
 
 == Changelog ==
+
+= 3.7.2 (8 May 2019) =
+
+*Change:*
+
+* Better readystate handling for faster page loads
+* Improved error messages for iOS on Chrome
+* Faster websocket streams
 
 = 3.7.1 (14 Jan 2019) =
 
