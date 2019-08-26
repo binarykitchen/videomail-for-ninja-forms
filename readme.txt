@@ -78,6 +78,17 @@ Probably you also want to whitelist additional domains besides localhost. See ch
 
 == Changelog ==
 
+= 3.7.3 (27 Aug 2019) =
+
+*Bugs:*
+
+* Correct error message when on insecure HTTP with recommendation to switch to HTTPS
+* Works again on older iPhones
+
+*Change:*
+
+* Replaced lots of old code with modern code.
+
 = 3.7.2 (8 May 2019) =
 
 *Change:*
