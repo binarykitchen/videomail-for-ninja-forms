@@ -78,6 +78,12 @@ Probably you also want to whitelist additional domains besides localhost. See ch
 
 == Changelog ==
 
+= 3.7.4 (3 Sep 2019) =
+
+*Bugs:*
+
+* Fix invalid URLs for Windows machines
+
 = 3.7.3 (27 Aug 2019) =
 
 *Bugs:*

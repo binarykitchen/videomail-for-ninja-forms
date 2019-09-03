@@ -9,7 +9,7 @@ Author URI: https://videomail.io
 Author URI: http://kylebjohnson.me
 Text Domain: videomail-for-ninja-forms
 
-Copyright 2018 Michael Heuberger + Kyle B. Johnson
+Copyright 2019 Michael Heuberger + Kyle B. Johnson
 */
 
 if (version_compare(get_option('ninja_forms_version', '0.0.0'), '3', '<') ||
@@ -21,7 +21,7 @@ if (version_compare(get_option('ninja_forms_version', '0.0.0'), '3', '<') ||
   $entryFile = __FILE__;
 
   $targetDir = plugin_dir_path($entryFile) . 'target' . DIRECTORY_SEPARATOR;
-  $url = plugin_dir_url($entryFile) . 'target' . DIRECTORY_SEPARATOR;
+  $url = plugin_dir_url($entryFile) . 'target/';
 
   require_once $targetDir . 'php' . DIRECTORY_SEPARATOR . 'videomail.php';
 
