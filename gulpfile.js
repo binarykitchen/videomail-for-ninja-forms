@@ -63,7 +63,7 @@ const js = gulp.series(lint, bundle)
 
 function copyVideomailClient () {
   return gulp
-    .src('node_modules/videomail-client/dist/videomail-client.min.*')
+    .src('node_modules/videomail-client/prototype/js/videomail-client.min.*')
     .pipe(gulp.dest('target/js/videomail-client'))
 }
 
