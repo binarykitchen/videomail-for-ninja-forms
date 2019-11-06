@@ -56,6 +56,7 @@ gulp bumpVersion --write --version=$VERSION
 yarn
 
 # Rebuild all assets and zip them all into dist
+gulp build
 gulp zip
 
 git add -A
