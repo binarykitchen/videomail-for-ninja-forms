@@ -6,6 +6,8 @@ const sourcemaps = require('gulp-sourcemaps')
 const del = require('del')
 const minimist = require('minimist')
 const path = require('path')
+const log = require('fancy-log')
+const browserSync = require('browser-sync').create()
 
 const defaultOptions = {
   importance: null,
@@ -14,21 +16,15 @@ const defaultOptions = {
 
 const options = minimist(process.argv.slice(2), { default: defaultOptions })
 
-// reloads browser and injects CSS
-const browserSync = require('browser-sync').create()
+log.info('Options:', options)
 
-// for manual browser reload
-const reload = browserSync.reload
-
-gulp.task('browser-sync', function () {
+function start () {
   const port = argv.port || 8890
   const host = argv.host || 'localhost'
 
   var projectUrl = 'https://' + host
 
-  if (port) {
-    projectUrl += ':' + port
-  }
+  if (port) { projectUrl += ':' + port }
 
   projectUrl += '/wp-admin/admin.php?page=ninja-forms'
 
@@ -42,18 +38,18 @@ gulp.task('browser-sync', function () {
     open: 'external',
     injectChanges: true
   })
-})
+}
 
-gulp.task('standard', function () {
+function lint () {
   return gulp.src(['src/js/main.js'])
     .pipe(plugins.standard())
     .pipe(plugins.standard.reporter('default', {
       breakOnError: true,
       quiet: true
     }))
-})
+}
 
-gulp.task('js', ['standard'], function () {
+function bundle () {
   return gulp.src('src/js/main.js')
     .pipe(sourcemaps.init())
     .pipe(plugins.uglify())
@@ -61,15 +57,17 @@ gulp.task('js', ['standard'], function () {
     // todo fix, sourcemaps do not seem to work (switch to webpack?)
     .pipe(sourcemaps.write())
     .pipe(gulp.dest('target/js'))
-})
+}
 
-gulp.task('copy-videomail-client', function () {
+const js = gulp.series(lint, bundle)
+
+function copyVideomailClient () {
   return gulp
-    .src('node_modules/videomail-client/dist/videomail-client.min.*')
+    .src('node_modules/videomail-client/prototype/js/videomail-client.min.*')
     .pipe(gulp.dest('target/js/videomail-client'))
-})
+}
 
-gulp.task('css', function () {
+function css () {
   return gulp.src('src/styl/main.styl')
     .pipe(plugins.plumber())
     .pipe(plugins.stylus({
@@ -91,26 +89,27 @@ gulp.task('css', function () {
     .pipe(plugins.bytediff.stop())
     .pipe(browserSync.stream())
     .pipe(gulp.dest('target/css'))
-})
+}
 
-gulp.task('clean:php', function () {
-  return del([
-    'target/**/*.{php,html}'
-  ])
-})
+function cleanPhp () {
+  return del(['target/**/*.{php,html}'])
+}
 
-gulp.task('php', ['clean:php'], function () {
-  return gulp.src('src/**/*.{php,html}')
-    .pipe(gulp.dest('target'))
-})
+function copyPhp () {
+  return gulp.src('src/**/*.{php,html}').pipe(gulp.dest('target'))
+}
 
-gulp.task('watch', ['default', 'browser-sync'], function () {
-  gulp.watch('src/**/*.{php,html}', ['php', reload])
-  gulp.watch('src/js/**/*.js', ['js', reload])
-  gulp.watch('src/styl/**/*.styl', ['css'])
-})
+const php = gulp.series(cleanPhp, copyPhp)
 
-gulp.task('todo', function () {
+function watch (done) {
+  gulp.watch('src/**/*.{php,html}', gulp.series(php, browserSync.reload))
+  gulp.watch('src/js/**/*.js', gulp.series(js, browserSync.reload))
+  gulp.watch('src/styl/**/*.styl', css)
+
+  done()
+}
+
+function todo () {
   return gulp.src([
     'videomail-for-ninja-forms.php',
     'src/**/*.{php,js,styl}',
@@ -118,9 +117,9 @@ gulp.task('todo', function () {
   ])
     .pipe(plugins.todo())
     .pipe(gulp.dest('./'))
-})
+}
 
-gulp.task('zip', ['css', 'js', 'copy-videomail-client', 'todo', 'php'], function () {
+function zip () {
   return gulp.src([
     'index.php',
     'readme.txt',
@@ -129,15 +128,13 @@ gulp.task('zip', ['css', 'js', 'copy-videomail-client', 'todo', 'php'], function
   ], { base: './' })
     .pipe(plugins.zip('videomail-for-ninja-forms.zip'))
     .pipe(gulp.dest('dist'))
-})
+}
 
 // get inspired by
 // https://www.npmjs.com/package/gulp-tag-version and
 // https://github.com/nicksrandall/gulp-release-tasks/blob/master/tasks/release.js
-gulp.task('bumpVersion', () => {
-  const bumpOptions = {
-    keys: ['version', 'Stable tag']
-  }
+exports.bumpVersion = function () {
+  const bumpOptions = { keys: ['version', 'Stable tag'] }
 
   if (options.version) {
     bumpOptions.version = options.version
@@ -155,8 +152,12 @@ gulp.task('bumpVersion', () => {
     .pipe(plugins.if(options.write, gulp.dest(function (file) {
       return path.dirname(file.path)
     })))
-    .on('error', plugins.util.log)
-})
+    .on('error', log.error)
+}
 
 // just builds assets once, nothing else
-gulp.task('default', ['css', 'js', 'copy-videomail-client', 'todo', 'php', 'zip'])
+const build = gulp.series(css, js, copyVideomailClient, todo, php)
+
+exports.build = build
+exports.zip = zip
+exports.watch = gulp.series(build, start, watch)
