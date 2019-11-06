@@ -4,19 +4,12 @@ Tags: form, video, email, audio, webcam, recorder, sign language, deaf
 Requires at least: 4.7
 Donate link: https://videomail.io/faq
 Tested up to: 5.2
-Stable tag: 3.8.0
+Stable tag: 3.9.0
 License: CC0-1.0
 
 Record videos in Ninja Forms!
 
-== Requirements ==
-
-WordPress: 4.6 or higher
-NinjaForms: 3.1.6 or higher
-PHP: 7.0 or higher
-
 == Description ==
-
 With this add-on recording and sending videos in WordPress *finally* comes true. No further coding required. Just install + configure a bit (like duration, width or enable audio etc) and that’s all. Wicked.
 
 * Record from webcam, simple
@@ -32,73 +25,79 @@ Latest version (zip file) also can be downloaded for free anytime from GitHub:
 More documentation on setup and configuration see:
 [https://github.com/binarykitchen/videomail-for-ninja-forms/tree/master/doc/faq/videomail-for-ninja-forms-faq.pdf](https://github.com/binarykitchen/videomail-for-ninja-forms/tree/master/doc/faq/videomail-for-ninja-forms-faq.pdf)
 
-== Screenshots ==
+== Installation ==
+This section describes how to install the plugin and get it working.
+1. Upload the `videomail-for-ninja-forms` plugin folder to your `/wp-content/plugins/` directory
+2. Activate the plugin through the 'Plugins' menu in WordPress
+3. Visit the 'Ninja Forms' menu item in your admin sidebar
+4. Build a form using videomail
 
-1. There will be a new Ninja Form Fields in the common section called Videomail.
-2. Once you have assembled a form and preview it, any browser will ask for webcam access first.
+Probably you also want to whitelist additional domains besides localhost. See whitelisting under FAQ.
 
-== Options ==
+== Frequently Asked Questions ==
 
+= Donations? =
+That would be awesome :) Scroll to bottom of https://videomail.io/faq
+
+= Where is the documentation? =
+Check out that pretty online PDF at [https://github.com/binarykitchen/videomail-for-ninja-forms/blob/master/doc/faq/videomail-for-ninja-forms-faq.pdf](https://github.com/binarykitchen/videomail-for-ninja-forms/blob/master/doc/faq/videomail-for-ninja-forms-faq.pdf)
+
+= What options are there? =
 That new recordable video field comes with many options you can configure yourself such as duration, width, audio on/off and much more.
 
 Each option is explained well at bottom of this PDF file: [Videomail FAQ](https://github.com/binarykitchen/videomail-for-ninja-forms/tree/master/doc/faq/videomail-for-ninja-forms-faq.pdf)
 
-== Whitelisting ==
-
+= How does whitelisting work? =
 For local development, everything will work right away because the localhost URL is already whitelisted on the videomail server.
 
 But once you deploy your Wordpress site out in the wild, we will have to whitelist your production URL. For that, just submit a [Whitelist Request](https://videomail.io/whitelist). Very easy.
 
-== Upgrade Notice ==
-
-N/A - none needed for now.
-
-== Support ==
-
-To get help, just use any of these contacts at [https://binarykitchen.com](https://binarykitchen.com)
-
-== Live example ==
-
+= Is there a live example? =
 There is also the live site [videomail.io](https://videomail.io). Have a look and play.
 You can see the videomail-client in action and use it right away for free, anytime, anywhere. Many people, especially Deafs and Sign Language users, already use it for their everyday communication.
 
-== Low level videomail-client library ==
+= Can I use videomail outside of WordPress? =
+Yes. There is a low level npm [videomail-client](https://github.com/binarykitchen/videomail-client) package. This WordPress plugin relies on it.
 
-This WordPress plugin is based on the open sourced npm package [videomail-client](https://github.com/binarykitchen/videomail-client). There you can find more information on the technical side of things.
+= Where is the support? =
+To get help, just use any of these contacts at [https://binarykitchen.com](https://binarykitchen.com)
 
-== Frequently Asked Questions ==
+== Screenshots ==
+1. There will be a new Ninja Form Fields in the common section called Videomail.
+2. Once you have assembled a form and preview it, any browser will ask for webcam access first.
 
-Check out that pretty online PDF at [https://github.com/binarykitchen/videomail-for-ninja-forms/blob/master/doc/faq/videomail-for-ninja-forms-faq.pdf](https://github.com/binarykitchen/videomail-for-ninja-forms/blob/master/doc/faq/videomail-for-ninja-forms-faq.pdf)
+== Upgrade Notice ==
 
-== Installation ==
+= 3.8.1 (7 Nov 2019) =
 
-Just upload the zip and install the plugin. Simple as that.
+*Bugs:*
+* Repair readme.txt
 
-Probably you also want to whitelist additional domains besides localhost. See chapter Whitelisting.
+= 3.8.0 (6 Nov 2019) =
 
-== Changelog ==
+*Change:*
+Lots improved under the hood, updated many libraries for speed and security.
+
+*Bugs:*
+* Works again on IE11
 
 = 3.7.4 (3 Sep 2019) =
 
 *Bugs:*
-
 * Fix invalid URLs for Windows machines
 
 = 3.7.3 (27 Aug 2019) =
 
 *Bugs:*
-
 * Correct error message when on insecure HTTP with recommendation to switch to HTTPS
 * Works again on older iPhones
 
 *Change:*
-
 * Replaced lots of old code with modern code.
 
 = 3.7.2 (8 May 2019) =
 
 *Change:*
-
 * Better readystate handling for faster page loads
 * Improved error messages for iOS on Chrome
 * Faster websocket streams
@@ -106,68 +105,56 @@ Probably you also want to whitelist additional domains besides localhost. See ch
 = 3.7.1 (14 Jan 2019) =
 
 *Change:*
-
 * Audio now enabled by default
 * Improved documentation
 
 *Bugs:*
-
 * More robust with exotic browsers
 * Correct bad spelling
 
 = 3.6.0 (17 March 2018) =
 
 *Change:*
-
 * Moved to a new, public repository and free now
 
 = 3.5.0 (17 February 2018) =
 
 *Features:*
-
 * New option: save to media library - so that you can reuse the video for posts or pages yay!
 * New option: image quality - with this you can improve video in cost of bandwidth
 
 *Bugs:*
-
 * Much better error handling
 
 = 3.4.3 (21 December 2017) =
 
 *Bugs:*
-
 * Now it does not mess with other rich content text editors anymore.
 
 = 3.4.2 (12 December 2017) =
 
 *Bugs:*
-
 * Added missing licensing field under settings
 
 = 3.4.0 (12 October 2017) =
 
 *Features:*
-
 * Now works on iPhones running on iOS11 and on Safari v11, yay.
 
 *Bugs:*
-
 * Now works as an optional input (= not as a required field)
 
 = 3.3.3 (9 September 2017) =
 
 *Bugs:*
-
 * Make it work again on all Edge browsers
 
 = 3.3.2 (27 July 2017) =
 
 *Bugs:*
-
 * Do not zip extension in another zip.
 
 *Changes:*
-
 * Bump videomail-client using ES6 code
 * Improved error messages
 
