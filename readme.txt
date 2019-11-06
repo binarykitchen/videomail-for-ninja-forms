@@ -78,6 +78,15 @@ Probably you also want to whitelist additional domains besides localhost. See ch
 
 == Changelog ==
 
+= 3.8.0 (6 Nov 2019) =
+
+*Change:*
+Lots improved under the hood, updated many libraries for speed and security.
+
+*Bugs:*
+
+* Works again on IE11
+
 = 3.7.4 (3 Sep 2019) =
 
 *Bugs:*
