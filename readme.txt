@@ -68,6 +68,11 @@ To get help, just use any of these contacts at [https://binarykitchen.com](https
 
 == Upgrade Notice ==
 
+= 3.9.3 (7 Nov 2019) =
+
+*Bugs:*
+* Do not enable audio when already false
+
 = 3.9.2 (7 Nov 2019) =
 
 *Bugs:*
