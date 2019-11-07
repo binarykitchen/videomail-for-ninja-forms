@@ -68,6 +68,11 @@ To get help, just use any of these contacts at [https://binarykitchen.com](https
 
 == Upgrade Notice ==
 
+= 3.9.2 (7 Nov 2019) =
+
+*Bugs:*
+* Repaired merging fields into strings
+
 = 3.8.1 (7 Nov 2019) =
 
 *Bugs:*
