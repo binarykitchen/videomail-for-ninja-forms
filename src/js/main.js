@@ -184,11 +184,12 @@ var VideomailFieldController = Marionette.Object.extend({
       if (value === '{wp:admin_email}') {
         value = window.nfVideomail.admin_email
       } else {
-        var rawFieldKey = value.replace('{field:', '').replace('}', '')
+        var rawFieldKeyMatches = value.match(/{field:(.*)}/i)
+        var rawFieldKey = rawFieldKeyMatches && rawFieldKeyMatches[1]
 
         if (rawFieldKey !== value) {
           // yes it was a merge tag, so use it
-          value = formValues[rawFieldKey]
+          value = value.replace(/{field:(.*)}/i, formValues[rawFieldKey])
         }
       }
     }
