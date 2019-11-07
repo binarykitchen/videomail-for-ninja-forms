@@ -4,7 +4,7 @@ Tags: form, video, email, audio, webcam, recorder, sign language, deaf
 Requires at least: 4.7
 Donate link: https://videomail.io/faq
 Tested up to: 5.2
-Stable tag: 3.9.2
+Stable tag: 3.9.3
 License: CC0-1.0
 
 Record videos in Ninja Forms!
@@ -67,6 +67,11 @@ To get help, just use any of these contacts at [https://binarykitchen.com](https
 2. Once you have assembled a form and preview it, any browser will ask for webcam access first.
 
 == Upgrade Notice ==
+
+= 3.9.3 (7 Nov 2019) =
+
+*Bugs:*
+* Do not enable audio when already false
 
 = 3.9.2 (7 Nov 2019) =
 
