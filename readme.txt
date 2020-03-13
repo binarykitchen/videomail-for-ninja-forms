@@ -68,6 +68,12 @@ To get help, just use any of these contacts at [https://binarykitchen.com](https
 
 == Upgrade Notice ==
 
+= 3.9.4 (13 Mar 2020) =
+
+*Bugs:*
+* Ping more often to keep connection alive
+* Also submit disabled form inputs
+
 = 3.9.3 (7 Nov 2019) =
 
 *Bugs:*
