@@ -19,11 +19,13 @@ In short: this add-on runs on the Ninja Forms plugin engine where you can config
 1. Install WordPress locally or use [Local by Flywheel](https://local.getflywheel.com/)
 2. Install Ninja Forms Plugin
 3. `git clone git@github.com:binarykitchen/videomail-for-ninja-forms.git`
-4. Symlink videomail-for-ninja-forms into WordPress plugins folder using this [addon](https://github.com/getflywheel/local-addon-volumes). For mapping, use that path `/app/public/wp-content/plugins/videomail-for-ninja-forms`
+4. Symlink videomail-for-ninja-forms like that: `ln -s /Users/michael-heuberger/code/videomail-for-ninja-forms /Users/michael-heuberger/Local\ Sites/infernaldarknesslocal/app/public/wp-content/plugins/videomail-for-ninja-forms`
 4. Install latest nodejs, best with [nvm](https://github.com/creationix/nvm)
 5. Install [yarn](https://yarnpkg.com/en/docs/install)
 5. `yarn install` to install dependencies
 6. `gulp watch --host x --port y` which will open Google Chrome and automatically reloads upon changes (PHP, JS and CSS). Defaults to https://localhost:8890
+
+Note, if you have a port conflict with flywheel, stop Apache with `sudo apachectl stop`.
 
 ### Customise host or port
 
