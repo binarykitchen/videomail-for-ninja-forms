@@ -68,6 +68,11 @@ To get help, just use any of these contacts at [https://binarykitchen.com](https
 
 == Upgrade Notice ==
 
+= 3.9.5 (16 Jun 2020) =
+
+*Bugs:*
+* Flip video feed horizontally to match with reality (all webcams are inverted by default)
+
 = 3.9.4 (13 Mar 2020) =
 
 *Bugs:*
