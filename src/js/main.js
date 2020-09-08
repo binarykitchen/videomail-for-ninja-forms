@@ -5,7 +5,6 @@ var DEBUG = false
 // http://backbonejs.org/#Events
 
 var VideomailFieldController = Marionette.Object.extend({
-
   videomailClient: null,
 
   // not sure if this is a good idea, but i need a reference to it
@@ -85,7 +84,9 @@ var VideomailFieldController = Marionette.Object.extend({
       },
       callbacks: {
         // ugly name eh?
-        adjustFormDataBeforePosting: this.adjustFormDataBeforePostingToVideomailServer.bind(this)
+        adjustFormDataBeforePosting: this.adjustFormDataBeforePostingToVideomailServer.bind(
+          this
+        )
       },
       // leave it to ninja form to validate the inputs
       enableAutoValidation: false,
@@ -95,9 +96,18 @@ var VideomailFieldController = Marionette.Object.extend({
       verbose: this.fieldModel.get('verbose') || DEBUG
     })
 
-    this.videomailClient.on(this.videomailClient.events.PREVIEW, this.onPreview.bind(this))
-    this.videomailClient.on(this.videomailClient.events.SUBMITTED, this.onSubmitted.bind(this))
-    this.videomailClient.on(this.videomailClient.events.GOING_BACK, this.onGoingBack.bind(this))
+    this.videomailClient.on(
+      this.videomailClient.events.PREVIEW,
+      this.onPreview.bind(this)
+    )
+    this.videomailClient.on(
+      this.videomailClient.events.SUBMITTED,
+      this.onSubmitted.bind(this)
+    )
+    this.videomailClient.on(
+      this.videomailClient.events.GOING_BACK,
+      this.onGoingBack.bind(this)
+    )
 
     this.videomailClient.show()
   },
@@ -106,8 +116,7 @@ var VideomailFieldController = Marionette.Object.extend({
   // submitting to the videomail server
   onPreview: function (key) {
     this.fieldModel.set('videomail-key', key)
-    Backbone.Radio
-      .channel('fields')
+    Backbone.Radio.channel('fields')
       // clears any previous errors
       .request('remove:error', this.fieldModel.get('id'), 'required-error')
   },
@@ -116,7 +125,9 @@ var VideomailFieldController = Marionette.Object.extend({
     var formModel = nfRadio.channel('app').request('get:form', this.getFormId())
 
     // todo isnt 'form-' + formModel.get('id') the same as the formID already?
-    nfRadio.channel('form-' + formModel.get('id')).request('add:extra', 'videomail', videomail)
+    nfRadio
+      .channel('form-' + formModel.get('id'))
+      .request('add:extra', 'videomail', videomail)
 
     // restart submission again, this time to the real wp site
     nfRadio.channel('form-' + this.getFormId()).request('submit', formModel)
