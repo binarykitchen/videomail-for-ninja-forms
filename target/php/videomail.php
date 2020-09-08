@@ -2,7 +2,7 @@
 final class NF_Videomail {
 
   const NAME = 'Videomail';
-  const VERSION = '3.9.6';
+  const VERSION = '3.9.7';
   const AUTHOR = 'Michael Heuberger + Kyle B. Johnson';
   const SLUG = 'videomail';
   const PREFIX = 'NF_Videomail';

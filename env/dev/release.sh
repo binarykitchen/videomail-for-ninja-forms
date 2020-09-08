@@ -14,17 +14,16 @@ die() {
 # maybe with command line args?
 # when done, rename this file
 
-for i in "$@"
-do
-case $i in
-    -i=*|--importance=*)
-    IMPORTANCE="${i#*=}"
-    shift # past argument=value
-    ;;
+for i in "$@"; do
+    case $i in
+    -i=* | --importance=*)
+        IMPORTANCE="${i#*=}"
+        shift # past argument=value
+        ;;
     *)
-    # unknown option
-    ;;
-esac
+        # unknown option
+        ;;
+    esac
 done
 
 if [[ -z "$IMPORTANCE" ]]; then
@@ -32,12 +31,13 @@ if [[ -z "$IMPORTANCE" ]]; then
 fi
 
 # ensures all is commited
-if [[ `git status --porcelain` ]]; then
+if [[ $(git status --porcelain) ]]; then
     die "Aborting the bump! You have uncommitted changes."
 fi
 
 # https://stackoverflow.com/questions/45047976/how-to-awk-extract-the-newer-version-number/45048086#45048086
-read VERSION <<< $(gulp bumpVersion --importance=$IMPORTANCE | awk '!a{if(match($0,/to [0-9]\.[0-9]\.[0-9]/)){print substr($0,RSTART+3,RLENGTH-3);a=1}}')
+# TODO allow two digit versioning like 3.10.0 ... that regex needs fixing
+read VERSION <<<$(yarn run gulp bumpVersion --importance=$IMPORTANCE | awk '!a{if(match($0,/to [0-9]\.[0-9]\.[0-9]/)){print substr($0,RSTART+3,RLENGTH-3);a=1}}')
 
 git checkout master
 git push
