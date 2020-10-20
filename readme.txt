@@ -68,6 +68,24 @@ To get help, just use any of these contacts at [https://binarykitchen.com](https
 
 == Upgrade Notice ==
 
+= 3.9.8 (20 Oct 2020) =
+
+*Bugs:*
+* Fixed wrong FPS calculation. Now overall quality of encoded videos won't be impacted when connectivity deteriorates toward the end.
+*Change:*
+* Upgrades Videomail dependency
+
+= 3.9.7 (9 Sept 2020) =
+
+*Improvements:*
+* Better release procedure
+* Consistent source code
+
+= 3.9.6 (16 Jun 2020) =
+
+*Change:*
+* Upgrades Videomail dependency
+
 = 3.9.5 (16 Jun 2020) =
 
 *Bugs:*

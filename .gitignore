@@ -4,3 +4,4 @@ yarn-error.log
 env/dev/git
 env/dev/svn
 *.code-workspace
+.vscode
