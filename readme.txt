@@ -68,6 +68,14 @@ To get help, just use any of these contacts at [https://binarykitchen.com](https
 
 == Upgrade Notice ==
 
+= 3.10.0 (5 Dec 2020) =
+
+*Bugs:*
+* Make it work along with the Conditional Logic add-on
+* Required attribute works again with latest WP and Ninja Form versions
+*Change:*
+* Upgrades Videomail dependency
+
 = 3.9.8 (20 Oct 2020) =
 
 *Bugs:*
