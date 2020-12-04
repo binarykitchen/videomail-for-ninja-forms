@@ -1,6 +1,6 @@
 ### TODOs
 | Filename | line # | TODO
 |:------|:------:|:------
-| js/main.js | 147 | isn't 'form-' + formModel.get('id') the same as the formID already?
-| js/main.js | 215 | ask for an endpoint to process those special merge tags
+| js/main.js | 126 | isn't 'form-' + formModel.get('id') the same as the formID already?
+| js/main.js | 194 | ask for an endpoint to process those special merge tags
 | gulpfile.js | 66 | fix, sourcemaps do not seem to work (switch to webpack?)

@@ -1,5 +1,5 @@
 // manual switch to have more stuff printed to console
-var DEBUG = true
+var DEBUG = false
 
 // good documentation on backbone event handling
 // http://backbonejs.org/#Events
@@ -7,41 +7,20 @@ var DEBUG = true
 var VideomailFieldController = Marionette.Object.extend({
   videomailClient: null,
 
-  // not sure if this is a good idea, but i need a reference to it
   fieldModel: null,
 
-  channel: nfRadio.channel('videomail'),
+  channel: Backbone.Radio.channel('videomail'),
 
   initialize: function () {
-    nfRadio.DEBUG = DEBUG
+    Backbone.Radio.DEBUG = DEBUG
 
-    this.listenTo(nfRadio.channel('global'), 'all', function (eventName) {
-      console.log('Global event triggered:', eventName)
+    // ugly workaround to make it work with the conditional plugin
+    this.listenTo(this.channel, 'all', function (eventName) {
+      DEBUG && console.log('Videomail channel event triggered:', eventName)
 
-      this.listenTo(this.channel, 'init:model', this.registerVideomailField)
-    })
-
-    this.listenTo(nfRadio.channel('app'), 'all', function (eventName) {
-      console.log('App event triggered:', eventName)
-
-      this.listenTo(this.channel, 'init:model', this.registerVideomailField)
-    })
-
-    this.listenTo(nfRadio.channel('form'), 'all', function (eventName) {
-      console.log('Form event triggered:', eventName)
-
-      this.listenTo(this.channel, 'init:model', this.registerVideomailField)
-    })
-
-    this.listenTo(nfRadio.channel('forms'), 'all', function (eventName) {
-      console.log('Forms event triggered:', eventName)
-
-      this.listenTo(this.channel, 'init:model', this.registerVideomailField)
-    })
-
-    this.listenTo(this.channel, 'all', function (eventName, b) {
-      console.log('Videomail event triggered:', eventName, b)
-
+      // only start listening at this point. because the conditional plugin
+      // is resetting event handlers. without the above, we'd be registering
+      // too early and the conditional plugin overrides.
       this.listenTo(this.channel, 'init:model', this.registerVideomailField)
     })
   },
@@ -54,8 +33,6 @@ var VideomailFieldController = Marionette.Object.extend({
     // workaround for https://github.com/wpninjas/ninja-forms/issues/2675
     // also prevents from event emitter leaks under race conditions
     if (!this.videomailClient) {
-      console.log('registerVideomailField!', fieldModel)
-
       this.fieldModel = fieldModel
 
       this.loadVideomailClient()
@@ -68,9 +45,12 @@ var VideomailFieldController = Marionette.Object.extend({
 
       // control submission progress,
       // so that we can POST to the Videomail server first
-      nfRadio
-        .channel('form-' + this.getFormId())
-        .reply('maybe:submit', this.maybeSubmit, this, fieldModel)
+      Backbone.Radio.channel('form-' + this.getFormId()).reply(
+        'maybe:submit',
+        this.maybeSubmit,
+        this,
+        fieldModel
+      )
     }
   },
 
@@ -135,22 +115,23 @@ var VideomailFieldController = Marionette.Object.extend({
   // submitting to the videomail server
   onPreview: function (key) {
     this.fieldModel.set('videomail-key', key)
-    nfRadio
-      .channel('fields')
+    Backbone.Radio.channel('fields')
       // clears any previous errors
       .request('remove:error', this.fieldModel.get('id'), 'required-error')
   },
 
   onSubmitted: function (videomail) {
-    var formModel = nfRadio.channel('app').request('get:form', this.getFormId())
+    var formModel = Backbone.Radio.channel('app').request('get:form', this.getFormId())
 
     // todo isn't 'form-' + formModel.get('id') the same as the formID already?
-    nfRadio
-      .channel('form-' + formModel.get('id'))
-      .request('add:extra', 'videomail', videomail)
+    Backbone.Radio.channel('form-' + formModel.get('id')).request(
+      'add:extra',
+      'videomail',
+      videomail
+    )
 
     // restart submission again, this time to the real wp site
-    nfRadio.channel('form-' + this.getFormId()).request('submit', formModel)
+    Backbone.Radio.channel('form-' + this.getFormId()).request('submit', formModel)
   },
 
   onGoingBack: function () {
@@ -170,14 +151,12 @@ var VideomailFieldController = Marionette.Object.extend({
 
   invalidate: function () {
     // override default behaviour so that we can set our own error text here
-    nfRadio
-      .channel('fields')
-      .request(
-        'add:error',
-        this.fieldModel.get('id'),
-        'required-error',
-        'Record and click on stop to see a preview video.'
-      )
+    Backbone.Radio.channel('fields').request(
+      'add:error',
+      this.fieldModel.get('id'),
+      'required-error',
+      'Record and click on stop to see a preview video.'
+    )
   },
 
   validateVideomail: function (fieldModel) {
@@ -231,7 +210,7 @@ var VideomailFieldController = Marionette.Object.extend({
   },
 
   getFormValues: function () {
-    var formModel = nfRadio.channel('app').request('get:form', this.getFormId())
+    var formModel = Backbone.Radio.channel('app').request('get:form', this.getFormId())
     var fieldsCollection = formModel.get('fields')
 
     return fieldsCollection.reduce(function (memo, field) {
