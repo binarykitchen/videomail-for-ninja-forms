@@ -18,13 +18,15 @@ const options = minimist(process.argv.slice(2), { default: defaultOptions })
 
 log.info('Options:', options)
 
-function start () {
+function start(done) {
   const port = argv.port || 8890
   const host = argv.host || 'localhost'
 
   var projectUrl = 'https://' + host
 
-  if (port) { projectUrl += ':' + port }
+  if (port) {
+    projectUrl += ':' + port
+  }
 
   projectUrl += '/wp-admin/admin.php?page=ninja-forms'
 
@@ -38,51 +40,64 @@ function start () {
     open: 'external',
     injectChanges: true
   })
+
+  done()
 }
 
-function lint () {
-  return gulp.src(['src/js/main.js'])
+function lint() {
+  return gulp
+    .src(['src/js/main.js'])
     .pipe(plugins.standard())
-    .pipe(plugins.standard.reporter('default', {
-      breakOnError: true,
-      quiet: true
-    }))
+    .pipe(
+      plugins.standard.reporter('default', {
+        breakOnError: true,
+        quiet: true
+      })
+    )
 }
 
-function bundle () {
-  return gulp.src('src/js/main.js')
-    .pipe(sourcemaps.init())
-    .pipe(plugins.uglify())
-    .pipe(plugins.rename({ suffix: '.min' }))
-    // todo fix, sourcemaps do not seem to work (switch to webpack?)
-    .pipe(sourcemaps.write())
-    .pipe(gulp.dest('target/js'))
+function bundle() {
+  return (
+    gulp
+      .src('src/js/main.js')
+      .pipe(sourcemaps.init())
+      .pipe(plugins.uglify())
+      .pipe(plugins.rename({ suffix: '.min' }))
+      // todo fix, sourcemaps do not seem to work (switch to webpack?)
+      .pipe(sourcemaps.write())
+      .pipe(gulp.dest('target/js'))
+  )
 }
 
 const js = gulp.series(lint, bundle)
 
-function copyVideomailClient () {
+function copyVideomailClient() {
   return gulp
     .src('node_modules/videomail-client/prototype/js/videomail-client.min.*')
     .pipe(gulp.dest('target/js/videomail-client'))
 }
 
-function css () {
-  return gulp.src('src/styl/main.styl')
+function css() {
+  return gulp
+    .src('src/styl/main.styl')
     .pipe(plugins.plumber())
-    .pipe(plugins.stylus({
-      use: [nib()],
-      errors: true
-    }))
-    .pipe(plugins.autoprefixer(
-      'last 3 versions',
-      '> 2%',
-      'Explorer >= 11',
-      'Chrome >= 46',
-      'Firefox >= 52',
-      'iOS >= 9',
-      'android >= 4'
-    ))
+    .pipe(
+      plugins.stylus({
+        use: [nib()],
+        errors: true
+      })
+    )
+    .pipe(
+      plugins.autoprefixer(
+        'last 3 versions',
+        '> 2%',
+        'Explorer >= 11',
+        'Chrome >= 46',
+        'Firefox >= 52',
+        'iOS >= 9',
+        'android >= 4'
+      )
+    )
     .pipe(plugins.bytediff.start())
     .pipe(plugins.cssnano())
     .pipe(plugins.rename({ suffix: '.min' }))
@@ -91,17 +106,17 @@ function css () {
     .pipe(gulp.dest('target/css'))
 }
 
-function cleanPhp () {
+function cleanPhp() {
   return del(['target/**/*.{php,html}'])
 }
 
-function copyPhp () {
+function copyPhp() {
   return gulp.src('src/**/*.{php,html}').pipe(gulp.dest('target'))
 }
 
 const php = gulp.series(cleanPhp, copyPhp)
 
-function watch (done) {
+function watch(done) {
   gulp.watch('src/**/*.{php,html}', gulp.series(php, browserSync.reload))
   gulp.watch('src/js/**/*.js', gulp.series(js, browserSync.reload))
   gulp.watch('src/styl/**/*.styl', css)
@@ -109,23 +124,18 @@ function watch (done) {
   done()
 }
 
-function todo () {
-  return gulp.src([
-    'videomail-for-ninja-forms.php',
-    'src/**/*.{php,js,styl}',
-    'gulpfile.js'
-  ])
+function todo() {
+  return gulp
+    .src(['videomail-for-ninja-forms.php', 'src/**/*.{php,js,styl}', 'gulpfile.js'])
     .pipe(plugins.todo())
     .pipe(gulp.dest('./'))
 }
 
-function zip () {
-  return gulp.src([
-    'index.php',
-    'readme.txt',
-    'videomail-for-ninja-forms.php',
-    'target/**'
-  ], { base: './' })
+function zip() {
+  return gulp
+    .src(['index.php', 'readme.txt', 'videomail-for-ninja-forms.php', 'target/**'], {
+      base: './'
+    })
     .pipe(plugins.zip('videomail-for-ninja-forms.zip'))
     .pipe(gulp.dest('dist'))
 }
@@ -142,16 +152,22 @@ exports.bumpVersion = function () {
     bumpOptions.type = options.importance
   }
 
-  return gulp.src([
-    './package.json',
-    './readme.txt',
-    './videomail-for-ninja-forms.php',
-    './src/php/videomail.php'
-  ])
+  return gulp
+    .src([
+      './package.json',
+      './readme.txt',
+      './videomail-for-ninja-forms.php',
+      './src/php/videomail.php'
+    ])
     .pipe(plugins.bump(bumpOptions))
-    .pipe(plugins.if(options.write, gulp.dest(function (file) {
-      return path.dirname(file.path)
-    })))
+    .pipe(
+      plugins.if(
+        options.write,
+        gulp.dest(function (file) {
+          return path.dirname(file.path)
+        })
+      )
+    )
     .on('error', log.error)
 }
 
