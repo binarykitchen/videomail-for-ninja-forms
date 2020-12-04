@@ -115,6 +115,8 @@ var VideomailFieldController = Marionette.Object.extend({
   // submitting to the videomail server
   onPreview: function (key) {
     this.fieldModel.set('videomail-key', key)
+    this.fieldModel.set('value', key)
+
     Backbone.Radio.channel('fields')
       // clears any previous errors
       .request('remove:error', this.fieldModel.get('id'), 'required-error')
