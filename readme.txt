@@ -4,7 +4,7 @@ Tags: form, video, email, audio, webcam, recorder, sign language, deaf
 Requires at least: 4.7
 Donate link: https://videomail.io/faq
 Tested up to: 5.2
-Stable tag: 3.9.11
+Stable tag: 3.10.0
 License: CC0-1.0
 
 Record videos in Ninja Forms!
@@ -67,6 +67,14 @@ To get help, just use any of these contacts at [https://binarykitchen.com](https
 2. Once you have assembled a form and preview it, any browser will ask for webcam access first.
 
 == Upgrade Notice ==
+
+= 3.10.0 (5 Dec 2020) =
+
+*Bugs:*
+* Make it work along with the Conditional Logic add-on
+* Required attribute works again with latest WP and Ninja Form versions
+*Change:*
+* Upgrades Videomail dependency
 
 = 3.9.8 (20 Oct 2020) =
 
