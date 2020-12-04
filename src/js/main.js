@@ -14,8 +14,12 @@ var VideomailFieldController = Marionette.Object.extend({
     Backbone.Radio.DEBUG = DEBUG
 
     // if (DEBUG) {
-    this.listenTo(Backbone.Radio.channel('videomail'), 'all', function (eventName) {
-      console.log('Event triggered:', eventName)
+    this.listenTo(Backbone.Radio.channel('videomail'), 'all', function (eventName, b) {
+      console.log('Videomail event triggered:', eventName, b)
+    })
+
+    this.listenTo(Backbone.Radio.channel('fields'), 'all', function (eventName, b) {
+      console.log('Fields event triggered:', eventName, b)
     })
     // }
 
