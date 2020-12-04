@@ -19,7 +19,7 @@ return apply_filters('ninja_forms_videomail_field_settings', array(
     'width' => 'one-half',
     'group' => 'primary',
     'value' => TRUE,
-    'help' => __('The audio fetaure is in beta and needs feedback for improvement. Otherwise leave it disabled and stick to Sign Language, grins')
+    'help' => __('The audio feature is in beta and needs feedback for improvement. Otherwise leave it disabled and stick to Sign Language, grins')
   ),
 
   'site_name' => array(

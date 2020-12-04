@@ -1,5 +1,5 @@
 // manual switch to have more stuff printed to console
-var DEBUG = false
+var DEBUG = true
 
 // good documentation on backbone event handling
 // http://backbonejs.org/#Events
@@ -12,6 +12,12 @@ var VideomailFieldController = Marionette.Object.extend({
 
   initialize: function () {
     Backbone.Radio.DEBUG = DEBUG
+
+    // if (DEBUG) {
+    this.listenTo(Backbone.Radio.channel('videomail'), 'all', function (eventName) {
+      console.log('Event triggered:', eventName)
+    })
+    // }
 
     this.listenTo(
       Backbone.Radio.channel('videomail'),
@@ -100,10 +106,12 @@ var VideomailFieldController = Marionette.Object.extend({
       this.videomailClient.events.PREVIEW,
       this.onPreview.bind(this)
     )
+
     this.videomailClient.on(
       this.videomailClient.events.SUBMITTED,
       this.onSubmitted.bind(this)
     )
+
     this.videomailClient.on(
       this.videomailClient.events.GOING_BACK,
       this.onGoingBack.bind(this)
@@ -124,7 +132,7 @@ var VideomailFieldController = Marionette.Object.extend({
   onSubmitted: function (videomail) {
     var formModel = nfRadio.channel('app').request('get:form', this.getFormId())
 
-    // todo isnt 'form-' + formModel.get('id') the same as the formID already?
+    // todo isn't 'form-' + formModel.get('id') the same as the formID already?
     nfRadio
       .channel('form-' + formModel.get('id'))
       .request('add:extra', 'videomail', videomail)
