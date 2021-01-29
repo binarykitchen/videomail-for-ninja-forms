@@ -63,6 +63,12 @@ var VideomailFieldController = Marionette.Object.extend({
       imageQualityPercentage = 1
     }
 
+    var verbose = this.fieldModel.get('verbose') || DEBUG
+
+    // late overrides
+    DEBUG = DEBUG || verbose
+    Backbone.Radio.DEBUG = Backbone.Radio.DEBUG || verbose
+
     this.videomailClient = new VideomailClient({
       siteName: this.fieldModel.get('site_name'),
       video: {
@@ -90,7 +96,7 @@ var VideomailFieldController = Marionette.Object.extend({
       // leave it to ninja form to deal with form submissions
       enableAutoSubmission: false,
       // log actions/events to console
-      verbose: this.fieldModel.get('verbose') || DEBUG
+      verbose: verbose
     })
 
     this.videomailClient.on(
@@ -211,11 +217,27 @@ var VideomailFieldController = Marionette.Object.extend({
     return value
   },
 
+  // returns a map like this:
+  // {
+  //   from_email: "micK@deafonz.eh"
+  //   from_name: "MH"
+  //   message: "sdfsdfsdf"
+  //   subject: "sdfsdf"
+  //   submit: ""
+  //   video_message: "11eb-61d7-dd583320-ae61-2b82be6c6e3e"
+  // }
   getFormValues: function () {
+    var collection
     var formModel = Backbone.Radio.channel('app').request('get:form', this.getFormId())
-    var fieldsCollection = formModel.get('fields')
 
-    return fieldsCollection.reduce(function (memo, field) {
+    if (formModel) {
+      collection = formModel.get('fields')
+      // fallback for older versions
+    } else if (this.fieldModel.collection.options.formModel.get('fields').models) {
+      collection = this.fieldModel.collection.options.formModel.get('fields').models
+    }
+
+    return collection.reduce(function (memo, field) {
       memo[field.get('key')] = field.get('value')
       return memo
     }, {})
