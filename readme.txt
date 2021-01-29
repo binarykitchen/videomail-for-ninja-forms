@@ -68,6 +68,11 @@ To get help, just use any of these contacts at [https://binarykitchen.com](https
 
 == Upgrade Notice ==
 
+= 3.10.3 (29 Jan 2021) =
+
+*Bugs:*
+* Another workaround for more global pollution situations
+
 = 3.10.2 (29 Jan 2021) =
 
 *Bugs:*

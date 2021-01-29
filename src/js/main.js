@@ -131,6 +131,11 @@ var VideomailFieldController = Marionette.Object.extend({
   onSubmitted: function (videomail) {
     var formModel = Backbone.Radio.channel('app').request('get:form', this.getFormId())
 
+    if (!formModel) {
+      // fallback for older versions
+      formModel = this.fieldModel.collection.options.formModel
+    }
+
     // todo isn't 'form-' + formModel.get('id') the same as the formID already?
     Backbone.Radio.channel('form-' + formModel.get('id')).request(
       'add:extra',
