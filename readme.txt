@@ -3,7 +3,7 @@ Contributors: michael.heuberger, kbjohnson90
 Tags: form, video, email, audio, webcam, recorder, sign language, deaf
 Requires at least: 5.2.0
 Donate link: https://videomail.io/faq
-Tested up to: 5.6.0
+Tested up to: 5.7.2
 Stable tag: 3.10.3
 License: CC0-1.0
 
@@ -67,6 +67,11 @@ To get help, just use any of these contacts at [https://binarykitchen.com](https
 2. Once you have assembled a form and preview it, any browser will ask for webcam access first.
 
 == Upgrade Notice ==
+
+= 3.10.4 (12 Jul 2021) =
+
+*Change:*
+* Countdown and pause texts are bolder now
 
 = 3.10.3 (29 Jan 2021) =
 
