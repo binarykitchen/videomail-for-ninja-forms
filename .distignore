@@ -16,4 +16,5 @@ package.json
 README.md
 TODO.md
 yarn.lock
+package-lock.json
 doc

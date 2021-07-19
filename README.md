@@ -20,10 +20,9 @@ In short: this add-on runs on the Ninja Forms plugin engine where you can config
 2. Install Ninja Forms Plugin
 3. `git clone git@github.com:binarykitchen/videomail-for-ninja-forms.git`
 4. Symlink videomail-for-ninja-forms like that: `ln -s /Users/michael-heuberger/code/videomail-for-ninja-forms /Users/michael-heuberger/Local\ Sites/infernaldarknesslocal/app/public/wp-content/plugins/videomail-for-ninja-forms`
-4. Install latest nodejs, best with [nvm](https://github.com/creationix/nvm)
-5. Install [yarn](https://yarnpkg.com/en/docs/install)
-5. `yarn install` to install dependencies
-6. `gulp watch --host x --port y` which will open Google Chrome and automatically reloads upon changes (PHP, JS and CSS). Defaults to https://localhost:8890
+5. Install latest nodejs, best with [nvm](https://github.com/creationix/nvm)
+6. `npm install` to install dependencies
+7. `gulp watch --host x --port y` which will open Google Chrome and automatically reloads upon changes (PHP, JS and CSS). Defaults to https://localhost:8890
 
 Note, if you have a port conflict with flywheel, stop Apache with `sudo apachectl stop`.
 
@@ -34,7 +33,7 @@ For custom hosts or ports, you can customize `gulp watch` like that:
 `gulp watch --port=8890 --host=wp` and that will open this page for you:
 https://wp:8890/wordpress/wp-admin/admin.php?page=ninja-forms
 
-(for exactly these parameters, there is a short cut: `yarn run wp` and `wp:8890` is already whitelisted)
+(for exactly these parameters, there is a short cut: `npm run wp` and `wp:8890` is already whitelisted)
 
 ## Directory structure
 
@@ -59,8 +58,8 @@ https://github.com/binarykitchen/videomail-for-ninja-forms/issues
 ## Releasing
 
 1. Update changelog in readme.txt
-2. `yarn run patch` (or minor or major)
-3. `yarn run sync` to sync with the public WordPress site (can take a long time)
+2. `npm run patch` (or minor or major)
+3. `npm run sync` to sync with the public WordPress site (can take a long time)
 
 ## Ask for help
 
