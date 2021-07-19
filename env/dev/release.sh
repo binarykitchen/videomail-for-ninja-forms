@@ -36,7 +36,7 @@ if [[ $(git status --porcelain) ]]; then
 fi
 
 # https://stackoverflow.com/questions/45047976/how-to-awk-extract-the-newer-version-number/45048086#45048086
-read VERSION <<<$(yarn run gulp bumpVersion --importance=$IMPORTANCE | awk '!a{if(match($0,/to [0-9][0-9]?\.[0-9][0-9]?\.[0-9][0-9]?/)){print substr($0,RSTART+3,RLENGTH-3);a=1}}')
+read VERSION <<<$(npm run gulp bumpVersion --importance=$IMPORTANCE | awk '!a{if(match($0,/to [0-9][0-9]?\.[0-9][0-9]?\.[0-9][0-9]?/)){print substr($0,RSTART+3,RLENGTH-3);a=1}}')
 
 git checkout master
 git push
@@ -52,7 +52,7 @@ git flow release start $VERSION
 gulp bumpVersion --write --version=$VERSION
 
 # Ensure dependencies are okay
-yarn
+npm install
 
 # Rebuild all assets and zip them all into dist
 gulp build

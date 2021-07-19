@@ -68,6 +68,12 @@ To get help, just use any of these contacts at [https://binarykitchen.com](https
 
 == Upgrade Notice ==
 
+= 3.11.0 (19 Jul 2021) =
+
+*Change:*
+* Switch to node.js v16 and npm v7.18
+* Runs security audit toward all dependencies
+
 = 3.10.4 (12 Jul 2021) =
 
 *Change:*
