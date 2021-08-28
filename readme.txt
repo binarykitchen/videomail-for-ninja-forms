@@ -4,7 +4,7 @@ Tags: form, video, email, audio, webcam, recorder, sign language, deaf
 Requires at least: 5.2.0
 Donate link: https://videomail.io/faq
 Tested up to: 5.7.2
-Stable tag: 3.11.0
+Stable tag: 3.11.1
 License: CC0-1.0
 
 Record videos in Ninja Forms!
