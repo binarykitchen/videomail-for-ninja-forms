@@ -58,6 +58,15 @@
       "@babel/transform-runtime"
     ]
   },
+  "standard": {
+    "globals": [
+      "Marionette",
+      "Backbone",
+      "jQuery",
+      "VideomailClient",
+      "nfRadio"
+    ]
+  },
   "dependencies": {
     "videomail-client": "2.16.2"
   },
