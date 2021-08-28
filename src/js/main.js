@@ -218,6 +218,10 @@ const VideomailFieldController = Marionette.Object.extend({
       }
     }
 
+    if (value === 'undefined') {
+      return undefined
+    }
+
     return value
   },
 

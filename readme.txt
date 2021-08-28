@@ -68,6 +68,12 @@ To get help, just use any of these contacts at [https://binarykitchen.com](https
 
 == Upgrade Notice ==
 
+= 3.11.1 (28 Aug 2021) =
+
+*Change:*
+* Just a maintenance bump using latest Videomail-Client
+* Better treatment of undefined form inputs
+
 = 3.11.0 (19 Jul 2021) =
 
 *Change:*
