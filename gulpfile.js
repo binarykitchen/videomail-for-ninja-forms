@@ -22,7 +22,7 @@ function start(done) {
   const port = argv.port || 8890
   const host = argv.host || 'localhost'
 
-  var projectUrl = 'https://' + host
+  let projectUrl = 'https://' + host
 
   if (port) {
     projectUrl += ':' + port
