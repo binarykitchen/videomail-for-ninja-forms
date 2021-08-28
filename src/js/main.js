@@ -1,10 +1,10 @@
 // manual switch to have more stuff printed to console
-var DEBUG = false
+let DEBUG = false
 
 // good documentation on backbone event handling
 // http://backbonejs.org/#Events
 
-var VideomailFieldController = Marionette.Object.extend({
+const VideomailFieldController = Marionette.Object.extend({
   videomailClient: null,
 
   fieldModel: null,
@@ -55,7 +55,7 @@ var VideomailFieldController = Marionette.Object.extend({
   },
 
   loadVideomailClient: function () {
-    var imageQualityPercentage = this.fieldModel.get('image_quality') || 40
+    let imageQualityPercentage = this.fieldModel.get('image_quality') || 40
 
     if (imageQualityPercentage > 100) {
       imageQualityPercentage = 100
@@ -63,7 +63,7 @@ var VideomailFieldController = Marionette.Object.extend({
       imageQualityPercentage = 1
     }
 
-    var verbose = this.fieldModel.get('verbose') || DEBUG
+    const verbose = this.fieldModel.get('verbose') || DEBUG
 
     // late overrides
     DEBUG = DEBUG || verbose
@@ -87,9 +87,8 @@ var VideomailFieldController = Marionette.Object.extend({
       },
       callbacks: {
         // ugly name eh?
-        adjustFormDataBeforePosting: this.adjustFormDataBeforePostingToVideomailServer.bind(
-          this
-        )
+        adjustFormDataBeforePosting:
+          this.adjustFormDataBeforePostingToVideomailServer.bind(this)
       },
       // leave it to ninja form to validate the inputs
       enableAutoValidation: false,
@@ -129,7 +128,7 @@ var VideomailFieldController = Marionette.Object.extend({
   },
 
   onSubmitted: function (videomail) {
-    var formModel = Backbone.Radio.channel('app').request('get:form', this.getFormId())
+    let formModel = Backbone.Radio.channel('app').request('get:form', this.getFormId())
 
     if (!formModel) {
       // fallback for older versions
@@ -153,7 +152,7 @@ var VideomailFieldController = Marionette.Object.extend({
   },
 
   validateRequired: function (el, fieldModel) {
-    var valid = this.validateVideomail(fieldModel)
+    const valid = this.validateVideomail(fieldModel)
 
     if (!valid) {
       this.invalidate()
@@ -182,14 +181,14 @@ var VideomailFieldController = Marionette.Object.extend({
   },
 
   maybeSubmit: function (formModel) {
-    var maybe = true
-    var videomailSubmitted = formModel.getExtra('videomail')
-    var videomailRecorded = this.validateVideomail()
-    var errorneous = this.hasErrors(formModel)
+    let maybe = true
+    const videomailSubmitted = formModel.getExtra('videomail')
+    const videomailRecorded = this.validateVideomail()
+    const error = this.hasErrors(formModel)
 
     // hold on with final form submission when one was recorded
     // but hasn't been submitted to the videomail server yet
-    if (!videomailSubmitted && !errorneous && videomailRecorded) {
+    if (!videomailSubmitted && !error && videomailRecorded) {
       this.videomailClient.submit()
       maybe = false
     }
@@ -198,7 +197,7 @@ var VideomailFieldController = Marionette.Object.extend({
   },
 
   getMergeTagValue: function (fieldKey, formValues) {
-    var value = this.fieldModel.get(fieldKey)
+    let value = this.fieldModel.get(fieldKey)
 
     // it can happen that the user has configured something wrong,
     // i.E. an empty email_from. in that case just ignore ...
@@ -209,14 +208,18 @@ var VideomailFieldController = Marionette.Object.extend({
       if (value === '{wp:admin_email}') {
         value = window.nfVideomail.admin_email
       } else {
-        var rawFieldKeyMatches = value.match(/{field:(.*)}/i)
-        var rawFieldKey = rawFieldKeyMatches && rawFieldKeyMatches[1]
+        const rawFieldKeyMatches = value.match(/{field:(.*)}/i)
+        const rawFieldKey = rawFieldKeyMatches && rawFieldKeyMatches[1]
 
         if (rawFieldKey !== value) {
           // yes it was a merge tag, so use it
           value = value.replace(/{field:(.*)}/i, formValues[rawFieldKey])
         }
       }
+    }
+
+    if (value === 'undefined') {
+      return undefined
     }
 
     return value
@@ -232,8 +235,8 @@ var VideomailFieldController = Marionette.Object.extend({
   //   video_message: "11eb-61d7-dd583320-ae61-2b82be6c6e3e"
   // }
   getFormValues: function () {
-    var collection
-    var formModel = Backbone.Radio.channel('app').request('get:form', this.getFormId())
+    let collection
+    const formModel = Backbone.Radio.channel('app').request('get:form', this.getFormId())
 
     if (formModel) {
       collection = formModel.get('fields')
@@ -249,7 +252,7 @@ var VideomailFieldController = Marionette.Object.extend({
   },
 
   adjustFormDataBeforePostingToVideomailServer: function (videomail, cb) {
-    var formValues = this.getFormValues()
+    const formValues = this.getFormValues()
 
     videomail.from = this.getMergeTagValue('email_from', formValues)
     videomail.to = this.getMergeTagValue('email_to', formValues)
