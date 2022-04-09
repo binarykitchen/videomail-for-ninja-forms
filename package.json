@@ -100,7 +100,7 @@
     "gulp-todo": "7.1.1",
     "gulp-uglify": "3.0.2",
     "gulp-zip": "5.1.0",
-    "minimist": "1.2.5",
+    "minimist": "1.2.6",
     "nib": "1.1.2",
     "prettier": "2.3.2",
     "standard": "16.0.3",
