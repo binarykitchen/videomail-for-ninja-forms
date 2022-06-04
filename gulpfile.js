@@ -34,9 +34,9 @@ function start(done) {
   browserSync.init({
     proxy: projectUrl,
     browser: ['google-chrome'],
-    port: port,
+    port,
     https: true,
-    host: host,
+    host,
     open: 'external',
     injectChanges: true
   })
