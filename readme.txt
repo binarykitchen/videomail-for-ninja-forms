@@ -3,7 +3,7 @@ Contributors: michael.heuberger, kbjohnson90
 Tags: form, video, email, audio, webcam, recorder, sign language, deaf
 Requires at least: 5.2.0
 Donate link: https://videomail.io/faq
-Tested up to: 5.7.2
+Tested up to: 6.0.0
 Stable tag: 3.11.1
 License: CC0-1.0
 
@@ -67,6 +67,14 @@ To get help, just use any of these contacts at [https://binarykitchen.com](https
 2. Once you have assembled a form and preview it, any browser will ask for webcam access first.
 
 == Upgrade Notice ==
+
+= 3.11.2 (11 Jun 2022) =
+
+*Tasks:*
+* Tested everything on latest WordPress v6.0.0 and works well
+
+*Change:*
+* Upgraded all internal libraries, especially Videomail-Client on npm (they come with lots of stability fixes)
 
 = 3.11.1 (28 Aug 2021) =
 
