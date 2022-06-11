@@ -95,7 +95,7 @@ const VideomailFieldController = Marionette.Object.extend({
       // leave it to ninja form to deal with form submissions
       enableAutoSubmission: false,
       // log actions/events to console
-      verbose: verbose
+      verbose
     })
 
     this.videomailClient.on(
