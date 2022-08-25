@@ -18,10 +18,34 @@ const VideomailFieldController = Marionette.Object.extend({
     this.listenTo(this.channel, 'all', function (eventName) {
       DEBUG && console.log('Videomail channel event triggered:', eventName)
 
-      // only start listening at this point. because the conditional plugin
-      // is resetting event handlers. without the above, we'd be registering
-      // too early and the conditional plugin overrides.
-      this.listenTo(this.channel, 'init:model', this.registerVideomailField)
+      if (!this.videomailClient) {
+        // only start registering and listening at this point.
+        // because the conditional plugin is resetting event handlers.
+        // without the above, we'd be registering too early and the
+        // conditional plugin overrides.
+        this.listenToOnce(this.channel, 'init:model', this.registerVideomailField)
+
+        // must be coming back from a multi-step where
+        // videomail has already been initialised. so just resume it.
+        this.listenTo(nfRadio.channel('nfMP'), 'change:part', function (params) {
+          DEBUG && console.log('nfMP channel event triggered:', 'change:part')
+
+          const currentModels =
+            params.currentElement?.attributes?.formContentData?.models || []
+
+          const currentCid = this.fieldModel.cid
+
+          const currentModel = currentModels.find(function (model) {
+            return model.cid === currentCid
+          })
+
+          if (currentModel) {
+            this.loadVideomailClient()
+          } else {
+            this.videomailClient.unload()
+          }
+        })
+      }
     })
   },
 

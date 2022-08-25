@@ -68,7 +68,7 @@
     ]
   },
   "dependencies": {
-    "videomail-client": "2.18.5"
+    "videomail-client": "2.18.6"
   },
   "devDependencies": {
     "@babel/core": "7.18.13",
@@ -83,7 +83,7 @@
     "eslint-config-standard": "17.0.0",
     "eslint-plugin-import": "2.26.0",
     "eslint-plugin-node": "11.1.0",
-    "eslint-plugin-promise": "6.0.0",
+    "eslint-plugin-promise": "6.0.1",
     "fancy-log": "2.0.0",
     "gulp": "4.0.2",
     "gulp-autoprefixer": "8.0.0",
