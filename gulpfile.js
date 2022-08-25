@@ -33,7 +33,7 @@ function start(done) {
   // http://www.browsersync.io/docs/options/
   browserSync.init({
     proxy: projectUrl,
-    browser: ['google-chrome'],
+    browser: 'google chrome',
     port,
     https: true,
     host,
@@ -116,12 +116,10 @@ function copyPhp() {
 
 const php = gulp.series(cleanPhp, copyPhp)
 
-function watch(done) {
-  gulp.watch('src/**/*.{php,html}', gulp.series(php, browserSync.reload))
-  gulp.watch('src/js/**/*.js', gulp.series(js, browserSync.reload))
-  gulp.watch('src/styl/**/*.styl', css)
-
-  done()
+function watch() {
+  gulp.watch('src/**/*.{php,html}', php).on('change', browserSync.reload)
+  gulp.watch('src/js/**/*.js', js).on('change', browserSync.reload)
+  gulp.watch('src/styl/**/*.styl', css).on('change', browserSync.reload)
 }
 
 function todo() {
