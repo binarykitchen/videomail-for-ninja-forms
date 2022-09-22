@@ -68,6 +68,11 @@ To get help, just use any of these contacts at [https://binarykitchen.com](https
 
 == Upgrade Notice ==
 
+= 3.13.1 (23 Sep 2022) =
+
+*Improvement:*
+* Better detection of supported video types
+
 = 3.13.0 (22 Sep 2022) =
 
 *Bugs:*

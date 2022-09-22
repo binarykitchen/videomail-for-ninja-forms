@@ -68,7 +68,7 @@
     ]
   },
   "dependencies": {
-    "videomail-client": "5.0.0"
+    "videomail-client": "5.0.1"
   },
   "devDependencies": {
     "@babel/core": "7.19.1",
