@@ -41,7 +41,7 @@ In `src` you do the normal development work. When gulp watches for changes, they
 
 This is needed so that this repository can be used right away as a plugin folder without the need to run any other commands. This is a requirement for automatic Ninja Forms plugin releases.
 
-In `dist` you can find a latest verison in a zip file for easier distribution. Can be useful sometimes. `env` contains code depending on environment, such as bash scripts for building releases.
+In `dist` you can find a latest version in a zip file for easier distribution. Can be useful sometimes. `env` contains code depending on environment, such as bash scripts for building releases.
 
 ## Examples
 
