@@ -30,7 +30,8 @@
     "url": "https://github.com/binarykitchen/videomail-for-ninja-forms.git"
   },
   "engines": {
-    "node": "^16.4.2"
+    "node": "^18.12.1",
+    "npm": "^8.19.2"
   },
   "scripts": {
     "sync": "./env/dev/sync-wp.sh",
@@ -68,22 +69,22 @@
     ]
   },
   "dependencies": {
-    "videomail-client": "5.0.1"
+    "videomail-client": "6.0.0"
   },
   "devDependencies": {
-    "@babel/core": "7.19.1",
+    "@babel/core": "7.20.7",
     "@babel/eslint-parser": "7.19.1",
-    "@babel/plugin-transform-runtime": "7.19.1",
-    "@babel/preset-env": "7.19.1",
-    "@babel/runtime": "7.19.0",
+    "@babel/plugin-transform-runtime": "7.19.6",
+    "@babel/preset-env": "7.20.2",
+    "@babel/runtime": "7.20.7",
     "babel-eslint": "10.1.0",
-    "browser-sync": "2.27.10",
+    "browser-sync": "2.27.11",
     "del": "6.1.1",
-    "eslint": "8.23.1",
+    "eslint": "8.30.0",
     "eslint-config-standard": "17.0.0",
     "eslint-plugin-import": "2.26.0",
     "eslint-plugin-node": "11.1.0",
-    "eslint-plugin-promise": "6.0.1",
+    "eslint-plugin-promise": "6.1.1",
     "fancy-log": "2.0.0",
     "gulp": "4.0.2",
     "gulp-autoprefixer": "8.0.0",
@@ -100,10 +101,10 @@
     "gulp-todo": "7.1.1",
     "gulp-uglify": "3.0.2",
     "gulp-zip": "5.1.0",
-    "minimist": "1.2.6",
+    "minimist": "1.2.7",
     "nib": "1.2.0",
-    "prettier": "2.7.1",
+    "prettier": "2.8.1",
     "standard": "17.0.0",
-    "yargs": "17.5.1"
+    "yargs": "17.6.2"
   }
 }
