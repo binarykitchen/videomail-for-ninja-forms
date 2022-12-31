@@ -5,3 +5,11 @@ env/dev/git
 env/dev/svn
 *.code-workspace
 .vscode
+
+# No idea why it does not get git-ignored??
+target
+target/
+target/**
+/target
+/target/
+/target/**
