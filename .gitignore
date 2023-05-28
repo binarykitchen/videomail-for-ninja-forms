@@ -5,4 +5,3 @@ env/dev/git
 env/dev/svn
 *.code-workspace
 .vscode
-target

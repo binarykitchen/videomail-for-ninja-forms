@@ -73,6 +73,9 @@ git push --tags
 # Prepare the develop branch for the new cycle
 git checkout develop
 
+# Strange bug, have to bump it again
+npx gulp bumpVersion --write --version=$VERSION
+
 unset GIT_MERGE_AUTOEDIT
 
 echo "All good. Ready for the next cycle!"
