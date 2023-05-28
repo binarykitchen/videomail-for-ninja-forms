@@ -59,7 +59,8 @@ https://github.com/binarykitchen/videomail-for-ninja-forms/issues
 
 1. Update changelog in readme.txt
 2. `npm run patch` (or minor or major)
-3. `npm run sync` to sync with the public WordPress site (can take a long time)
+3. Ensure you have pulled the git submodules for syncing with WP with `git submodule update --init --recursive`
+4. `npm run sync` to sync with the public WordPress site (can take a long time)
 
 ## Ask for help
 
