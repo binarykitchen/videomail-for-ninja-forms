@@ -68,6 +68,11 @@ To get help, just use any of these contacts at [https://binarykitchen.com](https
 
 == Upgrade Notice ==
 
+= 4.0.3 (29 May 2023) =
+
+*Change:*
+* Internal technical improvements for versioning
+
 = 4.0.2 (29 May 2023) =
 
 *Change:*
