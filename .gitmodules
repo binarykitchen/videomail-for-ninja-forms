@@ -1,3 +1,0 @@
-[submodule "env/dev/wp-plugin-git-svn-sync"]
-	path = env/dev/wp-plugin-git-svn-sync
-	url = https://github.com/rayrutjes/wp-plugin-git-svn-sync.git
