@@ -61,7 +61,6 @@ https://github.com/binarykitchen/videomail-for-ninja-forms/issues
 2. Validate readme.txt with https://wordpress.org/plugins/developers/readme-validator/
 3. `npm run patch` (or minor or major)
 4. `npm run sync` to sync with the public WordPress site (can take a long time)
-5. Only then push to GitHub
 
 ## Ask for help
 
