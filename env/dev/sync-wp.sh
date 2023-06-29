@@ -4,8 +4,7 @@ set -eu
 
 cd "${0%/*}"
 
-// TODO consider replacing this script with this:
-// https://github.com/Pierre-Lannoy/wordpress-actions
+# TODO consider replacing this script with this: https://github.com/Pierre-Lannoy/wordpress-actions
 
 $PWD/wp-plugin-git-svn-sync/sync.sh \
   --plugin-name="videomail-for-ninja-forms" \
