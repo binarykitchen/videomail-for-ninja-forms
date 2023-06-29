@@ -4,7 +4,7 @@ Tags: form, video, email, audio, webcam, recorder, sign language, deaf
 
 Requires at least: 6.0
 Tested up to: 6.2.2
-Stable tag: 4.0.9
+Stable tag: 4.0.10
 Requires PHP: 7.2.5
 Donate link: https://videomail.io/faq
 License: CC0-1.0
