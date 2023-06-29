@@ -100,9 +100,9 @@ sync_files () {
   local excludeFrom="$source.distignore"
 
   if [ -f "$excludeFrom" ]; then
-    rsync --compress --recursive --delete --delete-excluded --force --archive --exclude-from "$excludeFrom" "$source" "$destination"
+    rsync --checksum --recursive --delete --delete-excluded --force --archive --exclude-from "$excludeFrom" "$source" "$destination"
   else
-    rsync --compress --recursive --delete --delete-excluded --force --archive "$source" "$destination"
+    rsync --checksum --recursive --delete --delete-excluded --force --archive "$source" "$destination"
   fi
 }
 
