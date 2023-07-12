@@ -36,7 +36,7 @@
   "scripts": {
     "sync": "./env/dev/sync-wp.sh",
     "wp": "gulp watch --host=wp",
-    "mh": "gulp watch --port=443 --host=infernal.darkness.local",
+    "mh": "gulp watch --port=443 --host=infernal.videomail.local",
     "build": "gulp build",
     "patch": "./env/dev/release.sh --importance=patch",
     "minor": "./env/dev/release.sh --importance=minor",
@@ -73,10 +73,10 @@
     "videomail-client": "6.0.19"
   },
   "devDependencies": {
-    "@babel/core": "7.22.8",
-    "@babel/eslint-parser": "7.22.7",
-    "@babel/plugin-transform-runtime": "7.22.7",
-    "@babel/preset-env": "7.22.7",
+    "@babel/core": "7.22.9",
+    "@babel/eslint-parser": "7.22.9",
+    "@babel/plugin-transform-runtime": "7.22.9",
+    "@babel/preset-env": "7.22.9",
     "@babel/runtime": "7.22.6",
     "babel-eslint": "10.1.0",
     "browser-sync": "2.29.3",

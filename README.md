@@ -19,7 +19,7 @@ In short: this add-on runs on the Ninja Forms plugin engine where you can config
 1. Install WordPress locally or use [Local by Flywheel](https://local.getflywheel.com/)
 2. Install Ninja Forms Plugin
 3. `git clone git@github.com:binarykitchen/videomail-for-ninja-forms.git`
-4. Symlink videomail-for-ninja-forms like that: `ln -s /Users/michaelheuberger/code/videomail-for-ninja-forms /Users/michaelheuberger/Local\ Sites/infernaldarknesslocal/app/public/wp-content/plugins/videomail-for-ninja-forms`
+4. Symlink videomail-for-ninja-forms like that: `ln -s /Users/michaelheuberger/code/videomail-for-ninja-forms /Users/michaelheuberger/Local\ Sites/infernalvideomaillocal/app/public/wp-content/plugins/videomail-for-ninja-forms`
 5. Install latest nodejs, best with [nvm](https://github.com/creationix/nvm)
 6. `npm install` to install dependencies
 7. `gulp watch --host x --port y` which will open Google Chrome and automatically reloads upon changes (PHP, JS and CSS). Defaults to https://localhost:8890
@@ -57,7 +57,7 @@ https://github.com/binarykitchen/videomail-for-ninja-forms/issues
 
 ## Releasing
 
-1. Update changelog in readme.txt (do not touch package.json's version)
+1. Update changelog in readme.txt (stable tag + changelog) but do not touch package.json's version
 2. Validate readme.txt with https://wordpress.org/plugins/developers/readme-validator/
 3. `npm run patch` (or minor or major)
 4. `npm run sync` to sync with the public WordPress site (can take a long time)

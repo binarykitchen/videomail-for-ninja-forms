@@ -82,7 +82,9 @@ class NF_Videomail_Fields_Videomail extends NF_Abstracts_Field {
     Ninja_Forms()->merge_tags['video']->setAlias($videomail['alias']);
     Ninja_Forms()->merge_tags['video']->setReplyUrl($videomail['replyUrl']);
 
-    if ($field['media_library']) {
+    $enableMediaLibrary = $field['media_library'];
+
+    if ($enableMediaLibrary == "true" || $enableMediaLibrary == 1 || $enableMediaLibrary == true) {
       register_shutdown_function(array($this, 'downloadVideomailToMediaLibrary'), $videomail);
     }
 
@@ -158,7 +160,7 @@ class NF_Videomail_Fields_Videomail extends NF_Abstracts_Field {
 
     wp_enqueue_script(
       'nf-videomail-client',
-      NF_Videomail::$jsUrl . 'videomail-client/videomail-client.min.js',
+      NF_Videomail::$jsUrl . 'videomail-client/videomail-client.js',
       array(),
       NF_Videomail::VERSION
     );
