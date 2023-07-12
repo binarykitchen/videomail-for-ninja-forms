@@ -58,9 +58,10 @@ https://github.com/binarykitchen/videomail-for-ninja-forms/issues
 ## Releasing
 
 1. Update changelog in readme.txt (stable tag + changelog) but do not touch package.json's version
-2. Validate readme.txt with https://wordpress.org/plugins/developers/readme-validator/
-3. `npm run patch` (or minor or major)
-4. `npm run sync` to sync with the public WordPress site (can take a long time)
+2. Manually bump version in videomail-for-ninja-forms.php (weird bug)
+3. Validate readme.txt with https://wordpress.org/plugins/developers/readme-validator/
+4. `npm run patch` (or minor or major)
+5. `npm run sync` to sync with the public WordPress site (can take a long time)
 
 ## Ask for help
 
