@@ -142,7 +142,7 @@ function zip() {
 // https://www.npmjs.com/package/gulp-tag-version and
 // https://github.com/nicksrandall/gulp-release-tasks/blob/master/tasks/release.js
 exports.bumpVersion = function () {
-  const bumpOptions = { keys: ['version', 'Stable tag'] }
+  const bumpOptions = { keys: ['version', 'Stable tag', 'Version', 'Version:'] }
 
   if (options.version) {
     bumpOptions.version = options.version
