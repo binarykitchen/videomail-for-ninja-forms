@@ -4,7 +4,7 @@ Tags: form, video, email, audio, webcam, recorder, sign language, deaf
 
 Requires at least: 6.0
 Tested up to: 6.2.2
-Stable tag: 4.0.12
+Stable tag: 4.0.16
 Requires PHP: 7.2.5
 Donate link: https://videomail.io/faq
 License: CC0-1.0
@@ -69,6 +69,18 @@ To get help, just use any of these contacts at [https://binarykitchen.com](https
 2. Once you have assembled a form and preview it, any browser will ask for webcam access first.
 
 == Changelog ==
+= 4.0.16 (14 Jul 2023) =
+*Bugs:*
+* Fix versioning
+
+= 4.0.15 (14 Jul 2023) =
+*Bugs:*
+* Fix versioning
+
+= 4.0.14 (14 Jul 2023) =
+*Bugs:*
+* Fix versioning
+
 = 4.0.13 (14 Jul 2023) =
 *Bugs:*
 * Fix boolean check for media library addition
