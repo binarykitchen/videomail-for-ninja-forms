@@ -84,7 +84,7 @@ class NF_Videomail_Fields_Videomail extends NF_Abstracts_Field {
 
     $enableMediaLibrary = $field['media_library'];
 
-    if ($enableMediaLibrary == "true" || $enableMediaLibrary == 1 || $enableMediaLibrary == true) {
+    if ($enableMediaLibrary === "true" || $enableMediaLibrary === 1 || $enableMediaLibrary === true) {
       register_shutdown_function(array($this, 'downloadVideomailToMediaLibrary'), $videomail);
     }
 

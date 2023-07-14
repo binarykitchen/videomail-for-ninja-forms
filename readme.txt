@@ -69,6 +69,10 @@ To get help, just use any of these contacts at [https://binarykitchen.com](https
 2. Once you have assembled a form and preview it, any browser will ask for webcam access first.
 
 == Changelog ==
+= 4.0.13 (14 Jul 2023) =
+*Bugs:*
+* Fix boolean check for media library addition
+
 = 4.0.12 (12 Jul 2023) =
 *Bugs:*
 * Fix a releasing issue
