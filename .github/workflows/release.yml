@@ -26,9 +26,9 @@ jobs:
             php_version: 7.4
             dev: no
 
-      -   uses: actions/setup-node@v2
+      -   uses: actions/setup-node@v3
           with:
-            node-version: '12'
+            node-version: 18
 
       -   name: Install npm dependencies
           run: |
