@@ -4,7 +4,7 @@ Record videos in Ninja Forms!
 
 > Finally you can encode any webcam recordings from modern browsers and mobiles into MP4 + WebM within seconds. This without the need for Flash, Java nor any other plugins / addons. Just JavaScript.
 
-With this add-on recording videos in Wordpress forms comes true. No further coding required. Just install + configure a bit, that's all.
+With this add-on recording videos in Wordpress forms comes true. No further coding required. Just install + configure a bit, that’s all.
 
 More documentation, aimed at the mortal user, is in the readme.txt - this here is for developers only.
 
@@ -45,7 +45,7 @@ In `dist` you can find a latest version in a zip file for easier distribution. C
 
 ## Examples
 
-In the `/examples` folder you can see some ready-to-import Ninja Forms templates and HTML examples for re-use. They might inspire you ...
+In the `/examples` folder you can see some ready-to-import Ninja Forms templates and HTML examples for re-use. They might inspire you …
 
 ## Documentation
 
@@ -57,11 +57,15 @@ https://github.com/binarykitchen/videomail-for-ninja-forms/issues
 
 ## Releasing
 
-1. Update changelog in readme.txt (stable tag + changelog) but do not touch package.json's version
-2. Manually bump version in videomail-for-ninja-forms.php (weird bug)
+1. Update changelog in readme.txt (stable tag + changelog)
+2. Manually bump versions in
+   - package.json
+   - readme.txt
+   - videomail-for-ninja-forms.php
+   - src/php/videomail.php
 3. Optional: validate readme.txt with https://wordpress.org/plugins/developers/readme-validator/
-4. `npm run patch` (or minor or major)
-5. `npm run sync` to sync with the public WordPress site (can take a long time)
+4. Run `npm run release`
+5. Tag a new release which will run the release workflow on GitHub.
 
 ## Ask for help
 

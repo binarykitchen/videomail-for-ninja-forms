@@ -9,47 +9,26 @@ die() {
     exit 1
 }
 
-# todo: figure out an elegant solution to avoid duplicate code
-# when having three bash scripts for patches, features and releases
-# maybe with command line args?
-# when done, rename this file
+PACKAGE_VERSION=$(cat package.json | jq -r '.version')
 
-for i in "$@"; do
-    case $i in
-    -i=* | --importance=*)
-        IMPORTANCE="${i#*=}"
-        shift # past argument=value
-        ;;
-    *)
-        # unknown option
-        ;;
-    esac
-done
-
-if [[ -z "$IMPORTANCE" ]]; then
-    die "Aborting the bump! Argument --importance is missing."
+if [[ -z "$PACKAGE_VERSION" ]]; then
+    die "Aborting the bump! Version is missing."
 fi
+
+echo "Starting new release branch with version $PACKAGE_VERSION..."
 
 # ensures all is commited
 if [[ $(git status --porcelain) ]]; then
     die "Aborting the bump! You have uncommitted changes."
 fi
 
-# https://stackoverflow.com/questions/45047976/how-to-awk-extract-the-newer-version-number/45048086#45048086
-read VERSION <<<$(npx gulp bumpVersion --importance=$IMPORTANCE | awk '!a{if(match($0,/to [0-9][0-9]?\.[0-9][0-9]?\.[0-9][0-9]?/)){print substr($0,RSTART+3,RLENGTH-3);a=1}}')
-
 git checkout master
 git push
 git checkout develop
 git push
 
-echo "Starting new release branch with version $VERSION..."
-
 # Start a new release
-git flow release start $VERSION
-
-# This will increment version in package.json
-npx gulp bumpVersion --write --version=$VERSION
+git flow release start $PACKAGE_VERSION
 
 # Ensure dependencies are okay
 npm install
@@ -59,10 +38,10 @@ npx gulp build
 npx gulp zip
 
 git add -A
-git commit -am "Final commit of version $VERSION" --no-edit
+git commit -am "Final commit of version $PACKAGE_VERSION" --no-edit
 
-# Complete the previous release
-git flow release finish $VERSION -m "Completing release of $VERSION" # This will also tag it
+# Complete the previous release. This will also tag it.
+git flow release finish $PACKAGE_VERSION -m "Completing release of $PACKAGE_VERSION"
 
 git push
 
@@ -72,9 +51,6 @@ git push --tags
 
 # Prepare the develop branch for the new cycle
 git checkout develop
-
-# Strange bug, have to bump it again
-npx gulp bumpVersion --write --version=$VERSION
 
 unset GIT_MERGE_AUTOEDIT
 
