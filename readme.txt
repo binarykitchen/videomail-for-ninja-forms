@@ -4,8 +4,8 @@ Tags: form, video, email, audio, webcam, recorder, sign language, deaf
 
 Requires at least: 6.0
 Tested up to: 6.2.2
-Stable tag: 4.0.16
-Requires PHP: 7.2.5
+Stable tag: 5.0.0
+Requires PHP: 7.4.0
 Donate link: https://videomail.io/faq
 License: CC0-1.0
 
@@ -30,8 +30,8 @@ More documentation on setup and configuration see:
 == Installation ==
 This section describes how to install the plugin and get it working.
 1. Upload the `videomail-for-ninja-forms` plugin folder to your `/wp-content/plugins/` directory
-2. Activate the plugin through the 'Plugins' menu in WordPress
-3. Visit the 'Ninja Forms' menu item in your admin sidebar
+2. Activate the plugin through the ‘Plugins’ menu in WordPress
+3. Visit the ‘Ninja Forms’ menu item in your admin sidebar
 4. Build a form using videomail
 
 Probably you also want to whitelist additional domains besides localhost. See whitelisting under FAQ.
@@ -69,6 +69,11 @@ To get help, just use any of these contacts at [https://binarykitchen.com](https
 2. Once you have assembled a form and preview it, any browser will ask for webcam access first.
 
 == Changelog ==
+= 5.0.0 (19 Nov 2023) =
+*Change:*
+* Internal technical improvements for releasing new versions
+* Internal technical change: Bump to NodeJS v20 and npm v9
+
 = 4.0.16 (14 Jul 2023) =
 *Bugs:*
 * Fix versioning
@@ -197,7 +202,7 @@ To get help, just use any of these contacts at [https://binarykitchen.com](https
 
 = 3.9.8 (20 Oct 2020) =
 *Bugs:*
-* Fixed wrong FPS calculation. Now overall quality of encoded videos won't be impacted when connectivity deteriorates toward the end.
+* Fixed wrong FPS calculation. Now overall quality of encoded videos won’t be impacted when connectivity deteriorates toward the end.
 
 *Change:*
 * Upgrades Videomail dependency
