@@ -5,7 +5,6 @@ const argv = require('yargs').argv
 const sourcemaps = require('gulp-sourcemaps')
 const del = require('del')
 const minimist = require('minimist')
-const path = require('path')
 const log = require('fancy-log')
 const browserSync = require('browser-sync').create()
 
@@ -136,37 +135,6 @@ function zip() {
     })
     .pipe(plugins.zip('videomail-for-ninja-forms.zip'))
     .pipe(gulp.dest('dist'))
-}
-
-// get inspired by
-// https://www.npmjs.com/package/gulp-tag-version and
-// https://github.com/nicksrandall/gulp-release-tasks/blob/master/tasks/release.js
-exports.bumpVersion = function () {
-  const bumpOptions = { keys: ['version', 'Stable tag', 'Version', 'Version:'] }
-
-  if (options.version) {
-    bumpOptions.version = options.version
-  } else if (options.importance) {
-    bumpOptions.type = options.importance
-  }
-
-  return gulp
-    .src([
-      './package.json',
-      './readme.txt',
-      './videomail-for-ninja-forms.php',
-      './src/php/videomail.php'
-    ])
-    .pipe(plugins.bump(bumpOptions))
-    .pipe(
-      plugins.if(
-        options.write,
-        gulp.dest(function (file) {
-          return path.dirname(file.path)
-        })
-      )
-    )
-    .on('error', log.error)
 }
 
 // just builds assets once, nothing else
