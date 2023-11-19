@@ -34,7 +34,6 @@
     "npm": "^9.8.0"
   },
   "scripts": {
-    "sync": "./env/dev/sync-wp.sh",
     "wp": "gulp watch --host=wp",
     "mh": "gulp watch --port=443 --host=infernal.videomail.local",
     "build": "gulp build",
