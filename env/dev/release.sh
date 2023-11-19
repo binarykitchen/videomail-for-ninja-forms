@@ -9,15 +9,13 @@ die() {
     exit 1
 }
 
-PACKAGE_VERSION=$(cat package.json \
-  | grep version \
-  | head -1 \
-  | awk -F: '{ print $2 }' \
-  | sed 's/[",]//g')
+PACKAGE_VERSION=$(cat package.json | jq -r '.version')
 
 if [[ -z "$PACKAGE_VERSION" ]]; then
     die "Aborting the bump! Version is missing."
 fi
+
+echo "Starting new release branch with version $PACKAGE_VERSION..."
 
 # ensures all is commited
 if [[ $(git status --porcelain) ]]; then
@@ -29,10 +27,8 @@ git push
 git checkout develop
 git push
 
-echo "Starting new release branch with version $PACKAGE_VERSION..."
-
 # Start a new release
-git flow release start $VERSION
+git flow release start $PACKAGE_VERSION
 
 # Ensure dependencies are okay
 npm install
@@ -42,10 +38,10 @@ npx gulp build
 npx gulp zip
 
 git add -A
-git commit -am "Final commit of version $VERSION" --no-edit
+git commit -am "Final commit of version $PACKAGE_VERSION" --no-edit
 
-# Complete the previous release
-git flow release finish $VERSION -m "Completing release of $VERSION" # This will also tag it
+# Complete the previous release. This will also tag it.
+git flow release finish $PACKAGE_VERSION -m "Completing release of $PACKAGE_VERSION"
 
 git push
 
