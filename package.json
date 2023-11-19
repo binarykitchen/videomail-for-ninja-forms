@@ -30,8 +30,8 @@
     "url": "https://github.com/binarykitchen/videomail-for-ninja-forms.git"
   },
   "engines": {
-    "node": "^18.14.0",
-    "npm": "^9.3.1"
+    "node": "^20.5.1",
+    "npm": "^9.8.0"
   },
   "scripts": {
     "sync": "./env/dev/sync-wp.sh",
