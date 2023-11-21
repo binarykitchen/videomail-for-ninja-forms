@@ -7,20 +7,18 @@ on:
 jobs:
   release:
     name: New release
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     environment: live
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
           node-version: 20
 
       - name: Install npm dependencies
-        run: |
-          npm install -g npm@9
-          npm ci
+        run: npm ci
 
       - name: Build assets for production
         run: npm run build
