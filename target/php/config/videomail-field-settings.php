@@ -120,5 +120,15 @@ return apply_filters('ninja_forms_videomail_field_settings', array(
     'group' => 'advanced',
     'value' => FALSE,
     'help' => __('Show verbose comments in the developer console.', 'videomail-for-ninja-forms')
+  ),
+
+  'load_user_media_on_record' => array(
+    'name' => 'load_user_media_on_record',
+    'type' => 'toggle',
+    'label' => __('Ask for camera permission on record', 'videomail-for-ninja-forms'),
+    'width' => 'one-half',
+    'group' => 'advanced',
+    'value' => FALSE,
+    'help' => __('With this option enabled, the user will not be asked for camera permissions unless the record button is clicked. When disabled (default), permissions are being asked on page load which is preferred. This option is only for when the there is a conflict with the application when already many other events occur on page load.', 'videomail-for-ninja-forms')
   )
 ));

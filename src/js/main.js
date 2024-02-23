@@ -114,10 +114,15 @@ const VideomailFieldController = Marionette.Object.extend({
         adjustFormDataBeforePosting:
           this.adjustFormDataBeforePostingToVideomailServer.bind(this)
       },
+      // when true, user media is loaded only when record button is pressed
+      loadUserMediaOnRecord: this.fieldModel.get('load_user_media_on_record'),
+
       // leave it to ninja form to validate the inputs
       enableAutoValidation: false,
+
       // leave it to ninja form to deal with form submissions
       enableAutoSubmission: false,
+
       // log actions/events to console
       verbose
     })

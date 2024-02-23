@@ -34,6 +34,7 @@ jobs:
           SLUG: videomail-for-ninja-forms
 
       - name: Upload release asset
+        # TODO Switch to another action as this one is deprecated. Maybe softprops/action-gh-release
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

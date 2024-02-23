@@ -8,15 +8,11 @@ module.exports = {
     'plugin:import/errors',
     'plugin:import/warnings'
   ],
-  root: true,
   env: {
     browser: true,
     es6: true
   },
   rules: {
-    'no-debugger': 0,
-    'import/no-named-as-default': 0,
-    'no-else-return': 1,
     'space-before-function-paren': [
       'error',
       {
