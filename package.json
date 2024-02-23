@@ -1,6 +1,6 @@
 {
   "name": "videomail-for-ninja-forms",
-  "version": "5.0.2",
+  "version": "5.1.0",
   "description": "With this add-on recording videos in Wordpress Ninja Forms comes true.",
   "author": "Michael Heuberger <michael.heuberger@binarykitchen.com>",
   "contributors": [
@@ -41,6 +41,7 @@
     "lint-fix": "npm --silent run lint -- --fix; exit 0",
     "prettier": "prettier --check ./src gulpfile.js",
     "prettier-fix": "prettier --write ./src gulpfile.js",
+    "clean": "rm -rf node_modules && rm -rf target && rm -rf package-lock.json",
     "release": "./env/dev/release.sh"
   },
   "babel": {
@@ -67,20 +68,20 @@
     ]
   },
   "dependencies": {
-    "videomail-client": "7.0.0"
+    "videomail-client": "8.0.0"
   },
   "devDependencies": {
-    "@babel/core": "7.23.3",
-    "@babel/eslint-parser": "7.23.3",
-    "@babel/plugin-transform-runtime": "7.23.4",
-    "@babel/preset-env": "7.23.3",
-    "@babel/runtime": "7.23.4",
+    "@babel/core": "7.23.9",
+    "@babel/eslint-parser": "7.23.10",
+    "@babel/plugin-transform-runtime": "7.23.9",
+    "@babel/preset-env": "7.23.9",
+    "@babel/runtime": "7.23.9",
     "babel-eslint": "10.1.0",
     "browser-sync": "2.29.3",
     "del": "6.1.1",
-    "eslint": "8.54.0",
+    "eslint": "8.57.0",
     "eslint-config-standard": "17.1.0",
-    "eslint-plugin-import": "2.29.0",
+    "eslint-plugin-import": "2.29.1",
     "eslint-plugin-node": "11.1.0",
     "eslint-plugin-promise": "6.1.1",
     "fancy-log": "2.0.0",
@@ -99,7 +100,7 @@
     "gulp-zip": "5.1.0",
     "minimist": "1.2.8",
     "nib": "1.2.0",
-    "prettier": "2.8.8",
+    "prettier": "3.2.5",
     "standard": "17.1.0",
     "yargs": "17.7.2"
   }
