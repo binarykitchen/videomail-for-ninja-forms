@@ -77,7 +77,7 @@
     "@babel/preset-env": "7.23.9",
     "@babel/runtime": "7.23.9",
     "babel-eslint": "10.1.0",
-    "browser-sync": "2.29.3",
+    "browser-sync": "3.0.2",
     "del": "6.1.1",
     "eslint": "8.57.0",
     "eslint-config-standard": "17.1.0",
