@@ -21,17 +21,15 @@
     "video",
     "videomail",
     "wordpress",
-    "ninja form",
-    "audio",
-    "recorder"
+    "ninja form"
   ],
   "repository": {
     "type": "git",
     "url": "https://github.com/binarykitchen/videomail-for-ninja-forms.git"
   },
   "engines": {
-    "node": "^20.5.1",
-    "npm": "^9.8.0"
+    "node": "^20.12.2",
+    "npm": "^10.5.0"
   },
   "scripts": {
     "wp": "gulp watch --host=wp",
@@ -71,11 +69,11 @@
     "videomail-client": "8.0.0"
   },
   "devDependencies": {
-    "@babel/core": "7.23.9",
-    "@babel/eslint-parser": "7.23.10",
-    "@babel/plugin-transform-runtime": "7.23.9",
-    "@babel/preset-env": "7.23.9",
-    "@babel/runtime": "7.23.9",
+    "@babel/core": "7.24.7",
+    "@babel/eslint-parser": "7.24.7",
+    "@babel/plugin-transform-runtime": "7.24.7",
+    "@babel/preset-env": "7.24.7",
+    "@babel/runtime": "7.24.7",
     "babel-eslint": "10.1.0",
     "browser-sync": "2.29.3",
     "del": "6.1.1",
@@ -83,7 +81,7 @@
     "eslint-config-standard": "17.1.0",
     "eslint-plugin-import": "2.29.1",
     "eslint-plugin-node": "11.1.0",
-    "eslint-plugin-promise": "6.1.1",
+    "eslint-plugin-promise": "6.2.0",
     "fancy-log": "2.0.0",
     "gulp": "4.0.2",
     "gulp-autoprefixer": "8.0.0",
@@ -100,7 +98,7 @@
     "gulp-zip": "5.1.0",
     "minimist": "1.2.8",
     "nib": "1.2.0",
-    "prettier": "3.2.5",
+    "prettier": "3.3.2",
     "standard": "17.1.0",
     "yargs": "17.7.2"
   }

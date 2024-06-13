@@ -57,16 +57,18 @@ https://github.com/binarykitchen/videomail-for-ninja-forms/issues
 
 ## Releasing
 
-1. Update changelog in readme.txt (stable tag + changelog)
-2. Search for current version and replace it with the new one. Should be these files:
+1. Ensure you are on develop branch
+2. Update changelog in readme.txt (stable tag + changelog)
+3. Search for current version and replace it with the new one. Should be these files:
    - package.json
    - readme.txt
    - videomail-for-ninja-forms.php
    - src/php/videomail.php
-3. Optional: validate readme.txt with https://wordpress.org/plugins/developers/readme-validator/
-4. Run `npm run release`
-5. Tag a new release which will run the release workflow on GitHub, e.g. with `gh release create`
-6. Announce on Twitter
+4. Optional: validate readme.txt with https://wordpress.org/plugins/developers/readme-validator/
+5. Git commit and push
+6. Run `npm run release`
+7. Tag a new release which will run the release workflow on GitHub, e.g. with `gh release create`
+8. Announce on Twitter
 
 ## Ask for help
 

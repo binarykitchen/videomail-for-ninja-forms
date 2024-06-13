@@ -1,9 +1,9 @@
 === Videomail for Ninja Forms ===
 Contributors: michael.heuberger, kbjohnson90
-Tags: form, video, email, audio, webcam, recorder, sign language, deaf
+Tags: video, email, recorder, sign language
 
 Requires at least: 6.0
-Tested up to: 6.2.2
+Tested up to: 6.5.4
 Stable tag: 5.1.0
 Requires PHP: 7.4.0
 Donate link: https://videomail.io/faq
