@@ -65,10 +65,11 @@ https://github.com/binarykitchen/videomail-for-ninja-forms/issues
    - videomail-for-ninja-forms.php
    - src/php/videomail.php
 4. Optional: validate readme.txt with https://wordpress.org/plugins/developers/readme-validator/
-5. Git commit and push
-6. Run `npm run release`
-7. Tag a new release which will run the release workflow on GitHub, e.g. with `gh release create`
-8. Announce on Twitter
+5. Run `npm run clean`, `npm install` and `npm run build`
+6. Git commit and push
+7. Run `npm run release`
+8. Tag a new release which will run the release workflow on GitHub, e.g. with `gh release create`
+9. Announce on Twitter
 
 ## Ask for help
 
