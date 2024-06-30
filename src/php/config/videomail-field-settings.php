@@ -93,14 +93,6 @@ return apply_filters('ninja_forms_videomail_field_settings', array(
     'value' => 3
   ),
 
-  'width' => array(
-    'name' => 'width',
-    'type' => 'number',
-    'label' => __('Video Width', 'videomail-for-ninja-forms'),
-    'group' => 'display',
-    'value' => 320
-  ),
-
   'image_quality' => array(
     'name' => 'image_quality',
     'type' => 'number',
@@ -110,6 +102,25 @@ return apply_filters('ninja_forms_videomail_field_settings', array(
     'min' => 1,
     'max' => 100,
     'help' => __('Must be a percentage between 1 and 100 - Beware that higher values results into a sharper video but encoding and transport will be slower. Be thoughtful of users with low bandwidth.', 'videomail-for-ninja-forms')
+  ),
+
+  'width' => array(
+    'name' => 'width',
+    'type' => 'number',
+    'label' => __('Video width in pixels', 'videomail-for-ninja-forms'),
+    'group' => 'display',
+    'value' => 320,
+    'help' => __('The higher, the better the quality. Not recommended for low bandwidth connections.', 'videomail-for-ninja-forms')
+  ),
+
+  'stretch' => array(
+    'name' => 'stretch',
+    'type' => 'toggle',
+    'label' => __('Stretch', 'videomail-for-ninja-forms'),
+    'width' => 'one-half',
+    'group' => 'display',
+    'value' => FALSE,
+    'help' => __('Stretch video to full width of the parent container.', 'videomail-for-ninja-forms')
   ),
 
   'verbose' => array(

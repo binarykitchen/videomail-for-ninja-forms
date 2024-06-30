@@ -29,18 +29,16 @@ function start(done) {
 
   projectUrl += '/wp-admin/admin.php?page=ninja-forms'
 
-  // http://www.browsersync.io/docs/options/
-  browserSync.init({
+  const options = {
     proxy: projectUrl,
     browser: 'google chrome',
     port,
-    https: true,
-    host,
-    open: 'external',
+    open: false,
     injectChanges: true
-  })
+  }
 
-  done()
+  // http://www.browsersync.io/docs/options/
+  browserSync.init(options, done)
 }
 
 function lint() {

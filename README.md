@@ -14,17 +14,22 @@ Requires the [Ninja Forms plugin](https://github.com/wpninjas/ninja-forms).
 
 In short: this add-on runs on the Ninja Forms plugin engine where you can configure forms very easily. Upon installation, a new type will be added to enable recordable videos.
 
-## Development
+## Development (Personal)
 
 1. Install WordPress locally or use [Local by Flywheel](https://local.getflywheel.com/)
-2. Install Ninja Forms Plugin
-3. `git clone git@github.com:binarykitchen/videomail-for-ninja-forms.git`
-4. Symlink videomail-for-ninja-forms like that: `ln -s /Users/michaelheuberger/code/videomail-for-ninja-forms /Users/michaelheuberger/Local\ Sites/infernalvideomaillocal/app/public/wp-content/plugins/videomail-for-ninja-forms`
-5. Install latest nodejs, best with [nvm](https://github.com/creationix/nvm)
-6. `npm install` to install dependencies
-7. `gulp watch --host x --port y` which will open Google Chrome and automatically reloads upon changes (PHP, JS and CSS). Defaults to https://localhost:8890
+2. Log into Local and import Blueprint if any exist
+3. Install Ninja Forms Plugin
+4. `git clone git@github.com:binarykitchen/videomail-for-ninja-forms.git`
+5. Symlink videomail-for-ninja-forms like that: `ln -s ~/code/binarykitchen/videomail-for-ninja-forms ~/Local\ Sites/infernal-darkness-wp/app/public/wp-content/plugins/videomail-for-ninja-forms`
+6. Activate it on WP admin side
+7. Install latest nodejs, best with [nvm](https://github.com/creationix/nvm)
+8. `npm install` to install dependencies
+9. `gulp watch --host x --port y` which will open Google Chrome and automatically reloads upon changes (PHP, JS and CSS). Defaults to https://localhost:8890
 
-Note, if you have a port conflict with flywheel, stop Apache with `sudo apachectl stop`.
+Note: depending on your OS the `gulp watch` command might result into errors;
+
+- For Arch Linux, afraid have to amend `sudo` before `npm run mh` or so.
+- For older versions, if you have a port conflict with flywheel, stop Apache with `sudo apachectl stop`.
 
 ### Customise host or port
 

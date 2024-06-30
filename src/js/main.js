@@ -98,6 +98,8 @@ const VideomailFieldController = Marionette.Object.extend({
       video: {
         limitSeconds: this.fieldModel.get('limit_seconds') || 90,
         width: this.fieldModel.get('width') || 320,
+        // TODO Implement on VC side
+        stretch: this.fieldModel.get('stretch') || false,
         countdown: this.fieldModel.get('countdown') || false
       },
       audio: {
