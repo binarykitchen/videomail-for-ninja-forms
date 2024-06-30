@@ -4,7 +4,7 @@ Tags: video, email, recorder, sign language
 
 Requires at least: 6.0
 Tested up to: 6.5.4
-Stable tag: 5.1.1
+Stable tag: 5.2.1
 Requires PHP: 7.4.0
 Donate link: https://videomail.io/faq
 License: CC0-1.0
@@ -69,7 +69,7 @@ To get help, just use any of these contacts at [https://binarykitchen.com](https
 2. Once you have assembled a form and preview it, any browser will ask for webcam access first.
 
 == Changelog ==
-= 5.2.0 (30 Jun 2024) =
+= 5.2.1 (30 Jun 2024) =
 *Improvement:*
 * New option "stretch' to let the video take full width of the parent container, regardless of the webcam resolution.
 * Improve documentation for developers
