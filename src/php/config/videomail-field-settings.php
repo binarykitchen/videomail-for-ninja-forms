@@ -120,7 +120,7 @@ return apply_filters('ninja_forms_videomail_field_settings', array(
     'width' => 'one-half',
     'group' => 'display',
     'value' => FALSE,
-    'help' => __('Stretch video to full width', 'videomail-for-ninja-forms')
+    'help' => __('Stretch video to full width of the parent container.', 'videomail-for-ninja-forms')
   ),
 
   'verbose' => array(

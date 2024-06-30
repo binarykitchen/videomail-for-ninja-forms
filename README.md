@@ -26,7 +26,10 @@ In short: this add-on runs on the Ninja Forms plugin engine where you can config
 8. `npm install` to install dependencies
 9. `gulp watch --host x --port y` which will open Google Chrome and automatically reloads upon changes (PHP, JS and CSS). Defaults to https://localhost:8890
 
-Note, if you have a port conflict with flywheel, stop Apache with `sudo apachectl stop`.
+Note: depending on your OS the `gulp watch` command might result into errors;
+
+- For Arch Linux, afraid have to amend `sudo` before `npm run mh` or so.
+- For older versions, if you have a port conflict with flywheel, stop Apache with `sudo apachectl stop`.
 
 ### Customise host or port
 

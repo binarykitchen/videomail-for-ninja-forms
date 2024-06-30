@@ -69,6 +69,15 @@ To get help, just use any of these contacts at [https://binarykitchen.com](https
 2. Once you have assembled a form and preview it, any browser will ask for webcam access first.
 
 == Changelog ==
+= 5.2.0 (30 Jun 2024) =
+*Improvement:*
+* New option "stretch' to let the video take full width of the parent container, regardless of the webcam resolution.
+* Improve documentation for developers
+*Change:*
+* Upgrade internal dependencies
+*Bugs:*
+* Do not lint before build completes
+
 = 5.1.1 (13 Jun 2024) =
 *Change:*
 * Upgrade Node.js and npm
