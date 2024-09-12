@@ -23,37 +23,28 @@ const VideomailFieldController = Marionette.Object.extend({
         // because the conditional plugin is resetting event handlers.
         // without the above, we'd be registering too early and the
         // conditional plugin overrides.
-        this.listenToOnce(
-          this.channel,
-          "init:model",
-          this.registerVideomailField,
-        );
+        this.listenToOnce(this.channel, "init:model", this.registerVideomailField);
 
         // must be coming back from a multi-step where
         // videomail has already been initialised. so just resume it.
-        this.listenTo(
-          nfRadio.channel("nfMP"),
-          "change:part",
-          function (params) {
-            DEBUG &&
-              console.log("nfMP channel event triggered:", "change:part");
+        this.listenTo(nfRadio.channel("nfMP"), "change:part", function (params) {
+          DEBUG && console.log("nfMP channel event triggered:", "change:part");
 
-            const currentModels =
-              params.currentElement?.attributes?.formContentData?.models || [];
+          const currentModels =
+            params.currentElement?.attributes?.formContentData?.models || [];
 
-            const currentCid = this.fieldModel.cid;
+          const currentCid = this.fieldModel.cid;
 
-            const currentModel = currentModels.find(function (model) {
-              return model.cid === currentCid;
-            });
+          const currentModel = currentModels.find(function (model) {
+            return model.cid === currentCid;
+          });
 
-            if (currentModel) {
-              this.loadVideomailClient();
-            } else {
-              this.videomailClient.unload();
-            }
-          },
-        );
+          if (currentModel) {
+            this.loadVideomailClient();
+          } else {
+            this.videomailClient.unload();
+          }
+        });
       }
     });
   },
@@ -170,10 +161,7 @@ const VideomailFieldController = Marionette.Object.extend({
   },
 
   onSubmitted: function (videomail) {
-    let formModel = Backbone.Radio.channel("app").request(
-      "get:form",
-      this.getFormId(),
-    );
+    let formModel = Backbone.Radio.channel("app").request("get:form", this.getFormId());
 
     if (!formModel) {
       // fallback for older versions
@@ -188,10 +176,7 @@ const VideomailFieldController = Marionette.Object.extend({
     );
 
     // restart submission again, this time to the real wp site
-    Backbone.Radio.channel("form-" + this.getFormId()).request(
-      "submit",
-      formModel,
-    );
+    Backbone.Radio.channel("form-" + this.getFormId()).request("submit", formModel);
   },
 
   onGoingBack: function () {
@@ -284,19 +269,13 @@ const VideomailFieldController = Marionette.Object.extend({
   // }
   getFormValues: function () {
     let collection;
-    const formModel = Backbone.Radio.channel("app").request(
-      "get:form",
-      this.getFormId(),
-    );
+    const formModel = Backbone.Radio.channel("app").request("get:form", this.getFormId());
 
     if (formModel) {
       collection = formModel.get("fields");
       // fallback for older versions
-    } else if (
-      this.fieldModel.collection.options.formModel.get("fields").models
-    ) {
-      collection =
-        this.fieldModel.collection.options.formModel.get("fields").models;
+    } else if (this.fieldModel.collection.options.formModel.get("fields").models) {
+      collection = this.fieldModel.collection.options.formModel.get("fields").models;
     }
 
     return collection.reduce(function (memo, field) {

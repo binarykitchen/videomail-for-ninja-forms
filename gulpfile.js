@@ -121,23 +121,16 @@ function watch() {
 
 function todo() {
   return gulp
-    .src([
-      "videomail-for-ninja-forms.php",
-      "src/**/*.{php,js,styl}",
-      "gulpfile.js",
-    ])
+    .src(["videomail-for-ninja-forms.php", "src/**/*.{php,js,styl}", "gulpfile.js"])
     .pipe(plugins.todo())
     .pipe(gulp.dest("./"));
 }
 
 function zip() {
   return gulp
-    .src(
-      ["index.php", "readme.txt", "videomail-for-ninja-forms.php", "target/**"],
-      {
-        base: "./",
-      },
-    )
+    .src(["index.php", "readme.txt", "videomail-for-ninja-forms.php", "target/**"], {
+      base: "./",
+    })
     .pipe(plugins.zip("videomail-for-ninja-forms.zip"))
     .pipe(gulp.dest("dist"));
 }

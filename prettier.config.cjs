@@ -1,8 +1,8 @@
-//@ts-check
+// @ts-check
 
 /** @type {import('prettier').Config} */
 const config = {
-  "printWidth": 90,
+  printWidth: 90,
 };
 
 module.exports = config;
