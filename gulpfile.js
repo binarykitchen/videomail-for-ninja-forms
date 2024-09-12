@@ -41,18 +41,6 @@ function start(done) {
   browserSync.init(options, done);
 }
 
-function lint() {
-  return gulp
-    .src(["src/js/main.js"])
-    .pipe(plugins.standard())
-    .pipe(
-      plugins.standard.reporter("default", {
-        breakOnError: true,
-        quiet: true,
-      }),
-    );
-}
-
 function bundle() {
   return (
     gulp
@@ -65,8 +53,6 @@ function bundle() {
       .pipe(gulp.dest("target/js"))
   );
 }
-
-const js = gulp.series(lint, bundle);
 
 function copyVideomailClient() {
   return gulp
@@ -115,15 +101,8 @@ const php = gulp.series(cleanPhp, copyPhp);
 
 function watch() {
   gulp.watch("src/**/*.{php,html}", php).on("change", browserSync.reload);
-  gulp.watch("src/js/**/*.js", js).on("change", browserSync.reload);
+  gulp.watch("src/js/**/*.js", bundle).on("change", browserSync.reload);
   gulp.watch("src/styl/**/*.styl", css).on("change", browserSync.reload);
-}
-
-function todo() {
-  return gulp
-    .src(["videomail-for-ninja-forms.php", "src/**/*.{php,js,styl}", "gulpfile.js"])
-    .pipe(plugins.todo())
-    .pipe(gulp.dest("./"));
 }
 
 function zip() {
@@ -136,7 +115,7 @@ function zip() {
 }
 
 // just builds assets once, nothing else
-const build = gulp.series(css, js, copyVideomailClient, todo, php);
+const build = gulp.series(css, bundle, copyVideomailClient, php);
 
 exports.build = build;
 exports.zip = zip;
