@@ -31,7 +31,7 @@ Note: depending on your OS the `gulp watch` command might result into errors;
 - For Arch Linux, afraid have to amend `sudo` before `npm run mh` or so.
 - For older versions, if you have a port conflict with flywheel, stop Apache with `sudo apachectl stop`.
 
-### Customise host or port
+### Customize host or port
 
 For custom hosts or ports, you can customize `gulp watch` like that:
 
@@ -74,6 +74,7 @@ https://github.com/binarykitchen/videomail-for-ninja-forms/issues
 6. Git commit and push
 7. Run `npm run release`
 8. Tag a new release which will run the release workflow on GitHub, e.g. with `gh release create`
+   (upon any errors, you may try to run manually "gh release create" again to trigger a release on GitHub)
 9. Announce on Twitter
 
 ## Ask for help
