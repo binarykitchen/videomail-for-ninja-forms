@@ -1,11 +1,75 @@
 (function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.VideomailClient = f()}})(function(){var define,module,exports;return (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(_dereq_,module,exports){
+function _arrayLikeToArray(r, a) {
+  (null == a || a > r.length) && (a = r.length);
+  for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e];
+  return n;
+}
+module.exports = _arrayLikeToArray, module.exports.__esModule = true, module.exports["default"] = module.exports;
+},{}],2:[function(_dereq_,module,exports){
+var arrayLikeToArray = _dereq_("./arrayLikeToArray.js");
+function _arrayWithoutHoles(r) {
+  if (Array.isArray(r)) return arrayLikeToArray(r);
+}
+module.exports = _arrayWithoutHoles, module.exports.__esModule = true, module.exports["default"] = module.exports;
+},{"./arrayLikeToArray.js":1}],3:[function(_dereq_,module,exports){
+var toPropertyKey = _dereq_("./toPropertyKey.js");
+function _defineProperty(e, r, t) {
+  return (r = toPropertyKey(r)) in e ? Object.defineProperty(e, r, {
+    value: t,
+    enumerable: !0,
+    configurable: !0,
+    writable: !0
+  }) : e[r] = t, e;
+}
+module.exports = _defineProperty, module.exports.__esModule = true, module.exports["default"] = module.exports;
+},{"./toPropertyKey.js":9}],4:[function(_dereq_,module,exports){
 function _interopRequireDefault(e) {
   return e && e.__esModule ? e : {
     "default": e
   };
 }
 module.exports = _interopRequireDefault, module.exports.__esModule = true, module.exports["default"] = module.exports;
-},{}],2:[function(_dereq_,module,exports){
+},{}],5:[function(_dereq_,module,exports){
+function _iterableToArray(r) {
+  if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r);
+}
+module.exports = _iterableToArray, module.exports.__esModule = true, module.exports["default"] = module.exports;
+},{}],6:[function(_dereq_,module,exports){
+function _nonIterableSpread() {
+  throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+module.exports = _nonIterableSpread, module.exports.__esModule = true, module.exports["default"] = module.exports;
+},{}],7:[function(_dereq_,module,exports){
+var arrayWithoutHoles = _dereq_("./arrayWithoutHoles.js");
+var iterableToArray = _dereq_("./iterableToArray.js");
+var unsupportedIterableToArray = _dereq_("./unsupportedIterableToArray.js");
+var nonIterableSpread = _dereq_("./nonIterableSpread.js");
+function _toConsumableArray(r) {
+  return arrayWithoutHoles(r) || iterableToArray(r) || unsupportedIterableToArray(r) || nonIterableSpread();
+}
+module.exports = _toConsumableArray, module.exports.__esModule = true, module.exports["default"] = module.exports;
+},{"./arrayWithoutHoles.js":2,"./iterableToArray.js":5,"./nonIterableSpread.js":6,"./unsupportedIterableToArray.js":11}],8:[function(_dereq_,module,exports){
+var _typeof = _dereq_("./typeof.js")["default"];
+function toPrimitive(t, r) {
+  if ("object" != _typeof(t) || !t) return t;
+  var e = t[Symbol.toPrimitive];
+  if (void 0 !== e) {
+    var i = e.call(t, r || "default");
+    if ("object" != _typeof(i)) return i;
+    throw new TypeError("@@toPrimitive must return a primitive value.");
+  }
+  return ("string" === r ? String : Number)(t);
+}
+module.exports = toPrimitive, module.exports.__esModule = true, module.exports["default"] = module.exports;
+},{"./typeof.js":10}],9:[function(_dereq_,module,exports){
+var _typeof = _dereq_("./typeof.js")["default"];
+var toPrimitive = _dereq_("./toPrimitive.js");
+function toPropertyKey(t) {
+  var i = toPrimitive(t, "string");
+  return "symbol" == _typeof(i) ? i : i + "";
+}
+module.exports = toPropertyKey, module.exports.__esModule = true, module.exports["default"] = module.exports;
+},{"./toPrimitive.js":8,"./typeof.js":10}],10:[function(_dereq_,module,exports){
 function _typeof(o) {
   "@babel/helpers - typeof";
 
@@ -16,7 +80,17 @@ function _typeof(o) {
   }, module.exports.__esModule = true, module.exports["default"] = module.exports), _typeof(o);
 }
 module.exports = _typeof, module.exports.__esModule = true, module.exports["default"] = module.exports;
-},{}],3:[function(_dereq_,module,exports){
+},{}],11:[function(_dereq_,module,exports){
+var arrayLikeToArray = _dereq_("./arrayLikeToArray.js");
+function _unsupportedIterableToArray(r, a) {
+  if (r) {
+    if ("string" == typeof r) return arrayLikeToArray(r, a);
+    var t = {}.toString.call(r).slice(8, -1);
+    return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? arrayLikeToArray(r, a) : void 0;
+  }
+}
+module.exports = _unsupportedIterableToArray, module.exports.__esModule = true, module.exports["default"] = module.exports;
+},{"./arrayLikeToArray.js":1}],12:[function(_dereq_,module,exports){
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory();
@@ -165,7 +239,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ ])
 });
 ;
-},{}],4:[function(_dereq_,module,exports){
+},{}],13:[function(_dereq_,module,exports){
 var EventEmitter          = _dereq_('events').EventEmitter,
     inherits              = _dereq_('inherits'),
     raf                   = _dereq_('raf'),
@@ -583,80 +657,11 @@ Date.now = Date.now || function now() {
     return new Date().getTime();
 };
 
-},{"events":37,"inherits":61,"raf":85}],5:[function(_dereq_,module,exports){
-(function (Buffer){(function (){
-(function (w) {
-  "use strict";
-
-  function findBest(atobNative) {
-    // normal window
-    if ('function' === typeof atobNative) { return atobNative; }
+},{"events":44,"inherits":66,"raf":85}],14:[function(_dereq_,module,exports){
+function t(t){return t&&"object"==typeof t&&"default"in t?t:{default:t}}var r=/*#__PURE__*/t(_dereq_("typedarray-to-buffer"));module.exports=/*#__PURE__*/function(){function t(t){this.float32Array=void 0,this.float32Array=t}return t.prototype.toBuffer=function(){var t=new Int16Array(this.float32Array.length);return this.float32Array.forEach(function(r,o){t[o]=32767*Math.min(1,r)}),r.default(t)},t}();
 
 
-    // browserify (web worker)
-    if ('function' === typeof Buffer) {
-      return function atobBrowserify(a) {
-        //!! Deliberately using an API that's deprecated in node.js because
-        //!! this file is for browsers and we expect them to cope with it.
-        //!! Discussion: github.com/node-browser-compat/atob/pull/9
-        return new Buffer(a, 'base64').toString('binary');
-      };
-    }
-
-    // ios web worker with base64js
-    if ('object' === typeof w.base64js) {
-      // bufferToBinaryString
-      // https://git.coolaj86.com/coolaj86/unibabel.js/blob/master/index.js#L50
-      return function atobWebWorker_iOS(a) {
-        var buf = w.base64js.b64ToByteArray(a);
-        return Array.prototype.map.call(buf, function (ch) {
-          return String.fromCharCode(ch);
-        }).join('');
-      };
-    }
-
-		return function () {
-			// ios web worker without base64js
-			throw new Error("You're probably in an old browser or an iOS webworker." +
-				" It might help to include beatgammit's base64-js.");
-    };
-  }
-
-  var atobBest = findBest(w.atob);
-  w.atob = atobBest;
-
-  if ((typeof module === 'object') && module && module.exports) {
-    module.exports = atobBest;
-  }
-}(window));
-
-}).call(this)}).call(this,_dereq_("buffer").Buffer)
-},{"buffer":11}],6:[function(_dereq_,module,exports){
-var r=_dereq_("typedarray-to-buffer"),a=_dereq_("validate.io-float32array");module.exports=function(e){if(!e)throw new Error("A Float32Array parameter is missing.");if(!a(e))throw new Error("The parameter is not a Float32Array.");this.toBuffer=function(){var a,t=e.length,o=new Int16Array(t);for(a=0;a<t;a++)o[a]=32767*Math.min(1,e[a]);return r(o)}};
-
-
-},{"typedarray-to-buffer":111,"validate.io-float32array":117}],7:[function(_dereq_,module,exports){
-(function (global){(function (){
-'use strict';
-
-var possibleNames = _dereq_('possible-typed-array-names');
-
-var g = typeof globalThis === 'undefined' ? global : globalThis;
-
-/** @type {import('.')} */
-module.exports = function availableTypedArrays() {
-	var /** @type {ReturnType<typeof availableTypedArrays>} */ out = [];
-	for (var i = 0; i < possibleNames.length; i++) {
-		if (typeof g[possibleNames[i]] === 'function') {
-			// @ts-expect-error
-			out[out.length] = possibleNames[i];
-		}
-	}
-	return out;
-};
-
-}).call(this)}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"possible-typed-array-names":77}],8:[function(_dereq_,module,exports){
+},{"typedarray-to-buffer":109}],15:[function(_dereq_,module,exports){
 'use strict'
 
 exports.byteLength = byteLength
@@ -808,9 +813,9 @@ function fromByteArray (uint8) {
   return parts.join('')
 }
 
-},{}],9:[function(_dereq_,module,exports){
+},{}],16:[function(_dereq_,module,exports){
 
-},{}],10:[function(_dereq_,module,exports){
+},{}],17:[function(_dereq_,module,exports){
 /*!
  * Cross-Browser Split 1.1.1
  * Copyright 2007-2012 Steven Levithan <stevenlevithan.com>
@@ -918,7 +923,7 @@ module.exports = (function split(undef) {
   return self;
 })();
 
-},{}],11:[function(_dereq_,module,exports){
+},{}],18:[function(_dereq_,module,exports){
 (function (Buffer){(function (){
 /*!
  * The buffer module from node.js, for the browser.
@@ -2699,7 +2704,7 @@ function numberIsNaN (obj) {
 }
 
 }).call(this)}).call(this,_dereq_("buffer").Buffer)
-},{"base64-js":8,"buffer":11,"ieee754":59}],12:[function(_dereq_,module,exports){
+},{"base64-js":15,"buffer":18,"ieee754":64}],19:[function(_dereq_,module,exports){
 'use strict';
 
 var GetIntrinsic = _dereq_('get-intrinsic');
@@ -2716,7 +2721,7 @@ module.exports = function callBoundIntrinsic(name, allowMissing) {
 	return intrinsic;
 };
 
-},{"./":13,"get-intrinsic":44}],13:[function(_dereq_,module,exports){
+},{"./":20,"get-intrinsic":51}],20:[function(_dereq_,module,exports){
 'use strict';
 
 var bind = _dereq_('function-bind');
@@ -2753,11 +2758,11 @@ if ($defineProperty) {
 	module.exports.apply = applyBind;
 }
 
-},{"es-define-property":29,"es-errors/type":35,"function-bind":42,"get-intrinsic":44,"set-function-length":102}],14:[function(_dereq_,module,exports){
-var t,e=_dereq_("typedarray-to-buffer"),n=_dereq_("atob"),a="undefined"!=typeof document&&"function"==typeof document.createElement;module.exports=function(i,r){void 0===r&&(r={});var o=this;if(r.image=r.image?r.image:{},r.image.types=r.image.types?r.image.types:[],r.image.types.length>2)throw new Error("Too many image types are specified!");r.image.types.length<1&&(r.image.types=a?["webp","jpeg"]:["png"]),r.image.quality||(r.image.quality=.5);var u=parseFloat(r.image.quality);function g(t){var e;return r.image.types[t]&&(e="image/"+r.image.types[t]),e}function f(t,e){var n=t&&t.match(e);return n&&r.debug&&r.debug("Image type %s verified",e),n}function c(){var t;return a?(t=document.createElement("canvas")).width=t.height=1:t=i,t}function l(t,e){try{c().toDataURL(t,function(n,a){n?e(n):e(null,f(a,t))})}catch(t){e(null,!1)}}function m(t){var e;try{var n=c();e=f(n.toDataURL&&n.toDataURL(t),t)}catch(e){r.debug&&r.logger.debug("Failed to call toDataURL() on canvas for image type %s",t)}return e}function y(t){var e=g(0);if(!t)return function(t){return m(t)||r.image.types[1]&&m(t=g(1))||(t=null),!t&&r.debug&&r.logger.debug("Unable to verify image type"),t}(e);!function(t,e){l(t,function(n,a){n?e(n):a?e(null,t):l(t=g(1),function(n,a){n?e(n):e(null,a?t:null)})})}(e,t)}function p(t){var a,i=t.split(",")[1];if("function"==typeof n)a=n(i);else{if("function"!=typeof o.constructor.atob)throw new Error("atob function is missing");a=o.constructor.atob(i)}for(var r=new Uint8Array(a.length),u=0,g=a.length;u<g;u++)r[u]=a.charCodeAt(u);return e(r)}this.toBuffer=function(t){if(!t)return(n=o.getImageType())&&(e=p(i.toDataURL(n,u))),e;var e,n;!function(t){o.getImageType(function(e,n){e?t(e):n?i.toDataURL(n,function(e,n){e?t(e):t(null,p(n))}):t()})}(t)},this.getImageType=function(e){if(!e)return t&&a||(t=y()),t;t&&a?e(null,t):y(function(n,a){n?e(n):e(null,t=a)})}};
+},{"es-define-property":36,"es-errors/type":42,"function-bind":49,"get-intrinsic":51,"set-function-length":100}],21:[function(_dereq_,module,exports){
+function t(t){return t&&"object"==typeof t&&"default"in t?t:{default:t}}var e,i=/*#__PURE__*/t(_dereq_("typedarray-to-buffer")),r="undefined"!=typeof document&&"function"==typeof document.createElement,n=r?["webp","jpeg"]:["png"],o=/*#__PURE__*/function(){function t(t,e,i){if(void 0===e&&(e=n),void 0===i&&(i=.5),this.quality=void 0,this.types=void 0,this.canvas=void 0,e.length>2)throw new Error("Too many image types are specified!");this.canvas=t,this.quality=i,this.types=e}var o=t.prototype;return o.composeMimeType=function(t){var e;return this.types[t]&&(e="image/"+this.types[t]),e},o.isMatch=function(t,e){return t.match(e)},o.getTestCanvas=function(){var t;return r?(t=document.createElement("canvas")).width=t.height=1:t=this.canvas,t},o.canvasSupportsMimeType=function(t){try{var e=this.getTestCanvas(),i=e.toDataURL&&e.toDataURL(t);return this.isMatch(i,t)}catch(t){return!1}},o.figureMimeType=function(){var t=this.composeMimeType(0);return t&&this.canvasSupportsMimeType(t)||(this.types[1]?(t=this.composeMimeType(1))&&!this.canvasSupportsMimeType(t)&&(t=void 0):t=void 0),t},o.uriToBuffer=function(e){var n,o=e.split(",")[1];if(!o)throw new Error("Empty uri string given!");if(!(n=r?window.atob(o):null==t.atob?void 0:t.atob(o)))throw new Error("Byte are empty, something within atob went wrong.");for(var a=new Uint8Array(n.length),s=0,u=n.length;s<u;s++)a[s]=n.charCodeAt(s);return i.default(a)},o.toBuffer=function(){var t,e=this.getMimeType();if(e){var i=this.canvas.toDataURL(e,this.quality);t=this.uriToBuffer(i)}return t},o.getMimeType=function(){return e&&r||(e=this.figureMimeType()),e},t}();o.atob=void 0,module.exports=o;
 
 
-},{"atob":5,"typedarray-to-buffer":111}],15:[function(_dereq_,module,exports){
+},{"typedarray-to-buffer":109}],22:[function(_dereq_,module,exports){
 // contains, add, remove, toggle
 var indexof = _dereq_('indexof')
 
@@ -2858,7 +2863,7 @@ function isTruthy(value) {
     return !!value
 }
 
-},{"indexof":60}],16:[function(_dereq_,module,exports){
+},{"indexof":65}],23:[function(_dereq_,module,exports){
 /*
  * classList.js: Cross-browser full element.classList implementation.
  * 1.1.20150312
@@ -3100,7 +3105,7 @@ if (objCtr.defineProperty) {
 }
 
 
-},{}],17:[function(_dereq_,module,exports){
+},{}],24:[function(_dereq_,module,exports){
 
 /**
  * Expose `Emitter`.
@@ -3277,7 +3282,7 @@ Emitter.prototype.hasListeners = function(event){
   return !! this.listeners(event).length;
 };
 
-},{}],18:[function(_dereq_,module,exports){
+},{}],25:[function(_dereq_,module,exports){
 var DOCUMENT_POSITION_CONTAINED_BY = 16
 
 module.exports = contains
@@ -3292,7 +3297,7 @@ function contains(container, elem) {
     return comparison === 0 || comparison & DOCUMENT_POSITION_CONTAINED_BY
 }
 
-},{}],19:[function(_dereq_,module,exports){
+},{}],26:[function(_dereq_,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -3401,7 +3406,7 @@ function objectToString(o) {
   return Object.prototype.toString.call(o);
 }
 
-},{"buffer":11}],20:[function(_dereq_,module,exports){
+},{"buffer":18}],27:[function(_dereq_,module,exports){
 //     create-error.js 0.3.1
 //     (c) 2013 Tim Griesser
 //     This source may be freely distributed under the MIT license.
@@ -3521,7 +3526,7 @@ function clone(target) {
   }
 });
 
-},{}],21:[function(_dereq_,module,exports){
+},{}],28:[function(_dereq_,module,exports){
 'use strict';
 
 var isMergeableObject = function isMergeableObject(value) {
@@ -3656,7 +3661,7 @@ var deepmerge_1 = deepmerge;
 
 module.exports = deepmerge_1;
 
-},{}],22:[function(_dereq_,module,exports){
+},{}],29:[function(_dereq_,module,exports){
 'use strict';
 
 var $defineProperty = _dereq_('es-define-property');
@@ -3714,7 +3719,7 @@ module.exports = function defineDataProperty(
 	}
 };
 
-},{"es-define-property":29,"es-errors/syntax":34,"es-errors/type":35,"gopd":49}],23:[function(_dereq_,module,exports){
+},{"es-define-property":36,"es-errors/syntax":41,"es-errors/type":42,"gopd":55}],30:[function(_dereq_,module,exports){
 'use strict';
 
 module.exports = function defined() {
@@ -3725,29 +3730,29 @@ module.exports = function defined() {
 	}
 };
 
-},{}],24:[function(_dereq_,module,exports){
-var util = _dereq_('util')
-var global = _dereq_('global')
-var EventEmitter = _dereq_('events')
+},{}],31:[function(_dereq_,module,exports){
+var inherits = _dereq_("inherits");
+var global = _dereq_("global");
+var EventEmitter = _dereq_("events");
 
 var makeDespot = function () {
   var Despot = function () {
     if (global._singletonDespotInstance) {
-      return global._singletonDespotInstance
-    } else {
-      global._singletonDespotInstance = this
-      EventEmitter.call(this)
+      return global._singletonDespotInstance;
     }
-  }
 
-  util.inherits(Despot, EventEmitter)
+    global._singletonDespotInstance = this;
+    EventEmitter.call(this);
+  };
 
-  return new Despot()
-}
+  inherits(Despot, EventEmitter);
 
-module.exports = makeDespot()
+  return new Despot();
+};
 
-},{"events":37,"global":48,"util":116}],25:[function(_dereq_,module,exports){
+module.exports = makeDespot();
+
+},{"events":44,"global":54,"inherits":66}],32:[function(_dereq_,module,exports){
 'use strict'
 
 var document = _dereq_('global/document')
@@ -3787,7 +3792,7 @@ function noopShim () {
 
 function noop () {}
 
-},{"./keys":26,"geval":46,"global/document":47}],26:[function(_dereq_,module,exports){
+},{"./keys":33,"geval":53,"global/document":34}],33:[function(_dereq_,module,exports){
 'use strict'
 
 module.exports = keys
@@ -3812,45 +3817,28 @@ function lowercaseFirst (string) {
   return string.substring(0, 1).toLowerCase() + string.substring(1)
 }
 
-},{}],27:[function(_dereq_,module,exports){
-function polyfill(window) {
-  var ElementPrototype = window.Element.prototype;
+},{}],34:[function(_dereq_,module,exports){
+(function (global){(function (){
+var topLevel = typeof global !== 'undefined' ? global :
+    typeof window !== 'undefined' ? window : {}
+var minDoc = _dereq_('min-document');
 
-  if (typeof ElementPrototype.matches !== 'function') {
-    ElementPrototype.matches = ElementPrototype.msMatchesSelector || ElementPrototype.mozMatchesSelector || ElementPrototype.webkitMatchesSelector || function matches(selector) {
-      var element = this;
-      var elements = (element.document || element.ownerDocument).querySelectorAll(selector);
-      var index = 0;
+var doccy;
 
-      while (elements[index] && elements[index] !== element) {
-        ++index;
-      }
+if (typeof document !== 'undefined') {
+    doccy = document;
+} else {
+    doccy = topLevel['__GLOBAL_DOCUMENT_CACHE@4'];
 
-      return Boolean(elements[index]);
-    };
-  }
-
-  if (typeof ElementPrototype.closest !== 'function') {
-    ElementPrototype.closest = function closest(selector) {
-      var element = this;
-
-      while (element && element.nodeType === 1) {
-        if (element.matches(selector)) {
-          return element;
-        }
-
-        element = element.parentNode;
-      }
-
-      return null;
-    };
-  }
+    if (!doccy) {
+        doccy = topLevel['__GLOBAL_DOCUMENT_CACHE@4'] = minDoc;
+    }
 }
 
-module.exports = polyfill;
+module.exports = doccy;
 
-
-},{}],28:[function(_dereq_,module,exports){
+}).call(this)}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{"min-document":16}],35:[function(_dereq_,module,exports){
 (function (process){(function (){
 var once = _dereq_('once');
 
@@ -3948,7 +3936,7 @@ var eos = function(stream, opts, callback) {
 module.exports = eos;
 
 }).call(this)}).call(this,_dereq_('_process'))
-},{"_process":79,"once":75}],29:[function(_dereq_,module,exports){
+},{"_process":79,"once":76}],36:[function(_dereq_,module,exports){
 'use strict';
 
 var GetIntrinsic = _dereq_('get-intrinsic');
@@ -3966,49 +3954,49 @@ if ($defineProperty) {
 
 module.exports = $defineProperty;
 
-},{"get-intrinsic":44}],30:[function(_dereq_,module,exports){
+},{"get-intrinsic":51}],37:[function(_dereq_,module,exports){
 'use strict';
 
 /** @type {import('./eval')} */
 module.exports = EvalError;
 
-},{}],31:[function(_dereq_,module,exports){
+},{}],38:[function(_dereq_,module,exports){
 'use strict';
 
 /** @type {import('.')} */
 module.exports = Error;
 
-},{}],32:[function(_dereq_,module,exports){
+},{}],39:[function(_dereq_,module,exports){
 'use strict';
 
 /** @type {import('./range')} */
 module.exports = RangeError;
 
-},{}],33:[function(_dereq_,module,exports){
+},{}],40:[function(_dereq_,module,exports){
 'use strict';
 
 /** @type {import('./ref')} */
 module.exports = ReferenceError;
 
-},{}],34:[function(_dereq_,module,exports){
+},{}],41:[function(_dereq_,module,exports){
 'use strict';
 
 /** @type {import('./syntax')} */
 module.exports = SyntaxError;
 
-},{}],35:[function(_dereq_,module,exports){
+},{}],42:[function(_dereq_,module,exports){
 'use strict';
 
 /** @type {import('./type')} */
 module.exports = TypeError;
 
-},{}],36:[function(_dereq_,module,exports){
+},{}],43:[function(_dereq_,module,exports){
 'use strict';
 
 /** @type {import('./uri')} */
 module.exports = URIError;
 
-},{}],37:[function(_dereq_,module,exports){
+},{}],44:[function(_dereq_,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -4507,7 +4495,7 @@ function eventTargetAgnosticAddListener(emitter, name, listener, flags) {
   }
 }
 
-},{}],38:[function(_dereq_,module,exports){
+},{}],45:[function(_dereq_,module,exports){
 module.exports = stringify
 stringify.default = stringify
 stringify.stable = deterministicStringify
@@ -4738,13 +4726,13 @@ function replaceGetterValues (replacer) {
   }
 }
 
-},{}],39:[function(_dereq_,module,exports){
+},{}],46:[function(_dereq_,module,exports){
 /**
  * filesize
  *
  * @copyright 2024 Jason Mulligan <jason.mulligan@avoidwork.com>
  * @license BSD-3-Clause
- * @version 10.1.2
+ * @version 10.1.6
  */
 'use strict';
 
@@ -4912,9 +4900,10 @@ function filesize (arg, {
 		result[0] = result[0].toString().replace(PERIOD, separator);
 	}
 
-	if (pad && Number.isInteger(result[0]) === false && round > 0) {
-		const x = separator || PERIOD,
-			tmp = result[0].toString().split(x),
+	if (pad && round > 0) {
+		const i =  result[0].toString(),
+			x = separator || ((i.match(/(\D)/g) || []).pop() || PERIOD),
+			tmp = i.toString().split(x),
 			s = tmp[1] || EMPTY,
 			l = s.length,
 			n = round - l;
@@ -4977,71 +4966,46 @@ function partial ({
 exports.filesize = filesize;
 exports.partial = partial;
 
-},{}],40:[function(_dereq_,module,exports){
-'use strict';
+},{}],47:[function(_dereq_,module,exports){
+function format(fmt) {
+  var re = /(%?)(%([jds]))/g
+    , args = Array.prototype.slice.call(arguments, 1);
+  if(args.length) {
+    fmt = fmt.replace(re, function(match, escaped, ptn, flag) {
+      var arg = args.shift();
+      switch(flag) {
+        case 's':
+          arg = '' + arg;
+          break;
+        case 'd':
+          arg = Number(arg);
+          break;
+        case 'j':
+          arg = JSON.stringify(arg);
+          break;
+      }
+      if(!escaped) {
+        return arg; 
+      }
+      args.unshift(arg);
+      return match;
+    })
+  }
 
-var isCallable = _dereq_('is-callable');
+  // arguments remain after formatting
+  if(args.length) {
+    fmt += ' ' + args.join(' ');
+  }
 
-var toStr = Object.prototype.toString;
-var hasOwnProperty = Object.prototype.hasOwnProperty;
+  // update escaped %% values
+  fmt = fmt.replace(/%{2,2}/g, '%');
 
-var forEachArray = function forEachArray(array, iterator, receiver) {
-    for (var i = 0, len = array.length; i < len; i++) {
-        if (hasOwnProperty.call(array, i)) {
-            if (receiver == null) {
-                iterator(array[i], i, array);
-            } else {
-                iterator.call(receiver, array[i], i, array);
-            }
-        }
-    }
-};
+  return '' + fmt;
+}
 
-var forEachString = function forEachString(string, iterator, receiver) {
-    for (var i = 0, len = string.length; i < len; i++) {
-        // no such thing as a sparse string.
-        if (receiver == null) {
-            iterator(string.charAt(i), i, string);
-        } else {
-            iterator.call(receiver, string.charAt(i), i, string);
-        }
-    }
-};
+module.exports = format;
 
-var forEachObject = function forEachObject(object, iterator, receiver) {
-    for (var k in object) {
-        if (hasOwnProperty.call(object, k)) {
-            if (receiver == null) {
-                iterator(object[k], k, object);
-            } else {
-                iterator.call(receiver, object[k], k, object);
-            }
-        }
-    }
-};
-
-var forEach = function forEach(list, iterator, thisArg) {
-    if (!isCallable(iterator)) {
-        throw new TypeError('iterator must be a function');
-    }
-
-    var receiver;
-    if (arguments.length >= 3) {
-        receiver = thisArg;
-    }
-
-    if (toStr.call(list) === '[object Array]') {
-        forEachArray(list, iterator, receiver);
-    } else if (typeof list === 'string') {
-        forEachString(list, iterator, receiver);
-    } else {
-        forEachObject(list, iterator, receiver);
-    }
-};
-
-module.exports = forEach;
-
-},{"is-callable":66}],41:[function(_dereq_,module,exports){
+},{}],48:[function(_dereq_,module,exports){
 'use strict';
 
 /* eslint no-invalid-this: 1 */
@@ -5127,14 +5091,14 @@ module.exports = function bind(that) {
     return bound;
 };
 
-},{}],42:[function(_dereq_,module,exports){
+},{}],49:[function(_dereq_,module,exports){
 'use strict';
 
 var implementation = _dereq_('./implementation');
 
 module.exports = Function.prototype.bind || implementation;
 
-},{"./implementation":41}],43:[function(_dereq_,module,exports){
+},{"./implementation":48}],50:[function(_dereq_,module,exports){
 "use strict";
 
 exports.__esModule = true;
@@ -5341,7 +5305,7 @@ function getFormElementValue(element, trim) {
 
 
 getFormData.getFieldData = getFieldData;
-},{}],44:[function(_dereq_,module,exports){
+},{}],51:[function(_dereq_,module,exports){
 'use strict';
 
 var undefined;
@@ -5702,7 +5666,7 @@ module.exports = function GetIntrinsic(name, allowMissing) {
 	return value;
 };
 
-},{"es-errors":31,"es-errors/eval":30,"es-errors/range":32,"es-errors/ref":33,"es-errors/syntax":34,"es-errors/type":35,"es-errors/uri":36,"function-bind":42,"has-proto":51,"has-symbols":52,"hasown":55}],45:[function(_dereq_,module,exports){
+},{"es-errors":38,"es-errors/eval":37,"es-errors/range":39,"es-errors/ref":40,"es-errors/syntax":41,"es-errors/type":42,"es-errors/uri":43,"function-bind":49,"has-proto":57,"has-symbols":58,"hasown":60}],52:[function(_dereq_,module,exports){
 module.exports = Event
 
 function Event() {
@@ -5730,7 +5694,7 @@ function Event() {
     }
 }
 
-},{}],46:[function(_dereq_,module,exports){
+},{}],53:[function(_dereq_,module,exports){
 var Event = _dereq_('./event.js')
 
 module.exports = Source
@@ -5743,28 +5707,7 @@ function Source(broadcaster) {
     return tuple.listen
 }
 
-},{"./event.js":45}],47:[function(_dereq_,module,exports){
-(function (global){(function (){
-var topLevel = typeof global !== 'undefined' ? global :
-    typeof window !== 'undefined' ? window : {}
-var minDoc = _dereq_('min-document');
-
-var doccy;
-
-if (typeof document !== 'undefined') {
-    doccy = document;
-} else {
-    doccy = topLevel['__GLOBAL_DOCUMENT_CACHE@4'];
-
-    if (!doccy) {
-        doccy = topLevel['__GLOBAL_DOCUMENT_CACHE@4'] = minDoc;
-    }
-}
-
-module.exports = doccy;
-
-}).call(this)}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"min-document":9}],48:[function(_dereq_,module,exports){
+},{"./event.js":52}],54:[function(_dereq_,module,exports){
 (function (global){(function (){
 var win;
 
@@ -5781,7 +5724,7 @@ if (typeof window !== "undefined") {
 module.exports = win;
 
 }).call(this)}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],49:[function(_dereq_,module,exports){
+},{}],55:[function(_dereq_,module,exports){
 'use strict';
 
 var GetIntrinsic = _dereq_('get-intrinsic');
@@ -5799,7 +5742,7 @@ if ($gOPD) {
 
 module.exports = $gOPD;
 
-},{"get-intrinsic":44}],50:[function(_dereq_,module,exports){
+},{"get-intrinsic":51}],56:[function(_dereq_,module,exports){
 'use strict';
 
 var $defineProperty = _dereq_('es-define-property');
@@ -5823,7 +5766,7 @@ hasPropertyDescriptors.hasArrayLengthDefineBug = function hasArrayLengthDefineBu
 
 module.exports = hasPropertyDescriptors;
 
-},{"es-define-property":29}],51:[function(_dereq_,module,exports){
+},{"es-define-property":36}],57:[function(_dereq_,module,exports){
 'use strict';
 
 var test = {
@@ -5840,7 +5783,7 @@ module.exports = function hasProto() {
 		&& !(test instanceof $Object);
 };
 
-},{}],52:[function(_dereq_,module,exports){
+},{}],58:[function(_dereq_,module,exports){
 'use strict';
 
 var origSymbol = typeof Symbol !== 'undefined' && Symbol;
@@ -5855,7 +5798,7 @@ module.exports = function hasNativeSymbols() {
 	return hasSymbolSham();
 };
 
-},{"./shams":53}],53:[function(_dereq_,module,exports){
+},{"./shams":59}],59:[function(_dereq_,module,exports){
 'use strict';
 
 /* eslint complexity: [2, 18], max-statements: [2, 33] */
@@ -5899,17 +5842,7 @@ module.exports = function hasSymbols() {
 	return true;
 };
 
-},{}],54:[function(_dereq_,module,exports){
-'use strict';
-
-var hasSymbols = _dereq_('has-symbols/shams');
-
-/** @type {import('.')} */
-module.exports = function hasToStringTagShams() {
-	return hasSymbols() && !!Symbol.toStringTag;
-};
-
-},{"has-symbols/shams":53}],55:[function(_dereq_,module,exports){
+},{}],60:[function(_dereq_,module,exports){
 'use strict';
 
 var call = Function.prototype.call;
@@ -5919,7 +5852,7 @@ var bind = _dereq_('function-bind');
 /** @type {import('.')} */
 module.exports = bind.call(call, $hasOwn);
 
-},{"function-bind":42}],56:[function(_dereq_,module,exports){
+},{"function-bind":49}],61:[function(_dereq_,module,exports){
 module.exports = shim
 
 function shim (element, value) {
@@ -5930,7 +5863,7 @@ function shim (element, value) {
     element.style.display = value ? 'none' : ''
 }
 
-},{}],57:[function(_dereq_,module,exports){
+},{}],62:[function(_dereq_,module,exports){
 // HumanizeDuration.js - https://git.io/j0HgmQ
 
 // @ts-check
@@ -7892,7 +7825,7 @@ function shim (element, value) {
   }
 })();
 
-},{}],58:[function(_dereq_,module,exports){
+},{}],63:[function(_dereq_,module,exports){
 var split = _dereq_('browser-split')
 var ClassList = _dereq_('class-list')
 
@@ -8054,7 +7987,7 @@ function isArray (arr) {
 
 
 
-},{"browser-split":10,"class-list":15,"html-element":9}],59:[function(_dereq_,module,exports){
+},{"browser-split":17,"class-list":22,"html-element":16}],64:[function(_dereq_,module,exports){
 /*! ieee754. BSD-3-Clause License. Feross Aboukhadijeh <https://feross.org/opensource> */
 exports.read = function (buffer, offset, isLE, mLen, nBytes) {
   var e, m
@@ -8141,7 +8074,7 @@ exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
   buffer[offset + i - d] |= s * 128
 }
 
-},{}],60:[function(_dereq_,module,exports){
+},{}],65:[function(_dereq_,module,exports){
 
 var indexOf = [].indexOf;
 
@@ -8152,7 +8085,7 @@ module.exports = function(arr, obj){
   }
   return -1;
 };
-},{}],61:[function(_dereq_,module,exports){
+},{}],66:[function(_dereq_,module,exports){
 if (typeof Object.create === 'function') {
   // implementation from standard node.js 'util' module
   module.exports = function inherits(ctor, superCtor) {
@@ -8181,7 +8114,7 @@ if (typeof Object.create === 'function') {
   }
 }
 
-},{}],62:[function(_dereq_,module,exports){
+},{}],67:[function(_dereq_,module,exports){
 var containers = []; // will store container HTMLElement references
 var styleElements = []; // will store {prepend: HTMLElement, append: HTMLElement}
 
@@ -8241,7 +8174,7 @@ function createStyleElement() {
 module.exports = insertCss;
 module.exports.insertCss = insertCss;
 
-},{}],63:[function(_dereq_,module,exports){
+},{}],68:[function(_dereq_,module,exports){
 /*! npm.im/intervalometer */
 'use strict';
 
@@ -8285,7 +8218,7 @@ function timerIntervalometer(cb, delay) {
 exports.intervalometer = intervalometer;
 exports.frameIntervalometer = frameIntervalometer;
 exports.timerIntervalometer = timerIntervalometer;
-},{}],64:[function(_dereq_,module,exports){
+},{}],69:[function(_dereq_,module,exports){
 /*! npm.im/iphone-inline-video 2.2.2 */
 'use strict';
 
@@ -8653,215 +8586,27 @@ function enableInlineVideo(video, opts) {
 
 module.exports = enableInlineVideo;
 
-},{"intervalometer":63}],65:[function(_dereq_,module,exports){
-'use strict';
-
-var hasToStringTag = _dereq_('has-tostringtag/shams')();
-var callBound = _dereq_('call-bind/callBound');
-
-var $toString = callBound('Object.prototype.toString');
-
-var isStandardArguments = function isArguments(value) {
-	if (hasToStringTag && value && typeof value === 'object' && Symbol.toStringTag in value) {
-		return false;
-	}
-	return $toString(value) === '[object Arguments]';
-};
-
-var isLegacyArguments = function isArguments(value) {
-	if (isStandardArguments(value)) {
-		return true;
-	}
-	return value !== null &&
-		typeof value === 'object' &&
-		typeof value.length === 'number' &&
-		value.length >= 0 &&
-		$toString(value) !== '[object Array]' &&
-		$toString(value.callee) === '[object Function]';
-};
-
-var supportsStandardArguments = (function () {
-	return isStandardArguments(arguments);
-}());
-
-isStandardArguments.isLegacyArguments = isLegacyArguments; // for tests
-
-module.exports = supportsStandardArguments ? isStandardArguments : isLegacyArguments;
-
-},{"call-bind/callBound":12,"has-tostringtag/shams":54}],66:[function(_dereq_,module,exports){
-'use strict';
-
-var fnToStr = Function.prototype.toString;
-var reflectApply = typeof Reflect === 'object' && Reflect !== null && Reflect.apply;
-var badArrayLike;
-var isCallableMarker;
-if (typeof reflectApply === 'function' && typeof Object.defineProperty === 'function') {
-	try {
-		badArrayLike = Object.defineProperty({}, 'length', {
-			get: function () {
-				throw isCallableMarker;
-			}
-		});
-		isCallableMarker = {};
-		// eslint-disable-next-line no-throw-literal
-		reflectApply(function () { throw 42; }, null, badArrayLike);
-	} catch (_) {
-		if (_ !== isCallableMarker) {
-			reflectApply = null;
-		}
-	}
-} else {
-	reflectApply = null;
-}
-
-var constructorRegex = /^\s*class\b/;
-var isES6ClassFn = function isES6ClassFunction(value) {
-	try {
-		var fnStr = fnToStr.call(value);
-		return constructorRegex.test(fnStr);
-	} catch (e) {
-		return false; // not a function
-	}
-};
-
-var tryFunctionObject = function tryFunctionToStr(value) {
-	try {
-		if (isES6ClassFn(value)) { return false; }
-		fnToStr.call(value);
-		return true;
-	} catch (e) {
-		return false;
-	}
-};
-var toStr = Object.prototype.toString;
-var objectClass = '[object Object]';
-var fnClass = '[object Function]';
-var genClass = '[object GeneratorFunction]';
-var ddaClass = '[object HTMLAllCollection]'; // IE 11
-var ddaClass2 = '[object HTML document.all class]';
-var ddaClass3 = '[object HTMLCollection]'; // IE 9-10
-var hasToStringTag = typeof Symbol === 'function' && !!Symbol.toStringTag; // better: use `has-tostringtag`
-
-var isIE68 = !(0 in [,]); // eslint-disable-line no-sparse-arrays, comma-spacing
-
-var isDDA = function isDocumentDotAll() { return false; };
-if (typeof document === 'object') {
-	// Firefox 3 canonicalizes DDA to undefined when it's not accessed directly
-	var all = document.all;
-	if (toStr.call(all) === toStr.call(document.all)) {
-		isDDA = function isDocumentDotAll(value) {
-			/* globals document: false */
-			// in IE 6-8, typeof document.all is "object" and it's truthy
-			if ((isIE68 || !value) && (typeof value === 'undefined' || typeof value === 'object')) {
-				try {
-					var str = toStr.call(value);
-					return (
-						str === ddaClass
-						|| str === ddaClass2
-						|| str === ddaClass3 // opera 12.16
-						|| str === objectClass // IE 6-8
-					) && value('') == null; // eslint-disable-line eqeqeq
-				} catch (e) { /**/ }
-			}
-			return false;
-		};
-	}
-}
-
-module.exports = reflectApply
-	? function isCallable(value) {
-		if (isDDA(value)) { return true; }
-		if (!value) { return false; }
-		if (typeof value !== 'function' && typeof value !== 'object') { return false; }
-		try {
-			reflectApply(value, null, badArrayLike);
-		} catch (e) {
-			if (e !== isCallableMarker) { return false; }
-		}
-		return !isES6ClassFn(value) && tryFunctionObject(value);
-	}
-	: function isCallable(value) {
-		if (isDDA(value)) { return true; }
-		if (!value) { return false; }
-		if (typeof value !== 'function' && typeof value !== 'object') { return false; }
-		if (hasToStringTag) { return tryFunctionObject(value); }
-		if (isES6ClassFn(value)) { return false; }
-		var strClass = toStr.call(value);
-		if (strClass !== fnClass && strClass !== genClass && !(/^\[object HTML/).test(strClass)) { return false; }
-		return tryFunctionObject(value);
-	};
-
-},{}],67:[function(_dereq_,module,exports){
+},{"intervalometer":68}],70:[function(_dereq_,module,exports){
 'use strict';
 
 module.exports = Number.isFinite || function (value) {
 	return !(typeof value !== 'number' || value !== value || value === Infinity || value === -Infinity);
 };
 
-},{}],68:[function(_dereq_,module,exports){
-'use strict';
-
-var toStr = Object.prototype.toString;
-var fnToStr = Function.prototype.toString;
-var isFnRegex = /^\s*(?:function)?\*/;
-var hasToStringTag = _dereq_('has-tostringtag/shams')();
-var getProto = Object.getPrototypeOf;
-var getGeneratorFunc = function () { // eslint-disable-line consistent-return
-	if (!hasToStringTag) {
-		return false;
-	}
-	try {
-		return Function('return function*() {}')();
-	} catch (e) {
-	}
-};
-var GeneratorFunction;
-
-module.exports = function isGeneratorFunction(fn) {
-	if (typeof fn !== 'function') {
-		return false;
-	}
-	if (isFnRegex.test(fnToStr.call(fn))) {
-		return true;
-	}
-	if (!hasToStringTag) {
-		var str = toStr.call(fn);
-		return str === '[object GeneratorFunction]';
-	}
-	if (!getProto) {
-		return false;
-	}
-	if (typeof GeneratorFunction === 'undefined') {
-		var generatorFunc = getGeneratorFunc();
-		GeneratorFunction = generatorFunc ? getProto(generatorFunc) : false;
-	}
-	return getProto(fn) === GeneratorFunction;
-};
-
-},{"has-tostringtag/shams":54}],69:[function(_dereq_,module,exports){
+},{}],71:[function(_dereq_,module,exports){
 module.exports = isPowerOfTwo
 
 function isPowerOfTwo(n) {
   return n !== 0 && (n & (n - 1)) === 0
 }
-},{}],70:[function(_dereq_,module,exports){
-'use strict';
-
-var whichTypedArray = _dereq_('which-typed-array');
-
-/** @type {import('.')} */
-module.exports = function isTypedArray(value) {
-	return !!whichTypedArray(value);
-};
-
-},{"which-typed-array":121}],71:[function(_dereq_,module,exports){
+},{}],72:[function(_dereq_,module,exports){
 var toString = {}.toString;
 
 module.exports = Array.isArray || function (arr) {
   return toString.call(arr) == '[object Array]';
 };
 
-},{}],72:[function(_dereq_,module,exports){
+},{}],73:[function(_dereq_,module,exports){
 /**
  * Copyright 2013-2014 Facebook, Inc.
  *
@@ -8916,7 +8661,7 @@ var keyMirror = function(obj) {
 
 module.exports = keyMirror;
 
-},{}],73:[function(_dereq_,module,exports){
+},{}],74:[function(_dereq_,module,exports){
 'use strict';
 var numberIsFinite = _dereq_('is-finite');
 
@@ -8924,7 +8669,7 @@ module.exports = Number.isInteger || function (x) {
 	return numberIsFinite(x) && Math.floor(x) === x;
 };
 
-},{"is-finite":67}],74:[function(_dereq_,module,exports){
+},{"is-finite":70}],75:[function(_dereq_,module,exports){
 (function (global){(function (){
 var hasMap = typeof Map === 'function' && Map.prototype;
 var mapSizeDescriptor = Object.getOwnPropertyDescriptor && hasMap ? Object.getOwnPropertyDescriptor(Map.prototype, 'size') : null;
@@ -9455,7 +9200,7 @@ function arrObjKeys(obj, inspect) {
 }
 
 }).call(this)}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./util.inspect":9}],75:[function(_dereq_,module,exports){
+},{"./util.inspect":16}],76:[function(_dereq_,module,exports){
 var wrappy = _dereq_('wrappy')
 module.exports = wrappy(once)
 module.exports.strict = wrappy(onceStrict)
@@ -9499,7 +9244,7 @@ function onceStrict (fn) {
   return f
 }
 
-},{"wrappy":122}],76:[function(_dereq_,module,exports){
+},{"wrappy":115}],77:[function(_dereq_,module,exports){
 (function (process){(function (){
 // Generated by CoffeeScript 1.12.2
 (function() {
@@ -9539,25 +9284,7 @@ function onceStrict (fn) {
 
 
 }).call(this)}).call(this,_dereq_('_process'))
-},{"_process":79}],77:[function(_dereq_,module,exports){
-'use strict';
-
-/** @type {import('.')} */
-module.exports = [
-	'Float32Array',
-	'Float64Array',
-	'Int8Array',
-	'Int16Array',
-	'Int32Array',
-	'Uint8Array',
-	'Uint8ClampedArray',
-	'Uint16Array',
-	'Uint32Array',
-	'BigInt64Array',
-	'BigUint64Array'
-];
-
-},{}],78:[function(_dereq_,module,exports){
+},{"_process":79}],78:[function(_dereq_,module,exports){
 (function (process){(function (){
 'use strict';
 
@@ -9840,20 +9567,24 @@ var isArray = Array.isArray;
 
 var defaults = {
     allowDots: false,
+    allowEmptyArrays: false,
     allowPrototypes: false,
     allowSparse: false,
     arrayLimit: 20,
     charset: 'utf-8',
     charsetSentinel: false,
     comma: false,
+    decodeDotInKeys: false,
     decoder: utils.decode,
     delimiter: '&',
     depth: 5,
+    duplicates: 'combine',
     ignoreQueryPrefix: false,
     interpretNumericEntities: false,
     parameterLimit: 1000,
     parseArrays: true,
     plainObjects: false,
+    strictDepth: false,
     strictNullHandling: false
 };
 
@@ -9882,8 +9613,10 @@ var isoSentinel = 'utf8=%26%2310003%3B'; // encodeURIComponent('&#10003;')
 var charsetSentinel = 'utf8=%E2%9C%93'; // encodeURIComponent('✓')
 
 var parseValues = function parseQueryStringValues(str, options) {
-    var obj = {};
+    var obj = { __proto__: null };
+
     var cleanStr = options.ignoreQueryPrefix ? str.replace(/^\?/, '') : str;
+    cleanStr = cleanStr.replace(/%5B/gi, '[').replace(/%5D/gi, ']');
     var limit = options.parameterLimit === Infinity ? undefined : options.parameterLimit;
     var parts = cleanStr.split(options.delimiter, limit);
     var skipIndex = -1; // Keep track of where the utf8 sentinel was found
@@ -9935,9 +9668,10 @@ var parseValues = function parseQueryStringValues(str, options) {
             val = isArray(val) ? [val] : val;
         }
 
-        if (has.call(obj, key)) {
+        var existing = has.call(obj, key);
+        if (existing && options.duplicates === 'combine') {
             obj[key] = utils.combine(obj[key], val);
-        } else {
+        } else if (!existing || options.duplicates === 'last') {
             obj[key] = val;
         }
     }
@@ -9953,24 +9687,27 @@ var parseObject = function (chain, val, options, valuesParsed) {
         var root = chain[i];
 
         if (root === '[]' && options.parseArrays) {
-            obj = [].concat(leaf);
+            obj = options.allowEmptyArrays && (leaf === '' || (options.strictNullHandling && leaf === null))
+                ? []
+                : [].concat(leaf);
         } else {
             obj = options.plainObjects ? Object.create(null) : {};
             var cleanRoot = root.charAt(0) === '[' && root.charAt(root.length - 1) === ']' ? root.slice(1, -1) : root;
-            var index = parseInt(cleanRoot, 10);
-            if (!options.parseArrays && cleanRoot === '') {
+            var decodedRoot = options.decodeDotInKeys ? cleanRoot.replace(/%2E/g, '.') : cleanRoot;
+            var index = parseInt(decodedRoot, 10);
+            if (!options.parseArrays && decodedRoot === '') {
                 obj = { 0: leaf };
             } else if (
                 !isNaN(index)
-                && root !== cleanRoot
-                && String(index) === cleanRoot
+                && root !== decodedRoot
+                && String(index) === decodedRoot
                 && index >= 0
                 && (options.parseArrays && index <= options.arrayLimit)
             ) {
                 obj = [];
                 obj[index] = leaf;
-            } else if (cleanRoot !== '__proto__') {
-                obj[cleanRoot] = leaf;
+            } else if (decodedRoot !== '__proto__') {
+                obj[decodedRoot] = leaf;
             }
         }
 
@@ -10025,9 +9762,12 @@ var parseKeys = function parseQueryStringKeys(givenKey, val, options, valuesPars
         keys.push(segment[1]);
     }
 
-    // If there's a remainder, just add whatever is left
+    // If there's a remainder, check strictDepth option for throw, else just add whatever is left
 
     if (segment) {
+        if (options.strictDepth === true) {
+            throw new RangeError('Input depth exceeded depth option of ' + options.depth + ' and strictDepth is true');
+        }
         keys.push('[' + key.slice(segment.index) + ']');
     }
 
@@ -10039,7 +9779,15 @@ var normalizeParseOptions = function normalizeParseOptions(opts) {
         return defaults;
     }
 
-    if (opts.decoder !== null && opts.decoder !== undefined && typeof opts.decoder !== 'function') {
+    if (typeof opts.allowEmptyArrays !== 'undefined' && typeof opts.allowEmptyArrays !== 'boolean') {
+        throw new TypeError('`allowEmptyArrays` option can only be `true` or `false`, when provided');
+    }
+
+    if (typeof opts.decodeDotInKeys !== 'undefined' && typeof opts.decodeDotInKeys !== 'boolean') {
+        throw new TypeError('`decodeDotInKeys` option can only be `true` or `false`, when provided');
+    }
+
+    if (opts.decoder !== null && typeof opts.decoder !== 'undefined' && typeof opts.decoder !== 'function') {
         throw new TypeError('Decoder has to be a function.');
     }
 
@@ -10048,23 +9796,35 @@ var normalizeParseOptions = function normalizeParseOptions(opts) {
     }
     var charset = typeof opts.charset === 'undefined' ? defaults.charset : opts.charset;
 
+    var duplicates = typeof opts.duplicates === 'undefined' ? defaults.duplicates : opts.duplicates;
+
+    if (duplicates !== 'combine' && duplicates !== 'first' && duplicates !== 'last') {
+        throw new TypeError('The duplicates option must be either combine, first, or last');
+    }
+
+    var allowDots = typeof opts.allowDots === 'undefined' ? opts.decodeDotInKeys === true ? true : defaults.allowDots : !!opts.allowDots;
+
     return {
-        allowDots: typeof opts.allowDots === 'undefined' ? defaults.allowDots : !!opts.allowDots,
+        allowDots: allowDots,
+        allowEmptyArrays: typeof opts.allowEmptyArrays === 'boolean' ? !!opts.allowEmptyArrays : defaults.allowEmptyArrays,
         allowPrototypes: typeof opts.allowPrototypes === 'boolean' ? opts.allowPrototypes : defaults.allowPrototypes,
         allowSparse: typeof opts.allowSparse === 'boolean' ? opts.allowSparse : defaults.allowSparse,
         arrayLimit: typeof opts.arrayLimit === 'number' ? opts.arrayLimit : defaults.arrayLimit,
         charset: charset,
         charsetSentinel: typeof opts.charsetSentinel === 'boolean' ? opts.charsetSentinel : defaults.charsetSentinel,
         comma: typeof opts.comma === 'boolean' ? opts.comma : defaults.comma,
+        decodeDotInKeys: typeof opts.decodeDotInKeys === 'boolean' ? opts.decodeDotInKeys : defaults.decodeDotInKeys,
         decoder: typeof opts.decoder === 'function' ? opts.decoder : defaults.decoder,
         delimiter: typeof opts.delimiter === 'string' || utils.isRegExp(opts.delimiter) ? opts.delimiter : defaults.delimiter,
         // eslint-disable-next-line no-implicit-coercion, no-extra-parens
         depth: (typeof opts.depth === 'number' || opts.depth === false) ? +opts.depth : defaults.depth,
+        duplicates: duplicates,
         ignoreQueryPrefix: opts.ignoreQueryPrefix === true,
         interpretNumericEntities: typeof opts.interpretNumericEntities === 'boolean' ? opts.interpretNumericEntities : defaults.interpretNumericEntities,
         parameterLimit: typeof opts.parameterLimit === 'number' ? opts.parameterLimit : defaults.parameterLimit,
         parseArrays: opts.parseArrays !== false,
         plainObjects: typeof opts.plainObjects === 'boolean' ? opts.plainObjects : defaults.plainObjects,
+        strictDepth: typeof opts.strictDepth === 'boolean' ? !!opts.strictDepth : defaults.strictDepth,
         strictNullHandling: typeof opts.strictNullHandling === 'boolean' ? opts.strictNullHandling : defaults.strictNullHandling
     };
 };
@@ -10117,7 +9877,6 @@ var arrayPrefixGenerators = {
 };
 
 var isArray = Array.isArray;
-var split = String.prototype.split;
 var push = Array.prototype.push;
 var pushToArray = function (arr, valueOrArray) {
     push.apply(arr, isArray(valueOrArray) ? valueOrArray : [valueOrArray]);
@@ -10129,10 +9888,13 @@ var defaultFormat = formats['default'];
 var defaults = {
     addQueryPrefix: false,
     allowDots: false,
+    allowEmptyArrays: false,
+    arrayFormat: 'indices',
     charset: 'utf-8',
     charsetSentinel: false,
     delimiter: '&',
     encode: true,
+    encodeDotInKeys: false,
     encoder: utils.encode,
     encodeValuesOnly: false,
     format: defaultFormat,
@@ -10161,8 +9923,10 @@ var stringify = function stringify(
     prefix,
     generateArrayPrefix,
     commaRoundTrip,
+    allowEmptyArrays,
     strictNullHandling,
     skipNulls,
+    encodeDotInKeys,
     encoder,
     filter,
     sort,
@@ -10219,14 +9983,6 @@ var stringify = function stringify(
     if (isNonNullishPrimitive(obj) || utils.isBuffer(obj)) {
         if (encoder) {
             var keyValue = encodeValuesOnly ? prefix : encoder(prefix, defaults.encoder, charset, 'key', format);
-            if (generateArrayPrefix === 'comma' && encodeValuesOnly) {
-                var valuesArray = split.call(String(obj), ',');
-                var valuesJoined = '';
-                for (var i = 0; i < valuesArray.length; ++i) {
-                    valuesJoined += (i === 0 ? '' : ',') + formatter(encoder(valuesArray[i], defaults.encoder, charset, 'value', format));
-                }
-                return [formatter(keyValue) + (commaRoundTrip && isArray(obj) && valuesArray.length === 1 ? '[]' : '') + '=' + valuesJoined];
-            }
             return [formatter(keyValue) + '=' + formatter(encoder(obj, defaults.encoder, charset, 'value', format))];
         }
         return [formatter(prefix) + '=' + formatter(String(obj))];
@@ -10241,6 +9997,9 @@ var stringify = function stringify(
     var objKeys;
     if (generateArrayPrefix === 'comma' && isArray(obj)) {
         // we need to join elements in
+        if (encodeValuesOnly && encoder) {
+            obj = utils.maybeMap(obj, encoder);
+        }
         objKeys = [{ value: obj.length > 0 ? obj.join(',') || null : void undefined }];
     } else if (isArray(filter)) {
         objKeys = filter;
@@ -10249,7 +10008,13 @@ var stringify = function stringify(
         objKeys = sort ? keys.sort(sort) : keys;
     }
 
-    var adjustedPrefix = commaRoundTrip && isArray(obj) && obj.length === 1 ? prefix + '[]' : prefix;
+    var encodedPrefix = encodeDotInKeys ? prefix.replace(/\./g, '%2E') : prefix;
+
+    var adjustedPrefix = commaRoundTrip && isArray(obj) && obj.length === 1 ? encodedPrefix + '[]' : encodedPrefix;
+
+    if (allowEmptyArrays && isArray(obj) && obj.length === 0) {
+        return adjustedPrefix + '[]';
+    }
 
     for (var j = 0; j < objKeys.length; ++j) {
         var key = objKeys[j];
@@ -10259,9 +10024,10 @@ var stringify = function stringify(
             continue;
         }
 
+        var encodedKey = allowDots && encodeDotInKeys ? key.replace(/\./g, '%2E') : key;
         var keyPrefix = isArray(obj)
-            ? typeof generateArrayPrefix === 'function' ? generateArrayPrefix(adjustedPrefix, key) : adjustedPrefix
-            : adjustedPrefix + (allowDots ? '.' + key : '[' + key + ']');
+            ? typeof generateArrayPrefix === 'function' ? generateArrayPrefix(adjustedPrefix, encodedKey) : adjustedPrefix
+            : adjustedPrefix + (allowDots ? '.' + encodedKey : '[' + encodedKey + ']');
 
         sideChannel.set(object, step);
         var valueSideChannel = getSideChannel();
@@ -10271,9 +10037,11 @@ var stringify = function stringify(
             keyPrefix,
             generateArrayPrefix,
             commaRoundTrip,
+            allowEmptyArrays,
             strictNullHandling,
             skipNulls,
-            encoder,
+            encodeDotInKeys,
+            generateArrayPrefix === 'comma' && encodeValuesOnly && isArray(obj) ? null : encoder,
             filter,
             sort,
             allowDots,
@@ -10292,6 +10060,14 @@ var stringify = function stringify(
 var normalizeStringifyOptions = function normalizeStringifyOptions(opts) {
     if (!opts) {
         return defaults;
+    }
+
+    if (typeof opts.allowEmptyArrays !== 'undefined' && typeof opts.allowEmptyArrays !== 'boolean') {
+        throw new TypeError('`allowEmptyArrays` option can only be `true` or `false`, when provided');
+    }
+
+    if (typeof opts.encodeDotInKeys !== 'undefined' && typeof opts.encodeDotInKeys !== 'boolean') {
+        throw new TypeError('`encodeDotInKeys` option can only be `true` or `false`, when provided');
     }
 
     if (opts.encoder !== null && typeof opts.encoder !== 'undefined' && typeof opts.encoder !== 'function') {
@@ -10317,13 +10093,32 @@ var normalizeStringifyOptions = function normalizeStringifyOptions(opts) {
         filter = opts.filter;
     }
 
+    var arrayFormat;
+    if (opts.arrayFormat in arrayPrefixGenerators) {
+        arrayFormat = opts.arrayFormat;
+    } else if ('indices' in opts) {
+        arrayFormat = opts.indices ? 'indices' : 'repeat';
+    } else {
+        arrayFormat = defaults.arrayFormat;
+    }
+
+    if ('commaRoundTrip' in opts && typeof opts.commaRoundTrip !== 'boolean') {
+        throw new TypeError('`commaRoundTrip` must be a boolean, or absent');
+    }
+
+    var allowDots = typeof opts.allowDots === 'undefined' ? opts.encodeDotInKeys === true ? true : defaults.allowDots : !!opts.allowDots;
+
     return {
         addQueryPrefix: typeof opts.addQueryPrefix === 'boolean' ? opts.addQueryPrefix : defaults.addQueryPrefix,
-        allowDots: typeof opts.allowDots === 'undefined' ? defaults.allowDots : !!opts.allowDots,
+        allowDots: allowDots,
+        allowEmptyArrays: typeof opts.allowEmptyArrays === 'boolean' ? !!opts.allowEmptyArrays : defaults.allowEmptyArrays,
+        arrayFormat: arrayFormat,
         charset: charset,
         charsetSentinel: typeof opts.charsetSentinel === 'boolean' ? opts.charsetSentinel : defaults.charsetSentinel,
+        commaRoundTrip: opts.commaRoundTrip,
         delimiter: typeof opts.delimiter === 'undefined' ? defaults.delimiter : opts.delimiter,
         encode: typeof opts.encode === 'boolean' ? opts.encode : defaults.encode,
+        encodeDotInKeys: typeof opts.encodeDotInKeys === 'boolean' ? opts.encodeDotInKeys : defaults.encodeDotInKeys,
         encoder: typeof opts.encoder === 'function' ? opts.encoder : defaults.encoder,
         encodeValuesOnly: typeof opts.encodeValuesOnly === 'boolean' ? opts.encodeValuesOnly : defaults.encodeValuesOnly,
         filter: filter,
@@ -10357,20 +10152,8 @@ module.exports = function (object, opts) {
         return '';
     }
 
-    var arrayFormat;
-    if (opts && opts.arrayFormat in arrayPrefixGenerators) {
-        arrayFormat = opts.arrayFormat;
-    } else if (opts && 'indices' in opts) {
-        arrayFormat = opts.indices ? 'indices' : 'repeat';
-    } else {
-        arrayFormat = 'indices';
-    }
-
-    var generateArrayPrefix = arrayPrefixGenerators[arrayFormat];
-    if (opts && 'commaRoundTrip' in opts && typeof opts.commaRoundTrip !== 'boolean') {
-        throw new TypeError('`commaRoundTrip` must be a boolean, or absent');
-    }
-    var commaRoundTrip = generateArrayPrefix === 'comma' && opts && opts.commaRoundTrip;
+    var generateArrayPrefix = arrayPrefixGenerators[options.arrayFormat];
+    var commaRoundTrip = generateArrayPrefix === 'comma' && options.commaRoundTrip;
 
     if (!objKeys) {
         objKeys = Object.keys(obj);
@@ -10392,8 +10175,10 @@ module.exports = function (object, opts) {
             key,
             generateArrayPrefix,
             commaRoundTrip,
+            options.allowEmptyArrays,
             options.strictNullHandling,
             options.skipNulls,
+            options.encodeDotInKeys,
             options.encode ? options.encoder : null,
             options.filter,
             options.sort,
@@ -10423,7 +10208,7 @@ module.exports = function (object, opts) {
     return joined.length > 0 ? prefix + joined : '';
 };
 
-},{"./formats":80,"./utils":84,"side-channel":103}],84:[function(_dereq_,module,exports){
+},{"./formats":80,"./utils":84,"side-channel":101}],84:[function(_dereq_,module,exports){
 'use strict';
 
 var formats = _dereq_('./formats');
@@ -10548,6 +10333,10 @@ var decode = function (str, decoder, charset) {
     }
 };
 
+var limit = 1024;
+
+/* eslint operator-linebreak: [2, "before"] */
+
 var encode = function encode(str, defaultEncoder, charset, kind, format) {
     // This code was originally written by Brian White (mscdex) for the io.js core querystring library.
     // It has been adapted here for stricter adherence to RFC 3986
@@ -10569,45 +10358,54 @@ var encode = function encode(str, defaultEncoder, charset, kind, format) {
     }
 
     var out = '';
-    for (var i = 0; i < string.length; ++i) {
-        var c = string.charCodeAt(i);
+    for (var j = 0; j < string.length; j += limit) {
+        var segment = string.length >= limit ? string.slice(j, j + limit) : string;
+        var arr = [];
 
-        if (
-            c === 0x2D // -
-            || c === 0x2E // .
-            || c === 0x5F // _
-            || c === 0x7E // ~
-            || (c >= 0x30 && c <= 0x39) // 0-9
-            || (c >= 0x41 && c <= 0x5A) // a-z
-            || (c >= 0x61 && c <= 0x7A) // A-Z
-            || (format === formats.RFC1738 && (c === 0x28 || c === 0x29)) // ( )
-        ) {
-            out += string.charAt(i);
-            continue;
+        for (var i = 0; i < segment.length; ++i) {
+            var c = segment.charCodeAt(i);
+            if (
+                c === 0x2D // -
+                || c === 0x2E // .
+                || c === 0x5F // _
+                || c === 0x7E // ~
+                || (c >= 0x30 && c <= 0x39) // 0-9
+                || (c >= 0x41 && c <= 0x5A) // a-z
+                || (c >= 0x61 && c <= 0x7A) // A-Z
+                || (format === formats.RFC1738 && (c === 0x28 || c === 0x29)) // ( )
+            ) {
+                arr[arr.length] = segment.charAt(i);
+                continue;
+            }
+
+            if (c < 0x80) {
+                arr[arr.length] = hexTable[c];
+                continue;
+            }
+
+            if (c < 0x800) {
+                arr[arr.length] = hexTable[0xC0 | (c >> 6)]
+                    + hexTable[0x80 | (c & 0x3F)];
+                continue;
+            }
+
+            if (c < 0xD800 || c >= 0xE000) {
+                arr[arr.length] = hexTable[0xE0 | (c >> 12)]
+                    + hexTable[0x80 | ((c >> 6) & 0x3F)]
+                    + hexTable[0x80 | (c & 0x3F)];
+                continue;
+            }
+
+            i += 1;
+            c = 0x10000 + (((c & 0x3FF) << 10) | (segment.charCodeAt(i) & 0x3FF));
+
+            arr[arr.length] = hexTable[0xF0 | (c >> 18)]
+                + hexTable[0x80 | ((c >> 12) & 0x3F)]
+                + hexTable[0x80 | ((c >> 6) & 0x3F)]
+                + hexTable[0x80 | (c & 0x3F)];
         }
 
-        if (c < 0x80) {
-            out = out + hexTable[c];
-            continue;
-        }
-
-        if (c < 0x800) {
-            out = out + (hexTable[0xC0 | (c >> 6)] + hexTable[0x80 | (c & 0x3F)]);
-            continue;
-        }
-
-        if (c < 0xD800 || c >= 0xE000) {
-            out = out + (hexTable[0xE0 | (c >> 12)] + hexTable[0x80 | ((c >> 6) & 0x3F)] + hexTable[0x80 | (c & 0x3F)]);
-            continue;
-        }
-
-        i += 1;
-        c = 0x10000 + (((c & 0x3FF) << 10) | (string.charCodeAt(i) & 0x3FF));
-        /* eslint operator-linebreak: [2, "before"] */
-        out += hexTable[0xF0 | (c >> 18)]
-            + hexTable[0x80 | ((c >> 12) & 0x3F)]
-            + hexTable[0x80 | ((c >> 6) & 0x3F)]
-            + hexTable[0x80 | (c & 0x3F)];
+        out += arr.join('');
     }
 
     return out;
@@ -10756,7 +10554,7 @@ module.exports.polyfill = function(object) {
 }
 
 }).call(this)}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"performance-now":76}],86:[function(_dereq_,module,exports){
+},{"performance-now":77}],86:[function(_dereq_,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -10888,7 +10686,7 @@ Duplex.prototype._destroy = function (err, cb) {
 
   pna.nextTick(cb, err);
 };
-},{"./_stream_readable":88,"./_stream_writable":90,"core-util-is":19,"inherits":61,"process-nextick-args":78}],87:[function(_dereq_,module,exports){
+},{"./_stream_readable":88,"./_stream_writable":90,"core-util-is":26,"inherits":66,"process-nextick-args":78}],87:[function(_dereq_,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -10936,7 +10734,7 @@ function PassThrough(options) {
 PassThrough.prototype._transform = function (chunk, encoding, cb) {
   cb(null, chunk);
 };
-},{"./_stream_transform":89,"core-util-is":19,"inherits":61}],88:[function(_dereq_,module,exports){
+},{"./_stream_transform":89,"core-util-is":26,"inherits":66}],88:[function(_dereq_,module,exports){
 (function (process,global){(function (){
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -11958,7 +11756,7 @@ function indexOf(xs, x) {
   return -1;
 }
 }).call(this)}).call(this,_dereq_('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./_stream_duplex":86,"./internal/streams/BufferList":91,"./internal/streams/destroy":92,"./internal/streams/stream":93,"_process":79,"core-util-is":19,"events":37,"inherits":61,"isarray":71,"process-nextick-args":78,"safe-buffer":94,"string_decoder/":95,"util":9}],89:[function(_dereq_,module,exports){
+},{"./_stream_duplex":86,"./internal/streams/BufferList":91,"./internal/streams/destroy":92,"./internal/streams/stream":93,"_process":79,"core-util-is":26,"events":44,"inherits":66,"isarray":72,"process-nextick-args":78,"safe-buffer":94,"string_decoder/":95,"util":16}],89:[function(_dereq_,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -12173,7 +11971,7 @@ function done(stream, er, data) {
 
   return stream.push(null);
 }
-},{"./_stream_duplex":86,"core-util-is":19,"inherits":61}],90:[function(_dereq_,module,exports){
+},{"./_stream_duplex":86,"core-util-is":26,"inherits":66}],90:[function(_dereq_,module,exports){
 (function (process,global,setImmediate){(function (){
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -12861,7 +12659,7 @@ Writable.prototype._destroy = function (err, cb) {
   cb(err);
 };
 }).call(this)}).call(this,_dereq_('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},_dereq_("timers").setImmediate)
-},{"./_stream_duplex":86,"./internal/streams/destroy":92,"./internal/streams/stream":93,"_process":79,"core-util-is":19,"inherits":61,"process-nextick-args":78,"safe-buffer":94,"timers":110,"util-deprecate":113}],91:[function(_dereq_,module,exports){
+},{"./_stream_duplex":86,"./internal/streams/destroy":92,"./internal/streams/stream":93,"_process":79,"core-util-is":26,"inherits":66,"process-nextick-args":78,"safe-buffer":94,"timers":108,"util-deprecate":111}],91:[function(_dereq_,module,exports){
 'use strict';
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -12940,7 +12738,7 @@ if (util && util.inspect && util.inspect.custom) {
     return this.constructor.name + ' ' + obj;
   };
 }
-},{"safe-buffer":94,"util":9}],92:[function(_dereq_,module,exports){
+},{"safe-buffer":94,"util":16}],92:[function(_dereq_,module,exports){
 'use strict';
 
 /*<replacement>*/
@@ -13028,7 +12826,7 @@ module.exports = {
 },{"process-nextick-args":78}],93:[function(_dereq_,module,exports){
 module.exports = _dereq_('events').EventEmitter;
 
-},{"events":37}],94:[function(_dereq_,module,exports){
+},{"events":44}],94:[function(_dereq_,module,exports){
 /* eslint-disable node/no-deprecated-api */
 var buffer = _dereq_('buffer')
 var Buffer = buffer.Buffer
@@ -13092,7 +12890,7 @@ SafeBuffer.allocUnsafeSlow = function (size) {
   return buffer.SlowBuffer(size)
 }
 
-},{"buffer":11}],95:[function(_dereq_,module,exports){
+},{"buffer":18}],95:[function(_dereq_,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -13399,235 +13197,6 @@ exports.Transform = _dereq_('./lib/_stream_transform.js');
 exports.PassThrough = _dereq_('./lib/_stream_passthrough.js');
 
 },{"./lib/_stream_duplex.js":86,"./lib/_stream_passthrough.js":87,"./lib/_stream_readable.js":88,"./lib/_stream_transform.js":89,"./lib/_stream_writable.js":90}],97:[function(_dereq_,module,exports){
-'use strict';
-
-var readystate = module.exports = _dereq_('./readystate')
-  , win = (new Function('return this'))()
-  , complete = 'complete'
-  , root = true
-  , doc = win ? win.document : null
-  , html = doc ? doc.documentElement : null
-  , docReadyState = function () { return doc ? doc.readyState : null; };
-
-(function wrapper() {
-  //
-  // Bail out early if the document is already fully loaded. This means that this
-  // script is loaded after the onload event.
-  //
-
-  if (complete === docReadyState()) {
-    return readystate.change(complete);
-  }
-
-  //
-  // Use feature detection to see what kind of browser environment we're dealing
-  // with. Old versions of Internet Explorer do not support the addEventListener
-  // interface so we can also safely assume that we need to fall back to polling.
-  //
-  var modern = doc && !!doc.addEventListener
-    , prefix = modern ? '' : 'on'
-    , on = modern ? 'addEventListener' : 'attachEvent'
-    , off = modern ? 'removeEventListener' : 'detachEvent'
-    , doScroll = html ? html.doScroll : null;
-
-  if (!modern && 'function' === typeof doScroll) {
-    try { root = !win.frameElement; }
-    catch (e) {}
-
-    if (root) (function polling() {
-      try { doScroll('left'); }
-      catch (e) { return setTimeout(polling, 50); }
-
-      readystate.change('interactive');
-    }());
-  }
-
-  /**
-   * Handle the various of event listener calls.
-   *
-   * @param {Event} evt Simple DOM event.
-   * @api private
-   */
-  function change(evt) {
-    evt = evt || win.event;
-
-    if ('readystatechange' === evt.type) {
-      readystate.change(docReadyState());
-      if (complete !== docReadyState()) return;
-    }
-
-    if ('load' === evt.type) readystate.change('complete');
-    else readystate.change('interactive');
-
-    //
-    // House keeping, remove our assigned event listeners.
-    //
-    (evt.type === 'load' ? win : doc)[off](evt.type, change, false);
-  }
-
-  //
-  // Assign a shit load of event listeners so we can update our internal state.
-  //
-  doc[on](prefix +'DOMContentLoaded', change, false);
-  doc[on](prefix +'readystatechange', change, false);
-  win[on](prefix +'load', change, false);
-} ());
-
-},{"./readystate":98}],98:[function(_dereq_,module,exports){
-'use strict';
-
-/**
- * Generate a new prototype method which will the given function once the
- * desired state has been reached. The returned function accepts 2 arguments:
- *
- * - fn: The assigned function which needs to be called.
- * - context: Context/this value of the function we need to execute.
- *
- * @param {String} state The state we need to operate upon.
- * @returns {Function}
- * @api private
- */
-function generate(state) {
-  return function proxy(fn, context) {
-    var rs = this;
-
-    if (rs.is(state)) {
-      setTimeout(function () {
-        fn.call(context, rs.readyState);
-      }, 0);
-    } else {
-      if (!rs._events[state]) rs._events[state] = [];
-      rs._events[state].push({ fn: fn, context: context });
-    }
-
-    return rs;
-  };
-}
-
-/**
- * RS (readyState) instance.
- *
- * @constructor
- * @api public
- */
-function RS() {
-  this.readyState = RS.UNKNOWN;
-  this._events = {};
-}
-
-/**
- * The environment can be in different states. The following states are
- * generated:
- *
- * - ALL:         The I don't really give a fuck state.
- * - UNKNOWN:     We got an unknown readyState we should start listening for events.
- * - LOADING:     Environment is currently loading.
- * - INTERACTIVE: Environment is ready for modification.
- * - COMPLETE:    All resources have been loaded.
- *
- * Please note that the order of the `states` string/array is of vital
- * importance as it's used in the readyState check.
- *
- * @type {Number}
- * @private
- */
-RS.states = 'ALL,UNKNOWN,LOADING,INTERACTIVE,COMPLETE'.split(',');
-
-for (var s = 0, state; s < RS.states.length; s++) {
-  state = RS.states[s];
-
-  RS[state] = RS.prototype[state] = s;
-  RS.prototype[state.toLowerCase()] = generate(state);
-}
-
-/**
- * A change in the environment has been detected so we need to change our
- * readyState and call assigned event listeners and those of the previous
- * states.
- *
- * @param {Number} state The new readyState that we detected.
- * @returns {RS}
- * @api private
- */
-RS.prototype.change = function change(state) {
-  state = this.clean(state, true);
-
-  var j
-    , name
-    , i = 0
-    , listener
-    , rs = this
-    , previously = rs.readyState;
-
-  if (previously >= state) return rs;
-
-  rs.readyState = state;
-
-  for (; i < RS.states.length; i++) {
-    if (i > state) break;
-    name = RS.states[i];
-
-    if (name in rs._events) {
-      for (j = 0; j < rs._events[name].length; j++) {
-        listener = rs._events[name][j];
-        listener.fn.call(listener.context || rs, previously);
-      }
-
-      delete rs._events[name];
-    }
-  }
-
-  return rs;
-};
-
-/**
- * Check if we're currently in a given readyState.
- *
- * @param {String|Number} state The required readyState.
- * @returns {Boolean} Indication if this state has been reached.
- * @api public
- */
-RS.prototype.is = function is(state) {
-  return this.readyState >= this.clean(state, true);
-};
-
-/**
- * Transform a state to a number or toUpperCase.
- *
- * @param {Mixed} state State to transform.
- * @param {Boolean} nr Change to number.
- * @returns {Mixed}
- * @api public
- */
-RS.prototype.clean = function transform(state, nr) {
-  var type = typeof state;
-
-  if (nr) return 'number' !== type
-  ? +RS[state.toUpperCase()] || 0
-  : state;
-
-  return ('number' === type ? RS.states[state] : state).toUpperCase();
-};
-
-/**
- * Removes all event listeners. Useful when you want to unload readystatechange
- * completely so that it won't react to any events anymore. See
- * https://github.com/unshiftio/readystate/issues/8
- *
- * @returns {Function} rs so that calls can be chained.
- * @api public
- */
-RS.prototype.removeAllListeners = function removeAllListeners() {
-  this._events = {};
-  return this;
-}
-
-//
-// Expose the module.
-//
-module.exports = new RS();
-
-},{}],99:[function(_dereq_,module,exports){
 /**
  * request-frame - requestAnimationFrame & cancelAnimationFrame polyfill for optimal cross-browser development.
  * @version v1.5.3
@@ -13858,7 +13427,7 @@ return requestFrame;
 
 })));
 
-},{}],100:[function(_dereq_,module,exports){
+},{}],98:[function(_dereq_,module,exports){
 /*! safe-buffer. MIT License. Feross Aboukhadijeh <https://feross.org/opensource> */
 /* eslint-disable node/no-deprecated-api */
 var buffer = _dereq_('buffer')
@@ -13925,7 +13494,7 @@ SafeBuffer.allocUnsafeSlow = function (size) {
   return buffer.SlowBuffer(size)
 }
 
-},{"buffer":11}],101:[function(_dereq_,module,exports){
+},{"buffer":18}],99:[function(_dereq_,module,exports){
 var hasProp = Object.prototype.hasOwnProperty;
 
 function throwsMessage(err) {
@@ -13992,7 +13561,7 @@ module.exports = function(data, replacer, space) {
 
 module.exports.ensureProperties = ensureProperties;
 
-},{}],102:[function(_dereq_,module,exports){
+},{}],100:[function(_dereq_,module,exports){
 'use strict';
 
 var GetIntrinsic = _dereq_('get-intrinsic');
@@ -14036,7 +13605,7 @@ module.exports = function setFunctionLength(fn, length) {
 	return fn;
 };
 
-},{"define-data-property":22,"es-errors/type":35,"get-intrinsic":44,"gopd":49,"has-property-descriptors":50}],103:[function(_dereq_,module,exports){
+},{"define-data-property":29,"es-errors/type":42,"get-intrinsic":51,"gopd":55,"has-property-descriptors":56}],101:[function(_dereq_,module,exports){
 'use strict';
 
 var GetIntrinsic = _dereq_('get-intrinsic');
@@ -14167,7 +13736,7 @@ module.exports = function getSideChannel() {
 	return channel;
 };
 
-},{"call-bind/callBound":12,"es-errors/type":35,"get-intrinsic":44,"object-inspect":74}],104:[function(_dereq_,module,exports){
+},{"call-bind/callBound":19,"es-errors/type":42,"get-intrinsic":51,"object-inspect":75}],102:[function(_dereq_,module,exports){
 module.exports = shift
 
 function shift (stream) {
@@ -14190,7 +13759,7 @@ function getStateLength (state) {
   return state.length
 }
 
-},{}],105:[function(_dereq_,module,exports){
+},{}],103:[function(_dereq_,module,exports){
 "use strict";
 
 function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
@@ -14229,7 +13798,7 @@ Agent.prototype._setDefaults = function (request) {
 };
 module.exports = Agent;
 
-},{}],106:[function(_dereq_,module,exports){
+},{}],104:[function(_dereq_,module,exports){
 "use strict";
 
 function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
@@ -15174,7 +14743,7 @@ request.put = (url, data, fn) => {
   return request_;
 };
 
-},{"./agent-base":105,"./request-base":107,"./response-base":108,"./utils":109,"component-emitter":17,"fast-safe-stringify":38,"qs":81}],107:[function(_dereq_,module,exports){
+},{"./agent-base":103,"./request-base":105,"./response-base":106,"./utils":107,"component-emitter":24,"fast-safe-stringify":45,"qs":81}],105:[function(_dereq_,module,exports){
 (function (process){(function (){
 "use strict";
 
@@ -15915,7 +15484,7 @@ RequestBase.prototype._setTimeouts = function () {
 };
 
 }).call(this)}).call(this,_dereq_('_process'))
-},{"./utils":109,"_process":79,"semver":9}],108:[function(_dereq_,module,exports){
+},{"./utils":107,"_process":79,"semver":16}],106:[function(_dereq_,module,exports){
 "use strict";
 
 /**
@@ -16036,7 +15605,7 @@ ResponseBase.prototype._setStatusProperties = function (status) {
   this.unprocessableEntity = status === 422;
 };
 
-},{"./utils":109}],109:[function(_dereq_,module,exports){
+},{"./utils":107}],107:[function(_dereq_,module,exports){
 "use strict";
 
 function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
@@ -16160,7 +15729,7 @@ exports.mixin = (target, source) => {
   }
 };
 
-},{}],110:[function(_dereq_,module,exports){
+},{}],108:[function(_dereq_,module,exports){
 (function (setImmediate,clearImmediate){(function (){
 var nextTick = _dereq_('process/browser.js').nextTick;
 var apply = Function.prototype.apply;
@@ -16239,7 +15808,7 @@ exports.clearImmediate = typeof clearImmediate === "function" ? clearImmediate :
   delete immediateIds[id];
 };
 }).call(this)}).call(this,_dereq_("timers").setImmediate,_dereq_("timers").clearImmediate)
-},{"process/browser.js":79,"timers":110}],111:[function(_dereq_,module,exports){
+},{"process/browser.js":79,"timers":108}],109:[function(_dereq_,module,exports){
 (function (Buffer){(function (){
 /*! typedarray-to-buffer. MIT License. Feross Aboukhadijeh <https://feross.org/opensource> */
 /**
@@ -16261,7 +15830,7 @@ module.exports = function typedarrayToBuffer (arr) {
 }
 
 }).call(this)}).call(this,_dereq_("buffer").Buffer)
-},{"buffer":11}],112:[function(_dereq_,module,exports){
+},{"buffer":18}],110:[function(_dereq_,module,exports){
 /////////////////////////////////////////////////////////////////////////////////
 /* UAParser.js v1.0.38
    Copyright © 2012-2021 Faisal Salman <f@faisalman.com>
@@ -17216,7 +16785,7 @@ module.exports = function typedarrayToBuffer (arr) {
 
 })(typeof window === 'object' ? window : this);
 
-},{}],113:[function(_dereq_,module,exports){
+},{}],111:[function(_dereq_,module,exports){
 (function (global){(function (){
 
 /**
@@ -17287,1095 +16856,7 @@ function config (name) {
 }
 
 }).call(this)}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],114:[function(_dereq_,module,exports){
-module.exports = function isBuffer(arg) {
-  return arg && typeof arg === 'object'
-    && typeof arg.copy === 'function'
-    && typeof arg.fill === 'function'
-    && typeof arg.readUInt8 === 'function';
-}
-},{}],115:[function(_dereq_,module,exports){
-// Currently in sync with Node.js lib/internal/util/types.js
-// https://github.com/nodejs/node/commit/112cc7c27551254aa2b17098fb774867f05ed0d9
-
-'use strict';
-
-var isArgumentsObject = _dereq_('is-arguments');
-var isGeneratorFunction = _dereq_('is-generator-function');
-var whichTypedArray = _dereq_('which-typed-array');
-var isTypedArray = _dereq_('is-typed-array');
-
-function uncurryThis(f) {
-  return f.call.bind(f);
-}
-
-var BigIntSupported = typeof BigInt !== 'undefined';
-var SymbolSupported = typeof Symbol !== 'undefined';
-
-var ObjectToString = uncurryThis(Object.prototype.toString);
-
-var numberValue = uncurryThis(Number.prototype.valueOf);
-var stringValue = uncurryThis(String.prototype.valueOf);
-var booleanValue = uncurryThis(Boolean.prototype.valueOf);
-
-if (BigIntSupported) {
-  var bigIntValue = uncurryThis(BigInt.prototype.valueOf);
-}
-
-if (SymbolSupported) {
-  var symbolValue = uncurryThis(Symbol.prototype.valueOf);
-}
-
-function checkBoxedPrimitive(value, prototypeValueOf) {
-  if (typeof value !== 'object') {
-    return false;
-  }
-  try {
-    prototypeValueOf(value);
-    return true;
-  } catch(e) {
-    return false;
-  }
-}
-
-exports.isArgumentsObject = isArgumentsObject;
-exports.isGeneratorFunction = isGeneratorFunction;
-exports.isTypedArray = isTypedArray;
-
-// Taken from here and modified for better browser support
-// https://github.com/sindresorhus/p-is-promise/blob/cda35a513bda03f977ad5cde3a079d237e82d7ef/index.js
-function isPromise(input) {
-	return (
-		(
-			typeof Promise !== 'undefined' &&
-			input instanceof Promise
-		) ||
-		(
-			input !== null &&
-			typeof input === 'object' &&
-			typeof input.then === 'function' &&
-			typeof input.catch === 'function'
-		)
-	);
-}
-exports.isPromise = isPromise;
-
-function isArrayBufferView(value) {
-  if (typeof ArrayBuffer !== 'undefined' && ArrayBuffer.isView) {
-    return ArrayBuffer.isView(value);
-  }
-
-  return (
-    isTypedArray(value) ||
-    isDataView(value)
-  );
-}
-exports.isArrayBufferView = isArrayBufferView;
-
-
-function isUint8Array(value) {
-  return whichTypedArray(value) === 'Uint8Array';
-}
-exports.isUint8Array = isUint8Array;
-
-function isUint8ClampedArray(value) {
-  return whichTypedArray(value) === 'Uint8ClampedArray';
-}
-exports.isUint8ClampedArray = isUint8ClampedArray;
-
-function isUint16Array(value) {
-  return whichTypedArray(value) === 'Uint16Array';
-}
-exports.isUint16Array = isUint16Array;
-
-function isUint32Array(value) {
-  return whichTypedArray(value) === 'Uint32Array';
-}
-exports.isUint32Array = isUint32Array;
-
-function isInt8Array(value) {
-  return whichTypedArray(value) === 'Int8Array';
-}
-exports.isInt8Array = isInt8Array;
-
-function isInt16Array(value) {
-  return whichTypedArray(value) === 'Int16Array';
-}
-exports.isInt16Array = isInt16Array;
-
-function isInt32Array(value) {
-  return whichTypedArray(value) === 'Int32Array';
-}
-exports.isInt32Array = isInt32Array;
-
-function isFloat32Array(value) {
-  return whichTypedArray(value) === 'Float32Array';
-}
-exports.isFloat32Array = isFloat32Array;
-
-function isFloat64Array(value) {
-  return whichTypedArray(value) === 'Float64Array';
-}
-exports.isFloat64Array = isFloat64Array;
-
-function isBigInt64Array(value) {
-  return whichTypedArray(value) === 'BigInt64Array';
-}
-exports.isBigInt64Array = isBigInt64Array;
-
-function isBigUint64Array(value) {
-  return whichTypedArray(value) === 'BigUint64Array';
-}
-exports.isBigUint64Array = isBigUint64Array;
-
-function isMapToString(value) {
-  return ObjectToString(value) === '[object Map]';
-}
-isMapToString.working = (
-  typeof Map !== 'undefined' &&
-  isMapToString(new Map())
-);
-
-function isMap(value) {
-  if (typeof Map === 'undefined') {
-    return false;
-  }
-
-  return isMapToString.working
-    ? isMapToString(value)
-    : value instanceof Map;
-}
-exports.isMap = isMap;
-
-function isSetToString(value) {
-  return ObjectToString(value) === '[object Set]';
-}
-isSetToString.working = (
-  typeof Set !== 'undefined' &&
-  isSetToString(new Set())
-);
-function isSet(value) {
-  if (typeof Set === 'undefined') {
-    return false;
-  }
-
-  return isSetToString.working
-    ? isSetToString(value)
-    : value instanceof Set;
-}
-exports.isSet = isSet;
-
-function isWeakMapToString(value) {
-  return ObjectToString(value) === '[object WeakMap]';
-}
-isWeakMapToString.working = (
-  typeof WeakMap !== 'undefined' &&
-  isWeakMapToString(new WeakMap())
-);
-function isWeakMap(value) {
-  if (typeof WeakMap === 'undefined') {
-    return false;
-  }
-
-  return isWeakMapToString.working
-    ? isWeakMapToString(value)
-    : value instanceof WeakMap;
-}
-exports.isWeakMap = isWeakMap;
-
-function isWeakSetToString(value) {
-  return ObjectToString(value) === '[object WeakSet]';
-}
-isWeakSetToString.working = (
-  typeof WeakSet !== 'undefined' &&
-  isWeakSetToString(new WeakSet())
-);
-function isWeakSet(value) {
-  return isWeakSetToString(value);
-}
-exports.isWeakSet = isWeakSet;
-
-function isArrayBufferToString(value) {
-  return ObjectToString(value) === '[object ArrayBuffer]';
-}
-isArrayBufferToString.working = (
-  typeof ArrayBuffer !== 'undefined' &&
-  isArrayBufferToString(new ArrayBuffer())
-);
-function isArrayBuffer(value) {
-  if (typeof ArrayBuffer === 'undefined') {
-    return false;
-  }
-
-  return isArrayBufferToString.working
-    ? isArrayBufferToString(value)
-    : value instanceof ArrayBuffer;
-}
-exports.isArrayBuffer = isArrayBuffer;
-
-function isDataViewToString(value) {
-  return ObjectToString(value) === '[object DataView]';
-}
-isDataViewToString.working = (
-  typeof ArrayBuffer !== 'undefined' &&
-  typeof DataView !== 'undefined' &&
-  isDataViewToString(new DataView(new ArrayBuffer(1), 0, 1))
-);
-function isDataView(value) {
-  if (typeof DataView === 'undefined') {
-    return false;
-  }
-
-  return isDataViewToString.working
-    ? isDataViewToString(value)
-    : value instanceof DataView;
-}
-exports.isDataView = isDataView;
-
-// Store a copy of SharedArrayBuffer in case it's deleted elsewhere
-var SharedArrayBufferCopy = typeof SharedArrayBuffer !== 'undefined' ? SharedArrayBuffer : undefined;
-function isSharedArrayBufferToString(value) {
-  return ObjectToString(value) === '[object SharedArrayBuffer]';
-}
-function isSharedArrayBuffer(value) {
-  if (typeof SharedArrayBufferCopy === 'undefined') {
-    return false;
-  }
-
-  if (typeof isSharedArrayBufferToString.working === 'undefined') {
-    isSharedArrayBufferToString.working = isSharedArrayBufferToString(new SharedArrayBufferCopy());
-  }
-
-  return isSharedArrayBufferToString.working
-    ? isSharedArrayBufferToString(value)
-    : value instanceof SharedArrayBufferCopy;
-}
-exports.isSharedArrayBuffer = isSharedArrayBuffer;
-
-function isAsyncFunction(value) {
-  return ObjectToString(value) === '[object AsyncFunction]';
-}
-exports.isAsyncFunction = isAsyncFunction;
-
-function isMapIterator(value) {
-  return ObjectToString(value) === '[object Map Iterator]';
-}
-exports.isMapIterator = isMapIterator;
-
-function isSetIterator(value) {
-  return ObjectToString(value) === '[object Set Iterator]';
-}
-exports.isSetIterator = isSetIterator;
-
-function isGeneratorObject(value) {
-  return ObjectToString(value) === '[object Generator]';
-}
-exports.isGeneratorObject = isGeneratorObject;
-
-function isWebAssemblyCompiledModule(value) {
-  return ObjectToString(value) === '[object WebAssembly.Module]';
-}
-exports.isWebAssemblyCompiledModule = isWebAssemblyCompiledModule;
-
-function isNumberObject(value) {
-  return checkBoxedPrimitive(value, numberValue);
-}
-exports.isNumberObject = isNumberObject;
-
-function isStringObject(value) {
-  return checkBoxedPrimitive(value, stringValue);
-}
-exports.isStringObject = isStringObject;
-
-function isBooleanObject(value) {
-  return checkBoxedPrimitive(value, booleanValue);
-}
-exports.isBooleanObject = isBooleanObject;
-
-function isBigIntObject(value) {
-  return BigIntSupported && checkBoxedPrimitive(value, bigIntValue);
-}
-exports.isBigIntObject = isBigIntObject;
-
-function isSymbolObject(value) {
-  return SymbolSupported && checkBoxedPrimitive(value, symbolValue);
-}
-exports.isSymbolObject = isSymbolObject;
-
-function isBoxedPrimitive(value) {
-  return (
-    isNumberObject(value) ||
-    isStringObject(value) ||
-    isBooleanObject(value) ||
-    isBigIntObject(value) ||
-    isSymbolObject(value)
-  );
-}
-exports.isBoxedPrimitive = isBoxedPrimitive;
-
-function isAnyArrayBuffer(value) {
-  return typeof Uint8Array !== 'undefined' && (
-    isArrayBuffer(value) ||
-    isSharedArrayBuffer(value)
-  );
-}
-exports.isAnyArrayBuffer = isAnyArrayBuffer;
-
-['isProxy', 'isExternal', 'isModuleNamespaceObject'].forEach(function(method) {
-  Object.defineProperty(exports, method, {
-    enumerable: false,
-    value: function() {
-      throw new Error(method + ' is not supported in userland');
-    }
-  });
-});
-
-},{"is-arguments":65,"is-generator-function":68,"is-typed-array":70,"which-typed-array":121}],116:[function(_dereq_,module,exports){
-(function (process){(function (){
-// Copyright Joyent, Inc. and other Node contributors.
-//
-// Permission is hereby granted, free of charge, to any person obtaining a
-// copy of this software and associated documentation files (the
-// "Software"), to deal in the Software without restriction, including
-// without limitation the rights to use, copy, modify, merge, publish,
-// distribute, sublicense, and/or sell copies of the Software, and to permit
-// persons to whom the Software is furnished to do so, subject to the
-// following conditions:
-//
-// The above copyright notice and this permission notice shall be included
-// in all copies or substantial portions of the Software.
-//
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
-// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
-// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
-// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
-// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
-// USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-var getOwnPropertyDescriptors = Object.getOwnPropertyDescriptors ||
-  function getOwnPropertyDescriptors(obj) {
-    var keys = Object.keys(obj);
-    var descriptors = {};
-    for (var i = 0; i < keys.length; i++) {
-      descriptors[keys[i]] = Object.getOwnPropertyDescriptor(obj, keys[i]);
-    }
-    return descriptors;
-  };
-
-var formatRegExp = /%[sdj%]/g;
-exports.format = function(f) {
-  if (!isString(f)) {
-    var objects = [];
-    for (var i = 0; i < arguments.length; i++) {
-      objects.push(inspect(arguments[i]));
-    }
-    return objects.join(' ');
-  }
-
-  var i = 1;
-  var args = arguments;
-  var len = args.length;
-  var str = String(f).replace(formatRegExp, function(x) {
-    if (x === '%%') return '%';
-    if (i >= len) return x;
-    switch (x) {
-      case '%s': return String(args[i++]);
-      case '%d': return Number(args[i++]);
-      case '%j':
-        try {
-          return JSON.stringify(args[i++]);
-        } catch (_) {
-          return '[Circular]';
-        }
-      default:
-        return x;
-    }
-  });
-  for (var x = args[i]; i < len; x = args[++i]) {
-    if (isNull(x) || !isObject(x)) {
-      str += ' ' + x;
-    } else {
-      str += ' ' + inspect(x);
-    }
-  }
-  return str;
-};
-
-
-// Mark that a method should not be used.
-// Returns a modified function which warns once by default.
-// If --no-deprecation is set, then it is a no-op.
-exports.deprecate = function(fn, msg) {
-  if (typeof process !== 'undefined' && process.noDeprecation === true) {
-    return fn;
-  }
-
-  // Allow for deprecating things in the process of starting up.
-  if (typeof process === 'undefined') {
-    return function() {
-      return exports.deprecate(fn, msg).apply(this, arguments);
-    };
-  }
-
-  var warned = false;
-  function deprecated() {
-    if (!warned) {
-      if (process.throwDeprecation) {
-        throw new Error(msg);
-      } else if (process.traceDeprecation) {
-        console.trace(msg);
-      } else {
-        console.error(msg);
-      }
-      warned = true;
-    }
-    return fn.apply(this, arguments);
-  }
-
-  return deprecated;
-};
-
-
-var debugs = {};
-var debugEnvRegex = /^$/;
-
-if (process.env.NODE_DEBUG) {
-  var debugEnv = process.env.NODE_DEBUG;
-  debugEnv = debugEnv.replace(/[|\\{}()[\]^$+?.]/g, '\\$&')
-    .replace(/\*/g, '.*')
-    .replace(/,/g, '$|^')
-    .toUpperCase();
-  debugEnvRegex = new RegExp('^' + debugEnv + '$', 'i');
-}
-exports.debuglog = function(set) {
-  set = set.toUpperCase();
-  if (!debugs[set]) {
-    if (debugEnvRegex.test(set)) {
-      var pid = process.pid;
-      debugs[set] = function() {
-        var msg = exports.format.apply(exports, arguments);
-        console.error('%s %d: %s', set, pid, msg);
-      };
-    } else {
-      debugs[set] = function() {};
-    }
-  }
-  return debugs[set];
-};
-
-
-/**
- * Echos the value of a value. Trys to print the value out
- * in the best way possible given the different types.
- *
- * @param {Object} obj The object to print out.
- * @param {Object} opts Optional options object that alters the output.
- */
-/* legacy: obj, showHidden, depth, colors*/
-function inspect(obj, opts) {
-  // default options
-  var ctx = {
-    seen: [],
-    stylize: stylizeNoColor
-  };
-  // legacy...
-  if (arguments.length >= 3) ctx.depth = arguments[2];
-  if (arguments.length >= 4) ctx.colors = arguments[3];
-  if (isBoolean(opts)) {
-    // legacy...
-    ctx.showHidden = opts;
-  } else if (opts) {
-    // got an "options" object
-    exports._extend(ctx, opts);
-  }
-  // set default options
-  if (isUndefined(ctx.showHidden)) ctx.showHidden = false;
-  if (isUndefined(ctx.depth)) ctx.depth = 2;
-  if (isUndefined(ctx.colors)) ctx.colors = false;
-  if (isUndefined(ctx.customInspect)) ctx.customInspect = true;
-  if (ctx.colors) ctx.stylize = stylizeWithColor;
-  return formatValue(ctx, obj, ctx.depth);
-}
-exports.inspect = inspect;
-
-
-// http://en.wikipedia.org/wiki/ANSI_escape_code#graphics
-inspect.colors = {
-  'bold' : [1, 22],
-  'italic' : [3, 23],
-  'underline' : [4, 24],
-  'inverse' : [7, 27],
-  'white' : [37, 39],
-  'grey' : [90, 39],
-  'black' : [30, 39],
-  'blue' : [34, 39],
-  'cyan' : [36, 39],
-  'green' : [32, 39],
-  'magenta' : [35, 39],
-  'red' : [31, 39],
-  'yellow' : [33, 39]
-};
-
-// Don't use 'blue' not visible on cmd.exe
-inspect.styles = {
-  'special': 'cyan',
-  'number': 'yellow',
-  'boolean': 'yellow',
-  'undefined': 'grey',
-  'null': 'bold',
-  'string': 'green',
-  'date': 'magenta',
-  // "name": intentionally not styling
-  'regexp': 'red'
-};
-
-
-function stylizeWithColor(str, styleType) {
-  var style = inspect.styles[styleType];
-
-  if (style) {
-    return '\u001b[' + inspect.colors[style][0] + 'm' + str +
-           '\u001b[' + inspect.colors[style][1] + 'm';
-  } else {
-    return str;
-  }
-}
-
-
-function stylizeNoColor(str, styleType) {
-  return str;
-}
-
-
-function arrayToHash(array) {
-  var hash = {};
-
-  array.forEach(function(val, idx) {
-    hash[val] = true;
-  });
-
-  return hash;
-}
-
-
-function formatValue(ctx, value, recurseTimes) {
-  // Provide a hook for user-specified inspect functions.
-  // Check that value is an object with an inspect function on it
-  if (ctx.customInspect &&
-      value &&
-      isFunction(value.inspect) &&
-      // Filter out the util module, it's inspect function is special
-      value.inspect !== exports.inspect &&
-      // Also filter out any prototype objects using the circular check.
-      !(value.constructor && value.constructor.prototype === value)) {
-    var ret = value.inspect(recurseTimes, ctx);
-    if (!isString(ret)) {
-      ret = formatValue(ctx, ret, recurseTimes);
-    }
-    return ret;
-  }
-
-  // Primitive types cannot have properties
-  var primitive = formatPrimitive(ctx, value);
-  if (primitive) {
-    return primitive;
-  }
-
-  // Look up the keys of the object.
-  var keys = Object.keys(value);
-  var visibleKeys = arrayToHash(keys);
-
-  if (ctx.showHidden) {
-    keys = Object.getOwnPropertyNames(value);
-  }
-
-  // IE doesn't make error fields non-enumerable
-  // http://msdn.microsoft.com/en-us/library/ie/dww52sbt(v=vs.94).aspx
-  if (isError(value)
-      && (keys.indexOf('message') >= 0 || keys.indexOf('description') >= 0)) {
-    return formatError(value);
-  }
-
-  // Some type of object without properties can be shortcutted.
-  if (keys.length === 0) {
-    if (isFunction(value)) {
-      var name = value.name ? ': ' + value.name : '';
-      return ctx.stylize('[Function' + name + ']', 'special');
-    }
-    if (isRegExp(value)) {
-      return ctx.stylize(RegExp.prototype.toString.call(value), 'regexp');
-    }
-    if (isDate(value)) {
-      return ctx.stylize(Date.prototype.toString.call(value), 'date');
-    }
-    if (isError(value)) {
-      return formatError(value);
-    }
-  }
-
-  var base = '', array = false, braces = ['{', '}'];
-
-  // Make Array say that they are Array
-  if (isArray(value)) {
-    array = true;
-    braces = ['[', ']'];
-  }
-
-  // Make functions say that they are functions
-  if (isFunction(value)) {
-    var n = value.name ? ': ' + value.name : '';
-    base = ' [Function' + n + ']';
-  }
-
-  // Make RegExps say that they are RegExps
-  if (isRegExp(value)) {
-    base = ' ' + RegExp.prototype.toString.call(value);
-  }
-
-  // Make dates with properties first say the date
-  if (isDate(value)) {
-    base = ' ' + Date.prototype.toUTCString.call(value);
-  }
-
-  // Make error with message first say the error
-  if (isError(value)) {
-    base = ' ' + formatError(value);
-  }
-
-  if (keys.length === 0 && (!array || value.length == 0)) {
-    return braces[0] + base + braces[1];
-  }
-
-  if (recurseTimes < 0) {
-    if (isRegExp(value)) {
-      return ctx.stylize(RegExp.prototype.toString.call(value), 'regexp');
-    } else {
-      return ctx.stylize('[Object]', 'special');
-    }
-  }
-
-  ctx.seen.push(value);
-
-  var output;
-  if (array) {
-    output = formatArray(ctx, value, recurseTimes, visibleKeys, keys);
-  } else {
-    output = keys.map(function(key) {
-      return formatProperty(ctx, value, recurseTimes, visibleKeys, key, array);
-    });
-  }
-
-  ctx.seen.pop();
-
-  return reduceToSingleString(output, base, braces);
-}
-
-
-function formatPrimitive(ctx, value) {
-  if (isUndefined(value))
-    return ctx.stylize('undefined', 'undefined');
-  if (isString(value)) {
-    var simple = '\'' + JSON.stringify(value).replace(/^"|"$/g, '')
-                                             .replace(/'/g, "\\'")
-                                             .replace(/\\"/g, '"') + '\'';
-    return ctx.stylize(simple, 'string');
-  }
-  if (isNumber(value))
-    return ctx.stylize('' + value, 'number');
-  if (isBoolean(value))
-    return ctx.stylize('' + value, 'boolean');
-  // For some reason typeof null is "object", so special case here.
-  if (isNull(value))
-    return ctx.stylize('null', 'null');
-}
-
-
-function formatError(value) {
-  return '[' + Error.prototype.toString.call(value) + ']';
-}
-
-
-function formatArray(ctx, value, recurseTimes, visibleKeys, keys) {
-  var output = [];
-  for (var i = 0, l = value.length; i < l; ++i) {
-    if (hasOwnProperty(value, String(i))) {
-      output.push(formatProperty(ctx, value, recurseTimes, visibleKeys,
-          String(i), true));
-    } else {
-      output.push('');
-    }
-  }
-  keys.forEach(function(key) {
-    if (!key.match(/^\d+$/)) {
-      output.push(formatProperty(ctx, value, recurseTimes, visibleKeys,
-          key, true));
-    }
-  });
-  return output;
-}
-
-
-function formatProperty(ctx, value, recurseTimes, visibleKeys, key, array) {
-  var name, str, desc;
-  desc = Object.getOwnPropertyDescriptor(value, key) || { value: value[key] };
-  if (desc.get) {
-    if (desc.set) {
-      str = ctx.stylize('[Getter/Setter]', 'special');
-    } else {
-      str = ctx.stylize('[Getter]', 'special');
-    }
-  } else {
-    if (desc.set) {
-      str = ctx.stylize('[Setter]', 'special');
-    }
-  }
-  if (!hasOwnProperty(visibleKeys, key)) {
-    name = '[' + key + ']';
-  }
-  if (!str) {
-    if (ctx.seen.indexOf(desc.value) < 0) {
-      if (isNull(recurseTimes)) {
-        str = formatValue(ctx, desc.value, null);
-      } else {
-        str = formatValue(ctx, desc.value, recurseTimes - 1);
-      }
-      if (str.indexOf('\n') > -1) {
-        if (array) {
-          str = str.split('\n').map(function(line) {
-            return '  ' + line;
-          }).join('\n').slice(2);
-        } else {
-          str = '\n' + str.split('\n').map(function(line) {
-            return '   ' + line;
-          }).join('\n');
-        }
-      }
-    } else {
-      str = ctx.stylize('[Circular]', 'special');
-    }
-  }
-  if (isUndefined(name)) {
-    if (array && key.match(/^\d+$/)) {
-      return str;
-    }
-    name = JSON.stringify('' + key);
-    if (name.match(/^"([a-zA-Z_][a-zA-Z_0-9]*)"$/)) {
-      name = name.slice(1, -1);
-      name = ctx.stylize(name, 'name');
-    } else {
-      name = name.replace(/'/g, "\\'")
-                 .replace(/\\"/g, '"')
-                 .replace(/(^"|"$)/g, "'");
-      name = ctx.stylize(name, 'string');
-    }
-  }
-
-  return name + ': ' + str;
-}
-
-
-function reduceToSingleString(output, base, braces) {
-  var numLinesEst = 0;
-  var length = output.reduce(function(prev, cur) {
-    numLinesEst++;
-    if (cur.indexOf('\n') >= 0) numLinesEst++;
-    return prev + cur.replace(/\u001b\[\d\d?m/g, '').length + 1;
-  }, 0);
-
-  if (length > 60) {
-    return braces[0] +
-           (base === '' ? '' : base + '\n ') +
-           ' ' +
-           output.join(',\n  ') +
-           ' ' +
-           braces[1];
-  }
-
-  return braces[0] + base + ' ' + output.join(', ') + ' ' + braces[1];
-}
-
-
-// NOTE: These type checking functions intentionally don't use `instanceof`
-// because it is fragile and can be easily faked with `Object.create()`.
-exports.types = _dereq_('./support/types');
-
-function isArray(ar) {
-  return Array.isArray(ar);
-}
-exports.isArray = isArray;
-
-function isBoolean(arg) {
-  return typeof arg === 'boolean';
-}
-exports.isBoolean = isBoolean;
-
-function isNull(arg) {
-  return arg === null;
-}
-exports.isNull = isNull;
-
-function isNullOrUndefined(arg) {
-  return arg == null;
-}
-exports.isNullOrUndefined = isNullOrUndefined;
-
-function isNumber(arg) {
-  return typeof arg === 'number';
-}
-exports.isNumber = isNumber;
-
-function isString(arg) {
-  return typeof arg === 'string';
-}
-exports.isString = isString;
-
-function isSymbol(arg) {
-  return typeof arg === 'symbol';
-}
-exports.isSymbol = isSymbol;
-
-function isUndefined(arg) {
-  return arg === void 0;
-}
-exports.isUndefined = isUndefined;
-
-function isRegExp(re) {
-  return isObject(re) && objectToString(re) === '[object RegExp]';
-}
-exports.isRegExp = isRegExp;
-exports.types.isRegExp = isRegExp;
-
-function isObject(arg) {
-  return typeof arg === 'object' && arg !== null;
-}
-exports.isObject = isObject;
-
-function isDate(d) {
-  return isObject(d) && objectToString(d) === '[object Date]';
-}
-exports.isDate = isDate;
-exports.types.isDate = isDate;
-
-function isError(e) {
-  return isObject(e) &&
-      (objectToString(e) === '[object Error]' || e instanceof Error);
-}
-exports.isError = isError;
-exports.types.isNativeError = isError;
-
-function isFunction(arg) {
-  return typeof arg === 'function';
-}
-exports.isFunction = isFunction;
-
-function isPrimitive(arg) {
-  return arg === null ||
-         typeof arg === 'boolean' ||
-         typeof arg === 'number' ||
-         typeof arg === 'string' ||
-         typeof arg === 'symbol' ||  // ES6 symbol
-         typeof arg === 'undefined';
-}
-exports.isPrimitive = isPrimitive;
-
-exports.isBuffer = _dereq_('./support/isBuffer');
-
-function objectToString(o) {
-  return Object.prototype.toString.call(o);
-}
-
-
-function pad(n) {
-  return n < 10 ? '0' + n.toString(10) : n.toString(10);
-}
-
-
-var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep',
-              'Oct', 'Nov', 'Dec'];
-
-// 26 Feb 16:19:34
-function timestamp() {
-  var d = new Date();
-  var time = [pad(d.getHours()),
-              pad(d.getMinutes()),
-              pad(d.getSeconds())].join(':');
-  return [d.getDate(), months[d.getMonth()], time].join(' ');
-}
-
-
-// log is just a thin wrapper to console.log that prepends a timestamp
-exports.log = function() {
-  console.log('%s - %s', timestamp(), exports.format.apply(exports, arguments));
-};
-
-
-/**
- * Inherit the prototype methods from one constructor into another.
- *
- * The Function.prototype.inherits from lang.js rewritten as a standalone
- * function (not on Function.prototype). NOTE: If this file is to be loaded
- * during bootstrapping this function needs to be rewritten using some native
- * functions as prototype setup using normal JavaScript does not work as
- * expected during bootstrapping (see mirror.js in r114903).
- *
- * @param {function} ctor Constructor function which needs to inherit the
- *     prototype.
- * @param {function} superCtor Constructor function to inherit prototype from.
- */
-exports.inherits = _dereq_('inherits');
-
-exports._extend = function(origin, add) {
-  // Don't do anything if add isn't an object
-  if (!add || !isObject(add)) return origin;
-
-  var keys = Object.keys(add);
-  var i = keys.length;
-  while (i--) {
-    origin[keys[i]] = add[keys[i]];
-  }
-  return origin;
-};
-
-function hasOwnProperty(obj, prop) {
-  return Object.prototype.hasOwnProperty.call(obj, prop);
-}
-
-var kCustomPromisifiedSymbol = typeof Symbol !== 'undefined' ? Symbol('util.promisify.custom') : undefined;
-
-exports.promisify = function promisify(original) {
-  if (typeof original !== 'function')
-    throw new TypeError('The "original" argument must be of type Function');
-
-  if (kCustomPromisifiedSymbol && original[kCustomPromisifiedSymbol]) {
-    var fn = original[kCustomPromisifiedSymbol];
-    if (typeof fn !== 'function') {
-      throw new TypeError('The "util.promisify.custom" argument must be of type Function');
-    }
-    Object.defineProperty(fn, kCustomPromisifiedSymbol, {
-      value: fn, enumerable: false, writable: false, configurable: true
-    });
-    return fn;
-  }
-
-  function fn() {
-    var promiseResolve, promiseReject;
-    var promise = new Promise(function (resolve, reject) {
-      promiseResolve = resolve;
-      promiseReject = reject;
-    });
-
-    var args = [];
-    for (var i = 0; i < arguments.length; i++) {
-      args.push(arguments[i]);
-    }
-    args.push(function (err, value) {
-      if (err) {
-        promiseReject(err);
-      } else {
-        promiseResolve(value);
-      }
-    });
-
-    try {
-      original.apply(this, args);
-    } catch (err) {
-      promiseReject(err);
-    }
-
-    return promise;
-  }
-
-  Object.setPrototypeOf(fn, Object.getPrototypeOf(original));
-
-  if (kCustomPromisifiedSymbol) Object.defineProperty(fn, kCustomPromisifiedSymbol, {
-    value: fn, enumerable: false, writable: false, configurable: true
-  });
-  return Object.defineProperties(
-    fn,
-    getOwnPropertyDescriptors(original)
-  );
-}
-
-exports.promisify.custom = kCustomPromisifiedSymbol
-
-function callbackifyOnRejected(reason, cb) {
-  // `!reason` guard inspired by bluebird (Ref: https://goo.gl/t5IS6M).
-  // Because `null` is a special error value in callbacks which means "no error
-  // occurred", we error-wrap so the callback consumer can distinguish between
-  // "the promise rejected with null" or "the promise fulfilled with undefined".
-  if (!reason) {
-    var newReason = new Error('Promise was rejected with a falsy value');
-    newReason.reason = reason;
-    reason = newReason;
-  }
-  return cb(reason);
-}
-
-function callbackify(original) {
-  if (typeof original !== 'function') {
-    throw new TypeError('The "original" argument must be of type Function');
-  }
-
-  // We DO NOT return the promise as it gives the user a false sense that
-  // the promise is actually somehow related to the callback's execution
-  // and that the callback throwing will reject the promise.
-  function callbackified() {
-    var args = [];
-    for (var i = 0; i < arguments.length; i++) {
-      args.push(arguments[i]);
-    }
-
-    var maybeCb = args.pop();
-    if (typeof maybeCb !== 'function') {
-      throw new TypeError('The last argument must be of type Function');
-    }
-    var self = this;
-    var cb = function() {
-      return maybeCb.apply(self, arguments);
-    };
-    // In true node style we process the callback on `nextTick` with all the
-    // implications (stack, `uncaughtException`, `async_hooks`)
-    original.apply(this, args)
-      .then(function(ret) { process.nextTick(cb.bind(null, null, ret)) },
-            function(rej) { process.nextTick(callbackifyOnRejected.bind(null, rej, cb)) });
-  }
-
-  Object.setPrototypeOf(callbackified, Object.getPrototypeOf(original));
-  Object.defineProperties(callbackified,
-                          getOwnPropertyDescriptors(original));
-  return callbackified;
-}
-exports.callbackify = callbackify;
-
-}).call(this)}).call(this,_dereq_('_process'))
-},{"./support/isBuffer":114,"./support/types":115,"_process":79,"inherits":61}],117:[function(_dereq_,module,exports){
-'use strict';
-
-// FUNCTIONS //
-
-var isStr = Object.prototype.toString;
-
-
-// IS FLOAT32ARRAY //
-
-/**
-* FUNCTION: isFloat32Array( value )
-*	Validates if a value is a Float32Array.
-*
-* @param {*} value - value to validate
-* @returns {Boolean} boolean indicating if a value is a Float32Array
-*/
-function isFloat32Array( value ) {
-	return isStr.call( value ) === '[object Float32Array]';
-} // end FUNCTION isFloat32Array()
-
-
-// EXPORTS //
-
-module.exports = isFloat32Array;
-
-},{}],118:[function(_dereq_,module,exports){
+},{}],112:[function(_dereq_,module,exports){
 (function (process,Buffer){(function (){
 var stream = _dereq_('readable-stream')
 var eos = _dereq_('end-of-stream')
@@ -18613,7 +17094,7 @@ Duplexify.prototype.end = function(data, enc, cb) {
 module.exports = Duplexify
 
 }).call(this)}).call(this,_dereq_('_process'),_dereq_("buffer").Buffer)
-},{"_process":79,"buffer":11,"end-of-stream":28,"inherits":61,"readable-stream":96,"stream-shift":104}],119:[function(_dereq_,module,exports){
+},{"_process":79,"buffer":18,"end-of-stream":35,"inherits":66,"readable-stream":96,"stream-shift":102}],113:[function(_dereq_,module,exports){
 (function (process,global){(function (){
 'use strict'
 
@@ -18806,7 +17287,7 @@ function WebSocketStream(target, protocols, options) {
 }
 
 }).call(this)}).call(this,_dereq_('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"_process":79,"duplexify":118,"readable-stream":96,"safe-buffer":100,"ws":120}],120:[function(_dereq_,module,exports){
+},{"_process":79,"duplexify":112,"readable-stream":96,"safe-buffer":98,"ws":114}],114:[function(_dereq_,module,exports){
 
 var ws = null
 
@@ -18820,127 +17301,7 @@ if (typeof WebSocket !== 'undefined') {
 
 module.exports = ws
 
-},{}],121:[function(_dereq_,module,exports){
-(function (global){(function (){
-'use strict';
-
-var forEach = _dereq_('for-each');
-var availableTypedArrays = _dereq_('available-typed-arrays');
-var callBind = _dereq_('call-bind');
-var callBound = _dereq_('call-bind/callBound');
-var gOPD = _dereq_('gopd');
-
-/** @type {(O: object) => string} */
-var $toString = callBound('Object.prototype.toString');
-var hasToStringTag = _dereq_('has-tostringtag/shams')();
-
-var g = typeof globalThis === 'undefined' ? global : globalThis;
-var typedArrays = availableTypedArrays();
-
-var $slice = callBound('String.prototype.slice');
-var getPrototypeOf = Object.getPrototypeOf; // require('getprototypeof');
-
-/** @type {<T = unknown>(array: readonly T[], value: unknown) => number} */
-var $indexOf = callBound('Array.prototype.indexOf', true) || function indexOf(array, value) {
-	for (var i = 0; i < array.length; i += 1) {
-		if (array[i] === value) {
-			return i;
-		}
-	}
-	return -1;
-};
-
-/** @typedef {(receiver: import('.').TypedArray) => string | typeof Uint8Array.prototype.slice.call | typeof Uint8Array.prototype.set.call} Getter */
-/** @type {{ [k in `\$${import('.').TypedArrayName}`]?: Getter } & { __proto__: null }} */
-var cache = { __proto__: null };
-if (hasToStringTag && gOPD && getPrototypeOf) {
-	forEach(typedArrays, function (typedArray) {
-		var arr = new g[typedArray]();
-		if (Symbol.toStringTag in arr) {
-			var proto = getPrototypeOf(arr);
-			// @ts-expect-error TS won't narrow inside a closure
-			var descriptor = gOPD(proto, Symbol.toStringTag);
-			if (!descriptor) {
-				var superProto = getPrototypeOf(proto);
-				// @ts-expect-error TS won't narrow inside a closure
-				descriptor = gOPD(superProto, Symbol.toStringTag);
-			}
-			// @ts-expect-error TODO: fix
-			cache['$' + typedArray] = callBind(descriptor.get);
-		}
-	});
-} else {
-	forEach(typedArrays, function (typedArray) {
-		var arr = new g[typedArray]();
-		var fn = arr.slice || arr.set;
-		if (fn) {
-			// @ts-expect-error TODO: fix
-			cache['$' + typedArray] = callBind(fn);
-		}
-	});
-}
-
-/** @type {(value: object) => false | import('.').TypedArrayName} */
-var tryTypedArrays = function tryAllTypedArrays(value) {
-	/** @type {ReturnType<typeof tryAllTypedArrays>} */ var found = false;
-	forEach(
-		// eslint-disable-next-line no-extra-parens
-		/** @type {Record<`\$${TypedArrayName}`, Getter>} */ /** @type {any} */ (cache),
-		/** @type {(getter: Getter, name: `\$${import('.').TypedArrayName}`) => void} */
-		function (getter, typedArray) {
-			if (!found) {
-				try {
-				// @ts-expect-error TODO: fix
-					if ('$' + getter(value) === typedArray) {
-						found = $slice(typedArray, 1);
-					}
-				} catch (e) { /**/ }
-			}
-		}
-	);
-	return found;
-};
-
-/** @type {(value: object) => false | import('.').TypedArrayName} */
-var trySlices = function tryAllSlices(value) {
-	/** @type {ReturnType<typeof tryAllSlices>} */ var found = false;
-	forEach(
-		// eslint-disable-next-line no-extra-parens
-		/** @type {Record<`\$${TypedArrayName}`, Getter>} */ /** @type {any} */ (cache),
-		/** @type {(getter: typeof cache, name: `\$${import('.').TypedArrayName}`) => void} */ function (getter, name) {
-			if (!found) {
-				try {
-					// @ts-expect-error TODO: fix
-					getter(value);
-					found = $slice(name, 1);
-				} catch (e) { /**/ }
-			}
-		}
-	);
-	return found;
-};
-
-/** @type {import('.')} */
-module.exports = function whichTypedArray(value) {
-	if (!value || typeof value !== 'object') { return false; }
-	if (!hasToStringTag) {
-		/** @type {string} */
-		var tag = $slice($toString(value), 8, -1);
-		if ($indexOf(typedArrays, tag) > -1) {
-			return tag;
-		}
-		if (tag !== 'Object') {
-			return false;
-		}
-		// node < 0.6 hits here on real Typed Arrays
-		return trySlices(value);
-	}
-	if (!gOPD) { return null; } // unknown engine
-	return tryTypedArrays(value);
-};
-
-}).call(this)}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"available-typed-arrays":7,"call-bind":13,"call-bind/callBound":12,"for-each":40,"gopd":49,"has-tostringtag/shams":54}],122:[function(_dereq_,module,exports){
+},{}],115:[function(_dereq_,module,exports){
 // Returns a wrapper function that returns a wrapped callback
 // The wrapper function should do some stuff, and return a
 // presumably different callback function.
@@ -18975,45 +17336,11 @@ function wrappy (fn, cb) {
   }
 }
 
-},{}],123:[function(_dereq_,module,exports){
+},{}],116:[function(_dereq_,module,exports){
 module.exports={
   "name": "videomail-client",
-  "version": "8.1.1",
+  "version": "9.3.0",
   "description": "A wicked npm package to record videos directly in the browser, wohooo!",
-  "author": "Michael Heuberger <michael.heuberger@binarykitchen.com>",
-  "contributors": [
-    {
-      "name": "Michael Heuberger",
-      "email": "michael.heuberger@binarykitchen.com"
-    }
-  ],
-  "homepage": "https://videomail.io",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/binarykitchen/videomail-client.git"
-  },
-  "license": "CC0-1.0",
-  "readmeFilename": "README.md",
-  "module": "src/js/index.js",
-  "main": "prototype/js/videomail-client.js",
-  "scripts": {
-    "build": "gulp build",
-    "clean": "rm -rf node_modules && rm -rf package-lock.json",
-    "test": "gulp test",
-    "watch": "NODE_NO_HTTP2=1 gulp watch",
-    "audit": "npx audit-ci --config audit-ci.json",
-    "patch": "./env/dev/release.sh --importance=patch",
-    "minor": "./env/dev/release.sh --importance=minor",
-    "major": "./env/dev/release.sh --importance=major",
-    "lint": "eslint --color ./src ./test ./gulpfile.js",
-    "lint:fix": "npm --silent run lint -- --fix",
-    "prettier": "prettier --check ./src ./test ./prototype/*.html gulpfile.js",
-    "prettier:fix": "prettier --write ./src ./test ./prototype/*.html gulpfile.js"
-  },
-  "engines": {
-    "node": ">=20.5.1",
-    "npm": ">=9.8.0"
-  },
   "keywords": [
     "webcam",
     "video",
@@ -19023,32 +17350,61 @@ module.exports={
     "audio",
     "recorder"
   ],
+  "homepage": "https://videomail.io",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/binarykitchen/videomail-client.git"
+  },
+  "license": "CC0-1.0",
+  "author": "Michael Heuberger <michael.heuberger@binarykitchen.com>",
+  "contributors": [
+    {
+      "name": "Michael Heuberger",
+      "email": "michael.heuberger@binarykitchen.com"
+    }
+  ],
+  "main": "prototype/js/videomail-client.js",
+  "scripts": {
+    "audit": "npx audit-ci --config audit-ci.json",
+    "build": "gulp build",
+    "clean": "rm -rf node_modules && rm -rf package-lock.json",
+    "lint": "eslint --color ./src ./test ./gulpfile.js",
+    "lint:fix": "npm --silent run lint -- --fix",
+    "major": "./env/dev/release.sh --importance=major",
+    "minor": "./env/dev/release.sh --importance=minor",
+    "patch": "./env/dev/release.sh --importance=patch",
+    "prettier": "prettier --check ./src ./test ./prototype/*.html gulpfile.js",
+    "prettier:fix": "prettier --write ./src ./test ./prototype/*.html gulpfile.js",
+    "test": "gulp test",
+    "watch": "NODE_NO_HTTP2=1 gulp watch"
+  },
+  "prettier": "./prettier.config.cjs",
   "dependencies": {
-    "@babel/core": "7.24.7",
+    "@babel/core": "7.25.2",
     "add-eventlistener-with-options": "1.25.5",
     "animitter": "3.0.0",
-    "audio-sample": "3.0.1",
-    "canvas-to-buffer": "3.0.1",
+    "audio-sample": "4.1.0",
+    "canvas-to-buffer": "4.1.0",
     "classlist.js": "1.1.20150312",
     "contains": "0.1.1",
-    "core-js": "3.37.1",
+    "core-js": "3.38.1",
     "create-error": "0.3.1",
     "deepmerge": "4.3.1",
     "defined": "1.0.1",
-    "despot": "1.1.3",
+    "despot": "2.1.0",
     "document-visibility": "1.0.1",
-    "element-closest": "3.0.2",
-    "filesize": "10.1.2",
+    "filesize": "10.1.6",
+    "format-util": "1.0.5",
     "get-form-data": "3.0.0",
     "hidden": "1.1.1",
     "humanize-duration": "3.32.1",
     "hyperscript": "2.0.2",
+    "inherits": "2.0.4",
     "insert-css": "2.0.0",
     "iphone-inline-video": "2.2.2",
     "is-power-of-two": "1.0.0",
     "keymirror": "0.1.1",
     "number-is-integer": "2.0.0",
-    "readystate": "0.4.1",
     "request-frame": "1.5.3",
     "safe-json-stringify": "1.2.0",
     "superagent": "8.1.2",
@@ -19056,20 +17412,20 @@ module.exports={
     "websocket-stream": "5.5.2"
   },
   "devDependencies": {
-    "@babel/eslint-parser": "7.24.7",
-    "@babel/plugin-transform-runtime": "7.24.7",
-    "@babel/preset-env": "7.24.7",
-    "audit-ci": "6.6.1",
-    "autoprefixer": "10.4.19",
+    "@babel/eslint-parser": "7.25.1",
+    "@babel/plugin-transform-runtime": "7.25.4",
+    "@babel/preset-env": "7.25.4",
+    "audit-ci": "7.1.0",
+    "autoprefixer": "10.4.20",
     "babelify": "10.0.0",
-    "body-parser": "1.20.2",
+    "body-parser": "1.20.3",
     "browserify": "17.0.0",
     "connect-send-json": "1.0.0",
     "cssnano": "6.0.5",
     "del": "6.1.1",
     "eslint": "8.57.0",
     "eslint-config-prettier": "9.1.0",
-    "eslint-plugin-import": "2.29.1",
+    "eslint-plugin-import": "2.30.0",
     "eslint-plugin-node": "11.1.0",
     "eslint-plugin-promise": "6.2.0",
     "fancy-log": "2.0.0",
@@ -19089,11 +17445,14 @@ module.exports={
     "gulp-sourcemaps": "3.0.0",
     "gulp-stylus": "3.0.1",
     "gulp-terser": "2.1.0",
-    "gulp-todo": "7.1.1",
     "minimist": "1.2.8",
     "nib": "1.2.0",
-    "postcss": "8.4.39",
-    "prettier": "3.3.2",
+    "postcss": "8.4.45",
+    "prettier": "3.3.3",
+    "prettier-plugin-curly": "0.2.2",
+    "prettier-plugin-organize-imports": "4.0.0",
+    "prettier-plugin-packagejson": "2.5.2",
+    "prettier-plugin-sh": "0.14.0",
     "router": "1.3.8",
     "tape": "5.8.1",
     "tape-catch": "1.0.6",
@@ -19101,10 +17460,15 @@ module.exports={
     "vinyl-buffer": "1.0.1",
     "vinyl-source-stream": "2.0.0",
     "watchify": "4.0.0"
-  }
+  },
+  "engines": {
+    "node": ">=20.16.0",
+    "npm": ">=10.8.1"
+  },
+  "readmeFilename": "README.md"
 }
 
-},{}],124:[function(_dereq_,module,exports){
+},{}],117:[function(_dereq_,module,exports){
 "use strict";
 
 var _interopRequireDefault = _dereq_("@babel/runtime/helpers/interopRequireDefault");
@@ -19113,32 +17477,30 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 var _deepmerge = _interopRequireDefault(_dereq_("deepmerge"));
-var _readystate = _interopRequireDefault(_dereq_("readystate"));
-var _util = _interopRequireDefault(_dereq_("util"));
-var _options = _interopRequireDefault(_dereq_("./options"));
+var _inherits = _interopRequireDefault(_dereq_("inherits"));
 var _constants = _interopRequireDefault(_dereq_("./constants"));
 var _events = _interopRequireDefault(_dereq_("./events"));
+var _options = _interopRequireDefault(_dereq_("./options"));
+var _resource = _interopRequireDefault(_dereq_("./resource"));
+var _browser = _interopRequireDefault(_dereq_("./util/browser"));
 var _collectLogger = _interopRequireDefault(_dereq_("./util/collectLogger"));
 var _eventEmitter = _interopRequireDefault(_dereq_("./util/eventEmitter"));
 var _container = _interopRequireDefault(_dereq_("./wrappers/container"));
-var _replay = _interopRequireDefault(_dereq_("./wrappers/visuals/replay"));
-var _optionsWrapper = _interopRequireDefault(_dereq_("./wrappers/optionsWrapper"));
-var _browser = _interopRequireDefault(_dereq_("./util/browser"));
-var _resource = _interopRequireDefault(_dereq_("./resource"));
+var _addOptionsFunctions = _interopRequireDefault(_dereq_("./util/addOptionsFunctions"));
 var collectLogger;
 var browser;
 function adjustOptions() {
   var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
   var localOptions = (0, _deepmerge.default)(_options.default, options, {
-    arrayMerge: function arrayMerge(destination, source) {
+    arrayMerge: function arrayMerge(_destination, source) {
       return source;
     }
   });
-  collectLogger = collectLogger || new _collectLogger.default(localOptions);
+  collectLogger || (collectLogger = new _collectLogger.default(localOptions));
   localOptions.logger = collectLogger;
   localOptions.debug = localOptions.logger.debug;
-  _optionsWrapper.default.addFunctions(localOptions);
-  return localOptions;
+  var localOptionsWithFunctions = (0, _addOptionsFunctions.default)(localOptions);
+  return localOptionsWithFunctions;
 }
 function getBrowser(localOptions) {
   if (!browser) {
@@ -19150,83 +17512,52 @@ var VideomailClient = function VideomailClient(options) {
   var localOptions = adjustOptions(options);
   var container = new _container.default(localOptions);
   var debug = localOptions.debug;
-  var replay;
-  _eventEmitter.default.call(this, localOptions, 'VideomailClient');
-
-  // expose all possible events
   this.events = _events.default;
-  function build() {
+  _eventEmitter.default.call(this, localOptions, "VideomailClient");
+  this.build = function () {
     var building = false;
-    _readystate.default.interactive(function (previousState) {
-      debug('Client: interactive(),', 'previousState =', previousState + ',', '!building =', !building + ',', '!isBuilt() =', !container.isBuilt());
 
-      // it can happen that it gets called twice, i.E. when an error is thrown
-      // in the middle of the build() fn
-      if (!building && !container.isBuilt()) {
-        building = true;
-        container.build();
-        building = false;
-      }
-    });
-  }
-  this.show = function () {
-    if (container.isBuilt()) {
-      container.show();
-    } else {
-      this.once(_events.default.BUILT, container.show);
+    /*
+     * it can happen that it gets called twice, i.E. when an error is thrown
+     * in the middle of the build() fn
+     */
+    if (!building && !container.isBuilt()) {
+      debug("Client: build()");
+      building = true;
+      container.build();
+      building = false;
     }
   };
-
-  // automatically adds a <video> element inside the given parentElement and loads
-  // it with the videomail
-  this.replay = function (videomail, parentElement) {
-    function buildReplay() {
-      if (typeof parentElement === 'string') {
-        parentElement = document.getElementById(parentElement);
-      }
-      if (!parentElement) {
-        if (!container.isBuilt()) {
-          // this will try build all over again
-          container.build();
-        }
-        if (!container.hasElement()) {
-          // if container.setElement() failed too, then complain
-          _readystate.default.removeAllListeners();
-          throw new Error('Unable to replay video without a container nor parent element.');
-        }
-      } else {
-        if (container.isOutsideElementOf(parentElement)) {
-          replay = new _replay.default(parentElement, localOptions);
-          replay.build();
-        }
-      }
-      if (!replay) {
-        replay = container.getReplay();
-      }
-      if (!parentElement) {
-        parentElement = replay.getParentElement();
-      }
-      if (videomail) {
-        videomail = container.addPlayerDimensions(videomail, parentElement);
-      }
-      if (container.isOutsideElementOf(parentElement)) {
-        // replay element must be outside of the container
-        container.hideForm({
-          deep: true
-        });
-      } else {
-        container.loadForm(videomail);
-      }
-
-      // slight delay needed to avoid HTTP 416 errors (request range unavailable)
-      setTimeout(function () {
-        replay.setVideomail(videomail);
-        container.showReplayOnly();
-      }, 10e2); // not sure, but probably can be reduced a bit
+  this.show = function () {
+    if (!container.isBuilt()) {
+      this.build();
     }
-    _readystate.default.interactive(buildReplay);
+    container.show();
+  };
+
+  /*
+   * Automatically adds a <video> element inside the given parentElement and
+   * loads it with the videomail
+   */
+  this.replay = function (videomail, replayParentElement) {
+    if (!container.isBuilt()) {
+      container.build(true, replayParentElement);
+    }
+    if (videomail) {
+      videomail = container.addPlayerDimensions(videomail);
+    }
+    container.buildForm();
+    container.loadForm(videomail);
+
+    // Wait until ready to avoid HTTP 416 errors (request range unavailable)
+    this.once(_events.default.REPLAY_SHOWN, function () {
+      container.showReplayOnly();
+    });
+    var replay = container.getReplay();
+    replay.setVideomail(videomail);
   };
   this.startOver = function (params) {
+    var replay = container.getReplay();
     if (replay) {
       replay.hide();
       replay.reset();
@@ -19234,14 +17565,28 @@ var VideomailClient = function VideomailClient(options) {
     container.startOver(params);
   };
   this.unload = function (e) {
-    _readystate.default.removeAllListeners();
+    this.removeAllListeners();
     container.unload(e);
   };
   this.hide = function () {
     container.hide();
   };
-  this.get = function (alias, cb) {
-    new _resource.default(localOptions).get(alias, function (err, videomail) {
+  this.getByAlias = function (alias, cb) {
+    var resource = new _resource.default(localOptions);
+    resource.getByAlias(alias, function (err, videomail) {
+      if (err) {
+        cb(err);
+      } else {
+        cb(null, container.addPlayerDimensions(videomail));
+      }
+    });
+  };
+
+  // Shim, backward compat
+  this.get = this.getByAlias;
+  this.getByKey = function (key, cb) {
+    var resource = new _resource.default(localOptions);
+    resource.getByKey(key, function (err, videomail) {
       if (err) {
         cb(err);
       } else {
@@ -19253,9 +17598,12 @@ var VideomailClient = function VideomailClient(options) {
     return getBrowser(localOptions).canRecord();
   };
 
-  // return true when a video has been recorded but is not sent yet
+  // Returns true when a video has been recorded but is not submitted yet
   this.isDirty = function () {
     return container.isDirty();
+  };
+  this.isBuilt = function () {
+    return container.isBuilt();
   };
   this.isRecording = function () {
     return container.isRecording();
@@ -19268,18 +17616,17 @@ var VideomailClient = function VideomailClient(options) {
       return localOptions.logger.getLines();
     }
   };
-  build();
 };
-_util.default.inherits(VideomailClient, _eventEmitter.default);
+(0, _inherits.default)(VideomailClient, _eventEmitter.default);
 Object.keys(_constants.default.public).forEach(function (name) {
   VideomailClient[name] = _constants.default.public[name];
 });
 
 // just another convenient thing
-VideomailClient.events = _events.default;
+VideomailClient.Events = _events.default;
 var _default = exports.default = VideomailClient;
 
-},{"./constants":125,"./events":126,"./options":127,"./resource":128,"./util/browser":130,"./util/collectLogger":131,"./util/eventEmitter":132,"./wrappers/container":139,"./wrappers/optionsWrapper":142,"./wrappers/visuals/replay":152,"@babel/runtime/helpers/interopRequireDefault":1,"deepmerge":21,"readystate":97,"util":116}],125:[function(_dereq_,module,exports){
+},{"./constants":118,"./events":119,"./options":120,"./resource":121,"./util/addOptionsFunctions":122,"./util/browser":124,"./util/collectLogger":125,"./util/eventEmitter":126,"./wrappers/container":133,"@babel/runtime/helpers/interopRequireDefault":4,"deepmerge":28,"inherits":66}],118:[function(_dereq_,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -19288,15 +17635,15 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = void 0;
 // constants (changing these only break down functionality, so be careful)
 var _default = exports.default = {
-  SITE_NAME_LABEL: 'x-videomail-site-name',
-  VERSION_LABEL: 'videomailClientVersion',
+  SITE_NAME_LABEL: "x-videomail-site-name",
+  VERSION_LABEL: "videomailClientVersion",
   public: {
-    ENC_TYPE_APP_JSON: 'application/json',
-    ENC_TYPE_FORM: 'application/x-www-form-urlencoded'
+    ENC_TYPE_APP_JSON: "application/json",
+    ENC_TYPE_FORM: "application/x-www-form-urlencoded"
   }
 };
 
-},{}],126:[function(_dereq_,module,exports){
+},{}],119:[function(_dereq_,module,exports){
 "use strict";
 
 var _interopRequireDefault = _dereq_("@babel/runtime/helpers/interopRequireDefault");
@@ -19357,7 +17704,7 @@ var _default = exports.default = (0, _keymirror.default)({
   SUBMITTED: null,
   // form has been successfully submitted
   ERROR: null,
-  // an error occured
+  // an error occurred
   BLOCKING: null,
   // something serious, most likely an error, is shown and blocks
   SENDING_FIRST_FRAME: null,
@@ -19379,7 +17726,7 @@ var _default = exports.default = (0, _keymirror.default)({
   GOING_BACK: null,
   // switch from replaying back to recording
   STARTING_OVER: null,
-  // starting all over again back to its inital state
+  // starting all over again back to its initial state
   ASKING_WEBCAM_PERMISSION: null,
   // when about to ask for webcam permissions
   VISIBLE: null,
@@ -19387,38 +17734,37 @@ var _default = exports.default = (0, _keymirror.default)({
   INVISIBLE: null,
   // document just became INvisible
   SWITCH_FACING_MODE: null,
-  // to switch camera on mobiles between fron and back
-  SERVER_READY: null // Gets emitted when the ready command is sent through sockets from the server for recording
+  // to switch camera on mobiles between front and back
+  SERVER_READY: null,
+  // Gets emitted when the ready command is sent through sockets from the server for recording
+  UNLOADING: null
 });
 
-},{"@babel/runtime/helpers/interopRequireDefault":1,"keymirror":72}],127:[function(_dereq_,module,exports){
+},{"@babel/runtime/helpers/interopRequireDefault":4,"keymirror":73}],120:[function(_dereq_,module,exports){
 (function (process){(function (){
 "use strict";
 
+var _interopRequireDefault = _dereq_("@babel/runtime/helpers/interopRequireDefault");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
 var _package = _dereq_("../../package.json");
-var PRODUCTION = process.env.NODE_ENV === 'production';
-
-/* eslint-disable no-multi-spaces */
-/* eslint indent: ["error", 2, { "ignoreComments": true }] */
-var _default = exports.default = {
+var _addOptionsFunctions = _interopRequireDefault(_dereq_("./util/addOptionsFunctions"));
+var PRODUCTION = process.env.NODE_ENV === "production";
+var options = {
   logger: null,
   // define logging instance. leave null for default, console.
   logStackSize: 30,
   // limits the stack size of log outputs to collect
   verbose: !PRODUCTION,
   // set true to log more info
-  baseUrl: 'https://videomail.io',
-  // leave as it, permanent url to post videos
-  socketUrl: 'wss://videomail.io',
-  // leave as it, permanent url to send frames
-  siteName: 'videomail-client-demo',
+  baseUrl: "https://videomail.io",
+  // leave as it, permanent API url to post videos
+  socketUrl: "wss://videomail.io",
+  // leave as it, permanent websocket url to send frames
+  siteName: "videomail-client-demo",
   // Required for API, use https://videomail.io/whitelist
-  cache: true,
-  // reduces GET queries when loading videos
   insertCss: true,
   // inserts predefined CSS, see examples
   enablePause: true,
@@ -19435,50 +17781,56 @@ var _default = exports.default = {
   // but just want to record and replay these temporarily
   enableAutoValidation: true,
   // automatically validates all form inputs if any exist and
-  // does not /enable disable submit button after recording
-  // when something else seems invalid.
+  enableAutoUnload: true,
+  // automatically unloads VC when navigating away
+  /*
+   * does not /enable disable submit button after recording
+   * when something else seems invalid.
+   */
   enableAutoSubmission: true,
   // automatically submits the form where the videomail-client
-  // appears upon press of submit button. disable it when
-  // you want a framework to deal with the form submission itself.
+  /*
+   * appears upon press of submit button. disable it when
+   * you want a framework to deal with the form submission itself.
+   */
 
-  enctype: 'application/json',
+  enctype: "application/json",
   // enctype for the form submission. currently implemented are:
   // 'application/json' and 'application/x-www-form-urlencoded'
 
   // default CSS selectors you can alter, see examples
   selectors: {
-    containerId: 'videomail',
-    replayClass: 'replay',
-    userMediaClass: 'userMedia',
-    visualsClass: 'visuals',
+    containerId: "videomail",
+    containerClass: "videomail",
+    replayClass: "replay",
+    userMediaClass: "userMedia",
+    visualsClass: "visuals",
     buttonClass: null,
     // can also be used as a default class for all buttons
-    buttonsClass: 'buttons',
-    recordButtonClass: 'record',
-    pauseButtonClass: 'pause',
-    resumeButtonClass: 'resume',
-    previewButtonClass: 'preview',
-    recordAgainButtonClass: 'recordAgain',
-    submitButtonClass: 'submit',
-    subjectInputName: 'subject',
+    buttonsClass: "buttons",
+    recordButtonClass: "record",
+    pauseButtonClass: "pause",
+    resumeButtonClass: "resume",
+    previewButtonClass: "preview",
+    recordAgainButtonClass: "recordAgain",
+    submitButtonClass: "submit",
+    subjectInputName: "subject",
     // the form input name for subject
-    fromInputName: 'from',
+    fromInputName: "from",
     // the form input name for the from email
-    toInputName: 'to',
+    toInputName: "to",
     // the form input name for the to email
-    ccInputName: 'cc',
+    ccInputName: "cc",
     // the form input name for the cc email
-    bccInputName: 'bcc',
+    bccInputName: "bcc",
     // the form input name for the bcc email
-    bodyInputName: 'body',
+    bodyInputName: "body",
     // the form input name for the message (body)
-    sendCopyInputName: 'sendCopy',
+    sendCopyInputName: "sendCopy",
     // the form checkbox name for sending myself a copy
 
-    keyInputName: 'videomail_key',
-    parentKeyInputName: 'videomail_parent_key',
-    aliasInputName: 'videomail_alias',
+    keyInputName: "videomail_key",
+    parentKeyInputName: "videomail_parent_key",
     formId: null,
     // automatically detects form if any
     submitButtonId: null,
@@ -19494,10 +17846,12 @@ var _default = exports.default = {
     volume: 0.2,
     // must be between 0 .. 1 but 0.20 is recommended to avoid
     // distorting at the higher volume peaks
-    bufferSize: 'auto' // decides how often the audio is being sampled,
-    // can be 'auto' or an integer being a power of two like 512 or 2048
-    // the higher the less traffic, but harder to adjust with rubberband
-    // to match with the video length on server side during encoding
+    bufferSize: "auto" // decides how often the audio is being sampled,
+    /*
+     * can be 'auto' or an integer being a power of two like 512 or 2048
+     * the higher the less traffic, but harder to adjust with rubberband
+     * to match with the video length on server side during encoding
+     */
   },
   video: {
     fps: 15,
@@ -19507,43 +17861,45 @@ var _default = exports.default = {
     countdown: 3,
     // set it to 0 or false to disable it
 
-    // it is recommended to set one dimension only and leave the other one to auto
-    // because each webcam has a different aspect ratio
+    /*
+     * it is recommended to set one dimension only and leave the other one to auto
+     * because each webcam has a different aspect ratio
+     */
 
-    width: 'auto',
+    width: "auto",
     // or use an integer for exact pixels
-    height: 'auto',
+    height: "auto",
     // or use an integer for exact pixels
-    facingMode: 'user',
+    facingMode: "user",
     // can be 'user', 'environment', 'left' or 'right'. useful for mobiles.
     facingModeButton: false,
     stretch: false // Set to true if you want the video to take the full width of the parent container
   },
   image: {
     quality: 0.42,
-    types: ['webp', 'jpeg'] // recommended settings to make most of all browsers
+    types: ["webp", "jpeg"] // recommended settings to make most of all browsers
   },
-  // alter these text for internationalisation
+  // alter these text for internationalization
   text: {
-    pausedHeader: 'Paused',
+    pausedHeader: "Paused",
     pausedHint: null,
-    sending: 'Teleporting',
-    encoding: 'Encoding',
-    limitReached: 'Limit reached',
-    audioOff: 'Audio off',
-    audioOn: 'Audio on',
+    sending: "Teleporting",
+    encoding: "Encoding",
+    limitReached: "Limit reached",
+    audioOff: "Audio off",
+    audioOn: "Audio on",
     buttons: {
-      record: 'Record video',
-      recordAgain: 'Record again',
-      resume: 'Resume',
-      pause: 'Pause',
-      preview: 'Preview'
+      record: "Record video",
+      recordAgain: "Record again",
+      resume: "Resume",
+      pause: "Pause",
+      preview: "Preview"
     }
   },
   notifier: {
     entertain: false,
     // when true, user is entertained while waiting, see examples
-    entertainClass: 'bg',
+    entertainClass: "bg",
     entertainLimit: 6,
     entertainInterval: 9000
   },
@@ -19552,14 +17908,16 @@ var _default = exports.default = {
     // in milliseconds, increase if you want user give more time to enable webcam
     connection: 1e4,
     // in seconds, increase if api is slow
-    pingInterval: 35e3 // in milliseconds, keeps web stream (connection) alive when pausing
+    pingInterval: 30e3 // in milliseconds, keeps web stream (connection) alive when pausing
   },
   loadUserMediaOnRecord: false,
   // when true, user media is loaded only when record button is pressed
 
   callbacks: {
-    // a custom callback to tweak form data before posting to server
-    // this is for advanced use only and shouldn't be used if possible
+    /*
+     * a custom callback to tweak form data before posting to server
+     * this is for advanced use only and shouldn't be used if possible
+     */
     adjustFormDataBeforePosting: null
   },
   defaults: {
@@ -19575,23 +17933,26 @@ var _default = exports.default = {
     // define default subject line
     body: null // define default body content
   },
-  // a special flag to indicate that everything to be initialised
-  // serves only for playing existing videomails with the replay function
-  playerOnly: false,
   // show errors inside the container?
   displayErrors: true,
   // true = all form inputs get disabled and disappear when browser can't record
   adjustFormOnBrowserError: false,
-  // when true, any errors will be sent to the videomail server for analysis
-  // ps: can be a function too returning a boolean
+  /*
+   * when true, any errors will be sent to the videomail server for analysis
+   * ps: can be a function too returning a boolean
+   */
   reportErrors: false,
   // just for testing purposes to simulate browser agent handling
   fakeUaString: null,
   version: _package.version
 };
 
+// Add some helper functions to options
+var optionsWithFunctions = (0, _addOptionsFunctions.default)(options);
+var _default = exports.default = optionsWithFunctions;
+
 }).call(this)}).call(this,_dereq_('_process'))
-},{"../../package.json":123,"_process":79}],128:[function(_dereq_,module,exports){
+},{"../../package.json":116,"./util/addOptionsFunctions":122,"@babel/runtime/helpers/interopRequireDefault":4,"_process":79}],121:[function(_dereq_,module,exports){
 "use strict";
 
 var _interopRequireDefault = _dereq_("@babel/runtime/helpers/interopRequireDefault");
@@ -19601,10 +17962,8 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = _default;
 var _superagent = _interopRequireDefault(_dereq_("superagent"));
 var _constants = _interopRequireDefault(_dereq_("./constants"));
-var CACHE_KEY = 'alias';
 var timezoneId = Intl.DateTimeFormat().resolvedOptions().timeZone;
 function _default(options) {
-  var cache = {};
   function applyDefaultValue(videomail, name) {
     if (options.defaults[name] && !videomail[name]) {
       videomail[name] = options.defaults[name];
@@ -19613,35 +17972,49 @@ function _default(options) {
   }
   function applyDefaultValues(videomail) {
     if (options.defaults) {
-      videomail = applyDefaultValue(videomail, 'from');
-      videomail = applyDefaultValue(videomail, 'to');
-      videomail = applyDefaultValue(videomail, 'cc');
-      videomail = applyDefaultValue(videomail, 'bcc');
-      videomail = applyDefaultValue(videomail, 'subject');
-      videomail = applyDefaultValue(videomail, 'body');
+      videomail = applyDefaultValue(videomail, "from");
+      videomail = applyDefaultValue(videomail, "to");
+      videomail = applyDefaultValue(videomail, "cc");
+      videomail = applyDefaultValue(videomail, "bcc");
+      videomail = applyDefaultValue(videomail, "subject");
+      videomail = applyDefaultValue(videomail, "body");
     }
     return videomail;
   }
+  function setProperty(packedError, property, value) {
+    Object.defineProperty(packedError, property, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  }
   function packError(err, res) {
     if (res && res.body && res.body.error) {
-      // use the server generated text instead of the superagent's default text
-      err = res.body.error;
-      if (!err.message && res.text) {
-        err.message = res.text;
-      }
+      var originalError = res.body.error;
+      var packedError = new Error();
+      setProperty(packedError, "name", originalError.name);
+      setProperty(packedError, "type", originalError.type);
+      setProperty(packedError, "message", originalError.message || res.statusText);
+      setProperty(packedError, "cause", originalError.cause);
+      setProperty(packedError, "status", originalError.status);
+      setProperty(packedError, "code", originalError.code);
+      setProperty(packedError, "errno", originalError.errno);
+      setProperty(packedError, "details", originalError.details);
+      setProperty(packedError, "stack", originalError.stack);
+      return packedError;
     }
     return err;
   }
-  function fetch(alias, cb) {
-    _superagent.default.get('/videomail/' + alias + '/snapshot').set('Accept', 'application/json').set('Timezone-Id', timezoneId).set(_constants.default.SITE_NAME_LABEL, options.siteName).timeout(options.timeouts.connection).end(function (err, res) {
-      err = packError(err, res);
+  function fetch(identifierName, identifierValue, cb) {
+    var url = "".concat(options.baseUrl, "/videomail/").concat(identifierName, "/").concat(identifierValue, "/snapshot");
+    var request = (0, _superagent.default)("get", url);
+    request.type("json").set("Accept", "application/json").set("Timezone-Id", timezoneId).set(_constants.default.SITE_NAME_LABEL, options.siteName).timeout(options.timeouts.connection).end(function (err, res) {
       if (err) {
-        cb(err);
+        var prettyError = packError(err, res);
+        cb(prettyError);
       } else {
         var videomail = res.body ? res.body : null;
-        if (options.cache) {
-          cache[CACHE_KEY] = videomail;
-        }
         cb(null, videomail);
       }
     });
@@ -19652,44 +18025,37 @@ function _default(options) {
       identifier = null;
     }
     var queryParams = {};
-    var url = options.baseUrl + '/videomail/';
+    var url = "".concat(options.baseUrl, "/videomail/");
     if (identifier) {
       url += identifier;
     }
     var request = (0, _superagent.default)(method, url);
     queryParams[_constants.default.SITE_NAME_LABEL] = options.siteName;
-    request.query(queryParams).set('Timezone-Id', timezoneId).send(videomail).timeout(options.timeout).end(function (err, res) {
-      err = packError(err, res);
+    request.query(queryParams).set("Timezone-Id", timezoneId).send(videomail).timeout(options.timeout).end(function (err, res) {
       if (err) {
-        cb(err);
+        var prettyError = packError(err, res);
+        cb(prettyError);
       } else {
         var returnedVideomail = res.body && res.body.videomail ? res.body.videomail : null;
-        if (options.cache && videomail[CACHE_KEY]) {
-          cache[videomail[CACHE_KEY]] = returnedVideomail;
-        }
         cb(null, returnedVideomail, res.body);
       }
     });
   }
-  this.get = function (alias, cb) {
-    if (options.cache && cache[alias]) {
-      // keep all callbacks async
-      setTimeout(function () {
-        cb(null, cache[alias]);
-      }, 0);
-    } else {
-      fetch(alias, cb);
-    }
+  this.getByAlias = function (alias, cb) {
+    fetch("alias", alias, cb);
+  };
+  this.getByKey = function (key, cb) {
+    fetch("key", key, cb);
   };
   this.reportError = function (err, cb) {
     var queryParams = {};
-    var url = options.baseUrl + '/client-error/';
-    var request = (0, _superagent.default)('post', url);
+    var url = "".concat(options.baseUrl, "/client-error/");
+    var request = (0, _superagent.default)("post", url);
     queryParams[_constants.default.SITE_NAME_LABEL] = options.siteName;
     request.query(queryParams).send(err).timeout(options.timeout).end(function (err, res) {
-      err = packError(err, res);
       if (err) {
-        cb && cb(err);
+        var prettyError = packError(err, res);
+        cb && cb(prettyError);
       } else {
         cb && cb();
       }
@@ -19698,44 +18064,46 @@ function _default(options) {
   this.post = function (videomail, cb) {
     videomail = applyDefaultValues(videomail);
 
-    // always good to know the version of the client
-    // the videomail was submitted with
+    /*
+     * always good to know the version of the client
+     * the videomail was submitted with
+     */
     videomail[_constants.default.VERSION_LABEL] = options.version;
     if (options.callbacks.adjustFormDataBeforePosting) {
       options.callbacks.adjustFormDataBeforePosting(videomail, function (err, adjustedVideomail) {
         if (err) {
           cb(err);
         } else {
-          write('post', adjustedVideomail, cb);
+          write("post", adjustedVideomail, cb);
         }
       });
     } else {
-      write('post', videomail, cb);
+      write("post", videomail, cb);
     }
   };
   this.put = function (videomail, cb) {
-    write('put', videomail, videomail.key, cb);
+    write("put", videomail, videomail.key, cb);
   };
   this.form = function (formData, url, cb) {
     var formType;
     switch (options.enctype) {
       case _constants.default.public.ENC_TYPE_APP_JSON:
-        formType = 'json';
+        formType = "json";
         break;
       case _constants.default.public.ENC_TYPE_FORM:
-        formType = 'form';
+        formType = "form";
         break;
       default:
         // keep all callbacks async
         setTimeout(function () {
-          cb(new Error('Invalid enctype given: ' + options.enctype));
+          cb(new Error("Invalid enctype given: ".concat(options.enctype)));
         }, 0);
     }
     if (formType) {
-      _superagent.default.post(url).type(formType).set('Timezone-Id', timezoneId).send(formData).timeout(options.timeout).end(function (err, res) {
-        err = packError(err, res);
+      _superagent.default.post(url).type(formType).set("Timezone-Id", timezoneId).send(formData).timeout(options.timeout).end(function (err, res) {
         if (err) {
-          cb(err);
+          var prettyError = packError(err, res);
+          cb(prettyError);
         } else {
           cb(null, res);
         }
@@ -19744,7 +18112,62 @@ function _default(options) {
   };
 }
 
-},{"./constants":125,"@babel/runtime/helpers/interopRequireDefault":1,"superagent":106}],129:[function(_dereq_,module,exports){
+},{"./constants":118,"@babel/runtime/helpers/interopRequireDefault":4,"superagent":104}],122:[function(_dereq_,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+function addOptionsFunctions(options) {
+  var audioEnabled = options.audio && options.audio.enabled;
+  options.hasDefinedWidth = function () {
+    return this.video.width && this.video.width !== "auto";
+  };
+  options.hasDefinedHeight = function () {
+    return this.video.height && this.video.height !== "auto";
+  };
+  options.hasDefinedDimension = function () {
+    return this.hasDefinedWidth() || this.hasDefinedHeight();
+  };
+  options.hasDefinedDimensions = function () {
+    return this.hasDefinedWidth() && this.hasDefinedHeight();
+  };
+  options.getRatio = function () {
+    var ratio = 1; // just a default one when no computations are possible
+
+    // todo fix this, it's not really an option
+    var hasVideoDimensions = this.videoHeight && this.videoWidth;
+    if (this.hasDefinedDimensions()) {
+      if (hasVideoDimensions) {
+        // figure out first which one to pick
+        if (this.videoHeight < this.video.height || this.videoWidth < this.video.width) {
+          ratio = this.videoHeight / this.videoWidth;
+        } else {
+          ratio = this.video.height / this.video.width;
+        }
+      } else {
+        ratio = this.video.height / this.video.width;
+      }
+    } else if (hasVideoDimensions) {
+      ratio = this.videoHeight / this.videoWidth;
+    }
+    return ratio;
+  };
+  options.isAudioEnabled = function () {
+    return audioEnabled;
+  };
+  options.setAudioEnabled = function (enabled) {
+    audioEnabled = enabled;
+  };
+  options.isAutoPauseEnabled = function () {
+    return this.enableAutoPause && this.enablePause;
+  };
+  return options;
+}
+var _default = exports.default = addOptionsFunctions;
+
+},{}],123:[function(_dereq_,module,exports){
 "use strict";
 
 var _interopRequireDefault = _dereq_("@babel/runtime/helpers/interopRequireDefault");
@@ -19753,13 +18176,15 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = _default;
 var _audioSample = _interopRequireDefault(_dereq_("audio-sample"));
+var _isPowerOfTwo = _interopRequireDefault(_dereq_("is-power-of-two"));
 var _browser = _interopRequireDefault(_dereq_("./browser"));
 var _videomailError = _interopRequireDefault(_dereq_("./videomailError"));
-var _isPowerOfTwo = _interopRequireDefault(_dereq_("is-power-of-two"));
 var CHANNELS = 1;
 
-// for inspiration see
-// https://github.com/saebekassebil/microphone-stream
+/*
+ * for inspiration see
+ * https://github.com/saebekassebil/microphone-stream
+ */
 
 // todo code needs rewrite
 
@@ -19772,7 +18197,7 @@ function _default(userMedia, options) {
     return window.AudioContext || window.webkitAudioContext;
   }
   function hasAudioContext() {
-    return !!getAudioContextClass() && !!getAudioContext();
+    return Boolean(getAudioContextClass()) && Boolean(getAudioContext());
   }
   function getAudioContext() {
     // instantiate only once
@@ -19787,25 +18212,27 @@ function _default(userMedia, options) {
       return;
     }
 
-    // Returns a Float32Array containing the PCM data associated with the channel,
-    // defined by the channel parameter (with 0 representing the first channel)
+    /*
+     * Returns a Float32Array containing the PCM data associated with the channel,
+     * defined by the channel parameter (with 0 representing the first channel)
+     */
     var float32Array = e.inputBuffer.getChannelData(0);
     cb(new _audioSample.default(float32Array));
   }
   this.init = function (localMediaStream) {
-    options.debug('AudioRecorder: init()');
+    options.debug("AudioRecorder: init()");
 
     // creates an audio node from the microphone incoming stream
     var volume = getAudioContext().createGain();
     try {
       audioInput = getAudioContext().createMediaStreamSource(localMediaStream);
     } catch (exc) {
-      throw _videomailError.default.create('Webcam has no audio', exc.toString(), options);
+      throw _videomailError.default.create("Webcam has no audio", exc.toString(), options);
     }
     var bufferSize = options.audio.bufferSize;
 
     // see https://github.com/binarykitchen/videomail-client/issues/184
-    if (bufferSize === 'auto') {
+    if (bufferSize === "auto") {
       if (browser.isFirefox()) {
         bufferSize = 512;
       } else {
@@ -19813,15 +18240,17 @@ function _default(userMedia, options) {
       }
     }
     if (!(0, _isPowerOfTwo.default)(bufferSize)) {
-      throw _videomailError.default.create('Audio buffer size must be a power of two.', options);
+      throw _videomailError.default.create("Audio buffer size must be a power of two.", options);
     }
     if (!options.audio.volume || options.audio.volume > 1) {
-      throw _videomailError.default.create('Audio volume must be between zero and one.', options);
+      throw _videomailError.default.create("Audio volume must be between zero and one.", options);
     }
     volume.gain.value = options.audio.volume;
 
-    // Create a ScriptProcessorNode with the given bufferSize and
-    // a single input and output channel
+    /*
+     * Create a ScriptProcessorNode with the given bufferSize and
+     * a single input and output channel
+     */
     scriptProcessor = getAudioContext().createScriptProcessor(bufferSize, CHANNELS, CHANNELS);
 
     // connect stream to our scriptProcessor
@@ -19835,13 +18264,13 @@ function _default(userMedia, options) {
     volume.connect(scriptProcessor);
   };
   this.record = function (cb) {
-    options.debug('AudioRecorder: record()');
+    options.debug("AudioRecorder: record()");
     scriptProcessor.onaudioprocess = function (e) {
       onAudioProcess(e, cb);
     };
   };
   this.stop = function () {
-    options.debug('AudioRecorder: stop()');
+    options.debug("AudioRecorder: stop()");
     if (scriptProcessor) {
       scriptProcessor.onaudioprocess = undefined;
     }
@@ -19853,7 +18282,7 @@ function _default(userMedia, options) {
     if (hasAudioContext()) {
       if (getAudioContext().close) {
         getAudioContext().close().then(function () {
-          options.debug('AudioRecorder: audio context is closed');
+          options.debug("AudioRecorder: audio context is closed");
           vcAudioContext = null;
         }).catch(function (err) {
           throw _videomailError.default.create(err, options);
@@ -19871,7 +18300,7 @@ function _default(userMedia, options) {
   };
 }
 
-},{"./browser":130,"./videomailError":137,"@babel/runtime/helpers/interopRequireDefault":1,"audio-sample":6,"is-power-of-two":69}],130:[function(_dereq_,module,exports){
+},{"./browser":124,"./videomailError":131,"@babel/runtime/helpers/interopRequireDefault":4,"audio-sample":14,"is-power-of-two":71}],124:[function(_dereq_,module,exports){
 "use strict";
 
 var _interopRequireDefault = _dereq_("@babel/runtime/helpers/interopRequireDefault");
@@ -19883,37 +18312,36 @@ var _typeof2 = _interopRequireDefault(_dereq_("@babel/runtime/helpers/typeof"));
 var _defined = _interopRequireDefault(_dereq_("defined"));
 var _uaParserJs = _interopRequireDefault(_dereq_("ua-parser-js"));
 var _videomailError = _interopRequireDefault(_dereq_("./videomailError"));
-var FALLBACK_VIDEO_TYPE = 'mp4';
+var FALLBACK_VIDEO_TYPE = "mp4";
 var Browser = function Browser(options) {
-  options = options || {};
-  var firefoxDownload = 'http://www.mozilla.org/firefox/update/';
-  var edgeDownload = 'https://www.microsoft.com/en-us/download/details.aspx?id=48126';
-  var chromeDownload = 'http://www.google.com/chrome/';
-  var chromiumDownload = 'http://www.chromium.org/getting-involved/download-chromium';
-  var ua = (0, _defined.default)(options.fakeUaString, typeof window !== 'undefined' && window.navigator && window.navigator.userAgent, '');
+  options || (options = {});
+  var firefoxDownload = "http://www.mozilla.org/firefox/update/";
+  var edgeDownload = "https://www.microsoft.com/en-us/download/details.aspx?id=48126";
+  var chromeDownload = "http://www.google.com/chrome/";
+  var chromiumDownload = "http://www.chromium.org/getting-involved/download-chromium";
+  var ua = (0, _defined.default)(options.fakeUaString, typeof window !== "undefined" && window.navigator && window.navigator.userAgent, "");
   var uaParser = new _uaParserJs.default(ua).getResult();
-  var isIOS = uaParser.os.name === 'iOS';
+  var isIOS = uaParser.os.name === "iOS";
   var browserVersion = parseFloat(uaParser.browser.version);
-  var isChrome = uaParser.browser.name === 'Chrome';
-  var isBrave = uaParser.browser.name === 'Brave';
-  var isChromium = uaParser.browser.name === 'Chromium';
-  var firefox = uaParser.browser.name === 'Firefox';
+  var isChrome = uaParser.browser.name === "Chrome";
+  var isBrave = uaParser.browser.name === "Brave";
+  var isChromium = uaParser.browser.name === "Chromium";
+  var firefox = uaParser.browser.name === "Firefox";
   var osVersion = parseFloat(uaParser.os.version);
-  var isWindows = uaParser.os.name === 'Windows';
-  var isEdge = uaParser.browser.name === 'Edge' || isWindows && osVersion >= 10;
-  var isIE = /IE/.test(uaParser.browser.name);
+  var isWindows = uaParser.os.name === "Windows";
+  var isEdge = uaParser.browser.name === "Edge" || isWindows && osVersion >= 10;
   var isSafari = /Safari/.test(uaParser.browser.name);
   var isOpera = /Opera/.test(uaParser.browser.name);
   var isAndroid = /Android/.test(uaParser.os.name);
   var chromeBased = isChrome || isChromium;
-  var isFacebook = uaParser.browser.name === 'Facebook'; // Facebook App for iOS & Android
+  var isFacebook = uaParser.browser.name === "Facebook"; // Facebook App for iOS & Android
 
   var isMobile = isIOS || isAndroid;
   var isOkSafari = isSafari && browserVersion >= 11;
   var isOkIOS = isIOS && osVersion >= 11;
   var isBadIOS = isIOS && osVersion < 11;
   // unfortunately need to be able to fake https because tape-run can't run on https
-  var isHTTPS = options.fakeHttps || window.location.protocol === 'https:';
+  var isHTTPS = options.fakeHttps || window.location.protocol === "https:";
   var okBrowser = chromeBased || firefox || isAndroid || isOpera || isEdge || isOkSafari || isOkIOS || isBrave;
   var self = this;
   var videoType;
@@ -19921,64 +18349,58 @@ var Browser = function Browser(options) {
     var warning;
     if (firefox) {
       if (isIOS) {
-        warning = 'Firefox on iOS is not ready for cameras yet. Hopefully in near future ...';
+        warning = "Firefox on iOS is not ready for cameras yet. Hopefully in near future ...";
       } else {
-        warning = 'Probably you need to <a href="' + firefoxDownload + '" target="_blank">' + 'upgrade Firefox</a> to fix this.';
+        warning = "Probably you need to <a href=\"".concat(firefoxDownload, "\" target=\"_blank\">") + "upgrade Firefox</a> to fix this.";
       }
     } else if (isChrome) {
       if (isIOS) {
         warning = "Use Safari instead. Apple doesn't give Chrome access to iPhone cameras (booo).";
       } else {
-        warning = 'Probably you need to <a href="' + chromeDownload + '" target="_blank">' + 'upgrade Chrome</a> to fix this.';
+        warning = "Probably you need to <a href=\"".concat(chromeDownload, "\" target=\"_blank\">") + "upgrade Chrome</a> to fix this.";
       }
     } else if (isChromium) {
-      warning = 'Probably you need to <a href="' + chromiumDownload + '" target="_blank">' + 'upgrade Chromium</a> to fix this.';
-    } else if (isIE) {
-      warning = 'Instead of Internet Explorer you need to upgrade to' + ' <a href="' + edgeDownload + '" target="_blank">Edge</a>.';
+      warning = "Probably you need to <a href=\"".concat(chromiumDownload, "\" target=\"_blank\">") + "upgrade Chromium</a> to fix this.";
     } else if (isOkSafari) {
-      warning = 'Probably you need to shut down Safari and restart it, this for correct webcam access.';
+      warning = "Probably you need to shut down Safari and restart it, this for correct webcam access.";
     } else if (isSafari) {
-      warning = 'Safari below version 11 has no webcam support.<br/>Better upgrade Safari or pick' + ' <a href="' + chromeDownload + '" target="_blank">Chrome</a>,' + ' <a href="' + firefoxDownload + '" target="_blank">Firefox</a> or Android.';
+      warning = "Safari below version 11 has no webcam support.<br/>Better upgrade Safari or pick" + " <a href=\"".concat(chromeDownload, "\" target=\"_blank\">Chrome</a>,") + " <a href=\"".concat(firefoxDownload, "\" target=\"_blank\">Firefox</a> or Android.");
     }
     return warning;
   }
   function getUserMediaWarning() {
     var warning;
     if (isBadIOS) {
-      warning = 'On iPads or iPhones below iOS v11 this camera feature is missing.<br/><br/>' + 'For now, we recommend you to upgrade iOS or to use an Android device.';
+      warning = "On iPads or iPhones below iOS v11 this camera feature is missing.<br/><br/>" + "For now, we recommend you to upgrade iOS or to use an Android device.";
     } else {
       warning = getRecommendation();
     }
     if (!warning) {
       if (self.isChromeBased() || self.isFirefox() || isSafari) {
-        warning = 'For the webcam feature, your browser needs an upgrade.';
+        warning = "For the webcam feature, your browser needs an upgrade.";
+      } else if (isFacebook) {
+        warning = "Hence we recommend you to use a real browser like " + "<a href=\"".concat(chromeDownload, "\" target=\"_blank\">Chrome</a>, ") + "<a href=\"".concat(firefoxDownload, "\" target=\"_blank\">Firefox</a> or ") + "<a href=\"".concat(edgeDownload, "\" target=\"_blank\">Edge</a>.");
       } else {
-        if (isFacebook) {
-          warning = 'Hence we recommend you to use a real browser like ' + '<a href="' + chromeDownload + '" target="_blank">Chrome</a>, ' + '<a href="' + firefoxDownload + '" target="_blank">Firefox</a> or ' + '<a href="' + edgeDownload + '" target="_blank">Edge</a>.';
-        } else {
-          warning = 'Hence we recommend you to use either ' + '<a href="' + chromeDownload + '" target="_blank">Chrome</a>, ' + '<a href="' + firefoxDownload + '" target="_blank">Firefox</a>, ' + '<a href="' + edgeDownload + '" target="_blank">Edge</a> or Android.';
-        }
+        warning = "Hence we recommend you to use either " + "<a href=\"".concat(chromeDownload, "\" target=\"_blank\">Chrome</a>, ") + "<a href=\"".concat(firefoxDownload, "\" target=\"_blank\">Firefox</a>, ") + "<a href=\"".concat(edgeDownload, "\" target=\"_blank\">Edge</a> or Android.");
       }
     }
     return warning;
   }
   this.canRecord = function () {
-    var hasNavigator = typeof navigator !== 'undefined';
+    var hasNavigator = typeof navigator !== "undefined";
     var canRecord = false;
     if (hasNavigator && navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
       canRecord = true;
     } else {
       var getUserMediaType = hasNavigator && (0, _typeof2.default)(navigator.getUserMedia_);
-      canRecord = getUserMediaType === 'function';
+      canRecord = getUserMediaType === "function";
     }
     return canRecord;
   };
   this.checkRecordingCapabilities = function () {
     var err;
     if (!isHTTPS) {
-      err = _videomailError.default.create({
-        message: 'Sorry, your page is insecure'
-      }, 'Please switch to HTTPS to ensure all is encrypted.', options, {
+      err = _videomailError.default.create("Sorry, your page is insecure", "Please switch to HTTPS to ensure all is encrypted.", options, {
         classList: [_videomailError.default.BROWSER_PROBLEM]
       });
     } else if (!okBrowser || !this.canRecord()) {
@@ -19993,29 +18415,27 @@ var Browser = function Browser(options) {
       // good to be able to distinguish between two reasons why and what sort of camera it is
       if (!okBrowser) {
         if (isMobile) {
-          message = 'Sorry, your browser is unable to use your mobile camera';
+          message = "Sorry, your browser is unable to use your mobile camera";
         } else {
-          message = 'Sorry, your browser is unable to use webcams';
+          message = "Sorry, your browser is unable to use webcams";
+        }
+      } else if (isMobile) {
+        if (isFacebook) {
+          message = "Sorry, the Facebook app cannot record from your mobile camera";
+        } else {
+          message = "Sorry, your browser cannot record from your mobile camera";
         }
       } else {
-        if (isMobile) {
-          if (isFacebook) {
-            message = 'Sorry, the Facebook app cannot record from your mobile camera';
-          } else {
-            message = 'Sorry, your browser cannot record from your mobile camera';
-          }
-        } else {
-          message = 'Sorry, your browser cannot record from webcams';
-        }
+        message = "Sorry, your browser cannot record from webcams";
       }
       if (isBadIOS) {
-        // on older iPhones length of JSON is limited and breaking
-        // so just don't report and ignore
+        /*
+         * on older iPhones length of JSON is limited and breaking
+         * so just don't report and ignore
+         */
         options.reportErrors = false;
       }
-      err = _videomailError.default.create({
-        message: message
-      }, getUserMediaWarning(), options, {
+      err = _videomailError.default.create(message, getUserMediaWarning(), options, {
         classList: classList
       });
     }
@@ -20023,54 +18443,54 @@ var Browser = function Browser(options) {
   };
   this.checkBufferTypes = function () {
     var err;
-    if (typeof window === 'undefined' || typeof window.atob === 'undefined') {
-      err = _videomailError.default.create('atob is not supported', options);
-    } else if (typeof window.ArrayBuffer === 'undefined') {
-      err = _videomailError.default.create('ArrayBuffers are not supported', options);
-    } else if (typeof window.Uint8Array === 'undefined') {
-      err = _videomailError.default.create('Uint8Arrays are not supported', options);
+    if (typeof window === "undefined" || typeof window.atob === "undefined") {
+      err = _videomailError.default.create("atob is not supported", options);
+    } else if (typeof window.ArrayBuffer === "undefined") {
+      err = _videomailError.default.create("ArrayBuffers are not supported", options);
+    } else if (typeof window.Uint8Array === "undefined") {
+      err = _videomailError.default.create("Uint8Arrays are not supported", options);
     }
     return err;
   };
   function canPlayType(video, type) {
     var canPlayType;
     if (video && video.canPlayType) {
-      canPlayType = video.canPlayType('video/' + type);
+      canPlayType = video.canPlayType("video/".concat(type));
     }
 
     // definitely cannot be played here
-    if (canPlayType === '') {
+    if (canPlayType === "") {
       return false;
     }
     return canPlayType;
   }
   this.getVideoType = function (video) {
     if (!videoType && video) {
-      if (canPlayType(video, 'mp4')) {
-        videoType = 'mp4';
-      } else if (canPlayType(video, 'webm')) {
-        videoType = 'webm';
+      if (canPlayType(video, "mp4")) {
+        videoType = "mp4";
+      } else if (canPlayType(video, "webm")) {
+        videoType = "webm";
       }
     }
-    if (videoType !== 'webm' && videoType !== 'mp4') {
+    if (videoType !== "webm" && videoType !== "mp4") {
       // we only support these two. anything else defaults to the fallback.
       videoType = FALLBACK_VIDEO_TYPE;
     }
-    if (!videoType || videoType === '') {
+    if (!videoType || videoType === "") {
       // just as a fallback
       videoType = FALLBACK_VIDEO_TYPE;
     }
     return videoType;
   };
   this.getNoAccessIssue = function () {
-    var message = 'Unable to access webcam';
+    var message = "Unable to access webcam";
     var explanation;
     if (this.isChromeBased()) {
-      explanation = 'Click on the allow button to grant access to your webcam.';
+      explanation = "Click on the allow button to grant access to your webcam";
     } else if (this.isFirefox()) {
-      explanation = 'Please grant Firefox access to your webcam.';
+      explanation = "Please grant Firefox access to your webcam";
     } else {
-      explanation = 'Your system does not let your browser access your webcam.';
+      explanation = "Your system does not let your browser access your webcam";
     }
     return _videomailError.default.create(message, explanation, options);
   };
@@ -20087,7 +18507,7 @@ var Browser = function Browser(options) {
     return isAndroid;
   };
   this.isMobile = function () {
-    return uaParser.device.type === 'mobile';
+    return uaParser.device.type === "mobile";
   };
   this.isOkSafari = function () {
     return isOkSafari;
@@ -20098,16 +18518,16 @@ var Browser = function Browser(options) {
   this.getUsefulData = function () {
     return {
       browser: uaParser.browser,
-      device: uaParser.device,
-      os: uaParser.os,
+      cpu: uaParser.cpu.architecture ? uaParser.cpu : undefined,
+      device: uaParser.device.type ? uaParser.device : undefined,
       engine: uaParser.engine,
-      userAgent: ua
+      os: uaParser.os.name && uaParser.os.version ? uaParser.os : undefined
     };
   };
 };
 var _default = exports.default = Browser;
 
-},{"./videomailError":137,"@babel/runtime/helpers/interopRequireDefault":1,"@babel/runtime/helpers/typeof":2,"defined":23,"ua-parser-js":112}],131:[function(_dereq_,module,exports){
+},{"./videomailError":131,"@babel/runtime/helpers/interopRequireDefault":4,"@babel/runtime/helpers/typeof":10,"defined":30,"ua-parser-js":110}],125:[function(_dereq_,module,exports){
 "use strict";
 
 var _interopRequireDefault = _dereq_("@babel/runtime/helpers/interopRequireDefault");
@@ -20115,39 +18535,42 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = _default;
-var _util = _interopRequireDefault(_dereq_("util"));
+var _toConsumableArray2 = _interopRequireDefault(_dereq_("@babel/runtime/helpers/toConsumableArray"));
+var _formatUtil = _interopRequireDefault(_dereq_("format-util"));
 var _browser = _interopRequireDefault(_dereq_("./browser"));
 function _default() {
   var localOptions = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
   var browser = new _browser.default(localOptions);
   var logger = localOptions.logger || console;
-  var containerId = localOptions.selectors && localOptions.selectors.containerId || 'undefined container id';
+  var containerId = localOptions.selectors && localOptions.selectors.containerId || "undefined container id";
   var stack = [];
   function lifo(level, parameters) {
-    var line = _util.default.format.apply(_util.default, parameters);
+    var line = _formatUtil.default.apply(void 0, (0, _toConsumableArray2.default)(parameters));
     if (stack.length > localOptions.logStackSize) {
       stack.pop();
     }
-    stack.push('[' + level + '] ' + line);
+    stack.push("[".concat(level, "] ").concat(line));
     return line;
   }
   function addContainerId(firstArgument) {
-    return '#' + containerId + ' [' + new Date().toLocaleTimeString() + '] > ' + firstArgument;
+    return "#".concat(containerId, " [").concat(new Date().toLocaleTimeString(), "] > ").concat(firstArgument);
   }
 
-  // workaround: since we cannot overwrite console.log without having the correct file and line number
-  // we'll use groupCollapsed() and trace() instead to get these.
+  /*
+   * workaround: since we cannot overwrite console.log without having the correct file and line number
+   * we'll use groupCollapsed() and trace() instead to get these.
+   */
   this.debug = function () {
     // always add it for better client error reports
     var args = [].slice.call(arguments, 0);
     args[0] = addContainerId(args[0]);
-    var output = lifo('debug', args);
+    var output = lifo("debug", args);
     if (localOptions.verbose) {
       if (browser.isFirefox()) {
         logger.debug(output);
       } else if (logger.groupCollapsed) {
         logger.groupCollapsed(output);
-        logger.trace('Trace');
+        logger.trace("Trace");
         logger.groupEnd();
       } else if (logger.debug) {
         logger.debug(output);
@@ -20160,19 +18583,19 @@ function _default() {
   this.error = function () {
     var args = [].slice.call(arguments, 0);
     args[0] = addContainerId(args[0]);
-    logger.error(lifo('error', args));
+    logger.error(lifo("error", args));
   };
   this.warn = function () {
     var args = [].slice.call(arguments, 0);
     args[0] = addContainerId(args[0]);
-    logger.warn(lifo('warn', args));
+    logger.warn(lifo("warn", args));
   };
   this.getLines = function () {
     return stack;
   };
 }
 
-},{"./browser":130,"@babel/runtime/helpers/interopRequireDefault":1,"util":116}],132:[function(_dereq_,module,exports){
+},{"./browser":124,"@babel/runtime/helpers/interopRequireDefault":4,"@babel/runtime/helpers/toConsumableArray":7,"format-util":47}],126:[function(_dereq_,module,exports){
 "use strict";
 
 var _interopRequireDefault = _dereq_("@babel/runtime/helpers/interopRequireDefault");
@@ -20181,15 +18604,16 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = _default;
 var _despot = _interopRequireDefault(_dereq_("despot"));
-var _videomailError = _interopRequireDefault(_dereq_("./videomailError"));
+var _safeJsonStringify = _interopRequireDefault(_dereq_("safe-json-stringify"));
 var _events = _interopRequireDefault(_dereq_("./../events"));
+var _videomailError = _interopRequireDefault(_dereq_("./videomailError"));
 // TODO: MAKE EVENT EMITTING IN DESPOT NOT GLOBAL BUT BY CONTAINER ID INSTEAD
 
 function _default(options, name) {
   this.emit = function (event) {
     var args = Array.prototype.slice.call(arguments, 0);
     if (!event) {
-      throw _videomailError.default.create('You cannot emit without an event.', options);
+      throw _videomailError.default.create("You cannot emit without an event.", options);
     }
 
     // Automatically convert errors to videomail errors
@@ -20199,23 +18623,25 @@ function _default(options, name) {
       args[1] = err;
     }
     if (options.debug) {
-      if (event !== 'removeListener' && event !== 'newListener') {
+      if (event !== "removeListener" && event !== "newListener") {
         var moreArguments;
         if (args[1]) {
           moreArguments = args.slice(1);
         }
         if (moreArguments) {
-          options.debug('%s emits: %s', name, event, moreArguments);
+          options.debug("".concat(name, " emits ").concat(event, " with ").concat((0, _safeJsonStringify.default)(moreArguments)));
         } else {
-          options.debug('%s emits: %s', name, event);
+          options.debug("".concat(name, " emits ").concat(event));
         }
       }
     }
     var result = _despot.default.emit.apply(_despot.default, args);
 
-    // Todo: have this emitted through a configuration because it is pretty noisy
-    // if (event !== Events.EVENT_EMITTED)
-    //     this.emit(Events.EVENT_EMITTED, event)
+    /*
+     * Todo: have this emitted through a configuration because it is pretty noisy
+     * if (event !== Events.EVENT_EMITTED)
+     *     this.emit(Events.EVENT_EMITTED, event)
+     */
 
     return result;
   };
@@ -20236,7 +18662,7 @@ function _default(options, name) {
   };
 }
 
-},{"./../events":126,"./videomailError":137,"@babel/runtime/helpers/interopRequireDefault":1,"despot":24}],133:[function(_dereq_,module,exports){
+},{"./../events":119,"./videomailError":131,"@babel/runtime/helpers/interopRequireDefault":4,"despot":31,"safe-json-stringify":99}],127:[function(_dereq_,module,exports){
 "use strict";
 
 var _interopRequireDefault = _dereq_("@babel/runtime/helpers/interopRequireDefault");
@@ -20258,105 +18684,144 @@ var _default = exports.default = {
   }
 };
 
-},{"@babel/runtime/helpers/interopRequireDefault":1,"filesize":39,"humanize-duration":57}],134:[function(_dereq_,module,exports){
+},{"@babel/runtime/helpers/interopRequireDefault":4,"filesize":46,"humanize-duration":62}],128:[function(_dereq_,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
-// taken from
-// https://bbc.github.io/tal/jsdoc/events_mediaevent.js.html
+/*
+ * taken from
+ * https://bbc.github.io/tal/jsdoc/events_mediaevent.js.html
+ */
 var _default = exports.default = [
-// The user agent begins looking for media data, as part of
-// the resource selection algorithm.
-'loadstart',
-// The user agent is intentionally not currently fetching media data,
-// but does not have the entire media resource downloaded. networkState equals NETWORK_IDLE
-'suspend',
-// Playback has begun. Fired after the play() method has returned,
-// or when the autoplay attribute has caused playback to begin.
-// paused is newly false.
-// 'play', commented out since it has special treatment
+/*
+ * The user agent begins looking for media data, as part of
+ * the resource selection algorithm.
+ */
+"loadstart",
+/*
+ * The user agent is intentionally not currently fetching media data,
+ * but does not have the entire media resource downloaded. networkState equals NETWORK_IDLE
+ */
+"suspend",
+/*
+ * Playback has begun. Fired after the play() method has returned,
+ * or when the autoplay attribute has caused playback to begin.
+ * paused is newly false.
+ * 'play', commented out since it has special treatment
+ */
 
-// The user agent has just determined the duration and dimensions of the
-// media resource and the timed tracks are ready.
-// readyState is newly equal to HAVE_METADATA or greater for the first time.
-// 'loadedmetadata', commented out since it has special treatment
+/*
+ * The user agent has just determined the duration and dimensions of the
+ * media resource and the timed tracks are ready.
+ * readyState is newly equal to HAVE_METADATA or greater for the first time.
+ * 'loadedmetadata', commented out since it has special treatment
+ */
 
 // The user agent is fetching media data.
-'progress',
-// The user agent is intentionally not currently fetching media data,
-// but does not have the entire media resource downloaded.
-// 'suspend', // commented out, we are already listening to it in code
+"progress",
+/*
+ * The user agent is intentionally not currently fetching media data,
+ * but does not have the entire media resource downloaded.
+ * 'suspend', // commented out, we are already listening to it in code
+ */
 
-// Event The user agent stops fetching the media data before it is completely downloaded,
-// but not due to an error.  error is an object with the code MEDIA_ERR_ABORTED.
-'abort',
-// A media element whose networkState was previously not in the NETWORK_EMPTY
-// state has just switched to that state (either because of a fatal error
-// during load that's about to be reported, or because the load() method was
-// invoked while the resource selection algorithm was already running).
-'emptied',
-// The user agent is trying to fetch media data, but data is
-// unexpectedly not forthcoming
-'stalled',
-// Playback has been paused. Fired after the pause() method has returned.
-// paused is newly true.
-'pause',
-// The user agent can render the media data at the current playback position
-// for the first time.
-// readyState newly increased to HAVE_CURRENT_DATA or greater for the first time.
-'loadeddata',
-// Playback has stopped because the next frame is not available, but the user
-// agent expects that frame to become available in due course.
-// readyState is newly equal to or less than HAVE_CURRENT_DATA,
-// and paused is false. Either seeking is true, or the current playback
-// position is not contained in any of the ranges in buffered.
-// It is possible for playback to stop for two other reasons without
-// paused being false, but those two reasons do not fire this event:
-// maybe playback ended, or playback stopped due to errors.
-'waiting',
-// Playback has started. readyState is newly equal to or greater than
-// HAVE_FUTURE_DATA, paused is false, seeking is false,
-// or the current playback position is contained in one of the ranges in buffered.
-'playing',
-// The user agent can resume playback of the media data,
-// but estimates that if playback were to be started now, the media resource
-// could not be rendered at the current playback rate up to its end without
-// having to stop for further buffering of content.
-// readyState newly increased to HAVE_FUTURE_DATA or greater.
-'canplay',
-// The user agent estimates that if playback were to be started now,
-// the media resource could be rendered at the current playback rate
-// all the way to its end without having to stop for further buffering.
-// readyState is newly equal to HAVE_ENOUGH_DATA.
-'canplaythrough',
-// The seeking IDL attribute changed to true and the seek operation is
-// taking long enough that the user agent has time to fire the event.
-'seeking',
+/*
+ * Event The user agent stops fetching the media data before it is completely downloaded,
+ * but not due to an error.  error is an object with the code MEDIA_ERR_ABORTED.
+ */
+"abort",
+/*
+ * A media element whose networkState was previously not in the NETWORK_EMPTY
+ * state has just switched to that state (either because of a fatal error
+ * during load that's about to be reported, or because the load() method was
+ * invoked while the resource selection algorithm was already running).
+ */
+"emptied",
+/*
+ * The user agent is trying to fetch media data, but data is
+ * unexpectedly not forthcoming
+ */
+"stalled",
+/*
+ * Playback has been paused. Fired after the pause() method has returned.
+ * paused is newly true.
+ */
+"pause",
+/*
+ * The user agent can render the media data at the current playback position
+ * for the first time.
+ * readyState newly increased to HAVE_CURRENT_DATA or greater for the first time.
+ */
+"loadeddata",
+/*
+ * Playback has stopped because the next frame is not available, but the user
+ * agent expects that frame to become available in due course.
+ * readyState is newly equal to or less than HAVE_CURRENT_DATA,
+ * and paused is false. Either seeking is true, or the current playback
+ * position is not contained in any of the ranges in buffered.
+ * It is possible for playback to stop for two other reasons without
+ * paused being false, but those two reasons do not fire this event:
+ * maybe playback ended, or playback stopped due to errors.
+ */
+"waiting",
+/*
+ * Playback has started. readyState is newly equal to or greater than
+ * HAVE_FUTURE_DATA, paused is false, seeking is false,
+ * or the current playback position is contained in one of the ranges in buffered.
+ */
+"playing",
+/*
+ * The user agent can resume playback of the media data,
+ * but estimates that if playback were to be started now, the media resource
+ * could not be rendered at the current playback rate up to its end without
+ * having to stop for further buffering of content.
+ * readyState newly increased to HAVE_FUTURE_DATA or greater.
+ */
+"canplay",
+/*
+ * The user agent estimates that if playback were to be started now,
+ * the media resource could be rendered at the current playback rate
+ * all the way to its end without having to stop for further buffering.
+ * readyState is newly equal to HAVE_ENOUGH_DATA.
+ */
+"canplaythrough",
+/*
+ * The seeking IDL attribute changed to true and the seek operation is
+ * taking long enough that the user agent has time to fire the event.
+ */
+"seeking",
 // The seeking IDL attribute changed to false.
-'seeked',
-// Playback has stopped because the end of the media resource was reached.
-// currentTime equals the end of the media resource; ended is true.
-'ended',
-// Either the defaultPlaybackRate or the playbackRate attribute
-// has just been updated.
-'ratechange',
+"seeked",
+/*
+ * Playback has stopped because the end of the media resource was reached.
+ * currentTime equals the end of the media resource; ended is true.
+ */
+"ended",
+/*
+ * Either the defaultPlaybackRate or the playbackRate attribute
+ * has just been updated.
+ */
+"ratechange",
 // The duration attribute has just been updated.
-'durationchange',
-// Either the volume attribute or the muted attribute has changed.
-// Fired after the relevant attribute's setter has returned.
-'volumechange'
+"durationchange",
+/*
+ * Either the volume attribute or the muted attribute has changed.
+ * Fired after the relevant attribute's setter has returned.
+ */
+"volumechange"
 
 // commented out, happen too often
 
-// The current playback position changed as part of normal playback or in
-// an especially interesting way, for example discontinuously.
-// 'timeupdate'
-];
+/*
+ * The current playback position changed as part of normal playback or in
+ * an especially interesting way, for example discontinuously.
+ * 'timeupdate'
+ */];
 
-},{}],135:[function(_dereq_,module,exports){
+},{}],129:[function(_dereq_,module,exports){
 "use strict";
 
 var _interopRequireDefault = _dereq_("@babel/runtime/helpers/interopRequireDefault");
@@ -20366,8 +18831,8 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = _default;
 var _typeof2 = _interopRequireDefault(_dereq_("@babel/runtime/helpers/typeof"));
 var _safeJsonStringify = _interopRequireDefault(_dereq_("safe-json-stringify"));
-var DASH = '- ';
-var SEPARATOR = '<br/>' + DASH;
+var DASH = "- ";
+var SEPARATOR = "<br/>".concat(DASH);
 function arrayToString(array) {
   if (array && array.length > 0) {
     var lines = [];
@@ -20386,7 +18851,7 @@ function objectToString(object, options) {
   var sLines;
 
   // always ignore these
-  excludes.push('stack');
+  excludes.push("stack");
   if (propertyNames && propertyNames.length > 0) {
     var exclude = false;
     propertyNames.forEach(function (name) {
@@ -20394,8 +18859,10 @@ function objectToString(object, options) {
         exclude = excludes.indexOf(name) >= 0;
       }
       if (!exclude && object[name]) {
-        // this to cover this problem:
-        // https://github.com/binarykitchen/videomail-client/issues/157
+        /*
+         * this to cover this problem:
+         * https://github.com/binarykitchen/videomail-client/issues/157
+         */
         lines.push((0, _safeJsonStringify.default)(object[name]));
       }
     });
@@ -20409,20 +18876,20 @@ function objectToString(object, options) {
 }
 function _default(anything, options) {
   if (anything === null) {
-    return 'null';
-  } else if (typeof anything === 'undefined') {
-    return 'undefined';
-  } else if (typeof anything === 'string') {
+    return "null";
+  } else if (typeof anything === "undefined") {
+    return "undefined";
+  } else if (typeof anything === "string") {
     return anything;
   } else if (Array.isArray(anything)) {
     return arrayToString(anything);
-  } else if ((0, _typeof2.default)(anything) === 'object') {
+  } else if ((0, _typeof2.default)(anything) === "object") {
     return objectToString(anything, options);
   }
   return anything.toString();
 }
 
-},{"@babel/runtime/helpers/interopRequireDefault":1,"@babel/runtime/helpers/typeof":2,"safe-json-stringify":101}],136:[function(_dereq_,module,exports){
+},{"@babel/runtime/helpers/interopRequireDefault":4,"@babel/runtime/helpers/typeof":10,"safe-json-stringify":99}],130:[function(_dereq_,module,exports){
 "use strict";
 
 var _interopRequireDefault = _dereq_("@babel/runtime/helpers/interopRequireDefault");
@@ -20442,10 +18909,12 @@ function _default() {
   if (!window.screen) {
     window.screen = {};
   }
-  (0, _requestFrame.default)('native');
+  (0, _requestFrame.default)("native");
 
-  // avoids warning "navigator.mozGetUserMedia has been replaced by navigator.mediaDevices.getUserMedia",
-  // see https://github.com/binarykitchen/videomail-client/issues/79
+  /*
+   * avoids warning "navigator.mozGetUserMedia has been replaced by navigator.mediaDevices.getUserMedia",
+   * see https://github.com/binarykitchen/videomail-client/issues/79
+   */
   if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
     // do not shim
   } else {
@@ -20460,7 +18929,7 @@ function _default() {
   if (!navigator.connection) {
     navigator.connection = navigator.mozConnection || navigator.webkitConnection;
   }
-  var methods = ['debug', 'groupCollapsed', 'groupEnd', 'error', 'exception', 'info', 'log', 'trace', 'warn'];
+  var methods = ["debug", "groupCollapsed", "groupEnd", "error", "exception", "info", "log", "trace", "warn"];
   var console = {};
   if (window.console) {
     console = window.console;
@@ -20477,7 +18946,8 @@ function _default() {
   }
 }
 
-},{"@babel/runtime/helpers/interopRequireDefault":1,"classlist.js":16,"request-frame":99}],137:[function(_dereq_,module,exports){
+},{"@babel/runtime/helpers/interopRequireDefault":4,"classlist.js":23,"request-frame":97}],131:[function(_dereq_,module,exports){
+(function (global){(function (){
 "use strict";
 
 var _interopRequireDefault = _dereq_("@babel/runtime/helpers/interopRequireDefault");
@@ -20488,45 +18958,59 @@ exports.default = void 0;
 var _typeof2 = _interopRequireDefault(_dereq_("@babel/runtime/helpers/typeof"));
 var _resource = _interopRequireDefault(_dereq_("./../resource"));
 var _createError = _interopRequireDefault(_dereq_("create-error"));
+var _safeJsonStringify = _interopRequireDefault(_dereq_("safe-json-stringify"));
 var _pretty = _interopRequireDefault(_dereq_("./pretty"));
-var _util = _interopRequireDefault(_dereq_("util"));
 // https://github.com/tgriesser/create-error
 
-var VIDEOMAIL_ERR_NAME = 'Videomail Error';
+var VIDEOMAIL_ERR_NAME = "Videomail Error";
 var VideomailError = (0, _createError.default)(Error, VIDEOMAIL_ERR_NAME, {
+  title: undefined,
+  message: undefined,
   explanation: undefined,
   logLines: undefined,
-  useragent: undefined,
-  url: undefined,
-  stack: undefined
+  siteName: undefined,
+  cookie: undefined,
+  location: undefined,
+  err: undefined,
+  promise: undefined,
+  cause: undefined,
+  reason: undefined,
+  browser: undefined,
+  cpu: undefined,
+  device: undefined,
+  engine: undefined,
+  os: undefined,
+  screen: undefined,
+  orientation: undefined
 });
 
 // shim pretty to exclude stack always
 var pretty = function pretty(anything) {
   return (0, _pretty.default)(anything, {
-    excludes: ['stack']
+    excludes: ["stack"]
   });
 };
 
 // static and public attribute of this class
-VideomailError.PERMISSION_DENIED = 'PERMISSION_DENIED';
-VideomailError.NOT_ALLOWED_ERROR = 'NotAllowedError';
-VideomailError.NOT_CONNECTED = 'Not connected';
-VideomailError.DOM_EXCEPTION = 'DOMException';
-VideomailError.STARTING_FAILED = 'Starting video failed';
-VideomailError.MEDIA_DEVICE_NOT_SUPPORTED = 'MediaDeviceNotSupported';
-VideomailError.BROWSER_PROBLEM = 'browser-problem';
-VideomailError.WEBCAM_PROBLEM = 'webcam-problem';
-VideomailError.IOS_PROBLEM = 'ios-problem';
-VideomailError.OVERCONSTRAINED = 'OverconstrainedError';
-VideomailError.NOT_FOUND_ERROR = 'NotFoundError';
-VideomailError.NOT_READABLE_ERROR = 'NotReadableError';
-VideomailError.SECURITY_ERROR = 'SecurityError';
-VideomailError.TRACK_START_ERROR = 'TrackStartError';
-VideomailError.INVALID_STATE_ERROR = 'InvalidStateError';
+VideomailError.PERMISSION_DENIED = "PERMISSION_DENIED";
+VideomailError.NOT_ALLOWED_ERROR = "NotAllowedError";
+VideomailError.NOT_CONNECTED = "Not connected";
+VideomailError.DOM_EXCEPTION = "DOMException";
+VideomailError.STARTING_FAILED = "Starting video failed";
+VideomailError.MEDIA_DEVICE_NOT_SUPPORTED = "MediaDeviceNotSupported";
+VideomailError.BROWSER_PROBLEM = "browser-problem";
+VideomailError.WEBCAM_PROBLEM = "webcam-problem";
+VideomailError.IOS_PROBLEM = "ios-problem";
+VideomailError.OVERCONSTRAINED = "OverconstrainedError";
+VideomailError.NOT_FOUND_ERROR = "NotFoundError";
+VideomailError.NOT_READABLE_ERROR = "NotReadableError";
+VideomailError.SECURITY_ERROR = "SecurityError";
+VideomailError.TRACK_START_ERROR = "TrackStartError";
+VideomailError.INVALID_STATE_ERROR = "InvalidStateError";
 
 // static function to convert an error into a videomail error
 VideomailError.create = function (err, explanation, options, parameters) {
+  var _err$constructor;
   if (err && err.name === VIDEOMAIL_ERR_NAME) {
     return err;
   }
@@ -20534,26 +19018,23 @@ VideomailError.create = function (err, explanation, options, parameters) {
     options = explanation;
     explanation = undefined;
   }
-  options = options || {};
-  parameters = parameters || {};
-
-  // be super robust
-  var debug = options && options.debug || console.log;
+  options || (options = {});
+  parameters || (parameters = {});
   var audioEnabled = options && options.isAudioEnabled && options.isAudioEnabled();
-  debug('VideomailError: create()', err, explanation || '(no explanation set)');
   var classList = parameters.classList || [];
 
-  // Require Browser here, not at the top of the file to avoid
-  // recursion. Because the Browser class is requiring this file as well.
-  var Browser = _dereq_('./browser').default;
+  /*
+   * Require Browser here, not at the top of the file to avoid
+   * recursion. Because the Browser class is requiring this file as well.
+   */
+  var Browser = _dereq_("./browser").default;
   var browser = new Browser(options);
   var errType;
   var message;
-  var stack;
 
   // whole code is ugly because all browsers behave so differently :(
 
-  if ((0, _typeof2.default)(err) === 'object') {
+  if ((0, _typeof2.default)(err) === "object") {
     if (err.name === VideomailError.TRACK_START_ERROR) {
       errType = VideomailError.TRACK_START_ERROR;
     } else if (err.name === VideomailError.SECURITY_ERROR) {
@@ -20573,11 +19054,11 @@ VideomailError.create = function (err, explanation, options, parameters) {
       }
     } else if (err.constructor && err.constructor.name === VideomailError.OVERCONSTRAINED) {
       errType = VideomailError.OVERCONSTRAINED;
-    } else if (err.message === VideomailError.STARTING_FAILED) {
-      errType = err.message;
+    } else if (err.explanation === VideomailError.STARTING_FAILED) {
+      errType = err.explanation;
     } else if (err.name) {
       errType = err.name;
-    } else if (err.type === 'error' && err.target.bufferedAmount === 0) {
+    } else if (err.type === "error" && err.target.bufferedAmount === 0) {
       errType = VideomailError.NOT_CONNECTED;
     }
   } else if (err === VideomailError.NOT_CONNECTED) {
@@ -20585,178 +19066,175 @@ VideomailError.create = function (err, explanation, options, parameters) {
   } else {
     errType = err;
   }
-  if (err && err.stack) {
-    stack = err.stack;
-  } else {
-    stack = new Error().stack;
-  }
   switch (errType) {
     case VideomailError.SECURITY_ERROR:
-      message = 'The operation was insecure';
-      explanation = 'Probably you have disallowed Cookies for this page?';
+      message = "The operation was insecure";
+      explanation = "Probably you have disallowed Cookies for this page?";
       classList.push(VideomailError.BROWSER_PROBLEM);
       break;
     case VideomailError.OVERCONSTRAINED:
-      message = 'Invalid webcam constraints';
+      message = "Invalid webcam constraints";
       if (err.constraint) {
-        if (err.constraint === 'width') {
-          explanation = 'Your webcam does not meet the width requirement.';
+        if (err.constraint === "width") {
+          explanation = "Your webcam does not meet the width requirement.";
         } else {
-          explanation = 'Unmet constraint: ' + err.constraint;
+          explanation = "Unmet constraint: ".concat(err.constraint);
         }
       } else {
         explanation = err.toString();
       }
       break;
-    case 'MediaDeviceFailedDueToShutdown':
-      message = 'Webcam is shutting down';
-      explanation = 'This happens your webcam is already switching off and not giving you permission to use it.';
+    case "MediaDeviceFailedDueToShutdown":
+      message = "Webcam is shutting down";
+      explanation = "This happens your webcam is already switching off and not giving you permission to use it.";
       break;
-    case 'SourceUnavailableError':
-      message = 'Source of your webcam cannot be accessed';
-      explanation = 'Probably it is locked from another process or has a hardware error.';
-      if (err.message) {
-        err.message += ' Details: ' + err.message;
+    case "SourceUnavailableError":
+      message = "Source of your webcam cannot be accessed";
+      explanation = "Probably it is locked from another process or has a hardware error.";
+      if (err.explanation) {
+        err.explanation += " Details: ".concat(err.explanation);
       }
       break;
     case VideomailError.NOT_FOUND_ERROR:
-    case 'NO_DEVICES_FOUND':
+    case "NO_DEVICES_FOUND":
       if (audioEnabled) {
-        message = 'No webcam nor microphone found';
-        explanation = 'Your browser cannot find a webcam with microphone attached to your machine.';
+        message = "No webcam nor microphone found";
+        explanation = "Your browser cannot find a webcam with microphone attached to your machine.";
       } else {
-        message = 'No webcam found';
-        explanation = 'Your browser cannot find a webcam attached to your machine.';
+        message = "No webcam found";
+        explanation = "Your browser cannot find a webcam attached to your machine.";
       }
       classList.push(VideomailError.WEBCAM_PROBLEM);
       break;
-    case 'PermissionDismissedError':
+    case "PermissionDismissedError":
       message = "Ooops, you didn't give me any permissions?";
-      explanation = 'Looks like you skipped the webcam permission dialogue.<br/>' + 'Please grant access next time the dialogue appears.';
+      explanation = "Looks like you skipped the webcam permission dialogue.<br/>" + "Please grant access next time the dialogue appears.";
       classList.push(VideomailError.WEBCAM_PROBLEM);
       break;
     case VideomailError.NOT_ALLOWED_ERROR:
     case VideomailError.PERMISSION_DENIED:
-    case 'PermissionDeniedError':
-      message = 'Permission denied';
-      explanation = 'Cannot access your webcam. This can have two reasons:<br/>' + 'a) you blocked access to webcam; or<br/>' + 'b) your webcam is already in use.';
+    case "PermissionDeniedError":
+      message = "Permission denied";
+      explanation = "Cannot access your webcam. This can have two reasons:<br/>" + "a) you blocked access to webcam; or<br/>" + "b) your webcam is already in use.";
       classList.push(VideomailError.WEBCAM_PROBLEM);
       break;
-    case 'HARDWARE_UNAVAILABLE':
-      message = 'Webcam is unavailable';
-      explanation = 'Maybe it is already busy in another window?';
+    case "HARDWARE_UNAVAILABLE":
+      message = "Webcam is unavailable";
+      explanation = "Maybe it is already busy in another window?";
       if (browser.isChromeBased() || browser.isFirefox()) {
-        explanation += ' Or you have to allow access above?';
+        explanation += " Or you have to allow access above?";
       }
       classList.push(VideomailError.WEBCAM_PROBLEM);
       break;
     case VideomailError.NOT_CONNECTED:
-      message = 'Unable to connect';
-      explanation = 'Either the videomail server or your connection is down. ' + 'Trying to reconnect every few seconds …';
+      message = "Unable to connect";
+      explanation = "Either the videomail server or your connection is down. " + "Trying to reconnect every few seconds …";
       break;
-    case 'NO_VIDEO_FEED':
-      message = 'No video feed found!';
-      explanation = 'Your webcam is already used in another browser.';
+    case "NO_VIDEO_FEED":
+      message = "No video feed found!";
+      explanation = "Your webcam is already used in another browser.";
       classList.push(VideomailError.WEBCAM_PROBLEM);
       break;
     case VideomailError.STARTING_FAILED:
-      message = 'Starting video failed';
-      explanation = 'Most likely this happens when the webam is already active in another browser.';
+      message = "Starting video failed";
+      explanation = "Most likely this happens when the webcam is already active in another browser";
       classList.push(VideomailError.WEBCAM_PROBLEM);
       break;
-    case 'DevicesNotFoundError':
-      message = 'No available webcam could be found';
-      explanation = 'Looks like you do not have any webcam attached to your machine; or ' + 'the one you plugged in is already used.';
+    case "DevicesNotFoundError":
+      message = "No available webcam could be found";
+      explanation = "Looks like you do not have any webcam attached to your machine; or " + "the one you plugged in is already used.";
       classList.push(VideomailError.WEBCAM_PROBLEM);
       break;
     case VideomailError.NOT_READABLE_ERROR:
     case VideomailError.TRACK_START_ERROR:
-      message = 'No access to webcam';
-      explanation = 'A hardware error occurred which prevented access to your webcam.';
+      message = "No access to webcam";
+      explanation = "A hardware error occurred which prevented access to your webcam";
       classList.push(VideomailError.WEBCAM_PROBLEM);
       break;
     case VideomailError.INVALID_STATE_ERROR:
-      message = 'Invalid state';
-      explanation = 'Video recording stream from your webcam already has finished.';
+      message = "Invalid state";
+      explanation = "Video recording stream from your webcam already has finished";
       classList.push(VideomailError.WEBCAM_PROBLEM);
       break;
     case VideomailError.DOM_EXCEPTION:
       switch (err.code) {
         case 8:
-          message = 'Requested webcam not found';
-          explanation = 'A webcam is needed but could not be found.';
+          message = "Requested webcam not found";
+          explanation = "A webcam is needed but could not be found";
           classList.push(VideomailError.WEBCAM_PROBLEM);
           break;
         case 9:
           {
-            var newUrl = 'https:' + window.location.href.substring(window.location.protocol.length);
-            message = 'Security upgrade needed';
-            explanation = 'Click <a href="' + newUrl + '">here</a> to switch to HTTPs which is more safe ' + ' and enables encrypted videomail transfers.';
+            var newUrl = "https:".concat(window.location.href.substring(window.location.protocol.length));
+            message = "Security upgrade needed";
+            explanation = "Click <a href=\"".concat(newUrl, "\">here</a> to switch to HTTPs which is more safe ") + " and enables encrypted videomail transfers.";
             classList.push(VideomailError.BROWSER_PROBLEM);
             break;
           }
         case 11:
-          message = 'Invalid State';
-          explanation = 'The object is in an invalid, unusable state.';
+          message = "Invalid State";
+          explanation = "The object is in an invalid, unusable state";
           classList.push(VideomailError.BROWSER_PROBLEM);
           break;
         default:
-          message = 'DOM Exception';
+          message = "DOM Exception";
           explanation = pretty(err);
           classList.push(VideomailError.BROWSER_PROBLEM);
           break;
       }
       break;
 
-    // Chrome has a weird problem where if you try to do a getUserMedia request too early, it
-    // can return a MediaDeviceNotSupported error (even though nothing is wrong and permission
-    // has been granted). Look at userMediaErrorCallback() in recorder, there we do not
-    // emit those kind of errors further and just retry.
-    //
-    // but for whatever reasons, if it happens to reach this code, then investigate this further.
+    /*
+     * Chrome has a weird problem where if you try to do a getUserMedia request too early, it
+     * can return a MediaDeviceNotSupported error (even though nothing is wrong and permission
+     * has been granted). Look at userMediaErrorCallback() in recorder, there we do not
+     * emit those kind of errors further and just retry.
+     *
+     * but for whatever reasons, if it happens to reach this code, then investigate this further.
+     */
     case VideomailError.MEDIA_DEVICE_NOT_SUPPORTED:
-      message = 'Media device not supported';
+      message = "Media device not supported";
       explanation = pretty(err);
       break;
     default:
       {
         var originalExplanation = explanation;
-        if (explanation && (0, _typeof2.default)(explanation) === 'object') {
+        if (explanation && (0, _typeof2.default)(explanation) === "object") {
           explanation = pretty(explanation);
         }
 
-        // it can be that explanation itself is an error object
-        // error objects can be prettified to undefined sometimes
+        /*
+         * it can be that explanation itself is an error object
+         * error objects can be prettified to undefined sometimes
+         */
         if (!explanation && originalExplanation) {
-          if (originalExplanation.message) {
-            explanation = originalExplanation.message;
+          if (originalExplanation.explanation) {
+            explanation = originalExplanation.explanation;
           } else {
             // tried toString before but nah
-            explanation = 'Inspected: ' + _util.default.inspect(originalExplanation, {
-              showHidden: true
-            });
+            explanation = "Inspected: ".concat((0, _safeJsonStringify.default)(originalExplanation));
           }
         }
         if (err) {
-          if (typeof err === 'string') {
+          if (typeof err === "string") {
             message = err;
           } else {
             if (err.message) {
-              message = pretty(err.message);
+              message = pretty(err.message) + " (pretty)";
             }
             if (err.explanation) {
               if (!explanation) {
                 explanation = pretty(err.explanation);
               } else {
-                explanation += ';<br/>' + pretty(err.explanation);
+                explanation += ";<br/>".concat(pretty(err.explanation));
               }
             }
             if (err.details) {
               var details = pretty(err.details);
               if (!explanation) {
                 explanation = details;
-              } else {
-                explanation += ';<br/>' + details;
+              } else if (details) {
+                explanation += ";<br/>".concat(details);
               }
             }
           }
@@ -20765,11 +19243,11 @@ VideomailError.create = function (err, explanation, options, parameters) {
         // for weird, undefined cases
         if (!message) {
           if (errType) {
-            message = errType;
+            message = errType + " (weird)";
           }
           if (!explanation && err) {
             explanation = pretty(err, {
-              excludes: ['stack']
+              excludes: ["stack"]
             });
           }
 
@@ -20785,30 +19263,40 @@ VideomailError.create = function (err, explanation, options, parameters) {
   if (options.logger && options.logger.getLines) {
     logLines = options.logger.getLines();
   }
-  if (stack) {
-    message = new Error(message);
-    message.stack = stack;
-  }
-  var errCode = 'none';
-  if (err) {
-    errCode = 'code=' + (err.code ? err.code : 'undefined');
-    errCode += ', type=' + (err.type ? err.type : 'undefined');
-    errCode += ', name=' + (err.name ? err.name : 'undefined');
-    errCode += ', message=' + (err.message ? err.message : 'undefined');
-  }
-  var videomailError = new VideomailError(message, {
+
+  // be super robust
+  var debug = options && options.debug || console.log;
+  debug("VideomailError: create()", message, explanation || "(no explanation set)");
+  var usefulClientData = browser.getUsefulData();
+  var cookies = global.document.cookie.split("; ");
+  var errData = {
+    title: "videomail-client error",
+    message: message,
     explanation: explanation,
     logLines: logLines,
-    client: browser.getUsefulData(),
-    url: window.location.href,
     siteName: options.siteName,
-    code: errCode,
-    stack: stack // have to assign it manually again because it is kinda protected
-  });
+    browser: usefulClientData.browser,
+    cpu: usefulClientData.cpu,
+    device: usefulClientData.device,
+    engine: usefulClientData.engine,
+    os: usefulClientData.os,
+    location: window.location.href,
+    cookie: cookies.length > 0 ? cookies.join(",\n") : undefined,
+    screen: [screen.width, screen.height, screen.colorDepth].join("×"),
+    orientation: typeof screen.orientation === "string" ? screen.orientation : screen.orientation.type.toString(),
+    // Consider removing later once sorted
+    errNo: err === null || err === void 0 ? void 0 : err.errno,
+    errCode: err === null || err === void 0 ? void 0 : err.code,
+    errName: err === null || err === void 0 ? void 0 : err.name,
+    errType: err === null || err === void 0 ? void 0 : err.type,
+    errConstraint: err === null || err === void 0 ? void 0 : err.constraint,
+    errConstructorName: err === null || err === void 0 || (_err$constructor = err.constructor) === null || _err$constructor === void 0 ? void 0 : _err$constructor.name
+  };
+  var videomailError = new VideomailError(err instanceof Error ? err : message, errData);
   var resource;
   var reportErrors = false;
   if (options.reportErrors) {
-    if (typeof options.reportErrors === 'function') {
+    if (typeof options.reportErrors === "function") {
       reportErrors = options.reportErrors(videomailError);
     } else {
       reportErrors = options.reportErrors;
@@ -20820,7 +19308,7 @@ VideomailError.create = function (err, explanation, options, parameters) {
   if (resource) {
     resource.reportError(videomailError, function (err2) {
       if (err2) {
-        console.error('Unable to report error', err2);
+        console.error("Unable to report error", err2);
       }
     });
   }
@@ -20850,7 +19338,8 @@ VideomailError.create = function (err, explanation, options, parameters) {
 };
 var _default = exports.default = VideomailError;
 
-},{"./../resource":128,"./browser":130,"./pretty":135,"@babel/runtime/helpers/interopRequireDefault":1,"@babel/runtime/helpers/typeof":2,"create-error":20,"util":116}],138:[function(_dereq_,module,exports){
+}).call(this)}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{"./../resource":121,"./browser":124,"./pretty":129,"@babel/runtime/helpers/interopRequireDefault":4,"@babel/runtime/helpers/typeof":10,"create-error":27,"safe-json-stringify":99}],132:[function(_dereq_,module,exports){
 "use strict";
 
 var _interopRequireDefault = _dereq_("@babel/runtime/helpers/interopRequireDefault");
@@ -20861,11 +19350,11 @@ exports.default = void 0;
 var _contains = _interopRequireDefault(_dereq_("contains"));
 var _hidden = _interopRequireDefault(_dereq_("hidden"));
 var _hyperscript = _interopRequireDefault(_dereq_("hyperscript"));
-var _util = _interopRequireDefault(_dereq_("util"));
+var _inherits = _interopRequireDefault(_dereq_("inherits"));
 var _events = _interopRequireDefault(_dereq_("../events"));
 var _eventEmitter = _interopRequireDefault(_dereq_("../util/eventEmitter"));
 var Buttons = function Buttons(container, options) {
-  _eventEmitter.default.call(this, options, 'Buttons');
+  _eventEmitter.default.call(this, options, "Buttons");
   var self = this;
   var debug = options.debug;
   var buttonsElement;
@@ -20900,7 +19389,7 @@ var Buttons = function Buttons(container, options) {
       elements = [elements];
     }
     elements && elements.forEach(function (element) {
-      isShown = isShown && element && !(0, _hidden.default)(element);
+      isShown && (isShown = element && !(0, _hidden.default)(element));
     });
     return isShown;
   }
@@ -20911,10 +19400,10 @@ var Buttons = function Buttons(container, options) {
     elements && elements.forEach(function (element) {
       // https://github.com/binarykitchen/videomail-client/issues/148
       if (element) {
-        if (element.tagName === 'INPUT' || element.tagName === 'BUTTON') {
+        if (element.tagName === "INPUT" || element.tagName === "BUTTON") {
           element.disabled = true;
         } else {
-          element.classList.add('disabled');
+          element.classList.add("disabled");
         }
       }
     });
@@ -20926,10 +19415,10 @@ var Buttons = function Buttons(container, options) {
     elements && elements.forEach(function (element) {
       // https://github.com/binarykitchen/videomail-client/issues/148
       if (element) {
-        if (element.tagName === 'INPUT' || element.tagName === 'BUTTON') {
+        if (element.tagName === "INPUT" || element.tagName === "BUTTON") {
           element.disabled = false;
         } else {
-          element.classList.remove('disabled');
+          element.classList.remove("disabled");
         }
       }
     });
@@ -20941,7 +19430,7 @@ var Buttons = function Buttons(container, options) {
     if (type) {
       buttonElement.type = type;
     } else if (!buttonElement.type) {
-      buttonElement.type = 'button';
+      buttonElement.type = "button";
     }
     !show && hide(buttonElement);
     return buttonElement;
@@ -20966,13 +19455,13 @@ var Buttons = function Buttons(container, options) {
       radioButtonElement = document.getElementById(options.id);
     }
     if (!radioButtonElement) {
-      radioButtonElement = (0, _hyperscript.default)('input#' + options.id, {
-        type: 'radio',
+      radioButtonElement = (0, _hyperscript.default)("input#".concat(options.id), {
+        type: "radio",
         name: options.name,
         value: options.value,
         checked: options.checked
       });
-      radioButtonGroup = (0, _hyperscript.default)('span.radioGroup', radioButtonElement, (0, _hyperscript.default)('label', {
+      radioButtonGroup = (0, _hyperscript.default)("span.radioGroup", radioButtonElement, (0, _hyperscript.default)("label", {
         htmlFor: options.id
       }, options.label));
 
@@ -20987,7 +19476,7 @@ var Buttons = function Buttons(container, options) {
       radioButtonElement.onchange = options.changeHandler;
     }
     disable(radioButtonElement);
-    return [radioButtonElement, radioButtonGroup];
+    return radioButtonElement;
   }
   function makeButton(buttonClass, text, clickHandler, show, id, type, selector) {
     var disabled = arguments.length > 7 && arguments[7] !== undefined ? arguments[7] : true;
@@ -20997,13 +19486,13 @@ var Buttons = function Buttons(container, options) {
     } else if (selector) {
       buttonElement = document.querySelector(selector);
     } else {
-      buttonElement = buttonsElement.querySelector('.' + buttonClass);
+      buttonElement = buttonsElement.querySelector(".".concat(buttonClass));
     }
     if (!buttonElement) {
       if (options.selectors.buttonClass) {
-        buttonClass += '.' + options.selectors.buttonClass;
+        buttonClass += ".".concat(options.selectors.buttonClass);
       }
-      buttonElement = (0, _hyperscript.default)('button.' + buttonClass);
+      buttonElement = (0, _hyperscript.default)("button.".concat(buttonClass));
       buttonElement = adjustButton(buttonElement, show, type, disabled);
       buttonElement.innerHTML = text;
 
@@ -21024,13 +19513,15 @@ var Buttons = function Buttons(container, options) {
   function buildButtons() {
     if (!options.disableSubmit) {
       if (!submitButton) {
-        submitButton = makeButton(options.selectors.submitButtonClass, 'Submit', null, true, options.selectors.submitButtonId, 'submit', options.selectors.submitButtonSelector, options.enableAutoValidation);
+        submitButton = makeButton(options.selectors.submitButtonClass, "Submit", null, true, options.selectors.submitButtonId, "submit", options.selectors.submitButtonSelector, options.enableAutoValidation);
       } else {
         disable(submitButton);
       }
 
-      // no need to listen to the submit event when it's already listened
-      // within the form element class
+      /*
+       * no need to listen to the submit event when it's already listened
+       * within the form element class
+       */
       if (!container.hasForm() && submitButton) {
         replaceClickHandler(submitButton, submit);
       }
@@ -21043,15 +19534,17 @@ var Buttons = function Buttons(container, options) {
       resumeButton = makeButton(options.selectors.resumeButtonClass, options.text.buttons.resume, container.resume, false);
     }
 
-    // show stop only when pause is enabled - looks better that way otherwise button
-    // move left and right between record and stop (preview)
+    /*
+     * show stop only when pause is enabled - looks better that way otherwise button
+     * move left and right between record and stop (preview)
+     */
     previewButton = makeButton(options.selectors.previewButtonClass, options.text.buttons.preview, container.stop, false);
     recordAgainButton = makeButton(options.selectors.recordAgainButtonClass, options.text.buttons.recordAgain, recordAgain, false);
     if (options.audio && options.audio.switch) {
       audioOffRadioPair = makeRadioButtonPair({
-        id: 'audioOffOption',
-        name: 'audio',
-        value: 'off',
+        id: "audioOffOption",
+        name: "audio",
+        value: "off",
         label: options.text.audioOff,
         checked: !options.isAudioEnabled(),
         changeHandler: function changeHandler() {
@@ -21059,9 +19552,9 @@ var Buttons = function Buttons(container, options) {
         }
       });
       audioOnRadioPair = makeRadioButtonPair({
-        id: 'audioOnOption',
-        name: 'audio',
-        value: 'on',
+        id: "audioOnOption",
+        name: "audio",
+        value: "on",
         label: options.text.audioOn,
         checked: options.isAudioEnabled(),
         changeHandler: function changeHandler() {
@@ -21084,14 +19577,6 @@ var Buttons = function Buttons(container, options) {
     if (!options.enableAutoValidation) {
       enable(submitButton);
     }
-    if (!params.recordWhenReady) {
-      if (isShown(audioOnRadioPair)) {
-        enable(audioOnRadioPair);
-      }
-      if (isShown(audioOffRadioPair)) {
-        enable(audioOffRadioPair);
-      }
-    }
   }
   function onGoingBack() {
     hide(recordAgainButton);
@@ -21108,6 +19593,14 @@ var Buttons = function Buttons(container, options) {
     }
     if (options.enableAutoValidation) {
       disable(submitButton);
+    }
+    if (!params.recordWhenReady) {
+      if (isShown(audioOnRadioPair)) {
+        enable(audioOnRadioPair);
+      }
+      if (isShown(audioOffRadioPair)) {
+        enable(audioOffRadioPair);
+      }
     }
   }
   function onResetting() {
@@ -21149,8 +19642,10 @@ var Buttons = function Buttons(container, options) {
     show(previewButton);
   }
   function onRecording(framesCount) {
-    // it is possible to hide while recording, hence
-    // check framesCount first (coming from recorder)
+    /*
+     * it is possible to hide while recording, hence
+     * check framesCount first (coming from recorder)
+     */
     if (framesCount > 1) {
       onFirstFrameSent();
     } else {
@@ -21180,6 +19675,7 @@ var Buttons = function Buttons(container, options) {
     disable(audioOnRadioPair);
   }
   function onSubmitting() {
+    debug("Buttons: onSubmitting()");
     disable(submitButton);
     disable(recordAgainButton);
   }
@@ -21204,13 +19700,17 @@ var Buttons = function Buttons(container, options) {
     hide(previewButton);
     hide(recordAgainButton);
     hide(resumeButton);
+    hide(audioOnRadioPair);
+    hide(audioOffRadioPair);
   }
   function onEnablingAudio() {
+    debug("Buttons: onEnablingAudio()");
     disable(recordButton);
     disable(audioOnRadioPair);
     disable(audioOffRadioPair);
   }
   function onDisablingAudio() {
+    debug("Buttons: onDisablingAudio()");
     disable(recordButton);
     disable(audioOnRadioPair);
     disable(audioOffRadioPair);
@@ -21231,7 +19731,7 @@ var Buttons = function Buttons(container, options) {
     container.record(params);
   }
   function initEvents() {
-    debug('Buttons: initEvents()');
+    debug("Buttons: initEvents()");
     self.on(_events.default.USER_MEDIA_READY, function (params) {
       if (!params.switchingFacingMode) {
         onUserMediaReady(params);
@@ -21280,24 +19780,39 @@ var Buttons = function Buttons(container, options) {
           enable(recordButton);
         }
       }
+    }).on(_events.default.DISCONNECTED, function () {
+      disable(recordButton);
+      disable(audioOnRadioPair);
+      disable(audioOffRadioPair);
     }).on(_events.default.ERROR, function (err) {
-      // since https://github.com/binarykitchen/videomail-client/issues/60
-      // we hide areas to make it easier for the user
+      /*
+       * since https://github.com/binarykitchen/videomail-client/issues/60
+       * we hide areas to make it easier for the user
+       */
       if (err.hideButtons && err.hideButtons() && options.adjustFormOnBrowserError) {
         self.hide();
       }
     });
   }
   this.reset = function () {
-    options.debug('Buttons: reset()');
+    options.debug("Buttons: reset()");
     disable(pauseButton);
     disable(resumeButton);
     disable(recordButton);
     disable(previewButton);
     disable(recordAgainButton);
+    disable(audioOnRadioPair);
+    disable(audioOffRadioPair);
   };
   this.isRecordAgainButtonEnabled = function () {
     return !recordAgainButton.disabled;
+  };
+  this.isReady = function () {
+    if (!recordButton) {
+      // No recordButton? Ok, must be in playerOnly mode. So, not ready for recording
+      return false;
+    }
+    return this.isRecordButtonEnabled();
   };
   this.isRecordButtonEnabled = function () {
     return !recordButton.disabled;
@@ -21309,9 +19824,9 @@ var Buttons = function Buttons(container, options) {
     return submitButton;
   };
   this.build = function () {
-    buttonsElement = container.querySelector('.' + options.selectors.buttonsClass);
+    buttonsElement = container.querySelector(".".concat(options.selectors.buttonsClass));
     if (!buttonsElement) {
-      buttonsElement = (0, _hyperscript.default)('div.' + options.selectors.buttonsClass);
+      buttonsElement = (0, _hyperscript.default)("div.".concat(options.selectors.buttonsClass));
       container.appendChild(buttonsElement);
     }
     buildButtons();
@@ -21319,7 +19834,13 @@ var Buttons = function Buttons(container, options) {
     built = true;
   };
   this.unload = function () {
-    built = false;
+    if (built) {
+      // Disables all buttons
+      self.reset();
+      debug("Buttons: unload()");
+      self.removeAllListeners();
+      built = false;
+    }
   };
   this.hide = function (params) {
     hide(buttonsElement);
@@ -21330,6 +19851,8 @@ var Buttons = function Buttons(container, options) {
       hide(previewButton);
       hide(recordAgainButton);
       hide(submitButton);
+      hide(audioOnRadioPair);
+      hide(audioOffRadioPair);
     }
   };
   this.show = function () {
@@ -21339,10 +19862,10 @@ var Buttons = function Buttons(container, options) {
     return container.isCountingDown();
   };
 };
-_util.default.inherits(Buttons, _eventEmitter.default);
+(0, _inherits.default)(Buttons, _eventEmitter.default);
 var _default = exports.default = Buttons;
 
-},{"../events":126,"../util/eventEmitter":132,"@babel/runtime/helpers/interopRequireDefault":1,"contains":18,"hidden":56,"hyperscript":58,"util":116}],139:[function(_dereq_,module,exports){
+},{"../events":119,"../util/eventEmitter":126,"@babel/runtime/helpers/interopRequireDefault":4,"contains":25,"hidden":61,"hyperscript":63,"inherits":66}],133:[function(_dereq_,module,exports){
 "use strict";
 
 var _interopRequireDefault = _dereq_("@babel/runtime/helpers/interopRequireDefault");
@@ -21350,11 +19873,12 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
+var _defineProperty2 = _interopRequireDefault(_dereq_("@babel/runtime/helpers/defineProperty"));
 var _documentVisibility = _interopRequireDefault(_dereq_("document-visibility"));
-var _elementClosest = _interopRequireDefault(_dereq_("element-closest"));
 var _hidden = _interopRequireDefault(_dereq_("hidden"));
 var _insertCss = _interopRequireDefault(_dereq_("insert-css"));
-var _util = _interopRequireDefault(_dereq_("util"));
+var _safeJsonStringify = _interopRequireDefault(_dereq_("safe-json-stringify"));
+var _inherits = _interopRequireDefault(_dereq_("inherits"));
 var _mainMinCss = _interopRequireDefault(_dereq_("../../styles/css/main.min.css.js"));
 var _events = _interopRequireDefault(_dereq_("../events"));
 var _resource = _interopRequireDefault(_dereq_("../resource"));
@@ -21365,17 +19889,14 @@ var _dimension = _interopRequireDefault(_dereq_("./dimension"));
 var _form = _interopRequireDefault(_dereq_("./form"));
 var _optionsWrapper = _interopRequireDefault(_dereq_("./optionsWrapper"));
 var _visuals = _interopRequireDefault(_dereq_("./visuals"));
-// needed for IE 11
-
-(0, _elementClosest.default)(window);
 var Container = function Container(options) {
-  _eventEmitter.default.call(this, options, 'Container');
+  _eventEmitter.default.call(this, options, "Container");
   var self = this;
   var visibility = (0, _documentVisibility.default)();
   var visuals = new _visuals.default(this, options);
   var buttons = new _buttons.default(this, options);
   var resource = new _resource.default(options);
-  var htmlElement = document && document.querySelector && document.querySelector('html');
+  var htmlElement = document.querySelector("html");
   var debug = options.debug;
   var hasError = false;
   var submitted = false;
@@ -21383,19 +19904,19 @@ var Container = function Container(options) {
   var containerElement;
   var built;
   var form;
-  function prependDefaultCss() {
-    (0, _insertCss.default)(_mainMinCss.default, {
-      prepend: true
-    });
-  }
+  validateOptions();
 
   // since https://github.com/binarykitchen/videomail-client/issues/87
   function findParentFormElement() {
-    return containerElement.closest('form');
+    if (!containerElement) {
+      // Must be in player only mode
+      return;
+    }
+    return containerElement.closest("form");
   }
   function getFormElement() {
     var formElement;
-    if (containerElement.tagName === 'FORM') {
+    if (containerElement && containerElement.tagName === "FORM") {
       formElement = containerElement;
     } else if (options.selectors.formId) {
       formElement = document.getElementById(options.selectors.formId);
@@ -21404,27 +19925,31 @@ var Container = function Container(options) {
     }
     return formElement;
   }
-  function buildForm() {
+  this.buildForm = function () {
+    if (form) {
+      return; // already built
+    }
     var formElement = getFormElement();
     if (formElement) {
-      debug('Container: buildForm()');
       form = new _form.default(self, formElement, options);
       var submitButton = form.findSubmitButton();
-      submitButton && buttons.setSubmitButton(submitButton);
+      if (submitButton) {
+        buttons.setSubmitButton(submitButton);
+      }
       form.build();
     }
-  }
+  };
   function buildChildren() {
-    debug('Container: buildChildren()');
-    if (!containerElement.classList) {
-      self.emit(_events.default.ERROR, _videomailError.default.create('Sorry, your browser is too old!', options));
-    } else {
-      containerElement.classList.add('videomail');
-      if (!options.playerOnly) {
-        buttons.build();
-      }
-      visuals.build();
+    var playerOnly = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+    var replayParentElement = arguments.length > 1 ? arguments[1] : undefined;
+    debug("Container: buildChildren (playerOnly = ".concat(playerOnly).concat(replayParentElement ? ", replayParentElement=\"".concat(replayParentElement, "\"") : "", ")"));
+    if (containerElement) {
+      containerElement.classList.add(options.selectors.containerClass);
     }
+    if (!playerOnly) {
+      buttons.build();
+    }
+    visuals.build(playerOnly, replayParentElement);
   }
   function processError(err) {
     hasError = true;
@@ -21440,11 +19965,16 @@ var Container = function Container(options) {
     }
   }
   function initEvents() {
-    debug('Container: initEvents()');
-    window.addEventListener('beforeunload', function (e) {
-      self.unload(e);
-    });
-    if (!options.playerOnly) {
+    var playerOnly = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+    debug("Container: initEvents (playerOnly = ".concat(playerOnly, ")"));
+    if (options.enableAutoUnload) {
+      window.addEventListener("beforeunload", function (e) {
+        self.unload(e);
+      }, {
+        once: true
+      });
+    }
+    if (!playerOnly) {
       visibility.onChange(function (visible) {
         // built? see https://github.com/binarykitchen/videomail.io/issues/326
         if (built) {
@@ -21455,7 +19985,7 @@ var Container = function Container(options) {
             self.emit(_events.default.VISIBLE);
           } else {
             if (options.isAutoPauseEnabled() && (self.isCountingDown() || self.isRecording())) {
-              self.pause('document invisible');
+              self.pause("document invisible");
             }
             self.emit(_events.default.INVISIBLE);
           }
@@ -21463,14 +19993,14 @@ var Container = function Container(options) {
       });
     }
     if (options.enableSpace) {
-      if (!options.playerOnly) {
-        window.addEventListener('keypress', function (e) {
+      if (!playerOnly) {
+        window.addEventListener("keypress", function (e) {
           var tagName = e.target.tagName;
-          var isEditable = e.target.isContentEditable || e.target.contentEditable === 'true' || e.target.contentEditable === true;
+          var isEditable = e.target.isContentEditable || e.target.contentEditable === "true" || e.target.contentEditable === true;
 
           // beware of rich text editors, hence the isEditable check (wordpress plugin issue)
-          if (!isEditable && tagName !== 'INPUT' && tagName !== 'TEXTAREA') {
-            var code = e.keyCode ? e.keyCode : e.which;
+          if (!isEditable && tagName !== "INPUT" && tagName !== "TEXTAREA") {
+            var code = e.code;
             if (code === 32) {
               e.preventDefault();
               if (options.enablePause) {
@@ -21484,8 +20014,10 @@ var Container = function Container(options) {
       }
     }
 
-    // better to keep the one and only error listeners
-    // at one spot, here, because unload() will do a removeAllListeners()
+    /*
+     * better to keep the one and only error listeners
+     * at one spot, here, because unload() will do a removeAllListeners()
+     */
     self.on(_events.default.ERROR, function (err) {
       processError(err);
       unloadChildren(err);
@@ -21493,7 +20025,7 @@ var Container = function Container(options) {
         removeDimensions();
       }
     });
-    if (!options.playerOnly) {
+    if (!playerOnly) {
       self.on(_events.default.LOADED_META_DATA, function () {
         correctDimensions();
       });
@@ -21501,33 +20033,42 @@ var Container = function Container(options) {
   }
   function validateOptions() {
     if (options.hasDefinedWidth() && options.video.width % 2 !== 0) {
-      throw _videomailError.default.create('Width must be divisible by two.', options);
+      throw _videomailError.default.create("Width must be divisible by two.", options);
     }
     if (options.hasDefinedHeight() && options.video.height % 2 !== 0) {
-      throw _videomailError.default.create('Height must be divisible by two.', options);
+      throw _videomailError.default.create("Height must be divisible by two.", options);
     }
   }
 
-  // this will just set the width but not the height because
-  // it can be a form with more inputs elements
+  /*
+   * This will just set the width but not the height because
+   * it can be a form with more inputs elements
+   */
   function correctDimensions() {
     if (options.video.stretch) {
       removeDimensions();
-    } else {
+    } else if (containerElement) {
       var width = visuals.getRecorderWidth(true);
       if (width < 1) {
-        throw _videomailError.default.create('Recorder width cannot be less than 1!', options);
+        throw _videomailError.default.create("Recorder width cannot be less than 1!", options);
       } else {
-        containerElement.style.width = width + 'px';
+        containerElement.style.width = "".concat(width, "px");
       }
     }
   }
   function removeDimensions() {
-    containerElement.style.width = 'auto';
+    if (!containerElement) {
+      return;
+    }
+    containerElement.style.width = "auto";
   }
   function unloadChildren(e) {
     visuals.unload(e);
     buttons.unload();
+    if (form) {
+      form.unload();
+      form = undefined;
+    }
     self.endWaiting();
   }
   function hideMySelf() {
@@ -21543,7 +20084,7 @@ var Container = function Container(options) {
       videomailFormData.height = visuals.getRecorderHeight(true);
       if (navigator.connection) {
         videomailFormData.connection = {
-          downlink: navigator.connection.downlink + ' Mbit/s',
+          downlink: "".concat(navigator.connection.downlink, " Mbit/s"),
           effectiveType: navigator.connection.effectiveType,
           rtt: navigator.connection.rtt,
           type: navigator.connection.type
@@ -21555,20 +20096,21 @@ var Container = function Container(options) {
     }
   }
   function submitForm(formData, videomailResponse, url, cb) {
-    // for now, accept POSTs only which have an URL unlike null and
-    // treat all other submissions as direct submissions
+    /*
+     * for now, accept POSTs only which have an URL unlike null and
+     * treat all other submissions as direct submissions
+     */
 
-    if (!url || url === '') {
-      // figure out URL automatically then
-      url = document.baseURI;
+    if (!url || url === "") {
+      url = options.baseUrl;
     }
 
     // can be missing when no videomail was recorded and is not required
     if (videomailResponse) {
-      formData[options.selectors.aliasInputName] = videomailResponse.videomail.alias;
-
-      // this in case if user wants all videomail metadata to be posted
-      // altogether with the remaining form
+      /*
+       * this in case if user wants all videomail metadata to be posted
+       * altogether with the remaining form
+       */
       if (options.submitWithVideomail) {
         formData.videomail = videomailResponse.videomail;
       }
@@ -21589,23 +20131,30 @@ var Container = function Container(options) {
         });
       }
       self.emit(_events.default.SUBMITTED, videomail, response || formResponse);
-      if (formResponse && formResponse.type === 'text/html' && formResponse.text) {
+      if (formResponse && formResponse.type === "text/html" && formResponse.text) {
         // server replied with HTML contents - display these
         document.body.innerHTML = formResponse.text;
 
-        // todo: figure out how to fire dom's onload event again
-        // todo: or how to run all the scripts over again
+        /*
+         * todo: figure out how to fire dom's onload event again
+         * todo: or how to run all the scripts over again
+         */
       }
     }
   }
-  this.addPlayerDimensions = function (videomail, element) {
+  this.addPlayerDimensions = function (videomail) {
     try {
-      videomail.playerHeight = this.calculateHeight({
+      if (!videomail) {
+        throw new Error("Videomail data is missing for attaching player dimensions");
+      }
+      var replay = self.getReplay();
+      var replayParentElement = replay.getParentElement();
+      videomail.playerHeight = self.calculateHeight({
         responsive: true,
         videoWidth: videomail.width,
         ratio: videomail.height / videomail.width
-      }, element);
-      videomail.playerWidth = this.calculateWidth({
+      }, replayParentElement);
+      videomail.playerWidth = self.calculateWidth({
         responsive: true,
         videoHeight: videomail.playerHeight,
         ratio: videomail.height / videomail.width
@@ -21622,7 +20171,7 @@ var Container = function Container(options) {
     return _dimension.default.limitHeight(height, options);
   };
   this.calculateWidth = function (fnOptions) {
-    return _dimension.default.calculateWidth(_optionsWrapper.default.merge(options, fnOptions, true));
+    return _dimension.default.calculateWidth(_optionsWrapper.default.merge(options, fnOptions));
   };
   this.calculateHeight = function (fnOptions, element) {
     if (!element) {
@@ -21633,71 +20182,98 @@ var Container = function Container(options) {
         element = document.body;
       }
     }
-    return _dimension.default.calculateHeight(element, _optionsWrapper.default.merge(options, fnOptions, true));
+    return _dimension.default.calculateHeight(element, _optionsWrapper.default.merge(options, fnOptions));
   };
-  this.areVisualsHidden = function () {
+  function areVisualsHidden() {
     return visuals.isHidden();
-  };
+  }
   this.hasElement = function () {
-    return !!containerElement;
+    return Boolean(containerElement);
   };
+  function prependDefaultCss() {
+    (0, _insertCss.default)(_mainMinCss.default, {
+      prepend: true
+    });
+  }
   this.build = function () {
+    var playerOnly = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+    var replayParentElement = arguments.length > 1 ? arguments[1] : undefined;
+    debug("Container: build (playerOnly = ".concat(playerOnly).concat(replayParentElement ? ", replayParentElement=\"".concat(replayParentElement, "\"") : "", ")"));
     try {
+      options.insertCss && prependDefaultCss();
+
+      // Note, it can be undefined when e.g. just replaying a videomail
       containerElement = document.getElementById(options.selectors.containerId);
 
-      // only build when a container element hast been found, otherwise
-      // be silent and do nothing
-      if (containerElement) {
-        options.insertCss && prependDefaultCss();
-        !built && initEvents();
-        validateOptions();
-        correctDimensions();
-        if (!options.playerOnly) {
-          buildForm();
+      // Check if the replayParentElement could act as the container element perhaps?
+      if (!containerElement && replayParentElement) {
+        var _replayParentElement;
+        if (typeof replayParentElement === "string") {
+          replayParentElement = document.getElementById(replayParentElement);
         }
-        buildChildren();
-        if (!hasError) {
-          debug('Container: built.');
-          built = true;
-          self.emit(_events.default.BUILT);
-        } else {
-          debug('Container: building failed due to an error.');
+        if ((_replayParentElement = replayParentElement) !== null && _replayParentElement !== void 0 && _replayParentElement.classList.contains(options.selectors.containerClass)) {
+          containerElement = replayParentElement;
         }
+      }
+      !built && initEvents(playerOnly);
+      correctDimensions();
+
+      // Building form also applies for when `playerOnly` because of
+      // correcting mode on Videomail. This function will skip if there is no form. Easy.
+      self.buildForm();
+
+      // If a container element has been found, no need to pass on replayParentElement further
+      buildChildren(playerOnly, containerElement ? undefined : replayParentElement);
+      if (!hasError) {
+        debug("Container: built.");
+        built = true;
+        self.emit(_events.default.BUILT);
       } else {
-        // commented out since it does too much noise on videomail's view page which is fine
-        // debug('Container: no container element with ID ' + options.selectors.containerId + ' found. Do nothing.')
+        debug("Container: building failed due to an error.");
       }
     } catch (exc) {
-      if (visuals.isNotifierBuilt()) {
-        self.emit(_events.default.ERROR, exc);
-      } else {
-        throw exc;
-      }
+      self.emit(_events.default.ERROR, exc);
     }
   };
   this.getSubmitButton = function () {
     return buttons.getSubmitButton();
   };
   this.querySelector = function (selector) {
+    if (!containerElement) {
+      // Must be in player only mode
+      return;
+    }
     return containerElement.querySelector(selector);
   };
   this.beginWaiting = function () {
-    htmlElement.classList && htmlElement.classList.add('wait');
+    htmlElement.classList && htmlElement.classList.add("wait");
   };
   this.endWaiting = function () {
-    htmlElement.classList && htmlElement.classList.remove('wait');
+    htmlElement.classList && htmlElement.classList.remove("wait");
   };
   this.appendChild = function (child) {
+    if (!containerElement) {
+      // Must be in player only mode
+      return;
+    }
     containerElement.appendChild(child);
   };
   this.insertBefore = function (child, reference) {
+    if (!containerElement) {
+      // Must be in player only mode
+      return;
+    }
     containerElement.insertBefore(child, reference);
   };
   this.unload = function (e) {
-    debug('Container: unload()', e);
     try {
+      if (!built) {
+        return;
+      }
+      debug("Container: unload(".concat(e ? (0, _safeJsonStringify.default)(e) : "", ")"));
+      self.emit(_events.default.UNLOADING);
       unloadChildren(e);
-      this.removeAllListeners();
+      self.removeAllListeners();
       built = submitted = false;
     } catch (exc) {
       self.emit(_events.default.ERROR, exc);
@@ -21713,8 +20289,10 @@ var Container = function Container(options) {
           buttons.adjustButtonsForPause();
         }
 
-        // since https://github.com/binarykitchen/videomail-client/issues/60
-        // we hide areas to make it easier for the user
+        /*
+         * since https://github.com/binarykitchen/videomail-client/issues/60
+         * we hide areas to make it easier for the user
+         */
         buttons.show();
         if (self.isReplayShown()) {
           self.emit(_events.default.PREVIEW);
@@ -21727,9 +20305,9 @@ var Container = function Container(options) {
     }
   };
   this.hide = function () {
-    debug('Container: hide()');
+    debug("Container: hide()");
     hasError = false;
-    this.isRecording() && this.pause();
+    self.isRecording() && self.pause();
     visuals.hide();
     if (submitted) {
       buttons.hide();
@@ -21743,9 +20321,11 @@ var Container = function Container(options) {
       form.show();
       visuals.back(params, function () {
         if (params && params.keepHidden) {
-          // just enable form, do nothing else.
-          // see example contact_form.html when you submit without videomail
-          // and go back
+          /*
+           * just enable form, do nothing else.
+           * see example contact_form.html when you submit without videomail
+           * and go back
+           */
           self.enableForm();
         } else {
           self.show(params);
@@ -21757,7 +20337,7 @@ var Container = function Container(options) {
   };
   this.showReplayOnly = function () {
     hasError = false;
-    this.isRecording() && this.pause();
+    self.isRecording() && self.pause();
     visuals.showReplayOnly();
     submitted && buttons.hide();
   };
@@ -21772,9 +20352,9 @@ var Container = function Container(options) {
   };
 
   // this code needs a good rewrite :(
-  this.validate = function (force) {
+  this.validate = function (event, force) {
     var runValidation = true;
-    var valid;
+    var valid = true;
     if (!options.enableAutoValidation) {
       runValidation = false;
       lastValidation = true; // needed so that it can be submitted anyway, see submit()
@@ -21788,36 +20368,44 @@ var Container = function Container(options) {
       runValidation = false;
     }
     if (runValidation) {
-      this.emit(_events.default.VALIDATING);
+      var _event$target;
+      var targetName = event === null || event === void 0 || (_event$target = event.target) === null || _event$target === void 0 ? void 0 : _event$target.name;
+      if (targetName) {
+        self.emit(_events.default.VALIDATING, {
+          targetName: targetName
+        });
+      } else {
+        self.emit(_events.default.VALIDATING, event);
+      }
       var visualsValid = visuals.validate() && buttons.isRecordAgainButtonEnabled();
       var whyInvalid;
+      var invalidData;
       if (form) {
-        valid = form.validate();
-        if (valid) {
-          if (!this.areVisualsHidden() && !visualsValid) {
-            if (submitted || this.isReady() || this.isRecording() || this.isPaused() || this.isCountingDown()) {
-              valid = false;
-            }
-            if (!valid) {
-              whyInvalid = 'Video is not recorded';
-            }
-          }
-        } else {
-          var invalidInput = form.getInvalidElement();
-          if (invalidInput) {
-            whyInvalid = 'Form input named ' + invalidInput.name + ' is invalid. It has the value: "' + invalidInput.value + '"';
-          } else {
-            whyInvalid = 'Form input(s) are invalid';
+        var invalidInput = form.getInvalidElement();
+        if (invalidInput) {
+          valid = false;
+          whyInvalid = "Input \"".concat(invalidInput.name, "\" seems wrong \uD83E\uDD14");
+          invalidData = (0, _defineProperty2.default)({}, invalidInput.name, invalidInput.value);
+        } else if (!areVisualsHidden() && !visualsValid) {
+          // TODO Improve this check to have this based on `key`
+          if (buttonsAreReady() || self.isRecording() || self.isPaused() || self.isCountingDown()) {
+            valid = false;
+            whyInvalid = "Don't forget to record a video 😉";
+            invalidData = {
+              key: undefined
+            };
           }
         }
         if (valid) {
           var _recipients$to, _recipients$cc, _recipients$bcc;
-          // If CC and/or BCC exist, validate one more time to ensure at least
-          // one recipient is given
+          /*
+           * If CC and/or BCC exist, validate one more time to ensure at least
+           * one recipient is given
+           */
           var recipients = form.getRecipients();
-          var toIsConfigured = ('to' in recipients);
-          var ccIsConfigured = ('cc' in recipients);
-          var bccIsConfigured = ('bcc' in recipients);
+          var toIsConfigured = "to" in recipients;
+          var ccIsConfigured = "cc" in recipients;
+          var bccIsConfigured = "bcc" in recipients;
           var hasTo = ((_recipients$to = recipients.to) === null || _recipients$to === void 0 ? void 0 : _recipients$to.length) > 0;
           var hasCc = ((_recipients$cc = recipients.cc) === null || _recipients$cc === void 0 ? void 0 : _recipients$cc.length) > 0;
           var hasBcc = ((_recipients$bcc = recipients.bcc) === null || _recipients$bcc === void 0 ? void 0 : _recipients$bcc.length) > 0;
@@ -21836,29 +20424,34 @@ var Container = function Container(options) {
                   valid = false;
                 }
               } else {
-                whyInvalid = 'Please configure the form to have at least one recipient.';
+                valid = false;
               }
             }
           } else if (ccIsConfigured) {
             if (!hasCc) {
-              if (bccIsConfigured) {
-                if (!hasBcc) {
-                  valid = false;
-                }
+              if (bccIsConfigured && !hasBcc) {
+                valid = false;
               }
             }
+          } else if (bccIsConfigured) {
+            // Skip as it's hidden
+          } else {
+            // Form has no input fields for recipients, so don't validate
+            // recipients at all
           }
           if (!valid) {
-            whyInvalid = 'Please enter at least one recipient.';
+            whyInvalid = "At least one recipient is required";
           }
         }
       } else {
         valid = visualsValid;
       }
       if (valid) {
-        this.emit(_events.default.VALID);
+        self.emit(_events.default.VALID);
+      } else if (invalidData) {
+        self.emit(_events.default.INVALID, whyInvalid, invalidData);
       } else {
-        this.emit(_events.default.INVALID, whyInvalid);
+        self.emit(_events.default.INVALID, whyInvalid);
       }
       lastValidation = valid;
     }
@@ -21871,20 +20464,21 @@ var Container = function Container(options) {
     form && form.enable(buttonsToo);
   };
   this.hasForm = function () {
-    return !!form;
+    return Boolean(form);
   };
-  this.isReady = function () {
-    return buttons.isRecordButtonEnabled();
-  };
+  function buttonsAreReady() {
+    return buttons.isReady();
+  }
   function isPost(method) {
-    return method && method.toUpperCase() === 'POST';
+    return method && method.toUpperCase() === "POST";
   }
   function isPut(method) {
-    return method && method.toUpperCase() === 'PUT';
+    return method && method.toUpperCase() === "PUT";
   }
   this.submitAll = function (formData, method, url) {
+    debug("Container: submitAll(".concat(method, ": \"").concat(url, "\")"));
     var post = isPost(method);
-    var hasVideomailKey = !!formData[options.selectors.keyInputName];
+    var hasVideomailKey = Boolean(formData[options.selectors.keyInputName]);
     function startSubmission() {
       self.beginWaiting();
       self.disableForm(true);
@@ -21905,8 +20499,10 @@ var Container = function Container(options) {
       }
     };
 
-    // !hasVideomailKey makes it possible to submit form when videomail itself
-    // is not optional.
+    /*
+     * !hasVideomailKey makes it possible to submit form when videomail itself
+     * is not optional.
+     */
     if (!hasVideomailKey) {
       if (options.enableAutoSubmission) {
         startSubmission();
@@ -21914,10 +20510,12 @@ var Container = function Container(options) {
           finalizeSubmissions(err2, method, null, null, formResponse);
         });
       }
-      // ... and when the enableAutoSubmission option is false,
-      // then that can mean, leave it to the framework to process with the form
-      // validation/handling/submission itself. for example the ninja form
-      // will want to highlight which one input are wrong.
+      /*
+       * ... and when the enableAutoSubmission option is false,
+       * then that can mean, leave it to the framework to process with the form
+       * validation/handling/submission itself. for example the ninja form
+       * will want to highlight which one input are wrong.
+       */
     } else {
       startSubmission();
       submitVideomail(formData, method, submitVideomailCallback);
@@ -21934,7 +20532,9 @@ var Container = function Container(options) {
     if (form) {
       if (visuals.isRecorderUnloaded()) {
         isDirty = false;
-      } else if (this.isReplayShown() || this.isPaused()) {
+      } else if (submitted) {
+        isDirty = false;
+      } else if (self.isReplayShown() || self.isPaused()) {
         isDirty = true;
       }
     }
@@ -21954,18 +20554,19 @@ var Container = function Container(options) {
   this.loadForm = function (videomail) {
     if (form) {
       form.loadVideomail(videomail);
-      this.validate();
+      self.validate();
     }
   };
   this.enableAudio = function () {
     options.setAudioEnabled(true);
-    this.emit(_events.default.ENABLING_AUDIO);
+    self.emit(_events.default.ENABLING_AUDIO);
   };
   this.disableAudio = function () {
     options.setAudioEnabled(false);
-    this.emit(_events.default.DISABLING_AUDIO);
+    self.emit(_events.default.DISABLING_AUDIO);
   };
   this.submit = function () {
+    debug("Container: submit()");
     lastValidation && form && form.doTheSubmit();
   };
   this.isCountingDown = visuals.isCountingDown.bind(visuals);
@@ -21975,10 +20576,10 @@ var Container = function Container(options) {
   this.stop = visuals.stop.bind(visuals);
   this.recordAgain = visuals.recordAgain.bind(visuals);
 };
-_util.default.inherits(Container, _eventEmitter.default);
+(0, _inherits.default)(Container, _eventEmitter.default);
 var _default = exports.default = Container;
 
-},{"../../styles/css/main.min.css.js":154,"../events":126,"../resource":128,"../util/eventEmitter":132,"../util/videomailError":137,"./buttons":138,"./dimension":140,"./form":141,"./optionsWrapper":142,"./visuals":143,"@babel/runtime/helpers/interopRequireDefault":1,"document-visibility":25,"element-closest":27,"hidden":56,"insert-css":62,"util":116}],140:[function(_dereq_,module,exports){
+},{"../../styles/css/main.min.css.js":148,"../events":119,"../resource":121,"../util/eventEmitter":126,"../util/videomailError":131,"./buttons":132,"./dimension":134,"./form":135,"./optionsWrapper":136,"./visuals":137,"@babel/runtime/helpers/defineProperty":3,"@babel/runtime/helpers/interopRequireDefault":4,"document-visibility":32,"hidden":61,"inherits":66,"insert-css":67,"safe-json-stringify":99}],134:[function(_dereq_,module,exports){
 "use strict";
 
 var _interopRequireDefault = _dereq_("@babel/runtime/helpers/interopRequireDefault");
@@ -22010,7 +20611,7 @@ function figureMinHeight(height, options) {
     }
   }
   if ((0, _numberIsInteger.default)(height) && height < 1) {
-    throw _videomailError.default.create('Got a video height less than 1 (' + height + ') while figuring out the minimum!', options);
+    throw _videomailError.default.create("Got a video height less than 1 (".concat(height, ") while figuring out the minimum!"), options);
   }
 
   // just return it, can be "auto"
@@ -22028,22 +20629,24 @@ var _default = exports.default = {
       limitedWidth = outerWidth;
     }
     if ((0, _numberIsInteger.default)(limitedWidth) && limitedWidth < 1) {
-      throw _videomailError.default.create('Limited width cannot be less than 1!', options);
+      throw _videomailError.default.create("Limited width cannot be less than 1!", options);
     } else {
       return limitedWidth;
     }
   },
-  // this is difficult to compute and is not entirely correct.
-  // but good enough for now to ensure some stability.
+  /*
+   * this is difficult to compute and is not entirely correct.
+   * but good enough for now to ensure some stability.
+   */
   limitHeight: function limitHeight(height, options) {
     if ((0, _numberIsInteger.default)(height) && height < 1) {
-      throw _videomailError.default.create('Passed limit-height argument cannot be less than 1!', options);
+      throw _videomailError.default.create("Passed limit-height argument cannot be less than 1!", options);
     } else {
       var limitedHeight = Math.min(height,
       // document.body.scrollHeight,
       document.documentElement.clientHeight);
       if (limitedHeight < 1) {
-        throw _videomailError.default.create('Limited height cannot be less than 1!', options);
+        throw _videomailError.default.create("Limited height cannot be less than 1!", options);
       } else {
         return limitedHeight;
       }
@@ -22057,11 +20660,11 @@ var _default = exports.default = {
       height = this.limitHeight(height, options);
     }
     if ((0, _numberIsInteger.default)(height) && height < 1) {
-      throw _videomailError.default.create('Height cannot be smaller than 1 when calculating width.', options);
+      throw _videomailError.default.create("Height cannot be smaller than 1 when calculating width.", options);
     } else {
       var calculatedWidth = parseInt(height / ratio);
       if (calculatedWidth < 1) {
-        throw _videomailError.default.create('Calculated width cannot be smaller than 1!', options);
+        throw _videomailError.default.create("Calculated width cannot be smaller than 1!", options);
       } else {
         return calculatedWidth;
       }
@@ -22075,7 +20678,7 @@ var _default = exports.default = {
       width = options.video.width;
     }
     if ((0, _numberIsInteger.default)(width) && width < 1) {
-      throw _videomailError.default.create('Unable to calculate height when width is less than 1.', options);
+      throw _videomailError.default.create("Unable to calculate height when width is less than 1.", options);
     } else if (options.responsive) {
       width = this.limitWidth(element, width, options);
     }
@@ -22083,14 +20686,14 @@ var _default = exports.default = {
       height = parseInt(width * ratio);
     }
     if ((0, _numberIsInteger.default)(height) && height < 1) {
-      throw _videomailError.default.create('Just calculated a height less than 1 which is wrong.', options);
+      throw _videomailError.default.create("Just calculated a height less than 1 which is wrong.", options);
     } else {
       return figureMinHeight(height, options);
     }
   }
 };
 
-},{"./../util/videomailError":137,"@babel/runtime/helpers/interopRequireDefault":1,"number-is-integer":73}],141:[function(_dereq_,module,exports){
+},{"./../util/videomailError":131,"@babel/runtime/helpers/interopRequireDefault":4,"number-is-integer":74}],135:[function(_dereq_,module,exports){
 "use strict";
 
 var _interopRequireDefault = _dereq_("@babel/runtime/helpers/interopRequireDefault");
@@ -22101,17 +20704,30 @@ exports.default = void 0;
 var _getFormData = _interopRequireDefault(_dereq_("get-form-data"));
 var _hidden = _interopRequireDefault(_dereq_("hidden"));
 var _hyperscript = _interopRequireDefault(_dereq_("hyperscript"));
-var _util = _interopRequireDefault(_dereq_("util"));
+var _inherits = _interopRequireDefault(_dereq_("inherits"));
+var _safeJsonStringify = _interopRequireDefault(_dereq_("safe-json-stringify"));
 var _events = _interopRequireDefault(_dereq_("../events"));
 var _eventEmitter = _interopRequireDefault(_dereq_("../util/eventEmitter"));
 var _videomailError = _interopRequireDefault(_dereq_("../util/videomailError"));
 // fixes https://github.com/binarykitchen/videomail-client/issues/71
 function trimEmail(email) {
-  return email.replace(/(^[,\s]+)|([,\s]+$)/g, '');
+  return email.replace(/(^[,\s]+)|([,\s]+$)/g, "");
 }
 var Form = function Form(container, formElement, options) {
-  _eventEmitter.default.call(this, options, 'Form');
+  _eventEmitter.default.call(this, options, "Form");
+  var debug = options.debug;
   var self = this;
+  var FORM_FIELDS = {
+    subject: options.selectors.subjectInputName,
+    from: options.selectors.fromInputName,
+    to: options.selectors.toInputName,
+    cc: options.selectors.ccInputName,
+    bcc: options.selectors.bccInputName,
+    body: options.selectors.bodyInputName,
+    key: options.selectors.keyInputName,
+    parentKey: options.selectors.parentKeyInputName,
+    sendCopy: options.selectors.sendCopyInputName
+  };
   var keyInput;
   function getData() {
     return (0, _getFormData.default)(formElement, {
@@ -22119,22 +20735,16 @@ var Form = function Form(container, formElement, options) {
     });
   }
   this.transformFormData = function (formData) {
-    var FORM_FIELDS = {
-      subject: options.selectors.subjectInputName,
-      from: options.selectors.fromInputName,
-      to: options.selectors.toInputName,
-      cc: options.selectors.ccInputName,
-      bcc: options.selectors.bccInputName,
-      body: options.selectors.bodyInputName,
-      key: options.selectors.keyInputName,
-      parentKey: options.selectors.parentKeyInputName,
-      sendCopy: options.selectors.sendCopyInputName
-    };
     var transformedFormData = {};
     Object.keys(FORM_FIELDS).forEach(function (key) {
       var formFieldValue = FORM_FIELDS[key];
       if (formFieldValue in formData) {
-        transformedFormData[key] = formData[formFieldValue];
+        var value = formData[formFieldValue];
+        if (value === undefined) {
+          // skip
+        } else {
+          transformedFormData[key] = value;
+        }
       }
     });
     if (transformedFormData.from) {
@@ -22154,18 +20764,19 @@ var Form = function Form(container, formElement, options) {
   this.getRecipients = function () {
     var videomailFormData = this.transformFormData(getData());
     var recipients = {};
-    if ('to' in videomailFormData) {
+    if ("to" in videomailFormData) {
       recipients.to = videomailFormData.to;
     }
-    if ('cc' in videomailFormData) {
+    if ("cc" in videomailFormData) {
       recipients.cc = videomailFormData.cc;
     }
-    if ('bcc' in videomailFormData) {
+    if ("bcc" in videomailFormData) {
       recipients.bcc = videomailFormData.bcc;
     }
     return recipients;
   };
   this.loadVideomail = function (videomail) {
+    debug("Form: loadVideomail()");
     var limit = formElement.elements.length;
     var input;
     var name;
@@ -22179,10 +20790,10 @@ var Form = function Form(container, formElement, options) {
         input.disabled = true;
       }
     }
-    formElement.setAttribute('method', 'put');
+    formElement.setAttribute("method", "put");
   };
   function isNotButton(element) {
-    return element.tagName !== 'BUTTON' && element.type !== 'submit';
+    return element.tagName !== "BUTTON" && element.type !== "submit";
   }
   function setDisabled(disabled, buttonsToo) {
     var limit = formElement.elements.length;
@@ -22199,11 +20810,22 @@ var Form = function Form(container, formElement, options) {
     }
     (0, _hidden.default)(formElement, true);
   }
-  function getInputElements() {
-    return formElement.querySelectorAll('input, textarea');
+  function isRegisteredFormField(formElement) {
+    var formElementName = formElement.name;
+    var registeredFormFieldNames = Object.values(FORM_FIELDS);
+    var isRegistered = registeredFormFieldNames.includes(formElementName);
+    return isRegistered;
   }
-  function getSelectElements() {
-    return formElement.querySelectorAll('select');
+  function getRegisteredFormElements() {
+    var elements = formElement.querySelectorAll("input, textarea, select");
+    var registeredElements = [];
+    for (var i = 0; i < elements.length; i++) {
+      var element = elements[i];
+      if (isRegisteredFormField(element)) {
+        registeredElements.push(element);
+      }
+    }
+    return registeredElements;
   }
   this.disable = function (buttonsToo) {
     setDisabled(true, buttonsToo);
@@ -22212,62 +20834,68 @@ var Form = function Form(container, formElement, options) {
     setDisabled(false, buttonsToo);
   };
   this.build = function () {
-    if (options.enableAutoValidation) {
-      var inputElements = getInputElements();
-      var inputElement;
-      for (var i = 0, len = inputElements.length; i < len; i++) {
-        inputElement = inputElements[i];
-        if (inputElement.type === 'radio') {
-          inputElement.addEventListener('change', function () {
-            container.validate();
-          });
-        } else {
-          inputElement.addEventListener('input', function () {
-            // let angular validate first, e.g. remove the custom error
-            setTimeout(function () {
-              container.validate();
-            }, 0);
-          });
-        }
-      }
-      var selectElements = getSelectElements();
-      for (var j = 0, len2 = selectElements.length; j < len2; j++) {
-        selectElements[j].addEventListener('change', function () {
-          container.validate();
-        });
-      }
-    }
-    keyInput = formElement.querySelector('input[name="' + options.selectors.keyInputName + '"]');
+    debug("Form: build()");
+    keyInput = formElement.querySelector("input[name=\"".concat(options.selectors.keyInputName, "\"]"));
     if (!keyInput) {
-      keyInput = (0, _hyperscript.default)('input', {
+      keyInput = (0, _hyperscript.default)("input", {
         name: options.selectors.keyInputName,
-        type: 'hidden'
+        type: "hidden"
       });
       formElement.appendChild(keyInput);
     }
+    if (options.enableAutoValidation) {
+      var inputElements = getRegisteredFormElements();
+      for (var i = 0, len = inputElements.length; i < len; i++) {
+        var inputElement = inputElements[i];
+        var type = inputElement.type;
+        if (type === "radio" || type === "select") {
+          inputElement.addEventListener("change", container.validate);
+        } else {
+          inputElement.addEventListener("input", container.validate);
+        }
+      }
+    }
     this.on(_events.default.PREVIEW, function (videomailKey) {
-      // beware that preview doesn't always come with a key, i.E.
-      // container.show() can emit PREVIEW without a key when a replay already exists
-      // (can happen when showing - hiding - showing videomail over again)
+      /*
+       * beware that preview doesn't always come with a key, i.E.
+       * container.show() can emit PREVIEW without a key when a replay already exists
+       * (can happen when showing - hiding - showing videomail over again)
+       */
 
       // only emit error if key is missing AND the input has no key (value) yet
       if (!videomailKey && !keyInput.value) {
-        self.emit(_events.default.ERROR, _videomailError.default.create('Videomail key for preview is missing!', options));
+        self.emit(_events.default.ERROR, _videomailError.default.create("Videomail key for preview is missing!", options));
       } else if (videomailKey) {
         keyInput.value = videomailKey;
+        // Important so that any other JS framework can detect changes
+        keyInput.dispatchEvent(new Event("input", {
+          bubbles: true
+        }));
       }
-      // else
-      // leave as it and use existing keyInput.value
+      /*
+       * else leave as it and use existing keyInput.value
+       */
     });
 
     // fixes https://github.com/binarykitchen/videomail-client/issues/91
     this.on(_events.default.GOING_BACK, function () {
       keyInput.value = null;
+      keyInput.dispatchEvent(new Event("input", {
+        bubbles: true
+      }));
+    });
+    this.on(_events.default.INVALID, function () {
+      formElement.classList.add("invalid");
+    });
+    this.on(_events.default.VALID, function () {
+      formElement.classList.remove("invalid");
     });
     this.on(_events.default.ERROR, function (err) {
-      // since https://github.com/binarykitchen/videomail-client/issues/60
-      // we hide areas to make it easier for the user to process an error
-      // (= less distractions)
+      /*
+       * since https://github.com/binarykitchen/videomail-client/issues/60
+       * we hide areas to make it easier for the user to process an error
+       * (= less distractions)
+       */
       if (err.hideForm && err.hideForm() && options.adjustFormOnBrowserError) {
         hideAll();
       } else if (err.hideButtons && err.hideButtons() && options.adjustFormOnBrowserError) {
@@ -22278,46 +20906,62 @@ var Form = function Form(container, formElement, options) {
       startListeningToSubmitEvents();
     });
   };
+  function removeAllInputListeners() {
+    var inputElements = getRegisteredFormElements();
+    for (var i = 0, len = inputElements.length; i < len; i++) {
+      var inputElement = inputElements[i];
+      var type = inputElement.type;
+      if (type === "radio" || type === "select") {
+        inputElement.removeEventListener("change", container.validate);
+      } else {
+        inputElement.removeEventListener("input", container.validate);
+      }
+    }
+  }
   function hideSubmitButton() {
     var submitButton = self.findSubmitButton();
     (0, _hidden.default)(submitButton, true);
   }
+  this.unload = function () {
+    debug("Form: unload()");
+    removeAllInputListeners();
+    this.removeAllListeners();
+    stopListeningToSubmitEvents();
+  };
   function startListeningToSubmitEvents() {
     var submitButton = container.getSubmitButton();
-    submitButton.addEventListener('click', self.doTheSubmit.bind(self));
+    submitButton.onclick = self.doTheSubmit.bind(self);
+  }
+  function stopListeningToSubmitEvents() {
+    var submitButton = container.getSubmitButton();
+    submitButton.onclick = null;
   }
   this.doTheSubmit = function (e) {
     if (e) {
+      debug("Form: doTheSubmit(".concat((0, _safeJsonStringify.default)(e), ")"));
       e.preventDefault();
+    } else {
+      debug("Form: doTheSubmit()");
     }
 
-    // only submit when there is a container,
-    // otherwise do nothing and leave as it
+    /*
+     * only submit when there is a container,
+     * otherwise do nothing and leave as it
+     */
     if (container.hasElement()) {
-      container.submitAll(getData(), formElement.getAttribute('method'), formElement.getAttribute('action'));
+      container.submitAll(getData(), formElement.getAttribute("method"), formElement.getAttribute("action"));
     }
     return false; // important to stop submission
   };
   this.getInvalidElement = function () {
-    var inputElements = getInputElements();
+    var inputElements = getRegisteredFormElements();
     var i = 0;
     for (var len = inputElements.length; i < len; i++) {
       if (!inputElements[i].validity.valid) {
         return inputElements[i];
       }
     }
-    var selectElements = getSelectElements();
-    var j = 0;
-    for (var len2 = selectElements.length; j < len2; j++) {
-      if (!selectElements[j].validity.valid) {
-        return selectElements[j];
-      }
-    }
     return null;
-  };
-  this.validate = function () {
-    var formIsValid = formElement.checkValidity();
-    return formIsValid;
   };
   this.findSubmitButton = function () {
     return formElement.querySelector("[type='submit']");
@@ -22329,10 +20973,10 @@ var Form = function Form(container, formElement, options) {
     formElement && (0, _hidden.default)(formElement, false);
   };
 };
-_util.default.inherits(Form, _eventEmitter.default);
+(0, _inherits.default)(Form, _eventEmitter.default);
 var _default = exports.default = Form;
 
-},{"../events":126,"../util/eventEmitter":132,"../util/videomailError":137,"@babel/runtime/helpers/interopRequireDefault":1,"get-form-data":43,"hidden":56,"hyperscript":58,"util":116}],142:[function(_dereq_,module,exports){
+},{"../events":119,"../util/eventEmitter":126,"../util/videomailError":131,"@babel/runtime/helpers/interopRequireDefault":4,"get-form-data":50,"hidden":61,"hyperscript":63,"inherits":66,"safe-json-stringify":99}],136:[function(_dereq_,module,exports){
 "use strict";
 
 var _interopRequireDefault = _dereq_("@babel/runtime/helpers/interopRequireDefault");
@@ -22343,67 +20987,23 @@ exports.default = void 0;
 var _deepmerge = _interopRequireDefault(_dereq_("deepmerge"));
 // enhances options with useful functions we can reuse everywhere
 var _default = exports.default = {
-  addFunctions: function addFunctions(options) {
-    var audioEnabled = options.audio && options.audio.enabled;
-    options.hasDefinedHeight = function () {
-      return this.video.height && this.video.height !== 'auto';
-    };
-    options.hasDefinedWidth = function () {
-      return this.video.width && this.video.width !== 'auto';
-    };
-    options.hasDefinedDimension = function () {
-      return this.hasDefinedWidth() || this.hasDefinedHeight();
-    };
-    options.hasDefinedDimensions = function () {
-      return this.hasDefinedWidth() && this.hasDefinedHeight();
-    };
-    options.getRatio = function () {
-      var ratio = 1; // just a default one when no computations are possible
-
-      // todo fix this, it's not really an option
-      var hasVideoDimensions = this.videoHeight && this.videoWidth;
-      if (this.hasDefinedDimensions()) {
-        if (hasVideoDimensions) {
-          // figure out first which one to pick
-          if (this.videoHeight < this.video.height || this.videoWidth < this.video.width) {
-            ratio = this.videoHeight / this.videoWidth;
-          } else {
-            ratio = this.video.height / this.video.width;
-          }
-        } else {
-          ratio = this.video.height / this.video.width;
-        }
-      } else if (hasVideoDimensions) {
-        ratio = this.videoHeight / this.videoWidth;
-      }
-      return ratio;
-    };
-    options.isAudioEnabled = function () {
-      return audioEnabled;
-    };
-    options.setAudioEnabled = function (enabled) {
-      audioEnabled = enabled;
-    };
-    options.isAutoPauseEnabled = function () {
-      return this.enableAutoPause && this.enablePause;
-    };
-  },
-  // not very elegant but works! and if you here are reading this, and
-  // start to doubt, rest assured, it's solid and run thousand times over
-  // and over again each day. and other large sites out there have their own
-  // tech debts. hope i have shattered your illusion on perfection?
+  /*
+   * not very elegant but works! and if you here are reading this, and
+   * start to doubt, rest assured, it's solid and run thousand times over
+   * and over again each day. and other large sites out there have their own
+   * tech debts. hope i have shattered your illusion on perfection?
+   */
   merge: function merge(defaultOptions, newOptions) {
     var options = (0, _deepmerge.default)(defaultOptions, newOptions, {
-      arrayMerge: function arrayMerge(destination, source) {
+      arrayMerge: function arrayMerge(_destination, source) {
         return source;
       }
     });
-    this.addFunctions(options);
     return options;
   }
 };
 
-},{"@babel/runtime/helpers/interopRequireDefault":1,"deepmerge":21}],143:[function(_dereq_,module,exports){
+},{"@babel/runtime/helpers/interopRequireDefault":4,"deepmerge":28}],137:[function(_dereq_,module,exports){
 "use strict";
 
 var _interopRequireDefault = _dereq_("@babel/runtime/helpers/interopRequireDefault");
@@ -22413,7 +21013,8 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = void 0;
 var _hidden = _interopRequireDefault(_dereq_("hidden"));
 var _hyperscript = _interopRequireDefault(_dereq_("hyperscript"));
-var _util = _interopRequireDefault(_dereq_("util"));
+var _inherits = _interopRequireDefault(_dereq_("inherits"));
+var _safeJsonStringify = _interopRequireDefault(_dereq_("safe-json-stringify"));
 var _events = _interopRequireDefault(_dereq_("../events"));
 var _eventEmitter = _interopRequireDefault(_dereq_("../util/eventEmitter"));
 var _recorderInsides = _interopRequireDefault(_dereq_("./visuals/inside/recorderInsides"));
@@ -22421,7 +21022,7 @@ var _notifier = _interopRequireDefault(_dereq_("./visuals/notifier"));
 var _recorder = _interopRequireDefault(_dereq_("./visuals/recorder"));
 var _replay = _interopRequireDefault(_dereq_("./visuals/replay"));
 var Visuals = function Visuals(container, options) {
-  _eventEmitter.default.call(this, options, 'Visuals');
+  _eventEmitter.default.call(this, options, "Visuals");
   var self = this;
 
   // can be overwritten with setter fn
@@ -22433,26 +21034,28 @@ var Visuals = function Visuals(container, options) {
   var visualsElement;
   var built;
   function buildNoScriptTag() {
-    var noScriptElement = container.querySelector('noscript');
-    if (!noScriptElement) {
-      noScriptElement = (0, _hyperscript.default)('noscript');
-      noScriptElement.innerHTML = 'Please enable Javascript';
+    var noScriptElement = container.querySelector("noscript");
+    if (noScriptElement) {
+      noScriptElement = (0, _hyperscript.default)("noscript");
+      noScriptElement.innerHTML = "Please enable Javascript";
       visualsElement.appendChild(noScriptElement);
     }
   }
   function buildChildren() {
-    debug('Visuals: buildChildren()');
+    var playerOnly = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+    var replayParentElement = arguments.length > 1 ? arguments[1] : undefined;
+    debug("Visuals: buildChildren (playerOnly = ".concat(playerOnly).concat(replayParentElement ? ", replayParentElement=\"".concat(replayParentElement, "\"") : "", ")"));
     buildNoScriptTag();
-    if (!options.playerOnly) {
+    if (!playerOnly) {
       notifier.build();
       recorderInsides.build();
     }
-    replay.build();
-    debug('Visuals: built.');
+    replay.build(replayParentElement);
   }
   function initEvents() {
-    if (!options.playerOnly) {
-      debug('Visuals: initEvents()');
+    var playerOnly = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+    if (!playerOnly) {
+      debug("Visuals: initEvents (playerOnly = ".concat(playerOnly, ")"));
       self.on(_events.default.USER_MEDIA_READY, function () {
         built = true;
         self.endWaiting();
@@ -22461,14 +21064,16 @@ var Visuals = function Visuals(container, options) {
         self.endWaiting();
       }).on(_events.default.BLOCKING, function (blockingOptions) {
         if (!blockingOptions.hideForm && !options.adjustFormOnBrowserError) {
-          // do nothing, user still can enter form inputs
-          // can be useful when you are on i.E. seeflow's contact page and
-          // still want to tick off the webcam option
+          /*
+           * do nothing, user still can enter form inputs
+           * can be useful when you are on i.E. Seeflow's contact page and
+           * still want to tick off the webcam option
+           */
         } else {
           container.disableForm(true);
         }
       }).on(_events.default.PREVIEW_SHOWN, function () {
-        container.validate(true);
+        container.validate(undefined, true);
       }).on(_events.default.LOADED_META_DATA, function () {
         correctDimensions();
       }).on(_events.default.ERROR, function (err) {
@@ -22481,14 +21086,17 @@ var Visuals = function Visuals(container, options) {
   function correctDimensions() {
     if (options.video.stretch) {
       removeDimensions();
-    } else {
-      visualsElement.style.width = self.getRecorderWidth(true) + 'px';
-      visualsElement.style.height = self.getRecorderHeight(true) + 'px';
+    } else if (visualsElement && recorder) {
+      visualsElement.style.width = "".concat(self.getRecorderWidth(true), "px");
+      visualsElement.style.height = "".concat(self.getRecorderHeight(true), "px");
     }
   }
   function removeDimensions() {
-    visualsElement.style.width = 'auto';
-    visualsElement.style.height = 'auto';
+    if (!visualsElement) {
+      return;
+    }
+    visualsElement.style.width = "auto";
+    visualsElement.style.height = "auto";
   }
   this.getRatio = function () {
     if (visualsElement.clientWidth) {
@@ -22504,30 +21112,34 @@ var Visuals = function Visuals(container, options) {
     return recorderInsides.isCountingDown();
   };
   this.build = function () {
-    visualsElement = container.querySelector('.' + options.selectors.visualsClass);
-    if (!visualsElement) {
-      visualsElement = (0, _hyperscript.default)('div.' + options.selectors.visualsClass);
-      var buttonsElement = container.querySelector('.' + options.selectors.buttonsClass);
+    var playerOnly = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+    var replayParentElement = arguments.length > 1 ? arguments[1] : undefined;
+    if (container) {
+      visualsElement = container.querySelector(".".concat(options.selectors.visualsClass));
+      if (!visualsElement) {
+        visualsElement = (0, _hyperscript.default)("div.".concat(options.selectors.visualsClass));
+        var buttonsElement = container.querySelector(".".concat(options.selectors.buttonsClass));
 
-      // make sure it's placed before the buttons, but only if it's a child
-      // element of the container = inside the container
-      if (buttonsElement && !container.isOutsideElementOf(buttonsElement)) {
-        container.insertBefore(visualsElement, buttonsElement);
-      } else {
-        container.appendChild(visualsElement);
+        /*
+         * Make sure it's placed before the buttons, but only if it's a child
+         * element of the container = inside the container
+         */
+        if (buttonsElement && !container.isOutsideElementOf(buttonsElement)) {
+          container.insertBefore(visualsElement, buttonsElement);
+        } else {
+          container.appendChild(visualsElement);
+        }
       }
+
+      /*
+       * Do not hide visuals element so that apps can give it a predefined
+       * width or height through css but hide all children
+       */
+      visualsElement.classList.add("visuals");
     }
-
-    // do not hide visuals element so that apps can give it a predefined
-    // width or height through css but hide all children
-
-    visualsElement.classList.add('visuals');
     correctDimensions();
-    !built && initEvents();
-    buildChildren();
-
-    // needed for replay handling and container.isOutsideElementOf()
-    self.parentNode = visualsElement.parentNode;
+    !built && initEvents(playerOnly);
+    buildChildren(playerOnly, replayParentElement);
     built = true;
   };
   this.querySelector = function (selector) {
@@ -22582,9 +21194,14 @@ var Visuals = function Visuals(container, options) {
   };
   this.unload = function (e) {
     try {
+      if (!built) {
+        return;
+      }
+      debug("Visuals: unload(".concat(e ? (0, _safeJsonStringify.default)(e) : "", ")"));
+      self.removeAllListeners();
       recorder.unload(e);
       recorderInsides.unload(e);
-      replay.unload(e);
+      replay.unload();
       built = false;
     } catch (exc) {
       this.emit(_events.default.ERROR, exc);
@@ -22678,7 +21295,7 @@ var Visuals = function Visuals(container, options) {
     this.showVisuals();
   };
   this.showReplayOnly = function () {
-    !this.isReplayShown() && replay.show();
+    replay.show();
     this.show();
     recorder.hide();
     notifier.hide();
@@ -22727,10 +21344,10 @@ var Visuals = function Visuals(container, options) {
   this.isUserMediaLoaded = recorder.isUserMediaLoaded.bind(recorder);
   this.isConnected = recorder.isConnected.bind(recorder);
 };
-_util.default.inherits(Visuals, _eventEmitter.default);
+(0, _inherits.default)(Visuals, _eventEmitter.default);
 var _default = exports.default = Visuals;
 
-},{"../events":126,"../util/eventEmitter":132,"./visuals/inside/recorderInsides":149,"./visuals/notifier":150,"./visuals/recorder":151,"./visuals/replay":152,"@babel/runtime/helpers/interopRequireDefault":1,"hidden":56,"hyperscript":58,"util":116}],144:[function(_dereq_,module,exports){
+},{"../events":119,"../util/eventEmitter":126,"./visuals/inside/recorderInsides":143,"./visuals/notifier":144,"./visuals/recorder":145,"./visuals/replay":146,"@babel/runtime/helpers/interopRequireDefault":4,"hidden":61,"hyperscript":63,"inherits":66,"safe-json-stringify":99}],138:[function(_dereq_,module,exports){
 "use strict";
 
 var _interopRequireDefault = _dereq_("@babel/runtime/helpers/interopRequireDefault");
@@ -22738,8 +21355,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = _default;
-var _hyperscript = _interopRequireDefault(_dereq_("hyperscript"));
 var _hidden = _interopRequireDefault(_dereq_("hidden"));
+var _hyperscript = _interopRequireDefault(_dereq_("hyperscript"));
 function _default(visuals, options) {
   var self = this;
   var countdownElement;
@@ -22757,7 +21374,7 @@ function _default(visuals, options) {
   }
   function countBackward(cb) {
     if (!paused) {
-      options.debug('Countdown', countdown);
+      options.debug("Countdown", countdown);
       countdown--;
       if (countdown < 1) {
         fire(cb);
@@ -22778,9 +21395,9 @@ function _default(visuals, options) {
     paused = false;
   };
   this.build = function () {
-    countdownElement = visuals.querySelector('.countdown');
+    countdownElement = visuals.querySelector(".countdown");
     if (!countdownElement) {
-      countdownElement = (0, _hyperscript.default)('p.countdown');
+      countdownElement = (0, _hyperscript.default)("p.countdown");
       this.hide();
       visuals.appendChild(countdownElement);
     } else {
@@ -22791,7 +21408,7 @@ function _default(visuals, options) {
     (0, _hidden.default)(countdownElement, false);
   };
   this.isCountingDown = function () {
-    return !!intervalId;
+    return Boolean(intervalId);
   };
   this.unload = function () {
     clearInterval(intervalId);
@@ -22804,7 +21421,7 @@ function _default(visuals, options) {
   };
 }
 
-},{"@babel/runtime/helpers/interopRequireDefault":1,"hidden":56,"hyperscript":58}],145:[function(_dereq_,module,exports){
+},{"@babel/runtime/helpers/interopRequireDefault":4,"hidden":61,"hyperscript":63}],139:[function(_dereq_,module,exports){
 "use strict";
 
 var _interopRequireDefault = _dereq_("@babel/runtime/helpers/interopRequireDefault");
@@ -22812,12 +21429,12 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = _default;
-var _hyperscript = _interopRequireDefault(_dereq_("hyperscript"));
 var _hidden = _interopRequireDefault(_dereq_("hidden"));
+var _hyperscript = _interopRequireDefault(_dereq_("hyperscript"));
 var _events = _interopRequireDefault(_dereq_("./../../../../events"));
 var _eventEmitter = _interopRequireDefault(_dereq_("./../../../../util/eventEmitter"));
 function _default(visuals, options) {
-  _eventEmitter.default.call(this, options, 'Facing Mode');
+  _eventEmitter.default.call(this, options, "Facing Mode");
   var self = this;
   var facingModeElement;
   function initEvents() {
@@ -22826,10 +21443,10 @@ function _default(visuals, options) {
     });
   }
   this.build = function () {
-    facingModeElement = visuals.querySelector('.facingMode');
+    facingModeElement = visuals.querySelector(".facingMode");
     if (!facingModeElement) {
-      facingModeElement = (0, _hyperscript.default)('button.facingMode');
-      facingModeElement.innerHTML = '⤾';
+      facingModeElement = (0, _hyperscript.default)("button.facingMode");
+      facingModeElement.innerHTML = "⤾";
       facingModeElement.onclick = function (e) {
         e && e.preventDefault();
         try {
@@ -22853,7 +21470,7 @@ function _default(visuals, options) {
   };
 }
 
-},{"./../../../../events":126,"./../../../../util/eventEmitter":132,"@babel/runtime/helpers/interopRequireDefault":1,"hidden":56,"hyperscript":58}],146:[function(_dereq_,module,exports){
+},{"./../../../../events":119,"./../../../../util/eventEmitter":126,"@babel/runtime/helpers/interopRequireDefault":4,"hidden":61,"hyperscript":63}],140:[function(_dereq_,module,exports){
 "use strict";
 
 var _interopRequireDefault = _dereq_("@babel/runtime/helpers/interopRequireDefault");
@@ -22861,12 +21478,12 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = _default;
-var _hyperscript = _interopRequireDefault(_dereq_("hyperscript"));
 var _hidden = _interopRequireDefault(_dereq_("hidden"));
+var _hyperscript = _interopRequireDefault(_dereq_("hyperscript"));
 var _videomailError = _interopRequireDefault(_dereq_("./../../../../util/videomailError"));
 function _default(visuals, options) {
   if (!options.text.pausedHeader) {
-    throw _videomailError.default.create('Paused header cannot be empty', options);
+    throw _videomailError.default.create("Paused header cannot be empty", options);
   }
   var pausedBlockElement;
   var pausedHeaderElement;
@@ -22875,17 +21492,17 @@ function _default(visuals, options) {
     return options.text.pausedHint;
   }
   this.build = function () {
-    pausedBlockElement = visuals.querySelector('.paused');
-    pausedHeaderElement = visuals.querySelector('.pausedHeader');
+    pausedBlockElement = visuals.querySelector(".paused");
+    pausedHeaderElement = visuals.querySelector(".pausedHeader");
     if (!pausedHeaderElement) {
-      pausedBlockElement = (0, _hyperscript.default)('div.paused');
-      pausedHeaderElement = (0, _hyperscript.default)('p.pausedHeader');
+      pausedBlockElement = (0, _hyperscript.default)("div.paused");
+      pausedHeaderElement = (0, _hyperscript.default)("p.pausedHeader");
       this.hide();
       pausedHeaderElement.innerHTML = options.text.pausedHeader;
       pausedBlockElement.appendChild(pausedHeaderElement);
       if (hasPausedHint()) {
-        pausedHintElement = visuals.querySelector('.pausedHint');
-        pausedHintElement = (0, _hyperscript.default)('p.pausedHint');
+        pausedHintElement = visuals.querySelector(".pausedHint");
+        pausedHintElement = (0, _hyperscript.default)("p.pausedHint");
         pausedHintElement.innerHTML = options.text.pausedHint;
         pausedBlockElement.appendChild(pausedHintElement);
       }
@@ -22906,7 +21523,7 @@ function _default(visuals, options) {
   };
 }
 
-},{"./../../../../util/videomailError":137,"@babel/runtime/helpers/interopRequireDefault":1,"hidden":56,"hyperscript":58}],147:[function(_dereq_,module,exports){
+},{"./../../../../util/videomailError":131,"@babel/runtime/helpers/interopRequireDefault":4,"hidden":61,"hyperscript":63}],141:[function(_dereq_,module,exports){
 "use strict";
 
 var _interopRequireDefault = _dereq_("@babel/runtime/helpers/interopRequireDefault");
@@ -22914,14 +21531,14 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = _default;
-var _hyperscript = _interopRequireDefault(_dereq_("hyperscript"));
 var _hidden = _interopRequireDefault(_dereq_("hidden"));
+var _hyperscript = _interopRequireDefault(_dereq_("hyperscript"));
 function _default(visuals) {
   var recordNoteElement;
   this.build = function () {
-    recordNoteElement = visuals.querySelector('.recordNote');
+    recordNoteElement = visuals.querySelector(".recordNote");
     if (!recordNoteElement) {
-      recordNoteElement = (0, _hyperscript.default)('p.recordNote');
+      recordNoteElement = (0, _hyperscript.default)("p.recordNote");
       this.hide();
       visuals.appendChild(recordNoteElement);
     } else {
@@ -22930,14 +21547,14 @@ function _default(visuals) {
   };
   this.stop = function () {
     this.hide();
-    recordNoteElement.classList.remove('near');
-    recordNoteElement.classList.remove('nigh');
+    recordNoteElement.classList.remove("near");
+    recordNoteElement.classList.remove("nigh");
   };
   this.setNear = function () {
-    recordNoteElement.classList.add('near');
+    recordNoteElement.classList.add("near");
   };
   this.setNigh = function () {
-    recordNoteElement.classList.add('nigh');
+    recordNoteElement.classList.add("nigh");
   };
   this.hide = function () {
     (0, _hidden.default)(recordNoteElement, true);
@@ -22947,7 +21564,7 @@ function _default(visuals) {
   };
 }
 
-},{"@babel/runtime/helpers/interopRequireDefault":1,"hidden":56,"hyperscript":58}],148:[function(_dereq_,module,exports){
+},{"@babel/runtime/helpers/interopRequireDefault":4,"hidden":61,"hyperscript":63}],142:[function(_dereq_,module,exports){
 "use strict";
 
 var _interopRequireDefault = _dereq_("@babel/runtime/helpers/interopRequireDefault");
@@ -22955,8 +21572,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = _default;
-var _hyperscript = _interopRequireDefault(_dereq_("hyperscript"));
 var _hidden = _interopRequireDefault(_dereq_("hidden"));
+var _hyperscript = _interopRequireDefault(_dereq_("hyperscript"));
 function _default(visuals, recordNote, options) {
   var recordTimerElement;
   var nearComputed = false;
@@ -22964,7 +21581,7 @@ function _default(visuals, recordNote, options) {
   var started;
   var countdown;
   function pad(n) {
-    return n < 10 ? '0' + n : n;
+    return n < 10 ? "0".concat(n) : n;
   }
   function thresholdReached(secs, threshold) {
     return secs >= options.video.limitSeconds * threshold;
@@ -22984,10 +21601,10 @@ function _default(visuals, recordNote, options) {
     return false;
   }
   function setNear() {
-    recordTimerElement.classList.add('near');
+    recordTimerElement.classList.add("near");
   }
   function setNigh() {
-    recordTimerElement.classList.add('nigh');
+    recordTimerElement.classList.add("nigh");
   }
   this.check = function (opts) {
     var newCountdown = getStartSeconds() - Math.floor(opts.intervalSum / 1e3);
@@ -23007,21 +21624,21 @@ function _default(visuals, recordNote, options) {
       if (isNear(remainingSeconds)) {
         recordNote.setNear();
         setNear();
-        options.debug('End is near, ' + countdown + ' seconds to go');
+        options.debug("End is near, ".concat(countdown, " seconds to go"));
       } else if (endIsNigh(remainingSeconds)) {
         recordNote.setNigh();
         setNigh();
-        options.debug('End is nigh, ' + countdown + ' seconds to go');
+        options.debug("End is nigh, ".concat(countdown, " seconds to go"));
       }
     }
-    recordTimerElement.innerHTML = mins + ':' + pad(secs);
+    recordTimerElement.innerHTML = "".concat(mins, ":").concat(pad(secs));
   }
   function hide() {
     (0, _hidden.default)(recordTimerElement, true);
   }
   function show() {
-    recordTimerElement.classList.remove('near');
-    recordTimerElement.classList.remove('nigh');
+    recordTimerElement.classList.remove("near");
+    recordTimerElement.classList.remove("nigh");
     (0, _hidden.default)(recordTimerElement, false);
   }
   function getSecondsRecorded() {
@@ -23048,7 +21665,7 @@ function _default(visuals, recordNote, options) {
   }
   this.stop = function () {
     if (!isStopped() && started) {
-      options.debug('Stopping record timer. Was recording for about ~' + getSecondsRecorded() + ' seconds.');
+      options.debug("Stopping record timer. Was recording for about ~".concat(getSecondsRecorded(), " seconds."));
       hide();
       recordNote.stop();
       countdown = null;
@@ -23056,9 +21673,9 @@ function _default(visuals, recordNote, options) {
     }
   };
   this.build = function () {
-    recordTimerElement = visuals.querySelector('.recordTimer');
+    recordTimerElement = visuals.querySelector(".recordTimer");
     if (!recordTimerElement) {
-      recordTimerElement = (0, _hyperscript.default)('p.recordTimer');
+      recordTimerElement = (0, _hyperscript.default)("p.recordTimer");
       hide();
       visuals.appendChild(recordTimerElement);
     } else {
@@ -23067,7 +21684,7 @@ function _default(visuals, recordNote, options) {
   };
 }
 
-},{"@babel/runtime/helpers/interopRequireDefault":1,"hidden":56,"hyperscript":58}],149:[function(_dereq_,module,exports){
+},{"@babel/runtime/helpers/interopRequireDefault":4,"hidden":61,"hyperscript":63}],143:[function(_dereq_,module,exports){
 "use strict";
 
 var _interopRequireDefault = _dereq_("@babel/runtime/helpers/interopRequireDefault");
@@ -23075,17 +21692,17 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
-var _util = _interopRequireDefault(_dereq_("util"));
+var _inherits = _interopRequireDefault(_dereq_("inherits"));
 var _events = _interopRequireDefault(_dereq_("./../../../events"));
-var _eventEmitter = _interopRequireDefault(_dereq_("./../../../util/eventEmitter"));
 var _browser = _interopRequireDefault(_dereq_("./../../../util/browser"));
+var _eventEmitter = _interopRequireDefault(_dereq_("./../../../util/eventEmitter"));
 var _countdown = _interopRequireDefault(_dereq_("./recorder/countdown"));
+var _facingMode = _interopRequireDefault(_dereq_("./recorder/facingMode"));
 var _pausedNote = _interopRequireDefault(_dereq_("./recorder/pausedNote"));
 var _recordNote = _interopRequireDefault(_dereq_("./recorder/recordNote"));
 var _recordTimer = _interopRequireDefault(_dereq_("./recorder/recordTimer"));
-var _facingMode = _interopRequireDefault(_dereq_("./recorder/facingMode"));
 var RecorderInsides = function RecorderInsides(visuals, options) {
-  _eventEmitter.default.call(this, options, 'RecorderInsides');
+  _eventEmitter.default.call(this, options, "RecorderInsides");
   var self = this;
   var debug = options.debug;
   var recordNote = new _recordNote.default(visuals);
@@ -23127,7 +21744,7 @@ var RecorderInsides = function RecorderInsides(visuals, options) {
     facingMode && facingMode.hide();
   }
   function initEvents() {
-    debug('RecorderInsides: initEvents()');
+    debug("RecorderInsides: initEvents()");
     self.on(_events.default.USER_MEDIA_READY, function () {
       facingMode && facingMode.show();
     }).on(_events.default.RECORDING, function () {
@@ -23138,12 +21755,12 @@ var RecorderInsides = function RecorderInsides(visuals, options) {
       stopRecording();
     }).on(_events.default.PAUSED, function () {
       pauseRecording();
-    }).on(_events.default.RESETTING, onResetting).on(_events.default.HIDE, function () {
+    }).on(_events.default.ERROR, onResetting).on(_events.default.RESETTING, onResetting).on(_events.default.HIDE, function () {
       self.hideCountdown();
     });
   }
   this.build = function () {
-    debug('RecorderInsides: build()');
+    debug("RecorderInsides: build()");
     countdown && countdown.build();
     pausedNote && pausedNote.build();
     facingMode && facingMode.build();
@@ -23178,10 +21795,10 @@ var RecorderInsides = function RecorderInsides(visuals, options) {
     recordTimer.check(intervalSum);
   };
 };
-_util.default.inherits(RecorderInsides, _eventEmitter.default);
+(0, _inherits.default)(RecorderInsides, _eventEmitter.default);
 var _default = exports.default = RecorderInsides;
 
-},{"./../../../events":126,"./../../../util/browser":130,"./../../../util/eventEmitter":132,"./recorder/countdown":144,"./recorder/facingMode":145,"./recorder/pausedNote":146,"./recorder/recordNote":147,"./recorder/recordTimer":148,"@babel/runtime/helpers/interopRequireDefault":1,"util":116}],150:[function(_dereq_,module,exports){
+},{"./../../../events":119,"./../../../util/browser":124,"./../../../util/eventEmitter":126,"./recorder/countdown":138,"./recorder/facingMode":139,"./recorder/pausedNote":140,"./recorder/recordNote":141,"./recorder/recordTimer":142,"@babel/runtime/helpers/interopRequireDefault":4,"inherits":66}],144:[function(_dereq_,module,exports){
 "use strict";
 
 var _interopRequireDefault = _dereq_("@babel/runtime/helpers/interopRequireDefault");
@@ -23191,44 +21808,44 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = void 0;
 var _hidden = _interopRequireDefault(_dereq_("hidden"));
 var _hyperscript = _interopRequireDefault(_dereq_("hyperscript"));
-var _util = _interopRequireDefault(_dereq_("util"));
+var _inherits = _interopRequireDefault(_dereq_("inherits"));
 var _events = _interopRequireDefault(_dereq_("../../events"));
 var _eventEmitter = _interopRequireDefault(_dereq_("../../util/eventEmitter"));
+var NOTIFIER_MESSAGE_ID = "notifierMessage";
 var Notifier = function Notifier(visuals, options) {
-  _eventEmitter.default.call(this, options, 'Notifier');
+  _eventEmitter.default.call(this, options, "Notifier");
   var self = this;
   var debug = options && options.debug;
   var notifyElement;
-  var messageElement;
   var explanationElement;
   var entertainTimeoutId;
   var entertaining;
   var built;
   function onStopping(limitReached) {
-    var lead = '';
+    var lead = "";
     visuals.beginWaiting();
     if (limitReached) {
-      debug('Limit reached');
-      lead += options.text.limitReached + '.<br/>';
+      debug("Limit reached");
+      lead += "".concat(options.text.limitReached, ".<br/>");
     }
-    lead += options.text.sending + ' …';
+    lead += "".concat(options.text.sending, " \u2026");
     self.notify(lead, null, {
       stillWait: true,
       entertain: options.notifier.entertain
     });
   }
   function onConnecting() {
-    self.notify('Connecting …');
+    self.notify("Connecting …");
   }
   function onLoadingUserMedia() {
-    self.notify('Loading webcam …');
+    self.notify("Loading webcam …");
   }
   function onProgress(frameProgress, sampleProgress) {
     var overallProgress;
     if (options.isAudioEnabled()) {
-      overallProgress = 'Video: ' + frameProgress;
+      overallProgress = "Video: ".concat(frameProgress);
       if (sampleProgress) {
-        overallProgress += ', Audio: ' + sampleProgress;
+        overallProgress += ", Audio: ".concat(sampleProgress);
       }
     } else {
       overallProgress = frameProgress;
@@ -23237,7 +21854,7 @@ var Notifier = function Notifier(visuals, options) {
   }
   function onBeginVideoEncoding() {
     visuals.beginWaiting();
-    var lead = options.text.encoding + ' …';
+    var lead = "".concat(options.text.encoding, " \u2026");
     self.notify(lead, null, {
       stillWait: true,
       entertain: options.notifier.entertain
@@ -23245,7 +21862,7 @@ var Notifier = function Notifier(visuals, options) {
     hideExplanation();
   }
   function initEvents() {
-    debug('Notifier: initEvents()');
+    debug("Notifier: initEvents()");
     self.on(_events.default.CONNECTING, function () {
       onConnecting();
     }).on(_events.default.LOADING_USER_MEDIA, function () {
@@ -23262,8 +21879,12 @@ var Notifier = function Notifier(visuals, options) {
       onProgress(frameProgress, sampleProgress);
     }).on(_events.default.BEGIN_VIDEO_ENCODING, function () {
       onBeginVideoEncoding();
+    }).on(_events.default.UNLOADING, function () {
+      self.notify("Unloading …");
+    }).on(_events.default.DISCONNECTED, function () {
+      self.notify("Disconnected");
     }).on(_events.default.CONNECTED, function () {
-      self.notify('Connected.');
+      self.notify("Connected");
       if (options.loadUserMediaOnRecord) {
         self.hide();
       }
@@ -23271,11 +21892,11 @@ var Notifier = function Notifier(visuals, options) {
   }
   function correctNotifierDimensions() {
     if (options.video.stretch) {
-      notifyElement.style.width = 'auto';
-      notifyElement.style.height = visuals.getRecorderHeight(true, true) + 'px';
+      notifyElement.style.width = "auto";
+      notifyElement.style.height = "".concat(visuals.getRecorderHeight(true, true), "px");
     } else {
-      notifyElement.style.width = visuals.getRecorderWidth(true) + 'px';
-      notifyElement.style.height = visuals.getRecorderHeight(true) + 'px';
+      notifyElement.style.width = "".concat(visuals.getRecorderWidth(true), "px");
+      notifyElement.style.height = "".concat(visuals.getRecorderHeight(true), "px");
     }
   }
   function show() {
@@ -23285,7 +21906,7 @@ var Notifier = function Notifier(visuals, options) {
     if (options.notifier.entertain) {
       if (!entertaining) {
         var randomBackgroundClass = Math.floor(Math.random() * options.notifier.entertainLimit + 1);
-        notifyElement.className = 'notifier entertain ' + options.notifier.entertainClass + randomBackgroundClass;
+        notifyElement.className = "notifier entertain ".concat(options.notifier.entertainClass).concat(randomBackgroundClass);
         entertainTimeoutId = setTimeout(runEntertainment, options.notifier.entertainInterval);
         entertaining = true;
       }
@@ -23295,25 +21916,32 @@ var Notifier = function Notifier(visuals, options) {
   }
   function cancelEntertainment() {
     if (notifyElement) {
-      notifyElement.classList.remove('entertain');
+      notifyElement.classList.remove("entertain");
     }
     clearTimeout(entertainTimeoutId);
     entertainTimeoutId = null;
     entertaining = false;
   }
   function setMessage(message, messageOptions) {
-    var problem = messageOptions.problem ? messageOptions.problem : false;
-    if (messageElement) {
-      messageElement.innerHTML = (problem ? '&#x2639; ' : '') + message;
+    var notifierMessage = getNotifierMessage();
+    if (notifierMessage) {
+      options.debug("Notifier: setMessage(".concat(message, ")"));
+      if (message.length > 0) {
+        var problem = messageOptions.problem ? messageOptions.problem : false;
+        notifierMessage.innerHTML = (problem ? "&#x2639; " : "") + message;
+      } else {
+        options.logger.warn("Not going to update notifierMessage element because message is empty", message);
+      }
+      (0, _hidden.default)(notifierMessage, false);
     } else {
-      options.logger.warn('Unable to show following because messageElement is empty:', message);
+      // Must be unloaded, do nothing further
     }
   }
   this.error = function (err) {
     var message = err.message ? err.message.toString() : err.toString();
     var explanation = err.explanation ? err.explanation.toString() : null;
     if (!message) {
-      options.debug('Weird empty message generated for error', err);
+      options.debug("Weird empty error message generated for error", err);
     }
     self.notify(message, explanation, {
       blocking: true,
@@ -23325,21 +21953,23 @@ var Notifier = function Notifier(visuals, options) {
   };
   this.setExplanation = function (explanation) {
     if (!explanationElement) {
-      explanationElement = (0, _hyperscript.default)('p');
+      explanationElement = (0, _hyperscript.default)("p", {
+        className: "explanation"
+      });
       if (notifyElement) {
         notifyElement.appendChild(explanationElement);
       } else {
-        options.logger.warn('Unable to show explanation because notifyElement is empty:', explanation);
+        options.logger.warn("Unable to show explanation because notifyElement is empty:", explanation);
       }
     }
     explanationElement.innerHTML = explanation;
     (0, _hidden.default)(explanationElement, false);
   };
   this.build = function () {
-    options.debug('Notifier: build()');
-    notifyElement = visuals.querySelector('.notifier');
+    options.debug("Notifier: build()");
+    notifyElement = visuals.querySelector(".notifier");
     if (!notifyElement) {
-      notifyElement = (0, _hyperscript.default)('.notifier'); // defaults to div
+      notifyElement = (0, _hyperscript.default)(".notifier"); // defaults to div
 
       this.hide();
       visuals.appendChild(notifyElement);
@@ -23349,9 +21979,14 @@ var Notifier = function Notifier(visuals, options) {
     !built && initEvents();
     built = true;
   };
+  function hideMessage() {
+    var notifierMessage = getNotifierMessage();
+    if (notifierMessage) {
+      (0, _hidden.default)(notifierMessage, true);
+    }
+  }
   function hideExplanation() {
     if (explanationElement) {
-      explanationElement.innerHTML = null;
       (0, _hidden.default)(explanationElement, true);
     }
   }
@@ -23359,11 +21994,9 @@ var Notifier = function Notifier(visuals, options) {
     cancelEntertainment();
     if (notifyElement) {
       (0, _hidden.default)(notifyElement, true);
-      notifyElement.classList.remove('blocking');
+      notifyElement.classList.remove("blocking");
     }
-    if (messageElement) {
-      messageElement.innerHTML = null;
-    }
+    hideMessage();
     hideExplanation();
   };
   this.isVisible = function () {
@@ -23375,29 +22008,34 @@ var Notifier = function Notifier(visuals, options) {
   this.isBuilt = function () {
     return built;
   };
-  this.notify = function (message, explanation, notifyOptions) {
-    options.debug('Notifier: notify()');
-    if (!notifyOptions) {
-      notifyOptions = {};
-    }
+  function getNotifierMessage() {
+    return document.getElementById(NOTIFIER_MESSAGE_ID);
+  }
+  this.notify = function (message, explanation) {
+    var notifyOptions = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+    var params = [message, explanation].filter(Boolean);
+    options.debug("Notifier: notify(".concat(params.join(", "), ")"));
     var stillWait = notifyOptions.stillWait ? notifyOptions.stillWait : false;
     var entertain = notifyOptions.entertain ? notifyOptions.entertain : false;
     var blocking = notifyOptions.blocking ? notifyOptions.blocking : false;
     var hideForm = notifyOptions.hideForm ? notifyOptions.hideForm : false;
     var classList = notifyOptions.classList ? notifyOptions.classList : false;
     var removeDimensions = notifyOptions.removeDimensions ? notifyOptions.removeDimensions : false;
-    if (!messageElement && notifyElement) {
-      messageElement = (0, _hyperscript.default)('h2');
-      if (explanationElement) {
-        notifyElement.insertBefore(messageElement, explanationElement);
-      } else {
-        notifyElement.appendChild(messageElement);
-      }
+    var notifierMessage = getNotifierMessage();
+    if (!notifierMessage && notifyElement) {
+      var messageElement = (0, _hyperscript.default)("h2", {
+        id: NOTIFIER_MESSAGE_ID
+      });
+      notifyElement.appendChild(messageElement);
+    }
+    notifierMessage = getNotifierMessage();
+    if (notifyElement && notifierMessage && explanationElement) {
+      notifyElement.insertBefore(notifierMessage, explanationElement);
     }
     if (notifyElement) {
       // reset
       if (!entertain) {
-        notifyElement.className = 'notifier';
+        notifyElement.className = "notifier";
       }
       if (classList) {
         classList.forEach(function (className) {
@@ -23405,12 +22043,12 @@ var Notifier = function Notifier(visuals, options) {
         });
       }
       if (removeDimensions) {
-        notifyElement.style.width = 'auto';
-        notifyElement.style.height = 'auto';
+        notifyElement.style.width = "auto";
+        notifyElement.style.height = "auto";
       }
     }
     if (blocking) {
-      notifyElement && notifyElement.classList.add('blocking');
+      notifyElement && notifyElement.classList.add("blocking");
       this.emit(_events.default.BLOCKING, {
         hideForm: hideForm
       });
@@ -23429,17 +22067,19 @@ var Notifier = function Notifier(visuals, options) {
       cancelEntertainment();
     }
 
-    // just as a safety in case if an error is thrown in the middle of the build process
-    // and visuals aren't built/shown yet.
+    /*
+     * just as a safety in case if an error is thrown in the middle of the build process
+     * and visuals aren't built/shown yet.
+     */
     visuals.showVisuals();
     show();
     !stillWait && visuals.endWaiting();
   };
 };
-_util.default.inherits(Notifier, _eventEmitter.default);
+(0, _inherits.default)(Notifier, _eventEmitter.default);
 var _default = exports.default = Notifier;
 
-},{"../../events":126,"../../util/eventEmitter":132,"@babel/runtime/helpers/interopRequireDefault":1,"hidden":56,"hyperscript":58,"util":116}],151:[function(_dereq_,module,exports){
+},{"../../events":119,"../../util/eventEmitter":126,"@babel/runtime/helpers/interopRequireDefault":4,"hidden":61,"hyperscript":63,"inherits":66}],145:[function(_dereq_,module,exports){
 (function (Buffer){(function (){
 "use strict";
 
@@ -23453,8 +22093,8 @@ var _canvasToBuffer = _interopRequireDefault(_dereq_("canvas-to-buffer"));
 var _deepmerge = _interopRequireDefault(_dereq_("deepmerge"));
 var _hidden = _interopRequireDefault(_dereq_("hidden"));
 var _hyperscript = _interopRequireDefault(_dereq_("hyperscript"));
+var _inherits = _interopRequireDefault(_dereq_("inherits"));
 var _safeJsonStringify = _interopRequireDefault(_dereq_("safe-json-stringify"));
-var _util = _interopRequireDefault(_dereq_("util"));
 var _websocketStream = _interopRequireDefault(_dereq_("websocket-stream"));
 var _constants = _interopRequireDefault(_dereq_("../../constants"));
 var _events = _interopRequireDefault(_dereq_("../../events"));
@@ -23465,10 +22105,10 @@ var _pretty = _interopRequireDefault(_dereq_("../../util/pretty"));
 var _videomailError = _interopRequireDefault(_dereq_("../../util/videomailError"));
 var _userMedia = _interopRequireDefault(_dereq_("./userMedia"));
 // credits http://1lineart.kulaone.com/#/
-var PIPE_SYMBOL = '°º¤ø,¸¸,ø¤º°`°º¤ø,¸,ø¤°º¤ø,¸¸,ø¤º°`°º¤ø,¸ ';
+var PIPE_SYMBOL = "°º¤ø,¸¸,ø¤º°`°º¤ø,¸,ø¤°º¤ø,¸¸,ø¤º°`°º¤ø,¸ ";
 var Recorder = function Recorder(visuals, replay) {
   var defaultOptions = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
-  _eventEmitter.default.call(this, defaultOptions, 'Recorder');
+  _eventEmitter.default.call(this, defaultOptions, "Recorder");
   var browser = new _browser.default(defaultOptions);
   var options = (0, _deepmerge.default)(defaultOptions, {
     image: {
@@ -23479,7 +22119,7 @@ var Recorder = function Recorder(visuals, replay) {
 
   // validate some options this class needs
   if (!options.video || !options.video.fps) {
-    throw _videomailError.default.create('FPS must be defined', options);
+    throw _videomailError.default.create("FPS must be defined", options);
   }
   var self = this;
   var debug = options.debug;
@@ -23522,23 +22162,30 @@ var Recorder = function Recorder(visuals, replay) {
       if (stream.destroyed) {
         // prevents https://github.com/binarykitchen/videomail.io/issues/393
         stopPings();
-        self.emit(_events.default.ERROR, _videomailError.default.create('Already disconnected', 'Sorry, connection to the server has been destroyed. Please reload.', options));
+        self.emit(_events.default.ERROR, _videomailError.default.create("Already disconnected", "Sorry, connection to the server has been destroyed. Please reload.", options));
       } else {
         var onFlushedCallback = opts && opts.onFlushedCallback;
         try {
           stream.write(buffer, function () {
-            onFlushedCallback && onFlushedCallback(opts);
+            if (!onFlushedCallback) {
+              return;
+            }
+            try {
+              onFlushedCallback(opts);
+            } catch (exc) {
+              self.emit(_events.default.ERROR, _videomailError.default.create("Failed to write stream buffer", "stream.write() failed because of ".concat((0, _pretty.default)(exc)), options));
+            }
           });
         } catch (exc) {
-          self.emit(_events.default.ERROR, _videomailError.default.create('Failed writing to server', 'stream.write() failed because of ' + (0, _pretty.default)(exc), options));
+          self.emit(_events.default.ERROR, _videomailError.default.create("Failed writing to server", "stream.write() failed because of ".concat((0, _pretty.default)(exc)), options));
         }
       }
     }
   }
   function sendPings() {
     pingInterval = window.setInterval(function () {
-      debug('Recorder: pinging...');
-      writeStream(Buffer.from(''));
+      debug("Recorder: pinging...");
+      writeStream(Buffer.from(""));
     }, options.timeouts.pingInterval);
   }
   function stopPings() {
@@ -23548,11 +22195,13 @@ var Recorder = function Recorder(visuals, replay) {
     samplesCount++;
     var audioBuffer = audioSample.toBuffer();
 
-    // if (options.verbose) {
-    //     debug(
-    //         'Sample #' + samplesCount + ' (' + audioBuffer.length + ' bytes):'
-    //     )
-    // }
+    /*
+     * if (options.verbose) {
+     *     debug(
+     *         'Sample #' + samplesCount + ' (' + audioBuffer.length + ' bytes):'
+     *     )
+     * }
+     */
 
     writeStream(audioBuffer);
   }
@@ -23562,7 +22211,7 @@ var Recorder = function Recorder(visuals, replay) {
   function onUserMediaReady() {
     var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
     try {
-      debug('Recorder: onUserMediaReady()', params);
+      debug("Recorder: onUserMediaReady()", (0, _safeJsonStringify.default)(params));
       var switchingFacingMode = params.switchingFacingMode;
       userMediaLoading = blocking = unloaded = submitting = false;
       userMediaLoaded = true;
@@ -23583,26 +22232,24 @@ var Recorder = function Recorder(visuals, replay) {
     }
   }
   function clearRetryTimeout() {
-    debug('Recorder: clearRetryTimeout()');
-    retryTimeout && clearTimeout(retryTimeout);
+    if (!retryTimeout) {
+      return;
+    }
+    debug("Recorder: clearRetryTimeout()");
+    clearTimeout(retryTimeout);
     retryTimeout = null;
   }
-  function clearUserMediaTimeout() {
-    if (userMediaTimeout) {
-      debug('Recorder: clearUserMediaTimeout()');
-      userMediaTimeout && clearTimeout(userMediaTimeout);
-      userMediaTimeout = null;
-    }
-  }
   function calculateFrameProgress() {
-    return (confirmedFrameNumber / (framesCount || 1) * 100).toFixed(2) + '%';
+    return "".concat((confirmedFrameNumber / (framesCount || 1) * 100).toFixed(2), "%");
   }
   function calculateSampleProgress() {
-    return (confirmedSampleNumber / (samplesCount || 1) * 100).toFixed(2) + '%';
+    return "".concat((confirmedSampleNumber / (samplesCount || 1) * 100).toFixed(2), "%");
   }
   function updateOverallProgress() {
-    // when progresses aren't initialized,
-    // then do a first calculation to avoid `infinite` or `null` displays
+    /*
+     * when progresses aren't initialized,
+     * then do a first calculation to avoid `infinite` or `null` displays
+     */
 
     if (!frameProgress) {
       frameProgress = calculateFrameProgress();
@@ -23627,13 +22274,15 @@ var Recorder = function Recorder(visuals, replay) {
     sampleProgress = frameProgress = null;
     key = args.key;
 
-    // We are not serving MP4 videos anymore due to licensing but are keeping code
-    // for compatibility and documentation
+    /*
+     * We are not serving MP4 videos anymore due to licensing but are keeping code
+     * for compatibility and documentation
+     */
     if (args.mp4) {
-      replay.setMp4Source(args.mp4 + _constants.default.SITE_NAME_LABEL + '/' + options.siteName + '/videomail.mp4', true);
+      replay.setMp4Source("".concat(args.mp4 + _constants.default.SITE_NAME_LABEL, "/").concat(options.siteName, "/videomail.mp4"), true);
     }
     if (args.webm) {
-      replay.setWebMSource(args.webm + _constants.default.SITE_NAME_LABEL + '/' + options.siteName + '/videomail.webm', true);
+      replay.setWebMSource("".concat(args.webm + _constants.default.SITE_NAME_LABEL, "/").concat(options.siteName, "/videomail.webm"), true);
     }
     self.hide();
     var width = self.getRecorderWidth(true);
@@ -23644,24 +22293,28 @@ var Recorder = function Recorder(visuals, replay) {
     waitingTime = Date.now() - stopTime;
     recordingStats.waitingTime = waitingTime;
     if (options.debug) {
-      debug('While recording, %s have been transferred and waiting time was %s', _humanize.default.filesize(bytesSum, 2), _humanize.default.toTime(waitingTime));
+      debug("While recording, %s have been transferred and waiting time was %s", _humanize.default.filesize(bytesSum, 2), _humanize.default.toTime(waitingTime));
     }
   }
   function initSocket(cb) {
     if (!connected) {
       connecting = true;
-      debug('Recorder: initialising web socket to %s', options.socketUrl);
+      debug("Recorder: initializing web socket to %s", options.socketUrl);
       self.emit(_events.default.CONNECTING);
 
       // https://github.com/maxogden/websocket-stream#binary-sockets
 
-      // we use query parameters here because we cannot set custom headers in web sockets,
-      // see https://github.com/websockets/ws/issues/467
+      /*
+       * we use query parameters here because we cannot set custom headers in web sockets,
+       * see https://github.com/websockets/ws/issues/467
+       */
 
-      var url2Connect = options.socketUrl + '?' + encodeURIComponent(_constants.default.SITE_NAME_LABEL) + '=' + encodeURIComponent(options.siteName);
+      var url2Connect = "".concat(options.socketUrl, "?").concat(encodeURIComponent(_constants.default.SITE_NAME_LABEL), "=").concat(encodeURIComponent(options.siteName));
       try {
-        // websocket options cannot be set on client side, only on server, see
-        // https://github.com/maxogden/websocket-stream/issues/116#issuecomment-296421077
+        /*
+         * websocket options cannot be set on client side, only on server, see
+         * https://github.com/maxogden/websocket-stream/issues/116#issuecomment-296421077
+         */
         stream = (0, _websocketStream.default)(url2Connect, {
           perMessageDeflate: false,
           // see https://github.com/maxogden/websocket-stream/issues/117#issuecomment-298826011
@@ -23670,163 +22323,191 @@ var Recorder = function Recorder(visuals, replay) {
       } catch (exc) {
         connecting = connected = false;
         var err;
-        if (typeof _websocketStream.default === 'undefined') {
-          err = _videomailError.default.create('There is no websocket', 'Cause: ' + (0, _pretty.default)(exc), options);
+        if (typeof _websocketStream.default === "undefined") {
+          err = _videomailError.default.create("There is no websocket", "Cause: ".concat((0, _pretty.default)(exc)), options);
         } else {
-          err = _videomailError.default.create('Failed to connect to server', 'Please upgrade your browser. Your current version does not seem to support websockets.', options, {
+          err = _videomailError.default.create("Failed to connect to server", "Please upgrade your browser. Your current version does not seem to support websockets.", options, {
             browserProblem: true
           });
         }
         self.emit(_events.default.ERROR, err);
       }
       if (stream) {
-        // // useful for debugging streams
+        // useful for debugging streams
 
-        // if (!stream.originalEmit) {
-        //   stream.originalEmit = stream.emit
-        // }
+        /*
+         * if (!stream.originalEmit) {
+         *   stream.originalEmit = stream.emit
+         * }
+         */
 
-        // stream.emit = function (type) {
-        //   if (stream) {
-        //     debug(PIPE_SYMBOL + 'Debugging stream event:', type)
-        //     var args = Array.prototype.slice.call(arguments, 0)
-        //     return stream.originalEmit.apply(stream, args)
-        //   }
-        // }
+        /*
+         * stream.emit = function (type) {
+         *   if (stream) {
+         *     debug(PIPE_SYMBOL + 'Debugging stream event:', type)
+         *     var args = Array.prototype.slice.call(arguments, 0)
+         *     return stream.originalEmit.apply(stream, args)
+         *   }
+         * }
+         */
 
-        stream.on('close', function (err) {
-          debug(PIPE_SYMBOL + 'Stream has closed');
+        stream.on("close", function (err) {
+          debug("".concat(PIPE_SYMBOL, "Stream has closed"));
           connecting = connected = false;
           if (err) {
-            self.emit(_events.default.ERROR, err || 'Unhandled websocket error');
+            self.emit(_events.default.ERROR, err || "Unhandled websocket error");
           } else {
-            self.emit(_events.default.DISCONNECTED);
+            // COMMENTED OUT TEMPORARILY, PROBABLY OLD CODE TOO
+            // UPON CLOSE IT SHOULD TRY TO RECONNECT INSTEAD OF DISCONNECT.
 
-            // prevents from https://github.com/binarykitchen/videomail.io/issues/297 happening
-            cancelAnimationFrame();
+            // self.emit(Events.DISCONNECTED);
+            // // prevents from https://github.com/binarykitchen/videomail.io/issues/297 happening
+            // cancelAnimationFrame();
+
+            // New: try to reconnect
+            initSocket();
           }
         });
-        stream.on('connect', function () {
-          debug(PIPE_SYMBOL + 'Stream *connect* event emitted');
-          if (!connected) {
+        stream.on("connect", function () {
+          debug("".concat(PIPE_SYMBOL, "Stream *connect* event emitted"));
+          var isClosing = this.socket.readyState === WebSocket.CLOSING;
+          if (!connected && !isClosing && !unloaded) {
             connected = true;
             connecting = unloaded = false;
             self.emit(_events.default.CONNECTED);
             cb && cb();
           }
         });
-        stream.on('data', function (data) {
-          debug(PIPE_SYMBOL + 'Stream *data* event emitted');
+        stream.on("data", function (data) {
+          debug("".concat(PIPE_SYMBOL, "Stream *data* event emitted"));
           var command;
           try {
             command = JSON.parse(data.toString());
           } catch (exc) {
-            debug('Failed to parse command:', exc);
-            self.emit(_events.default.ERROR, _videomailError.default.create('Invalid server command',
-            // toString() since https://github.com/binarykitchen/videomail.io/issues/288
-            'Contact us asap. Bad command was ' + data.toString() + '. ', options));
+            debug("Failed to parse command:", exc);
+            self.emit(_events.default.ERROR, _videomailError.default.create("Invalid server command", // toString() since https://github.com/binarykitchen/videomail.io/issues/288
+            "Contact us asap. Bad command was ".concat(data.toString(), ". "), options));
           } finally {
             executeCommand.call(self, command);
           }
         });
-        stream.on('error', function (err) {
-          debug(PIPE_SYMBOL + 'Stream *error* event emitted', err);
-          connecting = connected = false;
-          var videomailError;
-          if (browser.isIOS()) {
-            // setting custom text since that err object isn't really an error
-            // on iphones when locked, and unlocked, this err is actually
-            // an event object with stuff we can't use at all (an external bug)
-            videomailError = _videomailError.default.create(err, 'iPhones cannot maintain a live connection for too long. Original error message is: ' + err.toString(), options);
+        stream.on("error", function (err) {
+          debug("".concat(PIPE_SYMBOL, "Stream *error* event emitted: ").concat((0, _safeJsonStringify.default)(err)));
 
-            // Changed to the above temporarily for better investigations
-            // videomailError = VideomailError.create(
-            //   'Sorry, connection has timed out',
-            //   'iPhones cannot maintain a live connection for too long,
-            //   options
-            // )
-          } else {
-            // or else it could be a poor wifi connection...
-            videomailError = _videomailError.default.create('Data exchange interrupted', 'Please check your network connection and reload.', options);
-          }
-          self.emit(_events.default.ERROR, videomailError);
+          // OLD CODE, COMMENTED OUT TEMPORARILY FOR INVESTIGATIONS
+          // IT SHOULD RECONNECT INSTEAD OF CLOSING THE CONNECTION
+
+          // connecting = connected = false;
+
+          // let videomailError;
+
+          // if (browser.isIOS()) {
+          //   /*
+          //    * setting custom text since that err object isn't really an error
+          //    * on iPhones when locked, and unlocked, this err is actually
+          //    * an event object with stuff we can't use at all (an external bug)
+          //    */
+          //   videomailError = VideomailError.create(
+          //     err,
+          //     `iPhones cannot maintain a live connection for too long. Original error message is: ${err.toString()}`,
+          //     options,
+          //   );
+
+          //   /*
+          //    * Changed to the above temporarily for better investigations
+          //    * videomailError = VideomailError.create(
+          //    *   'Sorry, connection has timed out',
+          //    *   'iPhones cannot maintain a live connection for too long,
+          //    *   options
+          //    * )
+          //    */
+          // } else {
+          //   // or else it could be a poor wifi connection...
+          //   videomailError = VideomailError.create(
+          //     "Data exchange interrupted",
+          //     "Please check your network connection and reload",
+          //     options,
+          //   );
+          // }
+
+          // self.emit(Events.ERROR, videomailError);
         });
 
         // just experimental
 
-        stream.on('drain', function () {
-          debug(PIPE_SYMBOL + 'Stream *drain* event emitted (should not happen!)');
+        stream.on("drain", function () {
+          debug("".concat(PIPE_SYMBOL, "Stream *drain* event emitted (should not happen!)"));
         });
-        stream.on('preend', function () {
-          debug(PIPE_SYMBOL + 'Stream *preend* event emitted');
+        stream.on("preend", function () {
+          debug("".concat(PIPE_SYMBOL, "Stream *preend* event emitted"));
         });
-        stream.on('end', function () {
-          debug(PIPE_SYMBOL + 'Stream *end* event emitted');
+        stream.on("end", function () {
+          debug("".concat(PIPE_SYMBOL, "Stream *end* event emitted"));
         });
-        stream.on('drain', function () {
-          debug(PIPE_SYMBOL + 'Stream *drain* event emitted');
+        stream.on("drain", function () {
+          debug("".concat(PIPE_SYMBOL, "Stream *drain* event emitted"));
         });
-        stream.on('pipe', function () {
-          debug(PIPE_SYMBOL + 'Stream *pipe* event emitted');
+        stream.on("pipe", function () {
+          debug("".concat(PIPE_SYMBOL, "Stream *pipe* event emitted"));
         });
-        stream.on('unpipe', function () {
-          debug(PIPE_SYMBOL + 'Stream *unpipe* event emitted');
+        stream.on("unpipe", function () {
+          debug("".concat(PIPE_SYMBOL, "Stream *unpipe* event emitted"));
         });
-        stream.on('resume', function () {
-          debug(PIPE_SYMBOL + 'Stream *resume* event emitted');
+        stream.on("resume", function () {
+          debug("".concat(PIPE_SYMBOL, "Stream *resume* event emitted"));
         });
-        stream.on('uncork', function () {
-          debug(PIPE_SYMBOL + 'Stream *uncork* event emitted');
+        stream.on("uncork", function () {
+          debug("".concat(PIPE_SYMBOL, "Stream *uncork* event emitted"));
         });
-        stream.on('readable', function () {
-          debug(PIPE_SYMBOL + 'Stream *preend* event emitted');
+        stream.on("readable", function () {
+          debug("".concat(PIPE_SYMBOL, "Stream *preend* event emitted"));
         });
-        stream.on('prefinish', function () {
-          debug(PIPE_SYMBOL + 'Stream *preend* event emitted');
+        stream.on("prefinish", function () {
+          debug("".concat(PIPE_SYMBOL, "Stream *preend* event emitted"));
         });
-        stream.on('finish', function () {
-          debug(PIPE_SYMBOL + 'Stream *preend* event emitted');
+        stream.on("finish", function () {
+          debug("".concat(PIPE_SYMBOL, "Stream *preend* event emitted"));
         });
       }
     }
   }
   function showUserMedia() {
-    // use connected flag to prevent this from happening
-    // https://github.com/binarykitchen/videomail.io/issues/323
+    /*
+     * use connected flag to prevent this from happening
+     * https://github.com/binarykitchen/videomail.io/issues/323
+     */
     return connected && (isNotifying() || !isHidden() || blocking);
   }
-  function userMediaErrorCallback(err, extraA, extraB) {
+  function userMediaErrorCallback(err) {
     userMediaLoading = false;
     clearUserMediaTimeout();
-    debug('Recorder: userMediaErrorCallback()', ', name:', err.name, ', message:', err.message, ', Webcam characteristics:', userMedia.getCharacteristics(),
-    // added recently in the hope to investigate weird webcam issues
-    ', extraA arguments:', extraA ? extraA.toString() : undefined, ', extraB arguments:', extraB ? extraB.toString() : undefined);
+    debug("Recorder: userMediaErrorCallback(), name: ".concat(err.name, ", message: ").concat(err.message, " and Webcam characteristics: ").concat((0, _safeJsonStringify.default)(userMedia.getCharacteristics())));
     var errorListeners = self.listeners(_events.default.ERROR);
     if (errorListeners && errorListeners.length) {
       if (err.name !== _videomailError.default.MEDIA_DEVICE_NOT_SUPPORTED) {
         self.emit(_events.default.ERROR, _videomailError.default.create(err, options));
       } else {
         // do not emit but retry since MEDIA_DEVICE_NOT_SUPPORTED can be a race condition
-        debug('Recorder: ignore user media error', err);
+        debug("Recorder: ignore user media error", err);
       }
 
       // retry after a while
       retryTimeout = setTimeout(initSocket, options.timeouts.userMedia);
+    } else if (unloaded) {
+      /*
+       * This can happen when a container is unloaded but some user media related callbacks
+       * are still in process. In that case ignore error.
+       */
+      debug("Recorder: already unloaded. Not going to throw error", err);
     } else {
-      if (unloaded) {
-        // can happen that container is unloaded but some user media related callbacks
-        // are still in process. in that case ignore error.
-        debug('Recorder: already unloaded. Not going to throw error', err);
-      } else {
-        debug('Recorder: no error listeners attached but throwing error', err);
+      debug("Recorder: no error listeners attached but throwing error", err);
 
-        // weird situation, throw it instead of emitting since there are no error listeners
-        throw _videomailError.default.create(err, 'Unable to process this error since there are no error listeners anymore.', options);
-      }
+      // weird situation, throw it instead of emitting since there are no error listeners
+      throw _videomailError.default.create(err, "Unable to process this error since there are no error listeners anymore.", options);
     }
   }
   function getUserMediaCallback(localStream, params) {
-    debug('Recorder: getUserMediaCallback()', params);
+    debug("Recorder: getUserMediaCallback()", (0, _safeJsonStringify.default)(params));
     if (showUserMedia()) {
       try {
         clearUserMediaTimeout();
@@ -23842,9 +22523,9 @@ var Recorder = function Recorder(visuals, replay) {
   }
   function loadGenuineUserMedia(params) {
     if (!navigator) {
-      throw new Error('Navigator is missing!');
+      throw new Error("Navigator is missing!");
     }
-    debug('Recorder: loadGenuineUserMedia()');
+    debug("Recorder: loadGenuineUserMedia()");
     self.emit(_events.default.ASKING_WEBCAM_PERMISSION);
 
     // https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia
@@ -23860,18 +22541,22 @@ var Recorder = function Recorder(visuals, replay) {
         audio: options.isAudioEnabled()
       };
       if (browser.isOkSafari()) {
-        // do not use those width/height constraints yet,
-        // current safari would throw an error
-        // todo in https://github.com/binarykitchen/videomail-client/issues/142
+        /*
+         * do not use those width/height constraints yet,
+         * current safari would throw an error
+         * todo in https://github.com/binarykitchen/videomail-client/issues/142
+         */
       } else {
         if (options.hasDefinedWidth()) {
           constraints.video.width = {
             ideal: options.video.width
           };
         } else {
-          // otherwise try to apply the same width as the element is having
-          // but there is no 100% guarantee that this will happen. not
-          // all webcam drivers behave the same way
+          /*
+           * otherwise try to apply the same width as the element is having
+           * but there is no 100% guarantee that this will happen. not
+           * all webcam drivers behave the same way
+           */
           constraints.video.width = {
             ideal: self.limitWidth()
           };
@@ -23882,9 +22567,9 @@ var Recorder = function Recorder(visuals, replay) {
           };
         }
       }
-      debug('Recorder: navigator.mediaDevices.getUserMedia()', constraints);
+      debug("Recorder: navigator.mediaDevices.getUserMedia()", (0, _safeJsonStringify.default)(constraints));
       if (navigator.mediaDevices.getSupportedConstraints) {
-        debug('Recorder: navigator.mediaDevices.getSupportedConstraints()', navigator.mediaDevices.getSupportedConstraints());
+        debug("Recorder: navigator.mediaDevices.getSupportedConstraints()", (0, _safeJsonStringify.default)(navigator.mediaDevices.getSupportedConstraints()));
       }
       var genuineUserMediaRequest = navigator.mediaDevices.getUserMedia(constraints);
       if (genuineUserMediaRequest) {
@@ -23892,14 +22577,16 @@ var Recorder = function Recorder(visuals, replay) {
           getUserMediaCallback(localStream, params);
         }).catch(userMediaErrorCallback);
       } else {
-        // this to trap errors like these
-        // Cannot read property 'then' of undefined
+        /*
+         * this to trap errors like these
+         * Cannot read property 'then' of undefined
+         */
 
         // todo retry with navigator.getUserMedia_() maybe?
-        throw _videomailError.default.create('Sorry, your browser is unable to use cameras.', 'Try a different browser with better user media functionalities.', options);
+        throw _videomailError.default.create("Sorry, your browser is unable to use cameras.", "Try a different browser with better user media functionalities.", options);
       }
     } else {
-      debug('Recorder: navigator.getUserMedia()');
+      debug("Recorder: navigator.getUserMedia()");
       navigator.getUserMedia_({
         video: true,
         audio: options.isAudioEnabled()
@@ -23909,14 +22596,14 @@ var Recorder = function Recorder(visuals, replay) {
   function loadUserMedia() {
     var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
     if (userMediaLoaded) {
-      debug('Recorder: skipping loadUserMedia() because it is already loaded');
+      debug("Recorder: skipping loadUserMedia() because it is already loaded");
       onUserMediaReady(params);
       return false;
     } else if (userMediaLoading) {
-      debug('Recorder: skipping loadUserMedia() because it is already asking for permission');
+      debug("Recorder: skipping loadUserMedia() because it is already asking for permission");
       return false;
     }
-    debug('Recorder: loadUserMedia()', params);
+    debug("Recorder: loadUserMedia(".concat((0, _safeJsonStringify.default)(params), ")"));
     self.emit(_events.default.LOADING_USER_MEDIA);
     try {
       userMediaTimeout = setTimeout(function () {
@@ -23927,22 +22614,30 @@ var Recorder = function Recorder(visuals, replay) {
       userMediaLoading = true;
       loadGenuineUserMedia(params);
     } catch (exc) {
-      debug('Recorder: failed to load genuine user media');
+      debug("Recorder: failed to load genuine user media");
       userMediaLoading = false;
       var errorListeners = self.listeners(_events.default.ERROR);
       if (errorListeners.length) {
         self.emit(_events.default.ERROR, exc);
       } else {
-        debug('Recorder: no error listeners attached but throwing exception', exc);
+        debug("Recorder: no error listeners attached but throwing exception", exc);
         throw exc; // throw it further
       }
     }
   }
   function executeCommand(command) {
+    if (unloaded) {
+      // Skip
+      return;
+    }
     try {
-      debug('Server commanded: %s', command.command, command.args ? ', ' + (0, _safeJsonStringify.default)(command.args) : '');
+      if (command.args) {
+        debug("Server commanded: ".concat(command.command, " with ").concat((0, _safeJsonStringify.default)(command.args)));
+      } else {
+        debug("Server commanded: ".concat(command.command));
+      }
       switch (command.command) {
-        case 'ready':
+        case "ready":
           this.emit(_events.default.SERVER_READY);
           if (!userMediaTimeout) {
             if (options.loadUserMediaOnRecord) {
@@ -23953,26 +22648,26 @@ var Recorder = function Recorder(visuals, replay) {
             }
           }
           break;
-        case 'preview':
+        case "preview":
           preview(command.args);
           break;
-        case 'error':
-          this.emit(_events.default.ERROR, _videomailError.default.create('Oh no, server error!', command.args.err.toString() || '(No explanation given)', options));
+        case "error":
+          this.emit(_events.default.ERROR, _videomailError.default.create("Oh no, server error!", command.args.err.toString() || "(No message given)", options));
           break;
-        case 'confirmFrame':
+        case "confirmFrame":
           updateFrameProgress(command.args);
           break;
-        case 'confirmSample':
+        case "confirmSample":
           updateSampleProgress(command.args);
           break;
-        case 'beginAudioEncoding':
+        case "beginAudioEncoding":
           this.emit(_events.default.BEGIN_AUDIO_ENCODING);
           break;
-        case 'beginVideoEncoding':
+        case "beginVideoEncoding":
           this.emit(_events.default.BEGIN_VIDEO_ENCODING);
           break;
         default:
-          this.emit(_events.default.ERROR, 'Unknown server command: ' + command.command);
+          this.emit(_events.default.ERROR, "Unknown server command: ".concat(command.command));
           break;
       }
     } catch (exc) {
@@ -23991,28 +22686,34 @@ var Recorder = function Recorder(visuals, replay) {
       args = null;
     }
     if (!connected) {
-      debug('Reconnecting for the command', command, '…');
+      debug("Reconnecting for the command", command, "…");
       initSocket(function () {
         writeCommand(command, args);
         cb && cb();
       });
     } else if (stream) {
-      debug('$ %s', command, args ? (0, _safeJsonStringify.default)(args) : '');
+      if (args) {
+        debug("$ ".concat(command, " with ").concat((0, _safeJsonStringify.default)(args)));
+      } else {
+        debug("$ ".concat(command));
+      }
       var commandObj = {
         command: command,
         args: args
       };
 
-      // todo commented out because for some reasons server does
-      // not accept such a long array of many log lines. to examine later.
-      //
-      // add some useful debug info to examine weird stuff like this one
-      // UnprocessableError: Unable to encode a video with FPS near zero.
-      // todo consider removing this later or have it for debug=1 only?
-      //
-      // if (options.logger && options.logger.getLines) {
-      //   commandObj.logLines = options.logger.getLines()
-      // }
+      /*
+       * todo commented out because for some reasons server does
+       * not accept such a long array of many log lines. to examine later.
+       *
+       * add some useful debug info to examine weird stuff like this one
+       * UnprocessableError: Unable to encode a video with FPS near zero.
+       * todo consider removing this later or have it for debug=1 only?
+       *
+       * if (options.logger && options.logger.getLines) {
+       *   commandObj.logLines = options.logger.getLines()
+       * }
+       */
 
       writeStream(Buffer.from((0, _safeJsonStringify.default)(commandObj)));
       if (cb) {
@@ -24020,24 +22721,6 @@ var Recorder = function Recorder(visuals, replay) {
         setTimeout(function () {
           cb();
         }, 0);
-      }
-    }
-  }
-  function disconnect() {
-    if (connected) {
-      debug('Recorder: disconnect()');
-      if (userMedia) {
-        // prevents https://github.com/binarykitchen/videomail-client/issues/114
-        userMedia.unloadRemainingEventListeners();
-      }
-      if (submitting) {
-        // server will disconnect socket automatically after submitting
-        connecting = connected = false;
-      } else if (stream) {
-        // force to disconnect socket right now to clean temp files on server
-        // event listeners will do the rest
-        stream.end();
-        stream = undefined;
       }
     }
   }
@@ -24060,20 +22743,24 @@ var Recorder = function Recorder(visuals, replay) {
     return userMedia.getAudioSampleRate();
   };
   this.stop = function (params) {
-    debug('stop()', params);
+    debug("stop(".concat((0, _safeJsonStringify.default)(params), ")"));
     var limitReached = params.limitReached;
     this.emit(_events.default.STOPPING, limitReached);
     loop.complete();
     var self = this;
 
-    // needed to give dom enough time to prepare the replay element
-    // to show up upon the STOPPING event so that we can evaluate
-    // the right video type
+    /*
+     * needed to give dom enough time to prepare the replay element
+     * to show up upon the STOPPING event so that we can evaluate
+     * the right video type
+     */
     setTimeout(function () {
       stopTime = Date.now();
       recordingStats = {
-        // do not use loop.getFPS() as this will only return the fps from the last delta,
-        // not the average. see https://github.com/hapticdata/animitter/issues/3
+        /*
+         * do not use loop.getFPS() as this will only return the fps from the last delta,
+         * not the average. see https://github.com/hapticdata/animitter/issues/3
+         */
         avgFps: getAvgFps(),
         wantedFps: options.video.fps,
         avgInterval: getAvgInterval(),
@@ -24086,7 +22773,7 @@ var Recorder = function Recorder(visuals, replay) {
         recordingStats.samplesCount = samplesCount;
         recordingStats.sampleRate = userMedia.getAudioSampleRate();
       }
-      writeCommand('stop', recordingStats, function () {
+      writeCommand("stop", recordingStats, function () {
         self.emit(_events.default.STOPPED, {
           recordingStats: recordingStats
         });
@@ -24100,10 +22787,10 @@ var Recorder = function Recorder(visuals, replay) {
     this.emit(_events.default.GOING_BACK);
     show();
     this.reset();
-    writeCommand('back', cb);
+    writeCommand("back", cb);
   };
-  function reInitialiseAudio() {
-    debug('Recorder: reInitialiseAudio()');
+  function reInitializeAudio() {
+    debug("Recorder: reInitializeAudio()");
     clearUserMediaTimeout();
 
     // important to free memory
@@ -24112,23 +22799,38 @@ var Recorder = function Recorder(visuals, replay) {
     loadUserMedia();
   }
   this.unload = function (e) {
-    if (!unloaded) {
-      var cause;
-      if (e) {
-        cause = e.name || e.statusText || e.toString();
-      }
-      debug('Recorder: unload()' + (cause ? ', cause: ' + cause : ''));
-      this.reset();
-      clearUserMediaTimeout();
-      disconnect();
-      unloaded = true;
-      built = false;
+    if (unloaded || !built) {
+      return; // already unloaded
     }
+    var cause;
+    if (e) {
+      cause = e.name || e.statusText || e.toString();
+    }
+    debug("Recorder: unload()".concat(cause ? ", cause: ".concat(cause) : ""));
+    this.reset();
+    clearUserMediaTimeout();
+    if (userMedia) {
+      // prevents https://github.com/binarykitchen/videomail-client/issues/114
+      userMedia.unloadRemainingEventListeners();
+    }
+    if (submitting) {
+      // server will disconnect socket automatically after submitting
+    } else if (stream) {
+      /*
+       * force to disconnect socket right now to clean temp files on server
+       * event listeners will do the rest
+       */
+      debug("Recorder: ending stream ...");
+      stream.destroy();
+      stream = undefined;
+    }
+    unloaded = true;
+    built = connecting = connected = false;
   };
   this.reset = function () {
     // no need to reset when already unloaded
     if (!unloaded) {
-      debug('Recorder: reset()');
+      debug("Recorder: reset()");
       this.emit(_events.default.RESETTING);
       cancelAnimationFrame();
 
@@ -24138,8 +22840,15 @@ var Recorder = function Recorder(visuals, replay) {
       userMediaLoaded = key = canvas = ctx = recordingBuffer = recordingBufferLength = null;
     }
   };
+  function clearUserMediaTimeout() {
+    if (userMediaTimeout) {
+      debug("Recorder: clearUserMediaTimeout()");
+      userMediaTimeout && clearTimeout(userMediaTimeout);
+      userMediaTimeout = null;
+    }
+  }
   this.validate = function () {
-    return connected && framesCount > 0 && canvas === null;
+    return connected && canvas === null;
   };
   this.isReady = function () {
     return userMedia.isReady();
@@ -24149,7 +22858,11 @@ var Recorder = function Recorder(visuals, replay) {
     if (e instanceof window.Event) {
       params.eventType = e.type;
     }
-    debug("pause() at frame ".concat(framesCount), params);
+    if (params) {
+      debug("pause() at frame ".concat(framesCount, " with ").concat((0, _safeJsonStringify.default)(params)));
+    } else {
+      debug("pause() at frame ".concat(framesCount));
+    }
     userMedia.pause();
     loop.stop();
     this.emit(_events.default.PAUSED);
@@ -24171,15 +22884,6 @@ var Recorder = function Recorder(visuals, replay) {
       self.emit(_events.default.FIRST_FRAME_SENT);
     }
   }
-  function createLoop() {
-    var newLoop = (0, _animitter.default)({
-      fps: options.video.fps
-    }, draw);
-
-    // remember it first
-    originalAnimationFrameObject = newLoop.getRequestAnimationFrameObject();
-    return newLoop;
-  }
   function draw(deltaTime, elapsedTime) {
     try {
       // ctx and stream might become null while unloading
@@ -24192,7 +22896,7 @@ var Recorder = function Recorder(visuals, replay) {
         recordingBuffer = frame.toBuffer();
         recordingBufferLength = recordingBuffer.length;
         if (recordingBufferLength < 1) {
-          throw _videomailError.default.create('Failed to extract webcam data.', options);
+          throw _videomailError.default.create("Failed to extract webcam data.", options);
         }
         bytesSum += recordingBufferLength;
         var frameControlBuffer = Buffer.from((0, _safeJsonStringify.default)({
@@ -24204,13 +22908,15 @@ var Recorder = function Recorder(visuals, replay) {
           onFlushedCallback: onFlushed
         });
 
-        // if (options.verbose) {
-        //   debug(
-        //     'Frame #' + framesCount + ' (' + recordingBufferLength + ' bytes):',
-        //     ' delta=' + deltaTime + 'ms, ' +
-        //     ' elapsed=' + elapsedTime + 'ms'
-        //   )
-        // }
+        /*
+         * if (options.verbose) {
+         *   debug(
+         *     'Frame #' + framesCount + ' (' + recordingBufferLength + ' bytes):',
+         *     ' delta=' + deltaTime + 'ms, ' +
+         *     ' elapsed=' + elapsedTime + 'ms'
+         *   )
+         * }
+         */
 
         visuals.checkTimer({
           intervalSum: elapsedTime
@@ -24220,6 +22926,15 @@ var Recorder = function Recorder(visuals, replay) {
       self.emit(_events.default.ERROR, exc);
     }
   }
+  function createLoop() {
+    var newLoop = (0, _animitter.default)({
+      fps: options.video.fps
+    }, draw);
+
+    // remember it first
+    originalAnimationFrameObject = newLoop.getRequestAnimationFrameObject();
+    return newLoop;
+  }
   this.record = function () {
     if (unloaded) {
       return false;
@@ -24227,7 +22942,7 @@ var Recorder = function Recorder(visuals, replay) {
 
     // reconnect when needed
     if (!connected) {
-      debug('Recorder: reconnecting before recording ...');
+      debug("Recorder: reconnecting before recording ...");
       initSocket(function () {
         self.once(_events.default.USER_MEDIA_READY, self.record);
       });
@@ -24239,7 +22954,7 @@ var Recorder = function Recorder(visuals, replay) {
           recordWhenReady: true
         });
       } else {
-        self.emit(_events.default.ERROR, _videomailError.default.create('Load and enable your camera first', options));
+        self.emit(_events.default.ERROR, _videomailError.default.create("Load and enable your camera first", options));
       }
       return false; // do nothing further
     }
@@ -24249,32 +22964,34 @@ var Recorder = function Recorder(visuals, replay) {
       self.emit(_events.default.ERROR, _videomailError.default.create(exc, options));
       return false;
     }
-    ctx = canvas.getContext('2d');
+    ctx = canvas.getContext("2d");
     if (!canvas.width) {
-      self.emit(_events.default.ERROR, _videomailError.default.create('Canvas has an invalid width.', options));
+      self.emit(_events.default.ERROR, _videomailError.default.create("Canvas has an invalid width.", options));
       return false;
     }
     if (!canvas.height) {
-      self.emit(_events.default.ERROR, _videomailError.default.create('Canvas has an invalid height.', options));
+      self.emit(_events.default.ERROR, _videomailError.default.create("Canvas has an invalid height.", options));
       return false;
     }
     bytesSum = 0;
-    frame = new _canvasToBuffer.default(canvas, options);
-    debug('Recorder: record()');
+    frame = new _canvasToBuffer.default(canvas, options.image.types, options.image.quality);
+    debug("Recorder: record()");
     userMedia.record();
     self.emit(_events.default.RECORDING, framesCount);
 
     // see https://github.com/hapticdata/animitter/issues/3
-    loop.on('update', function (deltaTime, elapsedTime) {
+    loop.on("update", function (_deltaTime, elapsedTime) {
       // x1000 because of milliseconds
       var avgFPS = framesCount / elapsedTime * 1000;
-      debug('Recorder: avgFps =', Math.round(avgFPS));
+      debug("Recorder: avgFps = ".concat(Math.round(avgFPS), ", framesCount = ").concat(framesCount));
     });
     loop.start();
   };
   function setAnimationFrameObject(newObj) {
-    // must stop and then start to make it become effective, see
-    // https://github.com/hapticdata/animitter/issues/5#issuecomment-292019168
+    /*
+     * must stop and then start to make it become effective, see
+     * https://github.com/hapticdata/animitter/issues/5#issuecomment-292019168
+     */
     if (loop) {
       var isRecording = self.isRecording();
       loop.stop();
@@ -24285,11 +23002,11 @@ var Recorder = function Recorder(visuals, replay) {
     }
   }
   function restoreAnimationFrameObject() {
-    debug('Recorder: restoreAnimationFrameObject()');
+    debug("Recorder: restoreAnimationFrameObject()");
     setAnimationFrameObject(originalAnimationFrameObject);
   }
   function loopWithTimeouts() {
-    debug('Recorder: loopWithTimeouts()');
+    debug("Recorder: loopWithTimeouts()");
     var wantedInterval = 1e3 / options.video.fps;
     var processingTime = 0;
     var start;
@@ -24299,9 +23016,11 @@ var Recorder = function Recorder(visuals, replay) {
         fn();
         processingTime = Date.now() - start;
       },
-      // reducing wanted interval by respecting the time it takes to
-      // compute internally since this is not multi-threaded like
-      // requestAnimationFrame
+      /*
+       * reducing wanted interval by respecting the time it takes to
+       * compute internally since this is not multi-threaded like
+       * requestAnimationFrame
+       */
       wantedInterval - processingTime);
     }
     function cancel(id) {
@@ -24313,7 +23032,7 @@ var Recorder = function Recorder(visuals, replay) {
     });
   }
   function buildElement() {
-    recorderElement = (0, _hyperscript.default)('video.' + options.selectors.userMediaClass);
+    recorderElement = (0, _hyperscript.default)("video.".concat(options.selectors.userMediaClass));
     visuals.appendChild(recorderElement);
   }
   function correctDimensions() {
@@ -24328,24 +23047,23 @@ var Recorder = function Recorder(visuals, replay) {
     if (!browser.isMobile()) {
       return false;
     }
-    if (facingMode === 'user') {
-      facingMode = 'environment';
-    } else if (facingMode === 'environment') {
-      facingMode = 'user';
+    if (facingMode === "user") {
+      facingMode = "environment";
+    } else if (facingMode === "environment") {
+      facingMode = "user";
     } else {
-      debug('Recorder: unsupported facing mode', facingMode);
+      debug("Recorder: unsupported facing mode", facingMode);
     }
     loadGenuineUserMedia({
       switchingFacingMode: true
     });
   }
   function initEvents() {
-    debug('Recorder: initEvents()');
+    debug("Recorder: initEvents()");
     self.on(_events.default.SUBMITTING, function () {
       submitting = true;
     }).on(_events.default.SUBMITTED, function () {
       submitting = false;
-      self.unload();
     }).on(_events.default.BLOCKING, function () {
       blocking = true;
       clearUserMediaTimeout();
@@ -24354,9 +23072,9 @@ var Recorder = function Recorder(visuals, replay) {
     }).on(_events.default.LOADED_META_DATA, function () {
       correctDimensions();
     }).on(_events.default.DISABLING_AUDIO, function () {
-      reInitialiseAudio();
+      reInitializeAudio();
     }).on(_events.default.ENABLING_AUDIO, function () {
-      reInitialiseAudio();
+      reInitializeAudio();
     }).on(_events.default.INVISIBLE, function () {
       loopWithTimeouts();
     }).on(_events.default.VISIBLE, function () {
@@ -24373,27 +23091,31 @@ var Recorder = function Recorder(visuals, replay) {
     if (err) {
       this.emit(_events.default.ERROR, err);
     } else {
-      recorderElement = visuals.querySelector('video.' + options.selectors.userMediaClass);
+      recorderElement = visuals.querySelector("video.".concat(options.selectors.userMediaClass));
       if (!recorderElement) {
         buildElement();
       }
       correctDimensions();
 
-      // prevent audio feedback, see
-      // https://github.com/binarykitchen/videomail-client/issues/35
+      /*
+       * prevent audio feedback, see
+       * https://github.com/binarykitchen/videomail-client/issues/35
+       */
       recorderElement.muted = true;
 
       // for iphones, see https://github.com/webrtc/samples/issues/929
-      recorderElement.setAttribute('playsinline', true);
-      recorderElement.setAttribute('webkit-playsinline', 'webkit-playsinline');
+      recorderElement.setAttribute("playsinline", true);
+      recorderElement.setAttribute("webkit-playsinline", "webkit-playsinline");
 
-      // add these here, not in CSS because users can configure custom
-      // class names
-      recorderElement.style.transform = 'rotateY(180deg)';
-      recorderElement.style['-webkit-transform'] = 'rotateY(180deg)';
-      recorderElement.style['-moz-transform'] = 'rotateY(180deg)';
+      /*
+       * add these here, not in CSS because users can configure custom
+       * class names
+       */
+      recorderElement.style.transform = "rotateY(180deg)";
+      recorderElement.style["-webkit-transform"] = "rotateY(180deg)";
+      recorderElement.style["-moz-transform"] = "rotateY(180deg)";
       if (options.video.stretch) {
-        recorderElement.style['width'] = '100%';
+        recorderElement.style.width = "100%";
       }
       if (!userMedia) {
         userMedia = new _userMedia.default(this, options);
@@ -24416,8 +23138,10 @@ var Recorder = function Recorder(visuals, replay) {
     return userMedia && userMedia.isPaused() && !loop.isRunning();
   };
   this.isRecording = function () {
-    // checking for stream.destroyed needed since
-    // https://github.com/binarykitchen/videomail.io/issues/296
+    /*
+     * checking for stream.destroyed needed since
+     * https://github.com/binarykitchen/videomail.io/issues/296
+     */
     return loop && loop.isRunning() && !this.isPaused() && !isNotifying() && stream && !stream.destroyed;
   };
   this.hide = function () {
@@ -24431,8 +23155,10 @@ var Recorder = function Recorder(visuals, replay) {
     return unloaded;
   };
 
-  // these two return the true dimensions of the webcam area.
-  // needed because on mobiles they might be different.
+  /*
+   * these two return the true dimensions of the webcam area.
+   * needed because on mobiles they might be different.
+   */
 
   this.getRecorderWidth = function (responsive) {
     if (userMedia && userMedia.hasVideoWidth()) {
@@ -24512,11 +23238,11 @@ var Recorder = function Recorder(visuals, replay) {
     return userMediaLoaded;
   };
 };
-_util.default.inherits(Recorder, _eventEmitter.default);
+(0, _inherits.default)(Recorder, _eventEmitter.default);
 var _default = exports.default = Recorder;
 
 }).call(this)}).call(this,_dereq_("buffer").Buffer)
-},{"../../constants":125,"../../events":126,"../../util/browser":130,"../../util/eventEmitter":132,"../../util/humanize":133,"../../util/pretty":135,"../../util/videomailError":137,"./userMedia":153,"@babel/runtime/helpers/interopRequireDefault":1,"animitter":4,"buffer":11,"canvas-to-buffer":14,"deepmerge":21,"hidden":56,"hyperscript":58,"safe-json-stringify":101,"util":116,"websocket-stream":119}],152:[function(_dereq_,module,exports){
+},{"../../constants":118,"../../events":119,"../../util/browser":124,"../../util/eventEmitter":126,"../../util/humanize":127,"../../util/pretty":129,"../../util/videomailError":131,"./userMedia":147,"@babel/runtime/helpers/interopRequireDefault":4,"animitter":13,"buffer":18,"canvas-to-buffer":21,"deepmerge":28,"hidden":61,"hyperscript":63,"inherits":66,"safe-json-stringify":99,"websocket-stream":113}],146:[function(_dereq_,module,exports){
 "use strict";
 
 var _interopRequireDefault = _dereq_("@babel/runtime/helpers/interopRequireDefault");
@@ -24527,14 +23253,13 @@ exports.default = void 0;
 var _addEventlistenerWithOptions = _interopRequireDefault(_dereq_("add-eventlistener-with-options"));
 var _hidden = _interopRequireDefault(_dereq_("hidden"));
 var _hyperscript = _interopRequireDefault(_dereq_("hyperscript"));
+var _inherits = _interopRequireDefault(_dereq_("inherits"));
 var _iphoneInlineVideo = _interopRequireDefault(_dereq_("iphone-inline-video"));
-var _util = _interopRequireDefault(_dereq_("util"));
 var _events = _interopRequireDefault(_dereq_("../../events"));
 var _browser = _interopRequireDefault(_dereq_("../../util/browser"));
 var _eventEmitter = _interopRequireDefault(_dereq_("../../util/eventEmitter"));
-var _videomailError = _interopRequireDefault(_dereq_("../../util/videomailError"));
 var Replay = function Replay(parentElement, options) {
-  _eventEmitter.default.call(this, options, 'Replay');
+  _eventEmitter.default.call(this, options, "Replay");
   var self = this;
   var browser = new _browser.default(options);
   var debug = options.debug;
@@ -24542,27 +23267,36 @@ var Replay = function Replay(parentElement, options) {
   var replayElement;
   var videomail;
   function buildElement() {
-    debug('Replay: buildElement()');
-    replayElement = (0, _hyperscript.default)('video.' + options.selectors.replayClass);
-    if (!replayElement.setAttribute) {
-      throw _videomailError.default.create('Please upgrade browser', options);
+    var replayParentElement = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : parentElement;
+    replayElement = (0, _hyperscript.default)("video.".concat(options.selectors.replayClass));
+    if (typeof replayParentElement === "string") {
+      replayParentElement = document.getElementById(replayParentElement);
+      if (!replayParentElement) {
+        throw new Error("No replay parent element container with ID ".concat(replayParentElement, " found."));
+      }
     }
-    parentElement.appendChild(replayElement);
+    replayParentElement.appendChild(replayElement);
   }
   function isStandalone() {
-    return parentElement.constructor.name === 'HTMLDivElement';
+    return parentElement.constructor.name === "HTMLDivElement";
   }
   function copyAttributes(newVideomail) {
     var attributeContainer;
     Object.keys(newVideomail).forEach(function (attribute) {
-      attributeContainer = parentElement.querySelector('.' + attribute);
+      attributeContainer = parentElement.querySelector(".".concat(attribute));
       if (attributeContainer) {
-        attributeContainer.innerHTML = newVideomail[attribute];
+        var empty = !attributeContainer.innerHTML || attributeContainer.innerHTML.length < 1;
+
+        // Do not overwrite when already set before, e
+        // e.g. with a React component adding links to the body
+        if (empty) {
+          attributeContainer.innerHTML = newVideomail[attribute];
+        }
       }
     });
   }
   function correctDimensions(options) {
-    var width, height;
+    var height, width;
     if (videomail && videomail.playerWidth) {
       width = videomail.playerWidth;
     } else if (parentElement.calculateWidth) {
@@ -24574,14 +23308,14 @@ var Replay = function Replay(parentElement, options) {
       height = parentElement.calculateHeight(options);
     }
     if (width > 0) {
-      replayElement.style.width = width + 'px';
+      replayElement.style.width = "".concat(width, "px");
     } else {
-      replayElement.style.width = 'auto';
+      replayElement.style.width = "auto";
     }
     if (height > 0) {
-      replayElement.style.height = height + 'px';
+      replayElement.style.height = "".concat(height, "px");
     } else {
-      replayElement.style.height = 'auto';
+      replayElement.style.height = "auto";
     }
   }
   this.setVideomail = function (newVideomail) {
@@ -24594,7 +23328,7 @@ var Replay = function Replay(parentElement, options) {
         this.setWebMSource(videomail.webm);
       }
       if (videomail.poster) {
-        replayElement.setAttribute('poster', videomail.poster);
+        replayElement.setAttribute("poster", videomail.poster);
       }
       copyAttributes(videomail);
     }
@@ -24602,6 +23336,14 @@ var Replay = function Replay(parentElement, options) {
     this.show(videomail && videomail.width, videomail && videomail.height, hasAudio);
   };
   this.show = function (recorderWidth, recorderHeight, hasAudio) {
+    if (!replayElement) {
+      return;
+    }
+    if (self.isShown()) {
+      // Skip, already shown
+      return;
+    }
+    debug("Replay: show()");
     if (videomail) {
       correctDimensions({
         responsive: true,
@@ -24621,15 +23363,19 @@ var Replay = function Replay(parentElement, options) {
       }
     }
     if (hasAudio) {
-      // https://github.com/binarykitchen/videomail-client/issues/115
-      // do not set mute to false as this will mess up. just do not mention this attribute at all
-      replayElement.setAttribute('volume', 1);
+      /*
+       * https://github.com/binarykitchen/videomail-client/issues/115
+       * do not set mute to false as this will mess up. just do not mention this attribute at all
+       */
+      replayElement.setAttribute("volume", 1);
     } else if (!options.isAudioEnabled()) {
-      replayElement.setAttribute('muted', true);
+      replayElement.setAttribute("muted", true);
     }
 
-    // this must be called after setting the sources and when becoming visible
-    // see https://github.com/bfred-it/iphone-inline-video/issues/16
+    /*
+     * this must be called after setting the sources and when becoming visible
+     * see https://github.com/bfred-it/iphone-inline-video/issues/16
+     */
     _iphoneInlineVideo.default && (0, _iphoneInlineVideo.default)(replayElement, {
       iPad: true
     });
@@ -24637,40 +23383,52 @@ var Replay = function Replay(parentElement, options) {
     // this forces to actually fetch the videos from the server
     replayElement.load();
     if (!videomail) {
-      self.emit(_events.default.PREVIEW_SHOWN);
+      replayElement.addEventListener("canplaythrough", function () {
+        self.emit(_events.default.PREVIEW_SHOWN);
+      }, {
+        once: true
+      });
     } else {
-      self.emit(_events.default.REPLAY_SHOWN);
+      replayElement.addEventListener("canplaythrough", function () {
+        self.emit(_events.default.REPLAY_SHOWN);
+      }, {
+        once: true
+      });
     }
   };
-  this.build = function () {
-    debug('Replay: build()');
-    replayElement = parentElement.querySelector('video.' + options.selectors.replayClass);
+  this.build = function (replayParentElement) {
+    debug("Replay: build (".concat(replayParentElement ? "replayParentElement=\"".concat(replayParentElement, "\"") : "", ")"));
+    replayElement = parentElement.querySelector("video.".concat(options.selectors.replayClass));
     if (!replayElement) {
-      buildElement();
+      buildElement(replayParentElement);
     }
     this.hide();
-    replayElement.setAttribute('autoplay', true);
-    replayElement.setAttribute('autostart', true);
-    replayElement.setAttribute('autobuffer', true);
-    replayElement.setAttribute('playsinline', true);
-    replayElement.setAttribute('webkit-playsinline', 'webkit-playsinline');
-    replayElement.setAttribute('controls', 'controls');
-    replayElement.setAttribute('preload', 'auto');
+    replayElement.setAttribute("autoplay", true);
+    replayElement.setAttribute("autostart", true);
+    replayElement.setAttribute("autobuffer", true);
+    replayElement.setAttribute("playsinline", true);
+    replayElement.setAttribute("webkit-playsinline", "webkit-playsinline");
+    replayElement.setAttribute("controls", "controls");
+    replayElement.setAttribute("preload", "auto");
     if (!built) {
       if (!isStandalone()) {
-        this.on(_events.default.PREVIEW, function (key, recorderWidth, recorderHeight) {
+        this.on(_events.default.PREVIEW, function (_key, recorderWidth, recorderHeight) {
           self.show(recorderWidth, recorderHeight);
         });
       }
 
-      // makes use of passive option automatically for better performance
-      // https://www.npmjs.com/package/add-eventlistener-with-options
-      (0, _addEventlistenerWithOptions.default)(replayElement, 'touchstart', function (e) {
+      /*
+       * makes use of passive option automatically for better performance
+       * https://www.npmjs.com/package/add-eventlistener-with-options
+       */
+      (0, _addEventlistenerWithOptions.default)(replayElement, "touchstart", function (e) {
         try {
           e && e.preventDefault();
         } catch (exc) {
-          // ignore errors like
-          // Unable to preventDefault inside passive event listener invocation.
+          /*
+           * ignore errors like
+           * Unable to preventDefault inside passive event listener invocation.
+           */
         }
         if (this.paused) {
           play();
@@ -24688,20 +23446,28 @@ var Replay = function Replay(parentElement, options) {
       };
     }
     built = true;
-    debug('Replay: built.');
+    debug("Replay: built.");
   };
   this.unload = function () {
+    debug("Replay: unload()");
+    self.removeAllListeners();
+    replayElement.remove();
+    replayElement = undefined;
+    videomail = undefined;
     built = false;
   };
   this.getVideoSource = function (type) {
-    var sources = replayElement.getElementsByTagName('source');
+    if (!replayElement) {
+      return;
+    }
+    var sources = replayElement.getElementsByTagName("source");
     var l = sources && sources.length;
-    var videoType = 'video/' + type;
+    var videoType = "video/".concat(type);
     var source;
     if (l) {
       var i;
       for (i = 0; i < l && !source; i++) {
-        if (sources[i].getAttribute('type') === videoType) {
+        if (sources[i].getAttribute("type") === videoType) {
           source = sources[i];
         }
       }
@@ -24711,7 +23477,7 @@ var Replay = function Replay(parentElement, options) {
   function setVideoSource(type, src, bustCache) {
     var source = self.getVideoSource(type);
     if (src && bustCache) {
-      src += '?' + Date.now();
+      src += "?".concat(Date.now());
     }
     if (!source) {
       if (src) {
@@ -24719,37 +23485,41 @@ var Replay = function Replay(parentElement, options) {
 
         // Ensure it's greater than the frame duration itself
         var t = 2 * (1 / fps);
-        source = (0, _hyperscript.default)('source', {
-          // Ensures HTML video thumbnail turns up on iOS, see
-          // https://muffinman.io/blog/hack-for-ios-safari-to-display-html-video-thumbnail/
-          src: src + '#t=' + t,
-          type: 'video/' + type
+        source = (0, _hyperscript.default)("source", {
+          /*
+           * Ensures HTML video thumbnail turns up on iOS, see
+           * https://muffinman.io/blog/hack-for-ios-safari-to-display-html-video-thumbnail/
+           */
+          src: "".concat(src, "#t=").concat(t),
+          type: "video/".concat(type)
         });
         replayElement.appendChild(source);
       }
+    } else if (src) {
+      source.setAttribute("src", src);
     } else {
-      if (src) {
-        source.setAttribute('src', src);
-      } else {
-        replayElement.removeChild(source);
-      }
+      replayElement.removeChild(source);
     }
   }
   this.setMp4Source = function (src, bustCache) {
-    setVideoSource('mp4', src, bustCache);
+    setVideoSource("mp4", src, bustCache);
   };
   this.setWebMSource = function (src, bustCache) {
-    setVideoSource('webm', src, bustCache);
+    setVideoSource("webm", src, bustCache);
   };
   this.getVideoType = function () {
     return browser.getVideoType(replayElement);
   };
   function pause(cb) {
-    // avoids race condition, inspired by
-    // http://stackoverflow.com/questions/36803176/how-to-prevent-the-play-request-was-interrupted-by-a-call-to-pause-error
+    /*
+     * avoids race condition, inspired by
+     * http://stackoverflow.com/questions/36803176/how-to-prevent-the-play-request-was-interrupted-by-a-call-to-pause-error
+     */
     setTimeout(function () {
       try {
-        replayElement.pause();
+        if (replayElement) {
+          replayElement.pause();
+        }
       } catch (exc) {
         // just ignore, see https://github.com/binarykitchen/videomail.io/issues/386
         options.logger.warn(exc);
@@ -24763,13 +23533,15 @@ var Replay = function Replay(parentElement, options) {
       try {
         p = replayElement.play();
       } catch (exc) {
-        // this in the hope to catch InvalidStateError, see
-        // https://github.com/binarykitchen/videomail-client/issues/149
-        options.logger.warn('Caught replay exception:', exc);
+        /*
+         * this in the hope to catch InvalidStateError, see
+         * https://github.com/binarykitchen/videomail-client/issues/149
+         */
+        options.logger.warn("Caught replay exception:", exc);
       }
-      if (p && typeof Promise !== 'undefined' && p instanceof Promise) {
+      if (p && typeof Promise !== "undefined" && p instanceof Promise) {
         p.catch(function (reason) {
-          options.logger.warn('Caught pending replay promise exception: %s', reason);
+          options.logger.warn("Caught pending replay promise exception: %s", reason);
         });
       }
     }
@@ -24798,10 +23570,10 @@ var Replay = function Replay(parentElement, options) {
     return parentElement;
   };
 };
-_util.default.inherits(Replay, _eventEmitter.default);
+(0, _inherits.default)(Replay, _eventEmitter.default);
 var _default = exports.default = Replay;
 
-},{"../../events":126,"../../util/browser":130,"../../util/eventEmitter":132,"../../util/videomailError":137,"@babel/runtime/helpers/interopRequireDefault":1,"add-eventlistener-with-options":3,"hidden":56,"hyperscript":58,"iphone-inline-video":64,"util":116}],153:[function(_dereq_,module,exports){
+},{"../../events":119,"../../util/browser":124,"../../util/eventEmitter":126,"@babel/runtime/helpers/interopRequireDefault":4,"add-eventlistener-with-options":12,"hidden":61,"hyperscript":63,"inherits":66,"iphone-inline-video":69}],147:[function(_dereq_,module,exports){
 "use strict";
 
 var _interopRequireDefault = _dereq_("@babel/runtime/helpers/interopRequireDefault");
@@ -24809,18 +23581,18 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = _default;
+var _hyperscript = _interopRequireDefault(_dereq_("hyperscript"));
+var _safeJsonStringify = _interopRequireDefault(_dereq_("safe-json-stringify"));
+var _events = _interopRequireDefault(_dereq_("./../../events"));
 var _audioRecorder = _interopRequireDefault(_dereq_("./../../util/audioRecorder"));
 var _browser = _interopRequireDefault(_dereq_("./../../util/browser"));
 var _eventEmitter = _interopRequireDefault(_dereq_("./../../util/eventEmitter"));
-var _events = _interopRequireDefault(_dereq_("./../../events"));
 var _mediaEvents = _interopRequireDefault(_dereq_("./../../util/mediaEvents"));
-var _videomailError = _interopRequireDefault(_dereq_("./../../util/videomailError"));
-var _hyperscript = _interopRequireDefault(_dereq_("hyperscript"));
 var _pretty = _interopRequireDefault(_dereq_("./../../util/pretty"));
-var _safeJsonStringify = _interopRequireDefault(_dereq_("safe-json-stringify"));
-var EVENT_ASCII = '|—O—|';
+var _videomailError = _interopRequireDefault(_dereq_("./../../util/videomailError"));
+var EVENT_ASCII = "|—O—|";
 function _default(recorder, options) {
-  _eventEmitter.default.call(this, options, 'UserMedia');
+  _eventEmitter.default.call(this, options, "UserMedia");
   var rawVisualUserMedia = recorder && recorder.getRawVisualUserMedia();
   var browser = new _browser.default(options);
   var self = this;
@@ -24830,21 +23602,21 @@ function _default(recorder, options) {
   var currentVisualStream;
   function attachMediaStream(stream) {
     currentVisualStream = stream;
-    if (typeof rawVisualUserMedia.srcObject !== 'undefined') {
+    if (typeof rawVisualUserMedia.srcObject !== "undefined") {
       rawVisualUserMedia.srcObject = stream;
-    } else if (typeof rawVisualUserMedia.src !== 'undefined') {
+    } else if (typeof rawVisualUserMedia.src !== "undefined") {
       var URL = window.URL || window.webkitURL;
       rawVisualUserMedia.src = URL.createObjectURL(stream) || stream;
     } else {
-      throw _videomailError.default.create('Error attaching stream to element.', 'Contact the developer about this', options);
+      throw _videomailError.default.create("Error attaching stream to element.", "Contact the developer about this", options);
     }
   }
   function setVisualStream(localMediaStream) {
     if (localMediaStream) {
       attachMediaStream(localMediaStream);
     } else {
-      rawVisualUserMedia.removeAttribute('srcObject');
-      rawVisualUserMedia.removeAttribute('src');
+      rawVisualUserMedia.removeAttribute("srcObject");
+      rawVisualUserMedia.removeAttribute("src");
       currentVisualStream = null;
     }
   }
@@ -24891,10 +23663,10 @@ function _default(recorder, options) {
     return videoTrack;
   }
   function logEvent(event, params) {
-    options.debug('UserMedia: ...', EVENT_ASCII, 'event', event, (0, _safeJsonStringify.default)(params));
+    options.debug("UserMedia: ...", EVENT_ASCII, "event", event, (0, _safeJsonStringify.default)(params));
   }
   function isPromise(anything) {
-    return anything && typeof Promise !== 'undefined' && anything instanceof Promise;
+    return anything && typeof Promise !== "undefined" && anything instanceof Promise;
   }
   function outputEvent(e) {
     logEvent(e.type, {
@@ -24905,7 +23677,7 @@ function _default(recorder, options) {
     rawVisualUserMedia.removeEventListener && rawVisualUserMedia.removeEventListener(e.type, outputEvent);
   }
   this.unloadRemainingEventListeners = function () {
-    options.debug('UserMedia: unloadRemainingEventListeners()');
+    options.debug("UserMedia: unloadRemainingEventListeners()");
     _mediaEvents.default.forEach(function (eventName) {
       rawVisualUserMedia.removeEventListener(eventName, outputEvent);
     });
@@ -24920,50 +23692,58 @@ function _default(recorder, options) {
     var onLoadedMetaDataReached = false;
     var playingPromiseReached = false;
     if (options && options.isAudioEnabled()) {
-      audioRecorder = audioRecorder || new _audioRecorder.default(this, options);
+      audioRecorder || (audioRecorder = new _audioRecorder.default(this, options));
     }
     function audioRecord() {
       self.removeListener(_events.default.SENDING_FIRST_FRAME, audioRecord);
       audioRecorder && audioRecorder.record(audioCallback);
     }
     function unloadAllEventListeners() {
-      options.debug('UserMedia: unloadAllEventListeners()');
-      self.removeListener(_events.default.SENDING_FIRST_FRAME, audioRecord);
-      rawVisualUserMedia.removeEventListener && rawVisualUserMedia.removeEventListener('play', onPlay);
-      rawVisualUserMedia.removeEventListener && rawVisualUserMedia.removeEventListener('loadedmetadata', onLoadedMetaData);
+      options.debug("UserMedia: unloadAllEventListeners()");
       self.unloadRemainingEventListeners();
+      self.removeListener(_events.default.SENDING_FIRST_FRAME, audioRecord);
+      rawVisualUserMedia.removeEventListener && rawVisualUserMedia.removeEventListener("play", onPlay);
+      rawVisualUserMedia.removeEventListener && rawVisualUserMedia.removeEventListener("loadedmetadata", onLoadedMetaData);
     }
     function play() {
       // Resets the media element and restarts the media resource. Any pending events are discarded.
       try {
         rawVisualUserMedia.load();
 
-        // fixes https://github.com/binarykitchen/videomail.io/issues/401
-        // see https://github.com/MicrosoftEdge/Demos/blob/master/photocapture/scripts/demo.js#L27
+        /*
+         * fixes https://github.com/binarykitchen/videomail.io/issues/401
+         * see https://github.com/MicrosoftEdge/Demos/blob/master/photocapture/scripts/demo.js#L27
+         */
         if (rawVisualUserMedia.paused) {
-          options.debug('UserMedia: play()', 'media.readyState=' + rawVisualUserMedia.readyState, 'media.paused=' + rawVisualUserMedia.paused, 'media.ended=' + rawVisualUserMedia.ended, 'media.played=' + (0, _pretty.default)(rawVisualUserMedia.played));
+          options.debug("UserMedia: play()", "media.readyState=".concat(rawVisualUserMedia.readyState), "media.paused=".concat(rawVisualUserMedia.paused), "media.ended=".concat(rawVisualUserMedia.ended), "media.played=".concat((0, _pretty.default)(rawVisualUserMedia.played)));
           var p;
           try {
             p = rawVisualUserMedia.play();
           } catch (exc) {
-            // this in the hope to catch InvalidStateError, see
-            // https://github.com/binarykitchen/videomail-client/issues/149
-            options.logger.warn('Caught raw usermedia play exception:', exc);
+            /*
+             * this in the hope to catch InvalidStateError, see
+             * https://github.com/binarykitchen/videomail-client/issues/149
+             */
+            options.logger.warn("Caught raw usermedia play exception:", exc);
           }
 
-          // using the promise here just experimental for now
-          // and this to catch any weird errors early if possible
+          /*
+           * using the promise here just experimental for now
+           * and this to catch any weird errors early if possible
+           */
           if (isPromise(p)) {
             p.then(function () {
               if (!playingPromiseReached) {
-                options.debug('UserMedia: play promise successful. Playing now.');
+                options.debug("UserMedia: play promise successful. Playing now.");
                 playingPromiseReached = true;
               }
             }).catch(function (reason) {
-              // promise can be interrupted, i.E. when switching tabs
-              // and promise can get resumed when switching back to tab, hence
-              // do not treat this like an error
-              options.logger.warn('Caught pending usermedia promise exception: %s', reason.toString());
+              /*
+               * promise can be interrupted, i.E. when switching tabs
+               * and promise can get resumed when switching back to tab, hence
+               * do not treat this like an error
+               */
+              options.logger.warn("Caught pending usermedia promise exception: %s", reason.toString());
             });
           }
         }
@@ -24976,7 +23756,7 @@ function _default(recorder, options) {
       var readyState = rawVisualUserMedia.readyState;
 
       // ready state, see https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement/readyState
-      options.debug('UserMedia: fireCallbacks(' + 'readyState=' + readyState + ', ' + 'onPlayReached=' + onPlayReached + ', ' + 'onLoadedMetaDataReached=' + onLoadedMetaDataReached + ')');
+      options.debug("UserMedia: fireCallbacks(" + "readyState=".concat(readyState, ", ") + "onPlayReached=".concat(onPlayReached, ", ") + "onLoadedMetaDataReached=".concat(onLoadedMetaDataReached, ")"));
       if (onPlayReached && onLoadedMetaDataReached) {
         videoCallback();
         if (audioRecorder && audioCallback) {
@@ -24992,7 +23772,7 @@ function _default(recorder, options) {
     }
     function onPlay() {
       try {
-        logEvent('play', {
+        logEvent("play", {
           readyState: rawVisualUserMedia.readyState,
           audio: options.isAudioEnabled(),
           width: rawVisualUserMedia.width,
@@ -25000,9 +23780,9 @@ function _default(recorder, options) {
           videoWidth: rawVisualUserMedia.videoWidth,
           videoHeight: rawVisualUserMedia.videoHeight
         });
-        rawVisualUserMedia.removeEventListener && rawVisualUserMedia.removeEventListener('play', onPlay);
+        rawVisualUserMedia.removeEventListener && rawVisualUserMedia.removeEventListener("play", onPlay);
         if (hasEnded() || hasInvalidDimensions()) {
-          endedEarlyCallback(_videomailError.default.create('Already busy', 'Probably another browser window is using your webcam?', options));
+          endedEarlyCallback(_videomailError.default.create("Already busy", "Probably another browser window is using your webcam?", options));
         } else {
           onPlayReached = true;
           fireCallbacks();
@@ -25015,7 +23795,7 @@ function _default(recorder, options) {
 
     // player modifications to perform that must wait until `loadedmetadata` has been triggered
     function onLoadedMetaData() {
-      logEvent('loadedmetadata', {
+      logEvent("loadedmetadata", {
         readyState: rawVisualUserMedia.readyState,
         paused: rawVisualUserMedia.paused,
         width: rawVisualUserMedia.width,
@@ -25023,12 +23803,14 @@ function _default(recorder, options) {
         videoWidth: rawVisualUserMedia.videoWidth,
         videoHeight: rawVisualUserMedia.videoHeight
       });
-      rawVisualUserMedia.removeEventListener && rawVisualUserMedia.removeEventListener('loadedmetadata', onLoadedMetaData);
+      rawVisualUserMedia.removeEventListener && rawVisualUserMedia.removeEventListener("loadedmetadata", onLoadedMetaData);
       if (!hasEnded() && !hasInvalidDimensions()) {
         self.emit(_events.default.LOADED_META_DATA);
 
-        // for android devices, we cannot call play() unless meta data has been loaded!
-        // todo consider removing that if it's not the case anymore (for better performance)
+        /*
+         * for android devices, we cannot call play() unless meta data has been loaded!
+         * todo consider removing that if it's not the case anymore (for better performance)
+         */
         if (browser.isAndroid()) {
           play();
         }
@@ -25039,20 +23821,20 @@ function _default(recorder, options) {
     try {
       var videoTrack = getFirstVideoTrack(localMediaStream);
       if (!videoTrack) {
-        options.debug('UserMedia: detected (but no video tracks exist');
+        options.debug("UserMedia: detected (but no video tracks exist");
       } else if (!videoTrack.enabled) {
-        throw _videomailError.default.create('Webcam is disabled', 'The video track seems to be disabled. Enable it in your system.', options);
+        throw _videomailError.default.create("Webcam is disabled", "The video track seems to be disabled. Enable it in your system.", options);
       } else {
         var description;
         if (videoTrack.label && videoTrack.label.length > 0) {
           description = videoTrack.label;
         }
-        description += ' with enabled=' + videoTrack.enabled;
-        description += ', muted=' + videoTrack.muted;
-        description += ', remote=' + videoTrack.remote;
-        description += ', readyState=' + videoTrack.readyState;
-        description += ', error=' + videoTrack.error;
-        options.debug('UserMedia: ' + videoTrack.kind + ' detected.', description || '');
+        description += " with enabled=".concat(videoTrack.enabled);
+        description += ", muted=".concat(videoTrack.muted);
+        description += ", remote=".concat(videoTrack.remote);
+        description += ", readyState=".concat(videoTrack.readyState);
+        description += ", error=".concat(videoTrack.error);
+        options.debug("UserMedia: ".concat(videoTrack.kind, " detected."), description || "");
       }
 
       // very useful i think, so leave this and just use options.debug()
@@ -25062,15 +23844,17 @@ function _default(recorder, options) {
           rawVisualUserMedia.addEventListener(eventName, outputEvent, false);
         });
       }
-      rawVisualUserMedia.addEventListener('loadedmetadata', onLoadedMetaData);
-      rawVisualUserMedia.addEventListener('play', onPlay);
+      rawVisualUserMedia.addEventListener("loadedmetadata", onLoadedMetaData);
+      rawVisualUserMedia.addEventListener("play", onPlay);
 
-      // experimental, not sure if this is ever needed/called? since 2 apr 2017
-      // An error occurs while fetching the media data.
-      // Error can be an object with the code MEDIA_ERR_NETWORK or higher.
-      // networkState equals either NETWORK_EMPTY or NETWORK_IDLE, depending on when the download was aborted.
-      rawVisualUserMedia.addEventListener('error', function (err) {
-        options.logger.warn('Caught video element error event: %s', (0, _pretty.default)(err));
+      /*
+       * experimental, not sure if this is ever needed/called? since 2 apr 2017
+       * An error occurs while fetching the media data.
+       * Error can be an object with the code MEDIA_ERR_NETWORK or higher.
+       * networkState equals either NETWORK_EMPTY or NETWORK_IDLE, depending on when the download was aborted.
+       */
+      rawVisualUserMedia.addEventListener("error", function (err) {
+        options.logger.warn("Caught video element error event: %s", (0, _pretty.default)(err));
       });
       setVisualStream(localMediaStream);
       play();
@@ -25079,7 +23863,7 @@ function _default(recorder, options) {
     }
   };
   this.isReady = function () {
-    return !!rawVisualUserMedia.src;
+    return Boolean(rawVisualUserMedia.src);
   };
   this.stop = function (visualStream) {
     var params = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
@@ -25109,8 +23893,10 @@ function _default(recorder, options) {
         audioRecorder = null;
       }
 
-      // don't have to reset these states when just switching camera
-      // while still recording or pausing
+      /*
+       * don't have to reset these states when just switching camera
+       * while still recording or pausing
+       */
       if (!switchingFacingMode) {
         paused = record = false;
       }
@@ -25119,7 +23905,7 @@ function _default(recorder, options) {
     }
   };
   this.createCanvas = function () {
-    return (0, _hyperscript.default)('canvas', {
+    return (0, _hyperscript.default)("canvas", {
       width: this.getRawWidth(true),
       height: this.getRawHeight(true)
     });
@@ -25153,12 +23939,12 @@ function _default(recorder, options) {
     if (options.hasDefinedDimension()) {
       rawHeight = recorder.calculateHeight(responsive);
       if (rawHeight < 1) {
-        throw _videomailError.default.create('Bad dimensions', 'Calculated raw height cannot be less than 1!', options);
+        throw _videomailError.default.create("Bad dimensions", "Calculated raw height cannot be less than 1!", options);
       }
     } else {
       rawHeight = this.getVideoHeight();
       if (rawHeight < 1) {
-        throw _videomailError.default.create('Bad dimensions', 'Raw video height from DOM element cannot be less than 1!', options);
+        throw _videomailError.default.create("Bad dimensions", "Raw video height from DOM element cannot be less than 1!", options);
       }
     }
     if (responsive) {
@@ -25202,7 +23988,7 @@ function _default(recorder, options) {
   };
 }
 
-},{"./../../events":126,"./../../util/audioRecorder":129,"./../../util/browser":130,"./../../util/eventEmitter":132,"./../../util/mediaEvents":134,"./../../util/pretty":135,"./../../util/videomailError":137,"@babel/runtime/helpers/interopRequireDefault":1,"hyperscript":58,"safe-json-stringify":101}],154:[function(_dereq_,module,exports){
+},{"./../../events":119,"./../../util/audioRecorder":123,"./../../util/browser":124,"./../../util/eventEmitter":126,"./../../util/mediaEvents":128,"./../../util/pretty":129,"./../../util/videomailError":131,"@babel/runtime/helpers/interopRequireDefault":4,"hyperscript":63,"safe-json-stringify":99}],148:[function(_dereq_,module,exports){
 "use strict";
 
 module.exports = '@-webkit-keyframes blink{0%{opacity:.9}35%{opacity:.9}50%{opacity:.1}85%{opacity:.1}to{opacity:.9}}@keyframes blink{0%{opacity:.9}35%{opacity:.9}50%{opacity:.1}85%{opacity:.1}to{opacity:.9}}.IIV::-webkit-media-controls-play-button,.IIV::-webkit-media-controls-start-playback-button{opacity:0;pointer-events:none;width:5px}.videomail .visuals{position:relative}.videomail .visuals video.replay{height:100%;width:100%}.videomail .countdown,.videomail .pausedHeader,.videomail .pausedHint,.videomail .recordNote,.videomail .recordTimer{height:auto;margin:0}.videomail .countdown,.videomail .facingMode,.videomail .paused,.videomail .recordNote,.videomail .recordTimer,.videomail noscript{position:absolute;z-index:100}.videomail .countdown,.videomail .pausedHeader,.videomail .pausedHint,.videomail .recordNote,.videomail .recordTimer,.videomail noscript{font-weight:700}.videomail .countdown,.videomail .paused,.videomail noscript{top:50%;-webkit-transform:translateY(-50%);-ms-transform:translateY(-50%);transform:translateY(-50%);width:100%}.videomail .countdown,.videomail .pausedHeader,.videomail .pausedHint{letter-spacing:4px;text-align:center;text-shadow:-2px 0 #fff,0 2px #fff,2px 0 #fff,0 -2px #fff}.videomail .countdown,.videomail .pausedHeader{font-size:460%;opacity:.9}.videomail .pausedHint{font-size:150%}.videomail .facingMode{background:rgba(30,30,30,.5);border:none;bottom:.6em;color:hsla(0,0%,96%,.9);font-family:monospace;font-size:1.2em;outline:none;padding:.1em .3em;right:.7em;-webkit-transition:all .2s ease;transition:all .2s ease;z-index:10}.videomail .facingMode:hover{background:rgba(50,50,50,.7);cursor:pointer}.videomail .recordNote,.videomail .recordTimer{background:hsla(0,0%,4%,.8);color:#00d814;font-family:monospace;opacity:.9;padding:.3em .4em;right:.7em;-webkit-transition:all 1s ease;transition:all 1s ease}.videomail .recordNote.near,.videomail .recordTimer.near{color:#eb9369}.videomail .recordNote.nigh,.videomail .recordTimer.nigh{color:#ea4b2a}.videomail .recordTimer{top:.7em}.videomail .recordNote{top:3.6em}.videomail .recordNote:before{-webkit-animation:blink 1s infinite;animation:blink 1s infinite;content:"REC"}.videomail .notifier{-webkit-box-sizing:border-box;box-sizing:border-box;height:100%;overflow:hidden}.videomail .radioGroup{display:block}.videomail video{margin-bottom:0}.videomail video.userMedia{background-color:rgba(50,50,50,.1)}';
@@ -25215,16 +24001,11 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
-var _standardize = _interopRequireDefault(_dereq_("./util/standardize"));
 var _client = _interopRequireDefault(_dereq_("./client"));
-if (!navigator) {
-  throw new Error('Navigator is missing!');
-} else {
-  // Ensures Videomail functionality is not broken on exotic browsers with shims.
-  (0, _standardize.default)(window, navigator);
-}
-var _default = exports.default = _client.default; // also add that so that we can require() it the normal ES5 way
-module.exports = _client.default;
+var _standardize = _interopRequireDefault(_dereq_("./util/standardize"));
+// Ensures Videomail functionality is not broken on exotic browsers with shims.
+(0, _standardize.default)(window, navigator);
+var _default = exports.default = _client.default;
 
-},{"./client":124,"./util/standardize":136,"@babel/runtime/helpers/interopRequireDefault":1}]},{},["videomail-client"])("videomail-client")
+},{"./client":117,"./util/standardize":130,"@babel/runtime/helpers/interopRequireDefault":4}]},{},["videomail-client"])("videomail-client")
 });
