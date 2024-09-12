@@ -12,16 +12,7 @@ module.exports = {
     browser: true,
     es6: true
   },
-  rules: {
-    'space-before-function-paren': [
-      'error',
-      {
-        anonymous: 'ignore',
-        named: 'ignore',
-        asyncArrow: 'ignore'
-      }
-    ]
-  },
+  rules: {},
   globals: {
     Marionette: false,
     Backbone: false,

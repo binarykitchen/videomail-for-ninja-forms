@@ -30,7 +30,7 @@ In short: this add-on runs on the Ninja Forms plugin engine where you can config
 
 Note: depending on your OS the `gulp watch` command might result into errors;
 
-- For Arch Linux, afraid have to amend `sudo` before `npm run mh` or so.
+- For Arch Linux, afraid have to amend `sudo` before `npm run mh` or so. <-------- !!!
 - For older versions, if you have a port conflict with flywheel, stop Apache with `sudo apachectl stop`.
 
 ### Customize host or port

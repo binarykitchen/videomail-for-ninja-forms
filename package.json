@@ -38,7 +38,7 @@
     "lint": "eslint ./src gulpfile.js",
     "lint-fix": "npm --silent run lint -- --fix; exit 0",
     "prettier": "prettier --check ./src gulpfile.js",
-    "prettier-fix": "prettier --write ./src gulpfile.js",
+    "prettier:fix": "prettier --write ./src gulpfile.js",
     "clean": "rm -rf node_modules && rm -rf target && rm -rf package-lock.json",
     "release": "./env/dev/release.sh"
   },
