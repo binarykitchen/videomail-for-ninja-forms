@@ -66,20 +66,20 @@
     ]
   },
   "dependencies": {
-    "videomail-client": "8.1.1"
+    "videomail-client": "9.3.0"
   },
   "devDependencies": {
-    "@babel/core": "7.24.7",
-    "@babel/eslint-parser": "7.24.7",
-    "@babel/plugin-transform-runtime": "7.24.7",
-    "@babel/preset-env": "7.24.7",
-    "@babel/runtime": "7.24.7",
+    "@babel/core": "7.25.2",
+    "@babel/eslint-parser": "7.25.1",
+    "@babel/plugin-transform-runtime": "7.25.4",
+    "@babel/preset-env": "7.25.4",
+    "@babel/runtime": "7.25.6",
     "babel-eslint": "10.1.0",
     "browser-sync": "3.0.2",
     "del": "6.1.1",
     "eslint": "8.57.0",
     "eslint-config-standard": "17.1.0",
-    "eslint-plugin-import": "2.29.1",
+    "eslint-plugin-import": "2.30.0",
     "eslint-plugin-node": "11.1.0",
     "eslint-plugin-promise": "6.2.0",
     "fancy-log": "2.0.0",
@@ -98,7 +98,7 @@
     "gulp-zip": "5.1.0",
     "minimist": "1.2.8",
     "nib": "1.2.0",
-    "prettier": "3.3.2",
+    "prettier": "3.3.3",
     "standard": "17.1.0",
     "yargs": "17.7.2"
   }
