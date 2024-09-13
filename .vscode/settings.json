@@ -5,6 +5,7 @@
   "prettier.configPath": "./prettier.config.cjs",
   "cSpell.words": [
     "apachectl",
+    "autoloader",
     "binarykitchen",
     "bytediff",
     "corejs",

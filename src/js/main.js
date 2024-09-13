@@ -14,38 +14,33 @@ const VideomailFieldController = Marionette.Object.extend({
   initialize: function () {
     Backbone.Radio.DEBUG = DEBUG;
 
+    this.listenToOnce(this.channel, "init:model", this.registerVideomailField);
+    this.listenToOnce(this.channel, "attach:view", this.loadVideomailClient);
+
     // ugly workaround to make it work with the conditional plugin
     this.listenTo(this.channel, "all", function (eventName) {
       DEBUG && console.log("Videomail channel event triggered:", eventName);
 
-      if (!this.videomailClient) {
-        // only start registering and listening at this point.
-        // because the conditional plugin is resetting event handlers.
-        // without the above, we'd be registering too early and the
-        // conditional plugin overrides.
-        this.listenToOnce(this.channel, "init:model", this.registerVideomailField);
+      // must be coming back from a multi-step where
+      // videomail has already been initialised. so just resume it.
+      this.listenTo(nfRadio.channel("nfMP"), "change:part", function (params) {
+        DEBUG && console.log("nfMP channel event triggered:", "change:part");
 
-        // must be coming back from a multi-step where
-        // videomail has already been initialised. so just resume it.
-        this.listenTo(nfRadio.channel("nfMP"), "change:part", function (params) {
-          DEBUG && console.log("nfMP channel event triggered:", "change:part");
+        const currentModels =
+          params.currentElement?.attributes?.formContentData?.models || [];
 
-          const currentModels =
-            params.currentElement?.attributes?.formContentData?.models || [];
+        const currentCid = this.fieldModel.cid;
 
-          const currentCid = this.fieldModel.cid;
-
-          const currentModel = currentModels.find(function (model) {
-            return model.cid === currentCid;
-          });
-
-          if (currentModel) {
-            this.loadVideomailClient();
-          } else {
-            this.videomailClient.unload();
-          }
+        const currentModel = currentModels.find(function (model) {
+          return model.cid === currentCid;
         });
-      }
+
+        if (currentModel) {
+          this.loadVideomailClient();
+        } else {
+          this.videomailClient.unload();
+        }
+      });
     });
   },
 
@@ -54,28 +49,22 @@ const VideomailFieldController = Marionette.Object.extend({
   },
 
   registerVideomailField: function (fieldModel) {
-    // workaround for https://github.com/wpninjas/ninja-forms/issues/2675
-    // also prevents from event emitter leaks under race conditions
-    if (!this.videomailClient) {
-      this.fieldModel = fieldModel;
+    this.fieldModel = fieldModel;
 
-      this.loadVideomailClient();
+    // custom field validation, since we aren't using a standard `value`
+    // for the videomail input
+    this.channel.reply("validate:required", this.validateRequired, this);
 
-      // custom field validation, since we aren't using a standard `value`
-      // for the videomail input
-      this.channel.reply("validate:required", this.validateRequired, this);
+    this.channel.reply("validate:modelData", this.validateVideomail, this);
 
-      this.channel.reply("validate:modelData", this.validateVideomail, this);
-
-      // control submission progress,
-      // so that we can POST to the Videomail server first
-      Backbone.Radio.channel("form-" + this.getFormId()).reply(
-        "maybe:submit",
-        this.maybeSubmit,
-        this,
-        fieldModel,
-      );
-    }
+    // control submission progress,
+    // so that we can POST to the Videomail server first
+    Backbone.Radio.channel("form-" + this.getFormId()).reply(
+      "maybe:submit",
+      this.maybeSubmit,
+      this,
+      fieldModel,
+    );
   },
 
   loadVideomailClient: function () {
