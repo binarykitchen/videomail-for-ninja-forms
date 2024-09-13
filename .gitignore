@@ -1,8 +1,3 @@
 node_modules
-yarn-error.log
 .DS_Store
-env/dev/git
-env/dev/svn
 *.code-workspace
-.vscode
-.idea

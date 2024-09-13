@@ -1,5 +1,7 @@
 # Videomail for Ninja Forms (developer documentation)
 
+[![Test Runner](https://github.com/binarykitchen/videomail-for-ninja-forms/actions/workflows/push.yml/badge.svg)](https://github.com/binarykitchen/videomail-for-ninja-forms/actions/workflows/push.yml)
+
 Record videos in Ninja Forms!
 
 > Finally you can encode any webcam recordings from modern browsers and mobiles into MP4 + WebM within seconds. This without the need for Flash, Java nor any other plugins / addons. Just JavaScript.
@@ -20,7 +22,7 @@ In short: this add-on runs on the Ninja Forms plugin engine where you can config
 2. Log into Local and import Blueprint if any exist
 3. Install Ninja Forms Plugin
 4. `git clone git@github.com:binarykitchen/videomail-for-ninja-forms.git`
-5. Symlink videomail-for-ninja-forms like that: `ln -s ~/code/binarykitchen/videomail-for-ninja-forms ~/Local\ Sites/infernal-darkness-wp/app/public/wp-content/plugins/videomail-for-ninja-forms`
+5. Symlink videomail-for-ninja-forms like that: `ln -s ~/code/binarykitchen/videomail-for-ninja-forms ~/Local\ Sites/videomail-for-ninja-forms/app/public/wp-content/plugins/videomail-for-ninja-forms`
 6. Activate it on WP admin side
 7. Install latest nodejs, best with [nvm](https://github.com/creationix/nvm)
 8. `npm install` to install dependencies
@@ -28,10 +30,12 @@ In short: this add-on runs on the Ninja Forms plugin engine where you can config
 
 Note: depending on your OS the `gulp watch` command might result into errors;
 
-- For Arch Linux, afraid have to amend `sudo` before `npm run mh` or so.
-- For older versions, if you have a port conflict with flywheel, stop Apache with `sudo apachectl stop`.
+### Arch Linux Issues
 
-### Customise host or port
+- Afraid have to amend `sudo` before `npm run mh` or so. <-------- !!!
+- Can't use .local domain as it's [reserved under Arch Linux](https://community.localwp.com/t/local-tld-is-not-resolved-when-in-hosts-file-if-used-on-arch-based-linux/43793/6)
+
+### Customize host or port
 
 For custom hosts or ports, you can customize `gulp watch` like that:
 
@@ -74,6 +78,7 @@ https://github.com/binarykitchen/videomail-for-ninja-forms/issues
 6. Git commit and push
 7. Run `npm run release`
 8. Tag a new release which will run the release workflow on GitHub, e.g. with `gh release create`
+   (upon any errors, you may try to run manually "gh release create" again to trigger a release on GitHub)
 9. Announce on Twitter
 
 ## Ask for help

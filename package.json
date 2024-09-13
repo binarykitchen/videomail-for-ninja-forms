@@ -1,6 +1,6 @@
 {
   "name": "videomail-for-ninja-forms",
-  "version": "5.2.1",
+  "version": "5.3.0",
   "description": "With this add-on recording videos in Wordpress Ninja Forms comes true.",
   "author": "Michael Heuberger <michael.heuberger@binarykitchen.com>",
   "contributors": [
@@ -28,20 +28,21 @@
     "url": "https://github.com/binarykitchen/videomail-for-ninja-forms.git"
   },
   "engines": {
-    "node": "^20.12.2",
-    "npm": "^10.5.0"
+    "node": ">=22.8.0",
+    "npm": ">=10.8.2"
   },
   "scripts": {
     "wp": "gulp watch --host=wp",
     "mh": "gulp watch --port=443 --host=infernal.videomail.local",
     "build": "gulp build",
     "lint": "eslint ./src gulpfile.js",
-    "lint-fix": "npm --silent run lint -- --fix; exit 0",
-    "prettier": "prettier --check ./src gulpfile.js",
-    "prettier-fix": "prettier --write ./src gulpfile.js",
+    "lint:fix": "npm --silent run lint -- --fix; exit 0",
+    "prettier": "prettier --check ./src gulpfile.js .eslintrc.js",
+    "prettier:fix": "prettier --write ./src gulpfile.js .eslintrc.js",
     "clean": "rm -rf node_modules && rm -rf target && rm -rf package-lock.json",
     "release": "./env/dev/release.sh"
   },
+  "prettier": "./prettier.config.cjs",
   "babel": {
     "presets": [
       [
@@ -56,30 +57,21 @@
       "@babel/transform-runtime"
     ]
   },
-  "standard": {
-    "globals": [
-      "Marionette",
-      "Backbone",
-      "jQuery",
-      "VideomailClient",
-      "nfRadio"
-    ]
-  },
   "dependencies": {
-    "videomail-client": "8.1.1"
+    "videomail-client": "9.3.1"
   },
   "devDependencies": {
-    "@babel/core": "7.24.7",
-    "@babel/eslint-parser": "7.24.7",
-    "@babel/plugin-transform-runtime": "7.24.7",
-    "@babel/preset-env": "7.24.7",
-    "@babel/runtime": "7.24.7",
+    "@babel/core": "7.25.2",
+    "@babel/eslint-parser": "7.25.1",
+    "@babel/plugin-transform-runtime": "7.25.4",
+    "@babel/preset-env": "7.25.4",
+    "@babel/runtime": "7.25.6",
     "babel-eslint": "10.1.0",
     "browser-sync": "3.0.2",
     "del": "6.1.1",
     "eslint": "8.57.0",
-    "eslint-config-standard": "17.1.0",
-    "eslint-plugin-import": "2.29.1",
+    "eslint-config-prettier": "9.1.0",
+    "eslint-plugin-import": "2.30.0",
     "eslint-plugin-node": "11.1.0",
     "eslint-plugin-promise": "6.2.0",
     "fancy-log": "2.0.0",
@@ -91,15 +83,12 @@
     "gulp-plumber": "1.2.1",
     "gulp-rename": "2.0.0",
     "gulp-sourcemaps": "3.0.0",
-    "gulp-standard": "14.0.0",
     "gulp-stylus": "2.7.1",
-    "gulp-todo": "7.1.1",
     "gulp-uglify": "3.0.2",
     "gulp-zip": "5.1.0",
     "minimist": "1.2.8",
     "nib": "1.2.0",
-    "prettier": "3.3.2",
-    "standard": "17.1.0",
+    "prettier": "3.3.3",
     "yargs": "17.7.2"
   }
 }
