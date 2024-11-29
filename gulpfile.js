@@ -56,7 +56,7 @@ function bundle() {
 
 function copyVideomailClient() {
   return gulp
-    .src("node_modules/videomail-client/prototype/js/videomail-client.js")
+    .src("node_modules/videomail-client/dist/index.cjs")
     .pipe(gulp.dest("target/js/videomail-client"));
 }
 
@@ -70,17 +70,7 @@ function css() {
         errors: true,
       }),
     )
-    .pipe(
-      plugins.autoprefixer(
-        "last 3 versions",
-        "> 2%",
-        "Explorer >= 11",
-        "Chrome >= 46",
-        "Firefox >= 52",
-        "iOS >= 9",
-        "android >= 4",
-      ),
-    )
+    .pipe(plugins.autoprefixer("last 3 versions", "> 2%"))
     .pipe(plugins.bytediff.start())
     .pipe(plugins.cssnano())
     .pipe(plugins.rename({ suffix: ".min" }))

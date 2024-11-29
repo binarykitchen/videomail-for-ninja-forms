@@ -82,9 +82,7 @@ const VideomailFieldController = Marionette.Object.extend({
     DEBUG = DEBUG || verbose;
     Backbone.Radio.DEBUG = Backbone.Radio.DEBUG || verbose;
 
-    // TODO Fix later once fully ported to ESNext
-    // eslint-disable-next-line new-cap
-    this.videomailClient = new VideomailClient.default({
+    this.videomailClient = new VideomailClient({
       siteName: this.fieldModel.get("site_name"),
       video: {
         limitSeconds: this.fieldModel.get("limit_seconds") || 90,
