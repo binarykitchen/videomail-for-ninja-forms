@@ -4012,7 +4012,7 @@
                         break;
                     case error_VideomailError.OVERCONSTRAINED:
                         message = "Invalid webcam constraints";
-                        explanation = err && "constraint" in err ? "width" === err.constraint ? "Your webcam does not meet the width requirement." : `Unmet constraint: ${err.constraint}` : err?.toString();
+                        explanation = err && "constraint" in err ? "width" === err.constraint ? "Your webcam does not meet the width requirement." : `Unmet constraint: ${err.constraint}` : err?.message;
                         break;
                     case "MediaDeviceFailedDueToShutdown":
                         message = "Webcam is shutting down";
@@ -5755,7 +5755,7 @@
             var external_is_power_of_two_ = __webpack_require__("is-power-of-two");
             var external_is_power_of_two_default = /*#__PURE__*/ __webpack_require__.n(external_is_power_of_two_);
             var package_namespaceObject = {
-                i8: "10.0.18"
+                i8: "10.0.19"
             }; // CONCATENATED MODULE: ./src/util/getNodeEnv.ts
             function getNodeEnv() {
                 return "production";
@@ -7968,20 +7968,14 @@
                     });
                 }
                 unload(params) {
-                    try {
-                        if (!this.built) return;
-                        const e = params?.e;
-                        this.options.logger.debug(`Visuals: unload(${e ? pretty(e) : ""})`);
-                        this.recorder.unload(params);
-                        this.recorderInsides.unload();
-                        this.replay.unload(params);
-                        e instanceof Error || this.hide();
-                        this.built = false;
-                    } catch (exc) {
-                        this.emit("ERROR", {
-                            exc
-                        });
-                    }
+                    if (!this.built) return;
+                    const e = params?.e;
+                    this.options.logger.debug(`Visuals: unload(${e ? pretty(e) : ""})`);
+                    this.recorder.unload(params);
+                    this.recorderInsides.unload();
+                    this.replay.unload(params);
+                    e instanceof Error || this.hide();
+                    this.built = false;
                 }
                 isNotifying() {
                     return this.notifier.isVisible();
