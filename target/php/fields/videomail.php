@@ -160,7 +160,7 @@ class NF_Videomail_Fields_Videomail extends NF_Abstracts_Field {
 
     wp_enqueue_script(
       'nf-videomail-client',
-      NF_Videomail::$jsUrl . 'videomail-client/videomail-client.js',
+      NF_Videomail::$jsUrl . 'videomail-client/index.js',
       array(),
       NF_Videomail::VERSION
     );

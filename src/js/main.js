@@ -82,9 +82,7 @@ const VideomailFieldController = Marionette.Object.extend({
     DEBUG = DEBUG || verbose;
     Backbone.Radio.DEBUG = Backbone.Radio.DEBUG || verbose;
 
-    // TODO Fix later once fully ported to ESNext
-    // eslint-disable-next-line new-cap
-    this.videomailClient = new VideomailClient.default({
+    this.videomailClient = new VideomailClient.VideomailClient({
       siteName: this.fieldModel.get("site_name"),
       video: {
         limitSeconds: this.fieldModel.get("limit_seconds") || 90,
@@ -100,6 +98,7 @@ const VideomailFieldController = Marionette.Object.extend({
         quality: imageQualityPercentage / 100, // must be a float
       },
       selectors: {
+        containerId: "videomail",
         submitButtonSelector: ".submit-wrap input",
       },
       callbacks: {
@@ -120,20 +119,9 @@ const VideomailFieldController = Marionette.Object.extend({
       verbose,
     });
 
-    this.videomailClient.on(
-      this.videomailClient.events.PREVIEW,
-      this.onPreview.bind(this),
-    );
-
-    this.videomailClient.on(
-      this.videomailClient.events.SUBMITTED,
-      this.onSubmitted.bind(this),
-    );
-
-    this.videomailClient.on(
-      this.videomailClient.events.GOING_BACK,
-      this.onGoingBack.bind(this),
-    );
+    this.videomailClient.on("PREVIEW", this.onPreview.bind(this));
+    this.videomailClient.on("SUBMITTED", this.onSubmitted.bind(this));
+    this.videomailClient.on("GOING_BACK", this.onGoingBack.bind(this));
 
     this.videomailClient.show();
   },
@@ -149,7 +137,7 @@ const VideomailFieldController = Marionette.Object.extend({
       .request("remove:error", this.fieldModel.get("id"), "required-error");
   },
 
-  onSubmitted: function (videomail) {
+  onSubmitted: function (result) {
     let formModel = Backbone.Radio.channel("app").request("get:form", this.getFormId());
 
     if (!formModel) {
@@ -161,7 +149,7 @@ const VideomailFieldController = Marionette.Object.extend({
     Backbone.Radio.channel("form-" + formModel.get("id")).request(
       "add:extra",
       "videomail",
-      videomail,
+      result.videomail,
     );
 
     // restart submission again, this time to the real wp site
@@ -184,7 +172,7 @@ const VideomailFieldController = Marionette.Object.extend({
   },
 
   invalidate: function () {
-    // override default behaviour so that we can set our own error text here
+    // override default behavior so that we can set our own error text here
     Backbone.Radio.channel("fields").request(
       "add:error",
       this.fieldModel.get("id"),
@@ -267,13 +255,15 @@ const VideomailFieldController = Marionette.Object.extend({
       collection = this.fieldModel.collection.options.formModel.get("fields").models;
     }
 
-    return collection.reduce(function (memo, field) {
+    const formValues = collection.reduce(function (memo, field) {
       memo[field.get("key")] = field.get("value");
       return memo;
     }, {});
+
+    return formValues;
   },
 
-  adjustFormDataBeforePostingToVideomailServer: function (videomail, cb) {
+  adjustFormDataBeforePostingToVideomailServer: function (videomail) {
     const formValues = this.getFormValues();
 
     videomail.from = this.getMergeTagValue("email_from", formValues);
@@ -281,7 +271,7 @@ const VideomailFieldController = Marionette.Object.extend({
     videomail.subject = this.getMergeTagValue("email_subject", formValues);
     videomail.body = this.getMergeTagValue("email_body", formValues);
 
-    cb(null, videomail);
+    return videomail;
   },
 
   onBeforeDestroy: function () {

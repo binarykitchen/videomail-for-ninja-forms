@@ -1,11 +1,12 @@
 === Videomail for Ninja Forms ===
+
 Contributors: michael.heuberger, kbjohnson90
 Tags: video, email, recorder, sign language
 
 Requires at least: 6.0
-Tested up to: 6.6.2
-Stable tag: 5.3.0
-Requires PHP: 7.4.0
+Tested up to: 7.0.0
+Stable tag: 7.0.0
+Requires PHP: 8.1.0
 Donate link: https://videomail.io/faq
 License: CC0-1.0
 
@@ -69,6 +70,18 @@ To get help, just use any of these contacts at [https://binarykitchen.com](https
 2. Once you have assembled a form and preview it, any browser will ask for webcam access first.
 
 == Changelog ==
+= 7.0.0 (21 Dec 2024) =
+*Change:*
+* After video processing, pick the correct API response (intelligence)
+*Fix:*
+* Revert invalid imports (ESM back to UMD)
+*Improvement:*
+* Better error messages (more human friendly)
+
+= 6.0.0 (29 Nov 2024) =
+*Change:*
+* Upgrade Videomail-Client to v10 (15% faster)
+
 = 5.3.0 (13 Sep 2024) =
 *Improvement:*
 * Speed: all is about 20% faster
