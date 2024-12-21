@@ -82,7 +82,7 @@ const VideomailFieldController = Marionette.Object.extend({
     DEBUG = DEBUG || verbose;
     Backbone.Radio.DEBUG = Backbone.Radio.DEBUG || verbose;
 
-    this.videomailClient = new VideomailClient({
+    this.videomailClient = new VideomailClient.VideomailClient({
       siteName: this.fieldModel.get("site_name"),
       video: {
         limitSeconds: this.fieldModel.get("limit_seconds") || 90,
@@ -118,20 +118,9 @@ const VideomailFieldController = Marionette.Object.extend({
       verbose,
     });
 
-    this.videomailClient.on(
-      this.videomailClient.events.PREVIEW,
-      this.onPreview.bind(this),
-    );
-
-    this.videomailClient.on(
-      this.videomailClient.events.SUBMITTED,
-      this.onSubmitted.bind(this),
-    );
-
-    this.videomailClient.on(
-      this.videomailClient.events.GOING_BACK,
-      this.onGoingBack.bind(this),
-    );
+    this.videomailClient.on("PREVIEW", this.onPreview.bind(this));
+    this.videomailClient.on("SUBMITTED", this.onSubmitted.bind(this));
+    this.videomailClient.on("GOING_BACK", this.onGoingBack.bind(this));
 
     this.videomailClient.show();
   },

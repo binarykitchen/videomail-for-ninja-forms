@@ -33,7 +33,7 @@
   },
   "scripts": {
     "wp": "gulp watch --host=wp",
-    "mh": "gulp watch --port=443 --host=infernal.videomail.local",
+    "mh": "gulp watch --port=443 --host=videomail-for-ninja-forms.home",
     "build": "gulp build",
     "lint": "eslint ./src gulpfile.js",
     "lint:fix": "npm --silent run lint -- --fix; exit 0",
@@ -58,7 +58,7 @@
     ]
   },
   "dependencies": {
-    "videomail-client": "10.0.19"
+    "videomail-client": "10.0.22"
   },
   "devDependencies": {
     "@babel/core": "7.26.0",
