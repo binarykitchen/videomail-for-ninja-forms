@@ -49,6 +49,13 @@ border-radius = 2px
           input[type=button]
             margin-top 5px
             margin-right 0.5em
+            padding 0.6em
+            cursor pointer
 
             &:focus
               outline 0
+
+            &:disabled
+              cursor not-allowed
+              transition none
+              opacity 0.5
