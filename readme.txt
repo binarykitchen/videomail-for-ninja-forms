@@ -4,8 +4,8 @@ Contributors: michael.heuberger, kbjohnson90
 Tags: video, email, recorder, sign language
 
 Requires at least: 6.0
-Tested up to: 7.0.0
-Stable tag: 7.0.0
+Tested up to: 7.0.1
+Stable tag: 7.0.1
 Requires PHP: 8.1.0
 Donate link: https://videomail.io/faq
 License: CC0-1.0
@@ -57,7 +57,7 @@ But once you deploy your Wordpress site out in the wild, we will have to whiteli
 
 = Is there a live example? =
 There is also the live site [videomail.io](https://videomail.io). Have a look and play.
-You can see the videomail-client in action and use it right away for free, anytime, anywhere. Many people, especially Deafs and Sign Language users, already use it for their everyday communication.
+You can see the videomail-client in action and use it right away for free, anytime, anywhere. Many people, especially Deaf and Sign Language users, already use it for their everyday communication.
 
 = Can I use videomail outside of WordPress? =
 Yes. There is a low level npm [videomail-client](https://github.com/binarykitchen/videomail-client) package. This WordPress plugin relies on it.
@@ -70,11 +70,20 @@ To get help, just use any of these contacts at [https://binarykitchen.com](https
 2. Once you have assembled a form and preview it, any browser will ask for webcam access first.
 
 == Changelog ==
+= 7.0.1 (15 Jan 2025) =
+*Improvement:*
+* Proper versions of anything are properly recorded for any error reports
+
+*Change:*
+* Bumps Videomail-Client to latest version
+
 = 7.0.0 (21 Dec 2024) =
 *Change:*
 * After video processing, pick the correct API response (intelligence)
+
 *Fix:*
 * Revert invalid imports (ESM back to UMD)
+
 *Improvement:*
 * Better error messages (more human friendly)
 
@@ -150,7 +159,7 @@ To get help, just use any of these contacts at [https://binarykitchen.com](https
 * Do not save to media library when disabled
 
 *Change:*
-* Deliver unminified JS for easier debugging
+* Deliver un-minified JS for easier debugging
 
 = 4.0.10 (29 June 2023) =
 *Bugs:*

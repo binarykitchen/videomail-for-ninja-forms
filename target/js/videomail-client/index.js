@@ -2004,7 +2004,7 @@
                 }
                 var util = Object.create(__webpack_require__("./node_modules/core-util-is/lib/util.js"));
                 util.inherits = __webpack_require__("./node_modules/inherits/inherits_browser.js");
-                var debugUtil = __webpack_require__("?d57a");
+                var debugUtil = __webpack_require__("?54a4");
                 var debug = void 0;
                 debug = debugUtil && debugUtil.debuglog ? debugUtil.debuglog('stream') : function() {};
                 var BufferList = __webpack_require__("./node_modules/duplexify/node_modules/readable-stream/lib/internal/streams/BufferList.js");
@@ -3135,7 +3135,7 @@
                     if (!(instance instanceof Constructor)) throw new TypeError("Cannot call a class as a function");
                 }
                 var Buffer = __webpack_require__("./node_modules/duplexify/node_modules/safe-buffer/index.js").Buffer;
-                var util = __webpack_require__("?f049");
+                var util = __webpack_require__("?2a0b");
                 function copyBuffer(src, target, offset) {
                     src.copy(target, offset);
                 }
@@ -3419,7 +3419,7 @@
                     if (byte <= 0x7F) return 0;
                     if (byte >> 5 === 0x06) return 2;
                     if (byte >> 4 === 0x0E) return 3;
-                    else if (byte >> 3 === 0x1E) return 4;
+                    if (byte >> 3 === 0x1E) return 4;
                     return byte >> 6 === 0x02 ? -1 : -2;
                 }
                 function utf8CheckIncomplete(self1, buf, i) {
@@ -4688,7 +4688,7 @@
             },
             "./node_modules/global/document.js": function(module1, __unused_webpack_exports, __webpack_require__) {
                 var topLevel = void 0 !== __webpack_require__.g ? __webpack_require__.g : 'undefined' != typeof window ? window : {};
-                var minDoc = __webpack_require__("?ff23");
+                var minDoc = __webpack_require__("?39ea");
                 var doccy;
                 if ('undefined' != typeof document) doccy = document;
                 else {
@@ -4700,7 +4700,7 @@
             "./node_modules/gopd/index.js": function(module1, __unused_webpack_exports, __webpack_require__) {
                 "use strict";
                 var GetIntrinsic = __webpack_require__("./node_modules/get-intrinsic/index.js");
-                var $gOPD = GetIntrinsic('%Object.getOwnPropertyDescriptor%', true);
+                var $gOPD = GetIntrinsic("%Object.getOwnPropertyDescriptor%", true);
                 if ($gOPD) try {
                     $gOPD([], 'length');
                 } catch (e) {
@@ -5092,7 +5092,7 @@
                     }
                     return $replace.call(str, sepRegex, '$&_');
                 }
-                var utilInspect = __webpack_require__("?64eb");
+                var utilInspect = __webpack_require__("?72a8");
                 var inspectCustom = utilInspect.custom;
                 var inspectSymbol = isSymbol(inspectCustom) ? inspectCustom : null;
                 var quotes = {
@@ -5419,10 +5419,14 @@
                         for(var k = 0; k < syms.length; k++)symMap['$' + syms[k]] = syms[k];
                     }
                     for(var key in obj){
-                        if (!has(obj, key)) continue;
-                        if (isArr && String(Number(key)) === key && key < obj.length) continue;
-                        if (!(hasShammedSymbols && symMap['$' + key] instanceof Symbol)) if ($test.call(/[^\w$]/, key)) xs.push(inspect(key, obj) + ': ' + inspect(obj[key], obj));
-                        else xs.push(key + ': ' + inspect(obj[key], obj));
+                        if (!!has(obj, key)) {
+                            if (!isArr || String(Number(key)) !== key || !(key < obj.length)) {
+                                if (!(hasShammedSymbols && symMap['$' + key] instanceof Symbol)) {
+                                    if ($test.call(/[^\w$]/, key)) xs.push(inspect(key, obj) + ': ' + inspect(obj[key], obj));
+                                    else xs.push(key + ': ' + inspect(obj[key], obj));
+                                }
+                            }
+                        }
                     }
                     if ('function' == typeof gOPS) {
                         for(var j = 0; j < syms.length; j++)if (isEnumerable.call(obj, syms[j])) xs.push('[' + inspect(syms[j]) + ']: ' + inspect(obj[syms[j]], obj));
@@ -5771,29 +5775,27 @@
                             i = parts.length;
                         }
                     }
-                    for(i = 0; i < parts.length; ++i){
-                        if (i !== skipIndex) {
-                            var part = parts[i];
-                            var bracketEqualsPos = part.indexOf(']=');
-                            var pos = -1 === bracketEqualsPos ? part.indexOf('=') : bracketEqualsPos + 1;
-                            var key, val;
-                            if (-1 === pos) {
-                                key = options.decoder(part, defaults.decoder, charset, 'key');
-                                val = options.strictNullHandling ? null : '';
-                            } else {
-                                key = options.decoder(part.slice(0, pos), defaults.decoder, charset, 'key');
-                                val = utils.maybeMap(parseArrayValue(part.slice(pos + 1), options), function(encodedVal) {
-                                    return options.decoder(encodedVal, defaults.decoder, charset, 'value');
-                                });
-                            }
-                            if (val && options.interpretNumericEntities && 'iso-8859-1' === charset) val = interpretNumericEntities(val);
-                            if (part.indexOf('[]=') > -1) val = isArray(val) ? [
-                                val
-                            ] : val;
-                            var existing = has.call(obj, key);
-                            if (existing && 'combine' === options.duplicates) obj[key] = utils.combine(obj[key], val);
-                            else if (!existing || 'last' === options.duplicates) obj[key] = val;
+                    for(i = 0; i < parts.length; ++i)if (i !== skipIndex) {
+                        var part = parts[i];
+                        var bracketEqualsPos = part.indexOf(']=');
+                        var pos = -1 === bracketEqualsPos ? part.indexOf('=') : bracketEqualsPos + 1;
+                        var key, val;
+                        if (-1 === pos) {
+                            key = options.decoder(part, defaults.decoder, charset, 'key');
+                            val = options.strictNullHandling ? null : '';
+                        } else {
+                            key = options.decoder(part.slice(0, pos), defaults.decoder, charset, 'key');
+                            val = utils.maybeMap(parseArrayValue(part.slice(pos + 1), options), function(encodedVal) {
+                                return options.decoder(encodedVal, defaults.decoder, charset, 'value');
+                            });
                         }
+                        if (val && options.interpretNumericEntities && 'iso-8859-1' === charset) val = interpretNumericEntities(val);
+                        if (part.indexOf('[]=') > -1) val = isArray(val) ? [
+                            val
+                        ] : val;
+                        var existing = has.call(obj, key);
+                        if (existing && 'combine' === options.duplicates) obj[key] = utils.combine(obj[key], val);
+                        else if (!existing || 'last' === options.duplicates) obj[key] = val;
                     }
                     return obj;
                 };
@@ -7693,7 +7695,7 @@
                     var keys = Object.keys(value);
                     var visibleKeys = arrayToHash(keys);
                     if (ctx.showHidden) keys = Object.getOwnPropertyNames(value);
-                    if (isError(value) && (keys.indexOf('message') >= 0 || keys.indexOf('description') >= 0)) return formatError(value);
+                    if (isError(value) && (keys.indexOf('message') >= 0 || keys.indexOf("description") >= 0)) return formatError(value);
                     if (0 === keys.length) {
                         if (isFunction(value)) {
                             var name = value.name ? ': ' + value.name : '';
@@ -8076,7 +8078,7 @@
                 }
                 var util = Object.create(__webpack_require__("./node_modules/core-util-is/lib/util.js"));
                 util.inherits = __webpack_require__("./node_modules/inherits/inherits_browser.js");
-                var debugUtil = __webpack_require__("?5eec");
+                var debugUtil = __webpack_require__("?e97d");
                 var debug = void 0;
                 debug = debugUtil && debugUtil.debuglog ? debugUtil.debuglog('stream') : function() {};
                 var BufferList = __webpack_require__("./node_modules/websocket-stream/node_modules/readable-stream/lib/internal/streams/BufferList.js");
@@ -9207,7 +9209,7 @@
                     if (!(instance instanceof Constructor)) throw new TypeError("Cannot call a class as a function");
                 }
                 var Buffer = __webpack_require__("./node_modules/websocket-stream/node_modules/safe-buffer/index.js").Buffer;
-                var util = __webpack_require__("?1aff");
+                var util = __webpack_require__("?ea64");
                 function copyBuffer(src, target, offset) {
                     src.copy(target, offset);
                 }
@@ -9491,7 +9493,7 @@
                     if (byte <= 0x7F) return 0;
                     if (byte >> 5 === 0x06) return 2;
                     if (byte >> 4 === 0x0E) return 3;
-                    else if (byte >> 3 === 0x1E) return 4;
+                    if (byte >> 3 === 0x1E) return 4;
                     return byte >> 6 === 0x02 ? -1 : -2;
                 }
                 function utf8CheckIncomplete(self1, buf, i) {
@@ -9819,18 +9821,18 @@
                     }
                 }
             },
-            "../../node_modules/@rsbuild/core/compiled/css-loader/index.js??ruleSet[1].rules[9].use[1]!builtin:lightningcss-loader??ruleSet[1].rules[9].use[2]!../../node_modules/stylus-loader/dist/cjs.js??ruleSet[1].rules[9].use[3]!./src/styles/main.styl": function(module1, __webpack_exports__, __webpack_require__) {
+            "../../node_modules/@rslib/core/node_modules/@rsbuild/core/compiled/css-loader/index.js??ruleSet[1].rules[9].use[1]!builtin:lightningcss-loader??ruleSet[1].rules[9].use[2]!../../node_modules/stylus-loader/dist/cjs.js??ruleSet[1].rules[9].use[3]!./src/styles/main.styl": function(module1, __webpack_exports__, __webpack_require__) {
                 "use strict";
                 __webpack_require__.d(__webpack_exports__, {
                     Z: function() {
                         return __WEBPACK_DEFAULT_EXPORT__;
                     }
                 });
-                var _node_modules_rsbuild_core_compiled_css_loader_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("./node_modules/@rsbuild/core/compiled/css-loader/noSourceMaps.js");
-                var _node_modules_rsbuild_core_compiled_css_loader_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/ __webpack_require__.n(_node_modules_rsbuild_core_compiled_css_loader_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
-                var _node_modules_rsbuild_core_compiled_css_loader_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__("./node_modules/@rsbuild/core/compiled/css-loader/api.js");
-                var _node_modules_rsbuild_core_compiled_css_loader_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/ __webpack_require__.n(_node_modules_rsbuild_core_compiled_css_loader_api_js__WEBPACK_IMPORTED_MODULE_1__);
-                var ___CSS_LOADER_EXPORT___ = _node_modules_rsbuild_core_compiled_css_loader_api_js__WEBPACK_IMPORTED_MODULE_1___default()(_node_modules_rsbuild_core_compiled_css_loader_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default());
+                var _node_modules_rslib_core_node_modules_rsbuild_core_compiled_css_loader_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("./node_modules/@rslib/core/node_modules/@rsbuild/core/compiled/css-loader/noSourceMaps.js");
+                var _node_modules_rslib_core_node_modules_rsbuild_core_compiled_css_loader_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/ __webpack_require__.n(_node_modules_rslib_core_node_modules_rsbuild_core_compiled_css_loader_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
+                var _node_modules_rslib_core_node_modules_rsbuild_core_compiled_css_loader_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__("./node_modules/@rslib/core/node_modules/@rsbuild/core/compiled/css-loader/api.js");
+                var _node_modules_rslib_core_node_modules_rsbuild_core_compiled_css_loader_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/ __webpack_require__.n(_node_modules_rslib_core_node_modules_rsbuild_core_compiled_css_loader_api_js__WEBPACK_IMPORTED_MODULE_1__);
+                var ___CSS_LOADER_EXPORT___ = _node_modules_rslib_core_node_modules_rsbuild_core_compiled_css_loader_api_js__WEBPACK_IMPORTED_MODULE_1___default()(_node_modules_rslib_core_node_modules_rsbuild_core_compiled_css_loader_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default());
                 ___CSS_LOADER_EXPORT___.push([
                     module1.id,
                     '@keyframes blink{0%{opacity:.9}35%{opacity:.9}50%{opacity:.1}85%{opacity:.1}to{opacity:.9}}.videomail .visuals{position:relative}.videomail .visuals video.replay{width:100%;height:100%}.videomail .countdown,.videomail .recordTimer,.videomail .recordNote,.videomail .pausedHeader,.videomail .pausedHint{height:auto;margin:0}.videomail .countdown,.videomail .recordTimer,.videomail .recordNote,.videomail .paused,.videomail .facingMode,.videomail noscript{z-index:100;position:absolute}.videomail .countdown,.videomail .recordTimer,.videomail .recordNote,.videomail .pausedHeader,.videomail .pausedHint,.videomail noscript{font-weight:700}.videomail .countdown,.videomail .paused,.videomail noscript{width:100%;top:50%;transform:translateY(-50%)}.videomail .pausedHeader,.videomail .pausedHint,.videomail .countdown{text-align:center;letter-spacing:4px;text-shadow:-2px 0 #fff,0 2px #fff,2px 0 #fff,0 -2px #fff}.videomail .pausedHeader,.videomail .countdown{opacity:.9;font-size:460%}.videomail .pausedHint{font-size:150%}.videomail .facingMode{color:#f5f5f5e6;z-index:10;background:#1e1e1e80;border:none;outline:none;padding:.1em .3em;font-family:monospace;font-size:1.2em;transition:all .2s;bottom:.6em;right:.7em}.videomail .facingMode:hover{cursor:pointer;background:#323232b3}.videomail .recordTimer,.videomail .recordNote{color:#00d814;opacity:.9;background:#0a0a0acc;padding:.3em .4em;font-family:monospace;transition:all 1s;right:.7em}.videomail .recordTimer.near,.videomail .recordNote.near{color:#eb9369}.videomail .recordTimer.nigh,.videomail .recordNote.nigh{color:#ea4b2a}.videomail .recordTimer{top:.7em}.videomail .recordNote{top:3.6em}.videomail .recordNote:before{content:"REC";animation:1s infinite blink}.videomail .notifier{box-sizing:border-box;overflow:hidden}.videomail .radioGroup{display:block}.videomail .radioGroup label{cursor:pointer}.videomail video{margin-bottom:0}.videomail video.userMedia{background-color:#3232321a}',
@@ -9838,13 +9840,13 @@
                 ]);
                 const __WEBPACK_DEFAULT_EXPORT__ = ___CSS_LOADER_EXPORT___;
             },
-            "?f049": function() {},
-            "?d57a": function() {},
-            "?ff23": function() {},
-            "?64eb": function() {},
-            "?1aff": function() {},
-            "?5eec": function() {},
-            "./node_modules/@rsbuild/core/compiled/css-loader/api.js": function(module1) {
+            "?2a0b": function() {},
+            "?54a4": function() {},
+            "?39ea": function() {},
+            "?72a8": function() {},
+            "?ea64": function() {},
+            "?e97d": function() {},
+            "./node_modules/@rslib/core/node_modules/@rsbuild/core/compiled/css-loader/api.js": function(module1) {
                 "use strict";
                 module1.exports = function(cssWithMappingToString) {
                     var list = [];
@@ -9904,13 +9906,13 @@
                     return list;
                 };
             },
-            "./node_modules/@rsbuild/core/compiled/css-loader/noSourceMaps.js": function(module1) {
+            "./node_modules/@rslib/core/node_modules/@rsbuild/core/compiled/css-loader/noSourceMaps.js": function(module1) {
                 "use strict";
                 module1.exports = function(i) {
                     return i[1];
                 };
             },
-            "./node_modules/@rsbuild/core/compiled/style-loader/runtime/injectStylesIntoStyleTag.js": function(module1) {
+            "./node_modules/@rslib/core/node_modules/@rsbuild/core/compiled/style-loader/runtime/injectStylesIntoStyleTag.js": function(module1) {
                 "use strict";
                 var stylesInDOM = [];
                 function getIndexByIdentifier(identifier) {
@@ -9989,7 +9991,7 @@
                     };
                 };
             },
-            "./node_modules/@rsbuild/core/compiled/style-loader/runtime/insertBySelector.js": function(module1) {
+            "./node_modules/@rslib/core/node_modules/@rsbuild/core/compiled/style-loader/runtime/insertBySelector.js": function(module1) {
                 "use strict";
                 var memo = {};
                 function getTarget(target) {
@@ -10011,7 +10013,7 @@
                 }
                 module1.exports = insertBySelector;
             },
-            "./node_modules/@rsbuild/core/compiled/style-loader/runtime/insertStyleElement.js": function(module1) {
+            "./node_modules/@rslib/core/node_modules/@rsbuild/core/compiled/style-loader/runtime/insertStyleElement.js": function(module1) {
                 "use strict";
                 function insertStyleElement(options) {
                     var element = document.createElement("style");
@@ -10021,7 +10023,7 @@
                 }
                 module1.exports = insertStyleElement;
             },
-            "./node_modules/@rsbuild/core/compiled/style-loader/runtime/setAttributesWithoutAttributes.js": function(module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/@rslib/core/node_modules/@rsbuild/core/compiled/style-loader/runtime/setAttributesWithoutAttributes.js": function(module1, __unused_webpack_exports, __webpack_require__) {
                 "use strict";
                 function setAttributesWithoutAttributes(styleElement) {
                     var nonce = __webpack_require__.nc;
@@ -10029,7 +10031,7 @@
                 }
                 module1.exports = setAttributesWithoutAttributes;
             },
-            "./node_modules/@rsbuild/core/compiled/style-loader/runtime/styleDomAPI.js": function(module1) {
+            "./node_modules/@rslib/core/node_modules/@rsbuild/core/compiled/style-loader/runtime/styleDomAPI.js": function(module1) {
                 "use strict";
                 function apply(styleElement, options, obj) {
                     var css = "";
@@ -10066,7 +10068,7 @@
                 }
                 module1.exports = domAPI;
             },
-            "./node_modules/@rsbuild/core/compiled/style-loader/runtime/styleTagTransform.js": function(module1) {
+            "./node_modules/@rslib/core/node_modules/@rsbuild/core/compiled/style-loader/runtime/styleTagTransform.js": function(module1) {
                 "use strict";
                 function styleTagTransform(css, styleElement) {
                     if (styleElement.styleSheet) styleElement.styleSheet.cssText = css;
@@ -13287,12 +13289,10 @@
                 if (!NODE_LIST_CLASSES[es_toString.call(element)]) return getFormElementValue(element, options.trim);
                 var data = [];
                 var allRadios = true;
-                for(var i = 0, l = element.length; i < l; i++){
-                    if (!element[i].disabled || !!options.includeDisabled) {
-                        if (allRadios && 'radio' !== element[i].type) allRadios = false;
-                        var value = getFormElementValue(element[i], options.trim);
-                        if (null != value) data = data.concat(value);
-                    }
+                for(var i = 0, l = element.length; i < l; i++)if (!element[i].disabled || !!options.includeDisabled) {
+                    if (allRadios && 'radio' !== element[i].type) allRadios = false;
+                    var value = getFormElementValue(element[i], options.trim);
+                    if (null != value) data = data.concat(value);
                 }
                 if (allRadios && 1 === data.length) return data[0];
                 return data.length > 0 ? data : null;
@@ -13646,6 +13646,9 @@
                 }
             }
             const wrappers_form = Form;
+            var package_namespaceObject = {
+                i8: "10.1.0"
+            };
             function findOriginalExc(exc) {
                 if (exc instanceof Error && "response" in exc) {
                     const response = exc.response;
@@ -13749,7 +13752,11 @@
                             status: err.status,
                             title: err.title,
                             message: err.message,
-                            stack: err.stack
+                            stack: err.stack,
+                            versions: {
+                                videomailClient: package_namespaceObject.i8,
+                                ninjaFormPlugin: this.options.versions?.ninjaFormPlugin
+                            }
                         };
                         await client_default()(form_FormMethod.POST, url).query(queryParams).set("Timezone-Id", this.timezoneId).send(fullVideomailErrorData).timeout(this.options.timeouts.connection);
                     } catch (exc) {
@@ -13758,7 +13765,7 @@
                 }
                 async post(videomail) {
                     const newVideomail = this.applyDefaultValues(videomail);
-                    newVideomail[constants.VERSION_LABEL] = this.options.version;
+                    newVideomail[constants.VERSION_LABEL] = package_namespaceObject.i8;
                     try {
                         let res;
                         if (this.options.callbacks.adjustFormDataBeforePosting) {
@@ -14951,9 +14958,6 @@
             }
             var is_power_of_two = __webpack_require__("./node_modules/is-power-of-two/index.js");
             var is_power_of_two_default = /*#__PURE__*/ __webpack_require__.n(is_power_of_two);
-            var package_namespaceObject = {
-                i8: "10.0.22"
-            };
             function getNodeEnv() {
                 return "production";
             }
@@ -15076,7 +15080,9 @@
                 adjustFormOnBrowserError: true,
                 reportErrors: true,
                 fakeUaString: void 0,
-                version: package_namespaceObject.i8
+                versions: {
+                    ninjaFormPlugin: void 0
+                }
             };
             const src_options = options_options;
             const CHANNELS = 1;
@@ -15508,12 +15514,12 @@
             const dimensions_getRatio = getRatio;
             function limitHeight_limitHeight(height, options) {
                 if (!height || height < 1) throw error_createError({
-                    message: "Passed limit-height argument cannot be less than 1!",
+                    message: `Passed limit-height argument ${height} cannot be less than 1!`,
                     options
                 });
                 const limitedHeight = Math.min(height, document.documentElement.clientHeight);
                 if (limitedHeight < 1) throw error_createError({
-                    message: "Limited height cannot be less than 1!",
+                    message: `Limited height ${limitedHeight} cannot be less than 1!`,
                     options
                 });
                 return limitedHeight;
@@ -15930,7 +15936,6 @@
                         };
                     }
                     this.options.logger.debug(`Recorder: our webcam constraints are: ${pretty(constraints)}`);
-                    if (!navigator.mediaDevices) throw new Error("No media devices are available.");
                     this.options.logger.debug(`Recorder: available webcam constraints are: ${pretty(navigator.mediaDevices.getSupportedConstraints())}`);
                     const genuineUserMediaRequest = navigator.mediaDevices.getUserMedia(constraints);
                     genuineUserMediaRequest.then((localStream)=>{
@@ -15952,6 +15957,7 @@
                     this.options.logger.debug(`Recorder: loadUserMedia(${params ? pretty(params) : ""})`);
                     this.emit("LOADING_USER_MEDIA");
                     try {
+                        if (!navigator.mediaDevices) throw new Error("No media devices are available.");
                         this.userMediaTimeout = window.setTimeout(()=>{
                             if (!this.isReady()) {
                                 const err = util_getBrowser(this.options).getNoAccessIssue();
@@ -15963,6 +15969,7 @@
                         this.userMediaLoading = true;
                         this.loadGenuineUserMedia(params);
                     } catch (exc) {
+                        this.clearUserMediaTimeout();
                         this.options.logger.debug("Recorder: failed to load genuine user media");
                         this.userMediaLoading = false;
                         const errorListeners = Despot.getListeners("ERROR");
@@ -17009,19 +17016,19 @@
                 }
             }
             const wrappers_visuals = Visuals;
-            var injectStylesIntoStyleTag = __webpack_require__("./node_modules/@rsbuild/core/compiled/style-loader/runtime/injectStylesIntoStyleTag.js");
+            var injectStylesIntoStyleTag = __webpack_require__("./node_modules/@rslib/core/node_modules/@rsbuild/core/compiled/style-loader/runtime/injectStylesIntoStyleTag.js");
             var injectStylesIntoStyleTag_default = /*#__PURE__*/ __webpack_require__.n(injectStylesIntoStyleTag);
-            var styleDomAPI = __webpack_require__("./node_modules/@rsbuild/core/compiled/style-loader/runtime/styleDomAPI.js");
+            var styleDomAPI = __webpack_require__("./node_modules/@rslib/core/node_modules/@rsbuild/core/compiled/style-loader/runtime/styleDomAPI.js");
             var styleDomAPI_default = /*#__PURE__*/ __webpack_require__.n(styleDomAPI);
-            var insertBySelector = __webpack_require__("./node_modules/@rsbuild/core/compiled/style-loader/runtime/insertBySelector.js");
+            var insertBySelector = __webpack_require__("./node_modules/@rslib/core/node_modules/@rsbuild/core/compiled/style-loader/runtime/insertBySelector.js");
             var insertBySelector_default = /*#__PURE__*/ __webpack_require__.n(insertBySelector);
-            var setAttributesWithoutAttributes = __webpack_require__("./node_modules/@rsbuild/core/compiled/style-loader/runtime/setAttributesWithoutAttributes.js");
+            var setAttributesWithoutAttributes = __webpack_require__("./node_modules/@rslib/core/node_modules/@rsbuild/core/compiled/style-loader/runtime/setAttributesWithoutAttributes.js");
             var setAttributesWithoutAttributes_default = /*#__PURE__*/ __webpack_require__.n(setAttributesWithoutAttributes);
-            var insertStyleElement = __webpack_require__("./node_modules/@rsbuild/core/compiled/style-loader/runtime/insertStyleElement.js");
+            var insertStyleElement = __webpack_require__("./node_modules/@rslib/core/node_modules/@rsbuild/core/compiled/style-loader/runtime/insertStyleElement.js");
             var insertStyleElement_default = /*#__PURE__*/ __webpack_require__.n(insertStyleElement);
-            var styleTagTransform = __webpack_require__("./node_modules/@rsbuild/core/compiled/style-loader/runtime/styleTagTransform.js");
+            var styleTagTransform = __webpack_require__("./node_modules/@rslib/core/node_modules/@rsbuild/core/compiled/style-loader/runtime/styleTagTransform.js");
             var styleTagTransform_default = /*#__PURE__*/ __webpack_require__.n(styleTagTransform);
-            var main = __webpack_require__("../../node_modules/@rsbuild/core/compiled/css-loader/index.js??ruleSet[1].rules[9].use[1]!builtin:lightningcss-loader??ruleSet[1].rules[9].use[2]!../../node_modules/stylus-loader/dist/cjs.js??ruleSet[1].rules[9].use[3]!./src/styles/main.styl");
+            var main = __webpack_require__("../../node_modules/@rslib/core/node_modules/@rsbuild/core/compiled/css-loader/index.js??ruleSet[1].rules[9].use[1]!builtin:lightningcss-loader??ruleSet[1].rules[9].use[2]!../../node_modules/stylus-loader/dist/cjs.js??ruleSet[1].rules[9].use[3]!./src/styles/main.styl");
             var main_options = {};
             main_options.styleTagTransform = styleTagTransform_default();
             main_options.setAttributes = setAttributesWithoutAttributes_default();
@@ -17385,7 +17392,7 @@
                                     if (!hasCc) {
                                         if (bccIsConfigured && !hasBcc) valid = false;
                                     }
-                                } else ;
+                                }
                                 if (!valid) whyInvalid = "At least one recipient is required";
                             }
                         } else valid = visualsValid;

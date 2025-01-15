@@ -1,3 +1,5 @@
+import { version } from "./../../package.json";
+
 // manual switch to have more stuff printed to console
 let DEBUG = false;
 
@@ -117,6 +119,10 @@ const VideomailFieldController = Marionette.Object.extend({
 
       // log actions/events to console
       verbose,
+
+      versions: {
+        ninjaFormPlugin: version,
+      },
     });
 
     this.videomailClient.on("PREVIEW", this.onPreview.bind(this));
@@ -145,7 +151,7 @@ const VideomailFieldController = Marionette.Object.extend({
       formModel = this.fieldModel.collection.options.formModel;
     }
 
-    // todo isn't 'form-' + formModel.get('id') the same as the formID already?
+    // TODO Isn't 'form-' + formModel.get('id') the same as the formID already?
     Backbone.Radio.channel("form-" + formModel.get("id")).request(
       "add:extra",
       "videomail",
