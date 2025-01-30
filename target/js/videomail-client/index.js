@@ -10188,7 +10188,7 @@
             }
             const pretty = pretty_pretty;
             function isAudioEnabled(options) {
-                return options.audio.enabled;
+                return Boolean(options.audio.enabled);
             }
             function setAudioEnabled(enabled, options) {
                 options.audio.enabled = enabled;
@@ -13647,7 +13647,7 @@
             }
             const wrappers_form = Form;
             var package_namespaceObject = {
-                i8: "10.1.0"
+                i8: "10.1.3"
             };
             function findOriginalExc(exc) {
                 if (exc instanceof Error && "response" in exc) {
@@ -16139,7 +16139,8 @@
                     const e = params?.e;
                     let cause;
                     if (e) cause = e.type;
-                    this.options.logger.debug(`Recorder: unload()${cause ? `, cause: ${cause}` : ""}`);
+                    const prettyCause = cause ? `, cause: ${cause}` : "";
+                    this.options.logger.debug(`Recorder: unload()${prettyCause}`);
                     this.reset();
                     this.clearUserMediaTimeout();
                     if (this.userMedia) this.userMedia.unloadRemainingEventListeners();
