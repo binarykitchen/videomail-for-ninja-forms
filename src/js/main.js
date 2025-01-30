@@ -1,4 +1,4 @@
-import { version } from "./../../package.json";
+// Remember, you can't use any import/require statements here
 
 // manual switch to have more stuff printed to console
 let DEBUG = false;
@@ -121,7 +121,7 @@ const VideomailFieldController = Marionette.Object.extend({
       verbose,
 
       versions: {
-        ninjaFormPlugin: version,
+        ninjaFormPlugin: "unknown (above v7.0.1)",
       },
     });
 
