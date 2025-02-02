@@ -72,8 +72,8 @@ https://github.com/binarykitchen/videomail-for-ninja-forms/issues
    - package.json
    - readme.txt
    - videomail-for-ninja-forms.php
-   - src/php/videomail.php
    - src/js/main.js
+   - src/php/videomail.php
 4. Optional: validate readme.txt with https://wordpress.org/plugins/developers/readme-validator/
 5. Run `npm run clean`, `npm install` and `npm run build`
 6. Git commit and push

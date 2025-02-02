@@ -9821,18 +9821,16 @@
                     }
                 }
             },
-            "../../node_modules/@rslib/core/node_modules/@rsbuild/core/compiled/css-loader/index.js??ruleSet[1].rules[9].use[1]!builtin:lightningcss-loader??ruleSet[1].rules[9].use[2]!../../node_modules/stylus-loader/dist/cjs.js??ruleSet[1].rules[9].use[3]!./src/styles/main.styl": function(module1, __webpack_exports__, __webpack_require__) {
+            "../../node_modules/@rsbuild/core/compiled/css-loader/index.js??ruleSet[1].rules[9].use[1]!builtin:lightningcss-loader??ruleSet[1].rules[9].use[2]!../../node_modules/stylus-loader/dist/cjs.js??ruleSet[1].rules[9].use[3]!./src/styles/main.styl": function(module1, __webpack_exports__, __webpack_require__) {
                 "use strict";
                 __webpack_require__.d(__webpack_exports__, {
-                    Z: function() {
-                        return __WEBPACK_DEFAULT_EXPORT__;
-                    }
+                    Z: ()=>__WEBPACK_DEFAULT_EXPORT__
                 });
-                var _node_modules_rslib_core_node_modules_rsbuild_core_compiled_css_loader_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("./node_modules/@rslib/core/node_modules/@rsbuild/core/compiled/css-loader/noSourceMaps.js");
-                var _node_modules_rslib_core_node_modules_rsbuild_core_compiled_css_loader_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/ __webpack_require__.n(_node_modules_rslib_core_node_modules_rsbuild_core_compiled_css_loader_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
-                var _node_modules_rslib_core_node_modules_rsbuild_core_compiled_css_loader_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__("./node_modules/@rslib/core/node_modules/@rsbuild/core/compiled/css-loader/api.js");
-                var _node_modules_rslib_core_node_modules_rsbuild_core_compiled_css_loader_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/ __webpack_require__.n(_node_modules_rslib_core_node_modules_rsbuild_core_compiled_css_loader_api_js__WEBPACK_IMPORTED_MODULE_1__);
-                var ___CSS_LOADER_EXPORT___ = _node_modules_rslib_core_node_modules_rsbuild_core_compiled_css_loader_api_js__WEBPACK_IMPORTED_MODULE_1___default()(_node_modules_rslib_core_node_modules_rsbuild_core_compiled_css_loader_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default());
+                var _node_modules_rsbuild_core_compiled_css_loader_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("./node_modules/@rsbuild/core/compiled/css-loader/noSourceMaps.js");
+                var _node_modules_rsbuild_core_compiled_css_loader_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/ __webpack_require__.n(_node_modules_rsbuild_core_compiled_css_loader_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
+                var _node_modules_rsbuild_core_compiled_css_loader_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__("./node_modules/@rsbuild/core/compiled/css-loader/api.js");
+                var _node_modules_rsbuild_core_compiled_css_loader_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/ __webpack_require__.n(_node_modules_rsbuild_core_compiled_css_loader_api_js__WEBPACK_IMPORTED_MODULE_1__);
+                var ___CSS_LOADER_EXPORT___ = _node_modules_rsbuild_core_compiled_css_loader_api_js__WEBPACK_IMPORTED_MODULE_1___default()(_node_modules_rsbuild_core_compiled_css_loader_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default());
                 ___CSS_LOADER_EXPORT___.push([
                     module1.id,
                     '@keyframes blink{0%{opacity:.9}35%{opacity:.9}50%{opacity:.1}85%{opacity:.1}to{opacity:.9}}.videomail .visuals{position:relative}.videomail .visuals video.replay{width:100%;height:100%}.videomail .countdown,.videomail .recordTimer,.videomail .recordNote,.videomail .pausedHeader,.videomail .pausedHint{height:auto;margin:0}.videomail .countdown,.videomail .recordTimer,.videomail .recordNote,.videomail .paused,.videomail .facingMode,.videomail noscript{z-index:100;position:absolute}.videomail .countdown,.videomail .recordTimer,.videomail .recordNote,.videomail .pausedHeader,.videomail .pausedHint,.videomail noscript{font-weight:700}.videomail .countdown,.videomail .paused,.videomail noscript{width:100%;top:50%;transform:translateY(-50%)}.videomail .pausedHeader,.videomail .pausedHint,.videomail .countdown{text-align:center;letter-spacing:4px;text-shadow:-2px 0 #fff,0 2px #fff,2px 0 #fff,0 -2px #fff}.videomail .pausedHeader,.videomail .countdown{opacity:.9;font-size:460%}.videomail .pausedHint{font-size:150%}.videomail .facingMode{color:#f5f5f5e6;z-index:10;background:#1e1e1e80;border:none;outline:none;padding:.1em .3em;font-family:monospace;font-size:1.2em;transition:all .2s;bottom:.6em;right:.7em}.videomail .facingMode:hover{cursor:pointer;background:#323232b3}.videomail .recordTimer,.videomail .recordNote{color:#00d814;opacity:.9;background:#0a0a0acc;padding:.3em .4em;font-family:monospace;transition:all 1s;right:.7em}.videomail .recordTimer.near,.videomail .recordNote.near{color:#eb9369}.videomail .recordTimer.nigh,.videomail .recordNote.nigh{color:#ea4b2a}.videomail .recordTimer{top:.7em}.videomail .recordNote{top:3.6em}.videomail .recordNote:before{content:"REC";animation:1s infinite blink}.videomail .notifier{box-sizing:border-box;overflow:hidden}.videomail .radioGroup{display:block}.videomail .radioGroup label{cursor:pointer}.videomail video{margin-bottom:0}.videomail video.userMedia{background-color:#3232321a}',
@@ -9846,7 +9844,7 @@
             "?72a8": function() {},
             "?ea64": function() {},
             "?e97d": function() {},
-            "./node_modules/@rslib/core/node_modules/@rsbuild/core/compiled/css-loader/api.js": function(module1) {
+            "./node_modules/@rsbuild/core/compiled/css-loader/api.js": function(module1) {
                 "use strict";
                 module1.exports = function(cssWithMappingToString) {
                     var list = [];
@@ -9906,13 +9904,13 @@
                     return list;
                 };
             },
-            "./node_modules/@rslib/core/node_modules/@rsbuild/core/compiled/css-loader/noSourceMaps.js": function(module1) {
+            "./node_modules/@rsbuild/core/compiled/css-loader/noSourceMaps.js": function(module1) {
                 "use strict";
                 module1.exports = function(i) {
                     return i[1];
                 };
             },
-            "./node_modules/@rslib/core/node_modules/@rsbuild/core/compiled/style-loader/runtime/injectStylesIntoStyleTag.js": function(module1) {
+            "./node_modules/@rsbuild/core/compiled/style-loader/runtime/injectStylesIntoStyleTag.js": function(module1) {
                 "use strict";
                 var stylesInDOM = [];
                 function getIndexByIdentifier(identifier) {
@@ -9991,7 +9989,7 @@
                     };
                 };
             },
-            "./node_modules/@rslib/core/node_modules/@rsbuild/core/compiled/style-loader/runtime/insertBySelector.js": function(module1) {
+            "./node_modules/@rsbuild/core/compiled/style-loader/runtime/insertBySelector.js": function(module1) {
                 "use strict";
                 var memo = {};
                 function getTarget(target) {
@@ -10013,7 +10011,7 @@
                 }
                 module1.exports = insertBySelector;
             },
-            "./node_modules/@rslib/core/node_modules/@rsbuild/core/compiled/style-loader/runtime/insertStyleElement.js": function(module1) {
+            "./node_modules/@rsbuild/core/compiled/style-loader/runtime/insertStyleElement.js": function(module1) {
                 "use strict";
                 function insertStyleElement(options) {
                     var element = document.createElement("style");
@@ -10023,7 +10021,7 @@
                 }
                 module1.exports = insertStyleElement;
             },
-            "./node_modules/@rslib/core/node_modules/@rsbuild/core/compiled/style-loader/runtime/setAttributesWithoutAttributes.js": function(module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/@rsbuild/core/compiled/style-loader/runtime/setAttributesWithoutAttributes.js": function(module1, __unused_webpack_exports, __webpack_require__) {
                 "use strict";
                 function setAttributesWithoutAttributes(styleElement) {
                     var nonce = __webpack_require__.nc;
@@ -10031,7 +10029,7 @@
                 }
                 module1.exports = setAttributesWithoutAttributes;
             },
-            "./node_modules/@rslib/core/node_modules/@rsbuild/core/compiled/style-loader/runtime/styleDomAPI.js": function(module1) {
+            "./node_modules/@rsbuild/core/compiled/style-loader/runtime/styleDomAPI.js": function(module1) {
                 "use strict";
                 function apply(styleElement, options, obj) {
                     var css = "";
@@ -10068,7 +10066,7 @@
                 }
                 module1.exports = domAPI;
             },
-            "./node_modules/@rslib/core/node_modules/@rsbuild/core/compiled/style-loader/runtime/styleTagTransform.js": function(module1) {
+            "./node_modules/@rsbuild/core/compiled/style-loader/runtime/styleTagTransform.js": function(module1) {
                 "use strict";
                 function styleTagTransform(css, styleElement) {
                     if (styleElement.styleSheet) styleElement.styleSheet.cssText = css;
@@ -13110,7 +13108,11 @@
                         break;
                     case error_VideomailError.OVERCONSTRAINED:
                         message = "Invalid webcam constraints";
-                        explanation = err && "constraint" in err ? "width" === err.constraint ? "Your webcam does not meet the width requirement." : `Unmet constraint: ${err.constraint}` : err?.message;
+                        if (err && "constraint" in err) {
+                            const overconstrainedError = err;
+                            const constraint = overconstrainedError.constraint;
+                            explanation = "width" === constraint ? "Your webcam does not meet the width requirement." : constraint ? `Unmet constraint: ${constraint}` : err.message;
+                        } else explanation = err?.message;
                         break;
                     case "MediaDeviceFailedDueToShutdown":
                         message = "Webcam is shutting down";
@@ -13647,7 +13649,7 @@
             }
             const wrappers_form = Form;
             var package_namespaceObject = {
-                i8: "10.1.3"
+                i8: "10.2.0"
             };
             function findOriginalExc(exc) {
                 if (exc instanceof Error && "response" in exc) {
@@ -14847,11 +14849,11 @@
                         explanation
                     ].filter(Boolean);
                     this.options.logger.debug(`Notifier: notify(${params.join(", ")})`);
-                    const stillWait = !!notifyOptions.stillWait && notifyOptions.stillWait;
-                    const entertain = !!notifyOptions.entertain && notifyOptions.entertain;
-                    const blocking = !!notifyOptions.blocking && notifyOptions.blocking;
-                    const classList = !!notifyOptions.classList && notifyOptions.classList;
-                    const removeDimensions = !!notifyOptions.removeDimensions && notifyOptions.removeDimensions;
+                    const stillWait = notifyOptions.stillWait ?? false;
+                    const entertain = notifyOptions.entertain ?? false;
+                    const blocking = notifyOptions.blocking ?? false;
+                    const classList = notifyOptions.classList ?? false;
+                    const removeDimensions = notifyOptions.removeDimensions ?? false;
                     if (this.notifyElement) {
                         if (!entertain) this.notifyElement.className = "notifier";
                         if (classList) classList.forEach((className)=>{
@@ -15512,9 +15514,13 @@
                 return ratio;
             }
             const dimensions_getRatio = getRatio;
-            function limitHeight_limitHeight(height, options) {
-                if (!height || height < 1) throw error_createError({
-                    message: `Passed limit-height argument ${height} cannot be less than 1!`,
+            function limitHeight_limitHeight(height, options, calledFrom) {
+                if (void 0 === height) throw error_createError({
+                    message: `Passed limit-height argument height cannot be undefined (Called from ${calledFrom})`,
+                    options
+                });
+                if (height < 1) throw error_createError({
+                    message: `Passed limit-height argument ${height} cannot be less than 1! (Called from ${calledFrom})`,
                     options
                 });
                 const limitedHeight = Math.min(height, document.documentElement.clientHeight);
@@ -15527,7 +15533,7 @@
             const limitHeight = limitHeight_limitHeight;
             function calculateWidth_calculateWidth(responsive, videoHeight, options, ratio) {
                 let height = figureMinHeight(videoHeight, options);
-                if (responsive) height = limitHeight(height, options);
+                if (responsive) height = limitHeight(height, options, "calculateWidth");
                 if (!height || height < 1) throw error_createError({
                     message: "Height cannot be smaller than 1 when calculating width.",
                     options
@@ -16576,7 +16582,7 @@
                     if (this.isShown()) return;
                     this.options.logger.debug(`Replay: show(playerOnly=${playerOnly})`);
                     const hasMedia = Boolean(this.videomail?.webm) || Boolean(this.videomail?.mp4) || Boolean(this.videomail?.poster);
-                    if (hasMedia) this.correctDimensions(true, videomailWidth ? videomailWidth : this.replayElement.videoWidth, videomailHeight ? videomailHeight : this.replayElement.videoHeight);
+                    if (hasMedia) this.correctDimensions(true, videomailWidth ?? this.replayElement.videoWidth, videomailHeight ?? this.replayElement.videoHeight);
                     if (playerOnly) {
                         if (hasMedia) hidden_default()(this.replayElement, false);
                     } else hidden_default()(this.replayElement, false);
@@ -17017,19 +17023,19 @@
                 }
             }
             const wrappers_visuals = Visuals;
-            var injectStylesIntoStyleTag = __webpack_require__("./node_modules/@rslib/core/node_modules/@rsbuild/core/compiled/style-loader/runtime/injectStylesIntoStyleTag.js");
+            var injectStylesIntoStyleTag = __webpack_require__("./node_modules/@rsbuild/core/compiled/style-loader/runtime/injectStylesIntoStyleTag.js");
             var injectStylesIntoStyleTag_default = /*#__PURE__*/ __webpack_require__.n(injectStylesIntoStyleTag);
-            var styleDomAPI = __webpack_require__("./node_modules/@rslib/core/node_modules/@rsbuild/core/compiled/style-loader/runtime/styleDomAPI.js");
+            var styleDomAPI = __webpack_require__("./node_modules/@rsbuild/core/compiled/style-loader/runtime/styleDomAPI.js");
             var styleDomAPI_default = /*#__PURE__*/ __webpack_require__.n(styleDomAPI);
-            var insertBySelector = __webpack_require__("./node_modules/@rslib/core/node_modules/@rsbuild/core/compiled/style-loader/runtime/insertBySelector.js");
+            var insertBySelector = __webpack_require__("./node_modules/@rsbuild/core/compiled/style-loader/runtime/insertBySelector.js");
             var insertBySelector_default = /*#__PURE__*/ __webpack_require__.n(insertBySelector);
-            var setAttributesWithoutAttributes = __webpack_require__("./node_modules/@rslib/core/node_modules/@rsbuild/core/compiled/style-loader/runtime/setAttributesWithoutAttributes.js");
+            var setAttributesWithoutAttributes = __webpack_require__("./node_modules/@rsbuild/core/compiled/style-loader/runtime/setAttributesWithoutAttributes.js");
             var setAttributesWithoutAttributes_default = /*#__PURE__*/ __webpack_require__.n(setAttributesWithoutAttributes);
-            var insertStyleElement = __webpack_require__("./node_modules/@rslib/core/node_modules/@rsbuild/core/compiled/style-loader/runtime/insertStyleElement.js");
+            var insertStyleElement = __webpack_require__("./node_modules/@rsbuild/core/compiled/style-loader/runtime/insertStyleElement.js");
             var insertStyleElement_default = /*#__PURE__*/ __webpack_require__.n(insertStyleElement);
-            var styleTagTransform = __webpack_require__("./node_modules/@rslib/core/node_modules/@rsbuild/core/compiled/style-loader/runtime/styleTagTransform.js");
+            var styleTagTransform = __webpack_require__("./node_modules/@rsbuild/core/compiled/style-loader/runtime/styleTagTransform.js");
             var styleTagTransform_default = /*#__PURE__*/ __webpack_require__.n(styleTagTransform);
-            var main = __webpack_require__("../../node_modules/@rslib/core/node_modules/@rsbuild/core/compiled/css-loader/index.js??ruleSet[1].rules[9].use[1]!builtin:lightningcss-loader??ruleSet[1].rules[9].use[2]!../../node_modules/stylus-loader/dist/cjs.js??ruleSet[1].rules[9].use[3]!./src/styles/main.styl");
+            var main = __webpack_require__("../../node_modules/@rsbuild/core/compiled/css-loader/index.js??ruleSet[1].rules[9].use[1]!builtin:lightningcss-loader??ruleSet[1].rules[9].use[2]!../../node_modules/stylus-loader/dist/cjs.js??ruleSet[1].rules[9].use[3]!./src/styles/main.styl");
             var main_options = {};
             main_options.styleTagTransform = styleTagTransform_default();
             main_options.setAttributes = setAttributesWithoutAttributes_default();
@@ -17218,7 +17224,7 @@
                     return limitWidth(this.containerElement, this.options, width);
                 }
                 limitHeight(height) {
-                    return limitHeight(height, this.options);
+                    return limitHeight(height, this.options, "containers limitHeight fn");
                 }
                 areVisualsHidden() {
                     return this.visuals.isHidden();
@@ -17663,6 +17669,9 @@
                 }
                 submit() {
                     this.container.submit();
+                }
+                record() {
+                    this.container.record();
                 }
                 getLogLines() {
                     if (this.options.logger.getLines) return this.options.logger.getLines();
