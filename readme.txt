@@ -4,8 +4,8 @@ Contributors: michael.heuberger, kbjohnson90
 Tags: video, email, recorder, sign language
 
 Requires at least: 6.0
-Tested up to: 7.0.4
-Stable tag: 7.0.4
+Tested up to: 7.0.5
+Stable tag: 7.0.5
 Requires PHP: 8.1.0
 Donate link: https://videomail.io/faq
 License: CC0-1.0
@@ -70,6 +70,10 @@ To get help, just use any of these contacts at [https://binarykitchen.com](https
 2. Once you have assembled a form and preview it, any browser will ask for webcam access first.
 
 == Changelog ==
+= 7.0.5 (5 Feb 2025) =
+*Improvement:*
+* Properly recognizes full height of iPhone devices
+
 = 7.0.4 (2 Feb 2025) =
 *Chore:*
 * Upgrade Videomail-Client
