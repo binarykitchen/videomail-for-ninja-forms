@@ -1,5 +1,5 @@
 // Remember, you can't use any import/require statements here
-const PLUGIN_VERSION = "7.0.5";
+const PLUGIN_VERSION = "7.0.6";
 
 // manual switch to have more stuff printed to console
 let DEBUG = false;
@@ -94,16 +94,11 @@ const VideomailFieldController = Marionette.Object.extend({
         stretch: this.fieldModel.get("stretch") || false,
         countdown: this.fieldModel.get("countdown") || false,
       },
-      audio: {
-        enabled: this.fieldModel.get("audio_enabled"),
-      },
+      audio: { enabled: this.fieldModel.get("audio_enabled") },
       image: {
         quality: imageQualityPercentage / 100, // must be a float
       },
-      selectors: {
-        containerId: "videomail",
-        submitButtonSelector: ".submit-wrap input",
-      },
+      selectors: { containerId: "videomail", submitButtonSelector: ".submit-wrap input" },
       callbacks: {
         // ugly name eh?
         adjustFormDataBeforePosting:
@@ -121,9 +116,7 @@ const VideomailFieldController = Marionette.Object.extend({
       // log actions/events to console
       verbose,
 
-      versions: {
-        ninjaFormPlugin: PLUGIN_VERSION,
-      },
+      versions: { ninjaFormPlugin: PLUGIN_VERSION },
     });
 
     this.videomailClient.on("PREVIEW", this.onPreview.bind(this));
