@@ -136,7 +136,7 @@ return apply_filters('ninja_forms_videomail_field_settings', array(
   'load_user_media_on_record' => array(
     'name' => 'load_user_media_on_record',
     'type' => 'toggle',
-    'label' => __('Ask for camera permission on record', 'videomail-for-ninja-forms'),
+    'label' => __('Ask for camera permission on record (fallback, not recommended)', 'videomail-for-ninja-forms'),
     'width' => 'one-half',
     'group' => 'advanced',
     'value' => FALSE,

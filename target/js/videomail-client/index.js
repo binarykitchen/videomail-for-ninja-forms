@@ -643,7 +643,7 @@
                         byteOffset = 0;
                     } else if (byteOffset > 0x7fffffff) byteOffset = 0x7fffffff;
                     else if (byteOffset < -2147483648) byteOffset = -2147483648;
-                    byteOffset = +byteOffset;
+                    byteOffset *= 1;
                     if (numberIsNaN(byteOffset)) byteOffset = dir ? 0 : buffer.length - 1;
                     if (byteOffset < 0) byteOffset = buffer.length + byteOffset;
                     if (byteOffset >= buffer.length) {
@@ -1035,7 +1035,7 @@
                     if (offset + ext > buf.length) throw new RangeError('Index out of range');
                 }
                 Buffer.prototype.writeUintLE = Buffer.prototype.writeUIntLE = function(value, offset, byteLength, noAssert) {
-                    value = +value;
+                    value *= 1;
                     offset >>>= 0;
                     byteLength >>>= 0;
                     if (!noAssert) {
@@ -1049,7 +1049,7 @@
                     return offset + byteLength;
                 };
                 Buffer.prototype.writeUintBE = Buffer.prototype.writeUIntBE = function(value, offset, byteLength, noAssert) {
-                    value = +value;
+                    value *= 1;
                     offset >>>= 0;
                     byteLength >>>= 0;
                     if (!noAssert) {
@@ -1063,14 +1063,14 @@
                     return offset + byteLength;
                 };
                 Buffer.prototype.writeUint8 = Buffer.prototype.writeUInt8 = function(value, offset, noAssert) {
-                    value = +value;
+                    value *= 1;
                     offset >>>= 0;
                     if (!noAssert) checkInt(this, value, offset, 1, 0xff, 0);
                     this[offset] = 0xff & value;
                     return offset + 1;
                 };
                 Buffer.prototype.writeUint16LE = Buffer.prototype.writeUInt16LE = function(value, offset, noAssert) {
-                    value = +value;
+                    value *= 1;
                     offset >>>= 0;
                     if (!noAssert) checkInt(this, value, offset, 2, 0xffff, 0);
                     this[offset] = 0xff & value;
@@ -1078,7 +1078,7 @@
                     return offset + 2;
                 };
                 Buffer.prototype.writeUint16BE = Buffer.prototype.writeUInt16BE = function(value, offset, noAssert) {
-                    value = +value;
+                    value *= 1;
                     offset >>>= 0;
                     if (!noAssert) checkInt(this, value, offset, 2, 0xffff, 0);
                     this[offset] = value >>> 8;
@@ -1086,7 +1086,7 @@
                     return offset + 2;
                 };
                 Buffer.prototype.writeUint32LE = Buffer.prototype.writeUInt32LE = function(value, offset, noAssert) {
-                    value = +value;
+                    value *= 1;
                     offset >>>= 0;
                     if (!noAssert) checkInt(this, value, offset, 4, 0xffffffff, 0);
                     this[offset + 3] = value >>> 24;
@@ -1096,7 +1096,7 @@
                     return offset + 4;
                 };
                 Buffer.prototype.writeUint32BE = Buffer.prototype.writeUInt32BE = function(value, offset, noAssert) {
-                    value = +value;
+                    value *= 1;
                     offset >>>= 0;
                     if (!noAssert) checkInt(this, value, offset, 4, 0xffffffff, 0);
                     this[offset] = value >>> 24;
@@ -1106,7 +1106,7 @@
                     return offset + 4;
                 };
                 Buffer.prototype.writeIntLE = function(value, offset, byteLength, noAssert) {
-                    value = +value;
+                    value *= 1;
                     offset >>>= 0;
                     if (!noAssert) {
                         var limit = Math.pow(2, 8 * byteLength - 1);
@@ -1123,7 +1123,7 @@
                     return offset + byteLength;
                 };
                 Buffer.prototype.writeIntBE = function(value, offset, byteLength, noAssert) {
-                    value = +value;
+                    value *= 1;
                     offset >>>= 0;
                     if (!noAssert) {
                         var limit = Math.pow(2, 8 * byteLength - 1);
@@ -1140,7 +1140,7 @@
                     return offset + byteLength;
                 };
                 Buffer.prototype.writeInt8 = function(value, offset, noAssert) {
-                    value = +value;
+                    value *= 1;
                     offset >>>= 0;
                     if (!noAssert) checkInt(this, value, offset, 1, 0x7f, -128);
                     if (value < 0) value = 0xff + value + 1;
@@ -1148,7 +1148,7 @@
                     return offset + 1;
                 };
                 Buffer.prototype.writeInt16LE = function(value, offset, noAssert) {
-                    value = +value;
+                    value *= 1;
                     offset >>>= 0;
                     if (!noAssert) checkInt(this, value, offset, 2, 0x7fff, -32768);
                     this[offset] = 0xff & value;
@@ -1156,7 +1156,7 @@
                     return offset + 2;
                 };
                 Buffer.prototype.writeInt16BE = function(value, offset, noAssert) {
-                    value = +value;
+                    value *= 1;
                     offset >>>= 0;
                     if (!noAssert) checkInt(this, value, offset, 2, 0x7fff, -32768);
                     this[offset] = value >>> 8;
@@ -1164,7 +1164,7 @@
                     return offset + 2;
                 };
                 Buffer.prototype.writeInt32LE = function(value, offset, noAssert) {
-                    value = +value;
+                    value *= 1;
                     offset >>>= 0;
                     if (!noAssert) checkInt(this, value, offset, 4, 0x7fffffff, -2147483648);
                     this[offset] = 0xff & value;
@@ -1174,7 +1174,7 @@
                     return offset + 4;
                 };
                 Buffer.prototype.writeInt32BE = function(value, offset, noAssert) {
-                    value = +value;
+                    value *= 1;
                     offset >>>= 0;
                     if (!noAssert) checkInt(this, value, offset, 4, 0x7fffffff, -2147483648);
                     if (value < 0) value = 0xffffffff + value + 1;
@@ -1189,7 +1189,7 @@
                     if (offset < 0) throw new RangeError('Index out of range');
                 }
                 function writeFloat(buf, value, offset, littleEndian, noAssert) {
-                    value = +value;
+                    value *= 1;
                     offset >>>= 0;
                     if (!noAssert) checkIEEE754(buf, value, offset, 4, 3.4028234663852886e+38, -340282346638528860000000000000000000000);
                     ieee754.write(buf, value, offset, littleEndian, 23, 4);
@@ -1202,7 +1202,7 @@
                     return writeFloat(this, value, offset, false, noAssert);
                 };
                 function writeDouble(buf, value, offset, littleEndian, noAssert) {
-                    value = +value;
+                    value *= 1;
                     offset >>>= 0;
                     if (!noAssert) checkIEEE754(buf, value, offset, 8, 1.7976931348623157E+308, -179769313486231570000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000);
                     ieee754.write(buf, value, offset, littleEndian, 52, 8);
@@ -1636,7 +1636,7 @@
                     var nonEnumerable = arguments.length > 3 ? arguments[3] : null;
                     var nonWritable = arguments.length > 4 ? arguments[4] : null;
                     var nonConfigurable = arguments.length > 5 ? arguments[5] : null;
-                    var loose = arguments.length > 6 && arguments[6];
+                    var loose = arguments.length > 6 ? arguments[6] : false;
                     var desc = !!gopd && gopd(obj, property);
                     if ($defineProperty) $defineProperty(obj, property, {
                         configurable: null === nonConfigurable && desc ? desc.configurable : !nonConfigurable,
@@ -5018,7 +5018,7 @@
                     if (!getProto) return false;
                     if (void 0 === GeneratorFunction) {
                         var generatorFunc = getGeneratorFunc();
-                        GeneratorFunction = !!generatorFunc && getProto(generatorFunc);
+                        GeneratorFunction = generatorFunc ? getProto(generatorFunc) : false;
                     }
                     return getProto(fn) === GeneratorFunction;
                 };
@@ -5109,7 +5109,7 @@
                     var opts = options || {};
                     if (has(opts, 'quoteStyle') && !has(quotes, opts.quoteStyle)) throw new TypeError('option "quoteStyle" must be "single" or "double"');
                     if (has(opts, 'maxStringLength') && ('number' == typeof opts.maxStringLength ? opts.maxStringLength < 0 && opts.maxStringLength !== 1 / 0 : null !== opts.maxStringLength)) throw new TypeError('option "maxStringLength", if provided, must be a positive integer, Infinity, or `null`');
-                    var customInspect = !has(opts, 'customInspect') || opts.customInspect;
+                    var customInspect = has(opts, 'customInspect') ? opts.customInspect : true;
                     if ('boolean' != typeof customInspect && 'symbol' !== customInspect) throw new TypeError('option "customInspect", if provided, must be `true`, `false`, or `\'symbol\'`');
                     if (has(opts, 'indent') && null !== opts.indent && '\t' !== opts.indent && !(parseInt(opts.indent, 10) === opts.indent && opts.indent > 0)) throw new TypeError('option "indent" must be "\\t", an integer > 0, or `null`');
                     if (has(opts, 'numericSeparator') && 'boolean' != typeof opts.numericSeparator) throw new TypeError('option "numericSeparator", if provided, must be `true` or `false`');
@@ -5860,7 +5860,7 @@
                     var charset = void 0 === opts.charset ? defaults.charset : opts.charset;
                     var duplicates = void 0 === opts.duplicates ? defaults.duplicates : opts.duplicates;
                     if ('combine' !== duplicates && 'first' !== duplicates && 'last' !== duplicates) throw new TypeError('The duplicates option must be either combine, first, or last');
-                    var allowDots = void 0 === opts.allowDots ? true === opts.decodeDotInKeys || defaults.allowDots : !!opts.allowDots;
+                    var allowDots = void 0 === opts.allowDots ? true === opts.decodeDotInKeys ? true : defaults.allowDots : !!opts.allowDots;
                     return {
                         allowDots: allowDots,
                         allowEmptyArrays: 'boolean' == typeof opts.allowEmptyArrays ? !!opts.allowEmptyArrays : defaults.allowEmptyArrays,
@@ -6036,7 +6036,7 @@
                     var arrayFormat;
                     arrayFormat = opts.arrayFormat in arrayPrefixGenerators ? opts.arrayFormat : 'indices' in opts ? opts.indices ? 'indices' : 'repeat' : defaults.arrayFormat;
                     if ('commaRoundTrip' in opts && 'boolean' != typeof opts.commaRoundTrip) throw new TypeError('`commaRoundTrip` must be a boolean, or absent');
-                    var allowDots = void 0 === opts.allowDots ? true === opts.encodeDotInKeys || defaults.allowDots : !!opts.allowDots;
+                    var allowDots = void 0 === opts.allowDots ? true === opts.encodeDotInKeys ? true : defaults.allowDots : !!opts.allowDots;
                     return {
                         addQueryPrefix: 'boolean' == typeof opts.addQueryPrefix ? opts.addQueryPrefix : defaults.addQueryPrefix,
                         allowDots: allowDots,
@@ -7141,7 +7141,7 @@
                     return this;
                 };
                 RequestBase.prototype.sortQuery = function(sort) {
-                    this._sort = void 0 === sort || sort;
+                    this._sort = void 0 === sort ? true : sort;
                     return this;
                 };
                 RequestBase.prototype._finalizeQueryString = function() {
@@ -7210,7 +7210,7 @@
                     this.redirect = 3 === type;
                     this.clientError = 4 === type;
                     this.serverError = 5 === type;
-                    this.error = (4 === type || 5 === type) && this.toError();
+                    this.error = 4 === type || 5 === type ? this.toError() : false;
                     this.created = 201 === status;
                     this.accepted = 202 === status;
                     this.noContent = 204 === status;
@@ -7255,6 +7255,10 @@
                         delete header.cookie;
                     }
                     return header;
+                };
+                exports1.normalizeHostname = (hostname)=>{
+                    const [, normalized] = hostname.match(/^\[([^\]]+)\]$/) || [];
+                    return normalized || hostname;
                 };
                 exports1.isObject = (object)=>null !== object && 'object' == typeof object;
                 exports1.hasOwn = Object.hasOwn || function(object, property) {
@@ -10100,12 +10104,8 @@
             return module1.exports;
         }
         (()=>{
-            __webpack_require__.n = function(module1) {
-                var getter = module1 && module1.__esModule ? function() {
-                    return module1['default'];
-                } : function() {
-                    return module1;
-                };
+            __webpack_require__.n = (module1)=>{
+                var getter = module1 && module1.__esModule ? ()=>module1['default'] : ()=>module1;
                 __webpack_require__.d(getter, {
                     a: getter
                 });
@@ -10113,7 +10113,7 @@
             };
         })();
         (()=>{
-            __webpack_require__.d = function(exports1, definition) {
+            __webpack_require__.d = (exports1, definition)=>{
                 for(var key in definition)if (__webpack_require__.o(definition, key) && !__webpack_require__.o(exports1, key)) Object.defineProperty(exports1, key, {
                     enumerable: true,
                     get: definition[key]
@@ -10121,22 +10121,20 @@
             };
         })();
         (()=>{
-            __webpack_require__.g = function() {
+            __webpack_require__.g = (()=>{
                 if ('object' == typeof globalThis) return globalThis;
                 try {
                     return this || new Function('return this')();
                 } catch (e) {
                     if ('object' == typeof window) return window;
                 }
-            }();
+            })();
         })();
         (()=>{
-            __webpack_require__.o = function(obj, prop) {
-                return Object.prototype.hasOwnProperty.call(obj, prop);
-            };
+            __webpack_require__.o = (obj, prop)=>Object.prototype.hasOwnProperty.call(obj, prop);
         })();
         (()=>{
-            __webpack_require__.r = function(exports1) {
+            __webpack_require__.r = (exports1)=>{
                 if ('undefined' != typeof Symbol && Symbol.toStringTag) Object.defineProperty(exports1, Symbol.toStringTag, {
                     value: 'Module'
                 });
@@ -10197,7 +10195,7 @@
             }
             var defined = __webpack_require__("./node_modules/defined/index.js");
             var defined_default = /*#__PURE__*/ __webpack_require__.n(defined);
-            var LIBVERSION = '2.0.1', UA_MAX_LENGTH = 500, USER_AGENT = 'user-agent', EMPTY = '', UNKNOWN = '?', FUNC_TYPE = 'function', UNDEF_TYPE = 'undefined', OBJ_TYPE = 'object', STR_TYPE = 'string', UA_BROWSER = 'browser', UA_CPU = 'cpu', UA_DEVICE = 'device', UA_ENGINE = 'engine', UA_OS = 'os', UA_RESULT = 'result', NAME = 'name', TYPE = 'type', VENDOR = 'vendor', VERSION = 'version', ARCHITECTURE = 'architecture', MAJOR = 'major', MODEL = 'model', CONSOLE = 'console', MOBILE = 'mobile', TABLET = 'tablet', SMARTTV = 'smarttv', WEARABLE = 'wearable', XR = 'xr', EMBEDDED = 'embedded', INAPP = 'inapp', BRANDS = 'brands', FORMFACTORS = 'formFactors', FULLVERLIST = 'fullVersionList', PLATFORM = 'platform', PLATFORMVER = 'platformVersion', BITNESS = 'bitness', CH_HEADER = 'sec-ch-ua', CH_HEADER_FULL_VER_LIST = CH_HEADER + '-full-version-list', CH_HEADER_ARCH = CH_HEADER + '-arch', CH_HEADER_BITNESS = CH_HEADER + '-' + BITNESS, CH_HEADER_FORM_FACTORS = CH_HEADER + '-form-factors', CH_HEADER_MOBILE = CH_HEADER + '-' + MOBILE, CH_HEADER_MODEL = CH_HEADER + '-' + MODEL, CH_HEADER_PLATFORM = CH_HEADER + '-' + PLATFORM, CH_HEADER_PLATFORM_VER = CH_HEADER_PLATFORM + '-version', CH_ALL_VALUES = [
+            var LIBVERSION = '2.0.3', UA_MAX_LENGTH = 500, USER_AGENT = 'user-agent', EMPTY = '', UNKNOWN = '?', FUNC_TYPE = 'function', UNDEF_TYPE = 'undefined', OBJ_TYPE = 'object', STR_TYPE = 'string', UA_BROWSER = 'browser', UA_CPU = 'cpu', UA_DEVICE = 'device', UA_ENGINE = 'engine', UA_OS = 'os', UA_RESULT = 'result', NAME = 'name', TYPE = 'type', VENDOR = 'vendor', VERSION = 'version', ARCHITECTURE = 'architecture', MAJOR = 'major', MODEL = 'model', CONSOLE = 'console', MOBILE = 'mobile', TABLET = 'tablet', SMARTTV = 'smarttv', WEARABLE = 'wearable', XR = 'xr', EMBEDDED = 'embedded', INAPP = 'inapp', BRANDS = 'brands', FORMFACTORS = 'formFactors', FULLVERLIST = 'fullVersionList', PLATFORM = 'platform', PLATFORMVER = 'platformVersion', BITNESS = 'bitness', CH_HEADER = 'sec-ch-ua', CH_HEADER_FULL_VER_LIST = CH_HEADER + '-full-version-list', CH_HEADER_ARCH = CH_HEADER + '-arch', CH_HEADER_BITNESS = CH_HEADER + '-' + BITNESS, CH_HEADER_FORM_FACTORS = CH_HEADER + '-form-factors', CH_HEADER_MOBILE = CH_HEADER + '-' + MOBILE, CH_HEADER_MODEL = CH_HEADER + '-' + MODEL, CH_HEADER_PLATFORM = CH_HEADER + '-' + PLATFORM, CH_HEADER_PLATFORM_VER = CH_HEADER_PLATFORM + '-version', CH_ALL_VALUES = [
                 BRANDS,
                 FULLVERLIST,
                 MOBILE,
@@ -10227,9 +10225,9 @@
                     for(var i in str1)if (lowerize(str1[i]) == lowerize(str2)) return true;
                     return false;
                 }
-                return !!isString(str1) && -1 !== lowerize(str2).indexOf(lowerize(str1));
+                return isString(str1) ? -1 !== lowerize(str2).indexOf(lowerize(str1)) : false;
             }, isExtensions = function(obj, deep) {
-                for(var prop in obj)return /^(browser|cpu|device|engine|os)$/.test(prop) || !!deep && isExtensions(obj[prop]);
+                for(var prop in obj)return /^(browser|cpu|device|engine|os)$/.test(prop) || (deep ? isExtensions(obj[prop]) : false);
             }, isString = function(val) {
                 return typeof val === STR_TYPE;
             }, itemListToArray = function(header) {
@@ -10419,9 +10417,9 @@
                         /(lunascape|maxthon|netfront|jasmine|blazer|sleipnir)[\/ ]?([\w\.]*)/i,
                         /(avant|iemobile|slim(?:browser|boat|jet))[\/ ]?([\d\.]*)/i,
                         /(?:ms|\()(ie) ([\w\.]+)/i,
-                        /(flock|rockmelt|midori|epiphany|silk|skyfire|ovibrowser|bolt|iron|vivaldi|iridium|phantomjs|bowser|qupzilla|falkon|rekonq|puffin|brave|whale(?!.+naver)|qqbrowserlite|duckduckgo|klar|helio|(?=comodo_)?dragon)\/([-\w\.]+)/i,
-                        /(heytap|ovi|115)browser\/([\d\.]+)/i,
-                        /(weibo)__([\d\.]+)/i
+                        /(flock|rockmelt|midori|epiphany|silk|skyfire|ovibrowser|bolt|iron|vivaldi|iridium|phantomjs|bowser|qupzilla|falkon|rekonq|puffin|brave|whale(?!.+naver)|qqbrowserlite|duckduckgo|klar|helio|(?=comodo_)?dragon|otter|dooble|(?:lg |qute)browser)\/([-\w\.]+)/i,
+                        /(heytap|ovi|115|surf)browser\/([\d\.]+)/i,
+                        /(ecosia|weibo)(?:__| \w+@)([\d\.]+)/i
                     ],
                     [
                         NAME,
@@ -11210,7 +11208,21 @@
                         ]
                     ],
                     [
-                        /vivo (\w+)(?: bui|\))/i,
+                        /(vivo (5r?|6|8l?|go|one|s|x[il]?[2-4]?)[\w\+ ]*)(?: bui|\))/i
+                    ],
+                    [
+                        MODEL,
+                        [
+                            VENDOR,
+                            'BLU'
+                        ],
+                        [
+                            TYPE,
+                            MOBILE
+                        ]
+                    ],
+                    [
+                        /; vivo (\w+)(?: bui|\))/i,
                         /\b(v[12]\d{3}\w?[at])(?: bui|;)/i
                     ],
                     [
@@ -11284,7 +11296,7 @@
                     ],
                     [
                         /(lm(?:-?f100[nv]?|-[\w\.]+)(?= bui|\))|nexus [45])/i,
-                        /\blg[-e;\/ ]+((?!browser|netcast|android tv|watch)\w+)/i,
+                        /\blg[-e;\/ ]+(?!.*(?:browser|netcast|android tv|watch))(\w+)/i,
                         /\blg-?([\d\w]+) bui/i
                     ],
                     [
@@ -11689,6 +11701,36 @@
                         ]
                     ],
                     [
+                        /; (x67 5g|tikeasy \w+|ac[1789]\d\w+)( b|\))/i,
+                        /archos ?(5|gamepad2?|([\w ]*[t1789]|hello) ?\d+[\w ]*)( b|\))/i
+                    ],
+                    [
+                        MODEL,
+                        [
+                            VENDOR,
+                            'Archos'
+                        ],
+                        [
+                            TYPE,
+                            TABLET
+                        ]
+                    ],
+                    [
+                        /archos ([\w ]+)( b|\))/i,
+                        /; (ac[3-6]\d\w{2,8})( b|\))/i
+                    ],
+                    [
+                        MODEL,
+                        [
+                            VENDOR,
+                            'Archos'
+                        ],
+                        [
+                            TYPE,
+                            MOBILE
+                        ]
+                    ],
+                    [
                         /(imo) (tab \w+)/i,
                         /(infinix) (x1101b?)/i
                     ],
@@ -11702,7 +11744,7 @@
                     ],
                     [
                         /(blackberry|benq|palm(?=\-)|sonyericsson|acer|asus(?! zenw)|dell|jolla|meizu|motorola|polytron|infinix|tecno|micromax|advan)[-_ ]?([-\w]*)/i,
-                        /; (hmd|imo) ([\w ]+?)(?: bui|\))/i,
+                        /; (blu|hmd|imo|tcl)[_ ]([\w\+ ]+?)(?: bui|\)|; r)/i,
                         /(hp) ([\w ]+\w)/i,
                         /(microsoft); (lumia[\w ]+)/i,
                         /(lenovo)[-_ ]?([-\w ]+?)(?: bui|\)|\/)/i,
@@ -11718,7 +11760,6 @@
                     ],
                     [
                         /(kobo)\s(ereader|touch)/i,
-                        /(archos) (gamepad2?)/i,
                         /(hp).+(touchpad(?!.+tablet)|tablet)/i,
                         /(kindle)\/([\w\.]+)/i
                     ],
@@ -11858,6 +11899,17 @@
                         ]
                     ],
                     [
+                        /tcast.+(lg)e?. ([-\w]+)/i
+                    ],
+                    [
+                        VENDOR,
+                        MODEL,
+                        [
+                            TYPE,
+                            SMARTTV
+                        ]
+                    ],
+                    [
                         /(nux; netcast.+smarttv|lg (netcast\.tv-201\d|android tv))/i
                     ],
                     [
@@ -11947,6 +11999,20 @@
                         [
                             VENDOR,
                             GOOGLE
+                        ],
+                        [
+                            TYPE,
+                            SMARTTV
+                        ]
+                    ],
+                    [
+                        /(portaltv)/i
+                    ],
+                    [
+                        MODEL,
+                        [
+                            VENDOR,
+                            FACEBOOK
                         ],
                         [
                             TYPE,
@@ -12276,7 +12342,7 @@
                         ]
                     ],
                     [
-                        /; (quest( \d| pro)?)/i
+                        /(quest( \d| pro)?s?).+vr/i
                     ],
                     [
                         MODEL,
@@ -12572,7 +12638,7 @@
                         VERSION
                     ],
                     [
-                        /(android|bada|blackberry|kaios|maemo|meego|openharmony|qnx|rim tablet os|sailfish|series40|symbian|tizen|webos)\w*[-\/; ]?([\d\.]*)/i
+                        /(android|bada|blackberry|kaios|maemo|meego|openharmony|qnx|rim tablet os|sailfish|series40|symbian|tizen|webos)\w*[-\/\.; ]?([\d\.]*)/i
                     ],
                     [
                         NAME,
@@ -12941,7 +13007,11 @@
                                         Chrome: 'Google Chrome',
                                         Edge: 'Microsoft Edge',
                                         'Chrome WebView': 'Android WebView',
-                                        'Chrome Headless': 'HeadlessChrome'
+                                        'Chrome Headless': 'HeadlessChrome',
+                                        'Huawei Browser': 'HuaweiBrowser',
+                                        'MIUI Browser': 'Miui Browser',
+                                        'Opera Mobi': 'OperaMobile',
+                                        Yandex: 'YaBrowser'
                                     });
                                     this.set(NAME, brandName).set(VERSION, brandVersion).set(MAJOR, majorize(brandVersion));
                                     prevName = brandName;
@@ -13126,7 +13196,7 @@
                 return VideoType;
             }({});
             const FALLBACK_VIDEO_TYPE = VideoType_VideoType.MP4;
-            class Browser_Browser {
+            class Browser {
                 options;
                 result;
                 videoType;
@@ -13200,13 +13270,13 @@
                     };
                 }
             }
-            const Browser = Browser_Browser;
+            const util_Browser = Browser;
             let getBrowser_browser;
-            function getBrowser(localOptions) {
-                if (!getBrowser_browser) getBrowser_browser = new Browser(localOptions);
+            function getBrowser_getBrowser(localOptions) {
+                if (!getBrowser_browser) getBrowser_browser = new util_Browser(localOptions);
                 return getBrowser_browser;
             }
-            const util_getBrowser = getBrowser;
+            const getBrowser = getBrowser_getBrowser;
             class HTTPError_HTTPError extends Error {
                 code;
                 status;
@@ -13248,7 +13318,7 @@
                     this.logLines = errData?.logLines;
                     this.siteName = options.siteName;
                     this.classList = classList;
-                    const browser = util_getBrowser(options);
+                    const browser = getBrowser(options);
                     const usefulClientData = browser.getUsefulData();
                     this.browser = usefulClientData.browser;
                     if (usefulClientData.cpu.architecture) this.cpu = usefulClientData.cpu;
@@ -13264,7 +13334,7 @@
                     ].join("×");
                     if (screen.orientation) this.orientation = screen.orientation.type.toString();
                     this.err = errData?.err;
-                    const stackTarget = errData?.cause || errData?.err;
+                    const stackTarget = errData?.cause ?? errData?.err;
                     if (stackTarget) Error.captureStackTrace(stackTarget, VideomailError);
                 }
                 hasClass(name) {
@@ -13287,7 +13357,7 @@
                 let explanation = errorParams.explanation;
                 const classList = errorParams.classList ?? [];
                 const audioEnabled = isAudioEnabled(options);
-                const browser = util_getBrowser(options);
+                const browser = getBrowser(options);
                 const errName = err?.name ?? err?.constructor.name;
                 switch(errName){
                     case error_VideomailError.SECURITY_ERROR:
@@ -13509,7 +13579,7 @@
                     return value;
                 }
                 if (CHECKED_INPUT_TYPES[type]) {
-                    if (element.checked) value = !('checkbox' !== type || element.hasAttribute('value')) || element.value;
+                    if (element.checked) value = 'checkbox' !== type || element.hasAttribute('value') ? element.value : true;
                 } else value = trim ? element.value.replace(TRIM_RE, '') : element.value;
                 return value;
             }
@@ -13528,7 +13598,7 @@
                         };
                     }
                 });
-            class Despot_Despot {
+            class Despot {
                 name;
                 options;
                 static EMITTER = createNanoEvents();
@@ -13542,18 +13612,18 @@
                     if (showParams) this.options.logger.debug(`${this.name} emits ${eventName} with ${pretty(params)}`);
                     else this.options.logger.debug(`${this.name} emits ${eventName}`);
                     try {
-                        Despot_Despot.EMITTER.emit(eventName, ...params);
+                        Despot.EMITTER.emit(eventName, ...params);
                     } catch (exc) {
-                        if (exc instanceof error_VideomailError) Despot_Despot.EMITTER.emit("ERROR", {
+                        if (exc instanceof error_VideomailError) Despot.EMITTER.emit("ERROR", {
                             err: exc
                         });
-                        else Despot_Despot.EMITTER.emit("ERROR", {
+                        else Despot.EMITTER.emit("ERROR", {
                             exc
                         });
                     }
                 }
                 on(eventName, callback) {
-                    return Despot_Despot.EMITTER.on(eventName, callback);
+                    return Despot.EMITTER.on(eventName, callback);
                 }
                 once(eventName, listener) {
                     const callback = (...params)=>{
@@ -13564,22 +13634,23 @@
                     return unbind;
                 }
                 static getListeners(eventName) {
-                    return Despot_Despot.EMITTER.events[eventName];
+                    return Despot.EMITTER.events[eventName];
                 }
                 static removeListener(eventName) {
-                    delete Despot_Despot.EMITTER.events[eventName];
+                    delete Despot.EMITTER.events[eventName];
                 }
                 static removeAllListeners() {
-                    Despot_Despot.EMITTER.events = {};
+                    Despot.EMITTER.events = {};
                 }
             }
-            const Despot = Despot_Despot;
-            const REGEX = /^[\s,]+|[\s,]+$/gu;
+            const util_Despot = Despot;
+            const REGEX = /[ ,]+/u;
             function trimEmail(email) {
                 return email.replace(REGEX, "");
             }
             function trimEmails(emails) {
-                return emails.split(REGEX).map((email)=>trimEmail(email));
+                const trimmedEmails = emails.split(REGEX).map((item)=>item.trim()).filter(Boolean);
+                return trimmedEmails;
             }
             function isNotButton(element) {
                 return "BUTTON" !== element.tagName && "submit" !== element.getAttribute("type");
@@ -13591,7 +13662,7 @@
                 FormMethod["GET"] = "get";
                 return FormMethod;
             }({});
-            class Form extends Despot {
+            class Form extends util_Despot {
                 container;
                 formElement;
                 keyInput;
@@ -13776,7 +13847,7 @@
                 unload() {
                     this.options.logger.debug("Form: unload()");
                     this.removeAllInputListeners();
-                    Despot.removeAllListeners();
+                    util_Despot.removeAllListeners();
                     this.stopListeningToSubmitEvents();
                     this.resetForm();
                 }
@@ -13838,7 +13909,7 @@
             }
             const wrappers_form = Form;
             var package_namespaceObject = {
-                i8: "10.2.1"
+                i8: "10.2.13"
             };
             function findOriginalExc(exc) {
                 if (exc instanceof Error && "response" in exc) {
@@ -13977,10 +14048,10 @@
                 async form(formData, url) {
                     let formType;
                     switch(this.options.enctype){
-                        case constants.public.ENC_TYPE_APP_JSON:
+                        case constants["public"].ENC_TYPE_APP_JSON:
                             formType = "json";
                             break;
-                        case constants.public.ENC_TYPE_FORM:
+                        case constants["public"].ENC_TYPE_FORM:
                             formType = "form";
                             break;
                         default:
@@ -14005,41 +14076,41 @@
             var document_visibility_default = /*#__PURE__*/ __webpack_require__.n(document_visibility);
             var contains = __webpack_require__("./node_modules/contains/index.js");
             var contains_default = /*#__PURE__*/ __webpack_require__.n(contains);
-            function disableElement_disableElement(element) {
+            function disableElement(element) {
                 if (!element) return;
                 if ("INPUT" === element.tagName || "BUTTON" === element.tagName) element.setAttribute("disabled", "true");
                 else element.classList.add("disabled");
             }
-            const disableElement = disableElement_disableElement;
-            function enableElement_enableElement(element) {
+            const html_disableElement = disableElement;
+            function enableElement(element) {
                 if (!element) return;
                 if ("INPUT" === element.tagName || "BUTTON" === element.tagName) element.removeAttribute("disabled");
                 else element.classList.remove("disabled");
             }
-            const enableElement = enableElement_enableElement;
+            const html_enableElement = enableElement;
             function hideElement(element) {
                 if (!element) return;
                 hidden_default()(element, true);
             }
             const html_hideElement = hideElement;
-            function showElement(element) {
+            function showElement_showElement(element) {
                 if (!element) return;
                 hidden_default()(element, false);
             }
-            const html_showElement = showElement;
+            const showElement = showElement_showElement;
             function isShown(element) {
                 if (!element) return false;
                 return !hidden_default()(element);
             }
             const html_isShown = isShown;
             function adjustButton_adjustButton(buttonElement, show, type, disabled) {
-                if (disabled) disableElement(buttonElement);
+                if (disabled) html_disableElement(buttonElement);
                 if (type) buttonElement.type = type;
                 if (!show) html_hideElement(buttonElement);
                 return buttonElement;
             }
             const adjustButton = adjustButton_adjustButton;
-            class Buttons extends Despot {
+            class Buttons extends util_Despot {
                 container;
                 buttonsElement;
                 recordButton;
@@ -14092,7 +14163,7 @@
                         else this.buttonsElement?.appendChild(radioButtonGroup);
                     }
                     radioButtonElement.onchange = options.changeHandler;
-                    disableElement(radioButtonElement);
+                    html_disableElement(radioButtonElement);
                     return radioButtonElement;
                 }
                 makeButton(buttonClass, text, clickHandler, show, id, type, selector, disabled = true) {
@@ -14113,7 +14184,7 @@
                 }
                 buildButtons() {
                     if (!this.options.disableSubmit) {
-                        if (this.submitButton) disableElement(this.submitButton);
+                        if (this.submitButton) html_disableElement(this.submitButton);
                         else this.submitButton = this.makeButton(this.options.selectors.submitButtonClass, "Submit", void 0, true, this.options.selectors.submitButtonId, "submit", this.options.selectors.submitButtonSelector, this.options.enableAutoValidation);
                         if (!this.container.hasForm()) this.replaceClickHandler(this.submitButton, this.submit.bind(this));
                     }
@@ -14147,112 +14218,112 @@
                 }
                 onFormReady(params) {
                     if (!html_isShown(this.recordAgainButton)) {
-                        if (!params?.paused) html_showElement(this.recordButton);
+                        if (!params?.paused) showElement(this.recordButton);
                     }
                     if (!params?.paused) {
-                        disableElement(this.previewButton);
+                        html_disableElement(this.previewButton);
                         html_hideElement(this.previewButton);
                     }
-                    if (!this.options.enableAutoValidation) enableElement(this.submitButton);
+                    if (!this.options.enableAutoValidation) html_enableElement(this.submitButton);
                 }
                 onGoingBack() {
                     html_hideElement(this.recordAgainButton);
-                    html_showElement(this.recordButton);
-                    html_showElement(this.submitButton);
+                    showElement(this.recordButton);
+                    showElement(this.submitButton);
                 }
                 onReplayShown() {
                     this.hide();
                 }
                 onUserMediaReady(params) {
                     this.onFormReady();
-                    if (html_isShown(this.recordButton) && !params.recordWhenReady) enableElement(this.recordButton);
-                    else if (html_isShown(this.recordAgainButton) && !params.recordWhenReady) enableElement(this.recordAgainButton);
-                    if (this.options.enableAutoValidation) disableElement(this.submitButton);
+                    if (html_isShown(this.recordButton) && !params.recordWhenReady) html_enableElement(this.recordButton);
+                    else if (html_isShown(this.recordAgainButton) && !params.recordWhenReady) html_enableElement(this.recordAgainButton);
+                    if (this.options.enableAutoValidation) html_disableElement(this.submitButton);
                     if (!params.recordWhenReady) {
-                        if (html_isShown(this.audioOnRadioPair)) enableElement(this.audioOnRadioPair);
-                        if (html_isShown(this.audioOffRadioPair)) enableElement(this.audioOffRadioPair);
+                        if (html_isShown(this.audioOnRadioPair)) html_enableElement(this.audioOnRadioPair);
+                        if (html_isShown(this.audioOffRadioPair)) html_enableElement(this.audioOffRadioPair);
                     }
                 }
                 onResetting() {
-                    disableElement(this.submitButton);
+                    html_disableElement(this.submitButton);
                     this.reset();
                 }
                 onPreview() {
                     html_hideElement(this.recordButton);
                     html_hideElement(this.previewButton);
-                    disableElement(this.audioOnRadioPair);
-                    disableElement(this.audioOffRadioPair);
-                    html_showElement(this.recordAgainButton);
-                    enableElement(this.recordAgainButton);
-                    if (!this.options.enableAutoValidation) enableElement(this.submitButton);
+                    html_disableElement(this.audioOnRadioPair);
+                    html_disableElement(this.audioOffRadioPair);
+                    showElement(this.recordAgainButton);
+                    html_enableElement(this.recordAgainButton);
+                    if (!this.options.enableAutoValidation) html_enableElement(this.submitButton);
                 }
                 enableSubmit() {
-                    enableElement(this.submitButton);
+                    html_enableElement(this.submitButton);
                 }
                 adjustButtonsForPause() {
                     if (!this.isCountingDown()) {
                         if (this.pauseButton) html_hideElement(this.pauseButton);
-                        html_showElement(this.resumeButton);
-                        enableElement(this.resumeButton);
+                        showElement(this.resumeButton);
+                        html_enableElement(this.resumeButton);
                         html_hideElement(this.recordButton);
-                        html_showElement(this.previewButton);
-                        enableElement(this.previewButton);
+                        showElement(this.previewButton);
+                        html_enableElement(this.previewButton);
                     }
                 }
                 onFirstFrameSent() {
                     html_hideElement(this.recordButton);
                     html_hideElement(this.recordAgainButton);
                     if (this.pauseButton) {
-                        html_showElement(this.pauseButton);
-                        enableElement(this.pauseButton);
+                        showElement(this.pauseButton);
+                        html_enableElement(this.pauseButton);
                     }
-                    enableElement(this.previewButton);
-                    html_showElement(this.previewButton);
+                    html_enableElement(this.previewButton);
+                    showElement(this.previewButton);
                 }
                 onRecording(params) {
                     if (params.framesCount > 1) this.onFirstFrameSent();
                     else {
-                        disableElement(this.audioOffRadioPair);
-                        disableElement(this.audioOnRadioPair);
-                        disableElement(this.recordAgainButton);
-                        disableElement(this.recordButton);
+                        html_disableElement(this.audioOffRadioPair);
+                        html_disableElement(this.audioOnRadioPair);
+                        html_disableElement(this.recordAgainButton);
+                        html_disableElement(this.recordButton);
                     }
                 }
                 onResuming() {
                     html_hideElement(this.resumeButton);
                     html_hideElement(this.recordButton);
                     if (this.pauseButton) {
-                        enableElement(this.pauseButton);
-                        html_showElement(this.pauseButton);
+                        html_enableElement(this.pauseButton);
+                        showElement(this.pauseButton);
                     }
                 }
                 onStopping() {
-                    disableElement(this.previewButton);
-                    disableElement(this.recordButton);
+                    html_disableElement(this.previewButton);
+                    html_disableElement(this.recordButton);
                     html_hideElement(this.pauseButton);
                     html_hideElement(this.resumeButton);
                 }
                 onCountdown() {
-                    disableElement(this.recordButton);
-                    disableElement(this.audioOffRadioPair);
-                    disableElement(this.audioOnRadioPair);
+                    html_disableElement(this.recordButton);
+                    html_disableElement(this.audioOffRadioPair);
+                    html_disableElement(this.audioOnRadioPair);
                 }
                 onSubmitting() {
                     this.options.logger.debug("Buttons: onSubmitting()");
-                    disableElement(this.submitButton);
-                    disableElement(this.recordAgainButton);
+                    html_disableElement(this.submitButton);
+                    html_disableElement(this.recordAgainButton);
                 }
                 onSubmitted() {
-                    disableElement(this.previewButton);
-                    disableElement(this.recordAgainButton);
-                    disableElement(this.recordButton);
-                    disableElement(this.submitButton);
+                    html_disableElement(this.previewButton);
+                    html_disableElement(this.recordAgainButton);
+                    html_disableElement(this.recordButton);
+                    html_disableElement(this.submitButton);
                 }
                 onInvalid() {
-                    if (this.options.enableAutoValidation) disableElement(this.submitButton);
+                    if (this.options.enableAutoValidation) html_disableElement(this.submitButton);
                 }
                 onValid() {
-                    if (this.options.enableAutoValidation) enableElement(this.submitButton);
+                    if (this.options.enableAutoValidation) html_enableElement(this.submitButton);
                 }
                 onHidden() {
                     html_hideElement(this.recordButton);
@@ -14264,29 +14335,29 @@
                 }
                 onEnablingAudio() {
                     this.options.logger.debug("Buttons: onEnablingAudio()");
-                    disableElement(this.recordButton);
-                    disableElement(this.audioOnRadioPair);
-                    disableElement(this.audioOffRadioPair);
+                    html_disableElement(this.recordButton);
+                    html_disableElement(this.audioOnRadioPair);
+                    html_disableElement(this.audioOffRadioPair);
                 }
                 onDisablingAudio() {
                     this.options.logger.debug("Buttons: onDisablingAudio()");
-                    disableElement(this.recordButton);
-                    disableElement(this.audioOnRadioPair);
-                    disableElement(this.audioOffRadioPair);
+                    html_disableElement(this.recordButton);
+                    html_disableElement(this.audioOnRadioPair);
+                    html_disableElement(this.audioOffRadioPair);
                 }
                 recordAgain() {
-                    disableElement(this.recordAgainButton);
+                    html_disableElement(this.recordAgainButton);
                     this.container.beginWaiting();
                     this.container.recordAgain();
                 }
                 onStartingOver() {
-                    html_showElement(this.submitButton);
+                    showElement(this.submitButton);
                 }
                 submit() {
                     this.container.submit();
                 }
                 record() {
-                    disableElement(this.recordButton);
+                    html_disableElement(this.recordButton);
                     this.container.record();
                 }
                 initEvents() {
@@ -14353,13 +14424,13 @@
                     });
                     this.on("CONNECTED", ()=>{
                         if (this.options.loadUserMediaOnRecord) {
-                            if (html_isShown(this.recordButton)) enableElement(this.recordButton);
+                            if (html_isShown(this.recordButton)) html_enableElement(this.recordButton);
                         }
                     });
                     this.on("DISCONNECTED", ()=>{
-                        disableElement(this.recordButton);
-                        disableElement(this.audioOnRadioPair);
-                        disableElement(this.audioOffRadioPair);
+                        html_disableElement(this.recordButton);
+                        html_disableElement(this.audioOnRadioPair);
+                        html_disableElement(this.audioOffRadioPair);
                     });
                     this.on("ERROR", (params)=>{
                         if (params.err?.isBrowserProblem() && this.options.adjustFormOnBrowserError) this.hide();
@@ -14367,13 +14438,13 @@
                 }
                 reset() {
                     this.options.logger.debug("Buttons: reset()");
-                    disableElement(this.pauseButton);
-                    disableElement(this.resumeButton);
-                    disableElement(this.recordButton);
-                    disableElement(this.previewButton);
-                    disableElement(this.recordAgainButton);
-                    disableElement(this.audioOnRadioPair);
-                    disableElement(this.audioOffRadioPair);
+                    html_disableElement(this.pauseButton);
+                    html_disableElement(this.resumeButton);
+                    html_disableElement(this.recordButton);
+                    html_disableElement(this.previewButton);
+                    html_disableElement(this.recordAgainButton);
+                    html_disableElement(this.audioOnRadioPair);
+                    html_disableElement(this.audioOffRadioPair);
                 }
                 isRecordAgainButtonEnabled() {
                     return !this.recordAgainButton?.disabled;
@@ -14406,7 +14477,7 @@
                     if (this.built) {
                         this.reset();
                         this.options.logger.debug("Buttons: unload()");
-                        Despot.removeAllListeners();
+                        util_Despot.removeAllListeners();
                         this.hide();
                         this.built = false;
                     }
@@ -14425,7 +14496,7 @@
                     }
                 }
                 show() {
-                    html_showElement(this.buttonsElement);
+                    showElement(this.buttonsElement);
                 }
                 isCountingDown() {
                     return this.container.isCountingDown();
@@ -14501,7 +14572,7 @@
                 }
             }
             const countdown = Countdown;
-            class FacingMode extends Despot {
+            class FacingMode extends util_Despot {
                 visuals;
                 facingModeElement;
                 constructor(visuals, options){
@@ -14745,7 +14816,7 @@
                 }
             }
             const recordTimer = RecordTimer;
-            class RecorderInsides extends Despot {
+            class RecorderInsides extends util_Despot {
                 recordNote;
                 recordTimer;
                 countdown;
@@ -14756,7 +14827,7 @@
                     super("RecorderInsides", options);
                     this.recordNote = new recorder_recordNote(visuals);
                     this.recordTimer = new recordTimer(visuals, this.recordNote, options);
-                    const browser = util_getBrowser(options);
+                    const browser = getBrowser(options);
                     if (options.video.countdown) this.countdown = new countdown(visuals, options);
                     if (options.video.facingModeButton && browser.isMobile()) this.facingMode = new facingMode(visuals, options);
                     if (options.enablePause) this.pausedNote = new pausedNote(visuals, options);
@@ -14841,7 +14912,7 @@
             }
             const recorderInsides = RecorderInsides;
             const NOTIFIER_MESSAGE_ID = "notifierMessage";
-            class Notifier extends Despot {
+            class Notifier extends util_Despot {
                 visuals;
                 notifyElement;
                 messageElement;
@@ -14961,7 +15032,7 @@
                         blocking: true,
                         problem: true,
                         classList: err.getClassList(),
-                        removeDimensions: util_getBrowser(this.options).isMobile()
+                        removeDimensions: getBrowser(this.options).isMobile()
                     });
                 }
                 getMessageElement() {
@@ -15280,7 +15351,7 @@
             function getAudioContextClass() {
                 return window.AudioContext;
             }
-            class AudioRecorder_AudioRecorder {
+            class AudioRecorder {
                 scriptProcessor;
                 audioInput;
                 vcAudioContext;
@@ -15318,7 +15389,7 @@
                         });
                     }
                     let { bufferSize } = this.options.audio;
-                    if ("auto" === bufferSize) bufferSize = util_getBrowser(this.options).isFirefox() ? 512 : 2048;
+                    if ("auto" === bufferSize) bufferSize = getBrowser(this.options).isFirefox() ? 512 : 2048;
                     if (!is_power_of_two_default()(bufferSize)) throw error_createError({
                         message: "Audio buffer size must be a power of two.",
                         options: this.options
@@ -15360,7 +15431,7 @@
                     return -1;
                 }
             }
-            const AudioRecorder = AudioRecorder_AudioRecorder;
+            const media_AudioRecorder = AudioRecorder;
             const MEDIA_EVENTS = [
                 "loadstart",
                 "suspend",
@@ -15382,15 +15453,15 @@
                 "volumechange"
             ];
             const mediaEvents = MEDIA_EVENTS;
-            function getFirstVideoTrack_getFirstVideoTrack(localMediaStream) {
+            function getFirstVideoTrack(localMediaStream) {
                 const videoTracks = localMediaStream.getVideoTracks();
                 let videoTrack;
                 if (videoTracks[0]) videoTrack = videoTracks[0];
                 return videoTrack;
             }
-            const getFirstVideoTrack = getFirstVideoTrack_getFirstVideoTrack;
+            const media_getFirstVideoTrack = getFirstVideoTrack;
             const EVENT_ASCII = "|—O—|";
-            class UserMedia extends Despot {
+            class UserMedia extends util_Despot {
                 recorder;
                 rawVisualUserMedia;
                 paused = false;
@@ -15449,7 +15520,7 @@
                     });
                 }
                 audioRecord(audioCallback) {
-                    Despot.removeListener("SENDING_FIRST_FRAME");
+                    util_Despot.removeListener("SENDING_FIRST_FRAME");
                     this.audioRecorder?.record(audioCallback);
                 }
                 init(localMediaStream, videoCallback, audioCallback, endedEarlyCallback, switchingFacingMode) {
@@ -15460,11 +15531,11 @@
                     this.onPlayReached = false;
                     this.onLoadedMetaDataReached = false;
                     this.playingPromiseReached = false;
-                    if (isAudioEnabled(this.options)) this.audioRecorder ??= new AudioRecorder(this, this.options);
+                    if (isAudioEnabled(this.options)) this.audioRecorder ??= new media_AudioRecorder(this, this.options);
                     const unloadAllEventListeners = ()=>{
                         this.options.logger.debug("UserMedia: unloadAllEventListeners()");
                         this.unloadRemainingEventListeners();
-                        Despot.removeListener("SENDING_FIRST_FRAME");
+                        util_Despot.removeListener("SENDING_FIRST_FRAME");
                         this.rawVisualUserMedia?.removeEventListener("play", onPlay);
                         this.rawVisualUserMedia?.removeEventListener("loadedmetadata", onLoadedMetaData);
                     };
@@ -15551,7 +15622,7 @@
                         }
                     };
                     try {
-                        const videoTrack = getFirstVideoTrack(localMediaStream);
+                        const videoTrack = media_getFirstVideoTrack(localMediaStream);
                         if (videoTrack) {
                             if (videoTrack.enabled) {
                                 let description = "";
@@ -15692,7 +15763,7 @@
                 return minHeight;
             }
             const figureMinHeight = figureMinHeight_figureMinHeight;
-            function getRatio(options, videoHeight, videoWidth) {
+            function getRatio_getRatio(options, videoHeight, videoWidth) {
                 let ratio = 1;
                 const hasVideoDimensions = videoHeight && videoWidth;
                 const desiredHeight = options.video.height;
@@ -15702,7 +15773,7 @@
                 else if (hasVideoDimensions) ratio = videoHeight / videoWidth;
                 return ratio;
             }
-            const dimensions_getRatio = getRatio;
+            const getRatio = getRatio_getRatio;
             function limitHeight_limitHeight(height, options, calledFrom) {
                 let limitedHeight = document.documentElement.clientHeight;
                 if (height) limitedHeight = Math.min(height, limitedHeight);
@@ -15713,14 +15784,14 @@
                 return limitedHeight;
             }
             const limitHeight = limitHeight_limitHeight;
-            function calculateWidth_calculateWidth(responsive, videoHeight, options, ratio) {
+            function calculateWidth(responsive, videoHeight, options, ratio) {
                 let height = figureMinHeight(videoHeight, options);
                 if (responsive) height = limitHeight(height, options, "calculateWidth");
                 if (!height || height < 1) throw error_createError({
                     message: `Height ${height} cannot be smaller than 1 when calculating width.`,
                     options
                 });
-                const chosenRatio = ratio ?? dimensions_getRatio(options, videoHeight);
+                const chosenRatio = ratio ?? getRatio(options, videoHeight);
                 const calculatedWidth = Math.round(height / chosenRatio);
                 if (calculatedWidth < 1) throw error_createError({
                     message: "Calculated width cannot be smaller than 1!",
@@ -15728,8 +15799,8 @@
                 });
                 return calculatedWidth;
             }
-            const calculateWidth = calculateWidth_calculateWidth;
-            function getOuterWidth(element) {
+            const dimensions_calculateWidth = calculateWidth;
+            function getOuterWidth_getOuterWidth(element) {
                 let rect = element.getBoundingClientRect();
                 let outerWidth = rect.right - rect.left;
                 if (outerWidth < 1) {
@@ -15738,10 +15809,10 @@
                 }
                 return outerWidth;
             }
-            const dimensions_getOuterWidth = getOuterWidth;
+            const getOuterWidth = getOuterWidth_getOuterWidth;
             function limitWidth_limitWidth(element, options, width) {
                 let limitedWidth;
-                const outerWidth = dimensions_getOuterWidth(element);
+                const outerWidth = getOuterWidth(element);
                 limitedWidth = width && "number" == typeof width ? outerWidth > 0 && outerWidth < width ? outerWidth : width : outerWidth;
                 if (Number.isInteger(limitedWidth) && limitedWidth < 1) throw error_createError({
                     message: "Limited width cannot be less than 1!",
@@ -15750,14 +15821,14 @@
                 return limitedWidth;
             }
             const limitWidth = limitWidth_limitWidth;
-            function calculateHeight_calculateHeight(responsive, videoWidth, options, target, ratio, element) {
+            function calculateHeight(responsive, videoWidth, options, target, ratio, element) {
                 let width = videoWidth;
                 if (width < 1) throw error_createError({
                     message: `Unable to calculate height for target ${target} when width is less than 1 (= ${width}) and responsive mode is set to ${responsive}`,
                     options
                 });
                 if (responsive && element) width = limitWidth(element, options, width);
-                const chosenRatio = ratio ?? dimensions_getRatio(options, void 0, videoWidth);
+                const chosenRatio = ratio ?? getRatio(options, void 0, videoWidth);
                 const height = Math.round(width * chosenRatio);
                 if (Number.isInteger(height) && height < 1) throw error_createError({
                     message: "Just calculated a height less than 1 which is wrong.",
@@ -15765,10 +15836,10 @@
                 });
                 return figureMinHeight(height, options);
             }
-            const calculateHeight = calculateHeight_calculateHeight;
+            const dimensions_calculateHeight = calculateHeight;
             var Buffer = __webpack_require__("./node_modules/buffer/index.js")["Buffer"];
             const PIPE_SYMBOL = "°º¤ø,¸¸,ø¤º°`°º¤ø,¸,ø¤°º¤ø,¸¸,ø¤º°`°º¤ø,¸ ";
-            class Recorder extends Despot {
+            class Recorder extends util_Despot {
                 visuals;
                 replay;
                 loop;
@@ -16054,7 +16125,7 @@
                     this.clearUserMediaTimeout();
                     const characteristics = this.userMedia?.getCharacteristics();
                     this.options.logger.debug(`Recorder: userMediaErrorCallback(), name: ${err.name}, message: ${err.message} and Webcam characteristics: ${characteristics ? pretty(characteristics) : "none"}`);
-                    const errorListeners = Despot.getListeners("ERROR");
+                    const errorListeners = util_Despot.getListeners("ERROR");
                     if (errorListeners?.length) {
                         if (err.name !== error_VideomailError.MEDIA_DEVICE_NOT_SUPPORTED) {
                             const videomailError = error_createError({
@@ -16148,7 +16219,7 @@
                         if (!navigator.mediaDevices) throw new Error("No media devices are available.");
                         this.userMediaTimeout = window.setTimeout(()=>{
                             if (!this.isReady()) {
-                                const err = util_getBrowser(this.options).getNoAccessIssue();
+                                const err = getBrowser(this.options).getNoAccessIssue();
                                 this.emit("ERROR", {
                                     err
                                 });
@@ -16160,7 +16231,7 @@
                         this.clearUserMediaTimeout();
                         this.options.logger.debug("Recorder: failed to load genuine user media");
                         this.userMediaLoading = false;
-                        const errorListeners = Despot.getListeners("ERROR");
+                        const errorListeners = util_Despot.getListeners("ERROR");
                         if (errorListeners?.length) this.emit("ERROR", {
                             exc
                         });
@@ -16190,7 +16261,7 @@
                                 {
                                     const err = error_createError({
                                         message: "Oh no, server error!",
-                                        explanation: command.args.err.toString() || "(No message given)",
+                                        explanation: command.args.err.toString() ?? "(No message given)",
                                         options: this.options
                                     });
                                     this.emit("ERROR", {
@@ -16540,7 +16611,7 @@
                     }
                 }
                 switchFacingMode() {
-                    if (!util_getBrowser(this.options).isMobile()) return;
+                    if (!getBrowser(this.options).isMobile()) return;
                     if ("user" === this.facingMode) this.facingMode = "environment";
                     else if ("environment" === this.facingMode) this.facingMode = "user";
                     else this.options.logger.warn(`Recorder: unsupported facing mode ${pretty(this.facingMode)}`);
@@ -16648,14 +16719,14 @@
                         const userMediaVideoHeight = this.userMedia.getVideoHeight();
                         if (!userMediaVideoWidth || userMediaVideoWidth < 1) ratio = this.visuals.getRatio();
                         else if (userMediaVideoHeight) ratio = userMediaVideoHeight / userMediaVideoWidth;
-                    } else ratio = dimensions_getRatio(this.options);
+                    } else ratio = getRatio(this.options);
                     return ratio;
                 }
                 calculateWidth(responsive) {
                     let videoHeight;
                     if (this.userMedia) videoHeight = this.userMedia.getVideoHeight();
                     else if (this.recorderElement) videoHeight = this.recorderElement.videoHeight || this.recorderElement.height;
-                    return calculateWidth(responsive, videoHeight, this.options, this.getRatio());
+                    return dimensions_calculateWidth(responsive, videoHeight, this.options, this.getRatio());
                 }
                 calculateHeight(responsive) {
                     let videoWidth;
@@ -16667,7 +16738,7 @@
                         target = "recorderElement";
                         videoWidth = this.recorderElement.videoWidth || this.recorderElement.width;
                     }
-                    return calculateHeight(responsive, videoWidth, this.options, target, this.getRatio(), this.recorderElement);
+                    return dimensions_calculateHeight(responsive, videoWidth, this.options, target, this.getRatio(), this.recorderElement);
                 }
                 getRawVisualUserMedia() {
                     return this.recorderElement;
@@ -16689,7 +16760,7 @@
                 }
             }
             const visuals_recorder = Recorder;
-            class Replay extends Despot {
+            class Replay extends util_Despot {
                 visuals;
                 built = false;
                 replayElement;
@@ -16730,7 +16801,7 @@
                         height = this.videomail.height;
                         if (width) ratio = height / width;
                     }
-                    if (!width) width = calculateWidth(responsive, videoHeight, this.options, ratio);
+                    if (!width) width = dimensions_calculateWidth(responsive, videoHeight, this.options, ratio);
                     if (!height) {
                         let element = this.visuals.getElement();
                         let target;
@@ -16739,7 +16810,7 @@
                             element = document.body;
                             target = "document body";
                         }
-                        height = calculateHeight(responsive, videoWidth, this.options, target, ratio, element);
+                        height = dimensions_calculateHeight(responsive, videoWidth, this.options, target, ratio, element);
                     }
                     if (width > 0) this.replayElement.style.width = `${width}px`;
                     else this.replayElement.style.width = "auto";
@@ -16756,7 +16827,7 @@
                     const sampleRate = this.videomail.recordingStats?.sampleRate;
                     const width = this.videomail.width;
                     const height = this.videomail.height;
-                    const hasAudio = void 0 !== sampleRate && sampleRate > 0;
+                    const hasAudio = void 0 !== sampleRate ? sampleRate > 0 : false;
                     this.show(width, height, hasAudio, playerOnly);
                 }
                 show(videomailWidth, videomailHeight, hasAudio, playerOnly = false) {
@@ -16821,7 +16892,7 @@
                 }
                 unload(params) {
                     this.options.logger.debug("Replay: unload()");
-                    Despot.removeAllListeners();
+                    util_Despot.removeAllListeners();
                     if (params?.startingOver) this.hide();
                     else {
                         this.replayElement?.remove();
@@ -16884,7 +16955,7 @@
                 }
                 getVideoType() {
                     if (!this.replayElement) return;
-                    return util_getBrowser(this.options).getVideoType(this.replayElement);
+                    return getBrowser(this.options).getVideoType(this.replayElement);
                 }
                 pause(cb) {
                     window.setTimeout(()=>{
@@ -16925,7 +16996,7 @@
                 }
             }
             const visuals_replay = Replay;
-            class Visuals extends Despot {
+            class Visuals extends util_Despot {
                 container;
                 replay;
                 recorder;
@@ -16980,7 +17051,7 @@
                             this.correctDimensions();
                         });
                         this.on("ERROR", ()=>{
-                            if (util_getBrowser(this.options).isMobile()) this.removeDimensions();
+                            if (getBrowser(this.options).isMobile()) this.removeDimensions();
                         });
                     }
                 }
@@ -17226,7 +17297,7 @@
             main_options.insertStyleElement = insertStyleElement_default();
             injectStylesIntoStyleTag_default()(main.Z, main_options);
             main.Z && main.Z.locals && main.Z.locals;
-            class Container extends Despot {
+            class Container extends util_Despot {
                 visibility = document_visibility_default()();
                 htmlElement = document.querySelector("html");
                 visuals;
@@ -17356,7 +17427,7 @@
                     this.on("ERROR", (params)=>{
                         this.processError(params);
                         this.endWaiting();
-                        const browser = util_getBrowser(this.options);
+                        const browser = getBrowser(this.options);
                         if (browser.isMobile()) this.removeDimensions();
                     });
                     if (!playerOnly) this.on("LOADED_META_DATA", ()=>{
@@ -17448,7 +17519,7 @@
                             exc
                         });
                     } finally{
-                        Despot.removeAllListeners();
+                        util_Despot.removeAllListeners();
                         this.built = this.submitted = false;
                     }
                 }
@@ -17719,7 +17790,7 @@
                 options;
                 constructor(options){
                     this.options = options;
-                    this.browser = util_getBrowser(options);
+                    this.browser = getBrowser(options);
                     this.logger = options.logger;
                 }
                 lifo(level, parameters) {
@@ -17771,14 +17842,14 @@
                 return newOptions;
             }
             const options_mergeWithDefaultOptions = mergeWithDefaultOptions;
-            class VideomailClient extends Despot {
+            class VideomailClient extends util_Despot {
                 container;
-                static ENC_TYPE_APP_JSON = constants.public.ENC_TYPE_APP_JSON;
-                static ENC_TYPE_FORM = constants.public.ENC_TYPE_FORM;
+                static ENC_TYPE_APP_JSON = constants["public"].ENC_TYPE_APP_JSON;
+                static ENC_TYPE_FORM = constants["public"].ENC_TYPE_FORM;
                 constructor(options = {}){
                     super("VideomailClient", options_mergeWithDefaultOptions(options));
                     this.validateOptions();
-                    Despot.removeAllListeners();
+                    util_Despot.removeAllListeners();
                     this.container = new wrappers_container(this.options);
                 }
                 validateOptions() {
