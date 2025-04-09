@@ -17,7 +17,7 @@ fi
 
 echo "Starting new release branch with version $PACKAGE_VERSION..."
 
-# ensures all is commited
+# Ensures all is committed
 if [[ $(git status --porcelain) ]]; then
     die "Aborting the bump! You have uncommitted changes."
 fi
