@@ -71,11 +71,13 @@ To get help, just use any of these contacts at [https://binarykitchen.com](https
 
 == Changelog ==
 = 7.0.8 (9 Apr 2025) =
-*Improvement:*
+**Improvement**
 * Serialize all error variables for improved error reporting
-*Chore:*
+
+**Chore**
 * Upgrade Videomail-Client
-*Fix:*
+
+**Fix**
 * Corrects invalid version for the "Tested up to" field
 
 = 7.0.7 (18 March 2025) =
