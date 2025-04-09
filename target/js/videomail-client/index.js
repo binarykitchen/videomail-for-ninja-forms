@@ -479,10 +479,9 @@
                     var pos = 0;
                     for(i = 0; i < list.length; ++i){
                         var buf = list[i];
-                        if (isInstance(buf, Uint8Array)) {
-                            if (pos + buf.length > buffer.length) Buffer.from(buf).copy(buffer, pos);
-                            else Uint8Array.prototype.set.call(buffer, buf, pos);
-                        } else if (Buffer.isBuffer(buf)) buf.copy(buffer, pos);
+                        if (isInstance(buf, Uint8Array)) if (pos + buf.length > buffer.length) Buffer.from(buf).copy(buffer, pos);
+                        else Uint8Array.prototype.set.call(buffer, buf, pos);
+                        else if (Buffer.isBuffer(buf)) buf.copy(buffer, pos);
                         else throw new TypeError('"list" argument must be an Array of Buffers');
                         pos += buf.length;
                     }
@@ -646,13 +645,10 @@
                     byteOffset *= 1;
                     if (numberIsNaN(byteOffset)) byteOffset = dir ? 0 : buffer.length - 1;
                     if (byteOffset < 0) byteOffset = buffer.length + byteOffset;
-                    if (byteOffset >= buffer.length) {
-                        if (dir) return -1;
-                        byteOffset = buffer.length - 1;
-                    } else if (byteOffset < 0) {
-                        if (!dir) return -1;
-                        byteOffset = 0;
-                    }
+                    if (byteOffset >= buffer.length) if (dir) return -1;
+                    else byteOffset = buffer.length - 1;
+                    else if (byteOffset < 0) if (!dir) return -1;
+                    else byteOffset = 0;
                     if ('string' == typeof val) val = Buffer.from(val, encoding);
                     if (Buffer.isBuffer(val)) {
                         if (0 === val.length) return -1;
@@ -660,10 +656,8 @@
                     }
                     if ('number' == typeof val) {
                         val &= 0xFF;
-                        if ('function' == typeof Uint8Array.prototype.indexOf) {
-                            if (dir) return Uint8Array.prototype.indexOf.call(buffer, val, byteOffset);
-                            return Uint8Array.prototype.lastIndexOf.call(buffer, val, byteOffset);
-                        }
+                        if ('function' == typeof Uint8Array.prototype.indexOf) if (dir) return Uint8Array.prototype.indexOf.call(buffer, val, byteOffset);
+                        else return Uint8Array.prototype.lastIndexOf.call(buffer, val, byteOffset);
                         return arrayIndexOf(buffer, [
                             val
                         ], byteOffset, encoding, dir);
@@ -2020,13 +2014,12 @@
                 ];
                 function prependListener(emitter, event, fn) {
                     if ('function' == typeof emitter.prependListener) return emitter.prependListener(event, fn);
-                    if (emitter._events && emitter._events[event]) {
-                        if (isArray(emitter._events[event])) emitter._events[event].unshift(fn);
-                        else emitter._events[event] = [
-                            fn,
-                            emitter._events[event]
-                        ];
-                    } else emitter.on(event, fn);
+                    if (emitter._events && emitter._events[event]) if (isArray(emitter._events[event])) emitter._events[event].unshift(fn);
+                    else emitter._events[event] = [
+                        fn,
+                        emitter._events[event]
+                    ];
+                    else emitter.on(event, fn);
                 }
                 function ReadableState(options, stream) {
                     Duplex = Duplex || __webpack_require__("./node_modules/duplexify/node_modules/readable-stream/lib/_stream_duplex.js");
@@ -2121,10 +2114,9 @@
                         if (er) stream.emit('error', er);
                         else if (state.objectMode || chunk && chunk.length > 0) {
                             if ('string' != typeof chunk && !state.objectMode && Object.getPrototypeOf(chunk) !== Buffer.prototype) chunk = _uint8ArrayToBuffer(chunk);
-                            if (addToFront) {
-                                if (state.endEmitted) stream.emit('error', new Error('stream.unshift() after end event'));
-                                else addChunk(stream, state, chunk, true);
-                            } else if (state.ended) stream.emit('error', new Error('stream.push() after EOF'));
+                            if (addToFront) if (state.endEmitted) stream.emit('error', new Error('stream.unshift() after end event'));
+                            else addChunk(stream, state, chunk, true);
+                            else if (state.ended) stream.emit('error', new Error('stream.push() after EOF'));
                             else {
                                 state.reading = false;
                                 if (state.decoder && !encoding) {
@@ -2183,10 +2175,8 @@
                 function howMuchToRead(n, state) {
                     if (n <= 0 || 0 === state.length && state.ended) return 0;
                     if (state.objectMode) return 1;
-                    if (n !== n) {
-                        if (state.flowing && state.length) return state.buffer.head.data.length;
-                        return state.length;
-                    }
+                    if (n !== n) if (state.flowing && state.length) return state.buffer.head.data.length;
+                    else return state.length;
                     if (n > state.highWaterMark) state.highWaterMark = computeNewHighWaterMark(n);
                     if (n <= state.length) return n;
                     if (!state.ended) {
@@ -3069,15 +3059,13 @@
                     });
                 }
                 function prefinish(stream, state) {
-                    if (!state.prefinished && !state.finalCalled) {
-                        if ('function' == typeof stream._final) {
-                            state.pendingcb++;
-                            state.finalCalled = true;
-                            pna.nextTick(callFinal, stream, state);
-                        } else {
-                            state.prefinished = true;
-                            stream.emit('prefinish');
-                        }
+                    if (!state.prefinished && !state.finalCalled) if ('function' == typeof stream._final) {
+                        state.pendingcb++;
+                        state.finalCalled = true;
+                        pna.nextTick(callFinal, stream, state);
+                    } else {
+                        state.prefinished = true;
+                        stream.emit('prefinish');
                     }
                 }
                 function finishMaybe(stream, state) {
@@ -3094,10 +3082,8 @@
                 function endWritable(stream, state, cb) {
                     state.ending = true;
                     finishMaybe(stream, state);
-                    if (cb) {
-                        if (state.finished) pna.nextTick(cb);
-                        else stream.once('finish', cb);
-                    }
+                    if (cb) if (state.finished) pna.nextTick(cb);
+                    else stream.once('finish', cb);
                     state.ended = true;
                     stream.writable = false;
                 }
@@ -3214,27 +3200,24 @@
                     var writableDestroyed = this._writableState && this._writableState.destroyed;
                     if (readableDestroyed || writableDestroyed) {
                         if (cb) cb(err);
-                        else if (err) {
-                            if (this._writableState) {
-                                if (!this._writableState.errorEmitted) {
-                                    this._writableState.errorEmitted = true;
-                                    pna.nextTick(emitErrorNT, this, err);
-                                }
-                            } else pna.nextTick(emitErrorNT, this, err);
-                        }
+                        else if (err) if (this._writableState) {
+                            if (!this._writableState.errorEmitted) {
+                                this._writableState.errorEmitted = true;
+                                pna.nextTick(emitErrorNT, this, err);
+                            }
+                        } else pna.nextTick(emitErrorNT, this, err);
                         return this;
                     }
                     if (this._readableState) this._readableState.destroyed = true;
                     if (this._writableState) this._writableState.destroyed = true;
                     this._destroy(err || null, function(err) {
-                        if (!cb && err) {
-                            if (_this._writableState) {
-                                if (!_this._writableState.errorEmitted) {
-                                    _this._writableState.errorEmitted = true;
-                                    pna.nextTick(emitErrorNT, _this, err);
-                                }
-                            } else pna.nextTick(emitErrorNT, _this, err);
-                        } else if (cb) cb(err);
+                        if (!cb && err) if (_this._writableState) {
+                            if (!_this._writableState.errorEmitted) {
+                                _this._writableState.errorEmitted = true;
+                                pna.nextTick(emitErrorNT, _this, err);
+                            }
+                        } else pna.nextTick(emitErrorNT, _this, err);
+                        else if (cb) cb(err);
                     });
                     return this;
                 }
@@ -3297,10 +3280,9 @@
                 SafeBuffer.alloc = function(size, fill, encoding) {
                     if ('number' != typeof size) throw new TypeError('Argument must be a number');
                     var buf = Buffer(size);
-                    if (void 0 !== fill) {
-                        if ('string' == typeof encoding) buf.fill(fill, encoding);
-                        else buf.fill(fill);
-                    } else buf.fill(0);
+                    if (void 0 !== fill) if ('string' == typeof encoding) buf.fill(fill, encoding);
+                    else buf.fill(fill);
+                    else buf.fill(0);
                     return buf;
                 };
                 SafeBuffer.allocUnsafe = function(size) {
@@ -3439,10 +3421,8 @@
                     if (--j < i || -2 === nb) return 0;
                     nb = utf8CheckByte(buf[j]);
                     if (nb >= 0) {
-                        if (nb > 0) {
-                            if (2 === nb) nb = 0;
-                            else self1.lastNeed = nb - 3;
-                        }
+                        if (nb > 0) if (2 === nb) nb = 0;
+                        else self1.lastNeed = nb - 3;
                         return nb;
                     }
                     return 0;
@@ -3832,13 +3812,12 @@
                     if (void 0 === events) return this;
                     list = events[type];
                     if (void 0 === list) return this;
-                    if (list === listener || list.listener === listener) {
-                        if (0 === --this._eventsCount) this._events = Object.create(null);
-                        else {
-                            delete events[type];
-                            if (events.removeListener) this.emit('removeListener', type, list.listener || listener);
-                        }
-                    } else if ('function' != typeof list) {
+                    if (list === listener || list.listener === listener) if (0 === --this._eventsCount) this._events = Object.create(null);
+                    else {
+                        delete events[type];
+                        if (events.removeListener) this.emit('removeListener', type, list.listener || listener);
+                    }
+                    else if ('function' != typeof list) {
                         position = -1;
                         for(i = list.length - 1; i >= 0; i--)if (list[i] === listener || list[i].listener === listener) {
                             originalListener = list[i].listener;
@@ -3862,10 +3841,8 @@
                         if (0 === arguments.length) {
                             this._events = Object.create(null);
                             this._eventsCount = 0;
-                        } else if (void 0 !== events[type]) {
-                            if (0 === --this._eventsCount) this._events = Object.create(null);
-                            else delete events[type];
-                        }
+                        } else if (void 0 !== events[type]) if (0 === --this._eventsCount) this._events = Object.create(null);
+                        else delete events[type];
                         return this;
                     }
                     if (0 === arguments.length) {
@@ -3956,10 +3933,9 @@
                     if ('function' == typeof emitter.on) eventTargetAgnosticAddListener(emitter, 'error', handler, flags);
                 }
                 function eventTargetAgnosticAddListener(emitter, name, listener, flags) {
-                    if ('function' == typeof emitter.on) {
-                        if (flags.once) emitter.once(name, listener);
-                        else emitter.on(name, listener);
-                    } else if ('function' == typeof emitter.addEventListener) emitter.addEventListener(name, function wrapListener(arg) {
+                    if ('function' == typeof emitter.on) if (flags.once) emitter.once(name, listener);
+                    else emitter.on(name, listener);
+                    else if ('function' == typeof emitter.addEventListener) emitter.addEventListener(name, function wrapListener(arg) {
                         if (flags.once) emitter.removeEventListener(name, wrapListener);
                         listener(arg);
                     });
@@ -4000,23 +3976,22 @@
                 }
                 function setReplace(replace, val, k, parent) {
                     var propertyDescriptor = Object.getOwnPropertyDescriptor(parent, k);
-                    if (void 0 !== propertyDescriptor.get) {
-                        if (propertyDescriptor.configurable) {
-                            Object.defineProperty(parent, k, {
-                                value: replace
-                            });
-                            arr.push([
-                                parent,
-                                k,
-                                val,
-                                propertyDescriptor
-                            ]);
-                        } else replacerStack.push([
-                            val,
+                    if (void 0 !== propertyDescriptor.get) if (propertyDescriptor.configurable) {
+                        Object.defineProperty(parent, k, {
+                            value: replace
+                        });
+                        arr.push([
+                            parent,
                             k,
-                            replace
+                            val,
+                            propertyDescriptor
                         ]);
-                    } else {
+                    } else replacerStack.push([
+                        val,
+                        k,
+                        replace
+                    ]);
+                    else {
                         parent[k] = replace;
                         arr.push([
                             parent,
@@ -4140,20 +4115,16 @@
                 var toStr = Object.prototype.toString;
                 var hasOwnProperty = Object.prototype.hasOwnProperty;
                 var forEachArray = function(array, iterator, receiver) {
-                    for(var i = 0, len = array.length; i < len; i++)if (hasOwnProperty.call(array, i)) {
-                        if (null == receiver) iterator(array[i], i, array);
-                        else iterator.call(receiver, array[i], i, array);
-                    }
+                    for(var i = 0, len = array.length; i < len; i++)if (hasOwnProperty.call(array, i)) if (null == receiver) iterator(array[i], i, array);
+                    else iterator.call(receiver, array[i], i, array);
                 };
                 var forEachString = function(string, iterator, receiver) {
                     for(var i = 0, len = string.length; i < len; i++)if (null == receiver) iterator(string.charAt(i), i, string);
                     else iterator.call(receiver, string.charAt(i), i, string);
                 };
                 var forEachObject = function(object, iterator, receiver) {
-                    for(var k in object)if (hasOwnProperty.call(object, k)) {
-                        if (null == receiver) iterator(object[k], k, object);
-                        else iterator.call(receiver, object[k], k, object);
-                    }
+                    for(var k in object)if (hasOwnProperty.call(object, k)) if (null == receiver) iterator(object[k], k, object);
+                    else iterator.call(receiver, object[k], k, object);
                 };
                 var forEach = function(list, iterator, thisArg) {
                     if (!isCallable(iterator)) throw new TypeError('iterator must be a function');
@@ -5181,7 +5152,7 @@
                         if (inspectSymbol && 'function' == typeof obj[inspectSymbol] && utilInspect) return utilInspect(obj, {
                             depth: maxDepth - depth
                         });
-                        if ('symbol' !== customInspect && 'function' == typeof obj.inspect) return obj.inspect();
+                        else if ('symbol' !== customInspect && 'function' == typeof obj.inspect) return obj.inspect();
                     }
                     if (isMap(obj)) {
                         var mapParts = [];
@@ -5418,15 +5389,10 @@
                         symMap = {};
                         for(var k = 0; k < syms.length; k++)symMap['$' + syms[k]] = syms[k];
                     }
-                    for(var key in obj){
-                        if (!!has(obj, key)) {
-                            if (!isArr || String(Number(key)) !== key || !(key < obj.length)) {
-                                if (!(hasShammedSymbols && symMap['$' + key] instanceof Symbol)) {
-                                    if ($test.call(/[^\w$]/, key)) xs.push(inspect(key, obj) + ': ' + inspect(obj[key], obj));
-                                    else xs.push(key + ': ' + inspect(obj[key], obj));
-                                }
-                            }
-                        }
+                    for(var key in obj)if (has(obj, key)) {
+                        if (!isArr || String(Number(key)) !== key || !(key < obj.length)) if (hasShammedSymbols && symMap['$' + key] instanceof Symbol) continue;
+                        else if ($test.call(/[^\w$]/, key)) xs.push(inspect(key, obj) + ': ' + inspect(obj[key], obj));
+                        else xs.push(key + ': ' + inspect(obj[key], obj));
                     }
                     if ('function' == typeof gOPS) {
                         for(var j = 0; j < syms.length; j++)if (isEnumerable.call(obj, syms[j])) xs.push('[' + inspect(syms[j]) + ']: ' + inspect(obj[syms[j]], obj));
@@ -5959,10 +5925,8 @@
                     while(void 0 !== (tmpSc = tmpSc.get(sentinel)) && !findFlag){
                         var pos = tmpSc.get(object);
                         step += 1;
-                        if (void 0 !== pos) {
-                            if (pos === step) throw new RangeError('Cyclic object value');
-                            findFlag = true;
-                        }
+                        if (void 0 !== pos) if (pos === step) throw new RangeError('Cyclic object value');
+                        else findFlag = true;
                         if (void 0 === tmpSc.get(sentinel)) step = 0;
                     }
                     if ('function' == typeof filter) obj = filter(prefix, obj);
@@ -6084,10 +6048,8 @@
                     }
                     var joined = keys.join(options.delimiter);
                     var prefix = true === options.addQueryPrefix ? '?' : '';
-                    if (options.charsetSentinel) {
-                        if ('iso-8859-1' === options.charset) prefix += 'utf8=%26%2310003%3B&';
-                        else prefix += 'utf8=%E2%9C%93&';
-                    }
+                    if (options.charsetSentinel) if ('iso-8859-1' === options.charset) prefix += 'utf8=%26%2310003%3B&';
+                    else prefix += 'utf8=%E2%9C%93&';
                     return joined.length > 0 ? prefix + joined : '';
                 };
             },
@@ -7581,15 +7543,13 @@
                 }
                 exports1.debuglog = function(set) {
                     set = set.toUpperCase();
-                    if (!debugs[set]) {
-                        if (debugEnvRegex.test(set)) {
-                            var pid = process.pid;
-                            debugs[set] = function() {
-                                var msg = exports1.format.apply(exports1, arguments);
-                                console.error('%s %d: %s', set, pid, msg);
-                            };
-                        } else debugs[set] = function() {};
-                    }
+                    if (!debugs[set]) if (debugEnvRegex.test(set)) {
+                        var pid = process.pid;
+                        debugs[set] = function() {
+                            var msg = exports1.format.apply(exports1, arguments);
+                            console.error('%s %d: %s', set, pid, msg);
+                        };
+                    } else debugs[set] = function() {};
                     return debugs[set];
                 };
                 function inspect(obj, opts) {
@@ -7728,10 +7688,8 @@
                     if (isDate(value)) base = ' ' + Date.prototype.toUTCString.call(value);
                     if (isError(value)) base = ' ' + formatError(value);
                     if (0 === keys.length && (!array || 0 == value.length)) return braces[0] + base + braces[1];
-                    if (recurseTimes < 0) {
-                        if (isRegExp(value)) return ctx.stylize(RegExp.prototype.toString.call(value), 'regexp');
-                        return ctx.stylize('[Object]', 'special');
-                    }
+                    if (recurseTimes < 0) if (isRegExp(value)) return ctx.stylize(RegExp.prototype.toString.call(value), 'regexp');
+                    else return ctx.stylize('[Object]', 'special');
                     ctx.seen.push(value);
                     var output;
                     output = array ? formatArray(ctx, value, recurseTimes, visibleKeys, keys) : keys.map(function(key) {
@@ -7770,16 +7728,14 @@
                     if (desc.get) str = desc.set ? ctx.stylize('[Getter/Setter]', 'special') : ctx.stylize('[Getter]', 'special');
                     else if (desc.set) str = ctx.stylize('[Setter]', 'special');
                     if (!hasOwnProperty(visibleKeys, key)) name = '[' + key + ']';
-                    if (!str) {
-                        if (ctx.seen.indexOf(desc.value) < 0) {
-                            str = isNull(recurseTimes) ? formatValue(ctx, desc.value, null) : formatValue(ctx, desc.value, recurseTimes - 1);
-                            if (str.indexOf('\n') > -1) str = array ? str.split('\n').map(function(line) {
-                                return '  ' + line;
-                            }).join('\n').slice(2) : '\n' + str.split('\n').map(function(line) {
-                                return '   ' + line;
-                            }).join('\n');
-                        } else str = ctx.stylize('[Circular]', 'special');
-                    }
+                    if (!str) if (ctx.seen.indexOf(desc.value) < 0) {
+                        str = isNull(recurseTimes) ? formatValue(ctx, desc.value, null) : formatValue(ctx, desc.value, recurseTimes - 1);
+                        if (str.indexOf('\n') > -1) str = array ? str.split('\n').map(function(line) {
+                            return '  ' + line;
+                        }).join('\n').slice(2) : '\n' + str.split('\n').map(function(line) {
+                            return '   ' + line;
+                        }).join('\n');
+                    } else str = ctx.stylize('[Circular]', 'special');
                     if (isUndefined(name)) {
                         if (array && key.match(/^\d+$/)) return str;
                         name = JSON.stringify('' + key);
@@ -8098,13 +8054,12 @@
                 ];
                 function prependListener(emitter, event, fn) {
                     if ('function' == typeof emitter.prependListener) return emitter.prependListener(event, fn);
-                    if (emitter._events && emitter._events[event]) {
-                        if (isArray(emitter._events[event])) emitter._events[event].unshift(fn);
-                        else emitter._events[event] = [
-                            fn,
-                            emitter._events[event]
-                        ];
-                    } else emitter.on(event, fn);
+                    if (emitter._events && emitter._events[event]) if (isArray(emitter._events[event])) emitter._events[event].unshift(fn);
+                    else emitter._events[event] = [
+                        fn,
+                        emitter._events[event]
+                    ];
+                    else emitter.on(event, fn);
                 }
                 function ReadableState(options, stream) {
                     Duplex = Duplex || __webpack_require__("./node_modules/websocket-stream/node_modules/readable-stream/lib/_stream_duplex.js");
@@ -8199,10 +8154,9 @@
                         if (er) stream.emit('error', er);
                         else if (state.objectMode || chunk && chunk.length > 0) {
                             if ('string' != typeof chunk && !state.objectMode && Object.getPrototypeOf(chunk) !== Buffer.prototype) chunk = _uint8ArrayToBuffer(chunk);
-                            if (addToFront) {
-                                if (state.endEmitted) stream.emit('error', new Error('stream.unshift() after end event'));
-                                else addChunk(stream, state, chunk, true);
-                            } else if (state.ended) stream.emit('error', new Error('stream.push() after EOF'));
+                            if (addToFront) if (state.endEmitted) stream.emit('error', new Error('stream.unshift() after end event'));
+                            else addChunk(stream, state, chunk, true);
+                            else if (state.ended) stream.emit('error', new Error('stream.push() after EOF'));
                             else {
                                 state.reading = false;
                                 if (state.decoder && !encoding) {
@@ -8261,10 +8215,8 @@
                 function howMuchToRead(n, state) {
                     if (n <= 0 || 0 === state.length && state.ended) return 0;
                     if (state.objectMode) return 1;
-                    if (n !== n) {
-                        if (state.flowing && state.length) return state.buffer.head.data.length;
-                        return state.length;
-                    }
+                    if (n !== n) if (state.flowing && state.length) return state.buffer.head.data.length;
+                    else return state.length;
                     if (n > state.highWaterMark) state.highWaterMark = computeNewHighWaterMark(n);
                     if (n <= state.length) return n;
                     if (!state.ended) {
@@ -9147,15 +9099,13 @@
                     });
                 }
                 function prefinish(stream, state) {
-                    if (!state.prefinished && !state.finalCalled) {
-                        if ('function' == typeof stream._final) {
-                            state.pendingcb++;
-                            state.finalCalled = true;
-                            pna.nextTick(callFinal, stream, state);
-                        } else {
-                            state.prefinished = true;
-                            stream.emit('prefinish');
-                        }
+                    if (!state.prefinished && !state.finalCalled) if ('function' == typeof stream._final) {
+                        state.pendingcb++;
+                        state.finalCalled = true;
+                        pna.nextTick(callFinal, stream, state);
+                    } else {
+                        state.prefinished = true;
+                        stream.emit('prefinish');
                     }
                 }
                 function finishMaybe(stream, state) {
@@ -9172,10 +9122,8 @@
                 function endWritable(stream, state, cb) {
                     state.ending = true;
                     finishMaybe(stream, state);
-                    if (cb) {
-                        if (state.finished) pna.nextTick(cb);
-                        else stream.once('finish', cb);
-                    }
+                    if (cb) if (state.finished) pna.nextTick(cb);
+                    else stream.once('finish', cb);
                     state.ended = true;
                     stream.writable = false;
                 }
@@ -9292,27 +9240,24 @@
                     var writableDestroyed = this._writableState && this._writableState.destroyed;
                     if (readableDestroyed || writableDestroyed) {
                         if (cb) cb(err);
-                        else if (err) {
-                            if (this._writableState) {
-                                if (!this._writableState.errorEmitted) {
-                                    this._writableState.errorEmitted = true;
-                                    pna.nextTick(emitErrorNT, this, err);
-                                }
-                            } else pna.nextTick(emitErrorNT, this, err);
-                        }
+                        else if (err) if (this._writableState) {
+                            if (!this._writableState.errorEmitted) {
+                                this._writableState.errorEmitted = true;
+                                pna.nextTick(emitErrorNT, this, err);
+                            }
+                        } else pna.nextTick(emitErrorNT, this, err);
                         return this;
                     }
                     if (this._readableState) this._readableState.destroyed = true;
                     if (this._writableState) this._writableState.destroyed = true;
                     this._destroy(err || null, function(err) {
-                        if (!cb && err) {
-                            if (_this._writableState) {
-                                if (!_this._writableState.errorEmitted) {
-                                    _this._writableState.errorEmitted = true;
-                                    pna.nextTick(emitErrorNT, _this, err);
-                                }
-                            } else pna.nextTick(emitErrorNT, _this, err);
-                        } else if (cb) cb(err);
+                        if (!cb && err) if (_this._writableState) {
+                            if (!_this._writableState.errorEmitted) {
+                                _this._writableState.errorEmitted = true;
+                                pna.nextTick(emitErrorNT, _this, err);
+                            }
+                        } else pna.nextTick(emitErrorNT, _this, err);
+                        else if (cb) cb(err);
                     });
                     return this;
                 }
@@ -9375,10 +9320,9 @@
                 SafeBuffer.alloc = function(size, fill, encoding) {
                     if ('number' != typeof size) throw new TypeError('Argument must be a number');
                     var buf = Buffer(size);
-                    if (void 0 !== fill) {
-                        if ('string' == typeof encoding) buf.fill(fill, encoding);
-                        else buf.fill(fill);
-                    } else buf.fill(0);
+                    if (void 0 !== fill) if ('string' == typeof encoding) buf.fill(fill, encoding);
+                    else buf.fill(fill);
+                    else buf.fill(0);
                     return buf;
                 };
                 SafeBuffer.allocUnsafe = function(size) {
@@ -9517,10 +9461,8 @@
                     if (--j < i || -2 === nb) return 0;
                     nb = utf8CheckByte(buf[j]);
                     if (nb >= 0) {
-                        if (nb > 0) {
-                            if (2 === nb) nb = 0;
-                            else self1.lastNeed = nb - 3;
-                        }
+                        if (nb > 0) if (2 === nb) nb = 0;
+                        else self1.lastNeed = nb - 3;
                         return nb;
                     }
                     return 0;
@@ -9825,7 +9767,7 @@
                     }
                 }
             },
-            "../../node_modules/@rsbuild/core/compiled/css-loader/index.js??ruleSet[1].rules[9].use[1]!builtin:lightningcss-loader??ruleSet[1].rules[9].use[2]!../../node_modules/stylus-loader/dist/cjs.js??ruleSet[1].rules[9].use[3]!./src/styles/main.styl": function(module1, __webpack_exports__, __webpack_require__) {
+            "../../node_modules/@rsbuild/core/compiled/css-loader/index.js??ruleSet[1].rules[11].use[1]!builtin:lightningcss-loader??ruleSet[1].rules[11].use[2]!../../node_modules/stylus-loader/dist/cjs.js??ruleSet[1].rules[11].use[3]!./src/styles/main.styl": function(module1, __webpack_exports__, __webpack_require__) {
                 "use strict";
                 __webpack_require__.d(__webpack_exports__, {
                     Z: ()=>__WEBPACK_DEFAULT_EXPORT__
@@ -9837,7 +9779,143 @@
                 var ___CSS_LOADER_EXPORT___ = _node_modules_rsbuild_core_compiled_css_loader_api_js__WEBPACK_IMPORTED_MODULE_1___default()(_node_modules_rsbuild_core_compiled_css_loader_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default());
                 ___CSS_LOADER_EXPORT___.push([
                     module1.id,
-                    '@keyframes blink{0%{opacity:.9}35%{opacity:.9}50%{opacity:.1}85%{opacity:.1}to{opacity:.9}}.videomail .visuals{position:relative}.videomail .visuals video.replay{width:100%;height:100%}.videomail .countdown,.videomail .recordTimer,.videomail .recordNote,.videomail .pausedHeader,.videomail .pausedHint{height:auto;margin:0}.videomail .countdown,.videomail .recordTimer,.videomail .recordNote,.videomail .paused,.videomail .facingMode,.videomail noscript{z-index:100;position:absolute}.videomail .countdown,.videomail .recordTimer,.videomail .recordNote,.videomail .pausedHeader,.videomail .pausedHint,.videomail noscript{font-weight:700}.videomail .countdown,.videomail .paused,.videomail noscript{width:100%;top:50%;transform:translateY(-50%)}.videomail .pausedHeader,.videomail .pausedHint,.videomail .countdown{text-align:center;letter-spacing:4px;text-shadow:-2px 0 #fff,0 2px #fff,2px 0 #fff,0 -2px #fff}.videomail .pausedHeader,.videomail .countdown{opacity:.9;font-size:460%}.videomail .pausedHint{font-size:150%}.videomail .facingMode{color:#f5f5f5e6;z-index:10;background:#1e1e1e80;border:none;outline:none;padding:.1em .3em;font-family:monospace;font-size:1.2em;transition:all .2s;bottom:.6em;right:.7em}.videomail .facingMode:hover{cursor:pointer;background:#323232b3}.videomail .recordTimer,.videomail .recordNote{color:#00d814;opacity:.9;background:#0a0a0acc;padding:.3em .4em;font-family:monospace;transition:all 1s;right:.7em}.videomail .recordTimer.near,.videomail .recordNote.near{color:#eb9369}.videomail .recordTimer.nigh,.videomail .recordNote.nigh{color:#ea4b2a}.videomail .recordTimer{top:.7em}.videomail .recordNote{top:3.6em}.videomail .recordNote:before{content:"REC";animation:1s infinite blink}.videomail .notifier{box-sizing:border-box;overflow:hidden}.videomail .radioGroup{display:block}.videomail .radioGroup label{cursor:pointer}.videomail video{margin-bottom:0}.videomail video.userMedia{background-color:#3232321a}',
+                    `@keyframes blink {
+  0% {
+    opacity: .9;
+  }
+
+  35% {
+    opacity: .9;
+  }
+
+  50% {
+    opacity: .1;
+  }
+
+  85% {
+    opacity: .1;
+  }
+
+  100% {
+    opacity: .9;
+  }
+}
+
+.videomail .visuals {
+  position: relative;
+}
+
+.videomail .visuals video.replay {
+  width: 100%;
+  height: 100%;
+}
+
+.videomail .countdown, .videomail .recordTimer, .videomail .recordNote, .videomail .pausedHeader, .videomail .pausedHint {
+  height: auto;
+  margin: 0;
+}
+
+.videomail .countdown, .videomail .recordTimer, .videomail .recordNote, .videomail .paused, .videomail .facingMode, .videomail noscript {
+  z-index: 100;
+  position: absolute;
+}
+
+.videomail .countdown, .videomail .recordTimer, .videomail .recordNote, .videomail .pausedHeader, .videomail .pausedHint, .videomail noscript {
+  font-weight: bold;
+}
+
+.videomail .countdown, .videomail .paused, .videomail noscript {
+  width: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.videomail .pausedHeader, .videomail .pausedHint, .videomail .countdown {
+  text-align: center;
+  letter-spacing: 4px;
+  text-shadow: -2px 0 #fff, 0 2px #fff, 2px 0 #fff, 0 -2px #fff;
+}
+
+.videomail .pausedHeader, .videomail .countdown {
+  opacity: .9;
+  font-size: 460%;
+}
+
+.videomail .pausedHint {
+  font-size: 150%;
+}
+
+.videomail .facingMode {
+  color: #f5f5f5e6;
+  z-index: 10;
+  background: #1e1e1e80;
+  border: none;
+  outline: none;
+  padding: .1em .3em;
+  font-family: monospace;
+  font-size: 1.2em;
+  transition: all .2s;
+  bottom: .6em;
+  right: .7em;
+}
+
+.videomail .facingMode:hover {
+  cursor: pointer;
+  background: #323232b3;
+}
+
+.videomail .recordTimer, .videomail .recordNote {
+  color: #00d814;
+  opacity: .9;
+  background: #0a0a0acc;
+  padding: .3em .4em;
+  font-family: monospace;
+  transition: all 1s;
+  right: .7em;
+}
+
+.videomail .recordTimer.near, .videomail .recordNote.near {
+  color: #eb9369;
+}
+
+.videomail .recordTimer.nigh, .videomail .recordNote.nigh {
+  color: #ea4b2a;
+}
+
+.videomail .recordTimer {
+  top: .7em;
+}
+
+.videomail .recordNote {
+  top: 3.6em;
+}
+
+.videomail .recordNote:before {
+  content: "REC";
+  animation: 1s infinite blink;
+}
+
+.videomail .notifier {
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.videomail .radioGroup {
+  display: block;
+}
+
+.videomail .radioGroup label {
+  cursor: pointer;
+}
+
+.videomail video {
+  margin-bottom: 0;
+}
+
+.videomail video.userMedia {
+  background-color: #3232321a;
+}
+`,
                     ""
                 ]);
                 const __WEBPACK_DEFAULT_EXPORT__ = ___CSS_LOADER_EXPORT___;
@@ -9882,25 +9960,19 @@
                         for(var _k = 0; _k < modules.length; _k++){
                             var item = [].concat(modules[_k]);
                             if (!dedupe || !alreadyImportedModules[item[0]]) {
-                                if (void 0 !== layer) {
-                                    if (void 0 === item[5]) item[5] = layer;
-                                    else {
-                                        item[1] = "@layer".concat(item[5].length > 0 ? " ".concat(item[5]) : "", " {").concat(item[1], "}");
-                                        item[5] = layer;
-                                    }
+                                if (void 0 !== layer) if (void 0 === item[5]) item[5] = layer;
+                                else {
+                                    item[1] = "@layer".concat(item[5].length > 0 ? " ".concat(item[5]) : "", " {").concat(item[1], "}");
+                                    item[5] = layer;
                                 }
-                                if (media) {
-                                    if (item[2]) {
-                                        item[1] = "@media ".concat(item[2], " {").concat(item[1], "}");
-                                        item[2] = media;
-                                    } else item[2] = media;
-                                }
-                                if (supports) {
-                                    if (item[4]) {
-                                        item[1] = "@supports (".concat(item[4], ") {").concat(item[1], "}");
-                                        item[4] = supports;
-                                    } else item[4] = "".concat(supports);
-                                }
+                                if (media) if (item[2]) {
+                                    item[1] = "@media ".concat(item[2], " {").concat(item[1], "}");
+                                    item[2] = media;
+                                } else item[2] = media;
+                                if (supports) if (item[4]) {
+                                    item[1] = "@supports (".concat(item[4], ") {").concat(item[1], "}");
+                                    item[4] = supports;
+                                } else item[4] = "".concat(supports);
                                 list.push(item);
                             }
                         }
@@ -10164,6 +10236,127 @@
             };
             var client = __webpack_require__("./node_modules/superagent/lib/client.js");
             var client_default = /*#__PURE__*/ __webpack_require__.n(client);
+            const list = [
+                Error,
+                EvalError,
+                RangeError,
+                ReferenceError,
+                SyntaxError,
+                TypeError,
+                URIError,
+                AggregateError,
+                globalThis.DOMException,
+                globalThis.AssertionError,
+                globalThis.SystemError
+            ].filter(Boolean).map((constructor)=>[
+                    constructor.name,
+                    constructor
+                ]);
+            const errorConstructors = new Map(list);
+            const errorProperties = [
+                {
+                    property: 'name',
+                    enumerable: false
+                },
+                {
+                    property: 'message',
+                    enumerable: false
+                },
+                {
+                    property: 'stack',
+                    enumerable: false
+                },
+                {
+                    property: 'code',
+                    enumerable: true
+                },
+                {
+                    property: 'cause',
+                    enumerable: false
+                },
+                {
+                    property: 'errors',
+                    enumerable: false
+                }
+            ];
+            const toJsonWasCalled = new WeakSet();
+            const toJSON = (from)=>{
+                toJsonWasCalled.add(from);
+                const json = from.toJSON();
+                toJsonWasCalled.delete(from);
+                return json;
+            };
+            const newError = (name)=>{
+                const ErrorConstructor = errorConstructors.get(name) ?? Error;
+                return ErrorConstructor === AggregateError ? new ErrorConstructor([]) : new ErrorConstructor();
+            };
+            const destroyCircular = ({ from, seen, to, forceEnumerable, maxDepth, depth, useToJSON, serialize })=>{
+                if (!to) to = Array.isArray(from) ? [] : !serialize && isErrorLike(from) ? newError(from.name) : {};
+                seen.push(from);
+                if (depth >= maxDepth) return to;
+                if (useToJSON && 'function' == typeof from.toJSON && !toJsonWasCalled.has(from)) return toJSON(from);
+                const continueDestroyCircular = (value)=>destroyCircular({
+                        from: value,
+                        seen: [
+                            ...seen
+                        ],
+                        forceEnumerable,
+                        maxDepth,
+                        depth,
+                        useToJSON,
+                        serialize
+                    });
+                for (const [key, value] of Object.entries(from)){
+                    if (value && value instanceof Uint8Array && 'Buffer' === value.constructor.name) {
+                        to[key] = '[object Buffer]';
+                        continue;
+                    }
+                    if (null !== value && 'object' == typeof value && 'function' == typeof value.pipe) {
+                        to[key] = '[object Stream]';
+                        continue;
+                    }
+                    if ('function' != typeof value) {
+                        if (!value || 'object' != typeof value) {
+                            try {
+                                to[key] = value;
+                            } catch  {}
+                            continue;
+                        }
+                        if (!seen.includes(from[key])) {
+                            depth++;
+                            to[key] = continueDestroyCircular(from[key]);
+                            continue;
+                        }
+                        to[key] = '[Circular]';
+                    }
+                }
+                if (serialize || to instanceof Error) {
+                    for (const { property, enumerable } of errorProperties)if (void 0 !== from[property] && null !== from[property]) Object.defineProperty(to, property, {
+                        value: isErrorLike(from[property]) || Array.isArray(from[property]) ? continueDestroyCircular(from[property]) : from[property],
+                        enumerable: forceEnumerable ? true : enumerable,
+                        configurable: true,
+                        writable: true
+                    });
+                }
+                return to;
+            };
+            function serializeError(value, options = {}) {
+                const { maxDepth = Number.POSITIVE_INFINITY, useToJSON = true } = options;
+                if ('object' == typeof value && null !== value) return destroyCircular({
+                    from: value,
+                    seen: [],
+                    forceEnumerable: true,
+                    maxDepth,
+                    depth: 0,
+                    useToJSON,
+                    serialize: true
+                });
+                if ('function' == typeof value) return `[Function: ${value.name || 'anonymous'}]`;
+                return value;
+            }
+            function isErrorLike(value) {
+                return Boolean(value) && 'object' == typeof value && 'string' == typeof value.name && 'string' == typeof value.message && 'string' == typeof value.stack;
+            }
             var util = __webpack_require__("./node_modules/util/util.js");
             var util_default = /*#__PURE__*/ __webpack_require__.n(util);
             function inspect(element) {
@@ -10276,13 +10469,11 @@
                             match = matches[++k];
                             q = props[p];
                             if (typeof q === OBJ_TYPE && q.length > 0) {
-                                if (2 === q.length) {
-                                    if (typeof q[1] == FUNC_TYPE) this[q[0]] = q[1].call(this, match);
-                                    else this[q[0]] = q[1];
-                                } else if (3 === q.length) {
-                                    if (typeof q[1] !== FUNC_TYPE || q[1].exec && q[1].test) this[q[0]] = match ? match.replace(q[1], q[2]) : void 0;
-                                    else this[q[0]] = match ? q[1].call(this, match, q[2]) : void 0;
-                                } else if (4 === q.length) this[q[0]] = match ? q[3].call(this, match.replace(q[1], q[2])) : void 0;
+                                if (2 === q.length) if (typeof q[1] == FUNC_TYPE) this[q[0]] = q[1].call(this, match);
+                                else this[q[0]] = q[1];
+                                else if (3 === q.length) if (typeof q[1] !== FUNC_TYPE || q[1].exec && q[1].test) this[q[0]] = match ? match.replace(q[1], q[2]) : void 0;
+                                else this[q[0]] = match ? q[1].call(this, match, q[2]) : void 0;
+                                else if (4 === q.length) this[q[0]] = match ? q[3].call(this, match.replace(q[1], q[2])) : void 0;
                             } else this[q] = match ? match : void 0;
                         }
                     }
@@ -13523,7 +13714,7 @@
                 var elementNameLookup = {};
                 for(var i = 0, l = form.elements.length; i < l; i++){
                     var element = form.elements[i];
-                    if (!IGNORED_ELEMENT_TYPES[element.type] && (!element.disabled || !!options.includeDisabled)) {
+                    if (!IGNORED_ELEMENT_TYPES[element.type] && (!element.disabled || options.includeDisabled)) {
                         elementName = element.name || element.id;
                         if (elementName && !elementNameLookup[elementName]) {
                             elementNames.push(elementName);
@@ -13550,7 +13741,7 @@
                 if (!NODE_LIST_CLASSES[es_toString.call(element)]) return getFormElementValue(element, options.trim);
                 var data = [];
                 var allRadios = true;
-                for(var i = 0, l = element.length; i < l; i++)if (!element[i].disabled || !!options.includeDisabled) {
+                for(var i = 0, l = element.length; i < l; i++)if (!element[i].disabled || options.includeDisabled) {
                     if (allRadios && 'radio' !== element[i].type) allRadios = false;
                     var value = getFormElementValue(element[i], options.trim);
                     if (null != value) data = data.concat(value);
@@ -13752,10 +13943,8 @@
                     this.formElement.setAttribute("method", "put");
                 }
                 setDisabled(disabled, buttonsToo) {
-                    for (const formControl of this.formElement.elements)if (buttonsToo || html_isNotButton(formControl)) {
-                        if (disabled) formControl.setAttribute("disabled", "disabled");
-                        else formControl.removeAttribute("disabled");
-                    }
+                    for (const formControl of this.formElement.elements)if (buttonsToo || html_isNotButton(formControl)) if (disabled) formControl.setAttribute("disabled", "disabled");
+                    else formControl.removeAttribute("disabled");
                 }
                 hideAll() {
                     for (const formElement of this.formElement.elements)hidden_default()(formElement, true);
@@ -13909,7 +14098,7 @@
             }
             const wrappers_form = Form;
             var package_namespaceObject = {
-                i8: "10.2.13"
+                i8: "10.2.22"
             };
             function findOriginalExc(exc) {
                 if (exc instanceof Error && "response" in exc) {
@@ -14001,7 +14190,7 @@
                             cpu: err.cpu,
                             device: err.device,
                             engine: err.engine,
-                            err: err.err,
+                            err: serializeError(err.err),
                             explanation: err.explanation,
                             location: err.location,
                             logLines: err.logLines,
@@ -14017,7 +14206,7 @@
                             stack: err.stack,
                             versions: {
                                 videomailClient: package_namespaceObject.i8,
-                                ninjaFormPlugin: this.options.versions?.ninjaFormPlugin
+                                videomailNinjaFormPlugin: this.options.versions?.videomailNinjaFormPlugin
                             }
                         };
                         await client_default()(form_FormMethod.POST, url).query(queryParams).set("Timezone-Id", this.timezoneId).send(fullVideomailErrorData).timeout(this.options.timeouts.connection);
@@ -15045,17 +15234,15 @@
                     if (!this.getMessageElement()) {
                         this.messageElement = document.createElement("h2");
                         this.messageElement.id = NOTIFIER_MESSAGE_ID;
-                        if (this.notifyElement) {
-                            if (this.explanationElement) this.notifyElement.insertBefore(this.messageElement, this.explanationElement);
-                            else this.notifyElement.appendChild(this.messageElement);
-                        } else this.options.logger.warn(`Unable to show message ${message} because notifyElement is empty`);
+                        if (this.notifyElement) if (this.explanationElement) this.notifyElement.insertBefore(this.messageElement, this.explanationElement);
+                        else this.notifyElement.appendChild(this.messageElement);
+                        else this.options.logger.warn(`Unable to show message ${message} because notifyElement is empty`);
                     }
-                    if (message.length > 0) {
-                        if (this.messageElement) {
-                            const problem = messageOptions?.problem;
-                            this.messageElement.innerHTML = (problem ? "&#x2639; " : "") + message;
-                        } else this.options.logger.warn("There is no message element for displaying a message");
-                    } else this.options.logger.warn("Not going to update notifierMessage element because message is empty");
+                    if (message.length > 0) if (this.messageElement) {
+                        const problem = messageOptions?.problem;
+                        this.messageElement.innerHTML = (problem ? "&#x2639; " : "") + message;
+                    } else this.options.logger.warn("There is no message element for displaying a message");
+                    else this.options.logger.warn("Not going to update notifierMessage element because message is empty");
                     hidden_default()(this.messageElement, false);
                 }
                 setExplanation(explanation) {
@@ -15343,7 +15530,7 @@
                 reportErrors: true,
                 fakeUaString: void 0,
                 versions: {
-                    ninjaFormPlugin: void 0
+                    videomailNinjaFormPlugin: void 0
                 }
             };
             const src_options = options_options;
@@ -15623,18 +15810,17 @@
                     };
                     try {
                         const videoTrack = media_getFirstVideoTrack(localMediaStream);
-                        if (videoTrack) {
-                            if (videoTrack.enabled) {
-                                let description = "";
-                                if (videoTrack.label && videoTrack.label.length > 0) description = description.concat(videoTrack.label);
-                                description = description.concat(` with enabled=${videoTrack.enabled}, muted=${videoTrack.muted}, readyState=${videoTrack.readyState}`);
-                                this.options.logger.debug(`UserMedia: ${videoTrack.kind} detected. ${description}`);
-                            } else throw error_createError({
-                                message: "Webcam is disabled",
-                                explanation: "The video track seems to be disabled. Enable it in your system.",
-                                options: this.options
-                            });
-                        } else this.options.logger.debug("UserMedia: detected (but no video tracks exist");
+                        if (videoTrack) if (videoTrack.enabled) {
+                            let description = "";
+                            if (videoTrack.label && videoTrack.label.length > 0) description = description.concat(videoTrack.label);
+                            description = description.concat(` with enabled=${videoTrack.enabled}, muted=${videoTrack.muted}, readyState=${videoTrack.readyState}`);
+                            this.options.logger.debug(`UserMedia: ${videoTrack.kind} detected. ${description}`);
+                        } else throw error_createError({
+                            message: "Webcam is disabled",
+                            explanation: "The video track seems to be disabled. Enable it in your system.",
+                            options: this.options
+                        });
+                        else this.options.logger.debug("UserMedia: detected (but no video tracks exist");
                         this.rawVisualUserMedia?.addEventListener("loadedmetadata", onLoadedMetaData);
                         this.rawVisualUserMedia?.addEventListener("play", onPlay);
                         this.rawVisualUserMedia?.addEventListener("error", (err)=>{
@@ -15880,47 +16066,45 @@
                     this.facingMode = options.video.facingMode;
                 }
                 writeStream(buffer, opts) {
-                    if (this.stream) {
-                        if (this.stream.destroyed) {
-                            this.stopPings();
+                    if (this.stream) if (this.stream.destroyed) {
+                        this.stopPings();
+                        const err = error_createError({
+                            message: "Already disconnected",
+                            explanation: "Sorry, connection to the server has been destroyed. Please reload.",
+                            options: this.options
+                        });
+                        this.emit("ERROR", {
+                            err
+                        });
+                    } else {
+                        const onFlushedCallback = opts?.onFlushedCallback;
+                        try {
+                            this.stream.write(buffer, ()=>{
+                                if (!onFlushedCallback) return;
+                                try {
+                                    onFlushedCallback(opts);
+                                } catch (exc) {
+                                    const err = error_createError({
+                                        message: "Failed to write stream buffer",
+                                        explanation: `stream.write() failed because of ${pretty(exc)}`,
+                                        options: this.options,
+                                        exc
+                                    });
+                                    this.emit("ERROR", {
+                                        err
+                                    });
+                                }
+                            });
+                        } catch (exc) {
                             const err = error_createError({
-                                message: "Already disconnected",
-                                explanation: "Sorry, connection to the server has been destroyed. Please reload.",
-                                options: this.options
+                                message: "Failed writing to server",
+                                explanation: `stream.write() failed because of ${pretty(exc)}`,
+                                options: this.options,
+                                exc
                             });
                             this.emit("ERROR", {
                                 err
                             });
-                        } else {
-                            const onFlushedCallback = opts?.onFlushedCallback;
-                            try {
-                                this.stream.write(buffer, ()=>{
-                                    if (!onFlushedCallback) return;
-                                    try {
-                                        onFlushedCallback(opts);
-                                    } catch (exc) {
-                                        const err = error_createError({
-                                            message: "Failed to write stream buffer",
-                                            explanation: `stream.write() failed because of ${pretty(exc)}`,
-                                            options: this.options,
-                                            exc
-                                        });
-                                        this.emit("ERROR", {
-                                            err
-                                        });
-                                    }
-                                });
-                            } catch (exc) {
-                                const err = error_createError({
-                                    message: "Failed writing to server",
-                                    explanation: `stream.write() failed because of ${pretty(exc)}`,
-                                    options: this.options,
-                                    exc
-                                });
-                                this.emit("ERROR", {
-                                    err
-                                });
-                            }
                         }
                     }
                 }
@@ -16249,10 +16433,8 @@
                         switch(command.command){
                             case "ready":
                                 this.emit("SERVER_READY");
-                                if (!this.userMediaTimeout) {
-                                    if (this.options.loadUserMediaOnRecord) this.show();
-                                    else this.loadUserMedia();
-                                }
+                                if (!this.userMediaTimeout) if (this.options.loadUserMediaOnRecord) this.show();
+                                else this.loadUserMedia();
                                 break;
                             case "preview":
                                 this.preview(command.args);
@@ -16917,10 +17099,9 @@
                     if (!this.replayElement) return;
                     const tracks = this.replayElement.getElementsByTagName("track");
                     const firstTrack = tracks[0];
-                    if (firstTrack) {
-                        if (src) firstTrack.setAttribute("src", src);
-                        else this.replayElement.removeChild(firstTrack);
-                    } else {
+                    if (firstTrack) if (src) firstTrack.setAttribute("src", src);
+                    else this.replayElement.removeChild(firstTrack);
+                    else {
                         const track = document.createElement("track");
                         track.setAttribute("src", src);
                         track.src = src;
@@ -16935,10 +17116,9 @@
                     let source = this.getVideoSource(type);
                     let url = src;
                     if (url && bustCache) url += `?${Date.now()}`;
-                    if (source) {
-                        if (src) source.setAttribute("src", src);
-                        else this.replayElement.removeChild(source);
-                    } else if (src) {
+                    if (source) if (src) source.setAttribute("src", src);
+                    else this.replayElement.removeChild(source);
+                    else if (src) {
                         const { fps } = this.options.video;
                         const t = 1 / fps * 2;
                         source = document.createElement("source");
@@ -17081,15 +17261,13 @@
                     this.options.logger.debug(`Visuals: build (playerOnly = ${playerOnly}${parentElement ? `, parentElement="${pretty(parentElement)}"` : ""})`);
                     if (parentElement) this.visualsElement = parentElement.querySelector(`.${this.options.selectors.visualsClass}`);
                     else this.visualsElement = this.container.querySelector(`.${this.options.selectors.visualsClass}`);
-                    if (!this.visualsElement) {
-                        if (playerOnly && parentElement) this.visualsElement = parentElement;
-                        else {
-                            this.visualsElement = document.createElement("div");
-                            this.visualsElement.classList.add(this.options.selectors.visualsClass);
-                            const buttonsElement = this.container.querySelector(`.${this.options.selectors.buttonsClass}`);
-                            if (buttonsElement && !this.container.isOutsideElementOf(buttonsElement)) this.container.insertBefore(this.visualsElement, buttonsElement);
-                            else this.container.appendChild(this.visualsElement);
-                        }
+                    if (!this.visualsElement) if (playerOnly && parentElement) this.visualsElement = parentElement;
+                    else {
+                        this.visualsElement = document.createElement("div");
+                        this.visualsElement.classList.add(this.options.selectors.visualsClass);
+                        const buttonsElement = this.container.querySelector(`.${this.options.selectors.buttonsClass}`);
+                        if (buttonsElement && !this.container.isOutsideElementOf(buttonsElement)) this.container.insertBefore(this.visualsElement, buttonsElement);
+                        else this.container.appendChild(this.visualsElement);
                     }
                     this.visualsElement.classList.add("visuals");
                     this.correctDimensions();
@@ -17203,11 +17381,9 @@
                     hidden_default()(this.visualsElement, false);
                 }
                 show(params) {
-                    if (!params?.playerOnly) {
-                        if (this.isReplayShown()) {
-                            if (params?.goBack) this.recorder.show();
-                        } else this.recorder.build();
-                    }
+                    if (!params?.playerOnly) if (this.isReplayShown()) {
+                        if (params?.goBack) this.recorder.show();
+                    } else this.recorder.build();
                     this.showVisuals();
                 }
                 showReplayOnly() {
@@ -17288,7 +17464,7 @@
             var insertStyleElement_default = /*#__PURE__*/ __webpack_require__.n(insertStyleElement);
             var styleTagTransform = __webpack_require__("./node_modules/@rsbuild/core/compiled/style-loader/runtime/styleTagTransform.js");
             var styleTagTransform_default = /*#__PURE__*/ __webpack_require__.n(styleTagTransform);
-            var main = __webpack_require__("../../node_modules/@rsbuild/core/compiled/css-loader/index.js??ruleSet[1].rules[9].use[1]!builtin:lightningcss-loader??ruleSet[1].rules[9].use[2]!../../node_modules/stylus-loader/dist/cjs.js??ruleSet[1].rules[9].use[3]!./src/styles/main.styl");
+            var main = __webpack_require__("../../node_modules/@rsbuild/core/compiled/css-loader/index.js??ruleSet[1].rules[11].use[1]!builtin:lightningcss-loader??ruleSet[1].rules[11].use[2]!../../node_modules/stylus-loader/dist/cjs.js??ruleSet[1].rules[11].use[3]!./src/styles/main.styl");
             var main_options = {};
             main_options.styleTagTransform = styleTagTransform_default();
             main_options.setAttributes = setAttributesWithoutAttributes_default();
@@ -17380,12 +17556,10 @@
                     this.hasError = true;
                     if (params.err?.stack) this.options.logger.error(params.err.stack);
                     else if (params.err?.message) this.options.logger.error(params.err.message);
-                    else if (params.exc) {
-                        if (params.exc instanceof Error) {
-                            if (params.exc.stack) this.options.logger.error(params.exc.stack);
-                            else if (params.exc.message) this.options.logger.error(params.exc.message);
-                        } else this.options.logger.error(params.exc);
-                    }
+                    else if (params.exc) if (params.exc instanceof Error) {
+                        if (params.exc.stack) this.options.logger.error(params.exc.stack);
+                        else if (params.exc.message) this.options.logger.error(params.exc.message);
+                    } else this.options.logger.error(params.exc);
                     if (this.options.displayErrors && params.err) this.visuals.error(params.err);
                     else this.visuals.reset();
                 }
@@ -17399,14 +17573,12 @@
                         once: true
                     });
                     if (!playerOnly) this.visibility.onChange((visible)=>{
-                        if (this.built) {
-                            if (visible) {
-                                if (isAutoPauseEnabled(this.options) && this.isCountingDown()) this.resume();
-                                this.emit("VISIBLE");
-                            } else {
-                                if (isAutoPauseEnabled(this.options) && (this.isCountingDown() || this.isRecording())) this.pause();
-                                this.emit("INVISIBLE");
-                            }
+                        if (this.built) if (visible) {
+                            if (isAutoPauseEnabled(this.options) && this.isCountingDown()) this.resume();
+                            this.emit("VISIBLE");
+                        } else {
+                            if (isAutoPauseEnabled(this.options) && (this.isCountingDown() || this.isRecording())) this.pause();
+                            this.emit("INVISIBLE");
                         }
                     });
                     if (this.options.enableSpace) {
@@ -17639,15 +17811,13 @@
                                 const hasCc = recipients.cc && recipients.cc.length > 0;
                                 const hasBcc = recipients.bcc && recipients.bcc.length > 0;
                                 if (toIsConfigured) {
-                                    if (!hasTo) {
-                                        if (ccIsConfigured && bccIsConfigured) {
-                                            if (!hasCc && !hasBcc) valid = false;
-                                        } else if (ccIsConfigured) {
-                                            if (!hasCc) valid = false;
-                                        } else if (bccIsConfigured) {
-                                            if (!hasBcc) valid = false;
-                                        } else valid = false;
-                                    }
+                                    if (!hasTo) if (ccIsConfigured && bccIsConfigured) {
+                                        if (!hasCc && !hasBcc) valid = false;
+                                    } else if (ccIsConfigured) {
+                                        if (!hasCc) valid = false;
+                                    } else if (bccIsConfigured) {
+                                        if (!hasBcc) valid = false;
+                                    } else valid = false;
                                 } else if (ccIsConfigured) {
                                     if (!hasCc) {
                                         if (bccIsConfigured && !hasBcc) valid = false;
@@ -17801,15 +17971,13 @@
                 }
                 debug(...args) {
                     const output = this.lifo("debug", args);
-                    if (this.options.verbose) {
-                        if (this.browser.isFirefox()) this.logger.debug(output);
-                        else if (this.logger.groupCollapsed) {
-                            this.logger.groupCollapsed(output);
-                            this.logger.trace("Trace");
-                            this.logger.groupEnd();
-                        } else if (this.logger.debug) this.logger.debug(output);
-                        else console.log(output);
-                    }
+                    if (this.options.verbose) if (this.browser.isFirefox()) this.logger.debug(output);
+                    else if (this.logger.groupCollapsed) {
+                        this.logger.groupCollapsed(output);
+                        this.logger.trace("Trace");
+                        this.logger.groupEnd();
+                    } else if (this.logger.debug) this.logger.debug(output);
+                    else console.log(output);
                 }
                 error(...args) {
                     this.logger.error(this.lifo("error", args));
