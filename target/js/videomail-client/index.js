@@ -1778,10 +1778,7 @@
                         if (writable && writable.destroy) writable.destroy();
                         return;
                     }
-                    if (null === writable || false === writable) {
-                        this.end();
-                        return;
-                    }
+                    if (null === writable || false === writable) return void this.end();
                     var self1 = this;
                     var unend = eos(writable, {
                         writable: true,
@@ -4004,18 +4001,9 @@
                     depth += 1;
                     var i;
                     if ('object' == typeof val && null !== val) {
-                        for(i = 0; i < stack.length; i++)if (stack[i] === val) {
-                            setReplace(CIRCULAR_REPLACE_NODE, val, k, parent);
-                            return;
-                        }
-                        if (void 0 !== options.depthLimit && depth > options.depthLimit) {
-                            setReplace(LIMIT_REPLACE_NODE, val, k, parent);
-                            return;
-                        }
-                        if (void 0 !== options.edgesLimit && edgeIndex + 1 > options.edgesLimit) {
-                            setReplace(LIMIT_REPLACE_NODE, val, k, parent);
-                            return;
-                        }
+                        for(i = 0; i < stack.length; i++)if (stack[i] === val) return void setReplace(CIRCULAR_REPLACE_NODE, val, k, parent);
+                        if (void 0 !== options.depthLimit && depth > options.depthLimit) return void setReplace(LIMIT_REPLACE_NODE, val, k, parent);
+                        if (void 0 !== options.edgesLimit && edgeIndex + 1 > options.edgesLimit) return void setReplace(LIMIT_REPLACE_NODE, val, k, parent);
                         stack.push(val);
                         if (Array.isArray(val)) for(i = 0; i < val.length; i++)decirc(val[i], i, i, stack, val, depth, options);
                         else {
@@ -4054,23 +4042,14 @@
                     depth += 1;
                     var i;
                     if ('object' == typeof val && null !== val) {
-                        for(i = 0; i < stack.length; i++)if (stack[i] === val) {
-                            setReplace(CIRCULAR_REPLACE_NODE, val, k, parent);
-                            return;
-                        }
+                        for(i = 0; i < stack.length; i++)if (stack[i] === val) return void setReplace(CIRCULAR_REPLACE_NODE, val, k, parent);
                         try {
                             if ('function' == typeof val.toJSON) return;
                         } catch (_) {
                             return;
                         }
-                        if (void 0 !== options.depthLimit && depth > options.depthLimit) {
-                            setReplace(LIMIT_REPLACE_NODE, val, k, parent);
-                            return;
-                        }
-                        if (void 0 !== options.edgesLimit && edgeIndex + 1 > options.edgesLimit) {
-                            setReplace(LIMIT_REPLACE_NODE, val, k, parent);
-                            return;
-                        }
+                        if (void 0 !== options.depthLimit && depth > options.depthLimit) return void setReplace(LIMIT_REPLACE_NODE, val, k, parent);
+                        if (void 0 !== options.edgesLimit && edgeIndex + 1 > options.edgesLimit) return void setReplace(LIMIT_REPLACE_NODE, val, k, parent);
                         stack.push(val);
                         if (Array.isArray(val)) for(i = 0; i < val.length; i++)deterministicDecirc(val[i], i, i, stack, val, depth, options);
                         else {
@@ -6478,10 +6457,7 @@
                 }
                 function pushEncodedKeyValuePair(pairs, key, value) {
                     if (void 0 === value) return;
-                    if (null === value) {
-                        pairs.push(encodeURI(key));
-                        return;
-                    }
+                    if (null === value) return void pairs.push(encodeURI(key));
                     if (Array.isArray(value)) for (const v of value)pushEncodedKeyValuePair(pairs, key, v);
                     else if (isObject(value)) {
                         for(const subkey in value)if (hasOwn(value, subkey)) pushEncodedKeyValuePair(pairs, `${key}[${subkey}]`, value[subkey]);
@@ -6959,10 +6935,7 @@
                         this._fullfilledPromise = new Promise((resolve, reject)=>{
                             self1.on('abort', ()=>{
                                 if (this._maxRetries && this._maxRetries > this._retries) return;
-                                if (this.timedout && this.timedoutError) {
-                                    reject(this.timedoutError);
-                                    return;
-                                }
+                                if (this.timedout && this.timedoutError) return void reject(this.timedoutError);
                                 const error = new Error('Aborted');
                                 error.code = 'ABORTED';
                                 error.status = this.status;
@@ -9619,18 +9592,12 @@
                     proxy.on('close', destroy);
                     var coerceToBuffer = !options.objectMode;
                     function socketWriteNode(chunk, enc, next) {
-                        if (socket.readyState !== socket.OPEN) {
-                            next();
-                            return;
-                        }
+                        if (socket.readyState !== socket.OPEN) return void next();
                         if (coerceToBuffer && 'string' == typeof chunk) chunk = Buffer.from(chunk, 'utf8');
                         socket.send(chunk, next);
                     }
                     function socketWriteBrowser(chunk, enc, next) {
-                        if (socket.bufferedAmount > bufferSize) {
-                            setTimeout(socketWriteBrowser, bufferTimeout, chunk, enc, next);
-                            return;
-                        }
+                        if (socket.bufferedAmount > bufferSize) return void setTimeout(socketWriteBrowser, bufferTimeout, chunk, enc, next);
                         if (coerceToBuffer && 'string' == typeof chunk) chunk = Buffer.from(chunk, 'utf8');
                         try {
                             socket.send(chunk);
@@ -10253,6 +10220,19 @@
                     constructor
                 ]);
             const errorConstructors = new Map(list);
+            class NonError extends Error {
+                name = 'NonError';
+                constructor(message){
+                    super(NonError._prepareSuperMessage(message));
+                }
+                static _prepareSuperMessage(message) {
+                    try {
+                        return JSON.stringify(message);
+                    } catch  {
+                        return String(message);
+                    }
+                }
+            }
             const errorProperties = [
                 {
                     property: 'name',
@@ -10354,8 +10334,24 @@
                 if ('function' == typeof value) return `[Function: ${value.name || 'anonymous'}]`;
                 return value;
             }
+            function deserializeError(value, options = {}) {
+                const { maxDepth = Number.POSITIVE_INFINITY } = options;
+                if (value instanceof Error) return value;
+                if (isMinimumViableSerializedError(value)) return destroyCircular({
+                    from: value,
+                    seen: [],
+                    to: newError(value.name),
+                    maxDepth,
+                    depth: 0,
+                    serialize: false
+                });
+                return new NonError(value);
+            }
             function isErrorLike(value) {
                 return Boolean(value) && 'object' == typeof value && 'string' == typeof value.name && 'string' == typeof value.message && 'string' == typeof value.stack;
+            }
+            function isMinimumViableSerializedError(value) {
+                return Boolean(value) && 'object' == typeof value && 'string' == typeof value.message && !Array.isArray(value);
             }
             var util = __webpack_require__("./node_modules/util/util.js");
             var util_default = /*#__PURE__*/ __webpack_require__.n(util);
@@ -14014,8 +14010,9 @@
                         this.formElement.classList.remove("invalid");
                     });
                     this.on("ERROR", (params)=>{
-                        if (this.options.adjustFormOnBrowserError) this.hideAll();
-                        else if (params.err?.isBrowserProblem()) this.hideSubmitButton();
+                        const isBrowserProblem = params.err?.isBrowserProblem();
+                        if (isBrowserProblem && this.options.adjustFormOnBrowserError) this.hideAll();
+                        if (isBrowserProblem) this.hideSubmitButton();
                     });
                     this.on("BUILT", ()=>{
                         this.startListeningToSubmitEvents();
@@ -14098,7 +14095,7 @@
             }
             const wrappers_form = Form;
             var package_namespaceObject = {
-                i8: "10.2.22"
+                i8: "10.2.26"
             };
             function findOriginalExc(exc) {
                 if (exc instanceof Error && "response" in exc) {
@@ -15057,8 +15054,12 @@
                     this.on("PAUSED", ()=>{
                         this.pauseRecording();
                     });
-                    this.on("ERROR", this.onResetting.bind(this));
-                    this.on("RESETTING", this.onResetting.bind(this));
+                    this.on("ERROR", ()=>{
+                        this.onResetting();
+                    });
+                    this.on("RESETTING", ()=>{
+                        this.onResetting();
+                    });
                     this.on("HIDE", ()=>{
                         this.hideCountdown();
                     });
@@ -16166,16 +16167,38 @@
                     });
                 }
                 updateFrameProgress(args) {
+                    if (args) {
+                        if (!args.frame) throw error_createError({
+                            message: "The frame number is missing",
+                            options: this.options
+                        });
+                    } else throw error_createError({
+                        message: "Arguments are missing for updating the frame progress",
+                        options: this.options
+                    });
                     this.confirmedFrameNumber = args.frame;
                     this.frameProgress = this.calculateFrameProgress();
                     this.updateOverallProgress();
                 }
                 updateSampleProgress(args) {
+                    if (args) {
+                        if (!args.sample) throw error_createError({
+                            message: "The audio sample number is missing",
+                            options: this.options
+                        });
+                    } else throw error_createError({
+                        message: "Arguments are missing for updating the audio sample progress",
+                        options: this.options
+                    });
                     this.confirmedSampleNumber = args.sample;
                     this.sampleProgress = this.calculateSampleProgress();
                     this.updateOverallProgress();
                 }
                 preview(args) {
+                    if (!args) throw error_createError({
+                        message: "Preview arguments are missing.",
+                        options: this.options
+                    });
                     const hasAudio = this.samplesCount > 0;
                     this.confirmedFrameNumber = this.confirmedSampleNumber = this.samplesCount = this.framesCount = 0;
                     this.sampleProgress = this.frameProgress = void 0;
@@ -16393,10 +16416,7 @@
                         this.onUserMediaReady(params);
                         return;
                     }
-                    if (this.userMediaLoading) {
-                        this.options.logger.debug("Recorder: skipping loadUserMedia() because it is already asking for permission");
-                        return;
-                    }
+                    if (this.userMediaLoading) return void this.options.logger.debug("Recorder: skipping loadUserMedia() because it is already asking for permission");
                     this.options.logger.debug(`Recorder: loadUserMedia(${params ? pretty(params) : ""})`);
                     this.emit("LOADING_USER_MEDIA");
                     try {
@@ -16441,9 +16461,12 @@
                                 break;
                             case "error":
                                 {
+                                    let explanation = "(No explanation given)";
+                                    if (command.args?.err?.message) explanation = command.args.err.message;
                                     const err = error_createError({
                                         message: "Oh no, server error!",
-                                        explanation: command.args.err.toString() ?? "(No message given)",
+                                        explanation,
+                                        err: deserializeError(command.args?.err),
                                         options: this.options
                                     });
                                     this.emit("ERROR", {
