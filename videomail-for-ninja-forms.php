@@ -1,15 +1,15 @@
 <?php
 /*
-Plugin Name: Videomail for Ninja Forms
-Plugin URI: https://github.com/binarykitchen/videomail-for-ninja-forms
-Description: Express yourself in more than just words. Record and send a short video from your webcam.
-Version: 7.0.9
-Author: Michael Heuberger + Kyle B. Johnson
-Author URI: https://videomail.io
-Author URI: http://kylebjohnson.me
-Text Domain: videomail-for-ninja-forms
+  Plugin Name: Videomail for Ninja Forms
+  Plugin URI: https://github.com/binarykitchen/videomail-for-ninja-forms
+  Description: Express yourself in more than just words. Record and send a short video from your webcam.
+  Version: 7.1.0
+  Author: Michael Heuberger + Kyle B. Johnson
+  Author URI: https://videomail.io
+  Author URI: http://kylebjohnson.me
+  Text Domain: videomail-for-ninja-forms
 
-Copyright 2025 Michael Heuberger + Kyle B. Johnson
+  Copyright 2025 Michael Heuberger + Kyle B. Johnson
 */
 
 if (version_compare(get_option('ninja_forms_version', '0.0.0'), '3', '<') ||

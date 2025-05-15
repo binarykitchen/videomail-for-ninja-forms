@@ -67,7 +67,7 @@ https://github.com/binarykitchen/videomail-for-ninja-forms/issues
 ## Releasing
 
 1. Ensure you are on develop branch. yeah
-2. Update changelog in readme.txt (have it tested up to, stable tag + changelog)
+2. Update changelog in readme.txt (bump "tested up to" using WordPress, "stable tag" using VC + write changelog)
 3. Search for current version and replace it with the new one. Should be these files:
    - package.json
    - readme.txt
