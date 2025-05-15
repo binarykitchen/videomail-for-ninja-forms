@@ -1112,7 +1112,7 @@
                     this[offset] = 0xFF & value;
                     while(++i < byteLength && (mul *= 0x100)){
                         if (value < 0 && 0 === sub && 0 !== this[offset + i - 1]) sub = 1;
-                        this[offset + i] = (value / mul >> 0) - sub & 0xFF;
+                        this[offset + i] = (value / mul | 0) - sub & 0xFF;
                     }
                     return offset + byteLength;
                 };
@@ -1129,7 +1129,7 @@
                     this[offset + i] = 0xFF & value;
                     while(--i >= 0 && (mul *= 0x100)){
                         if (value < 0 && 0 === sub && 0 !== this[offset + i + 1]) sub = 1;
-                        this[offset + i] = (value / mul >> 0) - sub & 0xFF;
+                        this[offset + i] = (value / mul | 0) - sub & 0xFF;
                     }
                     return offset + byteLength;
                 };
@@ -1359,6 +1359,37 @@
                     return table;
                 }();
             },
+            "./node_modules/call-bind-apply-helpers/actualApply.js": function(module1, __unused_webpack_exports, __webpack_require__) {
+                "use strict";
+                var bind = __webpack_require__("./node_modules/function-bind/index.js");
+                var $apply = __webpack_require__("./node_modules/call-bind-apply-helpers/functionApply.js");
+                var $call = __webpack_require__("./node_modules/call-bind-apply-helpers/functionCall.js");
+                var $reflectApply = __webpack_require__("./node_modules/call-bind-apply-helpers/reflectApply.js");
+                module1.exports = $reflectApply || bind.call($call, $apply);
+            },
+            "./node_modules/call-bind-apply-helpers/functionApply.js": function(module1) {
+                "use strict";
+                module1.exports = Function.prototype.apply;
+            },
+            "./node_modules/call-bind-apply-helpers/functionCall.js": function(module1) {
+                "use strict";
+                module1.exports = Function.prototype.call;
+            },
+            "./node_modules/call-bind-apply-helpers/index.js": function(module1, __unused_webpack_exports, __webpack_require__) {
+                "use strict";
+                var bind = __webpack_require__("./node_modules/function-bind/index.js");
+                var $TypeError = __webpack_require__("./node_modules/es-errors/type.js");
+                var $call = __webpack_require__("./node_modules/call-bind-apply-helpers/functionCall.js");
+                var $actualApply = __webpack_require__("./node_modules/call-bind-apply-helpers/actualApply.js");
+                module1.exports = function(args) {
+                    if (args.length < 1 || 'function' != typeof args[0]) throw new $TypeError('a function is required');
+                    return $actualApply(bind, $call, args);
+                };
+            },
+            "./node_modules/call-bind-apply-helpers/reflectApply.js": function(module1) {
+                "use strict";
+                module1.exports = 'undefined' != typeof Reflect && Reflect && Reflect.apply;
+            },
             "./node_modules/call-bind/callBound.js": function(module1, __unused_webpack_exports, __webpack_require__) {
                 "use strict";
                 var GetIntrinsic = __webpack_require__("./node_modules/get-intrinsic/index.js");
@@ -1393,6 +1424,21 @@
                     value: applyBind
                 });
                 else module1.exports.apply = applyBind;
+            },
+            "./node_modules/call-bound/index.js": function(module1, __unused_webpack_exports, __webpack_require__) {
+                "use strict";
+                var GetIntrinsic = __webpack_require__("./node_modules/get-intrinsic/index.js");
+                var callBindBasic = __webpack_require__("./node_modules/call-bind-apply-helpers/index.js");
+                var $indexOf = callBindBasic([
+                    GetIntrinsic('%String.prototype.indexOf%')
+                ]);
+                module1.exports = function(name, allowMissing) {
+                    var intrinsic = GetIntrinsic(name, !!allowMissing);
+                    if ('function' == typeof intrinsic && $indexOf(name, '.prototype.') > -1) return callBindBasic([
+                        intrinsic
+                    ]);
+                    return intrinsic;
+                };
             },
             "./node_modules/component-emitter/index.js": function(module1) {
                 module1.exports = Emitter;
@@ -1700,6 +1746,25 @@
                 function lowercaseFirst(string) {
                     return string.substring(0, 1).toLowerCase() + string.substring(1);
                 }
+            },
+            "./node_modules/dunder-proto/get.js": function(module1, __unused_webpack_exports, __webpack_require__) {
+                "use strict";
+                var callBind = __webpack_require__("./node_modules/call-bind-apply-helpers/index.js");
+                var gOPD = __webpack_require__("./node_modules/gopd/index.js");
+                var hasProtoAccessor;
+                try {
+                    hasProtoAccessor = [].__proto__ === Array.prototype;
+                } catch (e) {
+                    if (!e || 'object' != typeof e || !('code' in e) || 'ERR_PROTO_ACCESS' !== e.code) throw e;
+                }
+                var desc = !!hasProtoAccessor && gOPD && gOPD(Object.prototype, '__proto__');
+                var $Object = Object;
+                var $getPrototypeOf = $Object.getPrototypeOf;
+                module1.exports = desc && 'function' == typeof desc.get ? callBind([
+                    desc.get
+                ]) : 'function' == typeof $getPrototypeOf ? function(value) {
+                    return $getPrototypeOf(null == value ? value : $Object(value));
+                } : false;
             },
             "./node_modules/duplexify/index.js": function(module1, __unused_webpack_exports, __webpack_require__) {
                 var Buffer = __webpack_require__("./node_modules/buffer/index.js")["Buffer"];
@@ -3596,10 +3661,9 @@
                 };
                 module1.exports = eos;
             },
-            "./node_modules/es-define-property/index.js": function(module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/es-define-property/index.js": function(module1) {
                 "use strict";
-                var GetIntrinsic = __webpack_require__("./node_modules/get-intrinsic/index.js");
-                var $defineProperty = GetIntrinsic('%Object.defineProperty%', true) || false;
+                var $defineProperty = Object.defineProperty || false;
                 if ($defineProperty) try {
                     $defineProperty({}, 'a', {
                         value: 1
@@ -3636,6 +3700,10 @@
             "./node_modules/es-errors/uri.js": function(module1) {
                 "use strict";
                 module1.exports = URIError;
+            },
+            "./node_modules/es-object-atoms/index.js": function(module1) {
+                "use strict";
+                module1.exports = Object;
             },
             "./node_modules/events/events.js": function(module1) {
                 "use strict";
@@ -4174,6 +4242,7 @@
             "./node_modules/get-intrinsic/index.js": function(module1, __unused_webpack_exports, __webpack_require__) {
                 "use strict";
                 var undefined;
+                var $Object = __webpack_require__("./node_modules/es-object-atoms/index.js");
                 var $Error = __webpack_require__("./node_modules/es-errors/index.js");
                 var $EvalError = __webpack_require__("./node_modules/es-errors/eval.js");
                 var $RangeError = __webpack_require__("./node_modules/es-errors/range.js");
@@ -4181,18 +4250,21 @@
                 var $SyntaxError = __webpack_require__("./node_modules/es-errors/syntax.js");
                 var $TypeError = __webpack_require__("./node_modules/es-errors/type.js");
                 var $URIError = __webpack_require__("./node_modules/es-errors/uri.js");
+                var abs = __webpack_require__("./node_modules/math-intrinsics/abs.js");
+                var floor = __webpack_require__("./node_modules/math-intrinsics/floor.js");
+                var max = __webpack_require__("./node_modules/math-intrinsics/max.js");
+                var min = __webpack_require__("./node_modules/math-intrinsics/min.js");
+                var pow = __webpack_require__("./node_modules/math-intrinsics/pow.js");
+                var round = __webpack_require__("./node_modules/math-intrinsics/round.js");
+                var sign = __webpack_require__("./node_modules/math-intrinsics/sign.js");
                 var $Function = Function;
                 var getEvalledConstructor = function(expressionSyntax) {
                     try {
                         return $Function('"use strict"; return (' + expressionSyntax + ').constructor;')();
                     } catch (e) {}
                 };
-                var $gOPD = Object.getOwnPropertyDescriptor;
-                if ($gOPD) try {
-                    $gOPD({}, '');
-                } catch (e) {
-                    $gOPD = null;
-                }
+                var $gOPD = __webpack_require__("./node_modules/gopd/index.js");
+                var $defineProperty = __webpack_require__("./node_modules/es-define-property/index.js");
                 var throwTypeError = function() {
                     throw new $TypeError();
                 };
@@ -4209,10 +4281,11 @@
                     }
                 }() : throwTypeError;
                 var hasSymbols = __webpack_require__("./node_modules/has-symbols/index.js")();
-                var hasProto = __webpack_require__("./node_modules/has-proto/index.js")();
-                var getProto = Object.getPrototypeOf || (hasProto ? function(x) {
-                    return x.__proto__;
-                } : null);
+                var getProto = __webpack_require__("./node_modules/get-proto/index.js");
+                var $ObjectGPO = __webpack_require__("./node_modules/get-proto/Object.getPrototypeOf.js");
+                var $ReflectGPO = __webpack_require__("./node_modules/get-proto/Reflect.getPrototypeOf.js");
+                var $apply = __webpack_require__("./node_modules/call-bind-apply-helpers/functionApply.js");
+                var $call = __webpack_require__("./node_modules/call-bind-apply-helpers/functionCall.js");
                 var needsEval = {};
                 var TypedArray = 'undefined' != typeof Uint8Array && getProto ? getProto(Uint8Array) : undefined;
                 var INTRINSICS = {
@@ -4240,6 +4313,7 @@
                     '%Error%': $Error,
                     '%eval%': eval,
                     '%EvalError%': $EvalError,
+                    '%Float16Array%': 'undefined' == typeof Float16Array ? undefined : Float16Array,
                     '%Float32Array%': 'undefined' == typeof Float32Array ? undefined : Float32Array,
                     '%Float64Array%': 'undefined' == typeof Float64Array ? undefined : Float64Array,
                     '%FinalizationRegistry%': 'undefined' == typeof FinalizationRegistry ? undefined : FinalizationRegistry,
@@ -4256,7 +4330,8 @@
                     '%MapIteratorPrototype%': 'undefined' != typeof Map && hasSymbols && getProto ? getProto(new Map()[Symbol.iterator]()) : undefined,
                     '%Math%': Math,
                     '%Number%': Number,
-                    '%Object%': Object,
+                    '%Object%': $Object,
+                    "%Object.getOwnPropertyDescriptor%": $gOPD,
                     '%parseFloat%': parseFloat,
                     '%parseInt%': parseInt,
                     '%Promise%': 'undefined' == typeof Promise ? undefined : Promise,
@@ -4282,7 +4357,19 @@
                     '%URIError%': $URIError,
                     '%WeakMap%': 'undefined' == typeof WeakMap ? undefined : WeakMap,
                     '%WeakRef%': 'undefined' == typeof WeakRef ? undefined : WeakRef,
-                    '%WeakSet%': 'undefined' == typeof WeakSet ? undefined : WeakSet
+                    '%WeakSet%': 'undefined' == typeof WeakSet ? undefined : WeakSet,
+                    '%Function.prototype.call%': $call,
+                    '%Function.prototype.apply%': $apply,
+                    '%Object.defineProperty%': $defineProperty,
+                    '%Object.getPrototypeOf%': $ObjectGPO,
+                    '%Math.abs%': abs,
+                    '%Math.floor%': floor,
+                    '%Math.max%': max,
+                    '%Math.min%': min,
+                    '%Math.pow%': pow,
+                    '%Math.round%': round,
+                    '%Math.sign%': sign,
+                    '%Reflect.getPrototypeOf%': $ReflectGPO
                 };
                 if (getProto) try {
                     null.error;
@@ -4523,11 +4610,11 @@
                 };
                 var bind = __webpack_require__("./node_modules/function-bind/index.js");
                 var hasOwn = __webpack_require__("./node_modules/hasown/index.js");
-                var $concat = bind.call(Function.call, Array.prototype.concat);
-                var $spliceApply = bind.call(Function.apply, Array.prototype.splice);
-                var $replace = bind.call(Function.call, String.prototype.replace);
-                var $strSlice = bind.call(Function.call, String.prototype.slice);
-                var $exec = bind.call(Function.call, RegExp.prototype.exec);
+                var $concat = bind.call($call, Array.prototype.concat);
+                var $spliceApply = bind.call($apply, Array.prototype.splice);
+                var $replace = bind.call($call, String.prototype.replace);
+                var $strSlice = bind.call($call, String.prototype.slice);
+                var $exec = bind.call($call, RegExp.prototype.exec);
                 var rePropName = /[^%.[\]]+|\[(?:(-?\d+(?:\.\d+)?)|(["'])((?:(?!\2)[^\\]|\\.)*?)\2)\]|(?=(?:\.|\[\])(?:\.|\[\]|%$))/g;
                 var reEscapeChar = /\\(\\)?/g;
                 var stringToPath = function(string) {
@@ -4606,6 +4693,29 @@
                     return value;
                 };
             },
+            "./node_modules/get-proto/Object.getPrototypeOf.js": function(module1, __unused_webpack_exports, __webpack_require__) {
+                "use strict";
+                var $Object = __webpack_require__("./node_modules/es-object-atoms/index.js");
+                module1.exports = $Object.getPrototypeOf || null;
+            },
+            "./node_modules/get-proto/Reflect.getPrototypeOf.js": function(module1) {
+                "use strict";
+                module1.exports = 'undefined' != typeof Reflect && Reflect.getPrototypeOf || null;
+            },
+            "./node_modules/get-proto/index.js": function(module1, __unused_webpack_exports, __webpack_require__) {
+                "use strict";
+                var reflectGetProto = __webpack_require__("./node_modules/get-proto/Reflect.getPrototypeOf.js");
+                var originalGetProto = __webpack_require__("./node_modules/get-proto/Object.getPrototypeOf.js");
+                var getDunderProto = __webpack_require__("./node_modules/dunder-proto/get.js");
+                module1.exports = reflectGetProto ? function(O) {
+                    return reflectGetProto(O);
+                } : originalGetProto ? function(O) {
+                    if (!O || 'object' != typeof O && 'function' != typeof O) throw new TypeError('getProto: not an object');
+                    return originalGetProto(O);
+                } : getDunderProto ? function(O) {
+                    return getDunderProto(O);
+                } : null;
+            },
             "./node_modules/geval/event.js": function(module1) {
                 module1.exports = Event1;
                 function Event1() {
@@ -4647,10 +4757,13 @@
                 }
                 module1.exports = doccy;
             },
+            "./node_modules/gopd/gOPD.js": function(module1) {
+                "use strict";
+                module1.exports = Object.getOwnPropertyDescriptor;
+            },
             "./node_modules/gopd/index.js": function(module1, __unused_webpack_exports, __webpack_require__) {
                 "use strict";
-                var GetIntrinsic = __webpack_require__("./node_modules/get-intrinsic/index.js");
-                var $gOPD = GetIntrinsic("%Object.getOwnPropertyDescriptor%", true);
+                var $gOPD = __webpack_require__("./node_modules/gopd/gOPD.js");
                 if ($gOPD) try {
                     $gOPD([], 'length');
                 } catch (e) {
@@ -4675,19 +4788,6 @@
                     }
                 };
                 module1.exports = hasPropertyDescriptors;
-            },
-            "./node_modules/has-proto/index.js": function(module1) {
-                "use strict";
-                var test = {
-                    __proto__: null,
-                    foo: {}
-                };
-                var $Object = Object;
-                module1.exports = function() {
-                    return ({
-                        __proto__: test
-                    }).foo === test.foo && !(test instanceof $Object);
-                };
             },
             "./node_modules/has-symbols/index.js": function(module1, __unused_webpack_exports, __webpack_require__) {
                 "use strict";
@@ -4714,7 +4814,7 @@
                     if ('[object Symbol]' !== Object.prototype.toString.call(symObj)) return false;
                     var symVal = 42;
                     obj[sym] = symVal;
-                    for(sym in obj)return false;
+                    for(var _ in obj)return false;
                     if ('function' == typeof Object.keys && 0 !== Object.keys(obj).length) return false;
                     if ('function' == typeof Object.getOwnPropertyNames && 0 !== Object.getOwnPropertyNames(obj).length) return false;
                     var syms = Object.getOwnPropertySymbols(obj);
@@ -4990,6 +5090,44 @@
                 var toString = {}.toString;
                 module1.exports = Array.isArray || function(arr) {
                     return '[object Array]' == toString.call(arr);
+                };
+            },
+            "./node_modules/math-intrinsics/abs.js": function(module1) {
+                "use strict";
+                module1.exports = Math.abs;
+            },
+            "./node_modules/math-intrinsics/floor.js": function(module1) {
+                "use strict";
+                module1.exports = Math.floor;
+            },
+            "./node_modules/math-intrinsics/isNaN.js": function(module1) {
+                "use strict";
+                module1.exports = Number.isNaN || function(a) {
+                    return a !== a;
+                };
+            },
+            "./node_modules/math-intrinsics/max.js": function(module1) {
+                "use strict";
+                module1.exports = Math.max;
+            },
+            "./node_modules/math-intrinsics/min.js": function(module1) {
+                "use strict";
+                module1.exports = Math.min;
+            },
+            "./node_modules/math-intrinsics/pow.js": function(module1) {
+                "use strict";
+                module1.exports = Math.pow;
+            },
+            "./node_modules/math-intrinsics/round.js": function(module1) {
+                "use strict";
+                module1.exports = Math.round;
+            },
+            "./node_modules/math-intrinsics/sign.js": function(module1, __unused_webpack_exports, __webpack_require__) {
+                "use strict";
+                var $isNaN = __webpack_require__("./node_modules/math-intrinsics/isNaN.js");
+                module1.exports = function(number) {
+                    if ($isNaN(number) || 0 === number) return number;
+                    return number < 0 ? -1 : 1;
                 };
             },
             "./node_modules/object-inspect/index.js": function(module1, __unused_webpack_exports, __webpack_require__) {
@@ -6278,31 +6416,24 @@
                     return fn;
                 };
             },
-            "./node_modules/side-channel/index.js": function(module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/side-channel-list/index.js": function(module1, __unused_webpack_exports, __webpack_require__) {
                 "use strict";
-                var GetIntrinsic = __webpack_require__("./node_modules/get-intrinsic/index.js");
-                var callBound = __webpack_require__("./node_modules/call-bind/callBound.js");
                 var inspect = __webpack_require__("./node_modules/object-inspect/index.js");
                 var $TypeError = __webpack_require__("./node_modules/es-errors/type.js");
-                var $WeakMap = GetIntrinsic('%WeakMap%', true);
-                var $Map = GetIntrinsic('%Map%', true);
-                var $weakMapGet = callBound('WeakMap.prototype.get', true);
-                var $weakMapSet = callBound('WeakMap.prototype.set', true);
-                var $weakMapHas = callBound('WeakMap.prototype.has', true);
-                var $mapGet = callBound('Map.prototype.get', true);
-                var $mapSet = callBound('Map.prototype.set', true);
-                var $mapHas = callBound('Map.prototype.has', true);
-                var listGetNode = function(list, key) {
+                var listGetNode = function(list, key, isDelete) {
                     var prev = list;
                     var curr;
-                    for(; null !== (curr = prev.next); prev = curr)if (curr.key === key) {
+                    for(; null != (curr = prev.next); prev = curr)if (curr.key === key) {
                         prev.next = curr.next;
-                        curr.next = list.next;
-                        list.next = curr;
+                        if (!isDelete) {
+                            curr.next = list.next;
+                            list.next = curr;
+                        }
                         return curr;
                     }
                 };
                 var listGet = function(objects, key) {
+                    if (!objects) return;
                     var node = listGetNode(objects, key);
                     return node && node.value;
                 };
@@ -6316,45 +6447,159 @@
                     };
                 };
                 var listHas = function(objects, key) {
+                    if (!objects) return false;
                     return !!listGetNode(objects, key);
                 };
+                var listDelete = function(objects, key) {
+                    if (objects) return listGetNode(objects, key, true);
+                };
                 module1.exports = function() {
-                    var $wm;
-                    var $m;
                     var $o;
                     var channel = {
                         assert: function(key) {
                             if (!channel.has(key)) throw new $TypeError('Side channel does not contain ' + inspect(key));
                         },
+                        delete: function(key) {
+                            var root = $o && $o.next;
+                            var deletedNode = listDelete($o, key);
+                            if (deletedNode && root && root === deletedNode) $o = void 0;
+                            return !!deletedNode;
+                        },
+                        get: function(key) {
+                            return listGet($o, key);
+                        },
+                        has: function(key) {
+                            return listHas($o, key);
+                        },
+                        set: function(key, value) {
+                            if (!$o) $o = {
+                                next: void 0
+                            };
+                            listSet($o, key, value);
+                        }
+                    };
+                    return channel;
+                };
+            },
+            "./node_modules/side-channel-map/index.js": function(module1, __unused_webpack_exports, __webpack_require__) {
+                "use strict";
+                var GetIntrinsic = __webpack_require__("./node_modules/get-intrinsic/index.js");
+                var callBound = __webpack_require__("./node_modules/call-bound/index.js");
+                var inspect = __webpack_require__("./node_modules/object-inspect/index.js");
+                var $TypeError = __webpack_require__("./node_modules/es-errors/type.js");
+                var $Map = GetIntrinsic('%Map%', true);
+                var $mapGet = callBound('Map.prototype.get', true);
+                var $mapSet = callBound('Map.prototype.set', true);
+                var $mapHas = callBound('Map.prototype.has', true);
+                var $mapDelete = callBound('Map.prototype.delete', true);
+                var $mapSize = callBound('Map.prototype.size', true);
+                module1.exports = !!$Map && function() {
+                    var $m;
+                    var channel = {
+                        assert: function(key) {
+                            if (!channel.has(key)) throw new $TypeError('Side channel does not contain ' + inspect(key));
+                        },
+                        delete: function(key) {
+                            if ($m) {
+                                var result = $mapDelete($m, key);
+                                if (0 === $mapSize($m)) $m = void 0;
+                                return result;
+                            }
+                            return false;
+                        },
+                        get: function(key) {
+                            if ($m) return $mapGet($m, key);
+                        },
+                        has: function(key) {
+                            if ($m) return $mapHas($m, key);
+                            return false;
+                        },
+                        set: function(key, value) {
+                            if (!$m) $m = new $Map();
+                            $mapSet($m, key, value);
+                        }
+                    };
+                    return channel;
+                };
+            },
+            "./node_modules/side-channel-weakmap/index.js": function(module1, __unused_webpack_exports, __webpack_require__) {
+                "use strict";
+                var GetIntrinsic = __webpack_require__("./node_modules/get-intrinsic/index.js");
+                var callBound = __webpack_require__("./node_modules/call-bound/index.js");
+                var inspect = __webpack_require__("./node_modules/object-inspect/index.js");
+                var getSideChannelMap = __webpack_require__("./node_modules/side-channel-map/index.js");
+                var $TypeError = __webpack_require__("./node_modules/es-errors/type.js");
+                var $WeakMap = GetIntrinsic('%WeakMap%', true);
+                var $weakMapGet = callBound('WeakMap.prototype.get', true);
+                var $weakMapSet = callBound('WeakMap.prototype.set', true);
+                var $weakMapHas = callBound('WeakMap.prototype.has', true);
+                var $weakMapDelete = callBound('WeakMap.prototype.delete', true);
+                module1.exports = $WeakMap ? function() {
+                    var $wm;
+                    var $m;
+                    var channel = {
+                        assert: function(key) {
+                            if (!channel.has(key)) throw new $TypeError('Side channel does not contain ' + inspect(key));
+                        },
+                        delete: function(key) {
+                            if ($WeakMap && key && ('object' == typeof key || 'function' == typeof key)) {
+                                if ($wm) return $weakMapDelete($wm, key);
+                            } else if (getSideChannelMap) {
+                                if ($m) return $m['delete'](key);
+                            }
+                            return false;
+                        },
                         get: function(key) {
                             if ($WeakMap && key && ('object' == typeof key || 'function' == typeof key)) {
                                 if ($wm) return $weakMapGet($wm, key);
-                            } else if ($Map) {
-                                if ($m) return $mapGet($m, key);
-                            } else if ($o) return listGet($o, key);
+                            }
+                            return $m && $m.get(key);
                         },
                         has: function(key) {
                             if ($WeakMap && key && ('object' == typeof key || 'function' == typeof key)) {
                                 if ($wm) return $weakMapHas($wm, key);
-                            } else if ($Map) {
-                                if ($m) return $mapHas($m, key);
-                            } else if ($o) return listHas($o, key);
-                            return false;
+                            }
+                            return !!$m && $m.has(key);
                         },
                         set: function(key, value) {
                             if ($WeakMap && key && ('object' == typeof key || 'function' == typeof key)) {
                                 if (!$wm) $wm = new $WeakMap();
                                 $weakMapSet($wm, key, value);
-                            } else if ($Map) {
-                                if (!$m) $m = new $Map();
-                                $mapSet($m, key, value);
-                            } else {
-                                if (!$o) $o = {
-                                    key: {},
-                                    next: null
-                                };
-                                listSet($o, key, value);
+                            } else if (getSideChannelMap) {
+                                if (!$m) $m = getSideChannelMap();
+                                $m.set(key, value);
                             }
+                        }
+                    };
+                    return channel;
+                } : getSideChannelMap;
+            },
+            "./node_modules/side-channel/index.js": function(module1, __unused_webpack_exports, __webpack_require__) {
+                "use strict";
+                var $TypeError = __webpack_require__("./node_modules/es-errors/type.js");
+                var inspect = __webpack_require__("./node_modules/object-inspect/index.js");
+                var getSideChannelList = __webpack_require__("./node_modules/side-channel-list/index.js");
+                var getSideChannelMap = __webpack_require__("./node_modules/side-channel-map/index.js");
+                var getSideChannelWeakMap = __webpack_require__("./node_modules/side-channel-weakmap/index.js");
+                var makeChannel = getSideChannelWeakMap || getSideChannelMap || getSideChannelList;
+                module1.exports = function() {
+                    var $channelData;
+                    var channel = {
+                        assert: function(key) {
+                            if (!channel.has(key)) throw new $TypeError('Side channel does not contain ' + inspect(key));
+                        },
+                        delete: function(key) {
+                            return !!$channelData && $channelData['delete'](key);
+                        },
+                        get: function(key) {
+                            return $channelData && $channelData.get(key);
+                        },
+                        has: function(key) {
+                            return !!$channelData && $channelData.has(key);
+                        },
+                        set: function(key, value) {
+                            if (!$channelData) $channelData = makeChannel();
+                            $channelData.set(key, value);
                         }
                     };
                     return channel;
@@ -13470,7 +13715,7 @@
             }
             const HTTPError = HTTPError_HTTPError;
             class VideomailError extends HTTPError {
-                title = "videomail-client error";
+                title = "Error thrown from videomail-client npm package";
                 location = window.location.href;
                 explanation;
                 logLines;
@@ -13518,11 +13763,13 @@
                         screen.width,
                         screen.height,
                         screen.colorDepth
-                    ].join("×");
+                    ].join("\xd7");
                     if (screen.orientation) this.orientation = screen.orientation.type.toString();
                     this.err = errData?.err;
                     const stackTarget = errData?.cause ?? errData?.err;
-                    if (stackTarget) Error.captureStackTrace(stackTarget, VideomailError);
+                    if (stackTarget) {
+                        if ("captureStackTrace" in Error) Error.captureStackTrace(stackTarget, VideomailError);
+                    }
                 }
                 hasClass(name) {
                     return this.classList?.includes(name);
@@ -14095,7 +14342,7 @@
             }
             const wrappers_form = Form;
             var package_namespaceObject = {
-                i8: "10.2.26"
+                i8: "10.2.41"
             };
             function findOriginalExc(exc) {
                 if (exc instanceof Error && "response" in exc) {
@@ -14193,8 +14440,6 @@
                             logLines: err.logLines,
                             orientation: err.orientation,
                             os: err.os,
-                            promise: err.promise,
-                            reason: err.reason,
                             screen: err.screen,
                             siteName: err.siteName,
                             status: err.status,
@@ -14422,6 +14667,9 @@
                 }
                 onUserMediaReady(params) {
                     this.onFormReady();
+                    showElement(this.buttonsElement);
+                    showElement(this.audioOnRadioPair);
+                    showElement(this.audioOffRadioPair);
                     if (html_isShown(this.recordButton) && !params.recordWhenReady) html_enableElement(this.recordButton);
                     else if (html_isShown(this.recordAgainButton) && !params.recordWhenReady) html_enableElement(this.recordAgainButton);
                     if (this.options.enableAutoValidation) html_disableElement(this.submitButton);
@@ -14655,6 +14903,7 @@
                         this.buttonsElement.classList.add(this.options.selectors.buttonsClass);
                         this.container.appendChild(this.buttonsElement);
                     }
+                    html_hideElement(this.buttonsElement);
                     this.buildButtons();
                     if (!this.built) this.initEvents();
                     this.built = true;
@@ -14776,7 +15025,7 @@
                     else {
                         this.facingModeElement = document.createElement("button");
                         this.facingModeElement.classList.add("facingMode");
-                        this.facingModeElement.innerHTML = "⤾";
+                        this.facingModeElement.innerHTML = "\u293E";
                         this.facingModeElement.onclick = (e)=>{
                             e?.preventDefault();
                             try {
@@ -15121,17 +15370,17 @@
                         this.options.logger.debug("Limit reached");
                         lead += `${this.options.text.limitReached}.<br/>`;
                     }
-                    lead += `${this.options.text.sending} …`;
+                    lead += `${this.options.text.sending} \u{2026}`;
                     this.notify(lead, void 0, {
                         stillWait: true,
                         entertain: this.options.notifier.entertain
                     });
                 }
                 onConnecting() {
-                    this.notify("Connecting …");
+                    this.notify("Connecting \u2026");
                 }
                 onLoadingUserMedia() {
-                    this.notify("Loading webcam …");
+                    this.notify("Loading webcam \u2026");
                 }
                 onProgress(frameProgress, sampleProgress) {
                     let overallProgress;
@@ -15143,7 +15392,7 @@
                 }
                 onBeginVideoEncoding() {
                     this.visuals.beginWaiting();
-                    const lead = `${this.options.text.encoding} …`;
+                    const lead = `${this.options.text.encoding} \u{2026}`;
                     this.notify(lead, void 0, {
                         stillWait: true,
                         entertain: this.options.notifier.entertain
@@ -15175,7 +15424,7 @@
                         this.onBeginVideoEncoding();
                     });
                     this.on("UNLOADING", ()=>{
-                        this.notify("Unloading …");
+                        this.notify("Unloading \u2026");
                     });
                     this.on("DISCONNECTED", ()=>{
                         this.notify("Disconnected");
@@ -15648,7 +15897,7 @@
                 return videoTrack;
             }
             const media_getFirstVideoTrack = getFirstVideoTrack;
-            const EVENT_ASCII = "|—O—|";
+            const EVENT_ASCII = "|\u2014O\u2014|";
             class UserMedia extends util_Despot {
                 recorder;
                 rawVisualUserMedia;
@@ -16025,7 +16274,7 @@
             }
             const dimensions_calculateHeight = calculateHeight;
             var Buffer = __webpack_require__("./node_modules/buffer/index.js")["Buffer"];
-            const PIPE_SYMBOL = "°º¤ø,¸¸,ø¤º°`°º¤ø,¸,ø¤°º¤ø,¸¸,ø¤º°`°º¤ø,¸ ";
+            const PIPE_SYMBOL = "\xb0\xba\xa4\xf8,\xb8\xb8,\xf8\xa4\xba\xb0`\xb0\xba\xa4\xf8,\xb8,\xf8\xa4\xb0\xba\xa4\xf8,\xb8\xb8,\xf8\xa4\xba\xb0`\xb0\xba\xa4\xf8,\xb8 ";
             class Recorder extends util_Despot {
                 visuals;
                 replay;
@@ -16464,7 +16713,7 @@
                                     let explanation = "(No explanation given)";
                                     if (command.args?.err?.message) explanation = command.args.err.message;
                                     const err = error_createError({
-                                        message: "Oh no, server error!",
+                                        message: "Websocket error from Videomail server",
                                         explanation,
                                         err: deserializeError(command.args?.err),
                                         options: this.options
@@ -16525,7 +16774,7 @@
                             }, 0);
                         }
                     } else {
-                        this.options.logger.debug(`Reconnecting for the command ${command} …`);
+                        this.options.logger.debug(`Reconnecting for the command ${command} \u{2026}`);
                         this.initSocket(()=>{
                             this.writeCommand(command, args);
                             cb?.();
@@ -17083,6 +17332,8 @@
                                 throw err;
                             });
                             else this.replayElement?.pause();
+                        }, {
+                            passive: true
                         });
                         this.replayElement.addEventListener("click", (e)=>{
                             e.preventDefault();
@@ -17609,7 +17860,7 @@
                             const element = e.target;
                             const tagName = element.tagName;
                             const isEditable = element.isContentEditable || "true" === element.contentEditable;
-                            if (!isEditable && "INPUT" !== tagName.toUpperCase() && "TEXTAREA" !== tagName.toUpperCase()) {
+                            if (!isEditable && tagName && "INPUT" !== tagName.toUpperCase() && "TEXTAREA" !== tagName.toUpperCase()) {
                                 const code = e.code;
                                 if ("Space" === code) {
                                     e.preventDefault();
@@ -17811,7 +18062,7 @@
                                 const name = invalidInput.getAttribute("name");
                                 valid = false;
                                 if (name) {
-                                    whyInvalid = `Input "${name}" seems wrong 🤔`;
+                                    whyInvalid = `Input "${name}" seems wrong \u{1F914}`;
                                     invalidData = {
                                         [name]: invalidInput.getAttribute("value")
                                     };
@@ -17819,7 +18070,7 @@
                             } else if (!this.areVisualsHidden() && !visualsValid) {
                                 if (this.buttonsAreReady() || this.isRecording() || this.isPaused() || this.isCountingDown()) {
                                     valid = false;
-                                    whyInvalid = "Don't forget to record a video 😉";
+                                    whyInvalid = "Don't forget to record a video \uD83D\uDE09";
                                     invalidData = {
                                         key: void 0
                                     };
