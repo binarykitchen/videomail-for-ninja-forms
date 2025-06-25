@@ -5,7 +5,7 @@ Tags: video, email, recorder, sign language
 
 Requires at least: 6.0
 Tested up to: 6.7.2
-Stable tag: 7.1.0
+Stable tag: 7.1.1
 Requires PHP: 8.1.0
 Donate link: https://videomail.io/faq
 License: CC0-1.0
@@ -70,6 +70,14 @@ To get help, just use any of these contacts at [https://binarykitchen.com](https
 2. Once you have assembled a form and preview it, any browser will ask for webcam access first.
 
 == Changelog ==
+= 7.1.1 (25 June 2025) =
+**Improvement:**
+* Allow logins while recording
+
+**Chore**
+* Upgrade Videomail-Client for big upcoming changes
+* Polish changelog
+
 = 7.1.0 (15 May 2025) =
 **Improvement**
 * Also serialize unhandled play promises for more stability on Android phones
@@ -95,292 +103,294 @@ To get help, just use any of these contacts at [https://binarykitchen.com](https
 * Corrects invalid version for the "Tested up to" field
 
 = 7.0.7 (18 March 2025) =
-*Improvement:*
+**Improvement:**
 * More robust error reporting from mobile devices
 
-*Chore:*
+**Chore:**
 * Upgrade Videomail-Client
 * Export more types
 
 = 7.0.5 (5 Feb 2025) =
-*Improvement:*
+**Improvement:**
 * Properly recognizes full height of iPhone devices
 
 = 7.0.4 (2 Feb 2025) =
-*Chore:*
+**Chore:**
 * Upgrade Videomail-Client
 
 = 7.0.3 (31 Jan 2025) =
-*Improvement:*
+**Improvement:**
 * Inject version in error reports
 
 = 7.0.2 (30 Jan 2025) =
-*Fix:*
+**Fix:**
 * Remove invalid import statement
 
 = 7.0.1 (15 Jan 2025) =
-*Improvement:*
+**Improvement:**
 * Proper versions of anything are properly recorded for any error reports
 
-*Change:*
+**Change:**
 * Bumps Videomail-Client to latest version
 
 = 7.0.0 (21 Dec 2024) =
-*Change:*
+**Change:**
 * After video processing, pick the correct API response (intelligence)
 
-*Fix:*
+**Fix:**
 * Revert invalid imports (ESM back to UMD)
 
-*Improvement:*
+**Improvement:**
 * Better error messages (more human friendly)
 
 = 6.0.0 (29 Nov 2024) =
-*Change:*
+**Change:**
 * Upgrade Videomail-Client to v10 (15% faster)
 
 = 5.3.0 (13 Sep 2024) =
-*Improvement:*
+**Improvement:**
 * Speed: all is about 20% faster
-*Change:*
+**Change:**
 * Upgrade runs on Node.js v22
-*Bugs:*
+**Bugs:**
 * No conflicts when React is on the same page
 * Pause + Resume video recording won't crash when hit too many times
 
 = 5.2.1 (30 Jun 2024) =
-*Improvement:*
+**Improvement:**
 * New option "stretch' to let the video take full width of the parent container, regardless of the webcam resolution.
 * Improve documentation for developers
-*Change:*
+
+**Change:**
 * Upgrade internal dependencies
-*Bugs:*
+
+**Bugs:**
 * Do not lint before build completes
 
 = 5.1.1 (13 Jun 2024) =
-*Change:*
+**Change:**
 * Upgrade Node.js and npm
 * Tested on WordPress v6.5.4
 
-*Bugs:*
+**Bugs:**
 * Correct invalid tags
 
 = 5.1.0 (24 Feb 2024) =
-*Improvement:*
+**Improvement:**
 * New option: "load_user_media_on_record". When enabled, webcam permission are only being asked for when user hits record button
 
 = 5.0.2 (21 Nov 2023) =
-*Change:*
+**Change:**
 * Upgrade deployment tools
 
 = 5.0.1 (21 Nov 2023) =
-*Bugs:*
+**Bugs:**
 * Fix deployment issues
 
 = 5.0.0 (19 Nov 2023) =
-*Change:*
+**Change:**
 * Internal technical improvements for releasing new versions
 * Internal technical change: Bump to NodeJS v20 and npm v9
 
 = 4.0.16 (14 Jul 2023) =
-*Bugs:*
+**Bugs:**
 * Fix versioning
 
 = 4.0.15 (14 Jul 2023) =
-*Bugs:*
+**Bugs:**
 * Fix versioning
 
 = 4.0.14 (14 Jul 2023) =
-*Bugs:*
+**Bugs:**
 * Fix versioning
 
 = 4.0.13 (14 Jul 2023) =
-*Bugs:*
+**Bugs:**
 * Fix boolean check for media library addition
 
 = 4.0.12 (12 Jul 2023) =
-*Bugs:*
+**Bugs:**
 * Fix a releasing issue
 
 = 4.0.11 (12 Jul 2023) =
-*Bugs:*
+**Bugs:**
 * Do not save to media library when disabled
 
-*Change:*
+**Change:**
 * Deliver un-minified JS for easier debugging
 
 = 4.0.10 (29 June 2023) =
-*Bugs:*
+**Bugs:**
 * Repair broken bash comment
 
 = 4.0.9 (29 June 2023) =
-*Bugs:*
+**Bugs:**
 * Repair broken repo syncing
 
 = 4.0.8 (29 June 2023) =
-*Bugs:*
+**Bugs:**
 * Repair broken versioning
 
 = 4.0.6 (29 June 2023) =
-*Bugs:*
+**Bugs:**
 * Bump videomail-client which resolves a bug when webcam permissions are missing.
 
 = 4.0.5 (29 May 2023) =
-*Change:*
+**Change:**
 * Rebuild lockfile
 
 = 4.0.4 (29 May 2023) =
-*Change:*
+**Change:**
 * Include target folder
 
 = 4.0.3 (29 May 2023) =
-*Change:*
+**Change:**
 * Internal technical improvements for versioning
 
 = 4.0.2 (29 May 2023) =
-*Change:*
+**Change:**
 * Internal technical improvements for development
 
 = 4.0.1 (29 May 2023) =
-*Change:*
+**Change:**
 * Upgrade Videomail-Client
 
-*Improvement:*
+**Improvement:**
 * Prefer serving MP4 over WebM movies (better coverage, especially on mobiles)
 
 = 4.0.0 (31 Dec 2022) =
-*Change:*
+**Change:**
 * Bump all dependencies and rebuild with NodeJS v18
 
 = 3.13.1 (23 Sep 2022) =
-*Improvement:*
+**Improvement:**
 * Better detection of supported video types
 
 = 3.13.0 (22 Sep 2022) =
-*Bugs:*
+**Bugs:**
 * Fixes broken video type detection
 
 = 3.12.0 (3 Sep 2022) =
-*Improvements:*
+**Improvements:**
 * Audio and Video 99.9% in sync now
 
-*Tasks:*
+**Tasks:**
 * Upgrade all inside dependencies without breaking changes.
 
 = 3.11.2 (11 Jun 2022) =
-*Tasks:*
+**Tasks:**
 * Tested everything on latest WordPress v6.0.0 and works well
 
-*Change:*
+**Change:**
 * Upgraded all internal libraries, especially Videomail-Client on npm (they come with lots of stability fixes)
 
 = 3.11.1 (28 Aug 2021) =
-*Change:*
+**Change:**
 * Just a maintenance bump using latest Videomail-Client
 * Better treatment of undefined form inputs
 
 = 3.11.0 (19 Jul 2021) =
-*Change:*
+**Change:**
 * Switch to node.js v16 and npm v7.18
 * Runs security audit toward all dependencies
 
 = 3.10.4 (12 Jul 2021) =
-*Change:*
+**Change:**
 * Countdown and pause texts are bolder now
 
 = 3.10.3 (29 Jan 2021) =
-*Bugs:*
+**Bugs:**
 * Another workaround for more global pollution situations
 
 = 3.10.2 (29 Jan 2021) =
-*Bugs:*
+**Bugs:**
 * Works for older Backbone versions too or when other plugins pollute its global scope.
 
 = 3.10.1 (5 Dec 2020) =
-*Change:*
+**Change:**
 * Bump min required and tested versions
 
 = 3.10.0 (5 Dec 2020) =
-*Bugs:*
+**Bugs:**
 * Make it work along with the Conditional Logic add-on
 * Required attribute works again with latest WP and Ninja Form versions
 
-*Change:*
+**Change:**
 * Upgrades Videomail dependency
 
 = 3.9.8 (20 Oct 2020) =
-*Bugs:*
+**Bugs:**
 * Fixed wrong FPS calculation. Now overall quality of encoded videos won’t be impacted when connectivity deteriorates toward the end.
 
-*Change:*
+**Change:**
 * Upgrades Videomail dependency
 
 = 3.9.7 (9 Sept 2020) =
-*Improvements:*
+**Improvements:**
 * Better release procedure
 * Consistent source code
 
 = 3.9.6 (16 Jun 2020) =
-*Change:*
+**Change:**
 * Upgrades Videomail dependency
 
 = 3.9.5 (16 Jun 2020) =
-*Bugs:*
+**Bugs:**
 * Flip video feed horizontally to match with reality (all webcams are inverted by default)
 
 = 3.9.4 (13 Mar 2020) =
-*Bugs:*
+**Bugs:**
 * Ping more often to keep connection alive
 * Also submit disabled form inputs
 
 = 3.9.3 (7 Nov 2019) =
-*Bugs:*
+**Bugs:**
 * Do not enable audio when already false
 
 = 3.9.2 (7 Nov 2019) =
-*Bugs:*
+**Bugs:**
 * Repaired merging fields into strings
 
 = 3.8.1 (7 Nov 2019) =
-*Bugs:*
+**Bugs:**
 * Repair readme.txt
 
 = 3.8.0 (6 Nov 2019) =
-*Change:*
+**Change:**
 Lots improved under the hood, updated many libraries for speed and security.
 
-*Bugs:*
+**Bugs:**
 * Works again on IE11
 
 = 3.7.4 (3 Sep 2019) =
-*Bugs:*
+**Bugs:**
 * Fix invalid URLs for Windows machines
 
 = 3.7.3 (27 Aug 2019) =
-*Bugs:*
+**Bugs:**
 * Correct error message when on insecure HTTP with recommendation to switch to HTTPS
 * Works again on older iPhones
 
-*Change:*
+**Change:**
 * Replaced lots of old code with modern code.
 
 = 3.7.2 (8 May 2019) =
-*Change:*
+**Change:**
 * Better readystate handling for faster page loads
 * Improved error messages for iOS on Chrome
 * Faster websocket streams
 
 = 3.7.1 (14 Jan 2019) =
-*Change:*
+**Change:**
 * Audio now enabled by default
 * Improved documentation
 
-*Bugs:*
+**Bugs:**
 * More robust with exotic browsers
 * Correct bad spelling
 
 = 3.6.0 (17 March 2018) =
-*Change:*
+**Change:**
 * Moved to a new, public repository and free now
 
 = 3.5.0 (17 February 2018) =
@@ -388,30 +398,30 @@ Lots improved under the hood, updated many libraries for speed and security.
 * New option: save to media library - so that you can reuse the video for posts or pages yay!
 * New option: image quality - with this you can improve video in cost of bandwidth
 
-*Bugs:*
+**Bugs:**
 * Much better error handling
 
 = 3.4.3 (21 December 2017) =
-*Bugs:*
+**Bugs:**
 * Now it does not mess with other rich content text editors anymore.
 
 = 3.4.2 (12 December 2017) =
-*Bugs:*
+**Bugs:**
 * Added missing licensing field under settings
 
 = 3.4.0 (12 October 2017) =
 *Features:*
 * Now works on iPhones running on iOS11 and on Safari v11, yay.
 
-*Bugs:*
+**Bugs:**
 * Now works as an optional input (= not as a required field)
 
 = 3.3.3 (9 September 2017) =
-*Bugs:*
+**Bugs:**
 * Make it work again on all Edge browsers
 
 = 3.3.2 (27 July 2017) =
-*Bugs:*
+**Bugs:**
 * Do not zip extension in another zip.
 
 *Changes:*
@@ -419,4 +429,4 @@ Lots improved under the hood, updated many libraries for speed and security.
 * Improved error messages
 
 = 3.3.1 (12 July 2017) =
-*Initial Release*
+**Initial Release**

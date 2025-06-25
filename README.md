@@ -67,7 +67,7 @@ https://github.com/binarykitchen/videomail-for-ninja-forms/issues
 ## Releasing
 
 1. Ensure you are on develop branch. yeah
-2. Update changelog in readme.txt (bump "tested up to" using WordPress, "stable tag" using VC + write changelog)
+2. Update changelog in readme.txt (bump "tested up to" using WordPress version, "stable tag" using VC version + write changelog)
 3. Search for current version and replace it with the new one. Should be these files:
    - package.json
    - readme.txt
@@ -81,7 +81,7 @@ https://github.com/binarykitchen/videomail-for-ninja-forms/issues
 8. Tag a new release which will run the release workflow on GitHub, e.g. with `gh release create`.
    Skip optional title, then under release notes, select "Write my own" and paste the new version section from readme.txt
    (upon any errors, you may try to run manually "gh release create" again to trigger a release on GitHub)
-9. Announce on Twitter
+9. Announce on Social Media
 
 ## Ask for help
 

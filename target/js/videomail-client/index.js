@@ -1185,7 +1185,7 @@
                 function writeFloat(buf, value, offset, littleEndian, noAssert) {
                     value *= 1;
                     offset >>>= 0;
-                    if (!noAssert) checkIEEE754(buf, value, offset, 4, 3.4028234663852886e+38, -340282346638528860000000000000000000000);
+                    if (!noAssert) checkIEEE754(buf, value, offset, 4, 3.4028234663852886e+38, -3.4028234663852886e+38);
                     ieee754.write(buf, value, offset, littleEndian, 23, 4);
                     return offset + 4;
                 }
@@ -1198,7 +1198,7 @@
                 function writeDouble(buf, value, offset, littleEndian, noAssert) {
                     value *= 1;
                     offset >>>= 0;
-                    if (!noAssert) checkIEEE754(buf, value, offset, 8, 1.7976931348623157E+308, -179769313486231570000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000);
+                    if (!noAssert) checkIEEE754(buf, value, offset, 8, 1.7976931348623157E+308, -1.7976931348623157e+308);
                     ieee754.write(buf, value, offset, littleEndian, 52, 8);
                     return offset + 8;
                 }
@@ -2060,7 +2060,7 @@
                 }
                 var util = Object.create(__webpack_require__("./node_modules/core-util-is/lib/util.js"));
                 util.inherits = __webpack_require__("./node_modules/inherits/inherits_browser.js");
-                var debugUtil = __webpack_require__("?54a4");
+                var debugUtil = __webpack_require__("?2927");
                 var debug = void 0;
                 debug = debugUtil && debugUtil.debuglog ? debugUtil.debuglog('stream') : function() {};
                 var BufferList = __webpack_require__("./node_modules/duplexify/node_modules/readable-stream/lib/internal/streams/BufferList.js");
@@ -3183,7 +3183,7 @@
                     if (!(instance instanceof Constructor)) throw new TypeError("Cannot call a class as a function");
                 }
                 var Buffer = __webpack_require__("./node_modules/duplexify/node_modules/safe-buffer/index.js").Buffer;
-                var util = __webpack_require__("?2a0b");
+                var util = __webpack_require__("?82dc");
                 function copyBuffer(src, target, offset) {
                     src.copy(target, offset);
                 }
@@ -4748,7 +4748,7 @@
             },
             "./node_modules/global/document.js": function(module1, __unused_webpack_exports, __webpack_require__) {
                 var topLevel = void 0 !== __webpack_require__.g ? __webpack_require__.g : 'undefined' != typeof window ? window : {};
-                var minDoc = __webpack_require__("?39ea");
+                var minDoc = __webpack_require__("?7a90");
                 var doccy;
                 if ('undefined' != typeof document) doccy = document;
                 else {
@@ -5180,7 +5180,7 @@
                     }
                     return $replace.call(str, sepRegex, '$&_');
                 }
-                var utilInspect = __webpack_require__("?72a8");
+                var utilInspect = __webpack_require__("?aa23");
                 var inspectCustom = utilInspect.custom;
                 var inspectSymbol = isSymbol(inspectCustom) ? inspectCustom : null;
                 var quotes = {
@@ -8256,7 +8256,7 @@
                 }
                 var util = Object.create(__webpack_require__("./node_modules/core-util-is/lib/util.js"));
                 util.inherits = __webpack_require__("./node_modules/inherits/inherits_browser.js");
-                var debugUtil = __webpack_require__("?e97d");
+                var debugUtil = __webpack_require__("?5f55");
                 var debug = void 0;
                 debug = debugUtil && debugUtil.debuglog ? debugUtil.debuglog('stream') : function() {};
                 var BufferList = __webpack_require__("./node_modules/websocket-stream/node_modules/readable-stream/lib/internal/streams/BufferList.js");
@@ -9379,7 +9379,7 @@
                     if (!(instance instanceof Constructor)) throw new TypeError("Cannot call a class as a function");
                 }
                 var Buffer = __webpack_require__("./node_modules/websocket-stream/node_modules/safe-buffer/index.js").Buffer;
-                var util = __webpack_require__("?ea64");
+                var util = __webpack_require__("?9936");
                 function copyBuffer(src, target, offset) {
                     src.copy(target, offset);
                 }
@@ -9979,16 +9979,16 @@
                     }
                 }
             },
-            "../../node_modules/@rsbuild/core/compiled/css-loader/index.js??ruleSet[1].rules[11].use[1]!builtin:lightningcss-loader??ruleSet[1].rules[11].use[2]!../../node_modules/stylus-loader/dist/cjs.js??ruleSet[1].rules[11].use[3]!./src/styles/main.styl": function(module1, __webpack_exports__, __webpack_require__) {
+            "./node_modules/@rslib/core/node_modules/@rsbuild/core/compiled/css-loader/index.js??ruleSet[1].rules[12].use[1]!builtin:lightningcss-loader??ruleSet[1].rules[12].use[2]!./node_modules/stylus-loader/dist/cjs.js??ruleSet[1].rules[12].use[3]!./src/styles/main.styl": function(module1, __webpack_exports__, __webpack_require__) {
                 "use strict";
                 __webpack_require__.d(__webpack_exports__, {
                     Z: ()=>__WEBPACK_DEFAULT_EXPORT__
                 });
-                var _node_modules_rsbuild_core_compiled_css_loader_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("./node_modules/@rsbuild/core/compiled/css-loader/noSourceMaps.js");
-                var _node_modules_rsbuild_core_compiled_css_loader_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/ __webpack_require__.n(_node_modules_rsbuild_core_compiled_css_loader_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
-                var _node_modules_rsbuild_core_compiled_css_loader_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__("./node_modules/@rsbuild/core/compiled/css-loader/api.js");
-                var _node_modules_rsbuild_core_compiled_css_loader_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/ __webpack_require__.n(_node_modules_rsbuild_core_compiled_css_loader_api_js__WEBPACK_IMPORTED_MODULE_1__);
-                var ___CSS_LOADER_EXPORT___ = _node_modules_rsbuild_core_compiled_css_loader_api_js__WEBPACK_IMPORTED_MODULE_1___default()(_node_modules_rsbuild_core_compiled_css_loader_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default());
+                var _node_modules_rslib_core_node_modules_rsbuild_core_compiled_css_loader_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("./node_modules/@rslib/core/node_modules/@rsbuild/core/compiled/css-loader/noSourceMaps.js");
+                var _node_modules_rslib_core_node_modules_rsbuild_core_compiled_css_loader_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/ __webpack_require__.n(_node_modules_rslib_core_node_modules_rsbuild_core_compiled_css_loader_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
+                var _node_modules_rslib_core_node_modules_rsbuild_core_compiled_css_loader_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__("./node_modules/@rslib/core/node_modules/@rsbuild/core/compiled/css-loader/api.js");
+                var _node_modules_rslib_core_node_modules_rsbuild_core_compiled_css_loader_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/ __webpack_require__.n(_node_modules_rslib_core_node_modules_rsbuild_core_compiled_css_loader_api_js__WEBPACK_IMPORTED_MODULE_1__);
+                var ___CSS_LOADER_EXPORT___ = _node_modules_rslib_core_node_modules_rsbuild_core_compiled_css_loader_api_js__WEBPACK_IMPORTED_MODULE_1___default()(_node_modules_rslib_core_node_modules_rsbuild_core_compiled_css_loader_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default());
                 ___CSS_LOADER_EXPORT___.push([
                     module1.id,
                     `@keyframes blink {
@@ -10132,13 +10132,13 @@
                 ]);
                 const __WEBPACK_DEFAULT_EXPORT__ = ___CSS_LOADER_EXPORT___;
             },
-            "?2a0b": function() {},
-            "?54a4": function() {},
-            "?39ea": function() {},
-            "?72a8": function() {},
-            "?ea64": function() {},
-            "?e97d": function() {},
-            "./node_modules/@rsbuild/core/compiled/css-loader/api.js": function(module1) {
+            "?82dc": function() {},
+            "?2927": function() {},
+            "?7a90": function() {},
+            "?aa23": function() {},
+            "?9936": function() {},
+            "?5f55": function() {},
+            "./node_modules/@rslib/core/node_modules/@rsbuild/core/compiled/css-loader/api.js": function(module1) {
                 "use strict";
                 module1.exports = function(cssWithMappingToString) {
                     var list = [];
@@ -10192,13 +10192,13 @@
                     return list;
                 };
             },
-            "./node_modules/@rsbuild/core/compiled/css-loader/noSourceMaps.js": function(module1) {
+            "./node_modules/@rslib/core/node_modules/@rsbuild/core/compiled/css-loader/noSourceMaps.js": function(module1) {
                 "use strict";
                 module1.exports = function(i) {
                     return i[1];
                 };
             },
-            "./node_modules/@rsbuild/core/compiled/style-loader/runtime/injectStylesIntoStyleTag.js": function(module1) {
+            "./node_modules/@rslib/core/node_modules/@rsbuild/core/compiled/style-loader/runtime/injectStylesIntoStyleTag.js": function(module1) {
                 "use strict";
                 var stylesInDOM = [];
                 function getIndexByIdentifier(identifier) {
@@ -10277,7 +10277,7 @@
                     };
                 };
             },
-            "./node_modules/@rsbuild/core/compiled/style-loader/runtime/insertBySelector.js": function(module1) {
+            "./node_modules/@rslib/core/node_modules/@rsbuild/core/compiled/style-loader/runtime/insertBySelector.js": function(module1) {
                 "use strict";
                 var memo = {};
                 function getTarget(target) {
@@ -10299,7 +10299,7 @@
                 }
                 module1.exports = insertBySelector;
             },
-            "./node_modules/@rsbuild/core/compiled/style-loader/runtime/insertStyleElement.js": function(module1) {
+            "./node_modules/@rslib/core/node_modules/@rsbuild/core/compiled/style-loader/runtime/insertStyleElement.js": function(module1) {
                 "use strict";
                 function insertStyleElement(options) {
                     var element = document.createElement("style");
@@ -10309,7 +10309,7 @@
                 }
                 module1.exports = insertStyleElement;
             },
-            "./node_modules/@rsbuild/core/compiled/style-loader/runtime/setAttributesWithoutAttributes.js": function(module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/@rslib/core/node_modules/@rsbuild/core/compiled/style-loader/runtime/setAttributesWithoutAttributes.js": function(module1, __unused_webpack_exports, __webpack_require__) {
                 "use strict";
                 function setAttributesWithoutAttributes(styleElement) {
                     var nonce = __webpack_require__.nc;
@@ -10317,7 +10317,7 @@
                 }
                 module1.exports = setAttributesWithoutAttributes;
             },
-            "./node_modules/@rsbuild/core/compiled/style-loader/runtime/styleDomAPI.js": function(module1) {
+            "./node_modules/@rslib/core/node_modules/@rsbuild/core/compiled/style-loader/runtime/styleDomAPI.js": function(module1) {
                 "use strict";
                 function apply(styleElement, options, obj) {
                     var css = "";
@@ -10354,7 +10354,7 @@
                 }
                 module1.exports = domAPI;
             },
-            "./node_modules/@rsbuild/core/compiled/style-loader/runtime/styleTagTransform.js": function(module1) {
+            "./node_modules/@rslib/core/node_modules/@rsbuild/core/compiled/style-loader/runtime/styleTagTransform.js": function(module1) {
                 "use strict";
                 function styleTagTransform(css, styleElement) {
                     if (styleElement.styleSheet) styleElement.styleSheet.cssText = css;
@@ -10435,8 +10435,8 @@
             "use strict";
             __webpack_require__.r(__webpack_exports__);
             __webpack_require__.d(__webpack_exports__, {
-                VideoType: ()=>VideoType_VideoType,
-                VideomailClient: ()=>src_client
+                VideomailClient: ()=>src_client,
+                VideoType: ()=>VideoType_VideoType
             });
             const constants = {
                 SITE_NAME_LABEL: "x-videomail-site-name",
@@ -10608,7 +10608,7 @@
                     breakLength: 1 / 0
                 }).replace(/\s+/gu, " ").replace(/\r?\n/gu, "");
             }
-            function pretty_pretty(anything) {
+            function pretty(anything) {
                 if (anything instanceof HTMLElement) {
                     if (anything.id) return `#${anything.id}`;
                     if (anything.className) return `.${anything.className}`;
@@ -10616,7 +10616,7 @@
                 }
                 return inspect(anything);
             }
-            const pretty = pretty_pretty;
+            const util_pretty = pretty;
             function isAudioEnabled(options) {
                 return Boolean(options.audio.enabled);
             }
@@ -13704,20 +13704,20 @@
             }
             const util_Browser = Browser;
             let getBrowser_browser;
-            function getBrowser_getBrowser(localOptions) {
+            function getBrowser(localOptions) {
                 if (!getBrowser_browser) getBrowser_browser = new util_Browser(localOptions);
                 return getBrowser_browser;
             }
-            const getBrowser = getBrowser_getBrowser;
-            class HTTPError_HTTPError extends Error {
+            const util_getBrowser = getBrowser;
+            class HTTPVideomailError_HTTPVideomailError extends Error {
                 code;
                 status;
-            }
-            const HTTPError = HTTPError_HTTPError;
-            class VideomailError extends HTTPError {
-                title = "Error thrown from videomail-client npm package";
-                location = window.location.href;
                 explanation;
+            }
+            const HTTPVideomailError = HTTPVideomailError_HTTPVideomailError;
+            class VideomailError extends HTTPVideomailError {
+                title = "Error from videomail-client npm package";
+                location = window.location.href;
                 logLines;
                 siteName;
                 cookie;
@@ -13750,7 +13750,7 @@
                     this.logLines = errData?.logLines;
                     this.siteName = options.siteName;
                     this.classList = classList;
-                    const browser = getBrowser(options);
+                    const browser = util_getBrowser(options);
                     const usefulClientData = browser.getUsefulData();
                     this.browser = usefulClientData.browser;
                     if (usefulClientData.cpu.architecture) this.cpu = usefulClientData.cpu;
@@ -13791,7 +13791,7 @@
                 let explanation = errorParams.explanation;
                 const classList = errorParams.classList ?? [];
                 const audioEnabled = isAudioEnabled(options);
-                const browser = getBrowser(options);
+                const browser = util_getBrowser(options);
                 const errName = err?.name ?? err?.constructor.name;
                 switch(errName){
                     case error_VideomailError.SECURITY_ERROR:
@@ -13871,22 +13871,23 @@
                         break;
                     case error_VideomailError.DOM_EXCEPTION:
                         message = "DOM Exception";
-                        explanation = pretty(err);
+                        explanation = util_pretty(err);
                         break;
                     case error_VideomailError.MEDIA_DEVICE_NOT_SUPPORTED:
                         message = "Media device not supported";
-                        explanation = pretty(err);
+                        explanation = util_pretty(err);
                         break;
                     default:
                         {
                             const originalExplanation = explanation;
-                            if (explanation && "object" == typeof explanation) explanation = pretty(explanation);
+                            if (explanation && "object" == typeof explanation) explanation = util_pretty(explanation);
                             if (!explanation && originalExplanation) explanation = `Inspected: ${originalExplanation}`;
+                            if (!explanation && err?.explanation) explanation = err.explanation;
                             if (!message && err?.message) message = err.message;
                             if (!message) {
                                 if (errName) message = `${errName} (weird)`;
-                                if (!explanation) explanation = pretty(err);
-                                if (pretty(message) === explanation) explanation = void 0;
+                                if (!explanation) explanation = util_pretty(err);
+                                if (util_pretty(message) === explanation) explanation = void 0;
                             }
                             break;
                         }
@@ -14043,7 +14044,7 @@
                 emit(eventName, ...params) {
                     const firstParam = params[0];
                     const showParams = firstParam && ("object" != typeof firstParam || "object" == typeof firstParam && Object.keys(firstParam).filter(Boolean).length > 0);
-                    if (showParams) this.options.logger.debug(`${this.name} emits ${eventName} with ${pretty(params)}`);
+                    if (showParams) this.options.logger.debug(`${this.name} emits ${eventName} with ${util_pretty(params)}`);
                     else this.options.logger.debug(`${this.name} emits ${eventName}`);
                     try {
                         Despot.EMITTER.emit(eventName, ...params);
@@ -14303,7 +14304,7 @@
                 }
                 async doTheSubmit(e) {
                     if (e) {
-                        this.options.logger.debug(`Form: doTheSubmit(${pretty(e)})`);
+                        this.options.logger.debug(`Form: doTheSubmit(${util_pretty(e)})`);
                         e.preventDefault();
                     } else this.options.logger.debug("Form: doTheSubmit()");
                     const url = this.formElement.getAttribute("action") ?? this.options.baseUrl;
@@ -14342,7 +14343,7 @@
             }
             const wrappers_form = Form;
             var package_namespaceObject = {
-                i8: "10.2.41"
+                i8: "10.2.49"
             };
             function findOriginalExc(exc) {
                 if (exc instanceof Error && "response" in exc) {
@@ -14351,10 +14352,11 @@
                     if ("error" in body) {
                         const message = body.error.message;
                         const cause = body.error.cause;
-                        const error = new HTTPError(message, {
+                        const error = new HTTPVideomailError(message, {
                             cause
                         });
                         if (body.error.name) error.name = body.error.name;
+                        if (body.error.explanation) error.explanation = body.error.explanation;
                         if (body.error.stack) error.stack = body.error.stack;
                         if (body.error.status) error.status = body.error.status;
                         if (body.error.code) error.code = body.error.code;
@@ -14389,7 +14391,7 @@
                 async get(identifierName, identifierValue) {
                     const url = `${this.options.baseUrl}/videomail/${identifierName}/${identifierValue}/snapshot`;
                     try {
-                        const request = await client_default()("get", url).type("json").set("Accept", "application/json").set("Timezone-Id", this.timezoneId).set(constants.SITE_NAME_LABEL, this.options.siteName).timeout(this.options.timeouts.connection);
+                        const request = await client_default()("get", url).type("json").set("Accept", "application/json").withCredentials().set("Timezone-Id", this.timezoneId).set(constants.SITE_NAME_LABEL, this.options.siteName).timeout(this.options.timeouts.connection);
                         const videomail = request.body;
                         return videomail;
                     } catch (exc) {
@@ -14406,7 +14408,7 @@
                     let url = `${this.options.baseUrl}/videomail/`;
                     if (method === form_FormMethod.PUT && videomail.key) url += videomail.key;
                     try {
-                        const request = await client_default()(method, url).query(queryParams).set("Timezone-Id", this.timezoneId).send(videomail).timeout(this.options.timeouts.connection);
+                        const request = await client_default()(method, url).query(queryParams).set("Timezone-Id", this.timezoneId).withCredentials().send(videomail).timeout(this.options.timeouts.connection);
                         return request;
                     } catch (exc) {
                         throw error_createError({
@@ -14451,7 +14453,7 @@
                                 videomailNinjaFormPlugin: this.options.versions?.videomailNinjaFormPlugin
                             }
                         };
-                        await client_default()(form_FormMethod.POST, url).query(queryParams).set("Timezone-Id", this.timezoneId).send(fullVideomailErrorData).timeout(this.options.timeouts.connection);
+                        await client_default()(form_FormMethod.POST, url).query(queryParams).set("Timezone-Id", this.timezoneId).withCredentials().send(fullVideomailErrorData).timeout(this.options.timeouts.connection);
                     } catch (exc) {
                         console.error(exc);
                     }
@@ -14519,28 +14521,28 @@
                 else element.classList.remove("disabled");
             }
             const html_enableElement = enableElement;
-            function hideElement(element) {
+            function hideElement_hideElement(element) {
                 if (!element) return;
                 hidden_default()(element, true);
             }
-            const html_hideElement = hideElement;
-            function showElement_showElement(element) {
+            const hideElement = hideElement_hideElement;
+            function showElement(element) {
                 if (!element) return;
                 hidden_default()(element, false);
             }
-            const showElement = showElement_showElement;
-            function isShown(element) {
+            const html_showElement = showElement;
+            function isShown_isShown(element) {
                 if (!element) return false;
                 return !hidden_default()(element);
             }
-            const html_isShown = isShown;
-            function adjustButton_adjustButton(buttonElement, show, type, disabled) {
+            const isShown = isShown_isShown;
+            function adjustButton(buttonElement, show, type, disabled) {
                 if (disabled) html_disableElement(buttonElement);
                 if (type) buttonElement.type = type;
-                if (!show) html_hideElement(buttonElement);
+                if (!show) hideElement(buttonElement);
                 return buttonElement;
             }
-            const adjustButton = adjustButton_adjustButton;
+            const html_adjustButton = adjustButton;
             class Buttons extends util_Despot {
                 container;
                 buttonsElement;
@@ -14600,12 +14602,12 @@
                 makeButton(buttonClass, text, clickHandler, show, id, type, selector, disabled = true) {
                     let buttonElement;
                     buttonElement = id ? document.querySelector(`#${id}`) : selector ? document.querySelector(selector) : this.buttonsElement?.querySelector(`.${buttonClass}`);
-                    if (buttonElement) buttonElement = adjustButton(buttonElement, show, type, disabled);
+                    if (buttonElement) buttonElement = html_adjustButton(buttonElement, show, type, disabled);
                     else {
                         buttonElement = document.createElement("button");
                         buttonElement.classList.add(buttonClass);
                         if (this.options.selectors.buttonClass) buttonElement.classList.add(this.options.selectors.buttonClass);
-                        buttonElement = adjustButton(buttonElement, show, type, disabled);
+                        buttonElement = html_adjustButton(buttonElement, show, type, disabled);
                         buttonElement.innerHTML = text;
                         if (this.submitButton && contains_default()(this.buttonsElement, this.submitButton)) this.buttonsElement?.insertBefore(buttonElement, this.submitButton);
                         else this.buttonsElement?.appendChild(buttonElement);
@@ -14648,34 +14650,34 @@
                     }
                 }
                 onFormReady(params) {
-                    if (!html_isShown(this.recordAgainButton)) {
-                        if (!params?.paused) showElement(this.recordButton);
+                    if (!isShown(this.recordAgainButton)) {
+                        if (!params?.paused) html_showElement(this.recordButton);
                     }
                     if (!params?.paused) {
                         html_disableElement(this.previewButton);
-                        html_hideElement(this.previewButton);
+                        hideElement(this.previewButton);
                     }
                     if (!this.options.enableAutoValidation) html_enableElement(this.submitButton);
                 }
                 onGoingBack() {
-                    html_hideElement(this.recordAgainButton);
-                    showElement(this.recordButton);
-                    showElement(this.submitButton);
+                    hideElement(this.recordAgainButton);
+                    html_showElement(this.recordButton);
+                    html_showElement(this.submitButton);
                 }
                 onReplayShown() {
                     this.hide();
                 }
                 onUserMediaReady(params) {
                     this.onFormReady();
-                    showElement(this.buttonsElement);
-                    showElement(this.audioOnRadioPair);
-                    showElement(this.audioOffRadioPair);
-                    if (html_isShown(this.recordButton) && !params.recordWhenReady) html_enableElement(this.recordButton);
-                    else if (html_isShown(this.recordAgainButton) && !params.recordWhenReady) html_enableElement(this.recordAgainButton);
+                    html_showElement(this.buttonsElement);
+                    html_showElement(this.audioOnRadioPair);
+                    html_showElement(this.audioOffRadioPair);
+                    if (isShown(this.recordButton) && !params.recordWhenReady) html_enableElement(this.recordButton);
+                    else if (isShown(this.recordAgainButton) && !params.recordWhenReady) html_enableElement(this.recordAgainButton);
                     if (this.options.enableAutoValidation) html_disableElement(this.submitButton);
                     if (!params.recordWhenReady) {
-                        if (html_isShown(this.audioOnRadioPair)) html_enableElement(this.audioOnRadioPair);
-                        if (html_isShown(this.audioOffRadioPair)) html_enableElement(this.audioOffRadioPair);
+                        if (isShown(this.audioOnRadioPair)) html_enableElement(this.audioOnRadioPair);
+                        if (isShown(this.audioOffRadioPair)) html_enableElement(this.audioOffRadioPair);
                     }
                 }
                 onResetting() {
@@ -14683,11 +14685,11 @@
                     this.reset();
                 }
                 onPreview() {
-                    html_hideElement(this.recordButton);
-                    html_hideElement(this.previewButton);
+                    hideElement(this.recordButton);
+                    hideElement(this.previewButton);
                     html_disableElement(this.audioOnRadioPair);
                     html_disableElement(this.audioOffRadioPair);
-                    showElement(this.recordAgainButton);
+                    html_showElement(this.recordAgainButton);
                     html_enableElement(this.recordAgainButton);
                     if (!this.options.enableAutoValidation) html_enableElement(this.submitButton);
                 }
@@ -14696,23 +14698,23 @@
                 }
                 adjustButtonsForPause() {
                     if (!this.isCountingDown()) {
-                        if (this.pauseButton) html_hideElement(this.pauseButton);
-                        showElement(this.resumeButton);
+                        if (this.pauseButton) hideElement(this.pauseButton);
+                        html_showElement(this.resumeButton);
                         html_enableElement(this.resumeButton);
-                        html_hideElement(this.recordButton);
-                        showElement(this.previewButton);
+                        hideElement(this.recordButton);
+                        html_showElement(this.previewButton);
                         html_enableElement(this.previewButton);
                     }
                 }
                 onFirstFrameSent() {
-                    html_hideElement(this.recordButton);
-                    html_hideElement(this.recordAgainButton);
+                    hideElement(this.recordButton);
+                    hideElement(this.recordAgainButton);
                     if (this.pauseButton) {
-                        showElement(this.pauseButton);
+                        html_showElement(this.pauseButton);
                         html_enableElement(this.pauseButton);
                     }
                     html_enableElement(this.previewButton);
-                    showElement(this.previewButton);
+                    html_showElement(this.previewButton);
                 }
                 onRecording(params) {
                     if (params.framesCount > 1) this.onFirstFrameSent();
@@ -14724,18 +14726,18 @@
                     }
                 }
                 onResuming() {
-                    html_hideElement(this.resumeButton);
-                    html_hideElement(this.recordButton);
+                    hideElement(this.resumeButton);
+                    hideElement(this.recordButton);
                     if (this.pauseButton) {
                         html_enableElement(this.pauseButton);
-                        showElement(this.pauseButton);
+                        html_showElement(this.pauseButton);
                     }
                 }
                 onStopping() {
                     html_disableElement(this.previewButton);
                     html_disableElement(this.recordButton);
-                    html_hideElement(this.pauseButton);
-                    html_hideElement(this.resumeButton);
+                    hideElement(this.pauseButton);
+                    hideElement(this.resumeButton);
                 }
                 onCountdown() {
                     html_disableElement(this.recordButton);
@@ -14760,12 +14762,12 @@
                     if (this.options.enableAutoValidation) html_enableElement(this.submitButton);
                 }
                 onHidden() {
-                    html_hideElement(this.recordButton);
-                    html_hideElement(this.previewButton);
-                    html_hideElement(this.recordAgainButton);
-                    html_hideElement(this.resumeButton);
-                    html_hideElement(this.audioOnRadioPair);
-                    html_hideElement(this.audioOffRadioPair);
+                    hideElement(this.recordButton);
+                    hideElement(this.previewButton);
+                    hideElement(this.recordAgainButton);
+                    hideElement(this.resumeButton);
+                    hideElement(this.audioOnRadioPair);
+                    hideElement(this.audioOffRadioPair);
                 }
                 onEnablingAudio() {
                     this.options.logger.debug("Buttons: onEnablingAudio()");
@@ -14785,7 +14787,7 @@
                     this.container.recordAgain();
                 }
                 onStartingOver() {
-                    showElement(this.submitButton);
+                    html_showElement(this.submitButton);
                 }
                 submit() {
                     this.container.submit();
@@ -14858,7 +14860,7 @@
                     });
                     this.on("CONNECTED", ()=>{
                         if (this.options.loadUserMediaOnRecord) {
-                            if (html_isShown(this.recordButton)) html_enableElement(this.recordButton);
+                            if (isShown(this.recordButton)) html_enableElement(this.recordButton);
                         }
                     });
                     this.on("DISCONNECTED", ()=>{
@@ -14903,7 +14905,7 @@
                         this.buttonsElement.classList.add(this.options.selectors.buttonsClass);
                         this.container.appendChild(this.buttonsElement);
                     }
-                    html_hideElement(this.buttonsElement);
+                    hideElement(this.buttonsElement);
                     this.buildButtons();
                     if (!this.built) this.initEvents();
                     this.built = true;
@@ -14918,20 +14920,20 @@
                     }
                 }
                 hide(deep = false) {
-                    html_hideElement(this.buttonsElement);
+                    hideElement(this.buttonsElement);
                     if (deep) {
-                        html_hideElement(this.recordButton);
-                        html_hideElement(this.pauseButton);
-                        html_hideElement(this.resumeButton);
-                        html_hideElement(this.previewButton);
-                        html_hideElement(this.recordAgainButton);
-                        html_hideElement(this.submitButton);
-                        html_hideElement(this.audioOnRadioPair);
-                        html_hideElement(this.audioOffRadioPair);
+                        hideElement(this.recordButton);
+                        hideElement(this.pauseButton);
+                        hideElement(this.resumeButton);
+                        hideElement(this.previewButton);
+                        hideElement(this.recordAgainButton);
+                        hideElement(this.submitButton);
+                        hideElement(this.audioOnRadioPair);
+                        hideElement(this.audioOffRadioPair);
                     }
                 }
                 show() {
-                    showElement(this.buttonsElement);
+                    html_showElement(this.buttonsElement);
                 }
                 isCountingDown() {
                     return this.container.isCountingDown();
@@ -15262,7 +15264,7 @@
                     super("RecorderInsides", options);
                     this.recordNote = new recorder_recordNote(visuals);
                     this.recordTimer = new recordTimer(visuals, this.recordNote, options);
-                    const browser = getBrowser(options);
+                    const browser = util_getBrowser(options);
                     if (options.video.countdown) this.countdown = new countdown(visuals, options);
                     if (options.video.facingModeButton && browser.isMobile()) this.facingMode = new facingMode(visuals, options);
                     if (options.enablePause) this.pausedNote = new pausedNote(visuals, options);
@@ -15466,12 +15468,12 @@
                 error(err) {
                     const message = err.message;
                     const explanation = err.explanation ? err.explanation.toString() : void 0;
-                    if (!message) this.options.logger.debug(`Weird empty error message generated for error ${pretty(err)}`);
+                    if (!message) this.options.logger.debug(`Weird empty error message generated for error ${util_pretty(err)}`);
                     this.notify(message, explanation, {
                         blocking: true,
                         problem: true,
                         classList: err.getClassList(),
-                        removeDimensions: getBrowser(this.options).isMobile()
+                        removeDimensions: util_getBrowser(this.options).isMobile()
                     });
                 }
                 getMessageElement() {
@@ -15788,7 +15790,7 @@
             function getAudioContextClass() {
                 return window.AudioContext;
             }
-            class AudioRecorder {
+            class AudioRecorder_AudioRecorder {
                 scriptProcessor;
                 audioInput;
                 vcAudioContext;
@@ -15826,7 +15828,7 @@
                         });
                     }
                     let { bufferSize } = this.options.audio;
-                    if ("auto" === bufferSize) bufferSize = getBrowser(this.options).isFirefox() ? 512 : 2048;
+                    if ("auto" === bufferSize) bufferSize = util_getBrowser(this.options).isFirefox() ? 512 : 2048;
                     if (!is_power_of_two_default()(bufferSize)) throw error_createError({
                         message: "Audio buffer size must be a power of two.",
                         options: this.options
@@ -15868,7 +15870,7 @@
                     return -1;
                 }
             }
-            const media_AudioRecorder = AudioRecorder;
+            const AudioRecorder = AudioRecorder_AudioRecorder;
             const MEDIA_EVENTS = [
                 "loadstart",
                 "suspend",
@@ -15942,7 +15944,7 @@
                     return false;
                 }
                 logEvent(eventType, params) {
-                    this.options.logger.debug(`UserMedia: ... ${EVENT_ASCII} event ${eventType}: ${pretty(params)}`);
+                    this.options.logger.debug(`UserMedia: ... ${EVENT_ASCII} event ${eventType}: ${util_pretty(params)}`);
                 }
                 outputEvent(e) {
                     this.logEvent(e.type, {
@@ -15968,7 +15970,7 @@
                     this.onPlayReached = false;
                     this.onLoadedMetaDataReached = false;
                     this.playingPromiseReached = false;
-                    if (isAudioEnabled(this.options)) this.audioRecorder ??= new media_AudioRecorder(this, this.options);
+                    if (isAudioEnabled(this.options)) this.audioRecorder ??= new AudioRecorder(this, this.options);
                     const unloadAllEventListeners = ()=>{
                         this.options.logger.debug("UserMedia: unloadAllEventListeners()");
                         this.unloadRemainingEventListeners();
@@ -15980,7 +15982,7 @@
                         try {
                             this.rawVisualUserMedia?.load();
                             if (this.rawVisualUserMedia?.paused) {
-                                this.options.logger.debug(`UserMedia: play(): media.readyState=${this.rawVisualUserMedia.readyState}, media.paused=${this.rawVisualUserMedia.paused}, media.ended=${this.rawVisualUserMedia.ended}, media.played=${pretty(this.rawVisualUserMedia.played)}`);
+                                this.options.logger.debug(`UserMedia: play(): media.readyState=${this.rawVisualUserMedia.readyState}, media.paused=${this.rawVisualUserMedia.paused}, media.ended=${this.rawVisualUserMedia.ended}, media.played=${util_pretty(this.rawVisualUserMedia.played)}`);
                                 let p;
                                 try {
                                     p = this.rawVisualUserMedia.play();
@@ -16074,7 +16076,7 @@
                         this.rawVisualUserMedia?.addEventListener("loadedmetadata", onLoadedMetaData);
                         this.rawVisualUserMedia?.addEventListener("play", onPlay);
                         this.rawVisualUserMedia?.addEventListener("error", (err)=>{
-                            this.options.logger.warn(`Caught video element error event: ${pretty(err)}`);
+                            this.options.logger.warn(`Caught video element error event: ${util_pretty(err)}`);
                         });
                         this.setVisualStream(localMediaStream);
                         play();
@@ -16187,7 +16189,7 @@
                 }
             }
             const visuals_userMedia = UserMedia;
-            function figureMinHeight_figureMinHeight(height, options) {
+            function figureMinHeight(height, options) {
                 let minHeight;
                 if (options.video.height) {
                     minHeight = Math.min(options.video.height, height);
@@ -16198,7 +16200,7 @@
                 } else minHeight = height;
                 return minHeight;
             }
-            const figureMinHeight = figureMinHeight_figureMinHeight;
+            const dimensions_figureMinHeight = figureMinHeight;
             function getRatio_getRatio(options, videoHeight, videoWidth) {
                 let ratio = 1;
                 const hasVideoDimensions = videoHeight && videoWidth;
@@ -16210,7 +16212,7 @@
                 return ratio;
             }
             const getRatio = getRatio_getRatio;
-            function limitHeight_limitHeight(height, options, calledFrom) {
+            function limitHeight(height, options, calledFrom) {
                 let limitedHeight = document.documentElement.clientHeight;
                 if (height) limitedHeight = Math.min(height, limitedHeight);
                 if (limitedHeight < 1) throw error_createError({
@@ -16219,10 +16221,10 @@
                 });
                 return limitedHeight;
             }
-            const limitHeight = limitHeight_limitHeight;
+            const dimensions_limitHeight = limitHeight;
             function calculateWidth(responsive, videoHeight, options, ratio) {
-                let height = figureMinHeight(videoHeight, options);
-                if (responsive) height = limitHeight(height, options, "calculateWidth");
+                let height = dimensions_figureMinHeight(videoHeight, options);
+                if (responsive) height = dimensions_limitHeight(height, options, "calculateWidth");
                 if (!height || height < 1) throw error_createError({
                     message: `Height ${height} cannot be smaller than 1 when calculating width.`,
                     options
@@ -16246,7 +16248,7 @@
                 return outerWidth;
             }
             const getOuterWidth = getOuterWidth_getOuterWidth;
-            function limitWidth_limitWidth(element, options, width) {
+            function limitWidth(element, options, width) {
                 let limitedWidth;
                 const outerWidth = getOuterWidth(element);
                 limitedWidth = width && "number" == typeof width ? outerWidth > 0 && outerWidth < width ? outerWidth : width : outerWidth;
@@ -16256,21 +16258,21 @@
                 });
                 return limitedWidth;
             }
-            const limitWidth = limitWidth_limitWidth;
+            const dimensions_limitWidth = limitWidth;
             function calculateHeight(responsive, videoWidth, options, target, ratio, element) {
                 let width = videoWidth;
                 if (width < 1) throw error_createError({
                     message: `Unable to calculate height for target ${target} when width is less than 1 (= ${width}) and responsive mode is set to ${responsive}`,
                     options
                 });
-                if (responsive && element) width = limitWidth(element, options, width);
+                if (responsive && element) width = dimensions_limitWidth(element, options, width);
                 const chosenRatio = ratio ?? getRatio(options, void 0, videoWidth);
                 const height = Math.round(width * chosenRatio);
                 if (Number.isInteger(height) && height < 1) throw error_createError({
                     message: "Just calculated a height less than 1 which is wrong.",
                     options
                 });
-                return figureMinHeight(height, options);
+                return dimensions_figureMinHeight(height, options);
             }
             const dimensions_calculateHeight = calculateHeight;
             var Buffer = __webpack_require__("./node_modules/buffer/index.js")["Buffer"];
@@ -16336,7 +16338,7 @@
                                 } catch (exc) {
                                     const err = error_createError({
                                         message: "Failed to write stream buffer",
-                                        explanation: `stream.write() failed because of ${pretty(exc)}`,
+                                        explanation: `stream.write() failed because of ${util_pretty(exc)}`,
                                         options: this.options,
                                         exc
                                     });
@@ -16348,7 +16350,7 @@
                         } catch (exc) {
                             const err = error_createError({
                                 message: "Failed writing to server",
-                                explanation: `stream.write() failed because of ${pretty(exc)}`,
+                                explanation: `stream.write() failed because of ${util_pretty(exc)}`,
                                 options: this.options,
                                 exc
                             });
@@ -16377,7 +16379,7 @@
                 }
                 onUserMediaReady(params) {
                     try {
-                        this.options.logger.debug(`Recorder: onUserMediaReady(${params ? pretty(params) : ""})`);
+                        this.options.logger.debug(`Recorder: onUserMediaReady(${params ? util_pretty(params) : ""})`);
                         const switchingFacingMode = params?.switchingFacingMode;
                         this.userMediaLoading = this.blocking = this.unloaded = this.submitting = false;
                         this.userMediaLoaded = true;
@@ -16530,7 +16532,7 @@
                                 }
                             });
                             this.stream.on("error", (err)=>{
-                                this.options.logger.debug(`${PIPE_SYMBOL}Stream *error* event emitted: ${pretty(err)}`);
+                                this.options.logger.debug(`${PIPE_SYMBOL}Stream *error* event emitted: ${util_pretty(err)}`);
                             });
                             this.stream.on("drain", ()=>{
                                 this.options.logger.debug(`${PIPE_SYMBOL}Stream *drain* event emitted (should not happen!)`);
@@ -16580,7 +16582,7 @@
                     this.userMediaLoading = false;
                     this.clearUserMediaTimeout();
                     const characteristics = this.userMedia?.getCharacteristics();
-                    this.options.logger.debug(`Recorder: userMediaErrorCallback(), name: ${err.name}, message: ${err.message} and Webcam characteristics: ${characteristics ? pretty(characteristics) : "none"}`);
+                    this.options.logger.debug(`Recorder: userMediaErrorCallback(), name: ${err.name}, message: ${err.message} and Webcam characteristics: ${characteristics ? util_pretty(characteristics) : "none"}`);
                     const errorListeners = util_Despot.getListeners("ERROR");
                     if (errorListeners?.length) {
                         if (err.name !== error_VideomailError.MEDIA_DEVICE_NOT_SUPPORTED) {
@@ -16591,11 +16593,11 @@
                             this.emit("ERROR", {
                                 err: videomailError
                             });
-                        } else this.options.logger.debug(`Recorder: ignore user media error ${pretty(err)}`);
+                        } else this.options.logger.debug(`Recorder: ignore user media error ${util_pretty(err)}`);
                         this.retryTimeout = window.setTimeout(this.initSocket.bind(this), this.options.timeouts.userMedia);
-                    } else if (this.unloaded) this.options.logger.debug(`Recorder: already unloaded. Not going to throw error ${pretty(err)}`);
+                    } else if (this.unloaded) this.options.logger.debug(`Recorder: already unloaded. Not going to throw error ${util_pretty(err)}`);
                     else {
-                        this.options.logger.debug(`Recorder: no error listeners attached but throwing error ${pretty(err)}`);
+                        this.options.logger.debug(`Recorder: no error listeners attached but throwing error ${util_pretty(err)}`);
                         throw error_createError({
                             err,
                             message: "Unable to process this error since there are no error listeners anymore.",
@@ -16605,7 +16607,7 @@
                 }
                 getUserMediaCallback(localStream, params) {
                     if (!this.userMedia) throw new Error("No user media is defined");
-                    this.options.logger.debug(`Recorder: getUserMediaCallback(${params ? pretty(params) : ""})`);
+                    this.options.logger.debug(`Recorder: getUserMediaCallback(${params ? util_pretty(params) : ""})`);
                     if (this.showUserMedia()) try {
                         this.clearUserMediaTimeout();
                         this.userMedia.init(localStream, ()=>{
@@ -16622,7 +16624,7 @@
                     }
                 }
                 loadGenuineUserMedia(params) {
-                    this.options.logger.debug(`Recorder: loadGenuineUserMedia(${params ? pretty(params) : ""})`);
+                    this.options.logger.debug(`Recorder: loadGenuineUserMedia(${params ? util_pretty(params) : ""})`);
                     this.emit("ASKING_WEBCAM_PERMISSION");
                     const constraints = {
                         video: {
@@ -16650,8 +16652,8 @@
                             ideal: idealHeight
                         };
                     }
-                    this.options.logger.debug(`Recorder: our webcam constraints are: ${pretty(constraints)}`);
-                    this.options.logger.debug(`Recorder: available webcam constraints are: ${pretty(navigator.mediaDevices.getSupportedConstraints())}`);
+                    this.options.logger.debug(`Recorder: our webcam constraints are: ${util_pretty(constraints)}`);
+                    this.options.logger.debug(`Recorder: available webcam constraints are: ${util_pretty(navigator.mediaDevices.getSupportedConstraints())}`);
                     const genuineUserMediaRequest = navigator.mediaDevices.getUserMedia(constraints);
                     genuineUserMediaRequest.then((localStream)=>{
                         this.getUserMediaCallback(localStream, params);
@@ -16666,13 +16668,13 @@
                         return;
                     }
                     if (this.userMediaLoading) return void this.options.logger.debug("Recorder: skipping loadUserMedia() because it is already asking for permission");
-                    this.options.logger.debug(`Recorder: loadUserMedia(${params ? pretty(params) : ""})`);
+                    this.options.logger.debug(`Recorder: loadUserMedia(${params ? util_pretty(params) : ""})`);
                     this.emit("LOADING_USER_MEDIA");
                     try {
                         if (!navigator.mediaDevices) throw new Error("No media devices are available.");
                         this.userMediaTimeout = window.setTimeout(()=>{
                             if (!this.isReady()) {
-                                const err = getBrowser(this.options).getNoAccessIssue();
+                                const err = util_getBrowser(this.options).getNoAccessIssue();
                                 this.emit("ERROR", {
                                     err
                                 });
@@ -16697,7 +16699,7 @@
                 executeCommand(command) {
                     if (this.unloaded) return;
                     try {
-                        if (command.args) this.options.logger.debug(`Server commanded: ${command.command} with ${pretty(command.args)}`);
+                        if (command.args) this.options.logger.debug(`Server commanded: ${command.command} with ${util_pretty(command.args)}`);
                         else this.options.logger.debug(`Server commanded: ${command.command}`);
                         switch(command.command){
                             case "ready":
@@ -16762,7 +16764,7 @@
                 writeCommand(command, args, cb) {
                     if (this.connected) {
                         if (this.stream) {
-                            if (args) this.options.logger.debug(`$ ${command} with ${pretty(args)}`);
+                            if (args) this.options.logger.debug(`$ ${command} with ${util_pretty(args)}`);
                             else this.options.logger.debug(`$ ${command}`);
                             const commandObj = {
                                 command,
@@ -16803,7 +16805,7 @@
                 }
                 stop(params) {
                     if (!this.userMedia) throw new Error("No user media defined, unable to stop");
-                    this.options.logger.debug(`Recorder: stop(${params ? pretty(params) : ""})`);
+                    this.options.logger.debug(`Recorder: stop(${params ? util_pretty(params) : ""})`);
                     const limitReached = params?.limitReached;
                     this.emit("STOPPING", {
                         limitReached
@@ -16890,7 +16892,7 @@
                     return this.userMedia?.isReady();
                 }
                 pause(params) {
-                    if (params) this.options.logger.debug(`pause() at frame ${this.framesCount} with ${pretty(params)}`);
+                    if (params) this.options.logger.debug(`pause() at frame ${this.framesCount} with ${util_pretty(params)}`);
                     else this.options.logger.debug(`pause() at frame ${this.framesCount}`);
                     this.userMedia?.pause();
                     this.loop.stop();
@@ -17065,10 +17067,10 @@
                     }
                 }
                 switchFacingMode() {
-                    if (!getBrowser(this.options).isMobile()) return;
+                    if (!util_getBrowser(this.options).isMobile()) return;
                     if ("user" === this.facingMode) this.facingMode = "environment";
                     else if ("environment" === this.facingMode) this.facingMode = "user";
-                    else this.options.logger.warn(`Recorder: unsupported facing mode ${pretty(this.facingMode)}`);
+                    else this.options.logger.warn(`Recorder: unsupported facing mode ${util_pretty(this.facingMode)}`);
                     this.loadGenuineUserMedia({
                         switchingFacingMode: this.facingMode
                     });
@@ -17143,7 +17145,7 @@
                     return this.userMedia?.isPaused() && !this.loop.isRunning();
                 }
                 isRecording() {
-                    return this.loop?.isRunning() && !this.isPaused() && !this.isNotifying() && this.stream && !this.stream.destroyed;
+                    return Boolean(this.loop?.isRunning() && !this.isPaused() && !this.isNotifying() && this.stream && !this.stream.destroyed);
                 }
                 hide() {
                     if (!this.isHidden()) {
@@ -17310,7 +17312,7 @@
                     });
                 }
                 build(replayParentElement) {
-                    this.options.logger.debug(`Replay: build (replayParentElement="${pretty(replayParentElement)}")`);
+                    this.options.logger.debug(`Replay: build (replayParentElement="${util_pretty(replayParentElement)}")`);
                     this.replayElement = this.visuals.getElement()?.querySelector(`video.${this.options.selectors.replayClass}`);
                     if (!this.replayElement) this.buildElement(replayParentElement);
                     if (!this.replayElement) throw new Error("There is no replayElement to build on");
@@ -17409,7 +17411,7 @@
                 }
                 getVideoType() {
                     if (!this.replayElement) return;
-                    return getBrowser(this.options).getVideoType(this.replayElement);
+                    return util_getBrowser(this.options).getVideoType(this.replayElement);
                 }
                 pause(cb) {
                     window.setTimeout(()=>{
@@ -17476,7 +17478,7 @@
                 }
                 buildChildren(playerOnly = false, visualsElement) {
                     if (!visualsElement) throw new Error("Unable to build children without a visuals element");
-                    this.options.logger.debug(`Visuals: buildChildren (playerOnly = ${playerOnly}, visualsElement="${pretty(visualsElement)}"})`);
+                    this.options.logger.debug(`Visuals: buildChildren (playerOnly = ${playerOnly}, visualsElement="${util_pretty(visualsElement)}"})`);
                     this.buildNoScriptTag();
                     if (!playerOnly) {
                         this.notifier.build();
@@ -17505,7 +17507,7 @@
                             this.correctDimensions();
                         });
                         this.on("ERROR", ()=>{
-                            if (getBrowser(this.options).isMobile()) this.removeDimensions();
+                            if (util_getBrowser(this.options).isMobile()) this.removeDimensions();
                         });
                     }
                 }
@@ -17532,7 +17534,7 @@
                     return this.recorderInsides.isCountingDown();
                 }
                 build(playerOnly = false, parentElement) {
-                    this.options.logger.debug(`Visuals: build (playerOnly = ${playerOnly}${parentElement ? `, parentElement="${pretty(parentElement)}"` : ""})`);
+                    this.options.logger.debug(`Visuals: build (playerOnly = ${playerOnly}${parentElement ? `, parentElement="${util_pretty(parentElement)}"` : ""})`);
                     if (parentElement) this.visualsElement = parentElement.querySelector(`.${this.options.selectors.visualsClass}`);
                     else this.visualsElement = this.container.querySelector(`.${this.options.selectors.visualsClass}`);
                     if (!this.visualsElement) if (playerOnly && parentElement) this.visualsElement = parentElement;
@@ -17591,7 +17593,7 @@
                 unload(params) {
                     if (!this.built) return;
                     const e = params?.e;
-                    this.options.logger.debug(`Visuals: unload(${e ? pretty(e) : ""})`);
+                    this.options.logger.debug(`Visuals: unload(${e ? util_pretty(e) : ""})`);
                     this.recorder.unload(params);
                     this.recorderInsides.unload();
                     this.replay.unload(params);
@@ -17726,19 +17728,19 @@
                 }
             }
             const wrappers_visuals = Visuals;
-            var injectStylesIntoStyleTag = __webpack_require__("./node_modules/@rsbuild/core/compiled/style-loader/runtime/injectStylesIntoStyleTag.js");
+            var injectStylesIntoStyleTag = __webpack_require__("./node_modules/@rslib/core/node_modules/@rsbuild/core/compiled/style-loader/runtime/injectStylesIntoStyleTag.js");
             var injectStylesIntoStyleTag_default = /*#__PURE__*/ __webpack_require__.n(injectStylesIntoStyleTag);
-            var styleDomAPI = __webpack_require__("./node_modules/@rsbuild/core/compiled/style-loader/runtime/styleDomAPI.js");
+            var styleDomAPI = __webpack_require__("./node_modules/@rslib/core/node_modules/@rsbuild/core/compiled/style-loader/runtime/styleDomAPI.js");
             var styleDomAPI_default = /*#__PURE__*/ __webpack_require__.n(styleDomAPI);
-            var insertBySelector = __webpack_require__("./node_modules/@rsbuild/core/compiled/style-loader/runtime/insertBySelector.js");
+            var insertBySelector = __webpack_require__("./node_modules/@rslib/core/node_modules/@rsbuild/core/compiled/style-loader/runtime/insertBySelector.js");
             var insertBySelector_default = /*#__PURE__*/ __webpack_require__.n(insertBySelector);
-            var setAttributesWithoutAttributes = __webpack_require__("./node_modules/@rsbuild/core/compiled/style-loader/runtime/setAttributesWithoutAttributes.js");
+            var setAttributesWithoutAttributes = __webpack_require__("./node_modules/@rslib/core/node_modules/@rsbuild/core/compiled/style-loader/runtime/setAttributesWithoutAttributes.js");
             var setAttributesWithoutAttributes_default = /*#__PURE__*/ __webpack_require__.n(setAttributesWithoutAttributes);
-            var insertStyleElement = __webpack_require__("./node_modules/@rsbuild/core/compiled/style-loader/runtime/insertStyleElement.js");
+            var insertStyleElement = __webpack_require__("./node_modules/@rslib/core/node_modules/@rsbuild/core/compiled/style-loader/runtime/insertStyleElement.js");
             var insertStyleElement_default = /*#__PURE__*/ __webpack_require__.n(insertStyleElement);
-            var styleTagTransform = __webpack_require__("./node_modules/@rsbuild/core/compiled/style-loader/runtime/styleTagTransform.js");
+            var styleTagTransform = __webpack_require__("./node_modules/@rslib/core/node_modules/@rsbuild/core/compiled/style-loader/runtime/styleTagTransform.js");
             var styleTagTransform_default = /*#__PURE__*/ __webpack_require__.n(styleTagTransform);
-            var main = __webpack_require__("../../node_modules/@rsbuild/core/compiled/css-loader/index.js??ruleSet[1].rules[11].use[1]!builtin:lightningcss-loader??ruleSet[1].rules[11].use[2]!../../node_modules/stylus-loader/dist/cjs.js??ruleSet[1].rules[11].use[3]!./src/styles/main.styl");
+            var main = __webpack_require__("./node_modules/@rslib/core/node_modules/@rsbuild/core/compiled/css-loader/index.js??ruleSet[1].rules[12].use[1]!builtin:lightningcss-loader??ruleSet[1].rules[12].use[2]!./node_modules/stylus-loader/dist/cjs.js??ruleSet[1].rules[12].use[3]!./src/styles/main.styl");
             var main_options = {};
             main_options.styleTagTransform = styleTagTransform_default();
             main_options.setAttributes = setAttributesWithoutAttributes_default();
@@ -17766,13 +17768,13 @@
                     this.resource = new src_resource(options);
                 }
                 buildChildren(playerOnly = false, parentElement) {
-                    this.options.logger.debug(`Container: buildChildren (playerOnly = ${playerOnly}${parentElement ? `, parentElement="${pretty(parentElement)}"` : ""})`);
+                    this.options.logger.debug(`Container: buildChildren (playerOnly = ${playerOnly}${parentElement ? `, parentElement="${util_pretty(parentElement)}"` : ""})`);
                     if (this.containerElement) this.containerElement.classList.add(this.options.selectors.containerClass);
                     if (!playerOnly) this.buttons.build();
                     this.visuals.build(playerOnly, parentElement);
                 }
                 build(buildOptions) {
-                    this.options.logger.debug(`Container: build (${buildOptions ? pretty(buildOptions) : ""})`);
+                    this.options.logger.debug(`Container: build (${buildOptions ? util_pretty(buildOptions) : ""})`);
                     try {
                         const containerId = this.options.selectors.containerId;
                         if (containerId) this.containerElement = document.getElementById(containerId);
@@ -17873,7 +17875,7 @@
                     this.on("ERROR", (params)=>{
                         this.processError(params);
                         this.endWaiting();
-                        const browser = getBrowser(this.options);
+                        const browser = util_getBrowser(this.options);
                         if (browser.isMobile()) this.removeDimensions();
                     });
                     if (!playerOnly) this.on("LOADED_META_DATA", ()=>{
@@ -17920,10 +17922,10 @@
                 }
                 limitWidth(width) {
                     if (!this.containerElement) return;
-                    return limitWidth(this.containerElement, this.options, width);
+                    return dimensions_limitWidth(this.containerElement, this.options, width);
                 }
                 limitHeight(height) {
-                    return limitHeight(height, this.options, "containers limitHeight fn");
+                    return dimensions_limitHeight(height, this.options, "containers limitHeight fn");
                 }
                 areVisualsHidden() {
                     return this.visuals.isHidden();
@@ -17956,7 +17958,7 @@
                     try {
                         if (!this.built) return;
                         const e = params?.e;
-                        this.options.logger.debug(`Container: unload(${e ? pretty(e) : ""})`);
+                        this.options.logger.debug(`Container: unload(${e ? util_pretty(e) : ""})`);
                         this.emit("UNLOADING");
                         this.unloadChildren(params);
                         this.hide();
@@ -18234,7 +18236,7 @@
                 options;
                 constructor(options){
                     this.options = options;
-                    this.browser = getBrowser(options);
+                    this.browser = util_getBrowser(options);
                     this.logger = options.logger;
                 }
                 lifo(level, parameters) {
