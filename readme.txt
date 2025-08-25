@@ -4,7 +4,7 @@ Contributors: michael.heuberger, kbjohnson90
 Tags: video, email, recorder, sign language
 
 Requires at least: 6.0
-Tested up to: 6.7.2
+Tested up to: 6.8.2
 Stable tag: 7.1.1
 Requires PHP: 8.1.0
 Donate link: https://videomail.io/faq
@@ -70,6 +70,18 @@ To get help, just use any of these contacts at [https://binarykitchen.com](https
 2. Once you have assembled a form and preview it, any browser will ask for webcam access first.
 
 == Changelog ==
+= 8.0.0 (25 Aug 2025) =
+**Change:**
+* Embrace the new upcoming Videomail features around user authentication, associating them with registered users
+* They are not released yet, although, to avoid downtime and migrations, we are releasing new data structures early.
+* Bonus: there more fun waiting animations to enjoy during encoding ;)
+
+**Fix**
+* On the side, an important bug has been fixed where failed deliveries are properly reported back
+
+**Chore**
+* Upgrade all dependencies to latest versions. All tested.
+
 = 7.1.1 (25 June 2025) =
 **Improvement:**
 * Allow logins while recording
