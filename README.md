@@ -82,7 +82,10 @@ https://github.com/binarykitchen/videomail-for-ninja-forms/issues
    Skip optional title, then under release notes, select "Write my own" and
    paste the new version section from readme.txt (just the section without the date and version number)
    (upon any errors, you may try to run manually "gh release create" again to trigger a release on GitHub)
-9. Announce on Social Media
+9. Wait until the release is published and
+   make sure the new version is announced on https://wordpress.org/plugins/videomail-for-ninja-forms as
+   this can take a while ...
+10. Announce on Social Media
 
 ## Ask for help
 
