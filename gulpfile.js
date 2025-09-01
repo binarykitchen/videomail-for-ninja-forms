@@ -48,7 +48,7 @@ function bundle() {
       .pipe(sourcemaps.init())
       .pipe(plugins.uglify())
       .pipe(plugins.rename({ suffix: ".min" }))
-      // todo fix, sourcemaps do not seem to work (switch to webpack?)
+      // TODO fix, sourcemaps do not seem to work (switch to webpack?)
       .pipe(sourcemaps.write())
       .pipe(gulp.dest("target/js"))
   );

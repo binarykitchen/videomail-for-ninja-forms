@@ -4,6 +4,7 @@
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "prettier.configPath": "./prettier.config.cjs",
   "cSpell.words": [
+    "ABSPATH",
     "apachectl",
     "autoloader",
     "binarykitchen",
