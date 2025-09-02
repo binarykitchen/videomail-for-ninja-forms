@@ -5,7 +5,7 @@ Tags: video, email, recorder, sign language
 
 Requires at least: 6.0
 Tested up to: 6.8.2
-Stable tag: 8.0.2
+Stable tag: 8.0.3
 Requires PHP: 8.1.0
 Donate link: https://videomail.io/faq
 License: CC0-1.0
@@ -70,6 +70,10 @@ To get help, just use any of these contacts at [https://binarykitchen.com](https
 2. Once you have assembled a form and preview it, any browser will ask for webcam access first.
 
 == Changelog ==
+= 8.0.3 (2 Sept 2025) =
+**Fix**
+* Rearrange loading of Videomail-Client assets
+
 = 8.0.2 (2 Sept 2025) =
 **Chore**
 * Upgrade VC dependency and re-release complete build
