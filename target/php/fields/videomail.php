@@ -139,13 +139,15 @@ class NF_Videomail_Fields_Videomail extends NF_Abstracts_Field {
         if (is_wp_error($results)) {
           @unlink($tempFile);
           return $results;
-      	}
+        }
       }
     }
   }
 
   public function admin_form_element($id, $value) {
-    if (empty($value)) return __('No Video Recorded');
+    if (empty($value)) {
+      return __('No Video Recorded');
+    }
 
     NF_Videomail::template('admin-form-element.html.php', compact('value'));
   }
@@ -158,9 +160,11 @@ class NF_Videomail_Fields_Videomail extends NF_Abstracts_Field {
       NF_Videomail::VERSION
     );
 
-    wp_enqueue_script(
+    // WordPress will automatically include the registered script before it includes the
+    // enqueued script that lists the registered script’s handle as a dependency.
+    wp_register_script(
       'nf-videomail-client',
-      NF_Videomail::$jsUrl . 'videomail-client/index.js',
+      NF_Videomail::$jsUrl . 'videomail-client/index.min.js',
       array(),
       NF_Videomail::VERSION
     );
@@ -178,9 +182,13 @@ class NF_Videomail_Fields_Videomail extends NF_Abstracts_Field {
   }
 
   public function customColumns($value, $field) {
-    if ($this->_name != $field->get_setting('type')) return $value;
+    if ($this->_name != $field->get_setting('type')) {
+      return $value;
+    }
 
-    if (empty($value)) return __('No Video Recorded');
+    if (empty($value)) {
+      return __('No Video Recorded');
+    }
 
     // ok, value is a videomail
     return '<a href="' . $value . '">' . __('View Online', 'videomail-for-ninja-forms') . '</a>';
