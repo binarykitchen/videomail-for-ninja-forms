@@ -57,6 +57,7 @@ function bundle() {
 function copyVideomailClient() {
   return gulp
     .src("node_modules/videomail-client/dist/umd/index.js")
+    .pipe(plugins.rename({ suffix: ".min" }))
     .pipe(gulp.dest("target/js/videomail-client"));
 }
 
