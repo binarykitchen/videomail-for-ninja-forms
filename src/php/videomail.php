@@ -57,6 +57,7 @@ final class NF_Videomail {
 
   public function __construct() {
     add_action('admin_init', array($this, 'setup_license'));
+    add_action('plugins_loaded', array($this, 'plugin_update_check'));
     add_action('ninja_forms_loaded', array($this, 'ninja_forms_loaded'));
     add_filter('ninja_forms_register_fields', array($this, 'register_fields'));
     add_filter('ninja_forms_register_actions', array($this, 'register_actions'));
@@ -112,5 +113,12 @@ final class NF_Videomail {
         self::$entryFile,
         self::SLUG
       );
+  }
+
+  public function plugin_update_check() {
+      if(version_compare( self::VERSION, get_option( 'NF_Videomail_Version' ), '>' )) {
+          !class_exists('\LiteSpeed\Purge') || \LiteSpeed\Purge::purge_all();
+          update_option('NF_Videomail_Version', self::VERSION);
+      }
   }
 }
