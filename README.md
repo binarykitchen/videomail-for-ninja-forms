@@ -76,9 +76,9 @@ https://github.com/binarykitchen/videomail-for-ninja-forms/issues
 3. Search for current version and replace it with the new one. Should be these files:
    - package.json
    - readme.txt
-   - videomail-for-ninja-forms.php
    - src/js/main.js
    - src/php/videomail.php
+   - videomail-for-ninja-forms.php
 4. Optional: validate readme.txt with https://wordpress.org/plugins/developers/readme-validator/
 5. Run `npm run clean`, `npm install` and `npm run build`
 6. Git commit and push

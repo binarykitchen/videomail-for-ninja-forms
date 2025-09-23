@@ -2,7 +2,7 @@
 final class NF_Videomail {
 
   const NAME = 'Videomail';
-  const VERSION = '8.0.3';
+  const VERSION = '8.1.0';
   const AUTHOR = 'Michael Heuberger + Kyle B. Johnson';
   const SLUG = 'videomail';
   const PREFIX = 'NF_Videomail';
@@ -57,6 +57,7 @@ final class NF_Videomail {
 
   public function __construct() {
     add_action('admin_init', array($this, 'setup_license'));
+    add_action('plugins_loaded', array($this, 'plugin_update_check'));
     add_action('ninja_forms_loaded', array($this, 'ninja_forms_loaded'));
     add_filter('ninja_forms_register_fields', array($this, 'register_fields'));
     add_filter('ninja_forms_register_actions', array($this, 'register_actions'));
@@ -112,5 +113,17 @@ final class NF_Videomail {
         self::$entryFile,
         self::SLUG
       );
+  }
+
+  // See https://github.com/litespeedtech/lscache_wp/issues/895
+  public function plugin_update_check() {
+      // Check if current version is newer.
+      if(version_compare( self::VERSION, get_option( 'NF_Videomail_Version' ), '>' )) {
+          // Purge LiteSpeed cache.
+          !class_exists('\LiteSpeed\Purge') || \LiteSpeed\Purge::purge_all();
+
+          // Finally, update the stored version for future checks.
+          update_option('NF_Videomail_Version', self::VERSION);
+      }
   }
 }
