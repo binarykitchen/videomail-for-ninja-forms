@@ -19,14 +19,19 @@ In short: this add-on runs on the Ninja Forms plugin engine where you can config
 ## Development (Personal)
 
 1. Install WordPress locally or use [Local by Flywheel](https://local.getflywheel.com/)
-2. Log into Local and import Blueprint if any exist
-3. Install Ninja Forms Plugin
-4. `git clone git@github.com:binarykitchen/videomail-for-ninja-forms.git`
-5. Symlink videomail-for-ninja-forms like that: `ln -s ~/code/binarykitchen/videomail-for-ninja-forms ~/Local\ Sites/videomail-for-ninja-forms/app/public/wp-content/plugins/videomail-for-ninja-forms`
-6. Activate it on WP admin side
-7. Install latest nodejs, best with [nvm](https://github.com/creationix/nvm)
-8. `npm install` to install dependencies
-9. `gulp watch --host x --port y` which will open Google Chrome and automatically reloads upon changes (PHP, JS and CSS). Defaults to https://localhost:8890
+2. Log into Local
+   2.1 If there is a blueprint under ./env/dev/local/videomail_for_ninja_forms_blueprint_local.zip import it
+   2.2 Or else configure it manually as following:
+   2.2.1 Install Ninja Forms Plugin and activate it
+   2.2.2 `git clone git@github.com:binarykitchen/videomail-for-ninja-forms.git`
+   2.2.3 Symlink videomail-for-ninja-forms like that: `ln -s ~/code/binarykitchen/videomail-for-ninja-forms ~/Local\ Sites/videomail-for-ninja-forms/app/public/wp-content/plugins/videomail-for-ninja-forms`
+   2.2.4. Activate it on WP admin side
+   2.2.5 Import the template form from ./examples/nf_form_video_contact_us.nff
+   2.2.6 Download the PHP Error Log plugin from https://wordpress.org/plugins/error-log-monitor/ and install it locally
+   2.2.7. Activate it on WP admin side
+3. Install latest nodejs, best with [nvm](https://github.com/creationix/nvm)
+4. `npm install` to install dependencies
+5. `gulp watch --host x --port y` which will open Google Chrome and automatically reloads upon changes (PHP, JS and CSS). Defaults to https://localhost:8890
 
 Note: depending on your OS the `gulp watch` command might result into errors;
 
@@ -71,9 +76,9 @@ https://github.com/binarykitchen/videomail-for-ninja-forms/issues
 3. Search for current version and replace it with the new one. Should be these files:
    - package.json
    - readme.txt
-   - videomail-for-ninja-forms.php
    - src/js/main.js
    - src/php/videomail.php
+   - videomail-for-ninja-forms.php
 4. Optional: validate readme.txt with https://wordpress.org/plugins/developers/readme-validator/
 5. Run `npm run clean`, `npm install` and `npm run build`
 6. Git commit and push

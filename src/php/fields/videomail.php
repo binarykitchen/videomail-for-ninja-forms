@@ -172,6 +172,8 @@ class NF_Videomail_Fields_Videomail extends NF_Abstracts_Field {
     wp_enqueue_script(
       'nf-videomail-main',
       NF_Videomail::$jsUrl . 'main.min.js',
+      // The script nf-front-end is defined by the Ninja Forms plugin and
+      // enqueued along with the ("front-end", client-side) form.
       array('nf-front-end', 'nf-videomail-client'),
       NF_Videomail::VERSION
     );
