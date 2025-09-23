@@ -115,9 +115,14 @@ final class NF_Videomail {
       );
   }
 
+  // See https://github.com/litespeedtech/lscache_wp/issues/895
   public function plugin_update_check() {
+      // Check if current version is newer.
       if(version_compare( self::VERSION, get_option( 'NF_Videomail_Version' ), '>' )) {
+          // Purge LiteSpeed cache.
           !class_exists('\LiteSpeed\Purge') || \LiteSpeed\Purge::purge_all();
+
+          // Finally, update the stored version for future checks.
           update_option('NF_Videomail_Version', self::VERSION);
       }
   }
