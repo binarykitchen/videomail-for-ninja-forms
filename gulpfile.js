@@ -47,7 +47,7 @@ function bundle() {
       .src("src/js/main.js")
       .pipe(sourcemaps.init())
       .pipe(plugins.uglify())
-      .pipe(plugins.rename({ suffix: ".min" }))
+      .pipe(plugins.rename({ suffix: "-min" }))
       // TODO fix, sourcemaps do not seem to work (switch to webpack?)
       .pipe(sourcemaps.write())
       .pipe(gulp.dest("target/js"))
@@ -57,7 +57,7 @@ function bundle() {
 function copyVideomailClient() {
   return gulp
     .src("node_modules/videomail-client/dist/umd/index.js")
-    .pipe(plugins.rename({ suffix: ".min" }))
+    .pipe(plugins.rename({ suffix: "-min" }))
     .pipe(gulp.dest("target/js/videomail-client"));
 }
 
@@ -74,7 +74,7 @@ function css() {
     .pipe(plugins.autoprefixer("last 3 versions", "> 2%"))
     .pipe(plugins.bytediff.start())
     .pipe(plugins.cssnano())
-    .pipe(plugins.rename({ suffix: ".min" }))
+    .pipe(plugins.rename({ suffix: "-min" }))
     .pipe(plugins.bytediff.stop())
     .pipe(browserSync.stream())
     .pipe(gulp.dest("target/css"));

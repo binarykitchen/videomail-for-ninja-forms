@@ -5,16 +5,16 @@
     else root["VideomailClient"] = factory();
 })(globalThis, ()=>(()=>{
         var __webpack_modules__ = {
-            "./node_modules/@rsbuild/core/compiled/css-loader/index.js??ruleSet[1].rules[12].use[1]!builtin:lightningcss-loader??ruleSet[1].rules[12].use[2]!./node_modules/stylus-loader/dist/cjs.js??ruleSet[1].rules[12].use[3]!./src/styles/main.styl": function(module1, __webpack_exports__, __webpack_require__) {
+            "./node_modules/@rslib/core/node_modules/@rsbuild/core/compiled/css-loader/index.js??ruleSet[1].rules[12].use[1]!builtin:lightningcss-loader??ruleSet[1].rules[12].use[2]!./node_modules/stylus-loader/dist/cjs.js??ruleSet[1].rules[12].use[3]!./src/styles/main.styl": function(module1, __webpack_exports__, __webpack_require__) {
                 "use strict";
                 __webpack_require__.d(__webpack_exports__, {
                     A: ()=>__WEBPACK_DEFAULT_EXPORT__
                 });
-                var _node_modules_rsbuild_core_compiled_css_loader_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("./node_modules/@rsbuild/core/compiled/css-loader/noSourceMaps.js");
-                var _node_modules_rsbuild_core_compiled_css_loader_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/ __webpack_require__.n(_node_modules_rsbuild_core_compiled_css_loader_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
-                var _node_modules_rsbuild_core_compiled_css_loader_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__("./node_modules/@rsbuild/core/compiled/css-loader/api.js");
-                var _node_modules_rsbuild_core_compiled_css_loader_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/ __webpack_require__.n(_node_modules_rsbuild_core_compiled_css_loader_api_js__WEBPACK_IMPORTED_MODULE_1__);
-                var ___CSS_LOADER_EXPORT___ = _node_modules_rsbuild_core_compiled_css_loader_api_js__WEBPACK_IMPORTED_MODULE_1___default()(_node_modules_rsbuild_core_compiled_css_loader_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default());
+                var _node_modules_rslib_core_node_modules_rsbuild_core_compiled_css_loader_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("./node_modules/@rslib/core/node_modules/@rsbuild/core/compiled/css-loader/noSourceMaps.js");
+                var _node_modules_rslib_core_node_modules_rsbuild_core_compiled_css_loader_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/ __webpack_require__.n(_node_modules_rslib_core_node_modules_rsbuild_core_compiled_css_loader_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
+                var _node_modules_rslib_core_node_modules_rsbuild_core_compiled_css_loader_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__("./node_modules/@rslib/core/node_modules/@rsbuild/core/compiled/css-loader/api.js");
+                var _node_modules_rslib_core_node_modules_rsbuild_core_compiled_css_loader_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/ __webpack_require__.n(_node_modules_rslib_core_node_modules_rsbuild_core_compiled_css_loader_api_js__WEBPACK_IMPORTED_MODULE_1__);
+                var ___CSS_LOADER_EXPORT___ = _node_modules_rslib_core_node_modules_rsbuild_core_compiled_css_loader_api_js__WEBPACK_IMPORTED_MODULE_1___default()(_node_modules_rslib_core_node_modules_rsbuild_core_compiled_css_loader_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default());
                 ___CSS_LOADER_EXPORT___.push([
                     module1.id,
                     `@keyframes blink {
@@ -10187,7 +10187,7 @@
             "?aa23": function() {},
             "?9936": function() {},
             "?5f55": function() {},
-            "./node_modules/@rsbuild/core/compiled/css-loader/api.js": function(module1) {
+            "./node_modules/@rslib/core/node_modules/@rsbuild/core/compiled/css-loader/api.js": function(module1) {
                 "use strict";
                 module1.exports = function(cssWithMappingToString) {
                     var list = [];
@@ -10241,13 +10241,13 @@
                     return list;
                 };
             },
-            "./node_modules/@rsbuild/core/compiled/css-loader/noSourceMaps.js": function(module1) {
+            "./node_modules/@rslib/core/node_modules/@rsbuild/core/compiled/css-loader/noSourceMaps.js": function(module1) {
                 "use strict";
                 module1.exports = function(i) {
                     return i[1];
                 };
             },
-            "./node_modules/@rsbuild/core/compiled/style-loader/runtime/injectStylesIntoStyleTag.js": function(module1) {
+            "./node_modules/@rslib/core/node_modules/@rsbuild/core/compiled/style-loader/runtime/injectStylesIntoStyleTag.js": function(module1) {
                 "use strict";
                 var stylesInDOM = [];
                 function getIndexByIdentifier(identifier) {
@@ -10326,7 +10326,7 @@
                     };
                 };
             },
-            "./node_modules/@rsbuild/core/compiled/style-loader/runtime/insertBySelector.js": function(module1) {
+            "./node_modules/@rslib/core/node_modules/@rsbuild/core/compiled/style-loader/runtime/insertBySelector.js": function(module1) {
                 "use strict";
                 var memo = {};
                 function getTarget(target) {
@@ -10348,7 +10348,7 @@
                 }
                 module1.exports = insertBySelector;
             },
-            "./node_modules/@rsbuild/core/compiled/style-loader/runtime/insertStyleElement.js": function(module1) {
+            "./node_modules/@rslib/core/node_modules/@rsbuild/core/compiled/style-loader/runtime/insertStyleElement.js": function(module1) {
                 "use strict";
                 function insertStyleElement(options) {
                     var element = document.createElement("style");
@@ -10358,7 +10358,7 @@
                 }
                 module1.exports = insertStyleElement;
             },
-            "./node_modules/@rsbuild/core/compiled/style-loader/runtime/setAttributesWithoutAttributes.js": function(module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/@rslib/core/node_modules/@rsbuild/core/compiled/style-loader/runtime/setAttributesWithoutAttributes.js": function(module1, __unused_webpack_exports, __webpack_require__) {
                 "use strict";
                 function setAttributesWithoutAttributes(styleElement) {
                     var nonce = __webpack_require__.nc;
@@ -10366,7 +10366,7 @@
                 }
                 module1.exports = setAttributesWithoutAttributes;
             },
-            "./node_modules/@rsbuild/core/compiled/style-loader/runtime/styleDomAPI.js": function(module1) {
+            "./node_modules/@rslib/core/node_modules/@rsbuild/core/compiled/style-loader/runtime/styleDomAPI.js": function(module1) {
                 "use strict";
                 function apply(styleElement, options, obj) {
                     var css = "";
@@ -10403,7 +10403,7 @@
                 }
                 module1.exports = domAPI;
             },
-            "./node_modules/@rsbuild/core/compiled/style-loader/runtime/styleTagTransform.js": function(module1) {
+            "./node_modules/@rslib/core/node_modules/@rsbuild/core/compiled/style-loader/runtime/styleTagTransform.js": function(module1) {
                 "use strict";
                 function styleTagTransform(css, styleElement) {
                     if (styleElement.styleSheet) styleElement.styleSheet.cssText = css;
@@ -10648,7 +10648,7 @@
             var client = __webpack_require__("./node_modules/superagent/lib/client.js");
             var client_default = /*#__PURE__*/ __webpack_require__.n(client);
             var package_namespaceObject = {
-                rE: "11.0.8"
+                rE: "11.4.3"
             };
             var defined = __webpack_require__("./node_modules/defined/index.js");
             var defined_default = /*#__PURE__*/ __webpack_require__.n(defined);
@@ -14888,19 +14888,19 @@
                 return newOptions;
             }
             const mergeWithDefaultOptions = mergeWithDefaultOptions_mergeWithDefaultOptions;
-            var injectStylesIntoStyleTag = __webpack_require__("./node_modules/@rsbuild/core/compiled/style-loader/runtime/injectStylesIntoStyleTag.js");
+            var injectStylesIntoStyleTag = __webpack_require__("./node_modules/@rslib/core/node_modules/@rsbuild/core/compiled/style-loader/runtime/injectStylesIntoStyleTag.js");
             var injectStylesIntoStyleTag_default = /*#__PURE__*/ __webpack_require__.n(injectStylesIntoStyleTag);
-            var styleDomAPI = __webpack_require__("./node_modules/@rsbuild/core/compiled/style-loader/runtime/styleDomAPI.js");
+            var styleDomAPI = __webpack_require__("./node_modules/@rslib/core/node_modules/@rsbuild/core/compiled/style-loader/runtime/styleDomAPI.js");
             var styleDomAPI_default = /*#__PURE__*/ __webpack_require__.n(styleDomAPI);
-            var insertBySelector = __webpack_require__("./node_modules/@rsbuild/core/compiled/style-loader/runtime/insertBySelector.js");
+            var insertBySelector = __webpack_require__("./node_modules/@rslib/core/node_modules/@rsbuild/core/compiled/style-loader/runtime/insertBySelector.js");
             var insertBySelector_default = /*#__PURE__*/ __webpack_require__.n(insertBySelector);
-            var setAttributesWithoutAttributes = __webpack_require__("./node_modules/@rsbuild/core/compiled/style-loader/runtime/setAttributesWithoutAttributes.js");
+            var setAttributesWithoutAttributes = __webpack_require__("./node_modules/@rslib/core/node_modules/@rsbuild/core/compiled/style-loader/runtime/setAttributesWithoutAttributes.js");
             var setAttributesWithoutAttributes_default = /*#__PURE__*/ __webpack_require__.n(setAttributesWithoutAttributes);
-            var insertStyleElement = __webpack_require__("./node_modules/@rsbuild/core/compiled/style-loader/runtime/insertStyleElement.js");
+            var insertStyleElement = __webpack_require__("./node_modules/@rslib/core/node_modules/@rsbuild/core/compiled/style-loader/runtime/insertStyleElement.js");
             var insertStyleElement_default = /*#__PURE__*/ __webpack_require__.n(insertStyleElement);
-            var styleTagTransform = __webpack_require__("./node_modules/@rsbuild/core/compiled/style-loader/runtime/styleTagTransform.js");
+            var styleTagTransform = __webpack_require__("./node_modules/@rslib/core/node_modules/@rsbuild/core/compiled/style-loader/runtime/styleTagTransform.js");
             var styleTagTransform_default = /*#__PURE__*/ __webpack_require__.n(styleTagTransform);
-            var main = __webpack_require__("./node_modules/@rsbuild/core/compiled/css-loader/index.js??ruleSet[1].rules[12].use[1]!builtin:lightningcss-loader??ruleSet[1].rules[12].use[2]!./node_modules/stylus-loader/dist/cjs.js??ruleSet[1].rules[12].use[3]!./src/styles/main.styl");
+            var main = __webpack_require__("./node_modules/@rslib/core/node_modules/@rsbuild/core/compiled/css-loader/index.js??ruleSet[1].rules[12].use[1]!builtin:lightningcss-loader??ruleSet[1].rules[12].use[2]!./node_modules/stylus-loader/dist/cjs.js??ruleSet[1].rules[12].use[3]!./src/styles/main.styl");
             var main_options = {};
             main_options.styleTagTransform = styleTagTransform_default();
             main_options.setAttributes = setAttributesWithoutAttributes_default();

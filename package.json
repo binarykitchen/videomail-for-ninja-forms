@@ -1,6 +1,6 @@
 {
   "name": "videomail-for-ninja-forms",
-  "version": "8.1.0",
+  "version": "8.1.1",
   "description": "With this add-on recording videos in Wordpress Ninja Forms comes true.",
   "author": "Michael Heuberger <michael.heuberger@binarykitchen.com>",
   "contributors": [
@@ -58,7 +58,7 @@
     ]
   },
   "dependencies": {
-    "videomail-client": "11.0.8"
+    "videomail-client": "11.4.3"
   },
   "devDependencies": {
     "@babel/core": "7.28.4",
