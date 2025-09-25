@@ -155,7 +155,7 @@ class NF_Videomail_Fields_Videomail extends NF_Abstracts_Field {
   public function enqueueScripts() {
     wp_enqueue_style(
       'nf-videomail-main',
-      NF_Videomail::$cssUrl . 'main.min.css',
+      NF_Videomail::$cssUrl . 'main-min.css',
       array(),
       NF_Videomail::VERSION
     );
@@ -164,14 +164,14 @@ class NF_Videomail_Fields_Videomail extends NF_Abstracts_Field {
     // enqueued script that lists the registered script’s handle as a dependency.
     wp_register_script(
       'nf-videomail-client',
-      NF_Videomail::$jsUrl . 'videomail-client/index.min.js',
+      NF_Videomail::$jsUrl . 'videomail-client/index-min.js',
       array(),
       NF_Videomail::VERSION
     );
 
     wp_enqueue_script(
       'nf-videomail-main',
-      NF_Videomail::$jsUrl . 'main.min.js',
+      NF_Videomail::$jsUrl . 'main-min.js',
       // The script nf-front-end is defined by the Ninja Forms plugin and
       // enqueued along with the ("front-end", client-side) form.
       array('nf-front-end', 'nf-videomail-client'),
