@@ -1,5 +1,5 @@
 // Remember, you can't use any import/require statements here
-const PLUGIN_VERSION = "8.1.1";
+const PLUGIN_VERSION = "8.2.0";
 
 // manual switch to have more stuff printed to console
 let DEBUG = false;
