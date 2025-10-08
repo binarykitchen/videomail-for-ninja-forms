@@ -10485,7 +10485,7 @@
             __webpack_require__.r(__webpack_exports__);
             __webpack_require__.d(__webpack_exports__, {
                 VideomailClient: ()=>src_client,
-                VideoType: ()=>VideoType_VideoType
+                VideoType: ()=>VideoType
             });
             const constants = {
                 SITE_NAME_LABEL: "x-videomail-site-name",
@@ -10648,7 +10648,7 @@
             var client = __webpack_require__("./node_modules/superagent/lib/client.js");
             var client_default = /*#__PURE__*/ __webpack_require__.n(client);
             var package_namespaceObject = {
-                rE: "11.4.3"
+                rE: "11.4.9"
             };
             var defined = __webpack_require__("./node_modules/defined/index.js");
             var defined_default = /*#__PURE__*/ __webpack_require__.n(defined);
@@ -13784,18 +13784,17 @@
                 NAME,
                 VERSION
             ]);
-            var VideoType_VideoType = /*#__PURE__*/ function(VideoType) {
-                VideoType["WebM"] = "webm";
-                VideoType["MP4"] = "mp4";
-                return VideoType;
-            }({});
+            const VideoType = {
+                WebM: "webm",
+                MP4: "mp4"
+            };
             function canPlayType_canPlayType(video, type) {
                 const canPlayType = video.canPlayType(`video/${type}`);
                 if ("" === canPlayType) return false;
                 return canPlayType;
             }
             const media_canPlayType = canPlayType_canPlayType;
-            const FALLBACK_VIDEO_TYPE = VideoType_VideoType.MP4;
+            const FALLBACK_VIDEO_TYPE = VideoType.MP4;
             class Browser {
                 options;
                 result;
@@ -13842,10 +13841,10 @@
                 }
                 getVideoType(video) {
                     if (!this.videoType) {
-                        if (media_canPlayType(video, VideoType_VideoType.MP4)) this.videoType = VideoType_VideoType.MP4;
-                        else if (media_canPlayType(video, VideoType_VideoType.WebM)) this.videoType = VideoType_VideoType.WebM;
+                        if (media_canPlayType(video, VideoType.MP4)) this.videoType = VideoType.MP4;
+                        else if (media_canPlayType(video, VideoType.WebM)) this.videoType = VideoType.WebM;
                     }
-                    if (this.videoType !== VideoType_VideoType.WebM && this.videoType !== VideoType_VideoType.MP4) this.videoType = FALLBACK_VIDEO_TYPE;
+                    if (this.videoType !== VideoType.WebM && this.videoType !== VideoType.MP4) this.videoType = FALLBACK_VIDEO_TYPE;
                     if ("" === this.videoType.trim()) this.videoType = FALLBACK_VIDEO_TYPE;
                     return this.videoType;
                 }
@@ -14059,7 +14058,7 @@
                     case error_VideomailError.NOT_READABLE_ERROR:
                     case error_VideomailError.TRACK_START_ERROR:
                         message = "No access to webcam";
-                        explanation = "A hardware error occurred which prevented access to your webcam";
+                        explanation = "Perhaps you are already using it in another browser?";
                         classList.push(error_VideomailError.WEBCAM_PROBLEM);
                         break;
                     case error_VideomailError.INVALID_STATE_ERROR:
@@ -14297,6 +14296,11 @@
                 const trimmedEmails = emails.split(REGEX).map((item)=>item.trim()).filter(Boolean);
                 return trimmedEmails;
             }
+            const FormMethod = {
+                POST: "post",
+                PUT: "put",
+                GET: "get"
+            };
             class Form extends util_Despot {
                 container;
                 formElement;
@@ -14384,7 +14388,7 @@
                             if (name === this.options.selectors.toInputName || name === this.options.selectors.subjectInputName || name === this.options.selectors.bodyInputName) formControl.setAttribute("disabled", "disabled");
                         }
                     }
-                    this.formElement.setAttribute("method", "put");
+                    this.formElement.setAttribute("method", FormMethod.PUT);
                 }
                 setDisabled(disabled, buttonsToo) {
                     for (const formControl of this.formElement.elements)if (buttonsToo || html_isNotButton(formControl)) if (disabled) formControl.setAttribute("disabled", "disabled");
@@ -14440,7 +14444,7 @@
                             }
                         } else {
                             const err = error_createError({
-                                message: "Videomail key for preview is missing!",
+                                message: "Videomail key and its value for previewing is missing",
                                 options: this.options
                             });
                             this.emit("ERROR", {
@@ -14511,14 +14515,14 @@
                     const method = this.formElement.getAttribute("method");
                     let chosenMethod;
                     switch(method){
-                        case "post":
-                            chosenMethod = "post";
+                        case FormMethod.POST:
+                            chosenMethod = FormMethod.POST;
                             break;
-                        case "put":
-                            chosenMethod = "put";
+                        case FormMethod.PUT:
+                            chosenMethod = FormMethod.PUT;
                             break;
                         default:
-                            chosenMethod = "post";
+                            chosenMethod = FormMethod.POST;
                     }
                     if (this.container.hasElement()) await this.container.submitAll(this.getData(), chosenMethod, url);
                     return false;
@@ -14603,7 +14607,7 @@
                         [constants.SITE_NAME_LABEL]: this.options.siteName
                     };
                     let url = `${this.options.baseUrl}/videomail/`;
-                    if ("put" === method && videomail.key) url += videomail.key;
+                    if (method === FormMethod.PUT && videomail.key) url += videomail.key;
                     try {
                         const request = await client_default()(method, url).query(queryParams).set("Timezone-Id", this.timezoneId).withCredentials().send(videomail).timeout(this.options.timeouts.connection);
                         return request;
@@ -14650,7 +14654,7 @@
                                 videomailNinjaFormPlugin: this.options.versions?.videomailNinjaFormPlugin
                             }
                         };
-                        await client_default()("post", url).query(queryParams).set("Timezone-Id", this.timezoneId).withCredentials().send(fullVideomailErrorData).timeout(this.options.timeouts.connection);
+                        await client_default()(FormMethod.POST, url).query(queryParams).set("Timezone-Id", this.timezoneId).withCredentials().send(fullVideomailErrorData).timeout(this.options.timeouts.connection);
                     } catch (exc) {
                         console.error(exc);
                     }
@@ -14662,8 +14666,8 @@
                         let res;
                         if (this.options.callbacks.adjustFormDataBeforePosting) {
                             const adjustedVideomail = this.options.callbacks.adjustFormDataBeforePosting(newVideomail);
-                            res = await this.write("post", adjustedVideomail);
-                        } else res = await this.write("post", newVideomail);
+                            res = await this.write(FormMethod.POST, adjustedVideomail);
+                        } else res = await this.write(FormMethod.POST, newVideomail);
                         return res;
                     } catch (exc) {
                         throw error_createError({
@@ -14673,7 +14677,7 @@
                     }
                 }
                 async put(videomail) {
-                    return await this.write("put", videomail);
+                    return await this.write(FormMethod.PUT, videomail);
                 }
                 async form(formData, url) {
                     let formType;
@@ -15614,7 +15618,7 @@
                     if (newCountdown !== this.countdown) {
                         this.countdown = newCountdown;
                         this.update();
-                        if (this.countdown < 1) this.visuals.stop(true);
+                        if (this.countdown < 1) this.visuals.stop();
                     }
                 }
                 update() {
@@ -17132,7 +17136,7 @@
                     if (this.userMedia) this.userMedia.unloadRemainingEventListeners();
                     if (this.submitting) ;
                     else if (this.stream) {
-                        this.options.logger.debug("Recorder: ending stream ...");
+                        this.options.logger.debug("Recorder: destroying stream ...");
                         this.stream.destroy();
                         this.stream = void 0;
                     }
@@ -17292,7 +17296,7 @@
                     this.loop.on("update", (_deltaTime, elapsedTime)=>{
                         let avgFPS;
                         avgFPS = 0 !== elapsedTime ? Math.round(this.framesCount / elapsedTime * 1000) : void 0;
-                        this.options.logger.debug(`Recorder: avgFps = ${avgFPS}, framesCount = ${this.framesCount}`);
+                        this.options.logger.debug(`Recorder updates avgFps = ${avgFPS} at frame ${this.framesCount}`);
                     });
                     this.loop.start();
                 }
@@ -17683,10 +17687,10 @@
                     }
                 }
                 setMp4Source(src, bustCache) {
-                    this.setVideoSource(VideoType_VideoType.MP4, src, bustCache);
+                    this.setVideoSource(VideoType.MP4, src, bustCache);
                 }
                 setWebMSource(src, bustCache) {
-                    this.setVideoSource(VideoType_VideoType.WebM, src, bustCache);
+                    this.setVideoSource(VideoType.WebM, src, bustCache);
                 }
                 getVideoType() {
                     if (!this.replayElement) return;
@@ -17813,7 +17817,8 @@
                     return this.recorderInsides.isCountingDown();
                 }
                 build(playerOnly = false, parentElement) {
-                    this.options.logger.debug(`Visuals: build (playerOnly = ${playerOnly}${parentElement ? `, parentElement="${util_pretty(parentElement)}"` : ""})`);
+                    const parentElementInfo = parentElement ? `, parentElement="${util_pretty(parentElement)}"` : "";
+                    this.options.logger.debug(`Visuals: build (playerOnly = ${playerOnly}${parentElementInfo})`);
                     if (parentElement) this.visualsElement = parentElement.querySelector(`.${this.options.selectors.visualsClass}`);
                     else this.visualsElement = this.container.querySelector(`.${this.options.selectors.visualsClass}`);
                     if (!this.visualsElement) if (playerOnly && parentElement) this.visualsElement = parentElement;
@@ -17908,7 +17913,8 @@
                     return this.recorder;
                 }
                 validate() {
-                    return this.recorder.validate() && this.isReplayShown();
+                    if (this.isReplayShown()) return true;
+                    return this.recorder.validate();
                 }
                 getRecordingStats() {
                     return this.recorder.getRecordingStats();
@@ -18026,7 +18032,8 @@
                     this.resource = new src_resource(options);
                 }
                 buildChildren(playerOnly = false, parentElement) {
-                    this.options.logger.debug(`Container: buildChildren (playerOnly = ${playerOnly}${parentElement ? `, parentElement="${util_pretty(parentElement)}"` : ""})`);
+                    const parentElementInfo = parentElement ? `, parentElement="${util_pretty(parentElement)}"` : "";
+                    this.options.logger.debug(`Container: buildChildren (playerOnly = ${playerOnly}${parentElementInfo})`);
                     if (this.containerElement) this.containerElement.classList.add(this.options.selectors.containerClass);
                     if (!playerOnly) this.buttons.build();
                     this.visuals.build(playerOnly, parentElement);
@@ -18166,13 +18173,13 @@
                 async submitVideomail(formInputs, method) {
                     const videomailFormData = this.form?.transformFormData(formInputs);
                     if (!videomailFormData) throw new Error("No videomail form data defined");
-                    if ("post" === method) {
+                    if (method === FormMethod.POST) {
                         videomailFormData.recordingStats = this.visuals.getRecordingStats();
                         videomailFormData.width = this.visuals.getRecorderWidth(true);
                         videomailFormData.height = this.visuals.getRecorderHeight(true);
                         return await this.resource.post(videomailFormData);
                     }
-                    if ("put" === method) return await this.resource.put(videomailFormData);
+                    if (method === FormMethod.PUT) return await this.resource.put(videomailFormData);
                     throw error_createError({
                         message: `Unsupported form method ${method}, unable to submit videomail.`,
                         options: this.options
@@ -18295,7 +18302,7 @@
                 validate(event, force = false) {
                     let runValidation = true;
                     let valid = true;
-                    if (this.options.enableAutoValidation) {
+                    if (this.built) if (this.options.enableAutoValidation) {
                         if (force) runValidation = force;
                         else if (this.isNotifying()) runValidation = false;
                         else if (this.visuals.isConnected()) runValidation = this.visuals.isUserMediaLoaded() ?? this.visuals.isReplayShown();
@@ -18304,6 +18311,7 @@
                         runValidation = false;
                         this.lastValidation = true;
                     }
+                    else runValidation = false;
                     if (runValidation) {
                         const targetName = event?.target?.name;
                         if (targetName) this.emit("VALIDATING", {
@@ -18313,8 +18321,9 @@
                             event
                         });
                         else this.emit("VALIDATING");
-                        const visualsValid = this.visuals.validate() && this.buttons.isRecordAgainButtonEnabled();
                         let whyInvalid;
+                        const isRecordAgainButtonEnabled = this.buttons.isRecordAgainButtonEnabled();
+                        const visualsValid = this.visuals.validate() && isRecordAgainButtonEnabled;
                         let invalidData;
                         if (this.form) {
                             const invalidInput = this.form.getInvalidElement();
@@ -18359,7 +18368,10 @@
                                 }
                                 if (!valid) whyInvalid = "At least one recipient is required";
                             }
-                        } else valid = visualsValid;
+                        } else {
+                            valid = visualsValid;
+                            whyInvalid = "Because visuals aren't valid";
+                        }
                         if (valid) this.emit("VALID");
                         else if (invalidData) this.emit("INVALID", {
                             whyInvalid,
@@ -18447,10 +18459,9 @@
                     return element.parentNode !== this.containerElement && element !== this.containerElement;
                 }
                 loadForm(videomail) {
-                    if (this.form) {
-                        this.form.loadVideomail(videomail);
-                        this.validate();
-                    }
+                    if (!this.form) return;
+                    this.form.loadVideomail(videomail);
+                    this.validate();
                 }
                 enableAudio() {
                     this.options = setAudioEnabled(true, this.options);
@@ -18533,9 +18544,9 @@
                         replayParentElementId
                     });
                     this.container.buildForm();
-                    this.container.loadForm(videomail);
                     this.once("REPLAY_SHOWN", ()=>{
                         this.container.showReplayOnly();
+                        this.container.loadForm(videomail);
                     });
                     const replay = this.container.getReplay();
                     replay.setVideomail(videomail, true);

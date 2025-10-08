@@ -2,7 +2,7 @@
 final class NF_Videomail {
 
   const NAME = 'Videomail';
-  const VERSION = '8.1.1';
+  const VERSION = '8.2.0';
   const AUTHOR = 'Michael Heuberger + Kyle B. Johnson';
   const SLUG = 'videomail';
   const PREFIX = 'NF_Videomail';
@@ -62,6 +62,16 @@ final class NF_Videomail {
     add_filter('ninja_forms_register_fields', array($this, 'register_fields'));
     add_filter('ninja_forms_register_actions', array($this, 'register_actions'));
     add_filter('ninja_forms_field_template_file_paths', array($this, 'custom_template_path'));
+
+    add_filter('litespeed_optimize_js_excludes', array($this, 'add_exclude_test'));
+  }
+
+  public function add_exclude_test($excludes) {
+      if (is_array($excludes)) {
+        $excludes[] = 'videomail-client';
+      }
+
+      return $excludes;
   }
 
   public function ninja_forms_loaded() {

@@ -5,7 +5,7 @@ Tags: video, email, recorder, sign language
 
 Requires at least: 6.0
 Tested up to: 6.8.2
-Stable tag: 8.1.1
+Stable tag: 8.2.0
 Requires PHP: 8.1.0
 Donate link: https://videomail.io/faq
 License: CC0-1.0
@@ -70,6 +70,14 @@ To get help, just use any of these contacts at [https://binarykitchen.com](https
 2. Once you have assembled a form and preview it, any browser will ask for webcam access first.
 
 == Changelog ==
+= 8.2.0 (8 Oct 2025) =
+**Fix**
+* Exclude videomail-client from LiteSpeed
+
+**Chore**
+* Upgrade VC dependency
+* Upgrade Node.js
+
 = 8.1.1 (26 Sept 2025) =
 **Fix**
 * Rename minified files to prevent LiteSpeed from minifying them all over again, see https://github.com/litespeedtech/lscache_wp/issues/908
