@@ -5,16 +5,16 @@
     else root["VideomailClient"] = factory();
 })(globalThis, ()=>(()=>{
         var __webpack_modules__ = {
-            "./node_modules/@rslib/core/node_modules/@rsbuild/core/compiled/css-loader/index.js??ruleSet[1].rules[12].use[1]!builtin:lightningcss-loader??ruleSet[1].rules[12].use[2]!./node_modules/stylus-loader/dist/cjs.js??ruleSet[1].rules[12].use[3]!./src/styles/main.styl": function(module1, __webpack_exports__, __webpack_require__) {
+            "./node_modules/@rsbuild/core/compiled/css-loader/index.js??ruleSet[1].rules[12].use[1]!builtin:lightningcss-loader??ruleSet[1].rules[12].use[2]!./node_modules/stylus-loader/dist/cjs.js??ruleSet[1].rules[12].use[3]!./src/styles/main.styl": function(module1, __webpack_exports__, __webpack_require__) {
                 "use strict";
                 __webpack_require__.d(__webpack_exports__, {
                     A: ()=>__WEBPACK_DEFAULT_EXPORT__
                 });
-                var _node_modules_rslib_core_node_modules_rsbuild_core_compiled_css_loader_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("./node_modules/@rslib/core/node_modules/@rsbuild/core/compiled/css-loader/noSourceMaps.js");
-                var _node_modules_rslib_core_node_modules_rsbuild_core_compiled_css_loader_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/ __webpack_require__.n(_node_modules_rslib_core_node_modules_rsbuild_core_compiled_css_loader_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
-                var _node_modules_rslib_core_node_modules_rsbuild_core_compiled_css_loader_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__("./node_modules/@rslib/core/node_modules/@rsbuild/core/compiled/css-loader/api.js");
-                var _node_modules_rslib_core_node_modules_rsbuild_core_compiled_css_loader_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/ __webpack_require__.n(_node_modules_rslib_core_node_modules_rsbuild_core_compiled_css_loader_api_js__WEBPACK_IMPORTED_MODULE_1__);
-                var ___CSS_LOADER_EXPORT___ = _node_modules_rslib_core_node_modules_rsbuild_core_compiled_css_loader_api_js__WEBPACK_IMPORTED_MODULE_1___default()(_node_modules_rslib_core_node_modules_rsbuild_core_compiled_css_loader_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default());
+                var _node_modules_rsbuild_core_compiled_css_loader_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("./node_modules/@rsbuild/core/compiled/css-loader/noSourceMaps.js");
+                var _node_modules_rsbuild_core_compiled_css_loader_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/ __webpack_require__.n(_node_modules_rsbuild_core_compiled_css_loader_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
+                var _node_modules_rsbuild_core_compiled_css_loader_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__("./node_modules/@rsbuild/core/compiled/css-loader/api.js");
+                var _node_modules_rsbuild_core_compiled_css_loader_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/ __webpack_require__.n(_node_modules_rsbuild_core_compiled_css_loader_api_js__WEBPACK_IMPORTED_MODULE_1__);
+                var ___CSS_LOADER_EXPORT___ = _node_modules_rsbuild_core_compiled_css_loader_api_js__WEBPACK_IMPORTED_MODULE_1___default()(_node_modules_rsbuild_core_compiled_css_loader_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default());
                 ___CSS_LOADER_EXPORT___.push([
                     module1.id,
                     `@keyframes blink {
@@ -4391,6 +4391,11 @@
                 var implementation = __webpack_require__("./node_modules/function-bind/implementation.js");
                 module1.exports = Function.prototype.bind || implementation;
             },
+            "./node_modules/generator-function/index.js": function(module1) {
+                "use strict";
+                const cached = (function*() {}).constructor;
+                module1.exports = ()=>cached;
+            },
             "./node_modules/get-intrinsic/index.js": function(module1, __unused_webpack_exports, __webpack_require__) {
                 "use strict";
                 var undefined;
@@ -5198,13 +5203,7 @@
                 var getProto = __webpack_require__("./node_modules/get-proto/index.js");
                 var toStr = callBound('Object.prototype.toString');
                 var fnToStr = callBound('Function.prototype.toString');
-                var getGeneratorFunc = function() {
-                    if (!hasToStringTag) return false;
-                    try {
-                        return Function('return function*() {}')();
-                    } catch (e) {}
-                };
-                var GeneratorFunction;
+                var getGeneratorFunction = __webpack_require__("./node_modules/generator-function/index.js");
                 module1.exports = function(fn) {
                     if ('function' != typeof fn) return false;
                     if (isFnRegex(fnToStr(fn))) return true;
@@ -5213,11 +5212,8 @@
                         return '[object GeneratorFunction]' === str;
                     }
                     if (!getProto) return false;
-                    if (void 0 === GeneratorFunction) {
-                        var generatorFunc = getGeneratorFunc();
-                        GeneratorFunction = generatorFunc ? getProto(generatorFunc) : false;
-                    }
-                    return getProto(fn) === GeneratorFunction;
+                    var GeneratorFunction = getGeneratorFunction();
+                    return GeneratorFunction && getProto(fn) === GeneratorFunction.prototype;
                 };
             },
             "./node_modules/is-power-of-two/index.js": function(module1) {
@@ -6010,15 +6006,17 @@
                     parseArrays: true,
                     plainObjects: false,
                     strictDepth: false,
-                    strictNullHandling: false
+                    strictNullHandling: false,
+                    throwOnLimitExceeded: false
                 };
                 var interpretNumericEntities = function(str) {
                     return str.replace(/&#(\d+);/g, function($0, numberStr) {
                         return String.fromCharCode(parseInt(numberStr, 10));
                     });
                 };
-                var parseArrayValue = function(val, options) {
+                var parseArrayValue = function(val, options, currentArrayLength) {
                     if (val && 'string' == typeof val && options.comma && val.indexOf(',') > -1) return val.split(',');
+                    if (options.throwOnLimitExceeded && currentArrayLength >= options.arrayLimit) throw new RangeError('Array limit exceeded. Only ' + options.arrayLimit + ' element' + (1 === options.arrayLimit ? '' : 's') + ' allowed in an array.');
                     return val;
                 };
                 var isoSentinel = 'utf8=%26%2310003%3B';
@@ -6030,7 +6028,8 @@
                     var cleanStr = options.ignoreQueryPrefix ? str.replace(/^\?/, '') : str;
                     cleanStr = cleanStr.replace(/%5B/gi, '[').replace(/%5D/gi, ']');
                     var limit = options.parameterLimit === 1 / 0 ? void 0 : options.parameterLimit;
-                    var parts = cleanStr.split(options.delimiter, limit);
+                    var parts = cleanStr.split(options.delimiter, options.throwOnLimitExceeded ? limit + 1 : limit);
+                    if (options.throwOnLimitExceeded && parts.length > limit) throw new RangeError('Parameter limit exceeded. Only ' + limit + ' parameter' + (1 === limit ? '' : 's') + ' allowed.');
                     var skipIndex = -1;
                     var i;
                     var charset = options.charset;
@@ -6046,17 +6045,18 @@
                         var part = parts[i];
                         var bracketEqualsPos = part.indexOf(']=');
                         var pos = -1 === bracketEqualsPos ? part.indexOf('=') : bracketEqualsPos + 1;
-                        var key, val;
+                        var key;
+                        var val;
                         if (-1 === pos) {
                             key = options.decoder(part, defaults.decoder, charset, 'key');
                             val = options.strictNullHandling ? null : '';
                         } else {
                             key = options.decoder(part.slice(0, pos), defaults.decoder, charset, 'key');
-                            val = utils.maybeMap(parseArrayValue(part.slice(pos + 1), options), function(encodedVal) {
+                            val = utils.maybeMap(parseArrayValue(part.slice(pos + 1), options, isArray(obj[key]) ? obj[key].length : 0), function(encodedVal) {
                                 return options.decoder(encodedVal, defaults.decoder, charset, 'value');
                             });
                         }
-                        if (val && options.interpretNumericEntities && 'iso-8859-1' === charset) val = interpretNumericEntities(val);
+                        if (val && options.interpretNumericEntities && 'iso-8859-1' === charset) val = interpretNumericEntities(String(val));
                         if (part.indexOf('[]=') > -1) val = isArray(val) ? [
                             val
                         ] : val;
@@ -6067,13 +6067,20 @@
                     return obj;
                 };
                 var parseObject = function(chain, val, options, valuesParsed) {
-                    var leaf = valuesParsed ? val : parseArrayValue(val, options);
+                    var currentArrayLength = 0;
+                    if (chain.length > 0 && '[]' === chain[chain.length - 1]) {
+                        var parentKey = chain.slice(0, -1).join('');
+                        currentArrayLength = Array.isArray(val) && val[parentKey] ? val[parentKey].length : 0;
+                    }
+                    var leaf = valuesParsed ? val : parseArrayValue(val, options, currentArrayLength);
                     for(var i = chain.length - 1; i >= 0; --i){
                         var obj;
                         var root = chain[i];
-                        if ('[]' === root && options.parseArrays) obj = options.allowEmptyArrays && ('' === leaf || options.strictNullHandling && null === leaf) ? [] : [].concat(leaf);
+                        if ('[]' === root && options.parseArrays) obj = options.allowEmptyArrays && ('' === leaf || options.strictNullHandling && null === leaf) ? [] : utils.combine([], leaf);
                         else {
-                            obj = options.plainObjects ? Object.create(null) : {};
+                            obj = options.plainObjects ? {
+                                __proto__: null
+                            } : {};
                             var cleanRoot = '[' === root.charAt(0) && ']' === root.charAt(root.length - 1) ? root.slice(1, -1) : root;
                             var decodedRoot = options.decodeDotInKeys ? cleanRoot.replace(/%2E/g, '.') : cleanRoot;
                             var index = parseInt(decodedRoot, 10);
@@ -6124,6 +6131,7 @@
                     if (void 0 !== opts.decodeDotInKeys && 'boolean' != typeof opts.decodeDotInKeys) throw new TypeError('`decodeDotInKeys` option can only be `true` or `false`, when provided');
                     if (null !== opts.decoder && void 0 !== opts.decoder && 'function' != typeof opts.decoder) throw new TypeError('Decoder has to be a function.');
                     if (void 0 !== opts.charset && 'utf-8' !== opts.charset && 'iso-8859-1' !== opts.charset) throw new TypeError('The charset option must be either utf-8, iso-8859-1, or undefined');
+                    if (void 0 !== opts.throwOnLimitExceeded && 'boolean' != typeof opts.throwOnLimitExceeded) throw new TypeError('`throwOnLimitExceeded` option must be a boolean');
                     var charset = void 0 === opts.charset ? defaults.charset : opts.charset;
                     var duplicates = void 0 === opts.duplicates ? defaults.duplicates : opts.duplicates;
                     if ('combine' !== duplicates && 'first' !== duplicates && 'last' !== duplicates) throw new TypeError('The duplicates option must be either combine, first, or last');
@@ -6148,14 +6156,19 @@
                         parseArrays: false !== opts.parseArrays,
                         plainObjects: 'boolean' == typeof opts.plainObjects ? opts.plainObjects : defaults.plainObjects,
                         strictDepth: 'boolean' == typeof opts.strictDepth ? !!opts.strictDepth : defaults.strictDepth,
-                        strictNullHandling: 'boolean' == typeof opts.strictNullHandling ? opts.strictNullHandling : defaults.strictNullHandling
+                        strictNullHandling: 'boolean' == typeof opts.strictNullHandling ? opts.strictNullHandling : defaults.strictNullHandling,
+                        throwOnLimitExceeded: 'boolean' == typeof opts.throwOnLimitExceeded ? opts.throwOnLimitExceeded : false
                     };
                 };
                 module1.exports = function(str, opts) {
                     var options = normalizeParseOptions(opts);
-                    if ('' === str || null == str) return options.plainObjects ? Object.create(null) : {};
+                    if ('' === str || null == str) return options.plainObjects ? {
+                        __proto__: null
+                    } : {};
                     var tempObj = 'string' == typeof str ? parseValues(str, options) : str;
-                    var obj = options.plainObjects ? Object.create(null) : {};
+                    var obj = options.plainObjects ? {
+                        __proto__: null
+                    } : {};
                     var keys = Object.keys(tempObj);
                     for(var i = 0; i < keys.length; ++i){
                         var key = keys[i];
@@ -6200,11 +6213,13 @@
                     arrayFormat: 'indices',
                     charset: 'utf-8',
                     charsetSentinel: false,
+                    commaRoundTrip: false,
                     delimiter: '&',
                     encode: true,
                     encodeDotInKeys: false,
                     encoder: utils.encode,
                     encodeValuesOnly: false,
+                    filter: void 0,
                     format: defaultFormat,
                     formatter: formats.formatters[defaultFormat],
                     indices: false,
@@ -6266,14 +6281,14 @@
                         var keys = Object.keys(obj);
                         objKeys = sort ? keys.sort(sort) : keys;
                     }
-                    var encodedPrefix = encodeDotInKeys ? prefix.replace(/\./g, '%2E') : prefix;
+                    var encodedPrefix = encodeDotInKeys ? String(prefix).replace(/\./g, '%2E') : String(prefix);
                     var adjustedPrefix = commaRoundTrip && isArray(obj) && 1 === obj.length ? encodedPrefix + '[]' : encodedPrefix;
                     if (allowEmptyArrays && isArray(obj) && 0 === obj.length) return adjustedPrefix + '[]';
                     for(var j = 0; j < objKeys.length; ++j){
                         var key = objKeys[j];
-                        var value = 'object' == typeof key && void 0 !== key.value ? key.value : obj[key];
+                        var value = 'object' == typeof key && key && void 0 !== key.value ? key.value : obj[key];
                         if (!skipNulls || null !== value) {
-                            var encodedKey = allowDots && encodeDotInKeys ? key.replace(/\./g, '%2E') : key;
+                            var encodedKey = allowDots && encodeDotInKeys ? String(key).replace(/\./g, '%2E') : String(key);
                             var keyPrefix = isArray(obj) ? 'function' == typeof generateArrayPrefix ? generateArrayPrefix(adjustedPrefix, encodedKey) : adjustedPrefix : adjustedPrefix + (allowDots ? '.' + encodedKey : '[' + encodedKey + ']');
                             sideChannel.set(object, step);
                             var valueSideChannel = getSideChannel();
@@ -6309,7 +6324,7 @@
                         arrayFormat: arrayFormat,
                         charset: charset,
                         charsetSentinel: 'boolean' == typeof opts.charsetSentinel ? opts.charsetSentinel : defaults.charsetSentinel,
-                        commaRoundTrip: opts.commaRoundTrip,
+                        commaRoundTrip: !!opts.commaRoundTrip,
                         delimiter: void 0 === opts.delimiter ? defaults.delimiter : opts.delimiter,
                         encode: 'boolean' == typeof opts.encode ? opts.encode : defaults.encode,
                         encodeDotInKeys: 'boolean' == typeof opts.encodeDotInKeys ? opts.encodeDotInKeys : defaults.encodeDotInKeys,
@@ -6345,7 +6360,8 @@
                     var sideChannel = getSideChannel();
                     for(var i = 0; i < objKeys.length; ++i){
                         var key = objKeys[i];
-                        if (!options.skipNulls || null !== obj[key]) pushToArray(keys, stringify(obj[key], key, generateArrayPrefix, commaRoundTrip, options.allowEmptyArrays, options.strictNullHandling, options.skipNulls, options.encodeDotInKeys, options.encode ? options.encoder : null, options.filter, options.sort, options.allowDots, options.serializeDate, options.format, options.formatter, options.encodeValuesOnly, options.charset, sideChannel));
+                        var value = obj[key];
+                        if (!options.skipNulls || null !== value) pushToArray(keys, stringify(value, key, generateArrayPrefix, commaRoundTrip, options.allowEmptyArrays, options.strictNullHandling, options.skipNulls, options.encodeDotInKeys, options.encode ? options.encoder : null, options.filter, options.sort, options.allowDots, options.serializeDate, options.format, options.formatter, options.encodeValuesOnly, options.charset, sideChannel));
                     }
                     var joined = keys.join(options.delimiter);
                     var prefix = true === options.addQueryPrefix ? '?' : '';
@@ -6376,13 +6392,15 @@
                     }
                 };
                 var arrayToObject = function(source, options) {
-                    var obj = options && options.plainObjects ? Object.create(null) : {};
+                    var obj = options && options.plainObjects ? {
+                        __proto__: null
+                    } : {};
                     for(var i = 0; i < source.length; ++i)if (void 0 !== source[i]) obj[i] = source[i];
                     return obj;
                 };
                 var merge = function merge(target, source, options) {
                     if (!source) return target;
-                    if ('object' != typeof source) {
+                    if ('object' != typeof source && 'function' != typeof source) {
                         if (isArray(target)) target.push(source);
                         else if (!target || 'object' != typeof target) return [
                             target,
@@ -6419,7 +6437,7 @@
                         return acc;
                     }, target);
                 };
-                var decode = function(str, decoder, charset) {
+                var decode = function(str, defaultDecoder, charset) {
                     var strWithoutPlus = str.replace(/\+/g, ' ');
                     if ('iso-8859-1' === charset) return strWithoutPlus.replace(/%[0-9a-f]{2}/gi, unescape);
                     try {
@@ -10187,7 +10205,7 @@
             "?aa23": function() {},
             "?9936": function() {},
             "?5f55": function() {},
-            "./node_modules/@rslib/core/node_modules/@rsbuild/core/compiled/css-loader/api.js": function(module1) {
+            "./node_modules/@rsbuild/core/compiled/css-loader/api.js": function(module1) {
                 "use strict";
                 module1.exports = function(cssWithMappingToString) {
                     var list = [];
@@ -10241,13 +10259,13 @@
                     return list;
                 };
             },
-            "./node_modules/@rslib/core/node_modules/@rsbuild/core/compiled/css-loader/noSourceMaps.js": function(module1) {
+            "./node_modules/@rsbuild/core/compiled/css-loader/noSourceMaps.js": function(module1) {
                 "use strict";
                 module1.exports = function(i) {
                     return i[1];
                 };
             },
-            "./node_modules/@rslib/core/node_modules/@rsbuild/core/compiled/style-loader/runtime/injectStylesIntoStyleTag.js": function(module1) {
+            "./node_modules/@rsbuild/core/compiled/style-loader/runtime/injectStylesIntoStyleTag.js": function(module1) {
                 "use strict";
                 var stylesInDOM = [];
                 function getIndexByIdentifier(identifier) {
@@ -10326,7 +10344,7 @@
                     };
                 };
             },
-            "./node_modules/@rslib/core/node_modules/@rsbuild/core/compiled/style-loader/runtime/insertBySelector.js": function(module1) {
+            "./node_modules/@rsbuild/core/compiled/style-loader/runtime/insertBySelector.js": function(module1) {
                 "use strict";
                 var memo = {};
                 function getTarget(target) {
@@ -10348,7 +10366,7 @@
                 }
                 module1.exports = insertBySelector;
             },
-            "./node_modules/@rslib/core/node_modules/@rsbuild/core/compiled/style-loader/runtime/insertStyleElement.js": function(module1) {
+            "./node_modules/@rsbuild/core/compiled/style-loader/runtime/insertStyleElement.js": function(module1) {
                 "use strict";
                 function insertStyleElement(options) {
                     var element = document.createElement("style");
@@ -10358,7 +10376,7 @@
                 }
                 module1.exports = insertStyleElement;
             },
-            "./node_modules/@rslib/core/node_modules/@rsbuild/core/compiled/style-loader/runtime/setAttributesWithoutAttributes.js": function(module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/@rsbuild/core/compiled/style-loader/runtime/setAttributesWithoutAttributes.js": function(module1, __unused_webpack_exports, __webpack_require__) {
                 "use strict";
                 function setAttributesWithoutAttributes(styleElement) {
                     var nonce = __webpack_require__.nc;
@@ -10366,7 +10384,7 @@
                 }
                 module1.exports = setAttributesWithoutAttributes;
             },
-            "./node_modules/@rslib/core/node_modules/@rsbuild/core/compiled/style-loader/runtime/styleDomAPI.js": function(module1) {
+            "./node_modules/@rsbuild/core/compiled/style-loader/runtime/styleDomAPI.js": function(module1) {
                 "use strict";
                 function apply(styleElement, options, obj) {
                     var css = "";
@@ -10403,7 +10421,7 @@
                 }
                 module1.exports = domAPI;
             },
-            "./node_modules/@rslib/core/node_modules/@rsbuild/core/compiled/style-loader/runtime/styleTagTransform.js": function(module1) {
+            "./node_modules/@rsbuild/core/compiled/style-loader/runtime/styleTagTransform.js": function(module1) {
                 "use strict";
                 function styleTagTransform(css, styleElement) {
                     if (styleElement.styleSheet) styleElement.styleSheet.cssText = css;
@@ -10648,11 +10666,16 @@
             var client = __webpack_require__("./node_modules/superagent/lib/client.js");
             var client_default = /*#__PURE__*/ __webpack_require__.n(client);
             var package_namespaceObject = {
-                rE: "11.4.9"
+                rE: "11.5.2"
             };
             var defined = __webpack_require__("./node_modules/defined/index.js");
             var defined_default = /*#__PURE__*/ __webpack_require__.n(defined);
-            var LIBVERSION = '2.0.5', UA_MAX_LENGTH = 500, USER_AGENT = 'user-agent', EMPTY = '', UNKNOWN = '?', FUNC_TYPE = 'function', UNDEF_TYPE = 'undefined', OBJ_TYPE = 'object', STR_TYPE = 'string', UA_BROWSER = 'browser', UA_CPU = 'cpu', UA_DEVICE = 'device', UA_ENGINE = 'engine', UA_OS = 'os', UA_RESULT = 'result', NAME = 'name', TYPE = 'type', VENDOR = 'vendor', VERSION = 'version', ARCHITECTURE = 'architecture', MAJOR = 'major', MODEL = 'model', CONSOLE = 'console', MOBILE = 'mobile', TABLET = 'tablet', SMARTTV = 'smarttv', WEARABLE = 'wearable', XR = 'xr', EMBEDDED = 'embedded', INAPP = 'inapp', BRANDS = 'brands', FORMFACTORS = 'formFactors', FULLVERLIST = 'fullVersionList', PLATFORM = 'platform', PLATFORMVER = 'platformVersion', BITNESS = 'bitness', CH_HEADER = 'sec-ch-ua', CH_HEADER_FULL_VER_LIST = CH_HEADER + '-full-version-list', CH_HEADER_ARCH = CH_HEADER + '-arch', CH_HEADER_BITNESS = CH_HEADER + '-' + BITNESS, CH_HEADER_FORM_FACTORS = CH_HEADER + '-form-factors', CH_HEADER_MOBILE = CH_HEADER + '-' + MOBILE, CH_HEADER_MODEL = CH_HEADER + '-' + MODEL, CH_HEADER_PLATFORM = CH_HEADER + '-' + PLATFORM, CH_HEADER_PLATFORM_VER = CH_HEADER_PLATFORM + '-version', CH_ALL_VALUES = [
+            var LIBVERSION = '2.0.6', UA_MAX_LENGTH = 500, USER_AGENT = 'user-agent', EMPTY = '', UNKNOWN = '?', TYPEOF = {
+                FUNCTION: 'function',
+                OBJECT: 'object',
+                STRING: 'string',
+                UNDEFINED: 'undefined'
+            }, BROWSER = 'browser', CPU = 'cpu', DEVICE = 'device', ENGINE = 'engine', OS = 'os', RESULT = 'result', NAME = 'name', TYPE = 'type', VENDOR = 'vendor', VERSION = 'version', ARCHITECTURE = 'architecture', MAJOR = 'major', MODEL = 'model', CONSOLE = 'console', MOBILE = 'mobile', TABLET = 'tablet', SMARTTV = 'smarttv', WEARABLE = 'wearable', XR = 'xr', EMBEDDED = 'embedded', INAPP = 'inapp', BRANDS = 'brands', FORMFACTORS = 'formFactors', FULLVERLIST = 'fullVersionList', PLATFORM = 'platform', PLATFORMVER = 'platformVersion', BITNESS = 'bitness', CH = 'sec-ch-ua', CH_FULL_VER_LIST = CH + '-full-version-list', CH_ARCH = CH + '-arch', CH_BITNESS = CH + '-' + BITNESS, CH_FORM_FACTORS = CH + '-form-factors', CH_MOBILE = CH + '-' + MOBILE, CH_MODEL = CH + '-' + MODEL, CH_PLATFORM = CH + '-' + PLATFORM, CH_PLATFORM_VER = CH_PLATFORM + '-version', CH_ALL_VALUES = [
                 BRANDS,
                 FULLVERLIST,
                 MOBILE,
@@ -10663,7 +10686,7 @@
                 FORMFACTORS,
                 BITNESS
             ], AMAZON = 'Amazon', APPLE = 'Apple', ASUS = 'ASUS', BLACKBERRY = 'BlackBerry', GOOGLE = 'Google', HUAWEI = 'Huawei', LENOVO = 'Lenovo', HONOR = 'Honor', LG = 'LG', MICROSOFT = 'Microsoft', MOTOROLA = 'Motorola', NVIDIA = 'Nvidia', ONEPLUS = 'OnePlus', OPPO = 'OPPO', SAMSUNG = 'Samsung', SHARP = 'Sharp', SONY = 'Sony', XIAOMI = 'Xiaomi', ZEBRA = 'Zebra', CHROME = 'Chrome', CHROMIUM = 'Chromium', CHROMECAST = 'Chromecast', EDGE = 'Edge', FIREFOX = 'Firefox', OPERA = 'Opera', FACEBOOK = 'Facebook', SOGOU = 'Sogou', PREFIX_MOBILE = 'Mobile ', SUFFIX_BROWSER = ' Browser', WINDOWS = 'Windows';
-            var isWindow = typeof window !== UNDEF_TYPE, NAVIGATOR = isWindow && window.navigator ? window.navigator : void 0, NAVIGATOR_UADATA = NAVIGATOR && NAVIGATOR.userAgentData ? NAVIGATOR.userAgentData : void 0;
+            var isWindow = typeof window !== TYPEOF.UNDEFINED, NAVIGATOR = isWindow && window.navigator ? window.navigator : void 0, NAVIGATOR_UADATA = NAVIGATOR && NAVIGATOR.userAgentData ? NAVIGATOR.userAgentData : void 0;
             var extend = function(defaultRgx, extensions) {
                 var mergedRgx = {};
                 var extraRgx = extensions;
@@ -10678,7 +10701,7 @@
                 for(var i = 0; i < arr.length; i++)enums[arr[i].toUpperCase()] = arr[i];
                 return enums;
             }, has = function(str1, str2) {
-                if (typeof str1 === OBJ_TYPE && str1.length > 0) {
+                if (typeof str1 === TYPEOF.OBJECT && str1.length > 0) {
                     for(var i in str1)if (lowerize(str2) == lowerize(str1[i])) return true;
                     return false;
                 }
@@ -10686,7 +10709,7 @@
             }, isExtensions = function(obj, deep) {
                 for(var prop in obj)return /^(browser|cpu|device|engine|os)$/.test(prop) || (deep ? isExtensions(obj[prop]) : false);
             }, isString = function(val) {
-                return typeof val === STR_TYPE;
+                return typeof val === TYPEOF.STRING;
             }, itemListToArray = function(header) {
                 if (!header) return;
                 var arr = [];
@@ -10706,7 +10729,7 @@
             }, setProps = function(arr) {
                 for(var i in arr)if (arr.hasOwnProperty(i)) {
                     var propName = arr[i];
-                    if (typeof propName == OBJ_TYPE && 2 == propName.length) this[propName[0]] = propName[1];
+                    if (typeof propName == TYPEOF.OBJECT && 2 == propName.length) this[propName[0]] = propName[1];
                     else this[propName] = void 0;
                 }
                 return this;
@@ -10715,10 +10738,8 @@
             }, stripQuotes = function(str) {
                 return strip(/\\?\"/g, str);
             }, ua_parser_trim = function(str, len) {
-                if (isString(str)) {
-                    str = strip(/^\s\s*/, str);
-                    return typeof len === UNDEF_TYPE ? str : str.substring(0, UA_MAX_LENGTH);
-                }
+                str = strip(/^\s\s*/, String(str));
+                return typeof len === TYPEOF.UNDEFINED ? str : str.substring(0, len);
             };
             var rgxMapper = function(ua, arrays) {
                 if (!ua || !arrays) return;
@@ -10732,10 +10753,10 @@
                         if (!!matches) for(p = 0; p < props.length; p++){
                             match = matches[++k];
                             q = props[p];
-                            if (typeof q === OBJ_TYPE && q.length > 0) {
-                                if (2 === q.length) if (typeof q[1] == FUNC_TYPE) this[q[0]] = q[1].call(this, match);
+                            if (typeof q === TYPEOF.OBJECT && q.length > 0) {
+                                if (2 === q.length) if (typeof q[1] == TYPEOF.FUNCTION) this[q[0]] = q[1].call(this, match);
                                 else this[q[0]] = q[1];
-                                else if (q.length >= 3) if (typeof q[1] !== FUNC_TYPE || q[1].exec && q[1].test) {
+                                else if (q.length >= 3) if (typeof q[1] !== TYPEOF.FUNCTION || q[1].exec && q[1].test) {
                                     if (3 == q.length) this[q[0]] = match ? match.replace(q[1], q[2]) : void 0;
                                     else if (4 == q.length) this[q[0]] = match ? q[3].call(this, match.replace(q[1], q[2])) : void 0;
                                     else if (q.length > 4) this[q[0]] = match ? q[3].apply(this, [
@@ -10749,7 +10770,7 @@
                     i += 2;
                 }
             }, strMapper = function(str, map) {
-                for(var i in map)if (typeof map[i] === OBJ_TYPE && map[i].length > 0) {
+                for(var i in map)if (typeof map[i] === TYPEOF.OBJECT && map[i].length > 0) {
                     for(var j = 0; j < map[i].length; j++)if (has(map[i][j], str)) return i === UNKNOWN ? void 0 : i;
                 } else if (has(map[i], str)) return i === UNKNOWN ? void 0 : i;
                 return map.hasOwnProperty('*') ? map['*'] : str;
@@ -10900,8 +10921,9 @@
                         /(lunascape|maxthon|netfront|jasmine|blazer|sleipnir)[\/ ]?([\w\.]*)/i,
                         /(avant|iemobile|slim(?:browser|boat|jet))[\/ ]?([\d\.]*)/i,
                         /(?:ms|\()(ie) ([\w\.]+)/i,
-                        /(flock|rockmelt|midori|epiphany|silk|skyfire|ovibrowser|bolt|iron|vivaldi|iridium|phantomjs|bowser|qupzilla|falkon|rekonq|puffin|brave|whale(?!.+naver)|qqbrowserlite|duckduckgo|klar|helio|(?=comodo_)?dragon|otter|dooble|(?:lg |qute)browser)\/([-\w\.]+)/i,
-                        /(heytap|ovi|115|surf)browser\/([\d\.]+)/i,
+                        /(flock|rockmelt|midori|epiphany|silk|skyfire|ovibrowser|bolt|iron|vivaldi|iridium|phantomjs|bowser|qupzilla|falkon|rekonq|puffin|brave|whale(?!.+naver)|qqbrowserlite|duckduckgo|klar|helio|(?=comodo_)?dragon|otter|dooble|(?:lg |qute)browser|palemoon)\/([-\w\.]+)/i,
+                        /(heytap|ovi|115|surf|qwant)browser\/([\d\.]+)/i,
+                        /(qwant)(?:ios|mobile)\/([\d\.]+)/i,
                         /(ecosia|weibo)(?:__| \w+@)([\d\.]+)/i
                     ],
                     [
@@ -11178,6 +11200,7 @@
                         /\b(line)\/([\w\.]+)\/iab/i,
                         /(alipay)client\/([\w\.]+)/i,
                         /(twitter)(?:and| f.+e\/([\w\.]+))/i,
+                        /(bing)(?:web|sapphire)\/([\w\.]+)/i,
                         /(instagram|snapchat|klarna)[\/ ]([-\w\.]+)/i
                     ],
                     [
@@ -11389,9 +11412,9 @@
                         /ekiohf.+(flow)\/([\w\.]+)/i,
                         /(swiftfox)/i,
                         /(icedragon|iceweasel|camino|chimera|fennec|maemo browser|minimo|conkeror)[\/ ]?([\w\.\+]+)/i,
-                        /(seamonkey|k-meleon|icecat|iceape|firebird|phoenix|palemoon|basilisk|waterfox)\/([-\w\.]+)$/i,
+                        /(seamonkey|k-meleon|icecat|iceape|firebird|phoenix|basilisk|waterfox)\/([-\w\.]+)$/i,
                         /(firefox)\/([\w\.]+)/i,
-                        /(mozilla)\/([\w\.]+) .+rv\:.+gecko\/\d+/i,
+                        /(mozilla)\/([\w\.]+(?= .+rv\:.+gecko\/\d+)|[0-4][\w\.]+(?!.+compatible))/i,
                         /(amaya|dillo|doris|icab|ladybird|lynx|mosaic|netsurf|obigo|polaris|w3m|(?:go|ice|up)[\. ]?browser)[-\/ ]?v?([\w\.]+)/i,
                         /\b(links) \(([\w\.]+)/i
                     ],
@@ -11485,6 +11508,15 @@
                         ]
                     ],
                     [
+                        /mc680.0/i
+                    ],
+                    [
+                        [
+                            ARCHITECTURE,
+                            '68k'
+                        ]
+                    ],
+                    [
                         /winnt.+\[axp/i
                     ],
                     [
@@ -11526,7 +11558,7 @@
                         ]
                     ],
                     [
-                        /(?:\/|\()(ip(?:hone|od)[\w, ]*)(?:\/|;)/i
+                        /(?:\/|\()(ip(?:hone|od)[\w, ]*)[\/\);]/i
                     ],
                     [
                         MODEL,
@@ -11540,9 +11572,8 @@
                         ]
                     ],
                     [
-                        /\((ipad);[-\w\),; ]+apple/i,
-                        /applecoremedia\/[\w\.]+ \((ipad)/i,
-                        /\b(ipad)\d\d?,\d\d?[;\]].+ios/i
+                        /\b(?:ios|apple\w+)\/.+[\(\/](ipad)/i,
+                        /\b(ipad)[\d,]*[;\] ].+(mac |i(pad)?)os/i
                     ],
                     [
                         MODEL,
@@ -11622,8 +11653,8 @@
                         ]
                     ],
                     [
-                        /(?:huawei)([-\w ]+)[;\)]/i,
-                        /\b(nexus 6p|\w{2,4}e?-[atu]?[ln][\dx][012359c][adn]?)\b(?!.+d\/s)/i
+                        /(?:huawei) ?([-\w ]+)[;\)]/i,
+                        /\b(nexus 6p|\w{2,4}e?-[atu]?[ln][\dx][\dc][adnt]?)\b(?!.+d\/s)/i
                     ],
                     [
                         MODEL,
@@ -11638,7 +11669,7 @@
                     ],
                     [
                         /oid[^\)]+; (2[\dbc]{4}(182|283|rp\w{2})[cgl]|m2105k81a?c)(?: bui|\))/i,
-                        /\b((?:red)?mi[-_ ]?pad[\w- ]*)(?: bui|\))/i
+                        /\b(?:xiao)?((?:red)?mi[-_ ]?pad[\w- ]*)(?: bui|\))/i
                     ],
                     [
                         [
@@ -11661,7 +11692,7 @@
                         /\b(hm[-_ ]?note?[_ ]?(?:\d\w)?) bui/i,
                         /\b(redmi[\-_ ]?(?:note|k)?[\w_ ]+)(?: bui|\))/i,
                         /oid[^\)]+; (m?[12][0-389][01]\w{3,6}[c-y])( bui|; wv|\))/i,
-                        /\b(mi[-_ ]?(?:a\d|one|one[_ ]plus|note lte|max|cc)?[_ ]?(?:\d?\w?)[_ ]?(?:plus|se|lite|pro)?)(?: bui|\))/i,
+                        /\b(mi[-_ ]?(?:a\d|one|one[_ ]plus|note|max|cc)?[_ ]?(?:\d{0,2}\w?)[_ ]?(?:plus|se|lite|pro)?( 5g|lte)?)(?: bui|\))/i,
                         / ([\w ]+) miui\/v?\d/i
                     ],
                     [
@@ -11879,7 +11910,7 @@
                     ],
                     [
                         /(?:maemo|nokia).*(n900|lumia \d+|rm-\d+)/i,
-                        /nokia[-_ ]?(([-\w\. ]*))/i
+                        /nokia[-_ ]?(([-\w\. ]*?))( bui|\)|;|\/)/i
                     ],
                     [
                         [
@@ -12010,7 +12041,7 @@
                     ],
                     [
                         /\b((?:bb[a-f]|st[hv])100-\d)/i,
-                        /\(bb10; (\w+)/i
+                        /(?:blackberry|\(bb10;) (\w+)/i
                     ],
                     [
                         MODEL,
@@ -12291,10 +12322,11 @@
                     ],
                     [
                         /(blackberry|benq|palm(?=\-)|sonyericsson|acer|asus(?! zenw)|dell|jolla|meizu|motorola|polytron|tecno|micromax|advan)[-_ ]?([-\w]*)/i,
-                        /; (blu|hmd|imo|infinix|lava|oneplus|tcl)[_ ]([\w\+ ]+?)(?: bui|\)|; r)/i,
+                        /; (blu|hmd|imo|infinix|lava|oneplus|tcl|wiko)[_ ]([\w\+ ]+?)(?: bui|\)|; r)/i,
                         /(hp) ([\w ]+\w)/i,
                         /(microsoft); (lumia[\w ]+)/i,
                         /(oppo) ?([\w ]+) bui/i,
+                        /(hisense) ([ehv][\w ]+)\)/i,
                         /droid[^;]+; (philips)[_ ]([sv-x][\d]{3,4}[xz]?)/i
                     ],
                     [
@@ -12967,7 +12999,7 @@
                         ]
                     ],
                     [
-                        /droid .+?; ([^;]+?)(?: bui|; wv\)|\) applew).+?(mobile|vr|\d) safari/i
+                        /droid .+?; ([^;]+?)(?: bui|; wv\)|\) applew|; hmsc).+?(mobile|vr|\d) safari/i
                     ],
                     [
                         MODEL,
@@ -13117,7 +13149,7 @@
                     ],
                     [
                         /[adehimnop]{4,7}\b(?:.*os ([\w]+) like mac|; opera)/i,
-                        /(?:ios;fbsv\/|iphone.+ios[\/ ])([\d\.]+)/i,
+                        /(?:ios;fbsv|ios(?=.+ip(?:ad|hone))|ip(?:ad|hone)(?: |.+i(?:pad)?)os)[\/ ]([\w\.]+)/i,
                         /cfnetwork\/.+darwin/i
                     ],
                     [
@@ -13360,7 +13392,7 @@
                 };
                 setProps.call(props.init, [
                     [
-                        UA_BROWSER,
+                        BROWSER,
                         [
                             NAME,
                             VERSION,
@@ -13369,13 +13401,13 @@
                         ]
                     ],
                     [
-                        UA_CPU,
+                        CPU,
                         [
                             ARCHITECTURE
                         ]
                     ],
                     [
-                        UA_DEVICE,
+                        DEVICE,
                         [
                             TYPE,
                             MODEL,
@@ -13383,14 +13415,14 @@
                         ]
                     ],
                     [
-                        UA_ENGINE,
+                        ENGINE,
                         [
                             NAME,
                             VERSION
                         ]
                     ],
                     [
-                        UA_OS,
+                        OS,
                         [
                             NAME,
                             VERSION
@@ -13399,20 +13431,20 @@
                 ]);
                 setProps.call(props.isIgnore, [
                     [
-                        UA_BROWSER,
+                        BROWSER,
                         [
                             VERSION,
                             MAJOR
                         ]
                     ],
                     [
-                        UA_ENGINE,
+                        ENGINE,
                         [
                             VERSION
                         ]
                     ],
                     [
-                        UA_OS,
+                        OS,
                         [
                             VERSION
                         ]
@@ -13420,44 +13452,44 @@
                 ]);
                 setProps.call(props.isIgnoreRgx, [
                     [
-                        UA_BROWSER,
+                        BROWSER,
                         / ?browser$/i
                     ],
                     [
-                        UA_OS,
+                        OS,
                         / ?os$/i
                     ]
                 ]);
                 setProps.call(props.toString, [
                     [
-                        UA_BROWSER,
+                        BROWSER,
                         [
                             NAME,
                             VERSION
                         ]
                     ],
                     [
-                        UA_CPU,
+                        CPU,
                         [
                             ARCHITECTURE
                         ]
                     ],
                     [
-                        UA_DEVICE,
+                        DEVICE,
                         [
                             VENDOR,
                             MODEL
                         ]
                     ],
                     [
-                        UA_ENGINE,
+                        ENGINE,
                         [
                             NAME,
                             VERSION
                         ]
                     ],
                     [
-                        UA_OS,
+                        OS,
                         [
                             NAME,
                             VERSION
@@ -13483,13 +13515,13 @@
                 IData.prototype.withFeatureCheck = function() {
                     return item.detectFeature().get();
                 };
-                if (itemType != UA_RESULT) {
+                if (itemType != RESULT) {
                     IData.prototype.is = function(strToCheck) {
                         var is = false;
                         for(var i in this)if (this.hasOwnProperty(i) && !has(is_ignoreProps, i) && lowerize(is_ignoreRgx ? strip(is_ignoreRgx, this[i]) : this[i]) == lowerize(is_ignoreRgx ? strip(is_ignoreRgx, strToCheck) : strToCheck)) {
                             is = true;
-                            if (strToCheck != UNDEF_TYPE) break;
-                        } else if (strToCheck == UNDEF_TYPE && is) {
+                            if (strToCheck != TYPEOF.UNDEFINED) break;
+                        } else if (strToCheck == TYPEOF.UNDEFINED && is) {
                             is = !is;
                             break;
                         }
@@ -13497,8 +13529,8 @@
                     };
                     IData.prototype.toString = function() {
                         var str = EMPTY;
-                        for(var i in toString_props)if (typeof this[toString_props[i]] !== UNDEF_TYPE) str += (str ? ' ' : EMPTY) + this[toString_props[i]];
-                        return str || UNDEF_TYPE;
+                        for(var i in toString_props)if (typeof this[toString_props[i]] !== TYPEOF.UNDEFINED) str += (str ? ' ' : EMPTY) + this[toString_props[i]];
+                        return str || TYPEOF.UNDEFINED;
                     };
                 }
                 if (!NAVIGATOR_UADATA) IData.prototype.then = function(cb) {
@@ -13522,42 +13554,42 @@
                 if (isHttpUACH) setProps.call(this, [
                     [
                         BRANDS,
-                        itemListToArray(uach[CH_HEADER])
+                        itemListToArray(uach[CH])
                     ],
                     [
                         FULLVERLIST,
-                        itemListToArray(uach[CH_HEADER_FULL_VER_LIST])
+                        itemListToArray(uach[CH_FULL_VER_LIST])
                     ],
                     [
                         MOBILE,
-                        /\?1/.test(uach[CH_HEADER_MOBILE])
+                        /\?1/.test(uach[CH_MOBILE])
                     ],
                     [
                         MODEL,
-                        stripQuotes(uach[CH_HEADER_MODEL])
+                        stripQuotes(uach[CH_MODEL])
                     ],
                     [
                         PLATFORM,
-                        stripQuotes(uach[CH_HEADER_PLATFORM])
+                        stripQuotes(uach[CH_PLATFORM])
                     ],
                     [
                         PLATFORMVER,
-                        stripQuotes(uach[CH_HEADER_PLATFORM_VER])
+                        stripQuotes(uach[CH_PLATFORM_VER])
                     ],
                     [
                         ARCHITECTURE,
-                        stripQuotes(uach[CH_HEADER_ARCH])
+                        stripQuotes(uach[CH_ARCH])
                     ],
                     [
                         FORMFACTORS,
-                        itemListToArray(uach[CH_HEADER_FORM_FACTORS])
+                        itemListToArray(uach[CH_FORM_FACTORS])
                     ],
                     [
                         BITNESS,
-                        stripQuotes(uach[CH_HEADER_BITNESS])
+                        stripQuotes(uach[CH_BITNESS])
                     ]
                 ]);
-                else for(var prop in uach)if (this.hasOwnProperty(prop) && typeof uach[prop] !== UNDEF_TYPE) this[prop] = uach[prop];
+                else for(var prop in uach)if (this.hasOwnProperty(prop) && typeof uach[prop] !== TYPEOF.UNDEFINED) this[prop] = uach[prop];
             }
             function UAItem(itemType, ua, rgxMap, uaCH) {
                 this.get = function(prop) {
@@ -13574,55 +13606,65 @@
                 };
                 this.detectFeature = function() {
                     if (NAVIGATOR && NAVIGATOR.userAgent == this.ua) switch(this.itemType){
-                        case UA_BROWSER:
-                            if (NAVIGATOR.brave && typeof NAVIGATOR.brave.isBrave == FUNC_TYPE) this.set(NAME, 'Brave');
+                        case BROWSER:
+                            if (NAVIGATOR.brave && typeof NAVIGATOR.brave.isBrave == TYPEOF.FUNCTION) this.set(NAME, 'Brave');
                             break;
-                        case UA_DEVICE:
+                        case DEVICE:
                             if (!this.get(TYPE) && NAVIGATOR_UADATA && NAVIGATOR_UADATA[MOBILE]) this.set(TYPE, MOBILE);
-                            if ('Macintosh' == this.get(MODEL) && NAVIGATOR && typeof NAVIGATOR.standalone !== UNDEF_TYPE && NAVIGATOR.maxTouchPoints && NAVIGATOR.maxTouchPoints > 2) this.set(MODEL, 'iPad').set(TYPE, TABLET);
+                            if ('Macintosh' == this.get(MODEL) && NAVIGATOR && typeof NAVIGATOR.standalone !== TYPEOF.UNDEFINED && NAVIGATOR.maxTouchPoints && NAVIGATOR.maxTouchPoints > 2) this.set(MODEL, 'iPad').set(TYPE, TABLET);
                             break;
-                        case UA_OS:
+                        case OS:
                             if (!this.get(NAME) && NAVIGATOR_UADATA && NAVIGATOR_UADATA[PLATFORM]) this.set(NAME, NAVIGATOR_UADATA[PLATFORM]);
                             break;
-                        case UA_RESULT:
+                        case RESULT:
                             var data = this.data;
                             var detect = function(itemType) {
                                 return data[itemType].getItem().detectFeature().get();
                             };
-                            this.set(UA_BROWSER, detect(UA_BROWSER)).set(UA_CPU, detect(UA_CPU)).set(UA_DEVICE, detect(UA_DEVICE)).set(UA_ENGINE, detect(UA_ENGINE)).set(UA_OS, detect(UA_OS));
+                            this.set(BROWSER, detect(BROWSER)).set(CPU, detect(CPU)).set(DEVICE, detect(DEVICE)).set(ENGINE, detect(ENGINE)).set(OS, detect(OS));
                     }
                     return this;
                 };
                 this.parseUA = function() {
-                    if (this.itemType != UA_RESULT) rgxMapper.call(this.data, this.ua, this.rgxMap);
-                    if (this.itemType == UA_BROWSER) this.set(MAJOR, majorize(this.get(VERSION)));
+                    if (this.itemType != RESULT) rgxMapper.call(this.data, this.ua, this.rgxMap);
+                    switch(this.itemType){
+                        case BROWSER:
+                            this.set(MAJOR, majorize(this.get(VERSION)));
+                            break;
+                        case OS:
+                            if ('iOS' == this.get(NAME) && '18.6' == this.get(VERSION)) {
+                                var realVersion = /\) Version\/([\d\.]+)/.exec(this.ua);
+                                if (realVersion && parseInt(realVersion[1].substring(0, 2), 10) >= 26) this.set(VERSION, realVersion[1]);
+                            }
+                            break;
+                    }
                     return this;
                 };
                 this.parseCH = function() {
                     var uaCH = this.uaCH, rgxMap = this.rgxMap;
                     switch(this.itemType){
-                        case UA_BROWSER:
-                        case UA_ENGINE:
+                        case BROWSER:
+                        case ENGINE:
                             var brands = uaCH[FULLVERLIST] || uaCH[BRANDS], prevName;
                             if (brands) for(var i = 0; i < brands.length; i++){
                                 var brandName = brands[i].brand || brands[i], brandVersion = brands[i].version;
-                                if (this.itemType == UA_BROWSER && !/not.a.brand/i.test(brandName) && (!prevName || /Chrom/.test(prevName) && brandName != CHROMIUM || prevName == EDGE && /WebView2/.test(brandName))) {
+                                if (this.itemType == BROWSER && !/not.a.brand/i.test(brandName) && (!prevName || /Chrom/.test(prevName) && brandName != CHROMIUM || prevName == EDGE && /WebView2/.test(brandName))) {
                                     brandName = strMapper(brandName, browserHintsMap);
                                     prevName = this.get(NAME);
                                     if (!(prevName && !/Chrom/.test(prevName) && /Chrom/.test(brandName))) this.set(NAME, brandName).set(VERSION, brandVersion).set(MAJOR, majorize(brandVersion));
                                     prevName = brandName;
                                 }
-                                if (this.itemType == UA_ENGINE && brandName == CHROMIUM) this.set(VERSION, brandVersion);
+                                if (this.itemType == ENGINE && brandName == CHROMIUM) this.set(VERSION, brandVersion);
                             }
                             break;
-                        case UA_CPU:
+                        case CPU:
                             var archName = uaCH[ARCHITECTURE];
                             if (archName) {
                                 if (archName && '64' == uaCH[BITNESS]) archName += '64';
                                 rgxMapper.call(this.data, archName + ';', rgxMap);
                             }
                             break;
-                        case UA_DEVICE:
+                        case DEVICE:
                             if (uaCH[MOBILE]) this.set(TYPE, MOBILE);
                             if (uaCH[MODEL]) {
                                 this.set(MODEL, uaCH[MODEL]);
@@ -13642,7 +13684,7 @@
                                 this.set(TYPE, ff);
                             }
                             break;
-                        case UA_OS:
+                        case OS:
                             var osName = uaCH[PLATFORM];
                             if (osName) {
                                 var osVersion = uaCH[PLATFORMVER];
@@ -13651,12 +13693,12 @@
                             }
                             if (this.get(NAME) == WINDOWS && 'Xbox' == uaCH[MODEL]) this.set(NAME, 'Xbox').set(VERSION, void 0);
                             break;
-                        case UA_RESULT:
+                        case RESULT:
                             var data = this.data;
                             var parse = function(itemType) {
                                 return data[itemType].getItem().setCH(uaCH).parseCH().get();
                             };
-                            this.set(UA_BROWSER, parse(UA_BROWSER)).set(UA_CPU, parse(UA_CPU)).set(UA_DEVICE, parse(UA_DEVICE)).set(UA_ENGINE, parse(UA_ENGINE)).set(UA_OS, parse(UA_OS));
+                            this.set(BROWSER, parse(BROWSER)).set(CPU, parse(CPU)).set(DEVICE, parse(DEVICE)).set(ENGINE, parse(ENGINE)).set(OS, parse(OS));
                     }
                     return this;
                 };
@@ -13685,20 +13727,20 @@
                 return this;
             }
             function UAParser(ua, extensions, headers) {
-                if (typeof ua === OBJ_TYPE) {
+                if (typeof ua === TYPEOF.OBJECT) {
                     if (isExtensions(ua, true)) {
-                        if (typeof extensions === OBJ_TYPE) headers = extensions;
+                        if (typeof extensions === TYPEOF.OBJECT) headers = extensions;
                         extensions = ua;
                     } else {
                         headers = ua;
                         extensions = void 0;
                     }
                     ua = void 0;
-                } else if (typeof ua === STR_TYPE && !isExtensions(extensions, true)) {
+                } else if (typeof ua === TYPEOF.STRING && !isExtensions(extensions, true)) {
                     headers = extensions;
                     extensions = void 0;
                 }
-                if (headers) if (typeof headers.append === FUNC_TYPE) {
+                if (headers) if (typeof headers.append === TYPEOF.FUNCTION) {
                     var kv = {};
                     headers.forEach(function(v, k) {
                         kv[String(k).toLowerCase()] = v;
@@ -13710,9 +13752,9 @@
                     headers = normalized;
                 }
                 if (!(this instanceof UAParser)) return new UAParser(ua, extensions, headers).getResult();
-                var userAgent = typeof ua === STR_TYPE ? ua : headers && headers[USER_AGENT] ? headers[USER_AGENT] : NAVIGATOR && NAVIGATOR.userAgent ? NAVIGATOR.userAgent : EMPTY, httpUACH = new UACHData(headers, true), regexMap = extensions ? extend(defaultRegexes, extensions) : defaultRegexes, createItemFunc = function(itemType) {
-                    if (itemType == UA_RESULT) return function() {
-                        return new UAItem(itemType, userAgent, regexMap, httpUACH).set('ua', userAgent).set(UA_BROWSER, this.getBrowser()).set(UA_CPU, this.getCPU()).set(UA_DEVICE, this.getDevice()).set(UA_ENGINE, this.getEngine()).set(UA_OS, this.getOS()).get();
+                var userAgent = typeof ua === TYPEOF.STRING ? ua : headers && headers[USER_AGENT] ? headers[USER_AGENT] : NAVIGATOR && NAVIGATOR.userAgent ? NAVIGATOR.userAgent : EMPTY, httpUACH = new UACHData(headers, true), regexMap = extensions ? extend(defaultRegexes, extensions) : defaultRegexes, createItemFunc = function(itemType) {
+                    if (itemType == RESULT) return function() {
+                        return new UAItem(itemType, userAgent, regexMap, httpUACH).set('ua', userAgent).set(BROWSER, this.getBrowser()).set(CPU, this.getCPU()).set(DEVICE, this.getDevice()).set(ENGINE, this.getEngine()).set(OS, this.getOS()).get();
                     };
                     return function() {
                         return new UAItem(itemType, userAgent, regexMap[itemType], httpUACH).parseUA().get();
@@ -13721,27 +13763,27 @@
                 setProps.call(this, [
                     [
                         'getBrowser',
-                        createItemFunc(UA_BROWSER)
+                        createItemFunc(BROWSER)
                     ],
                     [
                         'getCPU',
-                        createItemFunc(UA_CPU)
+                        createItemFunc(CPU)
                     ],
                     [
                         'getDevice',
-                        createItemFunc(UA_DEVICE)
+                        createItemFunc(DEVICE)
                     ],
                     [
                         'getEngine',
-                        createItemFunc(UA_ENGINE)
+                        createItemFunc(ENGINE)
                     ],
                     [
                         'getOS',
-                        createItemFunc(UA_OS)
+                        createItemFunc(OS)
                     ],
                     [
                         'getResult',
-                        createItemFunc(UA_RESULT)
+                        createItemFunc(RESULT)
                     ],
                     [
                         'getUA',
@@ -13752,7 +13794,7 @@
                     [
                         'setUA',
                         function(ua) {
-                            if (isString(ua)) userAgent = ua.length > UA_MAX_LENGTH ? ua_parser_trim(ua, UA_MAX_LENGTH) : ua;
+                            if (isString(ua)) userAgent = ua_parser_trim(ua, UA_MAX_LENGTH);
                             return this;
                         }
                     ]
@@ -13960,7 +14002,7 @@
                         screen.width,
                         screen.height,
                         screen.colorDepth
-                    ].join("\xd7");
+                    ].join("×");
                     if (screen.orientation) this.orientation = screen.orientation.type;
                     this.err = errData?.err;
                     const stackTarget = errData?.cause ?? errData?.err;
@@ -14829,6 +14871,7 @@
                 displayErrors: true,
                 adjustFormOnBrowserError: true,
                 reportErrors: true,
+                disableFormWhenSubmitting: true,
                 fakeUaString: void 0,
                 versions: {
                     videomailNinjaFormPlugin: void 0
@@ -14892,19 +14935,19 @@
                 return newOptions;
             }
             const mergeWithDefaultOptions = mergeWithDefaultOptions_mergeWithDefaultOptions;
-            var injectStylesIntoStyleTag = __webpack_require__("./node_modules/@rslib/core/node_modules/@rsbuild/core/compiled/style-loader/runtime/injectStylesIntoStyleTag.js");
+            var injectStylesIntoStyleTag = __webpack_require__("./node_modules/@rsbuild/core/compiled/style-loader/runtime/injectStylesIntoStyleTag.js");
             var injectStylesIntoStyleTag_default = /*#__PURE__*/ __webpack_require__.n(injectStylesIntoStyleTag);
-            var styleDomAPI = __webpack_require__("./node_modules/@rslib/core/node_modules/@rsbuild/core/compiled/style-loader/runtime/styleDomAPI.js");
+            var styleDomAPI = __webpack_require__("./node_modules/@rsbuild/core/compiled/style-loader/runtime/styleDomAPI.js");
             var styleDomAPI_default = /*#__PURE__*/ __webpack_require__.n(styleDomAPI);
-            var insertBySelector = __webpack_require__("./node_modules/@rslib/core/node_modules/@rsbuild/core/compiled/style-loader/runtime/insertBySelector.js");
+            var insertBySelector = __webpack_require__("./node_modules/@rsbuild/core/compiled/style-loader/runtime/insertBySelector.js");
             var insertBySelector_default = /*#__PURE__*/ __webpack_require__.n(insertBySelector);
-            var setAttributesWithoutAttributes = __webpack_require__("./node_modules/@rslib/core/node_modules/@rsbuild/core/compiled/style-loader/runtime/setAttributesWithoutAttributes.js");
+            var setAttributesWithoutAttributes = __webpack_require__("./node_modules/@rsbuild/core/compiled/style-loader/runtime/setAttributesWithoutAttributes.js");
             var setAttributesWithoutAttributes_default = /*#__PURE__*/ __webpack_require__.n(setAttributesWithoutAttributes);
-            var insertStyleElement = __webpack_require__("./node_modules/@rslib/core/node_modules/@rsbuild/core/compiled/style-loader/runtime/insertStyleElement.js");
+            var insertStyleElement = __webpack_require__("./node_modules/@rsbuild/core/compiled/style-loader/runtime/insertStyleElement.js");
             var insertStyleElement_default = /*#__PURE__*/ __webpack_require__.n(insertStyleElement);
-            var styleTagTransform = __webpack_require__("./node_modules/@rslib/core/node_modules/@rsbuild/core/compiled/style-loader/runtime/styleTagTransform.js");
+            var styleTagTransform = __webpack_require__("./node_modules/@rsbuild/core/compiled/style-loader/runtime/styleTagTransform.js");
             var styleTagTransform_default = /*#__PURE__*/ __webpack_require__.n(styleTagTransform);
-            var main = __webpack_require__("./node_modules/@rslib/core/node_modules/@rsbuild/core/compiled/css-loader/index.js??ruleSet[1].rules[12].use[1]!builtin:lightningcss-loader??ruleSet[1].rules[12].use[2]!./node_modules/stylus-loader/dist/cjs.js??ruleSet[1].rules[12].use[3]!./src/styles/main.styl");
+            var main = __webpack_require__("./node_modules/@rsbuild/core/compiled/css-loader/index.js??ruleSet[1].rules[12].use[1]!builtin:lightningcss-loader??ruleSet[1].rules[12].use[2]!./node_modules/stylus-loader/dist/cjs.js??ruleSet[1].rules[12].use[3]!./src/styles/main.styl");
             var main_options = {};
             main_options.styleTagTransform = styleTagTransform_default();
             main_options.setAttributes = setAttributesWithoutAttributes_default();
@@ -15463,7 +15506,7 @@
                     else {
                         this.facingModeElement = document.createElement("button");
                         this.facingModeElement.classList.add("facingMode");
-                        this.facingModeElement.innerHTML = "\u293E";
+                        this.facingModeElement.innerHTML = "⤾";
                         this.facingModeElement.onclick = (e)=>{
                             e?.preventDefault();
                             try {
@@ -15810,17 +15853,17 @@
                         this.options.logger.debug("Limit reached");
                         lead += `${this.options.text.limitReached}.<br/>`;
                     }
-                    lead += `${this.options.text.sending} \u{2026}`;
+                    lead += `${this.options.text.sending} …`;
                     this.notify(lead, void 0, {
                         stillWait: true,
                         entertain: this.options.notifier.entertain
                     });
                 }
                 onConnecting() {
-                    this.notify("Connecting \u2026");
+                    this.notify("Connecting …");
                 }
                 onLoadingUserMedia() {
-                    this.notify("Loading webcam \u2026");
+                    this.notify("Loading webcam …");
                 }
                 onProgress(frameProgress, sampleProgress) {
                     let overallProgress;
@@ -15832,7 +15875,7 @@
                 }
                 onBeginVideoEncoding() {
                     this.visuals.beginWaiting();
-                    const lead = `${this.options.text.encoding} \u{2026}`;
+                    const lead = `${this.options.text.encoding} …`;
                     this.notify(lead, void 0, {
                         stillWait: true,
                         entertain: this.options.notifier.entertain
@@ -15864,7 +15907,7 @@
                         this.onBeginVideoEncoding();
                     });
                     this.on("UNLOADING", ()=>{
-                        this.notify("Unloading \u2026");
+                        this.notify("Unloading …");
                     });
                     this.on("DISCONNECTED", ()=>{
                         this.notify("Disconnected");
@@ -16261,7 +16304,7 @@
                 "volumechange"
             ];
             const mediaEvents = MEDIA_EVENTS;
-            const EVENT_ASCII = "|\u2014O\u2014|";
+            const EVENT_ASCII = "|—O—|";
             class UserMedia extends util_Despot {
                 recorder;
                 rawVisualUserMedia;
@@ -16551,7 +16594,7 @@
             }
             const visuals_userMedia = UserMedia;
             var Buffer = __webpack_require__("./node_modules/buffer/index.js")["Buffer"];
-            const PIPE_SYMBOL = "\xb0\xba\xa4\xf8,\xb8\xb8,\xf8\xa4\xba\xb0`\xb0\xba\xa4\xf8,\xb8,\xf8\xa4\xb0\xba\xa4\xf8,\xb8\xb8,\xf8\xa4\xba\xb0`\xb0\xba\xa4\xf8,\xb8 ";
+            const PIPE_SYMBOL = "°º¤ø,¸¸,ø¤º°`°º¤ø,¸,ø¤°º¤ø,¸¸,ø¤º°`°º¤ø,¸ ";
             class Recorder extends util_Despot {
                 visuals;
                 replay;
@@ -16734,11 +16777,13 @@
                     this.hide();
                     const width = this.getRecorderWidth(true);
                     const height = this.getRecorderHeight(true);
+                    const duration = args.duration ?? -1;
                     this.emit("PREVIEW", {
                         key: this.key,
                         width,
                         height,
-                        hasAudio
+                        hasAudio,
+                        duration
                     });
                     if (this.stopTime) this.waitingTime = Date.now() - this.stopTime;
                     this.recordingStats ??= {};
@@ -17051,7 +17096,7 @@
                             }, 0);
                         }
                     } else {
-                        this.options.logger.debug(`Reconnecting for the command ${command} \u{2026}`);
+                        this.options.logger.debug(`Reconnecting for the command ${command} …`);
                         this.initSocket(()=>{
                             this.writeCommand(command, args);
                             cb?.();
@@ -17839,7 +17884,7 @@
                     this.visualsElement?.appendChild(child);
                 }
                 removeChild(child) {
-                    this.visualsElement?.removeChild(child);
+                    child.remove();
                 }
                 reset() {
                     this.endWaiting();
@@ -18331,7 +18376,7 @@
                                 const name = invalidInput.getAttribute("name");
                                 valid = false;
                                 if (name) {
-                                    whyInvalid = `Input "${name}" seems wrong \u{1F914}`;
+                                    whyInvalid = `Input "${name}" seems wrong 🤔`;
                                     invalidData = {
                                         [name]: invalidInput.getAttribute("value")
                                     };
@@ -18339,7 +18384,7 @@
                             } else if (!this.areVisualsHidden() && !visualsValid) {
                                 if (this.buttonsAreReady() || this.isRecording() || this.isPaused() || this.isCountingDown()) {
                                     valid = false;
-                                    whyInvalid = "Don't forget to record a video \uD83D\uDE09";
+                                    whyInvalid = "Don't forget to record a video 😉";
                                     invalidData = {
                                         key: void 0
                                     };
@@ -18407,7 +18452,7 @@
                         ].filter(Boolean).join(": ");
                         this.options.logger.debug(`Container: submitAll(${output})`);
                         this.beginWaiting();
-                        this.disableForm(true);
+                        if (this.options.disableFormWhenSubmitting) this.disableForm(true);
                         this.emit("SUBMITTING");
                         if (hasVideomailKey) {
                             response = await this.submitVideomail(formData, method);

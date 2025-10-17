@@ -1,5 +1,5 @@
 // Remember, you can't use any import/require statements here
-const PLUGIN_VERSION = "8.2.0";
+const PLUGIN_VERSION = "8.3.0";
 
 // manual switch to have more stuff printed to console
 let DEBUG = false;
@@ -100,12 +100,14 @@ const VideomailFieldController = Marionette.Object.extend({
       },
       selectors: { containerId: "videomail", submitButtonSelector: ".submit-wrap input" },
       callbacks: {
-        // ugly name eh?
         adjustFormDataBeforePosting:
           this.adjustFormDataBeforePostingToVideomailServer.bind(this),
       },
+
       // when true, user media is loaded only when record button is pressed
       loadUserMediaOnRecord: this.fieldModel.get("load_user_media_on_record"),
+
+      disableFormWhenSubmitting: this.fieldModel.get("disable_form_when_submitting"),
 
       // leave it to ninja form to validate the inputs
       enableAutoValidation: false,
