@@ -141,7 +141,7 @@ return apply_filters('ninja_forms_videomail_field_settings', array(
     'group' => 'advanced',
     'value' => false,
     'help' => __('With this option enabled, the user will not be asked for camera permissions unless the record button is clicked. When disabled (default), permissions are being asked on page load which is preferred. This option is only for when the there is a conflict with the application when already many other events occur on page load.', 'videomail-for-ninja-forms')
-  )
+  ),
 
   'disable_form_when_submitting' => array(
     'name' => 'disable_form_when_submitting',
