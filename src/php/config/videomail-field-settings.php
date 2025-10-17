@@ -18,7 +18,7 @@ return apply_filters('ninja_forms_videomail_field_settings', array(
     'label' => __('Enable Audio (in Beta)', 'videomail-for-ninja-forms'),
     'width' => 'one-half',
     'group' => 'primary',
-    'value' => TRUE,
+    'value' => true,
     'help' => __('The audio feature is in beta and needs feedback for improvement. Otherwise leave it disabled and stick to Sign Language, grins')
   ),
 
@@ -40,7 +40,7 @@ return apply_filters('ninja_forms_videomail_field_settings', array(
     'placeholder' => __('Email address or search for a field', 'videomail-for-ninja-forms'),
     'value' => '',
     'width' => 'full',
-    'use_merge_tags' => TRUE
+    'use_merge_tags' => true
   ),
 
   'email_to' => array(
@@ -51,7 +51,7 @@ return apply_filters('ninja_forms_videomail_field_settings', array(
     'placeholder' => __('Email address or search for a field', 'videomail-for-ninja-forms'),
     'value' => '',
     'width' => 'full',
-    'use_merge_tags' => TRUE
+    'use_merge_tags' => true
   ),
 
   'email_subject' => array(
@@ -62,7 +62,7 @@ return apply_filters('ninja_forms_videomail_field_settings', array(
     'placeholder' => __('Subject Text or search for a field', 'videomail-for-ninja-forms'),
     'value' => '',
     'width' => 'full',
-    'use_merge_tags' => TRUE
+    'use_merge_tags' => true
   ),
 
   'email_body' => array(
@@ -73,7 +73,7 @@ return apply_filters('ninja_forms_videomail_field_settings', array(
     'placeholder' => __('Body Text or search for a field', 'videomail-for-ninja-forms'),
     'value' => '',
     'width' => 'full',
-    'use_merge_tags' => TRUE
+    'use_merge_tags' => true
   ),
 
   'limit_seconds' => array(
@@ -119,7 +119,7 @@ return apply_filters('ninja_forms_videomail_field_settings', array(
     'label' => __('Stretch', 'videomail-for-ninja-forms'),
     'width' => 'one-half',
     'group' => 'display',
-    'value' => FALSE,
+    'value' => false,
     'help' => __('Stretch video to full width of the parent container.', 'videomail-for-ninja-forms')
   ),
 
@@ -129,7 +129,7 @@ return apply_filters('ninja_forms_videomail_field_settings', array(
     'label' => __('Debug Mode', 'videomail-for-ninja-forms'),
     'width' => 'one-half',
     'group' => 'advanced',
-    'value' => FALSE,
+    'value' => false,
     'help' => __('Show verbose comments in the developer console.', 'videomail-for-ninja-forms')
   ),
 
@@ -139,7 +139,17 @@ return apply_filters('ninja_forms_videomail_field_settings', array(
     'label' => __('Ask for camera permission on record (fallback, not recommended)', 'videomail-for-ninja-forms'),
     'width' => 'one-half',
     'group' => 'advanced',
-    'value' => FALSE,
+    'value' => false,
     'help' => __('With this option enabled, the user will not be asked for camera permissions unless the record button is clicked. When disabled (default), permissions are being asked on page load which is preferred. This option is only for when the there is a conflict with the application when already many other events occur on page load.', 'videomail-for-ninja-forms')
+  )
+
+  'disable_form_when_submitting' => array(
+    'name' => 'disable_form_when_submitting',
+    'type' => 'toggle',
+    'label' => __('Disable form inputs once submitted', 'videomail-for-ninja-forms'),
+    'width' => 'one-half',
+    'group' => 'advanced',
+    'value' => false,
+    'help' => __('With this option enabled, all form inputs become disabled once submitted and cannot be changed which the ideal during any submissions. Unfortunately WordPress plugins can overlap with each other the submit button, hence it is disabled by default. Only enable if you are sure and have fully tested it.', 'videomail-for-ninja-forms')
   )
 ));

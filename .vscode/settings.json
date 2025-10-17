@@ -2,21 +2,5 @@
   "editor.tabSize": 2,
   "files.trimTrailingWhitespace": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "prettier.configPath": "./prettier.config.cjs",
-  "cSpell.words": [
-    "ABSPATH",
-    "apachectl",
-    "autoloader",
-    "binarykitchen",
-    "bytediff",
-    "corejs",
-    "cssnano",
-    "gulpfile",
-    "kbjohnson",
-    "litespeed",
-    "Metaboxes",
-    "softprops",
-    "styl",
-    "Videomail"
-  ]
+  "prettier.configPath": "./prettier.config.cjs"
 }
