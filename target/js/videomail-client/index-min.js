@@ -10502,9 +10502,13 @@
             "use strict";
             __webpack_require__.r(__webpack_exports__);
             __webpack_require__.d(__webpack_exports__, {
-                VideomailClient: ()=>src_client,
+                VideomailClient: ()=>VideomailClient,
                 VideoType: ()=>VideoType
             });
+            const VideoType = {
+                WebM: "webm",
+                MP4: "mp4"
+            };
             const constants = {
                 SITE_NAME_LABEL: "x-videomail-site-name",
                 VERSION_LABEL: "videomailClientVersion",
@@ -10666,7 +10670,7 @@
             var client = __webpack_require__("./node_modules/superagent/lib/client.js");
             var client_default = /*#__PURE__*/ __webpack_require__.n(client);
             var package_namespaceObject = {
-                rE: "11.5.2"
+                rE: "13.0.0"
             };
             var defined = __webpack_require__("./node_modules/defined/index.js");
             var defined_default = /*#__PURE__*/ __webpack_require__.n(defined);
@@ -13826,10 +13830,6 @@
                 NAME,
                 VERSION
             ]);
-            const VideoType = {
-                WebM: "webm",
-                MP4: "mp4"
-            };
             function canPlayType_canPlayType(video, type) {
                 const canPlayType = video.canPlayType(`video/${type}`);
                 if ("" === canPlayType) return false;
@@ -13879,7 +13879,7 @@
                 isOkSafari() {
                     const version = this.getBrowserVersion();
                     if (!version) return false;
-                    return this.isSafari() && parseFloat(version) >= 11;
+                    return this.isSafari() && Number.parseFloat(version) >= 11;
                 }
                 getVideoType(video) {
                     if (!this.videoType) {
@@ -14553,7 +14553,7 @@
                         this.options.logger.debug(`Form: doTheSubmit(${util_pretty(e)})`);
                         e.preventDefault();
                     } else this.options.logger.debug("Form: doTheSubmit()");
-                    const url = this.formElement.getAttribute("action") ?? this.options.baseUrl;
+                    const url = this.formElement.getAttribute("action") ?? this.options.apiUrl;
                     const method = this.formElement.getAttribute("method");
                     let chosenMethod;
                     switch(method){
@@ -14632,7 +14632,7 @@
                     return newVideomail;
                 }
                 async get(identifierName, identifierValue) {
-                    const url = `${this.options.baseUrl}/videomail/${identifierName}/${identifierValue}/snapshot`;
+                    const url = `${this.options.apiUrl}/videomail/${identifierName}/${identifierValue}/snapshot`;
                     try {
                         const request = await client_default()("get", url).type("json").set("Accept", "application/json").withCredentials().set("Timezone-Id", this.timezoneId).set(constants.SITE_NAME_LABEL, this.options.siteName).timeout(this.options.timeouts.connection);
                         const videomail = request.body;
@@ -14648,7 +14648,7 @@
                     const queryParams = {
                         [constants.SITE_NAME_LABEL]: this.options.siteName
                     };
-                    let url = `${this.options.baseUrl}/videomail/`;
+                    let url = `${this.options.apiUrl}/videomail/`;
                     if (method === FormMethod.PUT && videomail.key) url += videomail.key;
                     try {
                         const request = await client_default()(method, url).query(queryParams).set("Timezone-Id", this.timezoneId).withCredentials().send(videomail).timeout(this.options.timeouts.connection);
@@ -14670,7 +14670,7 @@
                     const queryParams = {
                         [constants.SITE_NAME_LABEL]: this.options.siteName
                     };
-                    const url = `${this.options.baseUrl}/client-error/`;
+                    const url = `${this.options.apiUrl}/client-error/`;
                     try {
                         const fullVideomailErrorData = {
                             browser: err.browser,
@@ -14767,7 +14767,7 @@
                 logger: console,
                 logStackSize: 30,
                 verbose: !PRODUCTION,
-                baseUrl: "https://videomail.io",
+                apiUrl: "https://videomail.io/api",
                 socketUrl: "wss://videomail.io",
                 siteName: "videomail-client-demo",
                 enablePause: true,
@@ -15449,7 +15449,7 @@
                 }
                 start(cb) {
                     if (!this.countdownElement) throw new Error("Unable to start countdown without an element");
-                    if ("number" != typeof this.options.video.countdown) throw new Error(`The defined countdown is not a valid number: ${this.options.video.countdown}`);
+                    if ("number" != typeof this.options.video.countdown) throw new TypeError(`The defined countdown is not a valid number: ${this.options.video.countdown}`);
                     this.countdown = this.options.video.countdown;
                     this.countdownElement.innerHTML = this.countdown.toString();
                     this.show();
@@ -17704,7 +17704,7 @@
                     const tracks = this.replayElement.getElementsByTagName("track");
                     const firstTrack = tracks[0];
                     if (firstTrack) if (src) firstTrack.setAttribute("src", src);
-                    else this.replayElement.removeChild(firstTrack);
+                    else firstTrack.remove();
                     else {
                         const track = document.createElement("track");
                         track.setAttribute("src", src);
@@ -17721,7 +17721,7 @@
                     let url = src;
                     if (url && bustCache) url += `?${Date.now()}`;
                     if (source) if (src) source.setAttribute("src", src);
-                    else this.replayElement.removeChild(source);
+                    else source.remove();
                     else if (src) {
                         const { fps } = this.options.video;
                         const t = 1 / fps * 2;
@@ -18629,7 +18629,6 @@
                     if (this.options.logger.getLines) return this.options.logger.getLines();
                 }
             }
-            const src_client = VideomailClient;
         })();
         return __webpack_exports__;
     })());
