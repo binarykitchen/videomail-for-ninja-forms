@@ -5,7 +5,7 @@ Tags: video, email, recorder, sign language
 
 Requires at least: 6.0
 Tested up to: 6.8.2
-Stable tag: 8.3.1
+Stable tag: 9.0.0
 Requires PHP: 8.1.0
 Donate link: https://videomail.io/faq
 License: CC0-1.0
@@ -70,13 +70,17 @@ To get help, just use any of these contacts at [https://binarykitchen.com](https
 2. Once you have assembled a form and preview it, any browser will ask for webcam access first.
 
 == Changelog ==
+= 9.0.0 (21 Oct 2025) =
+**Change:**
+* Breaking change: switch to new Videomail API endpoint.
+
 = 8.3.1 (17 Oct 2025) =
 **Fix**
 * Adds one missing comma :)
 
 = 8.3.0 (17 Oct 2025) =
 **Improvement**
-* Adds new advanced option "disableFormWhenSubmitting" to increase security during form submissions
+* Adds new advanced option "disableFormWhenSubmitting" to increase security during form submissions.
 
 **Change:**
 * Defaults that new option "disableFormWhenSubmitting" to false, because plugins overlap with each other.
