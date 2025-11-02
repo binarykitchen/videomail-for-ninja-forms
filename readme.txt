@@ -1,18 +1,17 @@
 === Videomail for Ninja Forms ===
-
 Contributors: michael.heuberger, kbjohnson90
 Tags: video, email, recorder, sign language
-
 Requires at least: 6.0
 Tested up to: 6.8.2
-Stable tag: 9.0.0
+Stable tag: 9.0.1
 Requires PHP: 8.1.0
 Donate link: https://videomail.io/faq
 License: CC0-1.0
 
-Record videos in Ninja Forms!
+Record videos with audio or in Sign Language with Ninja Forms!
 
 == Description ==
+
 With this add-on recording and sending videos in WordPress *finally* comes true. No further coding required. Just install + configure a bit (like duration, width or enable audio etc) and that’s all. Wicked.
 
 * Record from webcam, simple
@@ -70,6 +69,20 @@ To get help, just use any of these contacts at [https://binarykitchen.com](https
 2. Once you have assembled a form and preview it, any browser will ask for webcam access first.
 
 == Changelog ==
+
+= 9.0.1 (2 Nov 2025) =
+**Improvement**
+* More user friendlier error messages for missing inputs
+
+**Change:**
+* Include recording location which will assist investigating technical issues
+
+**Fix**
+* Rename wrong option name from ninjaFormPlugin to videomailNinjaFormPlugin
+
+**Chore**
+* Upgrade VC dependency
+
 = 9.0.0 (21 Oct 2025) =
 **Change:**
 * Breaking change: switch to new Videomail API endpoint.
