@@ -5,7 +5,7 @@
     else root["VideomailClient"] = factory();
 })(globalThis, ()=>(()=>{
         var __webpack_modules__ = {
-            "./node_modules/@rsbuild/core/compiled/css-loader/index.js??ruleSet[1].rules[12].use[1]!builtin:lightningcss-loader??ruleSet[1].rules[12].use[2]!./node_modules/stylus-loader/dist/cjs.js??ruleSet[1].rules[12].use[3]!./src/styles/main.styl": function(module1, __webpack_exports__, __webpack_require__) {
+            "./node_modules/@rsbuild/core/compiled/css-loader/index.js??ruleSet[1].rules[13].use[1]!builtin:lightningcss-loader??ruleSet[1].rules[13].use[2]!./node_modules/stylus-loader/dist/cjs.js??ruleSet[1].rules[13].use[3]!./src/styles/main.styl": function(module1, __webpack_exports__, __webpack_require__) {
                 "use strict";
                 __webpack_require__.d(__webpack_exports__, {
                     A: ()=>__WEBPACK_DEFAULT_EXPORT__
@@ -10670,7 +10670,7 @@
             var client = __webpack_require__("./node_modules/superagent/lib/client.js");
             var client_default = /*#__PURE__*/ __webpack_require__.n(client);
             var package_namespaceObject = {
-                rE: "13.0.0"
+                rE: "13.2.0"
             };
             var defined = __webpack_require__("./node_modules/defined/index.js");
             var defined_default = /*#__PURE__*/ __webpack_require__.n(defined);
@@ -13947,13 +13947,13 @@
                 return inspect(anything);
             }
             const util_pretty = pretty;
-            class HTTPVideomailError_HTTPVideomailError extends Error {
+            class HTTPVideomailError extends Error {
                 code;
                 status;
                 explanation;
             }
-            const HTTPVideomailError = HTTPVideomailError_HTTPVideomailError;
-            class VideomailError extends HTTPVideomailError {
+            const error_HTTPVideomailError = HTTPVideomailError;
+            class VideomailError extends error_HTTPVideomailError {
                 title = "Error from videomail-client npm package";
                 location = window.location.href;
                 logLines;
@@ -14316,6 +14316,11 @@
                 }
             }
             const util_Despot = Despot;
+            function getValidity(element) {
+                const validity = "validity" in element ? element.validity : void 0;
+                return validity;
+            }
+            const util_getValidity = getValidity;
             function hideElement(element) {
                 if (!element) return;
                 element.style.setProperty("display", "none", "important");
@@ -14405,8 +14410,9 @@
                     for (const formControl of this.formElement.elements){
                         const name = formControl.getAttribute("name");
                         if (name) {
-                            const value = videomail[name];
+                            let value = videomail[name];
                             const tagName = formControl.tagName;
+                            if (this.options.callbacks.adjustFormValueBeforePopulating) value = this.options.callbacks.adjustFormValueBeforePopulating(name, value, videomail);
                             switch(tagName){
                                 case "INPUT":
                                     {
@@ -14572,7 +14578,7 @@
                 getInvalidElement() {
                     const elements = this.getRegisteredFormElements();
                     for (const element of elements){
-                        const validity = "validity" in element ? element.validity : void 0;
+                        const validity = util_getValidity(element);
                         if (!validity?.valid) return element;
                     }
                     return null;
@@ -14595,7 +14601,7 @@
                     if ("error" in body) {
                         const message = body.error.message;
                         const cause = body.error.cause;
-                        const error = new HTTPVideomailError(message, {
+                        const error = new error_HTTPVideomailError(message, {
                             cause
                         });
                         if (body.error.name) error.name = body.error.name;
@@ -14704,6 +14710,7 @@
                 async post(videomail) {
                     const newVideomail = this.applyDefaultValues(videomail);
                     newVideomail[constants.VERSION_LABEL] = package_namespaceObject.rE;
+                    newVideomail.recordLocation = window.location.href;
                     try {
                         let res;
                         if (this.options.callbacks.adjustFormDataBeforePosting) {
@@ -14858,7 +14865,8 @@
                 },
                 loadUserMediaOnRecord: false,
                 callbacks: {
-                    adjustFormDataBeforePosting: void 0
+                    adjustFormDataBeforePosting: void 0,
+                    adjustFormValueBeforePopulating: void 0
                 },
                 defaults: {
                     from: void 0,
@@ -14923,7 +14931,7 @@
                 return "test" === process.env.ENVIRON;
             }
             const util_isTest = isTest;
-            function mergeWithDefaultOptions_mergeWithDefaultOptions(options = {}) {
+            function mergeWithDefaultOptions(options = {}) {
                 const newOptions = cjs_default()(src_options, options, {
                     arrayMerge (_destination, source) {
                         return source;
@@ -14934,7 +14942,7 @@
                 if (util_isTest()) newOptions.verbose = false;
                 return newOptions;
             }
-            const mergeWithDefaultOptions = mergeWithDefaultOptions_mergeWithDefaultOptions;
+            const options_mergeWithDefaultOptions = mergeWithDefaultOptions;
             var injectStylesIntoStyleTag = __webpack_require__("./node_modules/@rsbuild/core/compiled/style-loader/runtime/injectStylesIntoStyleTag.js");
             var injectStylesIntoStyleTag_default = /*#__PURE__*/ __webpack_require__.n(injectStylesIntoStyleTag);
             var styleDomAPI = __webpack_require__("./node_modules/@rsbuild/core/compiled/style-loader/runtime/styleDomAPI.js");
@@ -14947,7 +14955,7 @@
             var insertStyleElement_default = /*#__PURE__*/ __webpack_require__.n(insertStyleElement);
             var styleTagTransform = __webpack_require__("./node_modules/@rsbuild/core/compiled/style-loader/runtime/styleTagTransform.js");
             var styleTagTransform_default = /*#__PURE__*/ __webpack_require__.n(styleTagTransform);
-            var main = __webpack_require__("./node_modules/@rsbuild/core/compiled/css-loader/index.js??ruleSet[1].rules[12].use[1]!builtin:lightningcss-loader??ruleSet[1].rules[12].use[2]!./node_modules/stylus-loader/dist/cjs.js??ruleSet[1].rules[12].use[3]!./src/styles/main.styl");
+            var main = __webpack_require__("./node_modules/@rsbuild/core/compiled/css-loader/index.js??ruleSet[1].rules[13].use[1]!builtin:lightningcss-loader??ruleSet[1].rules[13].use[2]!./node_modules/stylus-loader/dist/cjs.js??ruleSet[1].rules[13].use[3]!./src/styles/main.styl");
             var main_options = {};
             main_options.styleTagTransform = styleTagTransform_default();
             main_options.setAttributes = setAttributesWithoutAttributes_default();
@@ -14968,7 +14976,7 @@
                 return limitedHeight;
             }
             const dimensions_limitHeight = limitHeight;
-            function getOuterWidth_getOuterWidth(element) {
+            function getOuterWidth(element) {
                 let rect = element.getBoundingClientRect();
                 let outerWidth = rect.right - rect.left;
                 if (outerWidth < 1) {
@@ -14977,10 +14985,10 @@
                 }
                 return outerWidth;
             }
-            const getOuterWidth = getOuterWidth_getOuterWidth;
+            const dimensions_getOuterWidth = getOuterWidth;
             function limitWidth(element, options, width) {
                 let limitedWidth;
-                const outerWidth = getOuterWidth(element);
+                const outerWidth = dimensions_getOuterWidth(element);
                 limitedWidth = width && "number" == typeof width ? outerWidth > 0 && outerWidth < width ? outerWidth : width : outerWidth;
                 if (Number.isInteger(limitedWidth) && limitedWidth < 1) throw error_createError({
                     message: "Limited width cannot be less than 1!",
@@ -15413,12 +15421,12 @@
                 }
             }
             const buttons = Buttons;
-            function isHidden_isHidden(element) {
+            function isHidden(element) {
                 if (!element) return true;
                 const display = element.style.getPropertyValue("display");
                 return display.includes("none");
             }
-            const isHidden = isHidden_isHidden;
+            const html_isHidden = isHidden;
             class Countdown {
                 visuals;
                 options;
@@ -16018,7 +16026,7 @@
                 }
                 isVisible() {
                     if (!this.built) return false;
-                    return this.notifyElement && !isHidden(this.notifyElement);
+                    return this.notifyElement && !html_isHidden(this.notifyElement);
                 }
                 isBuilt() {
                     return this.built;
@@ -16135,7 +16143,7 @@
                 return minHeight;
             }
             const dimensions_figureMinHeight = figureMinHeight;
-            function getRatio_getRatio(options, videoHeight, videoWidth) {
+            function getRatio(options, videoHeight, videoWidth) {
                 let ratio = 1;
                 const hasVideoDimensions = videoHeight && videoWidth;
                 const desiredHeight = options.video.height;
@@ -16145,7 +16153,7 @@
                 else if (hasVideoDimensions) ratio = videoHeight / videoWidth;
                 return ratio;
             }
-            const getRatio = getRatio_getRatio;
+            const dimensions_getRatio = getRatio;
             function calculateHeight(responsive, videoWidth, options, target, ratio, element) {
                 let width = videoWidth;
                 if (width < 1) throw error_createError({
@@ -16153,7 +16161,7 @@
                     options
                 });
                 if (responsive && element) width = dimensions_limitWidth(element, options, width);
-                const chosenRatio = ratio ?? getRatio(options, void 0, videoWidth);
+                const chosenRatio = ratio ?? dimensions_getRatio(options, void 0, videoWidth);
                 const height = Math.round(width * chosenRatio);
                 if (Number.isInteger(height) && height < 1) throw error_createError({
                     message: "Just calculated a height less than 1 which is wrong.",
@@ -16169,7 +16177,7 @@
                     message: `Height ${height} cannot be smaller than 1 when calculating width.`,
                     options
                 });
-                const chosenRatio = ratio ?? getRatio(options, videoHeight);
+                const chosenRatio = ratio ?? dimensions_getRatio(options, videoHeight);
                 const calculatedWidth = Math.round(height / chosenRatio);
                 if (calculatedWidth < 1) throw error_createError({
                     message: "Calculated width cannot be smaller than 1!",
@@ -16195,7 +16203,7 @@
             function getAudioContextClass() {
                 return window.AudioContext;
             }
-            class AudioRecorder_AudioRecorder {
+            class AudioRecorder {
                 scriptProcessor;
                 audioInput;
                 vcAudioContext;
@@ -16275,7 +16283,7 @@
                     return -1;
                 }
             }
-            const AudioRecorder = AudioRecorder_AudioRecorder;
+            const media_AudioRecorder = AudioRecorder;
             function getFirstVideoTrack(localMediaStream) {
                 const videoTracks = localMediaStream.getVideoTracks();
                 let videoTrack;
@@ -16375,7 +16383,7 @@
                     this.onPlayReached = false;
                     this.onLoadedMetaDataReached = false;
                     this.playingPromiseReached = false;
-                    if (isAudioEnabled(this.options)) this.audioRecorder ??= new AudioRecorder(this, this.options);
+                    if (isAudioEnabled(this.options)) this.audioRecorder ??= new media_AudioRecorder(this, this.options);
                     const unloadAllEventListeners = ()=>{
                         this.options.logger.debug("UserMedia: unloadAllEventListeners()");
                         this.unloadRemainingEventListeners();
@@ -17079,7 +17087,7 @@
                     return this.visuals.isNotifying();
                 }
                 isHidden() {
-                    return !this.recorderElement || isHidden(this.recorderElement);
+                    return !this.recorderElement || html_isHidden(this.recorderElement);
                 }
                 writeCommand(command, args, cb) {
                     if (this.connected) {
@@ -17495,7 +17503,7 @@
                         const userMediaVideoHeight = this.userMedia.getVideoHeight();
                         if (!userMediaVideoWidth || userMediaVideoWidth < 1) ratio = this.visuals.getRatio();
                         else if (userMediaVideoHeight) ratio = userMediaVideoHeight / userMediaVideoWidth;
-                    } else ratio = getRatio(this.options);
+                    } else ratio = dimensions_getRatio(this.options);
                     return ratio;
                 }
                 calculateWidth(responsive) {
@@ -17770,7 +17778,7 @@
                 }
                 isShown() {
                     if (!this.replayElement) return false;
-                    return !isHidden(this.replayElement) && !this.visuals.isHidden();
+                    return !html_isHidden(this.replayElement) && !this.visuals.isHidden();
                 }
                 getVisuals() {
                     return this.visuals;
@@ -17981,7 +17989,7 @@
                 }
                 isHidden() {
                     if (!this.built) return true;
-                    return isHidden(this.visualsElement);
+                    return html_isHidden(this.visualsElement);
                 }
                 showVisuals() {
                     html_showElement(this.visualsElement);
@@ -18121,7 +18129,7 @@
                 }
                 getFormElement() {
                     let formElement;
-                    if (this.containerElement && "FORM" === this.containerElement.tagName) formElement = this.containerElement;
+                    if (this.containerElement?.tagName === "FORM") formElement = this.containerElement;
                     else if (this.options.selectors.formId) {
                         formElement = document.querySelector(`#${this.options.selectors.formId}`);
                         if (formElement && "FORM" !== formElement.tagName) throw new Error(`HTML element with ID ${this.options.selectors.formId} is not a form.`);
@@ -18374,8 +18382,10 @@
                             const invalidInput = this.form.getInvalidElement();
                             if (invalidInput) {
                                 const name = invalidInput.getAttribute("name");
+                                const validity = util_getValidity(invalidInput);
                                 valid = false;
-                                if (name) {
+                                if (name) if (validity?.valueMissing) whyInvalid = `Please fill out field "${name}" ⚠️`;
+                                else {
                                     whyInvalid = `Input "${name}" seems wrong 🤔`;
                                     invalidData = {
                                         [name]: invalidInput.getAttribute("value")
@@ -18546,7 +18556,7 @@
                 static ENC_TYPE_APP_JSON = constants["public"].ENC_TYPE_APP_JSON;
                 static ENC_TYPE_FORM = constants["public"].ENC_TYPE_FORM;
                 constructor(options = {}){
-                    super("VideomailClient", mergeWithDefaultOptions(options));
+                    super("VideomailClient", options_mergeWithDefaultOptions(options));
                     this.validateOptions();
                     util_Despot.removeAllListeners();
                     this.container = new wrappers_container(this.options);
