@@ -2,8 +2,8 @@
 Contributors: michael.heuberger, kbjohnson90
 Tags: video, email, recorder, sign language
 Requires at least: 6.0
-Tested up to: 6.8.2
-Stable tag: 9.0.1
+Tested up to: 6.8.3
+Stable tag: 9.1.0
 Requires PHP: 8.1.0
 Donate link: https://videomail.io/faq
 License: CC0-1.0
@@ -69,6 +69,23 @@ To get help, just use any of these contacts at [https://binarykitchen.com](https
 2. Once you have assembled a form and preview it, any browser will ask for webcam access first.
 
 == Changelog ==
+
+= 9.1.0 (4 Dec 2025) =
+**Improvement**
+* Videomail button states (enabled/disabled) are now more robust, especially for mobile devices
+* Video recording duration can be limited on the spot
+
+**Change:**
+* Accessibility: no more auto play - users have to click on the play button first before watching
+* Bump to Node.js v24
+* Replace deprecated prettier with the latest version
+
+**Fix**
+* Do not emit resize event when not built
+
+**Chore**
+* Upgrade VC dependency
+* Polished dev documentation
 
 = 9.0.1 (2 Nov 2025) =
 **Improvement**

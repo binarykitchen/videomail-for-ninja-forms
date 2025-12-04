@@ -5,16 +5,16 @@
     else root["VideomailClient"] = factory();
 })(globalThis, ()=>(()=>{
         var __webpack_modules__ = {
-            "./node_modules/@rsbuild/core/compiled/css-loader/index.js??ruleSet[1].rules[13].use[1]!builtin:lightningcss-loader??ruleSet[1].rules[13].use[2]!./node_modules/stylus-loader/dist/cjs.js??ruleSet[1].rules[13].use[3]!./src/styles/main.styl": function(module1, __webpack_exports__, __webpack_require__) {
+            "./node_modules/@rsbuild/core/compiled/css-loader/index.js??ruleSet[1].rules[13].use[1]!builtin:lightningcss-loader??ruleSet[1].rules[13].use[2]!./node_modules/stylus-loader/dist/cjs.js??ruleSet[1].rules[13].use[3]!./src/styles/main.styl" (module1, __webpack_exports__, __webpack_require__) {
                 "use strict";
                 __webpack_require__.d(__webpack_exports__, {
-                    A: ()=>__WEBPACK_DEFAULT_EXPORT__
+                    A: ()=>__rspack_default_export
                 });
-                var _node_modules_rsbuild_core_compiled_css_loader_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("./node_modules/@rsbuild/core/compiled/css-loader/noSourceMaps.js");
-                var _node_modules_rsbuild_core_compiled_css_loader_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/ __webpack_require__.n(_node_modules_rsbuild_core_compiled_css_loader_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
-                var _node_modules_rsbuild_core_compiled_css_loader_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__("./node_modules/@rsbuild/core/compiled/css-loader/api.js");
-                var _node_modules_rsbuild_core_compiled_css_loader_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/ __webpack_require__.n(_node_modules_rsbuild_core_compiled_css_loader_api_js__WEBPACK_IMPORTED_MODULE_1__);
-                var ___CSS_LOADER_EXPORT___ = _node_modules_rsbuild_core_compiled_css_loader_api_js__WEBPACK_IMPORTED_MODULE_1___default()(_node_modules_rsbuild_core_compiled_css_loader_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default());
+                var _node_modules_rsbuild_core_compiled_css_loader_noSourceMaps_js__rspack_import_0 = __webpack_require__("./node_modules/@rsbuild/core/compiled/css-loader/noSourceMaps.js");
+                var _node_modules_rsbuild_core_compiled_css_loader_noSourceMaps_js__rspack_import_0_default = /*#__PURE__*/ __webpack_require__.n(_node_modules_rsbuild_core_compiled_css_loader_noSourceMaps_js__rspack_import_0);
+                var _node_modules_rsbuild_core_compiled_css_loader_api_js__rspack_import_1 = __webpack_require__("./node_modules/@rsbuild/core/compiled/css-loader/api.js");
+                var _node_modules_rsbuild_core_compiled_css_loader_api_js__rspack_import_1_default = /*#__PURE__*/ __webpack_require__.n(_node_modules_rsbuild_core_compiled_css_loader_api_js__rspack_import_1);
+                var ___CSS_LOADER_EXPORT___ = _node_modules_rsbuild_core_compiled_css_loader_api_js__rspack_import_1_default()(_node_modules_rsbuild_core_compiled_css_loader_noSourceMaps_js__rspack_import_0_default());
                 ___CSS_LOADER_EXPORT___.push([
                     module1.id,
                     `@keyframes blink {
@@ -156,9 +156,9 @@
 `,
                     ""
                 ]);
-                const __WEBPACK_DEFAULT_EXPORT__ = ___CSS_LOADER_EXPORT___;
+                const __rspack_default_export = ___CSS_LOADER_EXPORT___;
             },
-            "./node_modules/animitter/index.js": function(module1, exports1, __webpack_require__) {
+            "./node_modules/animitter/index.js" (module1, exports1, __webpack_require__) {
                 var EventEmitter = __webpack_require__("./node_modules/events/events.js").EventEmitter, inherits = __webpack_require__("./node_modules/inherits/inherits_browser.js"), raf = __webpack_require__("./node_modules/raf/index.js"), methods;
                 var defaultRAFObject = {
                     requestAnimationFrame: raf,
@@ -339,7 +339,7 @@
                     return new Date().getTime();
                 };
             },
-            "./node_modules/base64-js/index.js": function(__unused_webpack_module, exports1) {
+            "./node_modules/base64-js/index.js" (__unused_webpack_module, exports1) {
                 "use strict";
                 exports1.byteLength = byteLength;
                 exports1.toByteArray = toByteArray;
@@ -429,7 +429,7 @@
                     return parts.join('');
                 }
             },
-            "./node_modules/buffer/index.js": function(__unused_webpack_module, exports1, __webpack_require__) {
+            "./node_modules/buffer/index.js" (__unused_webpack_module, exports1, __webpack_require__) {
                 "use strict";
                 /*!
  * The buffer module from node.js, for the browser.
@@ -1512,7 +1512,7 @@
                     return table;
                 }();
             },
-            "./node_modules/call-bind-apply-helpers/actualApply.js": function(module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/call-bind-apply-helpers/actualApply.js" (module1, __unused_webpack_exports, __webpack_require__) {
                 "use strict";
                 var bind = __webpack_require__("./node_modules/function-bind/index.js");
                 var $apply = __webpack_require__("./node_modules/call-bind-apply-helpers/functionApply.js");
@@ -1520,7 +1520,7 @@
                 var $reflectApply = __webpack_require__("./node_modules/call-bind-apply-helpers/reflectApply.js");
                 module1.exports = $reflectApply || bind.call($call, $apply);
             },
-            "./node_modules/call-bind-apply-helpers/applyBind.js": function(module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/call-bind-apply-helpers/applyBind.js" (module1, __unused_webpack_exports, __webpack_require__) {
                 "use strict";
                 var bind = __webpack_require__("./node_modules/function-bind/index.js");
                 var $apply = __webpack_require__("./node_modules/call-bind-apply-helpers/functionApply.js");
@@ -1529,15 +1529,15 @@
                     return actualApply(bind, $apply, arguments);
                 };
             },
-            "./node_modules/call-bind-apply-helpers/functionApply.js": function(module1) {
+            "./node_modules/call-bind-apply-helpers/functionApply.js" (module1) {
                 "use strict";
                 module1.exports = Function.prototype.apply;
             },
-            "./node_modules/call-bind-apply-helpers/functionCall.js": function(module1) {
+            "./node_modules/call-bind-apply-helpers/functionCall.js" (module1) {
                 "use strict";
                 module1.exports = Function.prototype.call;
             },
-            "./node_modules/call-bind-apply-helpers/index.js": function(module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/call-bind-apply-helpers/index.js" (module1, __unused_webpack_exports, __webpack_require__) {
                 "use strict";
                 var bind = __webpack_require__("./node_modules/function-bind/index.js");
                 var $TypeError = __webpack_require__("./node_modules/es-errors/type.js");
@@ -1548,11 +1548,11 @@
                     return $actualApply(bind, $call, args);
                 };
             },
-            "./node_modules/call-bind-apply-helpers/reflectApply.js": function(module1) {
+            "./node_modules/call-bind-apply-helpers/reflectApply.js" (module1) {
                 "use strict";
                 module1.exports = 'undefined' != typeof Reflect && Reflect && Reflect.apply;
             },
-            "./node_modules/call-bind/index.js": function(module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/call-bind/index.js" (module1, __unused_webpack_exports, __webpack_require__) {
                 "use strict";
                 var setFunctionLength = __webpack_require__("./node_modules/set-function-length/index.js");
                 var $defineProperty = __webpack_require__("./node_modules/es-define-property/index.js");
@@ -1568,7 +1568,7 @@
                 });
                 else module1.exports.apply = applyBind;
             },
-            "./node_modules/call-bound/index.js": function(module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/call-bound/index.js" (module1, __unused_webpack_exports, __webpack_require__) {
                 "use strict";
                 var GetIntrinsic = __webpack_require__("./node_modules/get-intrinsic/index.js");
                 var callBindBasic = __webpack_require__("./node_modules/call-bind-apply-helpers/index.js");
@@ -1583,7 +1583,7 @@
                     return intrinsic;
                 };
             },
-            "./node_modules/component-emitter/index.js": function(module1) {
+            "./node_modules/component-emitter/index.js" (module1) {
                 module1.exports = Emitter;
                 function Emitter(obj) {
                     if (obj) return mixin(obj);
@@ -1647,7 +1647,7 @@
                     return !!this.listeners(event).length;
                 };
             },
-            "./node_modules/contains/index.js": function(module1) {
+            "./node_modules/contains/index.js" (module1) {
                 var DOCUMENT_POSITION_CONTAINED_BY = 16;
                 module1.exports = contains;
                 function contains(container, elem) {
@@ -1656,7 +1656,7 @@
                     return 0 === comparison || comparison & DOCUMENT_POSITION_CONTAINED_BY;
                 }
             },
-            "./node_modules/core-util-is/lib/util.js": function(__unused_webpack_module, exports1, __webpack_require__) {
+            "./node_modules/core-util-is/lib/util.js" (__unused_webpack_module, exports1, __webpack_require__) {
                 function isArray(arg) {
                     if (Array.isArray) return Array.isArray(arg);
                     return '[object Array]' === objectToString(arg);
@@ -1719,7 +1719,7 @@
                     return Object.prototype.toString.call(o);
                 }
             },
-            "./node_modules/deepmerge/dist/cjs.js": function(module1) {
+            "./node_modules/deepmerge/dist/cjs.js" (module1) {
                 "use strict";
                 var isMergeableObject = function(value) {
                     return isNonNullObject(value) && !isSpecial(value);
@@ -1803,7 +1803,7 @@
                 var deepmerge_1 = deepmerge;
                 module1.exports = deepmerge_1;
             },
-            "./node_modules/define-data-property/index.js": function(module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/define-data-property/index.js" (module1, __unused_webpack_exports, __webpack_require__) {
                 "use strict";
                 var $defineProperty = __webpack_require__("./node_modules/es-define-property/index.js");
                 var $SyntaxError = __webpack_require__("./node_modules/es-errors/syntax.js");
@@ -1831,13 +1831,13 @@
                     else obj[property] = value;
                 };
             },
-            "./node_modules/defined/index.js": function(module1) {
+            "./node_modules/defined/index.js" (module1) {
                 "use strict";
                 module1.exports = function() {
                     for(var i = 0; i < arguments.length; i++)if (void 0 !== arguments[i]) return arguments[i];
                 };
             },
-            "./node_modules/document-visibility/index.js": function(module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/document-visibility/index.js" (module1, __unused_webpack_exports, __webpack_require__) {
                 "use strict";
                 var document1 = __webpack_require__("./node_modules/global/document.js");
                 var Event1 = __webpack_require__("./node_modules/geval/source.js");
@@ -1869,7 +1869,7 @@
                 }
                 function noop() {}
             },
-            "./node_modules/document-visibility/keys.js": function(module1) {
+            "./node_modules/document-visibility/keys.js" (module1) {
                 "use strict";
                 module1.exports = keys;
                 function keys(document1) {
@@ -1890,7 +1890,7 @@
                     return string.substring(0, 1).toLowerCase() + string.substring(1);
                 }
             },
-            "./node_modules/dunder-proto/get.js": function(module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/dunder-proto/get.js" (module1, __unused_webpack_exports, __webpack_require__) {
                 "use strict";
                 var callBind = __webpack_require__("./node_modules/call-bind-apply-helpers/index.js");
                 var gOPD = __webpack_require__("./node_modules/gopd/index.js");
@@ -1909,7 +1909,7 @@
                     return $getPrototypeOf(null == value ? value : $Object(value));
                 } : false;
             },
-            "./node_modules/duplexify/index.js": function(module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/duplexify/index.js" (module1, __unused_webpack_exports, __webpack_require__) {
                 var Buffer = __webpack_require__("./node_modules/buffer/index.js")["Buffer"];
                 var process = __webpack_require__("./node_modules/process/browser.js");
                 var stream = __webpack_require__("./node_modules/duplexify/node_modules/readable-stream/readable-browser.js");
@@ -2106,13 +2106,13 @@
                 };
                 module1.exports = Duplexify;
             },
-            "./node_modules/duplexify/node_modules/isarray/index.js": function(module1) {
+            "./node_modules/duplexify/node_modules/isarray/index.js" (module1) {
                 var toString = {}.toString;
                 module1.exports = Array.isArray || function(arr) {
                     return '[object Array]' == toString.call(arr);
                 };
             },
-            "./node_modules/duplexify/node_modules/readable-stream/lib/_stream_duplex.js": function(module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/duplexify/node_modules/readable-stream/lib/_stream_duplex.js" (module1, __unused_webpack_exports, __webpack_require__) {
                 "use strict";
                 var pna = __webpack_require__("./node_modules/process-nextick-args/index.js");
                 var objectKeys = Object.keys || function(obj) {
@@ -2171,7 +2171,7 @@
                     pna.nextTick(cb, err);
                 };
             },
-            "./node_modules/duplexify/node_modules/readable-stream/lib/_stream_passthrough.js": function(module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/duplexify/node_modules/readable-stream/lib/_stream_passthrough.js" (module1, __unused_webpack_exports, __webpack_require__) {
                 "use strict";
                 module1.exports = PassThrough;
                 var Transform = __webpack_require__("./node_modules/duplexify/node_modules/readable-stream/lib/_stream_transform.js");
@@ -2186,7 +2186,7 @@
                     cb(null, chunk);
                 };
             },
-            "./node_modules/duplexify/node_modules/readable-stream/lib/_stream_readable.js": function(module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/duplexify/node_modules/readable-stream/lib/_stream_readable.js" (module1, __unused_webpack_exports, __webpack_require__) {
                 "use strict";
                 var process = __webpack_require__("./node_modules/process/browser.js");
                 var pna = __webpack_require__("./node_modules/process-nextick-args/index.js");
@@ -2209,7 +2209,7 @@
                 }
                 var util = Object.create(__webpack_require__("./node_modules/core-util-is/lib/util.js"));
                 util.inherits = __webpack_require__("./node_modules/inherits/inherits_browser.js");
-                var debugUtil = __webpack_require__("?2927");
+                var debugUtil = __webpack_require__("?c5fd");
                 var debug = void 0;
                 debug = debugUtil && debugUtil.debuglog ? debugUtil.debuglog('stream') : function() {};
                 var BufferList = __webpack_require__("./node_modules/duplexify/node_modules/readable-stream/lib/internal/streams/BufferList.js");
@@ -2830,7 +2830,7 @@
                     return -1;
                 }
             },
-            "./node_modules/duplexify/node_modules/readable-stream/lib/_stream_transform.js": function(module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/duplexify/node_modules/readable-stream/lib/_stream_transform.js" (module1, __unused_webpack_exports, __webpack_require__) {
                 "use strict";
                 module1.exports = Transform;
                 var Duplex = __webpack_require__("./node_modules/duplexify/node_modules/readable-stream/lib/_stream_duplex.js");
@@ -2915,7 +2915,7 @@
                     return stream.push(null);
                 }
             },
-            "./node_modules/duplexify/node_modules/readable-stream/lib/_stream_writable.js": function(module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/duplexify/node_modules/readable-stream/lib/_stream_writable.js" (module1, __unused_webpack_exports, __webpack_require__) {
                 "use strict";
                 var process = __webpack_require__("./node_modules/process/browser.js");
                 var pna = __webpack_require__("./node_modules/process-nextick-args/index.js");
@@ -3326,13 +3326,13 @@
                     cb(err);
                 };
             },
-            "./node_modules/duplexify/node_modules/readable-stream/lib/internal/streams/BufferList.js": function(module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/duplexify/node_modules/readable-stream/lib/internal/streams/BufferList.js" (module1, __unused_webpack_exports, __webpack_require__) {
                 "use strict";
                 function _classCallCheck(instance, Constructor) {
                     if (!(instance instanceof Constructor)) throw new TypeError("Cannot call a class as a function");
                 }
                 var Buffer = __webpack_require__("./node_modules/duplexify/node_modules/safe-buffer/index.js").Buffer;
-                var util = __webpack_require__("?82dc");
+                var util = __webpack_require__("?6dfc");
                 function copyBuffer(src, target, offset) {
                     src.copy(target, offset);
                 }
@@ -3402,7 +3402,7 @@
                     return this.constructor.name + ' ' + obj;
                 };
             },
-            "./node_modules/duplexify/node_modules/readable-stream/lib/internal/streams/destroy.js": function(module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/duplexify/node_modules/readable-stream/lib/internal/streams/destroy.js" (module1, __unused_webpack_exports, __webpack_require__) {
                 "use strict";
                 var pna = __webpack_require__("./node_modules/process-nextick-args/index.js");
                 function destroy(err, cb) {
@@ -3457,10 +3457,10 @@
                     undestroy: undestroy
                 };
             },
-            "./node_modules/duplexify/node_modules/readable-stream/lib/internal/streams/stream-browser.js": function(module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/duplexify/node_modules/readable-stream/lib/internal/streams/stream-browser.js" (module1, __unused_webpack_exports, __webpack_require__) {
                 module1.exports = __webpack_require__("./node_modules/events/events.js").EventEmitter;
             },
-            "./node_modules/duplexify/node_modules/readable-stream/readable-browser.js": function(module1, exports1, __webpack_require__) {
+            "./node_modules/duplexify/node_modules/readable-stream/readable-browser.js" (module1, exports1, __webpack_require__) {
                 exports1 = module1.exports = __webpack_require__("./node_modules/duplexify/node_modules/readable-stream/lib/_stream_readable.js");
                 exports1.Stream = exports1;
                 exports1.Readable = exports1;
@@ -3469,7 +3469,7 @@
                 exports1.Transform = __webpack_require__("./node_modules/duplexify/node_modules/readable-stream/lib/_stream_transform.js");
                 exports1.PassThrough = __webpack_require__("./node_modules/duplexify/node_modules/readable-stream/lib/_stream_passthrough.js");
             },
-            "./node_modules/duplexify/node_modules/safe-buffer/index.js": function(module1, exports1, __webpack_require__) {
+            "./node_modules/duplexify/node_modules/safe-buffer/index.js" (module1, exports1, __webpack_require__) {
                 var buffer = __webpack_require__("./node_modules/buffer/index.js");
                 var Buffer = buffer.Buffer;
                 function copyProps(src, dst) {
@@ -3505,7 +3505,7 @@
                     return buffer.SlowBuffer(size);
                 };
             },
-            "./node_modules/duplexify/node_modules/string_decoder/lib/string_decoder.js": function(__unused_webpack_module, exports1, __webpack_require__) {
+            "./node_modules/duplexify/node_modules/string_decoder/lib/string_decoder.js" (__unused_webpack_module, exports1, __webpack_require__) {
                 "use strict";
                 var Buffer = __webpack_require__("./node_modules/duplexify/node_modules/safe-buffer/index.js").Buffer;
                 var isEncoding = Buffer.isEncoding || function(encoding) {
@@ -3732,7 +3732,7 @@
                     return buf && buf.length ? this.write(buf) : '';
                 }
             },
-            "./node_modules/end-of-stream/index.js": function(module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/end-of-stream/index.js" (module1, __unused_webpack_exports, __webpack_require__) {
                 var process = __webpack_require__("./node_modules/process/browser.js");
                 var once = __webpack_require__("./node_modules/once/once.js");
                 var noop = function() {};
@@ -3811,7 +3811,7 @@
                 };
                 module1.exports = eos;
             },
-            "./node_modules/es-define-property/index.js": function(module1) {
+            "./node_modules/es-define-property/index.js" (module1) {
                 "use strict";
                 var $defineProperty = Object.defineProperty || false;
                 if ($defineProperty) try {
@@ -3823,39 +3823,39 @@
                 }
                 module1.exports = $defineProperty;
             },
-            "./node_modules/es-errors/eval.js": function(module1) {
+            "./node_modules/es-errors/eval.js" (module1) {
                 "use strict";
                 module1.exports = EvalError;
             },
-            "./node_modules/es-errors/index.js": function(module1) {
+            "./node_modules/es-errors/index.js" (module1) {
                 "use strict";
                 module1.exports = Error;
             },
-            "./node_modules/es-errors/range.js": function(module1) {
+            "./node_modules/es-errors/range.js" (module1) {
                 "use strict";
                 module1.exports = RangeError;
             },
-            "./node_modules/es-errors/ref.js": function(module1) {
+            "./node_modules/es-errors/ref.js" (module1) {
                 "use strict";
                 module1.exports = ReferenceError;
             },
-            "./node_modules/es-errors/syntax.js": function(module1) {
+            "./node_modules/es-errors/syntax.js" (module1) {
                 "use strict";
                 module1.exports = SyntaxError;
             },
-            "./node_modules/es-errors/type.js": function(module1) {
+            "./node_modules/es-errors/type.js" (module1) {
                 "use strict";
                 module1.exports = TypeError;
             },
-            "./node_modules/es-errors/uri.js": function(module1) {
+            "./node_modules/es-errors/uri.js" (module1) {
                 "use strict";
                 module1.exports = URIError;
             },
-            "./node_modules/es-object-atoms/index.js": function(module1) {
+            "./node_modules/es-object-atoms/index.js" (module1) {
                 "use strict";
                 module1.exports = Object;
             },
-            "./node_modules/events/events.js": function(module1) {
+            "./node_modules/events/events.js" (module1) {
                 "use strict";
                 var R = 'object' == typeof Reflect ? Reflect : null;
                 var ReflectApply = R && 'function' == typeof R.apply ? R.apply : function(target, receiver, args) {
@@ -4157,7 +4157,7 @@
                     else throw new TypeError('The "emitter" argument must be of type EventEmitter. Received type ' + typeof emitter);
                 }
             },
-            "./node_modules/fast-safe-stringify/index.js": function(module1) {
+            "./node_modules/fast-safe-stringify/index.js" (module1) {
                 module1.exports = stringify;
                 stringify.default = stringify;
                 stringify.stable = deterministicStringify;
@@ -4306,7 +4306,7 @@
                     };
                 }
             },
-            "./node_modules/for-each/index.js": function(module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/for-each/index.js" (module1, __unused_webpack_exports, __webpack_require__) {
                 "use strict";
                 var isCallable = __webpack_require__("./node_modules/is-callable/index.js");
                 var toStr = Object.prototype.toString;
@@ -4335,7 +4335,7 @@
                     else forEachObject(list, iterator, receiver);
                 };
             },
-            "./node_modules/function-bind/implementation.js": function(module1) {
+            "./node_modules/function-bind/implementation.js" (module1) {
                 "use strict";
                 var ERROR_MESSAGE = 'Function.prototype.bind called on incompatible ';
                 var toStr = Object.prototype.toString;
@@ -4386,17 +4386,17 @@
                     return bound;
                 };
             },
-            "./node_modules/function-bind/index.js": function(module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/function-bind/index.js" (module1, __unused_webpack_exports, __webpack_require__) {
                 "use strict";
                 var implementation = __webpack_require__("./node_modules/function-bind/implementation.js");
                 module1.exports = Function.prototype.bind || implementation;
             },
-            "./node_modules/generator-function/index.js": function(module1) {
+            "./node_modules/generator-function/index.js" (module1) {
                 "use strict";
                 const cached = (function*() {}).constructor;
                 module1.exports = ()=>cached;
             },
-            "./node_modules/get-intrinsic/index.js": function(module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/get-intrinsic/index.js" (module1, __unused_webpack_exports, __webpack_require__) {
                 "use strict";
                 var undefined;
                 var $Object = __webpack_require__("./node_modules/es-object-atoms/index.js");
@@ -4850,16 +4850,16 @@
                     return value;
                 };
             },
-            "./node_modules/get-proto/Object.getPrototypeOf.js": function(module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/get-proto/Object.getPrototypeOf.js" (module1, __unused_webpack_exports, __webpack_require__) {
                 "use strict";
                 var $Object = __webpack_require__("./node_modules/es-object-atoms/index.js");
                 module1.exports = $Object.getPrototypeOf || null;
             },
-            "./node_modules/get-proto/Reflect.getPrototypeOf.js": function(module1) {
+            "./node_modules/get-proto/Reflect.getPrototypeOf.js" (module1) {
                 "use strict";
                 module1.exports = 'undefined' != typeof Reflect && Reflect.getPrototypeOf || null;
             },
-            "./node_modules/get-proto/index.js": function(module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/get-proto/index.js" (module1, __unused_webpack_exports, __webpack_require__) {
                 "use strict";
                 var reflectGetProto = __webpack_require__("./node_modules/get-proto/Reflect.getPrototypeOf.js");
                 var originalGetProto = __webpack_require__("./node_modules/get-proto/Object.getPrototypeOf.js");
@@ -4873,7 +4873,7 @@
                     return getDunderProto(O);
                 } : null;
             },
-            "./node_modules/geval/event.js": function(module1) {
+            "./node_modules/geval/event.js" (module1) {
                 module1.exports = Event1;
                 function Event1() {
                     var listeners = [];
@@ -4894,7 +4894,7 @@
                     }
                 }
             },
-            "./node_modules/geval/source.js": function(module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/geval/source.js" (module1, __unused_webpack_exports, __webpack_require__) {
                 var Event1 = __webpack_require__("./node_modules/geval/event.js");
                 module1.exports = Source;
                 function Source(broadcaster) {
@@ -4903,9 +4903,9 @@
                     return tuple.listen;
                 }
             },
-            "./node_modules/global/document.js": function(module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/global/document.js" (module1, __unused_webpack_exports, __webpack_require__) {
                 var topLevel = void 0 !== __webpack_require__.g ? __webpack_require__.g : 'undefined' != typeof window ? window : {};
-                var minDoc = __webpack_require__("?7a90");
+                var minDoc = __webpack_require__("?a7ce");
                 var doccy;
                 if ('undefined' != typeof document) doccy = document;
                 else {
@@ -4914,11 +4914,11 @@
                 }
                 module1.exports = doccy;
             },
-            "./node_modules/gopd/gOPD.js": function(module1) {
+            "./node_modules/gopd/gOPD.js" (module1) {
                 "use strict";
                 module1.exports = Object.getOwnPropertyDescriptor;
             },
-            "./node_modules/gopd/index.js": function(module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/gopd/index.js" (module1, __unused_webpack_exports, __webpack_require__) {
                 "use strict";
                 var $gOPD = __webpack_require__("./node_modules/gopd/gOPD.js");
                 if ($gOPD) try {
@@ -4928,7 +4928,7 @@
                 }
                 module1.exports = $gOPD;
             },
-            "./node_modules/has-property-descriptors/index.js": function(module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/has-property-descriptors/index.js" (module1, __unused_webpack_exports, __webpack_require__) {
                 "use strict";
                 var $defineProperty = __webpack_require__("./node_modules/es-define-property/index.js");
                 var hasPropertyDescriptors = function() {
@@ -4946,7 +4946,7 @@
                 };
                 module1.exports = hasPropertyDescriptors;
             },
-            "./node_modules/has-symbols/index.js": function(module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/has-symbols/index.js" (module1, __unused_webpack_exports, __webpack_require__) {
                 "use strict";
                 var origSymbol = 'undefined' != typeof Symbol && Symbol;
                 var hasSymbolSham = __webpack_require__("./node_modules/has-symbols/shams.js");
@@ -4958,7 +4958,7 @@
                     return hasSymbolSham();
                 };
             },
-            "./node_modules/has-symbols/shams.js": function(module1) {
+            "./node_modules/has-symbols/shams.js" (module1) {
                 "use strict";
                 module1.exports = function() {
                     if ('function' != typeof Symbol || 'function' != typeof Object.getOwnPropertySymbols) return false;
@@ -4984,21 +4984,21 @@
                     return true;
                 };
             },
-            "./node_modules/has-tostringtag/shams.js": function(module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/has-tostringtag/shams.js" (module1, __unused_webpack_exports, __webpack_require__) {
                 "use strict";
                 var hasSymbols = __webpack_require__("./node_modules/has-symbols/shams.js");
                 module1.exports = function() {
                     return hasSymbols() && !!Symbol.toStringTag;
                 };
             },
-            "./node_modules/hasown/index.js": function(module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/hasown/index.js" (module1, __unused_webpack_exports, __webpack_require__) {
                 "use strict";
                 var call = Function.prototype.call;
                 var $hasOwn = Object.prototype.hasOwnProperty;
                 var bind = __webpack_require__("./node_modules/function-bind/index.js");
                 module1.exports = bind.call(call, $hasOwn);
             },
-            "./node_modules/ieee754/index.js": function(__unused_webpack_module, exports1) {
+            "./node_modules/ieee754/index.js" (__unused_webpack_module, exports1) {
                 /*! ieee754. BSD-3-Clause License. Feross Aboukhadijeh <https://feross.org/opensource> */ exports1.read = function(buffer, offset, isLE, mLen, nBytes) {
                     var e, m;
                     var eLen = 8 * nBytes - mLen - 1;
@@ -5068,7 +5068,7 @@
                     buffer[offset + i - d] |= 128 * s;
                 };
             },
-            "./node_modules/inherits/inherits_browser.js": function(module1) {
+            "./node_modules/inherits/inherits_browser.js" (module1) {
                 if ('function' == typeof Object.create) module1.exports = function(ctor, superCtor) {
                     if (superCtor) {
                         ctor.super_ = superCtor;
@@ -5092,7 +5092,7 @@
                     }
                 };
             },
-            "./node_modules/is-arguments/index.js": function(module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/is-arguments/index.js" (module1, __unused_webpack_exports, __webpack_require__) {
                 "use strict";
                 var hasToStringTag = __webpack_require__("./node_modules/has-tostringtag/shams.js")();
                 var callBound = __webpack_require__("./node_modules/call-bound/index.js");
@@ -5111,7 +5111,7 @@
                 isStandardArguments.isLegacyArguments = isLegacyArguments;
                 module1.exports = supportsStandardArguments ? isStandardArguments : isLegacyArguments;
             },
-            "./node_modules/is-callable/index.js": function(module1) {
+            "./node_modules/is-callable/index.js" (module1) {
                 "use strict";
                 var fnToStr = Function.prototype.toString;
                 var reflectApply = 'object' == typeof Reflect && null !== Reflect && Reflect.apply;
@@ -5194,7 +5194,7 @@
                     return tryFunctionObject(value);
                 };
             },
-            "./node_modules/is-generator-function/index.js": function(module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/is-generator-function/index.js" (module1, __unused_webpack_exports, __webpack_require__) {
                 "use strict";
                 var callBound = __webpack_require__("./node_modules/call-bound/index.js");
                 var safeRegexTest = __webpack_require__("./node_modules/safe-regex-test/index.js");
@@ -5216,13 +5216,13 @@
                     return GeneratorFunction && getProto(fn) === GeneratorFunction.prototype;
                 };
             },
-            "./node_modules/is-power-of-two/index.js": function(module1) {
+            "./node_modules/is-power-of-two/index.js" (module1) {
                 module1.exports = isPowerOfTwo;
                 function isPowerOfTwo(n) {
                     return 0 !== n && (n & n - 1) === 0;
                 }
             },
-            "./node_modules/is-regex/index.js": function(module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/is-regex/index.js" (module1, __unused_webpack_exports, __webpack_require__) {
                 "use strict";
                 var callBound = __webpack_require__("./node_modules/call-bound/index.js");
                 var hasToStringTag = __webpack_require__("./node_modules/has-tostringtag/shams.js")();
@@ -5261,44 +5261,44 @@
                 }
                 module1.exports = fn;
             },
-            "./node_modules/is-typed-array/index.js": function(module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/is-typed-array/index.js" (module1, __unused_webpack_exports, __webpack_require__) {
                 "use strict";
                 var whichTypedArray = __webpack_require__("./node_modules/which-typed-array/index.js");
                 module1.exports = function(value) {
                     return !!whichTypedArray(value);
                 };
             },
-            "./node_modules/math-intrinsics/abs.js": function(module1) {
+            "./node_modules/math-intrinsics/abs.js" (module1) {
                 "use strict";
                 module1.exports = Math.abs;
             },
-            "./node_modules/math-intrinsics/floor.js": function(module1) {
+            "./node_modules/math-intrinsics/floor.js" (module1) {
                 "use strict";
                 module1.exports = Math.floor;
             },
-            "./node_modules/math-intrinsics/isNaN.js": function(module1) {
+            "./node_modules/math-intrinsics/isNaN.js" (module1) {
                 "use strict";
                 module1.exports = Number.isNaN || function(a) {
                     return a !== a;
                 };
             },
-            "./node_modules/math-intrinsics/max.js": function(module1) {
+            "./node_modules/math-intrinsics/max.js" (module1) {
                 "use strict";
                 module1.exports = Math.max;
             },
-            "./node_modules/math-intrinsics/min.js": function(module1) {
+            "./node_modules/math-intrinsics/min.js" (module1) {
                 "use strict";
                 module1.exports = Math.min;
             },
-            "./node_modules/math-intrinsics/pow.js": function(module1) {
+            "./node_modules/math-intrinsics/pow.js" (module1) {
                 "use strict";
                 module1.exports = Math.pow;
             },
-            "./node_modules/math-intrinsics/round.js": function(module1) {
+            "./node_modules/math-intrinsics/round.js" (module1) {
                 "use strict";
                 module1.exports = Math.round;
             },
-            "./node_modules/math-intrinsics/sign.js": function(module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/math-intrinsics/sign.js" (module1, __unused_webpack_exports, __webpack_require__) {
                 "use strict";
                 var $isNaN = __webpack_require__("./node_modules/math-intrinsics/isNaN.js");
                 module1.exports = function(number) {
@@ -5306,7 +5306,7 @@
                     return number < 0 ? -1 : 1;
                 };
             },
-            "./node_modules/object-inspect/index.js": function(module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/object-inspect/index.js" (module1, __unused_webpack_exports, __webpack_require__) {
                 var hasMap = 'function' == typeof Map && Map.prototype;
                 var mapSizeDescriptor = Object.getOwnPropertyDescriptor && hasMap ? Object.getOwnPropertyDescriptor(Map.prototype, 'size') : null;
                 var mapSize = hasMap && mapSizeDescriptor && 'function' == typeof mapSizeDescriptor.get ? mapSizeDescriptor.get : null;
@@ -5356,7 +5356,7 @@
                     }
                     return $replace.call(str, sepRegex, '$&_');
                 }
-                var utilInspect = __webpack_require__("?aa23");
+                var utilInspect = __webpack_require__("?3f0e");
                 var inspectCustom = utilInspect.custom;
                 var inspectSymbol = isSymbol(inspectCustom) ? inspectCustom : null;
                 var quotes = {
@@ -5696,7 +5696,7 @@
                     return xs;
                 }
             },
-            "./node_modules/once/once.js": function(module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/once/once.js" (module1, __unused_webpack_exports, __webpack_require__) {
                 var wrappy = __webpack_require__("./node_modules/wrappy/wrappy.js");
                 module1.exports = wrappy(once);
                 module1.exports.strict = wrappy(onceStrict);
@@ -5735,7 +5735,7 @@
                     return f;
                 }
             },
-            "./node_modules/performance-now/lib/performance-now.js": function(module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/performance-now/lib/performance-now.js" (module1, __unused_webpack_exports, __webpack_require__) {
                 var process = __webpack_require__("./node_modules/process/browser.js");
                 (function() {
                     var getNanoSeconds, hrtime, loadTime, moduleLoadTime, nodeLoadTime, upTime;
@@ -5768,7 +5768,7 @@
                     }
                 }).call(this);
             },
-            "./node_modules/possible-typed-array-names/index.js": function(module1) {
+            "./node_modules/possible-typed-array-names/index.js" (module1) {
                 "use strict";
                 module1.exports = [
                     'Float16Array',
@@ -5785,7 +5785,7 @@
                     'BigUint64Array'
                 ];
             },
-            "./node_modules/process-nextick-args/index.js": function(module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/process-nextick-args/index.js" (module1, __unused_webpack_exports, __webpack_require__) {
                 "use strict";
                 var process = __webpack_require__("./node_modules/process/browser.js");
                 if (void 0 !== process && process.version && 0 !== process.version.indexOf('v0.') && (0 !== process.version.indexOf('v1.') || 0 === process.version.indexOf('v1.8.'))) module1.exports = process;
@@ -5822,7 +5822,7 @@
                     }
                 }
             },
-            "./node_modules/process/browser.js": function(module1) {
+            "./node_modules/process/browser.js" (module1) {
                 var process = module1.exports = {};
                 var cachedSetTimeout;
                 var cachedClearTimeout;
@@ -5948,7 +5948,7 @@
                     return 0;
                 };
             },
-            "./node_modules/qs/lib/formats.js": function(module1) {
+            "./node_modules/qs/lib/formats.js" (module1) {
                 "use strict";
                 var replace = String.prototype.replace;
                 var percentTwenties = /%20/g;
@@ -5970,7 +5970,7 @@
                     RFC3986: Format.RFC3986
                 };
             },
-            "./node_modules/qs/lib/index.js": function(module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/qs/lib/index.js" (module1, __unused_webpack_exports, __webpack_require__) {
                 "use strict";
                 var stringify = __webpack_require__("./node_modules/qs/lib/stringify.js");
                 var parse = __webpack_require__("./node_modules/qs/lib/parse.js");
@@ -5981,7 +5981,7 @@
                     stringify: stringify
                 };
             },
-            "./node_modules/qs/lib/parse.js": function(module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/qs/lib/parse.js" (module1, __unused_webpack_exports, __webpack_require__) {
                 "use strict";
                 var utils = __webpack_require__("./node_modules/qs/lib/utils.js");
                 var has = Object.prototype.hasOwnProperty;
@@ -6179,7 +6179,7 @@
                     return utils.compact(obj);
                 };
             },
-            "./node_modules/qs/lib/stringify.js": function(module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/qs/lib/stringify.js" (module1, __unused_webpack_exports, __webpack_require__) {
                 "use strict";
                 var getSideChannel = __webpack_require__("./node_modules/side-channel/index.js");
                 var utils = __webpack_require__("./node_modules/qs/lib/utils.js");
@@ -6370,7 +6370,7 @@
                     return joined.length > 0 ? prefix + joined : '';
                 };
             },
-            "./node_modules/qs/lib/utils.js": function(module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/qs/lib/utils.js" (module1, __unused_webpack_exports, __webpack_require__) {
                 "use strict";
                 var formats = __webpack_require__("./node_modules/qs/lib/formats.js");
                 var has = Object.prototype.hasOwnProperty;
@@ -6545,7 +6545,7 @@
                     merge: merge
                 };
             },
-            "./node_modules/raf/index.js": function(module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/raf/index.js" (module1, __unused_webpack_exports, __webpack_require__) {
                 var now = __webpack_require__("./node_modules/performance-now/lib/performance-now.js"), root = 'undefined' == typeof window ? __webpack_require__.g : window, vendors = [
                     'moz',
                     'webkit'
@@ -6595,7 +6595,7 @@
                     object.cancelAnimationFrame = caf;
                 };
             },
-            "./node_modules/safe-regex-test/index.js": function(module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/safe-regex-test/index.js" (module1, __unused_webpack_exports, __webpack_require__) {
                 "use strict";
                 var callBound = __webpack_require__("./node_modules/call-bound/index.js");
                 var isRegex = __webpack_require__("./node_modules/is-regex/index.js");
@@ -6608,7 +6608,7 @@
                     };
                 };
             },
-            "./node_modules/set-function-length/index.js": function(module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/set-function-length/index.js" (module1, __unused_webpack_exports, __webpack_require__) {
                 "use strict";
                 var GetIntrinsic = __webpack_require__("./node_modules/get-intrinsic/index.js");
                 var define1 = __webpack_require__("./node_modules/define-data-property/index.js");
@@ -6631,7 +6631,7 @@
                     return fn;
                 };
             },
-            "./node_modules/side-channel-list/index.js": function(module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/side-channel-list/index.js" (module1, __unused_webpack_exports, __webpack_require__) {
                 "use strict";
                 var inspect = __webpack_require__("./node_modules/object-inspect/index.js");
                 var $TypeError = __webpack_require__("./node_modules/es-errors/type.js");
@@ -6696,7 +6696,7 @@
                     return channel;
                 };
             },
-            "./node_modules/side-channel-map/index.js": function(module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/side-channel-map/index.js" (module1, __unused_webpack_exports, __webpack_require__) {
                 "use strict";
                 var GetIntrinsic = __webpack_require__("./node_modules/get-intrinsic/index.js");
                 var callBound = __webpack_require__("./node_modules/call-bound/index.js");
@@ -6737,7 +6737,7 @@
                     return channel;
                 };
             },
-            "./node_modules/side-channel-weakmap/index.js": function(module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/side-channel-weakmap/index.js" (module1, __unused_webpack_exports, __webpack_require__) {
                 "use strict";
                 var GetIntrinsic = __webpack_require__("./node_modules/get-intrinsic/index.js");
                 var callBound = __webpack_require__("./node_modules/call-bound/index.js");
@@ -6789,7 +6789,7 @@
                     return channel;
                 } : getSideChannelMap;
             },
-            "./node_modules/side-channel/index.js": function(module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/side-channel/index.js" (module1, __unused_webpack_exports, __webpack_require__) {
                 "use strict";
                 var $TypeError = __webpack_require__("./node_modules/es-errors/type.js");
                 var inspect = __webpack_require__("./node_modules/object-inspect/index.js");
@@ -6820,7 +6820,7 @@
                     return channel;
                 };
             },
-            "./node_modules/stream-shift/index.js": function(module1) {
+            "./node_modules/stream-shift/index.js" (module1) {
                 module1.exports = shift;
                 function shift(stream) {
                     var rs = stream._readableState;
@@ -6836,7 +6836,7 @@
                     return state.length;
                 }
             },
-            "./node_modules/superagent/lib/agent-base.js": function(module1) {
+            "./node_modules/superagent/lib/agent-base.js" (module1) {
                 "use strict";
                 const defaults = [
                     'use',
@@ -6879,7 +6879,7 @@
                 };
                 module1.exports = Agent;
             },
-            "./node_modules/superagent/lib/client.js": function(module1, exports1, __webpack_require__) {
+            "./node_modules/superagent/lib/client.js" (module1, exports1, __webpack_require__) {
                 "use strict";
                 let root;
                 if ('undefined' != typeof window) root = window;
@@ -7281,7 +7281,7 @@
                     return request_;
                 };
             },
-            "./node_modules/superagent/lib/request-base.js": function(module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/superagent/lib/request-base.js" (module1, __unused_webpack_exports, __webpack_require__) {
                 "use strict";
                 const { isObject, hasOwn } = __webpack_require__("./node_modules/superagent/lib/utils.js");
                 module1.exports = RequestBase;
@@ -7576,7 +7576,7 @@
                     }, this._responseTimeout);
                 };
             },
-            "./node_modules/superagent/lib/response-base.js": function(module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/superagent/lib/response-base.js" (module1, __unused_webpack_exports, __webpack_require__) {
                 "use strict";
                 const utils = __webpack_require__("./node_modules/superagent/lib/utils.js");
                 module1.exports = ResponseBase;
@@ -7616,7 +7616,7 @@
                     this.unprocessableEntity = 422 === status;
                 };
             },
-            "./node_modules/superagent/lib/utils.js": function(__unused_webpack_module, exports1) {
+            "./node_modules/superagent/lib/utils.js" (__unused_webpack_module, exports1) {
                 "use strict";
                 exports1.type = (string_)=>string_.split(/ *; */).shift();
                 exports1.params = (value)=>{
@@ -7665,13 +7665,13 @@
                 exports1.isGzipOrDeflateEncoding = (res)=>new RegExp(/^\s*(?:deflate|gzip)\s*$/).test(res.headers['content-encoding']);
                 exports1.isBrotliEncoding = (res)=>new RegExp(/^\s*(?:br)\s*$/).test(res.headers['content-encoding']);
             },
-            "./node_modules/typedarray-to-buffer/index.js": function(module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/typedarray-to-buffer/index.js" (module1, __unused_webpack_exports, __webpack_require__) {
                 var Buffer = __webpack_require__("./node_modules/buffer/index.js")["Buffer"];
                 /*! typedarray-to-buffer. MIT License. Feross Aboukhadijeh <https://feross.org/opensource> */ module1.exports = function(arr) {
                     return ArrayBuffer.isView(arr) ? Buffer.from(arr.buffer, arr.byteOffset, arr.byteLength) : Buffer.from(arr);
                 };
             },
-            "./node_modules/util-deprecate/browser.js": function(module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/util-deprecate/browser.js" (module1, __unused_webpack_exports, __webpack_require__) {
                 module1.exports = deprecate;
                 function deprecate(fn, msg) {
                     if (config('noDeprecation')) return fn;
@@ -7698,12 +7698,12 @@
                     return 'true' === String(val).toLowerCase();
                 }
             },
-            "./node_modules/util/support/isBufferBrowser.js": function(module1) {
+            "./node_modules/util/support/isBufferBrowser.js" (module1) {
                 module1.exports = function(arg) {
                     return arg && 'object' == typeof arg && 'function' == typeof arg.copy && 'function' == typeof arg.fill && 'function' == typeof arg.readUInt8;
                 };
             },
-            "./node_modules/util/support/types.js": function(__unused_webpack_module, exports1, __webpack_require__) {
+            "./node_modules/util/support/types.js" (__unused_webpack_module, exports1, __webpack_require__) {
                 "use strict";
                 var isArgumentsObject = __webpack_require__("./node_modules/is-arguments/index.js");
                 var isGeneratorFunction = __webpack_require__("./node_modules/is-generator-function/index.js");
@@ -7909,7 +7909,7 @@
                     });
                 });
             },
-            "./node_modules/util/util.js": function(__unused_webpack_module, exports1, __webpack_require__) {
+            "./node_modules/util/util.js" (__unused_webpack_module, exports1, __webpack_require__) {
                 var process = __webpack_require__("./node_modules/process/browser.js");
                 var getOwnPropertyDescriptors = Object.getOwnPropertyDescriptors || function(obj) {
                     var keys = Object.keys(obj);
@@ -8373,13 +8373,13 @@
                 }
                 exports1.callbackify = callbackify;
             },
-            "./node_modules/websocket-stream/node_modules/isarray/index.js": function(module1) {
+            "./node_modules/websocket-stream/node_modules/isarray/index.js" (module1) {
                 var toString = {}.toString;
                 module1.exports = Array.isArray || function(arr) {
                     return '[object Array]' == toString.call(arr);
                 };
             },
-            "./node_modules/websocket-stream/node_modules/readable-stream/lib/_stream_duplex.js": function(module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/websocket-stream/node_modules/readable-stream/lib/_stream_duplex.js" (module1, __unused_webpack_exports, __webpack_require__) {
                 "use strict";
                 var pna = __webpack_require__("./node_modules/process-nextick-args/index.js");
                 var objectKeys = Object.keys || function(obj) {
@@ -8438,7 +8438,7 @@
                     pna.nextTick(cb, err);
                 };
             },
-            "./node_modules/websocket-stream/node_modules/readable-stream/lib/_stream_passthrough.js": function(module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/websocket-stream/node_modules/readable-stream/lib/_stream_passthrough.js" (module1, __unused_webpack_exports, __webpack_require__) {
                 "use strict";
                 module1.exports = PassThrough;
                 var Transform = __webpack_require__("./node_modules/websocket-stream/node_modules/readable-stream/lib/_stream_transform.js");
@@ -8453,7 +8453,7 @@
                     cb(null, chunk);
                 };
             },
-            "./node_modules/websocket-stream/node_modules/readable-stream/lib/_stream_readable.js": function(module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/websocket-stream/node_modules/readable-stream/lib/_stream_readable.js" (module1, __unused_webpack_exports, __webpack_require__) {
                 "use strict";
                 var process = __webpack_require__("./node_modules/process/browser.js");
                 var pna = __webpack_require__("./node_modules/process-nextick-args/index.js");
@@ -8476,7 +8476,7 @@
                 }
                 var util = Object.create(__webpack_require__("./node_modules/core-util-is/lib/util.js"));
                 util.inherits = __webpack_require__("./node_modules/inherits/inherits_browser.js");
-                var debugUtil = __webpack_require__("?5f55");
+                var debugUtil = __webpack_require__("?3152");
                 var debug = void 0;
                 debug = debugUtil && debugUtil.debuglog ? debugUtil.debuglog('stream') : function() {};
                 var BufferList = __webpack_require__("./node_modules/websocket-stream/node_modules/readable-stream/lib/internal/streams/BufferList.js");
@@ -9097,7 +9097,7 @@
                     return -1;
                 }
             },
-            "./node_modules/websocket-stream/node_modules/readable-stream/lib/_stream_transform.js": function(module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/websocket-stream/node_modules/readable-stream/lib/_stream_transform.js" (module1, __unused_webpack_exports, __webpack_require__) {
                 "use strict";
                 module1.exports = Transform;
                 var Duplex = __webpack_require__("./node_modules/websocket-stream/node_modules/readable-stream/lib/_stream_duplex.js");
@@ -9182,7 +9182,7 @@
                     return stream.push(null);
                 }
             },
-            "./node_modules/websocket-stream/node_modules/readable-stream/lib/_stream_writable.js": function(module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/websocket-stream/node_modules/readable-stream/lib/_stream_writable.js" (module1, __unused_webpack_exports, __webpack_require__) {
                 "use strict";
                 var process = __webpack_require__("./node_modules/process/browser.js");
                 var pna = __webpack_require__("./node_modules/process-nextick-args/index.js");
@@ -9593,13 +9593,13 @@
                     cb(err);
                 };
             },
-            "./node_modules/websocket-stream/node_modules/readable-stream/lib/internal/streams/BufferList.js": function(module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/websocket-stream/node_modules/readable-stream/lib/internal/streams/BufferList.js" (module1, __unused_webpack_exports, __webpack_require__) {
                 "use strict";
                 function _classCallCheck(instance, Constructor) {
                     if (!(instance instanceof Constructor)) throw new TypeError("Cannot call a class as a function");
                 }
                 var Buffer = __webpack_require__("./node_modules/websocket-stream/node_modules/safe-buffer/index.js").Buffer;
-                var util = __webpack_require__("?9936");
+                var util = __webpack_require__("?3412");
                 function copyBuffer(src, target, offset) {
                     src.copy(target, offset);
                 }
@@ -9669,7 +9669,7 @@
                     return this.constructor.name + ' ' + obj;
                 };
             },
-            "./node_modules/websocket-stream/node_modules/readable-stream/lib/internal/streams/destroy.js": function(module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/websocket-stream/node_modules/readable-stream/lib/internal/streams/destroy.js" (module1, __unused_webpack_exports, __webpack_require__) {
                 "use strict";
                 var pna = __webpack_require__("./node_modules/process-nextick-args/index.js");
                 function destroy(err, cb) {
@@ -9724,10 +9724,10 @@
                     undestroy: undestroy
                 };
             },
-            "./node_modules/websocket-stream/node_modules/readable-stream/lib/internal/streams/stream-browser.js": function(module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/websocket-stream/node_modules/readable-stream/lib/internal/streams/stream-browser.js" (module1, __unused_webpack_exports, __webpack_require__) {
                 module1.exports = __webpack_require__("./node_modules/events/events.js").EventEmitter;
             },
-            "./node_modules/websocket-stream/node_modules/readable-stream/readable-browser.js": function(module1, exports1, __webpack_require__) {
+            "./node_modules/websocket-stream/node_modules/readable-stream/readable-browser.js" (module1, exports1, __webpack_require__) {
                 exports1 = module1.exports = __webpack_require__("./node_modules/websocket-stream/node_modules/readable-stream/lib/_stream_readable.js");
                 exports1.Stream = exports1;
                 exports1.Readable = exports1;
@@ -9736,7 +9736,7 @@
                 exports1.Transform = __webpack_require__("./node_modules/websocket-stream/node_modules/readable-stream/lib/_stream_transform.js");
                 exports1.PassThrough = __webpack_require__("./node_modules/websocket-stream/node_modules/readable-stream/lib/_stream_passthrough.js");
             },
-            "./node_modules/websocket-stream/node_modules/safe-buffer/index.js": function(module1, exports1, __webpack_require__) {
+            "./node_modules/websocket-stream/node_modules/safe-buffer/index.js" (module1, exports1, __webpack_require__) {
                 var buffer = __webpack_require__("./node_modules/buffer/index.js");
                 var Buffer = buffer.Buffer;
                 function copyProps(src, dst) {
@@ -9772,7 +9772,7 @@
                     return buffer.SlowBuffer(size);
                 };
             },
-            "./node_modules/websocket-stream/node_modules/string_decoder/lib/string_decoder.js": function(__unused_webpack_module, exports1, __webpack_require__) {
+            "./node_modules/websocket-stream/node_modules/string_decoder/lib/string_decoder.js" (__unused_webpack_module, exports1, __webpack_require__) {
                 "use strict";
                 var Buffer = __webpack_require__("./node_modules/websocket-stream/node_modules/safe-buffer/index.js").Buffer;
                 var isEncoding = Buffer.isEncoding || function(encoding) {
@@ -9999,7 +9999,7 @@
                     return buf && buf.length ? this.write(buf) : '';
                 }
             },
-            "./node_modules/websocket-stream/stream.js": function(module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/websocket-stream/stream.js" (module1, __unused_webpack_exports, __webpack_require__) {
                 "use strict";
                 var process = __webpack_require__("./node_modules/process/browser.js");
                 var Transform = __webpack_require__("./node_modules/websocket-stream/node_modules/readable-stream/readable-browser.js").Transform;
@@ -10104,14 +10104,14 @@
                     return stream;
                 }
             },
-            "./node_modules/websocket-stream/ws-fallback.js": function(module1) {
+            "./node_modules/websocket-stream/ws-fallback.js" (module1) {
                 var ws = null;
                 if ('undefined' != typeof WebSocket) ws = WebSocket;
                 else if ('undefined' != typeof MozWebSocket) ws = MozWebSocket;
                 else if ('undefined' != typeof window) ws = window.WebSocket || window.MozWebSocket;
                 module1.exports = ws;
             },
-            "./node_modules/which-typed-array/index.js": function(module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/which-typed-array/index.js" (module1, __unused_webpack_exports, __webpack_require__) {
                 "use strict";
                 var forEach = __webpack_require__("./node_modules/for-each/index.js");
                 var availableTypedArrays = __webpack_require__("./node_modules/available-typed-arrays/index.js");
@@ -10178,7 +10178,7 @@
                     return tryTypedArrays(value);
                 };
             },
-            "./node_modules/wrappy/wrappy.js": function(module1) {
+            "./node_modules/wrappy/wrappy.js" (module1) {
                 module1.exports = wrappy;
                 function wrappy(fn, cb) {
                     if (fn && cb) return wrappy(fn)(cb);
@@ -10199,13 +10199,13 @@
                     }
                 }
             },
-            "?82dc": function() {},
-            "?2927": function() {},
-            "?7a90": function() {},
-            "?aa23": function() {},
-            "?9936": function() {},
-            "?5f55": function() {},
-            "./node_modules/@rsbuild/core/compiled/css-loader/api.js": function(module1) {
+            "?6dfc" () {},
+            "?c5fd" () {},
+            "?a7ce" () {},
+            "?3f0e" () {},
+            "?3412" () {},
+            "?3152" () {},
+            "./node_modules/@rsbuild/core/compiled/css-loader/api.js" (module1) {
                 "use strict";
                 module1.exports = function(cssWithMappingToString) {
                     var list = [];
@@ -10259,13 +10259,13 @@
                     return list;
                 };
             },
-            "./node_modules/@rsbuild/core/compiled/css-loader/noSourceMaps.js": function(module1) {
+            "./node_modules/@rsbuild/core/compiled/css-loader/noSourceMaps.js" (module1) {
                 "use strict";
                 module1.exports = function(i) {
                     return i[1];
                 };
             },
-            "./node_modules/@rsbuild/core/compiled/style-loader/runtime/injectStylesIntoStyleTag.js": function(module1) {
+            "./node_modules/@rsbuild/core/compiled/style-loader/runtime/injectStylesIntoStyleTag.js" (module1) {
                 "use strict";
                 var stylesInDOM = [];
                 function getIndexByIdentifier(identifier) {
@@ -10344,7 +10344,7 @@
                     };
                 };
             },
-            "./node_modules/@rsbuild/core/compiled/style-loader/runtime/insertBySelector.js": function(module1) {
+            "./node_modules/@rsbuild/core/compiled/style-loader/runtime/insertBySelector.js" (module1) {
                 "use strict";
                 var memo = {};
                 function getTarget(target) {
@@ -10366,7 +10366,7 @@
                 }
                 module1.exports = insertBySelector;
             },
-            "./node_modules/@rsbuild/core/compiled/style-loader/runtime/insertStyleElement.js": function(module1) {
+            "./node_modules/@rsbuild/core/compiled/style-loader/runtime/insertStyleElement.js" (module1) {
                 "use strict";
                 function insertStyleElement(options) {
                     var element = document.createElement("style");
@@ -10376,7 +10376,7 @@
                 }
                 module1.exports = insertStyleElement;
             },
-            "./node_modules/@rsbuild/core/compiled/style-loader/runtime/setAttributesWithoutAttributes.js": function(module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/@rsbuild/core/compiled/style-loader/runtime/setAttributesWithoutAttributes.js" (module1, __unused_webpack_exports, __webpack_require__) {
                 "use strict";
                 function setAttributesWithoutAttributes(styleElement) {
                     var nonce = __webpack_require__.nc;
@@ -10384,7 +10384,7 @@
                 }
                 module1.exports = setAttributesWithoutAttributes;
             },
-            "./node_modules/@rsbuild/core/compiled/style-loader/runtime/styleDomAPI.js": function(module1) {
+            "./node_modules/@rsbuild/core/compiled/style-loader/runtime/styleDomAPI.js" (module1) {
                 "use strict";
                 function apply(styleElement, options, obj) {
                     var css = "";
@@ -10421,7 +10421,7 @@
                 }
                 module1.exports = domAPI;
             },
-            "./node_modules/@rsbuild/core/compiled/style-loader/runtime/styleTagTransform.js": function(module1) {
+            "./node_modules/@rsbuild/core/compiled/style-loader/runtime/styleTagTransform.js" (module1) {
                 "use strict";
                 function styleTagTransform(css, styleElement) {
                     if (styleElement.styleSheet) styleElement.styleSheet.cssText = css;
@@ -10432,7 +10432,7 @@
                 }
                 module1.exports = styleTagTransform;
             },
-            "./node_modules/available-typed-arrays/index.js": function(module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/available-typed-arrays/index.js" (module1, __unused_webpack_exports, __webpack_require__) {
                 "use strict";
                 var possibleNames = __webpack_require__("./node_modules/possible-typed-array-names/index.js");
                 var g = 'undefined' == typeof globalThis ? __webpack_require__.g : globalThis;
@@ -10670,7 +10670,7 @@
             var client = __webpack_require__("./node_modules/superagent/lib/client.js");
             var client_default = /*#__PURE__*/ __webpack_require__.n(client);
             var package_namespaceObject = {
-                rE: "13.2.0"
+                rE: "13.6.1"
             };
             var defined = __webpack_require__("./node_modules/defined/index.js");
             var defined_default = /*#__PURE__*/ __webpack_require__.n(defined);
@@ -14709,7 +14709,8 @@
                 }
                 async post(videomail) {
                     const newVideomail = this.applyDefaultValues(videomail);
-                    newVideomail[constants.VERSION_LABEL] = package_namespaceObject.rE;
+                    if (!newVideomail.versions) newVideomail.versions = {};
+                    newVideomail.versions.videomailClient = package_namespaceObject.rE;
                     newVideomail.recordLocation = window.location.href;
                     try {
                         let res;
@@ -14827,7 +14828,9 @@
                     height: void 0,
                     facingMode: "user",
                     facingModeButton: false,
-                    stretch: false
+                    stretch: false,
+                    mobileBreakPoint: void 0,
+                    autoPlay: void 0
                 },
                 image: {
                     quality: 0.42,
@@ -14967,13 +14970,17 @@
             var document_visibility = __webpack_require__("./node_modules/document-visibility/index.js");
             var document_visibility_default = /*#__PURE__*/ __webpack_require__.n(document_visibility);
             function limitHeight(height, options, calledFrom) {
+                const dimension = {
+                    unit: "px"
+                };
                 let limitedHeight = document.documentElement.clientHeight;
                 if (height) limitedHeight = Math.min(height, limitedHeight);
                 if (limitedHeight < 1) throw error_createError({
                     message: `Limited height ${limitedHeight} cannot be less than 1! (Called from ${calledFrom})`,
                     options
                 });
-                return limitedHeight;
+                dimension.value = limitedHeight;
+                return dimension;
             }
             const dimensions_limitHeight = limitHeight;
             function getOuterWidth(element) {
@@ -14987,6 +14994,9 @@
             }
             const dimensions_getOuterWidth = getOuterWidth;
             function limitWidth(element, options, width) {
+                const limitedDimension = {
+                    unit: "px"
+                };
                 let limitedWidth;
                 const outerWidth = dimensions_getOuterWidth(element);
                 limitedWidth = width && "number" == typeof width ? outerWidth > 0 && outerWidth < width ? outerWidth : width : outerWidth;
@@ -14994,9 +15004,22 @@
                     message: "Limited width cannot be less than 1!",
                     options
                 });
-                return limitedWidth;
+                limitedDimension.value = limitedWidth;
+                return limitedDimension;
             }
             const dimensions_limitWidth = limitWidth;
+            function useFullWidth(mobileBreakPoint) {
+                if (void 0 === mobileBreakPoint) return;
+                const viewportWidth = window.innerWidth;
+                if (viewportWidth < mobileBreakPoint) {
+                    const dimension = {
+                        unit: "%",
+                        value: 100
+                    };
+                    return dimension;
+                }
+            }
+            const dimensions_useFullWidth = useFullWidth;
             var contains = __webpack_require__("./node_modules/contains/index.js");
             var contains_default = /*#__PURE__*/ __webpack_require__.n(contains);
             function disableElement(element) {
@@ -15705,6 +15728,9 @@
                 getStartSeconds() {
                     return this.options.video.limitSeconds;
                 }
+                setLimitSeconds(limitSeconds) {
+                    this.options.video.limitSeconds = limitSeconds;
+                }
                 start() {
                     this.countdown = this.getStartSeconds();
                     this.nearComputed = this.endNighComputed = false;
@@ -15839,6 +15865,10 @@
                 checkTimer(elapsedTime) {
                     this.recordTimer.check(elapsedTime);
                 }
+                setLimitSeconds(limitSeconds) {
+                    this.options.video.limitSeconds = limitSeconds;
+                    this.recordTimer.setLimitSeconds(limitSeconds);
+                }
             }
             const recorderInsides = RecorderInsides;
             const NOTIFIER_MESSAGE_ID = "notifierMessage";
@@ -15898,7 +15928,7 @@
                     this.on("LOADING_USER_MEDIA", ()=>{
                         this.onLoadingUserMedia();
                     });
-                    this.on("USER_MEDIA_READY", ()=>{
+                    this.on("USER_MEDIA_READY", (_params)=>{
                         this.correctNotifierDimensions();
                         this.hide();
                     });
@@ -15924,15 +15954,27 @@
                         this.notify("Connected");
                         if (this.options.loadUserMediaOnRecord) this.hide();
                     });
+                    this.on("WINDOW_RESIZE", ()=>{
+                        this.correctNotifierDimensions();
+                    });
                 }
                 correctNotifierDimensions() {
                     if (!this.notifyElement) return;
                     if (this.options.video.stretch) {
+                        const heightDimension = this.visuals.getRecorderHeight(true, true);
                         this.notifyElement.style.width = "auto";
-                        this.notifyElement.style.height = `${this.visuals.getRecorderHeight(true, true)}px`;
+                        this.notifyElement.style.height = `${heightDimension.value}${heightDimension.unit}`;
                     } else {
-                        this.notifyElement.style.width = `${this.visuals.getRecorderWidth(true)}px`;
-                        this.notifyElement.style.height = `${this.visuals.getRecorderHeight(true)}px`;
+                        let heightDimension;
+                        let widthDimension = dimensions_useFullWidth(this.options.video.mobileBreakPoint);
+                        if (!widthDimension) {
+                            widthDimension = this.visuals.getRecorderWidth(true);
+                            heightDimension = this.visuals.getRecorderHeight(true);
+                        }
+                        if (widthDimension) this.notifyElement.style.width = `${widthDimension.value}${widthDimension.unit}`;
+                        else this.notifyElement.style.removeProperty("width");
+                        if (heightDimension) this.notifyElement.style.height = `${heightDimension.value}${heightDimension.unit}`;
+                        else this.notifyElement.style.removeProperty("height");
                     }
                 }
                 show() {
@@ -16134,7 +16176,7 @@
             function figureMinHeight(height, options) {
                 let minHeight;
                 if (options.video.height) {
-                    minHeight = Math.min(options.video.height, height);
+                    minHeight = height ? Math.min(options.video.height, height) : options.video.height;
                     if (minHeight < 1) throw error_createError({
                         message: `Got a min height less than 1 (${minHeight})!`,
                         options
@@ -16154,25 +16196,35 @@
                 return ratio;
             }
             const dimensions_getRatio = getRatio;
-            function calculateHeight(responsive, videoWidth, options, target, ratio, element) {
+            function calculateHeight(responsive, videoWidth, options, ratio, element) {
+                const dimension = {
+                    unit: "px"
+                };
                 let width = videoWidth;
-                if (width < 1) throw error_createError({
-                    message: `Unable to calculate height for target ${target} when width is less than 1 (= ${width}) and responsive mode is set to ${responsive}`,
-                    options
-                });
-                if (responsive && element) width = dimensions_limitWidth(element, options, width);
+                if (responsive && element) {
+                    const limitedDimension = dimensions_limitWidth(element, options, width);
+                    width = limitedDimension.value;
+                }
                 const chosenRatio = ratio ?? dimensions_getRatio(options, void 0, videoWidth);
-                const height = Math.round(width * chosenRatio);
-                if (Number.isInteger(height) && height < 1) throw error_createError({
+                const height = width ? Math.round(width * chosenRatio) : void 0;
+                if (height && Number.isInteger(height) && height < 1) throw error_createError({
                     message: "Just calculated a height less than 1 which is wrong.",
                     options
                 });
-                return dimensions_figureMinHeight(height, options);
+                const minHeight = dimensions_figureMinHeight(height, options);
+                dimension.value = minHeight;
+                return dimension;
             }
             const dimensions_calculateHeight = calculateHeight;
             function calculateWidth(responsive, videoHeight, options, ratio) {
+                const dimension = {
+                    unit: "px"
+                };
                 let height = dimensions_figureMinHeight(videoHeight, options);
-                if (responsive) height = dimensions_limitHeight(height, options, "calculateWidth");
+                if (responsive) {
+                    const limitedDimension = dimensions_limitHeight(height, options, "calculateWidth");
+                    height = limitedDimension.value;
+                }
                 if (!height || height < 1) throw error_createError({
                     message: `Height ${height} cannot be smaller than 1 when calculating width.`,
                     options
@@ -16183,7 +16235,8 @@
                     message: "Calculated width cannot be smaller than 1!",
                     options
                 });
-                return calculatedWidth;
+                dimension.value = calculatedWidth;
+                return dimension;
             }
             const dimensions_calculateWidth = calculateWidth;
             class audio_sample_modern_t {
@@ -16523,8 +16576,8 @@
                 }
                 createCanvas() {
                     const canvas = document.createElement("canvas");
-                    const rawWidth = this.getRawWidth(true);
-                    if (rawWidth) canvas.width = rawWidth;
+                    const rawWidthDimension = this.getRawWidth(true);
+                    if (rawWidthDimension.value) canvas.width = rawWidthDimension.value;
                     const rawHeight = this.getRawHeight(true);
                     if (rawHeight) canvas.height = rawHeight;
                     return canvas;
@@ -16543,14 +16596,25 @@
                 }
                 getRawWidth(responsive) {
                     let rawWidth = this.getVideoWidth();
-                    if (this.options.video.width || this.options.video.height) rawWidth = responsive ? this.recorder.calculateWidth(responsive) : this.options.video.width;
-                    if (responsive) rawWidth = this.recorder.limitWidth(rawWidth);
-                    return rawWidth;
+                    const widthDimension = {
+                        unit: "px"
+                    };
+                    if (this.options.video.width || this.options.video.height) if (responsive) {
+                        const dimension = this.recorder.calculateWidth(responsive);
+                        rawWidth = dimension.value;
+                    } else rawWidth = this.options.video.width;
+                    if (responsive) {
+                        const widthDimension = this.recorder.limitWidth(rawWidth);
+                        rawWidth = widthDimension?.value;
+                    }
+                    widthDimension.value = rawWidth;
+                    return widthDimension;
                 }
                 getRawHeight(responsive) {
                     let rawHeight;
                     if (this.options.video.width || this.options.video.height) {
-                        rawHeight = this.recorder.calculateHeight(responsive);
+                        const heightDimension = this.recorder.calculateHeight(responsive);
+                        rawHeight = heightDimension.value;
                         if (!rawHeight || rawHeight < 1) throw error_createError({
                             message: "Bad dimensions",
                             explanation: "Calculated raw height cannot be less than 1!",
@@ -16558,13 +16622,21 @@
                         });
                     } else {
                         rawHeight = this.getVideoHeight();
-                        if (!rawHeight || rawHeight < 1) throw error_createError({
+                        if (void 0 === rawHeight) throw error_createError({
                             message: "Bad dimensions",
-                            explanation: "Raw video height from DOM element cannot be less than 1!",
+                            explanation: "Raw video height from DOM element cannot be undefined.",
+                            options: this.options
+                        });
+                        if (rawHeight < 1) throw error_createError({
+                            message: "Bad dimensions",
+                            explanation: "Raw video height from DOM element cannot be less than 1.",
                             options: this.options
                         });
                     }
-                    if (responsive) rawHeight = this.recorder.limitHeight(rawHeight);
+                    if (responsive) {
+                        const heightDimension = this.recorder.limitHeight(rawHeight);
+                        rawHeight = heightDimension.value;
+                    }
                     return rawHeight;
                 }
                 getRawVisuals() {
@@ -16783,13 +16855,13 @@
                     if (args.mp4) this.replay.setMp4Source(`${args.mp4 + constants.SITE_NAME_LABEL}/${this.options.siteName}/videomail.mp4`, true);
                     if (args.webm) this.replay.setWebMSource(`${args.webm + constants.SITE_NAME_LABEL}/${this.options.siteName}/videomail.webm`, true);
                     this.hide();
-                    const width = this.getRecorderWidth(true);
-                    const height = this.getRecorderHeight(true);
+                    const widthDimension = this.getRecorderWidth(true);
+                    const heightDimension = this.getRecorderHeight(true);
                     const duration = args.duration ?? -1;
                     this.emit("PREVIEW", {
                         key: this.key,
-                        width,
-                        height,
+                        width: widthDimension?.value,
+                        height: heightDimension.value,
                         hasAudio,
                         duration
                     });
@@ -16970,8 +17042,8 @@
                         };
                     } else if (constraints.video && true !== constraints.video) {
                         const limitedWidth = this.limitWidth();
-                        if (limitedWidth) constraints.video.width = {
-                            ideal: limitedWidth
+                        if (limitedWidth?.value) constraints.video.width = {
+                            ideal: limitedWidth.value
                         };
                     }
                     if (this.options.video.height && constraints.video && true !== constraints.video) {
@@ -17385,13 +17457,21 @@
                 }
                 correctDimensions() {
                     if (!this.recorderElement) return;
-                    if (this.options.video.width) {
-                        const recorderWidth = this.getRecorderWidth(true);
-                        if (recorderWidth) this.recorderElement.width = recorderWidth;
-                    }
-                    if (this.options.video.height) {
-                        const recorderHeight = this.getRecorderHeight(true);
-                        if (recorderHeight) this.recorderElement.height = recorderHeight;
+                    const widthDimension = dimensions_useFullWidth(this.options.video.mobileBreakPoint);
+                    if (this.options.video.stretch || widthDimension) {
+                        this.recorderElement.style.width = "100%";
+                        this.recorderElement.style.removeProperty("height");
+                    } else {
+                        if (this.options.video.width) {
+                            const recorderWidth = this.getRecorderWidth(true);
+                            if (recorderWidth?.value) this.recorderElement.width = recorderWidth.value;
+                            else this.recorderElement.style.removeProperty("width");
+                        }
+                        if (this.options.video.height) {
+                            const recorderHeight = this.getRecorderHeight(true);
+                            if (recorderHeight.value) this.recorderElement.height = recorderHeight.value;
+                            else this.recorderElement.style.removeProperty("height");
+                        }
                     }
                 }
                 switchFacingMode() {
@@ -17439,6 +17519,9 @@
                     this.on("SWITCH_FACING_MODE", ()=>{
                         this.switchFacingMode();
                     });
+                    this.on("WINDOW_RESIZE", ()=>{
+                        this.correctDimensions();
+                    });
                 }
                 buildElement() {
                     this.recorderElement = document.createElement("video");
@@ -17456,7 +17539,6 @@
                     this.recorderElement.style.transform = "rotateY(180deg)";
                     this.recorderElement.style["-webkit-transform"] = "rotateY(180deg)";
                     this.recorderElement.style["-moz-transform"] = "rotateY(180deg)";
-                    if (this.options.video.stretch) this.recorderElement.style.width = "100%";
                     this.userMedia ??= new visuals_userMedia(this, this.options);
                     this.show();
                     if (this.built) {
@@ -17488,13 +17570,36 @@
                 getRecorderWidth(responsive) {
                     if (this.userMedia?.hasVideoWidth()) return this.userMedia.getRawWidth(responsive);
                     if (responsive && this.options.video.width) return this.limitWidth(this.options.video.width);
-                    return this.options.video.width;
+                    const dimension = {
+                        unit: "px",
+                        value: this.options.video.width
+                    };
+                    return dimension;
                 }
                 getRecorderHeight(responsive, useBoundingClientRect) {
-                    if (this.recorderElement && useBoundingClientRect) return this.recorderElement.getBoundingClientRect().height;
-                    if (this.userMedia) return this.userMedia.getRawHeight(responsive);
+                    if (this.recorderElement && useBoundingClientRect) {
+                        const height = this.recorderElement.getBoundingClientRect().height;
+                        const dimension = {
+                            unit: "px",
+                            value: height
+                        };
+                        return dimension;
+                    }
+                    if (this.userMedia) {
+                        const height = this.userMedia.getRawHeight(responsive);
+                        const dimension = {
+                            unit: "px",
+                            value: height
+                        };
+                        return dimension;
+                    }
                     if (responsive && this.options.video.height) return this.calculateHeight(responsive);
-                    return this.options.video.height;
+                    const height = this.options.video.height;
+                    const dimension = {
+                        unit: "px",
+                        value: height
+                    };
+                    return dimension;
                 }
                 getRatio() {
                     let ratio;
@@ -17514,15 +17619,9 @@
                 }
                 calculateHeight(responsive) {
                     let videoWidth;
-                    let target;
-                    if (this.userMedia) {
-                        target = "userMedia";
-                        videoWidth = this.userMedia.getVideoWidth();
-                    } else if (this.recorderElement) {
-                        target = "recorderElement";
-                        videoWidth = this.recorderElement.videoWidth || this.recorderElement.width;
-                    }
-                    return dimensions_calculateHeight(responsive, videoWidth, this.options, target, this.getRatio(), this.recorderElement);
+                    if (this.userMedia) videoWidth = this.userMedia.getVideoWidth();
+                    else if (this.recorderElement) videoWidth = this.recorderElement.videoWidth || this.recorderElement.width;
+                    return dimensions_calculateHeight(responsive, videoWidth, this.options, this.getRatio(), this.recorderElement);
                 }
                 getRawVisualUserMedia() {
                     return this.recorderElement;
@@ -17588,13 +17687,8 @@
                     if (!width) width = dimensions_calculateWidth(responsive, videoHeight, this.options, ratio);
                     if (!height) {
                         let element = this.visuals.getElement();
-                        let target;
-                        if (element) target = "visualsElement";
-                        else {
-                            element = document.body;
-                            target = "document body";
-                        }
-                        height = dimensions_calculateHeight(responsive, videoWidth, this.options, target, ratio, element);
+                        if (!element) element = document.body;
+                        height = dimensions_calculateHeight(responsive, videoWidth, this.options, ratio, element);
                     }
                     if (width > 0) this.replayElement.style.width = `${width}px`;
                     else this.replayElement.style.width = "auto";
@@ -17645,7 +17739,7 @@
                     if (!this.replayElement) this.buildElement(replayParentElement);
                     if (!this.replayElement) throw new Error("There is no replayElement to build on");
                     this.hide();
-                    this.replayElement.setAttribute("autoplay", "true");
+                    if (this.options.video.autoPlay) this.replayElement.setAttribute("autoplay", this.options.video.autoPlay.toString());
                     this.replayElement.setAttribute("autostart", "true");
                     this.replayElement.setAttribute("autobuffer", "true");
                     this.replayElement.setAttribute("playsinline", "true");
@@ -17845,13 +17939,24 @@
                         this.on("ERROR", ()=>{
                             if (util_getBrowser(this.options).isMobile()) this.removeDimensions();
                         });
+                        this.on("WINDOW_RESIZE", ()=>{
+                            this.correctDimensions();
+                        });
                     }
                 }
                 correctDimensions() {
                     if (this.options.video.stretch) this.removeDimensions();
                     else if (this.visualsElement) {
-                        this.visualsElement.style.width = `${this.getRecorderWidth(true)}px`;
-                        this.visualsElement.style.height = `${this.getRecorderHeight(true)}px`;
+                        let heightDimension;
+                        let widthDimension = dimensions_useFullWidth(this.options.video.mobileBreakPoint);
+                        if (!widthDimension) {
+                            widthDimension = this.getRecorderWidth(true);
+                            heightDimension = this.getRecorderHeight(true);
+                        }
+                        if (widthDimension) this.visualsElement.style.width = `${widthDimension.value}${widthDimension.unit}`;
+                        else this.visualsElement.style.removeProperty("width");
+                        if (heightDimension) this.visualsElement.style.height = `${heightDimension.value}${heightDimension.unit}`;
+                        else this.visualsElement.style.removeProperty("height");
                     }
                 }
                 removeDimensions() {
@@ -18061,6 +18166,10 @@
                         this.recorderInsides.startCountdown(this.recorder.record.bind(this.recorder));
                     } else this.recorder.record();
                 }
+                setLimitSeconds(limitSeconds) {
+                    this.options.video.limitSeconds = limitSeconds;
+                    this.recorderInsides.setLimitSeconds(limitSeconds);
+                }
                 getElement() {
                     return this.visualsElement;
                 }
@@ -18159,6 +18268,10 @@
                 }
                 initEvents(playerOnly = false) {
                     this.options.logger.debug(`Container: initEvents (playerOnly = ${playerOnly})`);
+                    window.addEventListener("resize", ()=>{
+                        if (!this.built) return;
+                        this.emit("WINDOW_RESIZE", "container");
+                    });
                     if (this.options.enableAutoUnload) window.addEventListener("beforeunload", (e)=>{
                         this.unload({
                             e
@@ -18196,6 +18309,9 @@
                         const browser = util_getBrowser(this.options);
                         if (browser.isMobile()) this.removeDimensions();
                     });
+                    this.on("WINDOW_RESIZE", ()=>{
+                        this.correctDimensions();
+                    });
                     if (!playerOnly) this.on("LOADED_META_DATA", ()=>{
                         this.correctDimensions();
                     });
@@ -18203,8 +18319,10 @@
                 correctDimensions() {
                     if (this.options.video.stretch) this.removeDimensions();
                     else if (this.containerElement) {
-                        const width = this.visuals.getRecorderWidth(true);
-                        if (width) this.containerElement.style.width = `${width}px`;
+                        let widthDimension = dimensions_useFullWidth(this.options.video.mobileBreakPoint);
+                        if (!widthDimension) widthDimension = this.visuals.getRecorderWidth(true);
+                        if (widthDimension?.value) this.containerElement.style.width = `${widthDimension.value}${widthDimension.unit}`;
+                        else this.containerElement.style.removeProperty("width");
                     }
                 }
                 removeDimensions() {
@@ -18228,8 +18346,10 @@
                     if (!videomailFormData) throw new Error("No videomail form data defined");
                     if (method === FormMethod.POST) {
                         videomailFormData.recordingStats = this.visuals.getRecordingStats();
-                        videomailFormData.width = this.visuals.getRecorderWidth(true);
-                        videomailFormData.height = this.visuals.getRecorderHeight(true);
+                        const widthDimension = this.visuals.getRecorderWidth(true);
+                        const heightDimension = this.visuals.getRecorderHeight(true);
+                        videomailFormData.width = widthDimension?.value;
+                        videomailFormData.height = heightDimension.value;
                         return await this.resource.post(videomailFormData);
                     }
                     if (method === FormMethod.PUT) return await this.resource.put(videomailFormData);
@@ -18549,6 +18669,10 @@
                 recordAgain() {
                     this.visuals.recordAgain();
                 }
+                setLimitSeconds(limitSeconds) {
+                    this.options.video.limitSeconds = limitSeconds;
+                    this.visuals.setLimitSeconds(limitSeconds);
+                }
             }
             const wrappers_container = Container;
             class VideomailClient extends util_Despot {
@@ -18586,6 +18710,12 @@
                 startOver(params) {
                     this.unload(true);
                     this.container.startOver(params);
+                }
+                setLimitSeconds(limitSeconds) {
+                    if (this.options.video.limitSeconds === limitSeconds) return void this.options.logger.debug(`Client: setLimitSeconds called but limitSeconds is already ${limitSeconds}, doing nothing.`);
+                    this.options.video.limitSeconds = limitSeconds;
+                    this.options.logger.debug(`Client: setLimitSeconds (limitSeconds = ${limitSeconds})`);
+                    this.container.setLimitSeconds(limitSeconds);
                 }
                 unload(startingOver = false) {
                     this.container.unload({
