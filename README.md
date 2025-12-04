@@ -72,25 +72,26 @@ https://github.com/binarykitchen/videomail-for-ninja-forms/issues
 ## Releasing
 
 1. Ensure you are on develop branch
-2. Update changelog in readme.txt (bump "tested up to" using WordPress version, "stable tag" using this plugin's version + write changelog)
-3. Search for current version and replace it with the new one. Should be these files:
+2. Write changelog in `readme.txt`
+3. Bump versions in `readme.txt` under "tested up to" using WordPress version, "stable tag" using this plugin's latest version from changelog
+4. Search for current version and replace it with the new one. Should be these files:
    - package.json
    - readme.txt
    - src/js/main.js
    - src/php/videomail.php
    - videomail-for-ninja-forms.php
-4. Optional: validate readme.txt with https://wordpress.org/plugins/developers/readme-validator/
-5. Run `npm run clean`, `npm install` and `npm run build`
-6. Git commit and push
-7. Run `npm run release`
-8. Tag a new release which will run the release workflow on GitHub with `gh release create`.
+5. Optional: validate readme.txt with https://wordpress.org/plugins/developers/readme-validator/
+6. Run `npm run clean`, `npm install` and `npm run build`
+7. Git commit and push
+8. Run `npm run release`
+9. Tag a new release which will run the release workflow on GitHub with `gh release create`.
    Skip optional title, then under release notes, select "Write my own" and
    paste the new version section from readme.txt (just the section without the date and version number)
    (upon any errors, you may try to run manually "gh release create" again to trigger a release on GitHub)
-9. Wait until the release is published and
-   make sure the new version is announced on https://wordpress.org/plugins/videomail-for-ninja-forms as
-   this can take a while ...
-10. Announce on Social Media
+10. Wait until the release is published and
+    make sure the new version is announced on https://wordpress.org/plugins/videomail-for-ninja-forms as
+    this can take a while ...
+11. Announce on Social Media
 
 ## Ask for help
 
