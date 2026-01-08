@@ -3,7 +3,7 @@ Contributors: michael.heuberger, kbjohnson90
 Tags: video, email, recorder, sign language
 Requires at least: 6.0
 Tested up to: 6.8.3
-Stable tag: 9.1.0
+Stable tag: 9.1.1
 Requires PHP: 8.1.0
 Donate link: https://videomail.io/faq
 License: CC0-1.0
@@ -69,6 +69,19 @@ To get help, just use any of these contacts at [https://binarykitchen.com](https
 2. Once you have assembled a form and preview it, any browser will ask for webcam access first.
 
 == Changelog ==
+
+= 9.1.1 (8 Jan 2026) =
+**Improvement**
+* Some error messages are more user friendlier, less technical. Sorry :)
+
+**Fix**
+* Correct height of videos, this by making it more responsive to your environment
+
+**Change:**
+* Lay out the foundation for the upcoming new whitelist management. There a no breaking changes.
+
+**Chore**
+* Apply security patches
 
 = 9.1.0 (4 Dec 2025) =
 **Improvement**

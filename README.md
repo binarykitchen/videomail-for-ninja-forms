@@ -73,8 +73,10 @@ https://github.com/binarykitchen/videomail-for-ninja-forms/issues
 
 1. Ensure you are on develop branch
 2. Write changelog in `readme.txt`
-3. Bump versions in `readme.txt` under "tested up to" using WordPress version, "stable tag" using this plugin's latest version from changelog
-4. Search for current version and replace it with the new one. Should be these files:
+3. Bump versions in `readme.txt`:
+   - If there was a WordPress upgrade, bump it under "tested up to", otherwise
+   - "stable tag" using this plugin's latest version from changelog
+4. Search for current stable tag version and replace it with the new one. Should be these files:
    - package.json
    - readme.txt
    - src/js/main.js

@@ -339,14 +339,14 @@
                     return new Date().getTime();
                 };
             },
-            "./node_modules/base64-js/index.js" (__unused_webpack_module, exports1) {
+            "./node_modules/base64-js/index.js" (__unused_rspack_module, exports1) {
                 "use strict";
                 exports1.byteLength = byteLength;
                 exports1.toByteArray = toByteArray;
                 exports1.fromByteArray = fromByteArray;
                 var lookup = [];
                 var revLookup = [];
-                var Arr = 'undefined' != typeof Uint8Array ? Uint8Array : Array;
+                var Arr = "u" > typeof Uint8Array ? Uint8Array : Array;
                 var code = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
                 for(var i = 0, len = code.length; i < len; ++i){
                     lookup[i] = code[i];
@@ -429,7 +429,7 @@
                     return parts.join('');
                 }
             },
-            "./node_modules/buffer/index.js" (__unused_webpack_module, exports1, __webpack_require__) {
+            "./node_modules/buffer/index.js" (__unused_rspack_module, exports1, __webpack_require__) {
                 "use strict";
                 /*!
  * The buffer module from node.js, for the browser.
@@ -445,7 +445,7 @@
                 var K_MAX_LENGTH = 0x7fffffff;
                 exports1.kMaxLength = K_MAX_LENGTH;
                 Buffer.TYPED_ARRAY_SUPPORT = typedArraySupport();
-                if (!Buffer.TYPED_ARRAY_SUPPORT && 'undefined' != typeof console && 'function' == typeof console.error) console.error("This browser lacks typed array (Uint8Array) support which is required by `buffer` v5.x. Use `buffer` v4.x if you require old browser support.");
+                if (!Buffer.TYPED_ARRAY_SUPPORT && "u" > typeof console && 'function' == typeof console.error) console.error("This browser lacks typed array (Uint8Array) support which is required by `buffer` v5.x. Use `buffer` v4.x if you require old browser support.");
                 function typedArraySupport() {
                     try {
                         var arr = new Uint8Array(1);
@@ -494,13 +494,13 @@
                     if (ArrayBuffer.isView(value)) return fromArrayView(value);
                     if (null == value) throw new TypeError("The first argument must be one of type string, Buffer, ArrayBuffer, Array, or Array-like Object. Received type " + typeof value);
                     if (isInstance(value, ArrayBuffer) || value && isInstance(value.buffer, ArrayBuffer)) return fromArrayBuffer(value, encodingOrOffset, length);
-                    if ('undefined' != typeof SharedArrayBuffer && (isInstance(value, SharedArrayBuffer) || value && isInstance(value.buffer, SharedArrayBuffer))) return fromArrayBuffer(value, encodingOrOffset, length);
+                    if ("u" > typeof SharedArrayBuffer && (isInstance(value, SharedArrayBuffer) || value && isInstance(value.buffer, SharedArrayBuffer))) return fromArrayBuffer(value, encodingOrOffset, length);
                     if ('number' == typeof value) throw new TypeError('The "value" argument must not be of type number. Received type number');
                     var valueOf = value.valueOf && value.valueOf();
                     if (null != valueOf && valueOf !== value) return Buffer.from(valueOf, encodingOrOffset, length);
                     var b = fromObject(value);
                     if (b) return b;
-                    if ('undefined' != typeof Symbol && null != Symbol.toPrimitive && 'function' == typeof value[Symbol.toPrimitive]) return Buffer.from(value[Symbol.toPrimitive]('string'), encodingOrOffset, length);
+                    if ("u" > typeof Symbol && null != Symbol.toPrimitive && 'function' == typeof value[Symbol.toPrimitive]) return Buffer.from(value[Symbol.toPrimitive]('string'), encodingOrOffset, length);
                     throw new TypeError("The first argument must be one of type string, Buffer, ArrayBuffer, Array, or Array-like Object. Received type " + typeof value);
                 }
                 Buffer.from = function(value, encodingOrOffset, length) {
@@ -1512,7 +1512,7 @@
                     return table;
                 }();
             },
-            "./node_modules/call-bind-apply-helpers/actualApply.js" (module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/call-bind-apply-helpers/actualApply.js" (module1, __unused_rspack_exports, __webpack_require__) {
                 "use strict";
                 var bind = __webpack_require__("./node_modules/function-bind/index.js");
                 var $apply = __webpack_require__("./node_modules/call-bind-apply-helpers/functionApply.js");
@@ -1520,7 +1520,7 @@
                 var $reflectApply = __webpack_require__("./node_modules/call-bind-apply-helpers/reflectApply.js");
                 module1.exports = $reflectApply || bind.call($call, $apply);
             },
-            "./node_modules/call-bind-apply-helpers/applyBind.js" (module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/call-bind-apply-helpers/applyBind.js" (module1, __unused_rspack_exports, __webpack_require__) {
                 "use strict";
                 var bind = __webpack_require__("./node_modules/function-bind/index.js");
                 var $apply = __webpack_require__("./node_modules/call-bind-apply-helpers/functionApply.js");
@@ -1537,7 +1537,7 @@
                 "use strict";
                 module1.exports = Function.prototype.call;
             },
-            "./node_modules/call-bind-apply-helpers/index.js" (module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/call-bind-apply-helpers/index.js" (module1, __unused_rspack_exports, __webpack_require__) {
                 "use strict";
                 var bind = __webpack_require__("./node_modules/function-bind/index.js");
                 var $TypeError = __webpack_require__("./node_modules/es-errors/type.js");
@@ -1550,9 +1550,9 @@
             },
             "./node_modules/call-bind-apply-helpers/reflectApply.js" (module1) {
                 "use strict";
-                module1.exports = 'undefined' != typeof Reflect && Reflect && Reflect.apply;
+                module1.exports = "u" > typeof Reflect && Reflect && Reflect.apply;
             },
-            "./node_modules/call-bind/index.js" (module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/call-bind/index.js" (module1, __unused_rspack_exports, __webpack_require__) {
                 "use strict";
                 var setFunctionLength = __webpack_require__("./node_modules/set-function-length/index.js");
                 var $defineProperty = __webpack_require__("./node_modules/es-define-property/index.js");
@@ -1568,7 +1568,7 @@
                 });
                 else module1.exports.apply = applyBind;
             },
-            "./node_modules/call-bound/index.js" (module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/call-bound/index.js" (module1, __unused_rspack_exports, __webpack_require__) {
                 "use strict";
                 var GetIntrinsic = __webpack_require__("./node_modules/get-intrinsic/index.js");
                 var callBindBasic = __webpack_require__("./node_modules/call-bind-apply-helpers/index.js");
@@ -1656,7 +1656,7 @@
                     return 0 === comparison || comparison & DOCUMENT_POSITION_CONTAINED_BY;
                 }
             },
-            "./node_modules/core-util-is/lib/util.js" (__unused_webpack_module, exports1, __webpack_require__) {
+            "./node_modules/core-util-is/lib/util.js" (__unused_rspack_module, exports1, __webpack_require__) {
                 function isArray(arg) {
                     if (Array.isArray) return Array.isArray(arg);
                     return '[object Array]' === objectToString(arg);
@@ -1803,7 +1803,7 @@
                 var deepmerge_1 = deepmerge;
                 module1.exports = deepmerge_1;
             },
-            "./node_modules/define-data-property/index.js" (module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/define-data-property/index.js" (module1, __unused_rspack_exports, __webpack_require__) {
                 "use strict";
                 var $defineProperty = __webpack_require__("./node_modules/es-define-property/index.js");
                 var $SyntaxError = __webpack_require__("./node_modules/es-errors/syntax.js");
@@ -1837,7 +1837,7 @@
                     for(var i = 0; i < arguments.length; i++)if (void 0 !== arguments[i]) return arguments[i];
                 };
             },
-            "./node_modules/document-visibility/index.js" (module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/document-visibility/index.js" (module1, __unused_rspack_exports, __webpack_require__) {
                 "use strict";
                 var document1 = __webpack_require__("./node_modules/global/document.js");
                 var Event1 = __webpack_require__("./node_modules/geval/source.js");
@@ -1890,7 +1890,7 @@
                     return string.substring(0, 1).toLowerCase() + string.substring(1);
                 }
             },
-            "./node_modules/dunder-proto/get.js" (module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/dunder-proto/get.js" (module1, __unused_rspack_exports, __webpack_require__) {
                 "use strict";
                 var callBind = __webpack_require__("./node_modules/call-bind-apply-helpers/index.js");
                 var gOPD = __webpack_require__("./node_modules/gopd/index.js");
@@ -1909,7 +1909,7 @@
                     return $getPrototypeOf(null == value ? value : $Object(value));
                 } : false;
             },
-            "./node_modules/duplexify/index.js" (module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/duplexify/index.js" (module1, __unused_rspack_exports, __webpack_require__) {
                 var Buffer = __webpack_require__("./node_modules/buffer/index.js")["Buffer"];
                 var process = __webpack_require__("./node_modules/process/browser.js");
                 var stream = __webpack_require__("./node_modules/duplexify/node_modules/readable-stream/readable-browser.js");
@@ -2112,7 +2112,7 @@
                     return '[object Array]' == toString.call(arr);
                 };
             },
-            "./node_modules/duplexify/node_modules/readable-stream/lib/_stream_duplex.js" (module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/duplexify/node_modules/readable-stream/lib/_stream_duplex.js" (module1, __unused_rspack_exports, __webpack_require__) {
                 "use strict";
                 var pna = __webpack_require__("./node_modules/process-nextick-args/index.js");
                 var objectKeys = Object.keys || function(obj) {
@@ -2171,7 +2171,7 @@
                     pna.nextTick(cb, err);
                 };
             },
-            "./node_modules/duplexify/node_modules/readable-stream/lib/_stream_passthrough.js" (module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/duplexify/node_modules/readable-stream/lib/_stream_passthrough.js" (module1, __unused_rspack_exports, __webpack_require__) {
                 "use strict";
                 module1.exports = PassThrough;
                 var Transform = __webpack_require__("./node_modules/duplexify/node_modules/readable-stream/lib/_stream_transform.js");
@@ -2186,7 +2186,7 @@
                     cb(null, chunk);
                 };
             },
-            "./node_modules/duplexify/node_modules/readable-stream/lib/_stream_readable.js" (module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/duplexify/node_modules/readable-stream/lib/_stream_readable.js" (module1, __unused_rspack_exports, __webpack_require__) {
                 "use strict";
                 var process = __webpack_require__("./node_modules/process/browser.js");
                 var pna = __webpack_require__("./node_modules/process-nextick-args/index.js");
@@ -2200,7 +2200,7 @@
                 };
                 var Stream = __webpack_require__("./node_modules/duplexify/node_modules/readable-stream/lib/internal/streams/stream-browser.js");
                 var Buffer = __webpack_require__("./node_modules/duplexify/node_modules/safe-buffer/index.js").Buffer;
-                var OurUint8Array = (void 0 !== __webpack_require__.g ? __webpack_require__.g : 'undefined' != typeof window ? window : 'undefined' != typeof self ? self : {}).Uint8Array || function() {};
+                var OurUint8Array = (void 0 !== __webpack_require__.g ? __webpack_require__.g : "u" > typeof window ? window : "u" > typeof self ? self : {}).Uint8Array || function() {};
                 function _uint8ArrayToBuffer(chunk) {
                     return Buffer.from(chunk);
                 }
@@ -2830,7 +2830,7 @@
                     return -1;
                 }
             },
-            "./node_modules/duplexify/node_modules/readable-stream/lib/_stream_transform.js" (module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/duplexify/node_modules/readable-stream/lib/_stream_transform.js" (module1, __unused_rspack_exports, __webpack_require__) {
                 "use strict";
                 module1.exports = Transform;
                 var Duplex = __webpack_require__("./node_modules/duplexify/node_modules/readable-stream/lib/_stream_duplex.js");
@@ -2915,7 +2915,7 @@
                     return stream.push(null);
                 }
             },
-            "./node_modules/duplexify/node_modules/readable-stream/lib/_stream_writable.js" (module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/duplexify/node_modules/readable-stream/lib/_stream_writable.js" (module1, __unused_rspack_exports, __webpack_require__) {
                 "use strict";
                 var process = __webpack_require__("./node_modules/process/browser.js");
                 var pna = __webpack_require__("./node_modules/process-nextick-args/index.js");
@@ -2941,7 +2941,7 @@
                 };
                 var Stream = __webpack_require__("./node_modules/duplexify/node_modules/readable-stream/lib/internal/streams/stream-browser.js");
                 var Buffer = __webpack_require__("./node_modules/duplexify/node_modules/safe-buffer/index.js").Buffer;
-                var OurUint8Array = (void 0 !== __webpack_require__.g ? __webpack_require__.g : 'undefined' != typeof window ? window : 'undefined' != typeof self ? self : {}).Uint8Array || function() {};
+                var OurUint8Array = (void 0 !== __webpack_require__.g ? __webpack_require__.g : "u" > typeof window ? window : "u" > typeof self ? self : {}).Uint8Array || function() {};
                 function _uint8ArrayToBuffer(chunk) {
                     return Buffer.from(chunk);
                 }
@@ -3326,7 +3326,7 @@
                     cb(err);
                 };
             },
-            "./node_modules/duplexify/node_modules/readable-stream/lib/internal/streams/BufferList.js" (module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/duplexify/node_modules/readable-stream/lib/internal/streams/BufferList.js" (module1, __unused_rspack_exports, __webpack_require__) {
                 "use strict";
                 function _classCallCheck(instance, Constructor) {
                     if (!(instance instanceof Constructor)) throw new TypeError("Cannot call a class as a function");
@@ -3402,7 +3402,7 @@
                     return this.constructor.name + ' ' + obj;
                 };
             },
-            "./node_modules/duplexify/node_modules/readable-stream/lib/internal/streams/destroy.js" (module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/duplexify/node_modules/readable-stream/lib/internal/streams/destroy.js" (module1, __unused_rspack_exports, __webpack_require__) {
                 "use strict";
                 var pna = __webpack_require__("./node_modules/process-nextick-args/index.js");
                 function destroy(err, cb) {
@@ -3457,7 +3457,7 @@
                     undestroy: undestroy
                 };
             },
-            "./node_modules/duplexify/node_modules/readable-stream/lib/internal/streams/stream-browser.js" (module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/duplexify/node_modules/readable-stream/lib/internal/streams/stream-browser.js" (module1, __unused_rspack_exports, __webpack_require__) {
                 module1.exports = __webpack_require__("./node_modules/events/events.js").EventEmitter;
             },
             "./node_modules/duplexify/node_modules/readable-stream/readable-browser.js" (module1, exports1, __webpack_require__) {
@@ -3505,7 +3505,7 @@
                     return buffer.SlowBuffer(size);
                 };
             },
-            "./node_modules/duplexify/node_modules/string_decoder/lib/string_decoder.js" (__unused_webpack_module, exports1, __webpack_require__) {
+            "./node_modules/duplexify/node_modules/string_decoder/lib/string_decoder.js" (__unused_rspack_module, exports1, __webpack_require__) {
                 "use strict";
                 var Buffer = __webpack_require__("./node_modules/duplexify/node_modules/safe-buffer/index.js").Buffer;
                 var isEncoding = Buffer.isEncoding || function(encoding) {
@@ -3732,7 +3732,7 @@
                     return buf && buf.length ? this.write(buf) : '';
                 }
             },
-            "./node_modules/end-of-stream/index.js" (module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/end-of-stream/index.js" (module1, __unused_rspack_exports, __webpack_require__) {
                 var process = __webpack_require__("./node_modules/process/browser.js");
                 var once = __webpack_require__("./node_modules/once/once.js");
                 var noop = function() {};
@@ -4306,7 +4306,7 @@
                     };
                 }
             },
-            "./node_modules/for-each/index.js" (module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/for-each/index.js" (module1, __unused_rspack_exports, __webpack_require__) {
                 "use strict";
                 var isCallable = __webpack_require__("./node_modules/is-callable/index.js");
                 var toStr = Object.prototype.toString;
@@ -4386,7 +4386,7 @@
                     return bound;
                 };
             },
-            "./node_modules/function-bind/index.js" (module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/function-bind/index.js" (module1, __unused_rspack_exports, __webpack_require__) {
                 "use strict";
                 var implementation = __webpack_require__("./node_modules/function-bind/implementation.js");
                 module1.exports = Function.prototype.bind || implementation;
@@ -4396,7 +4396,7 @@
                 const cached = (function*() {}).constructor;
                 module1.exports = ()=>cached;
             },
-            "./node_modules/get-intrinsic/index.js" (module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/get-intrinsic/index.js" (module1, __unused_rspack_exports, __webpack_require__) {
                 "use strict";
                 var undefined;
                 var $Object = __webpack_require__("./node_modules/es-object-atoms/index.js");
@@ -4444,24 +4444,24 @@
                 var $apply = __webpack_require__("./node_modules/call-bind-apply-helpers/functionApply.js");
                 var $call = __webpack_require__("./node_modules/call-bind-apply-helpers/functionCall.js");
                 var needsEval = {};
-                var TypedArray = 'undefined' != typeof Uint8Array && getProto ? getProto(Uint8Array) : undefined;
+                var TypedArray = "u" > typeof Uint8Array && getProto ? getProto(Uint8Array) : undefined;
                 var INTRINSICS = {
                     __proto__: null,
-                    '%AggregateError%': 'undefined' == typeof AggregateError ? undefined : AggregateError,
+                    '%AggregateError%': "u" < typeof AggregateError ? undefined : AggregateError,
                     '%Array%': Array,
-                    '%ArrayBuffer%': 'undefined' == typeof ArrayBuffer ? undefined : ArrayBuffer,
+                    '%ArrayBuffer%': "u" < typeof ArrayBuffer ? undefined : ArrayBuffer,
                     '%ArrayIteratorPrototype%': hasSymbols && getProto ? getProto([][Symbol.iterator]()) : undefined,
                     '%AsyncFromSyncIteratorPrototype%': undefined,
                     '%AsyncFunction%': needsEval,
                     '%AsyncGenerator%': needsEval,
                     '%AsyncGeneratorFunction%': needsEval,
                     '%AsyncIteratorPrototype%': needsEval,
-                    '%Atomics%': 'undefined' == typeof Atomics ? undefined : Atomics,
-                    '%BigInt%': 'undefined' == typeof BigInt ? undefined : BigInt,
-                    '%BigInt64Array%': 'undefined' == typeof BigInt64Array ? undefined : BigInt64Array,
-                    '%BigUint64Array%': 'undefined' == typeof BigUint64Array ? undefined : BigUint64Array,
+                    '%Atomics%': "u" < typeof Atomics ? undefined : Atomics,
+                    '%BigInt%': "u" < typeof BigInt ? undefined : BigInt,
+                    '%BigInt64Array%': "u" < typeof BigInt64Array ? undefined : BigInt64Array,
+                    '%BigUint64Array%': "u" < typeof BigUint64Array ? undefined : BigUint64Array,
                     '%Boolean%': Boolean,
-                    '%DataView%': 'undefined' == typeof DataView ? undefined : DataView,
+                    '%DataView%': "u" < typeof DataView ? undefined : DataView,
                     '%Date%': Date,
                     '%decodeURI%': decodeURI,
                     '%decodeURIComponent%': decodeURIComponent,
@@ -4470,36 +4470,36 @@
                     '%Error%': $Error,
                     '%eval%': eval,
                     '%EvalError%': $EvalError,
-                    '%Float16Array%': 'undefined' == typeof Float16Array ? undefined : Float16Array,
-                    '%Float32Array%': 'undefined' == typeof Float32Array ? undefined : Float32Array,
-                    '%Float64Array%': 'undefined' == typeof Float64Array ? undefined : Float64Array,
-                    '%FinalizationRegistry%': 'undefined' == typeof FinalizationRegistry ? undefined : FinalizationRegistry,
+                    '%Float16Array%': "u" < typeof Float16Array ? undefined : Float16Array,
+                    '%Float32Array%': "u" < typeof Float32Array ? undefined : Float32Array,
+                    '%Float64Array%': "u" < typeof Float64Array ? undefined : Float64Array,
+                    '%FinalizationRegistry%': "u" < typeof FinalizationRegistry ? undefined : FinalizationRegistry,
                     '%Function%': $Function,
                     '%GeneratorFunction%': needsEval,
-                    '%Int8Array%': 'undefined' == typeof Int8Array ? undefined : Int8Array,
-                    '%Int16Array%': 'undefined' == typeof Int16Array ? undefined : Int16Array,
-                    '%Int32Array%': 'undefined' == typeof Int32Array ? undefined : Int32Array,
+                    '%Int8Array%': "u" < typeof Int8Array ? undefined : Int8Array,
+                    '%Int16Array%': "u" < typeof Int16Array ? undefined : Int16Array,
+                    '%Int32Array%': "u" < typeof Int32Array ? undefined : Int32Array,
                     '%isFinite%': isFinite,
                     '%isNaN%': isNaN,
                     '%IteratorPrototype%': hasSymbols && getProto ? getProto(getProto([][Symbol.iterator]())) : undefined,
                     '%JSON%': 'object' == typeof JSON ? JSON : undefined,
-                    '%Map%': 'undefined' == typeof Map ? undefined : Map,
-                    '%MapIteratorPrototype%': 'undefined' != typeof Map && hasSymbols && getProto ? getProto(new Map()[Symbol.iterator]()) : undefined,
+                    '%Map%': "u" < typeof Map ? undefined : Map,
+                    '%MapIteratorPrototype%': "u" > typeof Map && hasSymbols && getProto ? getProto(new Map()[Symbol.iterator]()) : undefined,
                     '%Math%': Math,
                     '%Number%': Number,
                     '%Object%': $Object,
                     "%Object.getOwnPropertyDescriptor%": $gOPD,
                     '%parseFloat%': parseFloat,
                     '%parseInt%': parseInt,
-                    '%Promise%': 'undefined' == typeof Promise ? undefined : Promise,
-                    '%Proxy%': 'undefined' == typeof Proxy ? undefined : Proxy,
+                    '%Promise%': "u" < typeof Promise ? undefined : Promise,
+                    '%Proxy%': "u" < typeof Proxy ? undefined : Proxy,
                     '%RangeError%': $RangeError,
                     '%ReferenceError%': $ReferenceError,
-                    '%Reflect%': 'undefined' == typeof Reflect ? undefined : Reflect,
+                    '%Reflect%': "u" < typeof Reflect ? undefined : Reflect,
                     '%RegExp%': RegExp,
-                    '%Set%': 'undefined' == typeof Set ? undefined : Set,
-                    '%SetIteratorPrototype%': 'undefined' != typeof Set && hasSymbols && getProto ? getProto(new Set()[Symbol.iterator]()) : undefined,
-                    '%SharedArrayBuffer%': 'undefined' == typeof SharedArrayBuffer ? undefined : SharedArrayBuffer,
+                    '%Set%': "u" < typeof Set ? undefined : Set,
+                    '%SetIteratorPrototype%': "u" > typeof Set && hasSymbols && getProto ? getProto(new Set()[Symbol.iterator]()) : undefined,
+                    '%SharedArrayBuffer%': "u" < typeof SharedArrayBuffer ? undefined : SharedArrayBuffer,
                     '%String%': String,
                     '%StringIteratorPrototype%': hasSymbols && getProto ? getProto(''[Symbol.iterator]()) : undefined,
                     '%Symbol%': hasSymbols ? Symbol : undefined,
@@ -4507,14 +4507,14 @@
                     '%ThrowTypeError%': ThrowTypeError,
                     '%TypedArray%': TypedArray,
                     '%TypeError%': $TypeError,
-                    '%Uint8Array%': 'undefined' == typeof Uint8Array ? undefined : Uint8Array,
-                    '%Uint8ClampedArray%': 'undefined' == typeof Uint8ClampedArray ? undefined : Uint8ClampedArray,
-                    '%Uint16Array%': 'undefined' == typeof Uint16Array ? undefined : Uint16Array,
-                    '%Uint32Array%': 'undefined' == typeof Uint32Array ? undefined : Uint32Array,
+                    '%Uint8Array%': "u" < typeof Uint8Array ? undefined : Uint8Array,
+                    '%Uint8ClampedArray%': "u" < typeof Uint8ClampedArray ? undefined : Uint8ClampedArray,
+                    '%Uint16Array%': "u" < typeof Uint16Array ? undefined : Uint16Array,
+                    '%Uint32Array%': "u" < typeof Uint32Array ? undefined : Uint32Array,
                     '%URIError%': $URIError,
-                    '%WeakMap%': 'undefined' == typeof WeakMap ? undefined : WeakMap,
-                    '%WeakRef%': 'undefined' == typeof WeakRef ? undefined : WeakRef,
-                    '%WeakSet%': 'undefined' == typeof WeakSet ? undefined : WeakSet,
+                    '%WeakMap%': "u" < typeof WeakMap ? undefined : WeakMap,
+                    '%WeakRef%': "u" < typeof WeakRef ? undefined : WeakRef,
+                    '%WeakSet%': "u" < typeof WeakSet ? undefined : WeakSet,
                     '%Function.prototype.call%': $call,
                     '%Function.prototype.apply%': $apply,
                     '%Object.defineProperty%': $defineProperty,
@@ -4850,16 +4850,16 @@
                     return value;
                 };
             },
-            "./node_modules/get-proto/Object.getPrototypeOf.js" (module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/get-proto/Object.getPrototypeOf.js" (module1, __unused_rspack_exports, __webpack_require__) {
                 "use strict";
                 var $Object = __webpack_require__("./node_modules/es-object-atoms/index.js");
                 module1.exports = $Object.getPrototypeOf || null;
             },
             "./node_modules/get-proto/Reflect.getPrototypeOf.js" (module1) {
                 "use strict";
-                module1.exports = 'undefined' != typeof Reflect && Reflect.getPrototypeOf || null;
+                module1.exports = "u" > typeof Reflect && Reflect.getPrototypeOf || null;
             },
-            "./node_modules/get-proto/index.js" (module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/get-proto/index.js" (module1, __unused_rspack_exports, __webpack_require__) {
                 "use strict";
                 var reflectGetProto = __webpack_require__("./node_modules/get-proto/Reflect.getPrototypeOf.js");
                 var originalGetProto = __webpack_require__("./node_modules/get-proto/Object.getPrototypeOf.js");
@@ -4894,7 +4894,7 @@
                     }
                 }
             },
-            "./node_modules/geval/source.js" (module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/geval/source.js" (module1, __unused_rspack_exports, __webpack_require__) {
                 var Event1 = __webpack_require__("./node_modules/geval/event.js");
                 module1.exports = Source;
                 function Source(broadcaster) {
@@ -4903,11 +4903,11 @@
                     return tuple.listen;
                 }
             },
-            "./node_modules/global/document.js" (module1, __unused_webpack_exports, __webpack_require__) {
-                var topLevel = void 0 !== __webpack_require__.g ? __webpack_require__.g : 'undefined' != typeof window ? window : {};
+            "./node_modules/global/document.js" (module1, __unused_rspack_exports, __webpack_require__) {
+                var topLevel = void 0 !== __webpack_require__.g ? __webpack_require__.g : "u" > typeof window ? window : {};
                 var minDoc = __webpack_require__("?a7ce");
                 var doccy;
-                if ('undefined' != typeof document) doccy = document;
+                if ("u" > typeof document) doccy = document;
                 else {
                     doccy = topLevel['__GLOBAL_DOCUMENT_CACHE@4'];
                     if (!doccy) doccy = topLevel['__GLOBAL_DOCUMENT_CACHE@4'] = minDoc;
@@ -4918,7 +4918,7 @@
                 "use strict";
                 module1.exports = Object.getOwnPropertyDescriptor;
             },
-            "./node_modules/gopd/index.js" (module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/gopd/index.js" (module1, __unused_rspack_exports, __webpack_require__) {
                 "use strict";
                 var $gOPD = __webpack_require__("./node_modules/gopd/gOPD.js");
                 if ($gOPD) try {
@@ -4928,7 +4928,7 @@
                 }
                 module1.exports = $gOPD;
             },
-            "./node_modules/has-property-descriptors/index.js" (module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/has-property-descriptors/index.js" (module1, __unused_rspack_exports, __webpack_require__) {
                 "use strict";
                 var $defineProperty = __webpack_require__("./node_modules/es-define-property/index.js");
                 var hasPropertyDescriptors = function() {
@@ -4946,9 +4946,9 @@
                 };
                 module1.exports = hasPropertyDescriptors;
             },
-            "./node_modules/has-symbols/index.js" (module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/has-symbols/index.js" (module1, __unused_rspack_exports, __webpack_require__) {
                 "use strict";
-                var origSymbol = 'undefined' != typeof Symbol && Symbol;
+                var origSymbol = "u" > typeof Symbol && Symbol;
                 var hasSymbolSham = __webpack_require__("./node_modules/has-symbols/shams.js");
                 module1.exports = function() {
                     if ('function' != typeof origSymbol) return false;
@@ -4984,21 +4984,21 @@
                     return true;
                 };
             },
-            "./node_modules/has-tostringtag/shams.js" (module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/has-tostringtag/shams.js" (module1, __unused_rspack_exports, __webpack_require__) {
                 "use strict";
                 var hasSymbols = __webpack_require__("./node_modules/has-symbols/shams.js");
                 module1.exports = function() {
                     return hasSymbols() && !!Symbol.toStringTag;
                 };
             },
-            "./node_modules/hasown/index.js" (module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/hasown/index.js" (module1, __unused_rspack_exports, __webpack_require__) {
                 "use strict";
                 var call = Function.prototype.call;
                 var $hasOwn = Object.prototype.hasOwnProperty;
                 var bind = __webpack_require__("./node_modules/function-bind/index.js");
                 module1.exports = bind.call(call, $hasOwn);
             },
-            "./node_modules/ieee754/index.js" (__unused_webpack_module, exports1) {
+            "./node_modules/ieee754/index.js" (__unused_rspack_module, exports1) {
                 /*! ieee754. BSD-3-Clause License. Feross Aboukhadijeh <https://feross.org/opensource> */ exports1.read = function(buffer, offset, isLE, mLen, nBytes) {
                     var e, m;
                     var eLen = 8 * nBytes - mLen - 1;
@@ -5092,7 +5092,7 @@
                     }
                 };
             },
-            "./node_modules/is-arguments/index.js" (module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/is-arguments/index.js" (module1, __unused_rspack_exports, __webpack_require__) {
                 "use strict";
                 var hasToStringTag = __webpack_require__("./node_modules/has-tostringtag/shams.js")();
                 var callBound = __webpack_require__("./node_modules/call-bound/index.js");
@@ -5194,7 +5194,7 @@
                     return tryFunctionObject(value);
                 };
             },
-            "./node_modules/is-generator-function/index.js" (module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/is-generator-function/index.js" (module1, __unused_rspack_exports, __webpack_require__) {
                 "use strict";
                 var callBound = __webpack_require__("./node_modules/call-bound/index.js");
                 var safeRegexTest = __webpack_require__("./node_modules/safe-regex-test/index.js");
@@ -5222,7 +5222,7 @@
                     return 0 !== n && (n & n - 1) === 0;
                 }
             },
-            "./node_modules/is-regex/index.js" (module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/is-regex/index.js" (module1, __unused_rspack_exports, __webpack_require__) {
                 "use strict";
                 var callBound = __webpack_require__("./node_modules/call-bound/index.js");
                 var hasToStringTag = __webpack_require__("./node_modules/has-tostringtag/shams.js")();
@@ -5261,7 +5261,7 @@
                 }
                 module1.exports = fn;
             },
-            "./node_modules/is-typed-array/index.js" (module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/is-typed-array/index.js" (module1, __unused_rspack_exports, __webpack_require__) {
                 "use strict";
                 var whichTypedArray = __webpack_require__("./node_modules/which-typed-array/index.js");
                 module1.exports = function(value) {
@@ -5298,7 +5298,7 @@
                 "use strict";
                 module1.exports = Math.round;
             },
-            "./node_modules/math-intrinsics/sign.js" (module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/math-intrinsics/sign.js" (module1, __unused_rspack_exports, __webpack_require__) {
                 "use strict";
                 var $isNaN = __webpack_require__("./node_modules/math-intrinsics/isNaN.js");
                 module1.exports = function(number) {
@@ -5306,7 +5306,7 @@
                     return number < 0 ? -1 : 1;
                 };
             },
-            "./node_modules/object-inspect/index.js" (module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/object-inspect/index.js" (module1, __unused_rspack_exports, __webpack_require__) {
                 var hasMap = 'function' == typeof Map && Map.prototype;
                 var mapSizeDescriptor = Object.getOwnPropertyDescriptor && hasMap ? Object.getOwnPropertyDescriptor(Map.prototype, 'size') : null;
                 var mapSize = hasMap && mapSizeDescriptor && 'function' == typeof mapSizeDescriptor.get ? mapSizeDescriptor.get : null;
@@ -5468,8 +5468,8 @@
                     if (isBigInt(obj)) return markBoxed(inspect(bigIntValueOf.call(obj)));
                     if (isBoolean(obj)) return markBoxed(booleanValueOf.call(obj));
                     if (isString(obj)) return markBoxed(inspect(String(obj)));
-                    if ('undefined' != typeof window && obj === window) return '{ [object Window] }';
-                    if ('undefined' != typeof globalThis && obj === globalThis || void 0 !== __webpack_require__.g && obj === __webpack_require__.g) return '{ [object globalThis] }';
+                    if ("u" > typeof window && obj === window) return '{ [object Window] }';
+                    if ("u" > typeof globalThis && obj === globalThis || void 0 !== __webpack_require__.g && obj === __webpack_require__.g) return '{ [object globalThis] }';
                     if (!isDate(obj) && !isRegExp(obj)) {
                         var ys = arrObjKeys(obj, inspect);
                         var isPlainObject = gPO ? gPO(obj) === Object.prototype : obj instanceof Object || obj.constructor === Object;
@@ -5615,7 +5615,7 @@
                 }
                 function isElement(x) {
                     if (!x || 'object' != typeof x) return false;
-                    if ('undefined' != typeof HTMLElement && x instanceof HTMLElement) return true;
+                    if ("u" > typeof HTMLElement && x instanceof HTMLElement) return true;
                     return 'string' == typeof x.nodeName && 'function' == typeof x.getAttribute;
                 }
                 function inspectString(str, opts) {
@@ -5696,7 +5696,7 @@
                     return xs;
                 }
             },
-            "./node_modules/once/once.js" (module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/once/once.js" (module1, __unused_rspack_exports, __webpack_require__) {
                 var wrappy = __webpack_require__("./node_modules/wrappy/wrappy.js");
                 module1.exports = wrappy(once);
                 module1.exports.strict = wrappy(onceStrict);
@@ -5735,11 +5735,11 @@
                     return f;
                 }
             },
-            "./node_modules/performance-now/lib/performance-now.js" (module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/performance-now/lib/performance-now.js" (module1, __unused_rspack_exports, __webpack_require__) {
                 var process = __webpack_require__("./node_modules/process/browser.js");
                 (function() {
                     var getNanoSeconds, hrtime, loadTime, moduleLoadTime, nodeLoadTime, upTime;
-                    if ("undefined" != typeof performance && null !== performance && performance.now) module1.exports = function() {
+                    if ("u" > typeof performance && null !== performance && performance.now) module1.exports = function() {
                         return performance.now();
                     };
                     else if (null != process && process.hrtime) {
@@ -5785,7 +5785,7 @@
                     'BigUint64Array'
                 ];
             },
-            "./node_modules/process-nextick-args/index.js" (module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/process-nextick-args/index.js" (module1, __unused_rspack_exports, __webpack_require__) {
                 "use strict";
                 var process = __webpack_require__("./node_modules/process/browser.js");
                 if (void 0 !== process && process.version && 0 !== process.version.indexOf('v0.') && (0 !== process.version.indexOf('v1.') || 0 === process.version.indexOf('v1.8.'))) module1.exports = process;
@@ -5970,7 +5970,7 @@
                     RFC3986: Format.RFC3986
                 };
             },
-            "./node_modules/qs/lib/index.js" (module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/qs/lib/index.js" (module1, __unused_rspack_exports, __webpack_require__) {
                 "use strict";
                 var stringify = __webpack_require__("./node_modules/qs/lib/stringify.js");
                 var parse = __webpack_require__("./node_modules/qs/lib/parse.js");
@@ -5981,7 +5981,7 @@
                     stringify: stringify
                 };
             },
-            "./node_modules/qs/lib/parse.js" (module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/qs/lib/parse.js" (module1, __unused_rspack_exports, __webpack_require__) {
                 "use strict";
                 var utils = __webpack_require__("./node_modules/qs/lib/utils.js");
                 var has = Object.prototype.hasOwnProperty;
@@ -6052,7 +6052,7 @@
                             val = options.strictNullHandling ? null : '';
                         } else {
                             key = options.decoder(part.slice(0, pos), defaults.decoder, charset, 'key');
-                            val = utils.maybeMap(parseArrayValue(part.slice(pos + 1), options, isArray(obj[key]) ? obj[key].length : 0), function(encodedVal) {
+                            if (null !== key) val = utils.maybeMap(parseArrayValue(part.slice(pos + 1), options, isArray(obj[key]) ? obj[key].length : 0), function(encodedVal) {
                                 return options.decoder(encodedVal, defaults.decoder, charset, 'value');
                             });
                         }
@@ -6060,9 +6060,11 @@
                         if (part.indexOf('[]=') > -1) val = isArray(val) ? [
                             val
                         ] : val;
-                        var existing = has.call(obj, key);
-                        if (existing && 'combine' === options.duplicates) obj[key] = utils.combine(obj[key], val);
-                        else if (!existing || 'last' === options.duplicates) obj[key] = val;
+                        if (null !== key) {
+                            var existing = has.call(obj, key);
+                            if (existing && 'combine' === options.duplicates) obj[key] = utils.combine(obj[key], val, options.arrayLimit, options.plainObjects);
+                            else if (!existing || 'last' === options.duplicates) obj[key] = val;
+                        }
                     }
                     return obj;
                 };
@@ -6076,7 +6078,7 @@
                     for(var i = chain.length - 1; i >= 0; --i){
                         var obj;
                         var root = chain[i];
-                        if ('[]' === root && options.parseArrays) obj = options.allowEmptyArrays && ('' === leaf || options.strictNullHandling && null === leaf) ? [] : utils.combine([], leaf);
+                        if ('[]' === root && options.parseArrays) obj = utils.isOverflow(leaf) ? leaf : options.allowEmptyArrays && ('' === leaf || options.strictNullHandling && null === leaf) ? [] : utils.combine([], leaf, options.arrayLimit, options.plainObjects);
                         else {
                             obj = options.plainObjects ? {
                                 __proto__: null
@@ -6097,12 +6099,19 @@
                     }
                     return leaf;
                 };
-                var parseKeys = function(givenKey, val, options, valuesParsed) {
-                    if (!givenKey) return;
+                var splitKeyIntoSegments = function(givenKey, options) {
                     var key = options.allowDots ? givenKey.replace(/\.([^.[]+)/g, '[$1]') : givenKey;
+                    if (options.depth <= 0) {
+                        if (!options.plainObjects && has.call(Object.prototype, key)) {
+                            if (!options.allowPrototypes) return;
+                        }
+                        return [
+                            key
+                        ];
+                    }
                     var brackets = /(\[[^[\]]*])/;
                     var child = /(\[[^[\]]*])/g;
-                    var segment = options.depth > 0 && brackets.exec(key);
+                    var segment = brackets.exec(key);
                     var parent = segment ? key.slice(0, segment.index) : key;
                     var keys = [];
                     if (parent) {
@@ -6112,9 +6121,10 @@
                         keys.push(parent);
                     }
                     var i = 0;
-                    while(options.depth > 0 && null !== (segment = child.exec(key)) && i < options.depth){
+                    while(null !== (segment = child.exec(key)) && i < options.depth){
                         i += 1;
-                        if (!options.plainObjects && has.call(Object.prototype, segment[1].slice(1, -1))) {
+                        var segmentContent = segment[1].slice(1, -1);
+                        if (!options.plainObjects && has.call(Object.prototype, segmentContent)) {
                             if (!options.allowPrototypes) return;
                         }
                         keys.push(segment[1]);
@@ -6123,6 +6133,12 @@
                         if (true === options.strictDepth) throw new RangeError('Input depth exceeded depth option of ' + options.depth + ' and strictDepth is true');
                         keys.push('[' + key.slice(segment.index) + ']');
                     }
+                    return keys;
+                };
+                var parseKeys = function(givenKey, val, options, valuesParsed) {
+                    if (!givenKey) return;
+                    var keys = splitKeyIntoSegments(givenKey, options);
+                    if (!keys) return;
                     return parseObject(keys, val, options, valuesParsed);
                 };
                 var normalizeParseOptions = function(opts) {
@@ -6179,7 +6195,7 @@
                     return utils.compact(obj);
                 };
             },
-            "./node_modules/qs/lib/stringify.js" (module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/qs/lib/stringify.js" (module1, __unused_rspack_exports, __webpack_require__) {
                 "use strict";
                 var getSideChannel = __webpack_require__("./node_modules/side-channel/index.js");
                 var utils = __webpack_require__("./node_modules/qs/lib/utils.js");
@@ -6370,11 +6386,26 @@
                     return joined.length > 0 ? prefix + joined : '';
                 };
             },
-            "./node_modules/qs/lib/utils.js" (module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/qs/lib/utils.js" (module1, __unused_rspack_exports, __webpack_require__) {
                 "use strict";
                 var formats = __webpack_require__("./node_modules/qs/lib/formats.js");
+                var getSideChannel = __webpack_require__("./node_modules/side-channel/index.js");
                 var has = Object.prototype.hasOwnProperty;
                 var isArray = Array.isArray;
+                var overflowChannel = getSideChannel();
+                var markOverflow = function(obj, maxIndex) {
+                    overflowChannel.set(obj, maxIndex);
+                    return obj;
+                };
+                var isOverflow = function(obj) {
+                    return overflowChannel.has(obj);
+                };
+                var getMaxIndex = function(obj) {
+                    return overflowChannel.get(obj);
+                };
+                var setMaxIndex = function(obj, maxIndex) {
+                    overflowChannel.set(obj, maxIndex);
+                };
                 var hexTable = function() {
                     var array = [];
                     for(var i = 0; i < 256; ++i)array.push('%' + ((i < 16 ? '0' : '') + i.toString(16)).toUpperCase());
@@ -6406,12 +6437,32 @@
                             target,
                             source
                         ];
-                        else if (options && (options.plainObjects || options.allowPrototypes) || !has.call(Object.prototype, source)) target[source] = true;
+                        else if (isOverflow(target)) {
+                            var newIndex = getMaxIndex(target) + 1;
+                            target[newIndex] = source;
+                            setMaxIndex(target, newIndex);
+                        } else if (options && (options.plainObjects || options.allowPrototypes) || !has.call(Object.prototype, source)) target[source] = true;
                         return target;
                     }
-                    if (!target || 'object' != typeof target) return [
-                        target
-                    ].concat(source);
+                    if (!target || 'object' != typeof target) {
+                        if (isOverflow(source)) {
+                            var sourceKeys = Object.keys(source);
+                            var result = options && options.plainObjects ? {
+                                __proto__: null,
+                                0: target
+                            } : {
+                                0: target
+                            };
+                            for(var m = 0; m < sourceKeys.length; m++){
+                                var oldKey = parseInt(sourceKeys[m], 10);
+                                result[oldKey + 1] = source[sourceKeys[m]];
+                            }
+                            return markOverflow(result, getMaxIndex(source) + 1);
+                        }
+                        return [
+                            target
+                        ].concat(source);
+                    }
                     var mergeTarget = target;
                     if (isArray(target) && !isArray(source)) mergeTarget = arrayToObject(target, options);
                     if (isArray(target) && isArray(source)) {
@@ -6521,8 +6572,18 @@
                     if (!obj || 'object' != typeof obj) return false;
                     return !!(obj.constructor && obj.constructor.isBuffer && obj.constructor.isBuffer(obj));
                 };
-                var combine = function(a, b) {
-                    return [].concat(a, b);
+                var combine = function(a, b, arrayLimit, plainObjects) {
+                    if (isOverflow(a)) {
+                        var newIndex = getMaxIndex(a) + 1;
+                        a[newIndex] = b;
+                        setMaxIndex(a, newIndex);
+                        return a;
+                    }
+                    var result = [].concat(a, b);
+                    if (result.length > arrayLimit) return markOverflow(arrayToObject(result, {
+                        plainObjects: plainObjects
+                    }), result.length - 1);
+                    return result;
                 };
                 var maybeMap = function(val, fn) {
                     if (isArray(val)) {
@@ -6540,13 +6601,14 @@
                     decode: decode,
                     encode: encode,
                     isBuffer: isBuffer,
+                    isOverflow: isOverflow,
                     isRegExp: isRegExp,
                     maybeMap: maybeMap,
                     merge: merge
                 };
             },
-            "./node_modules/raf/index.js" (module1, __unused_webpack_exports, __webpack_require__) {
-                var now = __webpack_require__("./node_modules/performance-now/lib/performance-now.js"), root = 'undefined' == typeof window ? __webpack_require__.g : window, vendors = [
+            "./node_modules/raf/index.js" (module1, __unused_rspack_exports, __webpack_require__) {
+                var now = __webpack_require__("./node_modules/performance-now/lib/performance-now.js"), root = "u" < typeof window ? __webpack_require__.g : window, vendors = [
                     'moz',
                     'webkit'
                 ], suffix = 'AnimationFrame', raf = root['request' + suffix], caf = root['cancel' + suffix] || root['cancelRequest' + suffix];
@@ -6595,7 +6657,7 @@
                     object.cancelAnimationFrame = caf;
                 };
             },
-            "./node_modules/safe-regex-test/index.js" (module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/safe-regex-test/index.js" (module1, __unused_rspack_exports, __webpack_require__) {
                 "use strict";
                 var callBound = __webpack_require__("./node_modules/call-bound/index.js");
                 var isRegex = __webpack_require__("./node_modules/is-regex/index.js");
@@ -6608,7 +6670,7 @@
                     };
                 };
             },
-            "./node_modules/set-function-length/index.js" (module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/set-function-length/index.js" (module1, __unused_rspack_exports, __webpack_require__) {
                 "use strict";
                 var GetIntrinsic = __webpack_require__("./node_modules/get-intrinsic/index.js");
                 var define1 = __webpack_require__("./node_modules/define-data-property/index.js");
@@ -6631,7 +6693,7 @@
                     return fn;
                 };
             },
-            "./node_modules/side-channel-list/index.js" (module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/side-channel-list/index.js" (module1, __unused_rspack_exports, __webpack_require__) {
                 "use strict";
                 var inspect = __webpack_require__("./node_modules/object-inspect/index.js");
                 var $TypeError = __webpack_require__("./node_modules/es-errors/type.js");
@@ -6696,7 +6758,7 @@
                     return channel;
                 };
             },
-            "./node_modules/side-channel-map/index.js" (module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/side-channel-map/index.js" (module1, __unused_rspack_exports, __webpack_require__) {
                 "use strict";
                 var GetIntrinsic = __webpack_require__("./node_modules/get-intrinsic/index.js");
                 var callBound = __webpack_require__("./node_modules/call-bound/index.js");
@@ -6737,7 +6799,7 @@
                     return channel;
                 };
             },
-            "./node_modules/side-channel-weakmap/index.js" (module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/side-channel-weakmap/index.js" (module1, __unused_rspack_exports, __webpack_require__) {
                 "use strict";
                 var GetIntrinsic = __webpack_require__("./node_modules/get-intrinsic/index.js");
                 var callBound = __webpack_require__("./node_modules/call-bound/index.js");
@@ -6789,7 +6851,7 @@
                     return channel;
                 } : getSideChannelMap;
             },
-            "./node_modules/side-channel/index.js" (module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/side-channel/index.js" (module1, __unused_rspack_exports, __webpack_require__) {
                 "use strict";
                 var $TypeError = __webpack_require__("./node_modules/es-errors/type.js");
                 var inspect = __webpack_require__("./node_modules/object-inspect/index.js");
@@ -6882,8 +6944,8 @@
             "./node_modules/superagent/lib/client.js" (module1, exports1, __webpack_require__) {
                 "use strict";
                 let root;
-                if ('undefined' != typeof window) root = window;
-                else if ('undefined' == typeof self) {
+                if ("u" > typeof window) root = window;
+                else if ("u" < typeof self) {
                     console.warn('Using browser-only version of superagent in non-browser environment');
                     root = void 0;
                 } else root = self;
@@ -7193,7 +7255,12 @@
                     this.emit('request', this);
                     xhr.send(void 0 === data ? null : data);
                 };
-                request.agent = ()=>new Agent();
+                const proxyAgent = new Proxy(Agent, {
+                    apply (target, thisArg, argumentsList) {
+                        return new target(...argumentsList);
+                    }
+                });
+                request.agent = proxyAgent;
                 for (const method of [
                     'GET',
                     'POST',
@@ -7281,7 +7348,7 @@
                     return request_;
                 };
             },
-            "./node_modules/superagent/lib/request-base.js" (module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/superagent/lib/request-base.js" (module1, __unused_rspack_exports, __webpack_require__) {
                 "use strict";
                 const { isObject, hasOwn } = __webpack_require__("./node_modules/superagent/lib/utils.js");
                 module1.exports = RequestBase;
@@ -7576,7 +7643,7 @@
                     }, this._responseTimeout);
                 };
             },
-            "./node_modules/superagent/lib/response-base.js" (module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/superagent/lib/response-base.js" (module1, __unused_rspack_exports, __webpack_require__) {
                 "use strict";
                 const utils = __webpack_require__("./node_modules/superagent/lib/utils.js");
                 module1.exports = ResponseBase;
@@ -7616,7 +7683,7 @@
                     this.unprocessableEntity = 422 === status;
                 };
             },
-            "./node_modules/superagent/lib/utils.js" (__unused_webpack_module, exports1) {
+            "./node_modules/superagent/lib/utils.js" (__unused_rspack_module, exports1) {
                 "use strict";
                 exports1.type = (string_)=>string_.split(/ *; */).shift();
                 exports1.params = (value)=>{
@@ -7665,13 +7732,13 @@
                 exports1.isGzipOrDeflateEncoding = (res)=>new RegExp(/^\s*(?:deflate|gzip)\s*$/).test(res.headers['content-encoding']);
                 exports1.isBrotliEncoding = (res)=>new RegExp(/^\s*(?:br)\s*$/).test(res.headers['content-encoding']);
             },
-            "./node_modules/typedarray-to-buffer/index.js" (module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/typedarray-to-buffer/index.js" (module1, __unused_rspack_exports, __webpack_require__) {
                 var Buffer = __webpack_require__("./node_modules/buffer/index.js")["Buffer"];
                 /*! typedarray-to-buffer. MIT License. Feross Aboukhadijeh <https://feross.org/opensource> */ module1.exports = function(arr) {
                     return ArrayBuffer.isView(arr) ? Buffer.from(arr.buffer, arr.byteOffset, arr.byteLength) : Buffer.from(arr);
                 };
             },
-            "./node_modules/util-deprecate/browser.js" (module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/util-deprecate/browser.js" (module1, __unused_rspack_exports, __webpack_require__) {
                 module1.exports = deprecate;
                 function deprecate(fn, msg) {
                     if (config('noDeprecation')) return fn;
@@ -7703,7 +7770,7 @@
                     return arg && 'object' == typeof arg && 'function' == typeof arg.copy && 'function' == typeof arg.fill && 'function' == typeof arg.readUInt8;
                 };
             },
-            "./node_modules/util/support/types.js" (__unused_webpack_module, exports1, __webpack_require__) {
+            "./node_modules/util/support/types.js" (__unused_rspack_module, exports1, __webpack_require__) {
                 "use strict";
                 var isArgumentsObject = __webpack_require__("./node_modules/is-arguments/index.js");
                 var isGeneratorFunction = __webpack_require__("./node_modules/is-generator-function/index.js");
@@ -7712,8 +7779,8 @@
                 function uncurryThis(f) {
                     return f.call.bind(f);
                 }
-                var BigIntSupported = 'undefined' != typeof BigInt;
-                var SymbolSupported = 'undefined' != typeof Symbol;
+                var BigIntSupported = "u" > typeof BigInt;
+                var SymbolSupported = "u" > typeof Symbol;
                 var ObjectToString = uncurryThis(Object.prototype.toString);
                 var numberValue = uncurryThis(Number.prototype.valueOf);
                 var stringValue = uncurryThis(String.prototype.valueOf);
@@ -7733,11 +7800,11 @@
                 exports1.isGeneratorFunction = isGeneratorFunction;
                 exports1.isTypedArray = isTypedArray;
                 function isPromise(input) {
-                    return 'undefined' != typeof Promise && input instanceof Promise || null !== input && 'object' == typeof input && 'function' == typeof input.then && 'function' == typeof input.catch;
+                    return "u" > typeof Promise && input instanceof Promise || null !== input && 'object' == typeof input && 'function' == typeof input.then && 'function' == typeof input.catch;
                 }
                 exports1.isPromise = isPromise;
                 function isArrayBufferView(value) {
-                    if ('undefined' != typeof ArrayBuffer && ArrayBuffer.isView) return ArrayBuffer.isView(value);
+                    if ("u" > typeof ArrayBuffer && ArrayBuffer.isView) return ArrayBuffer.isView(value);
                     return isTypedArray(value) || isDataView(value);
                 }
                 exports1.isArrayBufferView = isArrayBufferView;
@@ -7788,34 +7855,34 @@
                 function isMapToString(value) {
                     return '[object Map]' === ObjectToString(value);
                 }
-                isMapToString.working = 'undefined' != typeof Map && isMapToString(new Map());
+                isMapToString.working = "u" > typeof Map && isMapToString(new Map());
                 function isMap(value) {
-                    if ('undefined' == typeof Map) return false;
+                    if ("u" < typeof Map) return false;
                     return isMapToString.working ? isMapToString(value) : value instanceof Map;
                 }
                 exports1.isMap = isMap;
                 function isSetToString(value) {
                     return '[object Set]' === ObjectToString(value);
                 }
-                isSetToString.working = 'undefined' != typeof Set && isSetToString(new Set());
+                isSetToString.working = "u" > typeof Set && isSetToString(new Set());
                 function isSet(value) {
-                    if ('undefined' == typeof Set) return false;
+                    if ("u" < typeof Set) return false;
                     return isSetToString.working ? isSetToString(value) : value instanceof Set;
                 }
                 exports1.isSet = isSet;
                 function isWeakMapToString(value) {
                     return '[object WeakMap]' === ObjectToString(value);
                 }
-                isWeakMapToString.working = 'undefined' != typeof WeakMap && isWeakMapToString(new WeakMap());
+                isWeakMapToString.working = "u" > typeof WeakMap && isWeakMapToString(new WeakMap());
                 function isWeakMap(value) {
-                    if ('undefined' == typeof WeakMap) return false;
+                    if ("u" < typeof WeakMap) return false;
                     return isWeakMapToString.working ? isWeakMapToString(value) : value instanceof WeakMap;
                 }
                 exports1.isWeakMap = isWeakMap;
                 function isWeakSetToString(value) {
                     return '[object WeakSet]' === ObjectToString(value);
                 }
-                isWeakSetToString.working = 'undefined' != typeof WeakSet && isWeakSetToString(new WeakSet());
+                isWeakSetToString.working = "u" > typeof WeakSet && isWeakSetToString(new WeakSet());
                 function isWeakSet(value) {
                     return isWeakSetToString(value);
                 }
@@ -7823,22 +7890,22 @@
                 function isArrayBufferToString(value) {
                     return '[object ArrayBuffer]' === ObjectToString(value);
                 }
-                isArrayBufferToString.working = 'undefined' != typeof ArrayBuffer && isArrayBufferToString(new ArrayBuffer());
+                isArrayBufferToString.working = "u" > typeof ArrayBuffer && isArrayBufferToString(new ArrayBuffer());
                 function isArrayBuffer(value) {
-                    if ('undefined' == typeof ArrayBuffer) return false;
+                    if ("u" < typeof ArrayBuffer) return false;
                     return isArrayBufferToString.working ? isArrayBufferToString(value) : value instanceof ArrayBuffer;
                 }
                 exports1.isArrayBuffer = isArrayBuffer;
                 function isDataViewToString(value) {
                     return '[object DataView]' === ObjectToString(value);
                 }
-                isDataViewToString.working = 'undefined' != typeof ArrayBuffer && 'undefined' != typeof DataView && isDataViewToString(new DataView(new ArrayBuffer(1), 0, 1));
+                isDataViewToString.working = "u" > typeof ArrayBuffer && "u" > typeof DataView && isDataViewToString(new DataView(new ArrayBuffer(1), 0, 1));
                 function isDataView(value) {
-                    if ('undefined' == typeof DataView) return false;
+                    if ("u" < typeof DataView) return false;
                     return isDataViewToString.working ? isDataViewToString(value) : value instanceof DataView;
                 }
                 exports1.isDataView = isDataView;
-                var SharedArrayBufferCopy = 'undefined' != typeof SharedArrayBuffer ? SharedArrayBuffer : void 0;
+                var SharedArrayBufferCopy = "u" > typeof SharedArrayBuffer ? SharedArrayBuffer : void 0;
                 function isSharedArrayBufferToString(value) {
                     return '[object SharedArrayBuffer]' === ObjectToString(value);
                 }
@@ -7893,7 +7960,7 @@
                 }
                 exports1.isBoxedPrimitive = isBoxedPrimitive;
                 function isAnyArrayBuffer(value) {
-                    return 'undefined' != typeof Uint8Array && (isArrayBuffer(value) || isSharedArrayBuffer(value));
+                    return "u" > typeof Uint8Array && (isArrayBuffer(value) || isSharedArrayBuffer(value));
                 }
                 exports1.isAnyArrayBuffer = isAnyArrayBuffer;
                 [
@@ -7909,7 +7976,7 @@
                     });
                 });
             },
-            "./node_modules/util/util.js" (__unused_webpack_module, exports1, __webpack_require__) {
+            "./node_modules/util/util.js" (__unused_rspack_module, exports1, __webpack_require__) {
                 var process = __webpack_require__("./node_modules/process/browser.js");
                 var getOwnPropertyDescriptors = Object.getOwnPropertyDescriptors || function(obj) {
                     var keys = Object.keys(obj);
@@ -8299,7 +8366,7 @@
                 function hasOwnProperty(obj, prop) {
                     return Object.prototype.hasOwnProperty.call(obj, prop);
                 }
-                var kCustomPromisifiedSymbol = 'undefined' != typeof Symbol ? Symbol('util.promisify.custom') : void 0;
+                var kCustomPromisifiedSymbol = "u" > typeof Symbol ? Symbol('util.promisify.custom') : void 0;
                 exports1.promisify = function(original) {
                     if ('function' != typeof original) throw new TypeError('The "original" argument must be of type Function');
                     if (kCustomPromisifiedSymbol && original[kCustomPromisifiedSymbol]) {
@@ -8379,7 +8446,7 @@
                     return '[object Array]' == toString.call(arr);
                 };
             },
-            "./node_modules/websocket-stream/node_modules/readable-stream/lib/_stream_duplex.js" (module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/websocket-stream/node_modules/readable-stream/lib/_stream_duplex.js" (module1, __unused_rspack_exports, __webpack_require__) {
                 "use strict";
                 var pna = __webpack_require__("./node_modules/process-nextick-args/index.js");
                 var objectKeys = Object.keys || function(obj) {
@@ -8438,7 +8505,7 @@
                     pna.nextTick(cb, err);
                 };
             },
-            "./node_modules/websocket-stream/node_modules/readable-stream/lib/_stream_passthrough.js" (module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/websocket-stream/node_modules/readable-stream/lib/_stream_passthrough.js" (module1, __unused_rspack_exports, __webpack_require__) {
                 "use strict";
                 module1.exports = PassThrough;
                 var Transform = __webpack_require__("./node_modules/websocket-stream/node_modules/readable-stream/lib/_stream_transform.js");
@@ -8453,7 +8520,7 @@
                     cb(null, chunk);
                 };
             },
-            "./node_modules/websocket-stream/node_modules/readable-stream/lib/_stream_readable.js" (module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/websocket-stream/node_modules/readable-stream/lib/_stream_readable.js" (module1, __unused_rspack_exports, __webpack_require__) {
                 "use strict";
                 var process = __webpack_require__("./node_modules/process/browser.js");
                 var pna = __webpack_require__("./node_modules/process-nextick-args/index.js");
@@ -8467,7 +8534,7 @@
                 };
                 var Stream = __webpack_require__("./node_modules/websocket-stream/node_modules/readable-stream/lib/internal/streams/stream-browser.js");
                 var Buffer = __webpack_require__("./node_modules/websocket-stream/node_modules/safe-buffer/index.js").Buffer;
-                var OurUint8Array = (void 0 !== __webpack_require__.g ? __webpack_require__.g : 'undefined' != typeof window ? window : 'undefined' != typeof self ? self : {}).Uint8Array || function() {};
+                var OurUint8Array = (void 0 !== __webpack_require__.g ? __webpack_require__.g : "u" > typeof window ? window : "u" > typeof self ? self : {}).Uint8Array || function() {};
                 function _uint8ArrayToBuffer(chunk) {
                     return Buffer.from(chunk);
                 }
@@ -9097,7 +9164,7 @@
                     return -1;
                 }
             },
-            "./node_modules/websocket-stream/node_modules/readable-stream/lib/_stream_transform.js" (module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/websocket-stream/node_modules/readable-stream/lib/_stream_transform.js" (module1, __unused_rspack_exports, __webpack_require__) {
                 "use strict";
                 module1.exports = Transform;
                 var Duplex = __webpack_require__("./node_modules/websocket-stream/node_modules/readable-stream/lib/_stream_duplex.js");
@@ -9182,7 +9249,7 @@
                     return stream.push(null);
                 }
             },
-            "./node_modules/websocket-stream/node_modules/readable-stream/lib/_stream_writable.js" (module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/websocket-stream/node_modules/readable-stream/lib/_stream_writable.js" (module1, __unused_rspack_exports, __webpack_require__) {
                 "use strict";
                 var process = __webpack_require__("./node_modules/process/browser.js");
                 var pna = __webpack_require__("./node_modules/process-nextick-args/index.js");
@@ -9208,7 +9275,7 @@
                 };
                 var Stream = __webpack_require__("./node_modules/websocket-stream/node_modules/readable-stream/lib/internal/streams/stream-browser.js");
                 var Buffer = __webpack_require__("./node_modules/websocket-stream/node_modules/safe-buffer/index.js").Buffer;
-                var OurUint8Array = (void 0 !== __webpack_require__.g ? __webpack_require__.g : 'undefined' != typeof window ? window : 'undefined' != typeof self ? self : {}).Uint8Array || function() {};
+                var OurUint8Array = (void 0 !== __webpack_require__.g ? __webpack_require__.g : "u" > typeof window ? window : "u" > typeof self ? self : {}).Uint8Array || function() {};
                 function _uint8ArrayToBuffer(chunk) {
                     return Buffer.from(chunk);
                 }
@@ -9593,7 +9660,7 @@
                     cb(err);
                 };
             },
-            "./node_modules/websocket-stream/node_modules/readable-stream/lib/internal/streams/BufferList.js" (module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/websocket-stream/node_modules/readable-stream/lib/internal/streams/BufferList.js" (module1, __unused_rspack_exports, __webpack_require__) {
                 "use strict";
                 function _classCallCheck(instance, Constructor) {
                     if (!(instance instanceof Constructor)) throw new TypeError("Cannot call a class as a function");
@@ -9669,7 +9736,7 @@
                     return this.constructor.name + ' ' + obj;
                 };
             },
-            "./node_modules/websocket-stream/node_modules/readable-stream/lib/internal/streams/destroy.js" (module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/websocket-stream/node_modules/readable-stream/lib/internal/streams/destroy.js" (module1, __unused_rspack_exports, __webpack_require__) {
                 "use strict";
                 var pna = __webpack_require__("./node_modules/process-nextick-args/index.js");
                 function destroy(err, cb) {
@@ -9724,7 +9791,7 @@
                     undestroy: undestroy
                 };
             },
-            "./node_modules/websocket-stream/node_modules/readable-stream/lib/internal/streams/stream-browser.js" (module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/websocket-stream/node_modules/readable-stream/lib/internal/streams/stream-browser.js" (module1, __unused_rspack_exports, __webpack_require__) {
                 module1.exports = __webpack_require__("./node_modules/events/events.js").EventEmitter;
             },
             "./node_modules/websocket-stream/node_modules/readable-stream/readable-browser.js" (module1, exports1, __webpack_require__) {
@@ -9772,7 +9839,7 @@
                     return buffer.SlowBuffer(size);
                 };
             },
-            "./node_modules/websocket-stream/node_modules/string_decoder/lib/string_decoder.js" (__unused_webpack_module, exports1, __webpack_require__) {
+            "./node_modules/websocket-stream/node_modules/string_decoder/lib/string_decoder.js" (__unused_rspack_module, exports1, __webpack_require__) {
                 "use strict";
                 var Buffer = __webpack_require__("./node_modules/websocket-stream/node_modules/safe-buffer/index.js").Buffer;
                 var isEncoding = Buffer.isEncoding || function(encoding) {
@@ -9999,7 +10066,7 @@
                     return buf && buf.length ? this.write(buf) : '';
                 }
             },
-            "./node_modules/websocket-stream/stream.js" (module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/websocket-stream/stream.js" (module1, __unused_rspack_exports, __webpack_require__) {
                 "use strict";
                 var process = __webpack_require__("./node_modules/process/browser.js");
                 var Transform = __webpack_require__("./node_modules/websocket-stream/node_modules/readable-stream/readable-browser.js").Transform;
@@ -10106,12 +10173,12 @@
             },
             "./node_modules/websocket-stream/ws-fallback.js" (module1) {
                 var ws = null;
-                if ('undefined' != typeof WebSocket) ws = WebSocket;
-                else if ('undefined' != typeof MozWebSocket) ws = MozWebSocket;
-                else if ('undefined' != typeof window) ws = window.WebSocket || window.MozWebSocket;
+                if ("u" > typeof WebSocket) ws = WebSocket;
+                else if ("u" > typeof MozWebSocket) ws = MozWebSocket;
+                else if ("u" > typeof window) ws = window.WebSocket || window.MozWebSocket;
                 module1.exports = ws;
             },
-            "./node_modules/which-typed-array/index.js" (module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/which-typed-array/index.js" (module1, __unused_rspack_exports, __webpack_require__) {
                 "use strict";
                 var forEach = __webpack_require__("./node_modules/for-each/index.js");
                 var availableTypedArrays = __webpack_require__("./node_modules/available-typed-arrays/index.js");
@@ -10121,7 +10188,7 @@
                 var getProto = __webpack_require__("./node_modules/get-proto/index.js");
                 var $toString = callBound('Object.prototype.toString');
                 var hasToStringTag = __webpack_require__("./node_modules/has-tostringtag/shams.js")();
-                var g = 'undefined' == typeof globalThis ? __webpack_require__.g : globalThis;
+                var g = "u" < typeof globalThis ? __webpack_require__.g : globalThis;
                 var typedArrays = availableTypedArrays();
                 var $slice = callBound('String.prototype.slice');
                 var $indexOf = callBound('Array.prototype.indexOf', true) || function(array, value) {
@@ -10376,7 +10443,7 @@
                 }
                 module1.exports = insertStyleElement;
             },
-            "./node_modules/@rsbuild/core/compiled/style-loader/runtime/setAttributesWithoutAttributes.js" (module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/@rsbuild/core/compiled/style-loader/runtime/setAttributesWithoutAttributes.js" (module1, __unused_rspack_exports, __webpack_require__) {
                 "use strict";
                 function setAttributesWithoutAttributes(styleElement) {
                     var nonce = __webpack_require__.nc;
@@ -10397,7 +10464,7 @@
                     if (obj.media) css += "}";
                     if (obj.supports) css += "}";
                     var sourceMap = obj.sourceMap;
-                    if (sourceMap && "undefined" != typeof btoa) css += "\n/*# sourceMappingURL=data:application/json;base64,".concat(btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))), " */");
+                    if (sourceMap && "u" > typeof btoa) css += "\n/*# sourceMappingURL=data:application/json;base64,".concat(btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))), " */");
                     options.styleTagTransform(css, styleElement, options.options);
                 }
                 function removeStyleElement(styleElement) {
@@ -10405,7 +10472,7 @@
                     styleElement.parentNode.removeChild(styleElement);
                 }
                 function domAPI(options) {
-                    if ("undefined" == typeof document) return {
+                    if ("u" < typeof document) return {
                         update: function() {},
                         remove: function() {}
                     };
@@ -10432,10 +10499,10 @@
                 }
                 module1.exports = styleTagTransform;
             },
-            "./node_modules/available-typed-arrays/index.js" (module1, __unused_webpack_exports, __webpack_require__) {
+            "./node_modules/available-typed-arrays/index.js" (module1, __unused_rspack_exports, __webpack_require__) {
                 "use strict";
                 var possibleNames = __webpack_require__("./node_modules/possible-typed-array-names/index.js");
-                var g = 'undefined' == typeof globalThis ? __webpack_require__.g : globalThis;
+                var g = "u" < typeof globalThis ? __webpack_require__.g : globalThis;
                 module1.exports = function() {
                     var out = [];
                     for(var i = 0; i < possibleNames.length; i++)if ('function' == typeof g[possibleNames[i]]) out[out.length] = possibleNames[i];
@@ -10486,7 +10553,7 @@
         })();
         (()=>{
             __webpack_require__.r = (exports1)=>{
-                if ('undefined' != typeof Symbol && Symbol.toStringTag) Object.defineProperty(exports1, Symbol.toStringTag, {
+                if ("u" > typeof Symbol && Symbol.toStringTag) Object.defineProperty(exports1, Symbol.toStringTag, {
                     value: 'Module'
                 });
                 Object.defineProperty(exports1, '__esModule', {
@@ -10670,11 +10737,40 @@
             var client = __webpack_require__("./node_modules/superagent/lib/client.js");
             var client_default = /*#__PURE__*/ __webpack_require__.n(client);
             var package_namespaceObject = {
-                rE: "13.6.1"
+                rE: "13.6.11"
             };
+            function isAudioEnabled(options) {
+                return Boolean(options.audio.enabled);
+            }
+            function setAudioEnabled(enabled, options) {
+                options.audio.enabled = enabled;
+                return options;
+            }
+            function isAutoPauseEnabled(options) {
+                return options.enableAutoPause && options.enablePause;
+            }
+            var util = __webpack_require__("./node_modules/util/util.js");
+            var util_default = /*#__PURE__*/ __webpack_require__.n(util);
+            function inspect(element) {
+                return util_default().inspect(element, {
+                    colors: false,
+                    compact: true,
+                    depth: 4,
+                    breakLength: 1 / 0
+                }).replace(/\s+/gu, " ").replace(/\r?\n/gu, "");
+            }
+            function pretty(anything) {
+                if (anything instanceof HTMLElement) {
+                    if (anything.id) return `#${anything.id}`;
+                    if (anything.className) return `.${anything.className}`;
+                    return "(No HTML identifier available)";
+                }
+                return inspect(anything);
+            }
+            const util_pretty = pretty;
             var defined = __webpack_require__("./node_modules/defined/index.js");
             var defined_default = /*#__PURE__*/ __webpack_require__.n(defined);
-            var LIBVERSION = '2.0.6', UA_MAX_LENGTH = 500, USER_AGENT = 'user-agent', EMPTY = '', UNKNOWN = '?', TYPEOF = {
+            var LIBVERSION = '2.0.7', UA_MAX_LENGTH = 500, USER_AGENT = 'user-agent', EMPTY = '', UNKNOWN = '?', TYPEOF = {
                 FUNCTION: 'function',
                 OBJECT: 'object',
                 STRING: 'string',
@@ -10925,7 +11021,7 @@
                         /(lunascape|maxthon|netfront|jasmine|blazer|sleipnir)[\/ ]?([\w\.]*)/i,
                         /(avant|iemobile|slim(?:browser|boat|jet))[\/ ]?([\d\.]*)/i,
                         /(?:ms|\()(ie) ([\w\.]+)/i,
-                        /(flock|rockmelt|midori|epiphany|silk|skyfire|ovibrowser|bolt|iron|vivaldi|iridium|phantomjs|bowser|qupzilla|falkon|rekonq|puffin|brave|whale(?!.+naver)|qqbrowserlite|duckduckgo|klar|helio|(?=comodo_)?dragon|otter|dooble|(?:lg |qute)browser|palemoon)\/([-\w\.]+)/i,
+                        /(atlas|flock|rockmelt|midori|epiphany|silk|skyfire|ovibrowser|bolt|iron|vivaldi|iridium|phantomjs|bowser|qupzilla|falkon|rekonq|puffin|brave|whale(?!.+naver)|qqbrowserlite|duckduckgo|klar|helio|(?=comodo_)?dragon|otter|dooble|(?:lg |qute)browser|palemoon)\/([-\w\.]+)/i,
                         /(heytap|ovi|115|surf|qwant)browser\/([\d\.]+)/i,
                         /(qwant)(?:ios|mobile)\/([\d\.]+)/i,
                         /(ecosia|weibo)(?:__| \w+@)([\d\.]+)/i
@@ -11169,7 +11265,7 @@
                         VERSION
                     ],
                     [
-                        /(lbbrowser|rekonq)/i
+                        /(lbbrowser|rekonq|steam(?= (clie|tenf|gameo)))/i
                     ],
                     [
                         NAME
@@ -11691,11 +11787,9 @@
                         ]
                     ],
                     [
-                        /\b(poco[\w ]+|m2\d{3}j\d\d[a-z]{2})(?: bui|\))/i,
                         /\b; (\w+) build\/hm\1/i,
                         /\b(hm[-_ ]?note?[_ ]?(?:\d\w)?) bui/i,
-                        /\b(redmi[\-_ ]?(?:note|k)?[\w_ ]+)(?: bui|\))/i,
-                        /oid[^\)]+; (m?[12][0-389][01]\w{3,6}[c-y])( bui|; wv|\))/i,
+                        /oid[^\)]+; (redmi[\-_ ]?(?:note|k)?[\w_ ]+|m?[12]\d[01]\d\w{3,6}|poco[\w ]+|(shark )?\w{3}-[ah]0|qin ?[1-3](s\+|ultra| pro)?)( bui|; wv|\))/i,
                         /\b(mi[-_ ]?(?:a\d|one|one[_ ]plus|note|max|cc)?[_ ]?(?:\d{0,2}\w?)[_ ]?(?:plus|se|lite|pro)?( 5g|lte)?)(?: bui|\))/i,
                         / ([\w ]+) miui\/v?\d/i
                     ],
@@ -12740,25 +12834,21 @@
                     [
                         /(ouya)/i,
                         /(nintendo) (\w+)/i,
-                        /(retroid) (pocket ([^\)]+))/i
+                        /(retroid) (pocket ([^\)]+))/i,
+                        /(valve).+(steam deck)/i,
+                        /droid.+; ((shield|rgcube|gr0006))( bui|\))/i
                     ],
                     [
-                        VENDOR,
-                        MODEL,
-                        [
-                            TYPE,
-                            CONSOLE
-                        ]
-                    ],
-                    [
-                        /droid.+; (shield)( bui|\))/i
-                    ],
-                    [
-                        MODEL,
                         [
                             VENDOR,
-                            NVIDIA
+                            strMapper,
+                            {
+                                Nvidia: 'Shield',
+                                Anbernic: 'RGCUBE',
+                                Logitech: 'GR0006'
+                            }
                         ],
+                        MODEL,
                         [
                             TYPE,
                             CONSOLE
@@ -12780,7 +12870,7 @@
                     ],
                     [
                         /((pebble))app/i,
-                        /(asus|google|lg|oppo) ((pixel |zen)?watch[\w ]*)( bui|\))/i
+                        /(asus|google|lg|oppo|xiaomi) ((pixel |zen)?watch[\w ]*)( bui|\))/i
                     ],
                     [
                         VENDOR,
@@ -13153,7 +13243,8 @@
                     ],
                     [
                         /[adehimnop]{4,7}\b(?:.*os ([\w]+) like mac|; opera)/i,
-                        /(?:ios;fbsv|ios(?=.+ip(?:ad|hone))|ip(?:ad|hone)(?: |.+i(?:pad)?)os)[\/ ]([\w\.]+)/i,
+                        /(?:ios;fbsv|ios(?=.+ip(?:ad|hone)|.+apple ?tv)|ip(?:ad|hone)(?: |.+i(?:pad)?)os|apple ?tv.+ios)[\/ ]([\w\.]+)/i,
+                        /\btvos ?([\w\.]+)/i,
                         /cfnetwork\/.+darwin/i
                     ],
                     [
@@ -13537,14 +13628,16 @@
                         return str || TYPEOF.UNDEFINED;
                     };
                 }
-                if (!NAVIGATOR_UADATA) IData.prototype.then = function(cb) {
+                IData.prototype.then = function(cb) {
                     var that = this;
                     var IDataResolve = function() {
                         for(var prop in that)if (that.hasOwnProperty(prop)) this[prop] = that[prop];
                     };
                     IDataResolve.prototype = {
                         is: IData.prototype.is,
-                        toString: IData.prototype.toString
+                        toString: IData.prototype.toString,
+                        withClientHints: IData.prototype.withClientHints,
+                        withFeatureCheck: IData.prototype.withFeatureCheck
                     };
                     var resolveData = new IDataResolve();
                     cb(resolveData);
@@ -13596,116 +13689,6 @@
                 else for(var prop in uach)if (this.hasOwnProperty(prop) && typeof uach[prop] !== TYPEOF.UNDEFINED) this[prop] = uach[prop];
             }
             function UAItem(itemType, ua, rgxMap, uaCH) {
-                this.get = function(prop) {
-                    if (!prop) return this.data;
-                    return this.data.hasOwnProperty(prop) ? this.data[prop] : void 0;
-                };
-                this.set = function(prop, val) {
-                    this.data[prop] = val;
-                    return this;
-                };
-                this.setCH = function(ch) {
-                    this.uaCH = ch;
-                    return this;
-                };
-                this.detectFeature = function() {
-                    if (NAVIGATOR && NAVIGATOR.userAgent == this.ua) switch(this.itemType){
-                        case BROWSER:
-                            if (NAVIGATOR.brave && typeof NAVIGATOR.brave.isBrave == TYPEOF.FUNCTION) this.set(NAME, 'Brave');
-                            break;
-                        case DEVICE:
-                            if (!this.get(TYPE) && NAVIGATOR_UADATA && NAVIGATOR_UADATA[MOBILE]) this.set(TYPE, MOBILE);
-                            if ('Macintosh' == this.get(MODEL) && NAVIGATOR && typeof NAVIGATOR.standalone !== TYPEOF.UNDEFINED && NAVIGATOR.maxTouchPoints && NAVIGATOR.maxTouchPoints > 2) this.set(MODEL, 'iPad').set(TYPE, TABLET);
-                            break;
-                        case OS:
-                            if (!this.get(NAME) && NAVIGATOR_UADATA && NAVIGATOR_UADATA[PLATFORM]) this.set(NAME, NAVIGATOR_UADATA[PLATFORM]);
-                            break;
-                        case RESULT:
-                            var data = this.data;
-                            var detect = function(itemType) {
-                                return data[itemType].getItem().detectFeature().get();
-                            };
-                            this.set(BROWSER, detect(BROWSER)).set(CPU, detect(CPU)).set(DEVICE, detect(DEVICE)).set(ENGINE, detect(ENGINE)).set(OS, detect(OS));
-                    }
-                    return this;
-                };
-                this.parseUA = function() {
-                    if (this.itemType != RESULT) rgxMapper.call(this.data, this.ua, this.rgxMap);
-                    switch(this.itemType){
-                        case BROWSER:
-                            this.set(MAJOR, majorize(this.get(VERSION)));
-                            break;
-                        case OS:
-                            if ('iOS' == this.get(NAME) && '18.6' == this.get(VERSION)) {
-                                var realVersion = /\) Version\/([\d\.]+)/.exec(this.ua);
-                                if (realVersion && parseInt(realVersion[1].substring(0, 2), 10) >= 26) this.set(VERSION, realVersion[1]);
-                            }
-                            break;
-                    }
-                    return this;
-                };
-                this.parseCH = function() {
-                    var uaCH = this.uaCH, rgxMap = this.rgxMap;
-                    switch(this.itemType){
-                        case BROWSER:
-                        case ENGINE:
-                            var brands = uaCH[FULLVERLIST] || uaCH[BRANDS], prevName;
-                            if (brands) for(var i = 0; i < brands.length; i++){
-                                var brandName = brands[i].brand || brands[i], brandVersion = brands[i].version;
-                                if (this.itemType == BROWSER && !/not.a.brand/i.test(brandName) && (!prevName || /Chrom/.test(prevName) && brandName != CHROMIUM || prevName == EDGE && /WebView2/.test(brandName))) {
-                                    brandName = strMapper(brandName, browserHintsMap);
-                                    prevName = this.get(NAME);
-                                    if (!(prevName && !/Chrom/.test(prevName) && /Chrom/.test(brandName))) this.set(NAME, brandName).set(VERSION, brandVersion).set(MAJOR, majorize(brandVersion));
-                                    prevName = brandName;
-                                }
-                                if (this.itemType == ENGINE && brandName == CHROMIUM) this.set(VERSION, brandVersion);
-                            }
-                            break;
-                        case CPU:
-                            var archName = uaCH[ARCHITECTURE];
-                            if (archName) {
-                                if (archName && '64' == uaCH[BITNESS]) archName += '64';
-                                rgxMapper.call(this.data, archName + ';', rgxMap);
-                            }
-                            break;
-                        case DEVICE:
-                            if (uaCH[MOBILE]) this.set(TYPE, MOBILE);
-                            if (uaCH[MODEL]) {
-                                this.set(MODEL, uaCH[MODEL]);
-                                if (!this.get(TYPE) || !this.get(VENDOR)) {
-                                    var reParse = {};
-                                    rgxMapper.call(reParse, 'droid 9; ' + uaCH[MODEL] + ')', rgxMap);
-                                    if (!this.get(TYPE) && !!reParse.type) this.set(TYPE, reParse.type);
-                                    if (!this.get(VENDOR) && !!reParse.vendor) this.set(VENDOR, reParse.vendor);
-                                }
-                            }
-                            if (uaCH[FORMFACTORS]) {
-                                var ff;
-                                if ('string' != typeof uaCH[FORMFACTORS]) {
-                                    var idx = 0;
-                                    while(!ff && idx < uaCH[FORMFACTORS].length)ff = strMapper(uaCH[FORMFACTORS][idx++], formFactorsMap);
-                                } else ff = strMapper(uaCH[FORMFACTORS], formFactorsMap);
-                                this.set(TYPE, ff);
-                            }
-                            break;
-                        case OS:
-                            var osName = uaCH[PLATFORM];
-                            if (osName) {
-                                var osVersion = uaCH[PLATFORMVER];
-                                if (osName == WINDOWS) osVersion = parseInt(majorize(osVersion), 10) >= 13 ? '11' : '10';
-                                this.set(NAME, osName).set(VERSION, osVersion);
-                            }
-                            if (this.get(NAME) == WINDOWS && 'Xbox' == uaCH[MODEL]) this.set(NAME, 'Xbox').set(VERSION, void 0);
-                            break;
-                        case RESULT:
-                            var data = this.data;
-                            var parse = function(itemType) {
-                                return data[itemType].getItem().setCH(uaCH).parseCH().get();
-                            };
-                            this.set(BROWSER, parse(BROWSER)).set(CPU, parse(CPU)).set(DEVICE, parse(DEVICE)).set(ENGINE, parse(ENGINE)).set(OS, parse(OS));
-                    }
-                    return this;
-                };
                 setProps.call(this, [
                     [
                         'itemType',
@@ -13730,6 +13713,116 @@
                 ]);
                 return this;
             }
+            UAItem.prototype.get = function(prop) {
+                if (!prop) return this.data;
+                return this.data.hasOwnProperty(prop) ? this.data[prop] : void 0;
+            };
+            UAItem.prototype.set = function(prop, val) {
+                this.data[prop] = val;
+                return this;
+            };
+            UAItem.prototype.setCH = function(ch) {
+                this.uaCH = ch;
+                return this;
+            };
+            UAItem.prototype.detectFeature = function() {
+                if (NAVIGATOR && NAVIGATOR.userAgent == this.ua) switch(this.itemType){
+                    case BROWSER:
+                        if (NAVIGATOR.brave && typeof NAVIGATOR.brave.isBrave == TYPEOF.FUNCTION) this.set(NAME, 'Brave');
+                        break;
+                    case DEVICE:
+                        if (!this.get(TYPE) && NAVIGATOR_UADATA && NAVIGATOR_UADATA[MOBILE]) this.set(TYPE, MOBILE);
+                        if ('Macintosh' == this.get(MODEL) && NAVIGATOR && typeof NAVIGATOR.standalone !== TYPEOF.UNDEFINED && NAVIGATOR.maxTouchPoints && NAVIGATOR.maxTouchPoints > 2) this.set(MODEL, 'iPad').set(TYPE, TABLET);
+                        break;
+                    case OS:
+                        if (!this.get(NAME) && NAVIGATOR_UADATA && NAVIGATOR_UADATA[PLATFORM]) this.set(NAME, NAVIGATOR_UADATA[PLATFORM]);
+                        break;
+                    case RESULT:
+                        var data = this.data;
+                        var detect = function(itemType) {
+                            return data[itemType].getItem().detectFeature().get();
+                        };
+                        this.set(BROWSER, detect(BROWSER)).set(CPU, detect(CPU)).set(DEVICE, detect(DEVICE)).set(ENGINE, detect(ENGINE)).set(OS, detect(OS));
+                }
+                return this;
+            };
+            UAItem.prototype.parseUA = function() {
+                if (this.itemType != RESULT) rgxMapper.call(this.data, this.ua, this.rgxMap);
+                switch(this.itemType){
+                    case BROWSER:
+                        this.set(MAJOR, majorize(this.get(VERSION)));
+                        break;
+                    case OS:
+                        if ('iOS' == this.get(NAME) && '18.6' == this.get(VERSION)) {
+                            var realVersion = /\) Version\/([\d\.]+)/.exec(this.ua);
+                            if (realVersion && parseInt(realVersion[1].substring(0, 2), 10) >= 26) this.set(VERSION, realVersion[1]);
+                        }
+                        break;
+                }
+                return this;
+            };
+            UAItem.prototype.parseCH = function() {
+                var uaCH = this.uaCH, rgxMap = this.rgxMap;
+                switch(this.itemType){
+                    case BROWSER:
+                    case ENGINE:
+                        var brands = uaCH[FULLVERLIST] || uaCH[BRANDS], prevName;
+                        if (brands) for(var i = 0; i < brands.length; i++){
+                            var brandName = brands[i].brand || brands[i], brandVersion = brands[i].version;
+                            if (this.itemType == BROWSER && !/not.a.brand/i.test(brandName) && (!prevName || /Chrom/.test(prevName) && brandName != CHROMIUM || prevName == EDGE && /WebView2/.test(brandName))) {
+                                brandName = strMapper(brandName, browserHintsMap);
+                                prevName = this.get(NAME);
+                                if (!(prevName && !/Chrom/.test(prevName) && /Chrom/.test(brandName))) this.set(NAME, brandName).set(VERSION, brandVersion).set(MAJOR, majorize(brandVersion));
+                                prevName = brandName;
+                            }
+                            if (this.itemType == ENGINE && brandName == CHROMIUM) this.set(VERSION, brandVersion);
+                        }
+                        break;
+                    case CPU:
+                        var archName = uaCH[ARCHITECTURE];
+                        if (archName) {
+                            if (archName && '64' == uaCH[BITNESS]) archName += '64';
+                            rgxMapper.call(this.data, archName + ';', rgxMap);
+                        }
+                        break;
+                    case DEVICE:
+                        if (uaCH[MOBILE]) this.set(TYPE, MOBILE);
+                        if (uaCH[MODEL]) {
+                            this.set(MODEL, uaCH[MODEL]);
+                            if (!this.get(TYPE) || !this.get(VENDOR)) {
+                                var reParse = {};
+                                rgxMapper.call(reParse, 'droid 9; ' + uaCH[MODEL] + ')', rgxMap);
+                                if (!this.get(TYPE) && !!reParse.type) this.set(TYPE, reParse.type);
+                                if (!this.get(VENDOR) && !!reParse.vendor) this.set(VENDOR, reParse.vendor);
+                            }
+                        }
+                        if (uaCH[FORMFACTORS]) {
+                            var ff;
+                            if ('string' != typeof uaCH[FORMFACTORS]) {
+                                var idx = 0;
+                                while(!ff && idx < uaCH[FORMFACTORS].length)ff = strMapper(uaCH[FORMFACTORS][idx++], formFactorsMap);
+                            } else ff = strMapper(uaCH[FORMFACTORS], formFactorsMap);
+                            this.set(TYPE, ff);
+                        }
+                        break;
+                    case OS:
+                        var osName = uaCH[PLATFORM];
+                        if (osName) {
+                            var osVersion = uaCH[PLATFORMVER];
+                            if (osName == WINDOWS) osVersion = parseInt(majorize(osVersion), 10) >= 13 ? '11' : '10';
+                            this.set(NAME, osName).set(VERSION, osVersion);
+                        }
+                        if (this.get(NAME) == WINDOWS && 'Xbox' == uaCH[MODEL]) this.set(NAME, 'Xbox').set(VERSION, void 0);
+                        break;
+                    case RESULT:
+                        var data = this.data;
+                        var parse = function(itemType) {
+                            return data[itemType].getItem().setCH(uaCH).parseCH().get();
+                        };
+                        this.set(BROWSER, parse(BROWSER)).set(CPU, parse(CPU)).set(DEVICE, parse(DEVICE)).set(ENGINE, parse(ENGINE)).set(OS, parse(OS));
+                }
+                return this;
+            };
             function UAParser(ua, extensions, headers) {
                 if (typeof ua === TYPEOF.OBJECT) {
                     if (isExtensions(ua, true)) {
@@ -13901,7 +13994,7 @@
                     });
                 }
                 getUsefulData() {
-                    return {
+                    const data = {
                         ua: this.result.ua,
                         browser: this.result.browser,
                         cpu: this.result.cpu,
@@ -13909,6 +14002,7 @@
                         engine: this.result.engine,
                         os: this.result.os
                     };
+                    return data;
                 }
             }
             const util_Browser = Browser;
@@ -13918,35 +14012,6 @@
                 return getBrowser_browser;
             }
             const util_getBrowser = getBrowser;
-            function isAudioEnabled(options) {
-                return Boolean(options.audio.enabled);
-            }
-            function setAudioEnabled(enabled, options) {
-                options.audio.enabled = enabled;
-                return options;
-            }
-            function isAutoPauseEnabled(options) {
-                return options.enableAutoPause && options.enablePause;
-            }
-            var util = __webpack_require__("./node_modules/util/util.js");
-            var util_default = /*#__PURE__*/ __webpack_require__.n(util);
-            function inspect(element) {
-                return util_default().inspect(element, {
-                    colors: false,
-                    compact: true,
-                    depth: 4,
-                    breakLength: 1 / 0
-                }).replace(/\s+/gu, " ").replace(/\r?\n/gu, "");
-            }
-            function pretty(anything) {
-                if (anything instanceof HTMLElement) {
-                    if (anything.id) return `#${anything.id}`;
-                    if (anything.className) return `.${anything.className}`;
-                    return "(No HTML identifier available)";
-                }
-                return inspect(anything);
-            }
-            const util_pretty = pretty;
             class HTTPVideomailError extends Error {
                 code;
                 status;
@@ -14030,7 +14095,6 @@
                 let explanation = errorParams.explanation;
                 const classList = errorParams.classList ?? [];
                 const audioEnabled = isAudioEnabled(options);
-                const browser = util_getBrowser(options);
                 const errName = err?.name ?? err?.constructor.name;
                 switch(errName){
                     case error_VideomailError.SECURITY_ERROR:
@@ -14077,9 +14141,9 @@
                         classList.push(error_VideomailError.WEBCAM_PROBLEM);
                         break;
                     case "HARDWARE_UNAVAILABLE":
+                    case "AbortError":
                         message = "Webcam is unavailable";
                         explanation = "Maybe it is already busy in another window?";
-                        if (browser.isChromeBased() || browser.isFirefox()) explanation += " Or you have to allow access above?";
                         classList.push(error_VideomailError.WEBCAM_PROBLEM);
                         break;
                     case "NO_VIDEO_FEED":
@@ -14712,6 +14776,8 @@
                     if (!newVideomail.versions) newVideomail.versions = {};
                     newVideomail.versions.videomailClient = package_namespaceObject.rE;
                     newVideomail.recordLocation = window.location.href;
+                    const browser = util_getBrowser(this.options);
+                    newVideomail.browserStats = browser.getUsefulData();
                     try {
                         let res;
                         if (this.options.callbacks.adjustFormDataBeforePosting) {
@@ -14884,6 +14950,7 @@
                 reportErrors: true,
                 disableFormWhenSubmitting: true,
                 fakeUaString: void 0,
+                recalculateDimensionsOnWindowResize: false,
                 versions: {
                     videomailNinjaFormPlugin: void 0
                 }
@@ -15963,7 +16030,7 @@
                     if (this.options.video.stretch) {
                         const heightDimension = this.visuals.getRecorderHeight(true, true);
                         this.notifyElement.style.width = "auto";
-                        this.notifyElement.style.height = `${heightDimension.value}${heightDimension.unit}`;
+                        if (heightDimension) this.notifyElement.style.height = `${heightDimension.value}${heightDimension.unit}`;
                     } else {
                         let heightDimension;
                         let widthDimension = dimensions_useFullWidth(this.options.video.mobileBreakPoint);
@@ -16113,7 +16180,7 @@
             var animitter = __webpack_require__("./node_modules/animitter/index.js");
             var animitter_default = /*#__PURE__*/ __webpack_require__.n(animitter);
             var typedarray_to_buffer = __webpack_require__("./node_modules/typedarray-to-buffer/index.js");
-            const canvas_to_buffer_modern_e = "undefined" != typeof document && "function" == typeof document.createElement, canvas_to_buffer_modern_i = canvas_to_buffer_modern_e ? [
+            const canvas_to_buffer_modern_e = "u" > typeof document && "function" == typeof document.createElement, canvas_to_buffer_modern_i = canvas_to_buffer_modern_e ? [
                 "webp",
                 "jpeg"
             ] : [
@@ -16216,7 +16283,7 @@
                 return dimension;
             }
             const dimensions_calculateHeight = calculateHeight;
-            function calculateWidth(responsive, videoHeight, options, ratio) {
+            function calculateWidth(responsive, options, videoHeight, ratio) {
                 const dimension = {
                     unit: "px"
                 };
@@ -16595,14 +16662,11 @@
                     return videoWidth && videoWidth > 0;
                 }
                 getRawWidth(responsive) {
-                    let rawWidth = this.getVideoWidth();
+                    let rawWidth;
                     const widthDimension = {
                         unit: "px"
                     };
-                    if (this.options.video.width || this.options.video.height) if (responsive) {
-                        const dimension = this.recorder.calculateWidth(responsive);
-                        rawWidth = dimension.value;
-                    } else rawWidth = this.options.video.width;
+                    rawWidth = responsive ? this.getVideoWidth() : this.options.video.width ? this.options.video.width : this.getVideoWidth();
                     if (responsive) {
                         const widthDimension = this.recorder.limitWidth(rawWidth);
                         rawWidth = widthDimension?.value;
@@ -16612,27 +16676,12 @@
                 }
                 getRawHeight(responsive) {
                     let rawHeight;
-                    if (this.options.video.width || this.options.video.height) {
-                        const heightDimension = this.recorder.calculateHeight(responsive);
-                        rawHeight = heightDimension.value;
-                        if (!rawHeight || rawHeight < 1) throw error_createError({
-                            message: "Bad dimensions",
-                            explanation: "Calculated raw height cannot be less than 1!",
-                            options: this.options
-                        });
-                    } else {
-                        rawHeight = this.getVideoHeight();
-                        if (void 0 === rawHeight) throw error_createError({
-                            message: "Bad dimensions",
-                            explanation: "Raw video height from DOM element cannot be undefined.",
-                            options: this.options
-                        });
-                        if (rawHeight < 1) throw error_createError({
-                            message: "Bad dimensions",
-                            explanation: "Raw video height from DOM element cannot be less than 1.",
-                            options: this.options
-                        });
-                    }
+                    if (responsive) {
+                        rawHeight = this.options.video.height || this.getVideoHeight();
+                        const ratio = this.recorder.getRatio();
+                        const rawWidth = this.getRawWidth(responsive);
+                        if (void 0 !== ratio && rawWidth.value) rawHeight = rawWidth.value * ratio;
+                    } else rawHeight = this.options.video.height ? this.options.video.height : this.getVideoHeight();
                     if (responsive) {
                         const heightDimension = this.recorder.limitHeight(rawHeight);
                         rawHeight = heightDimension.value;
@@ -16861,7 +16910,7 @@
                     this.emit("PREVIEW", {
                         key: this.key,
                         width: widthDimension?.value,
-                        height: heightDimension.value,
+                        height: heightDimension?.value,
                         hasAudio,
                         duration
                     });
@@ -16872,9 +16921,9 @@
                 initSocket(cb) {
                     if (!this.connected) {
                         this.connecting = true;
-                        this.options.logger.debug(`Recorder: initializing web socket to ${this.options.socketUrl}`);
                         this.emit("CONNECTING");
                         const url2Connect = `${this.options.socketUrl}?${encodeURIComponent(constants.SITE_NAME_LABEL)}=${encodeURIComponent(this.options.siteName)}`;
+                        this.options.logger.debug(`Recorder: initializing web socket to ${url2Connect}`);
                         try {
                             this.stream = stream_default()(url2Connect, {
                                 perMessageDeflate: false,
@@ -17469,7 +17518,7 @@
                         }
                         if (this.options.video.height) {
                             const recorderHeight = this.getRecorderHeight(true);
-                            if (recorderHeight.value) this.recorderElement.height = recorderHeight.value;
+                            if (recorderHeight?.value) this.recorderElement.height = recorderHeight.value;
                             else this.recorderElement.style.removeProperty("height");
                         }
                     }
@@ -17577,29 +17626,35 @@
                     return dimension;
                 }
                 getRecorderHeight(responsive, useBoundingClientRect) {
+                    let recorderHeight;
                     if (this.recorderElement && useBoundingClientRect) {
                         const height = this.recorderElement.getBoundingClientRect().height;
-                        const dimension = {
+                        recorderHeight = {
                             unit: "px",
                             value: height
                         };
-                        return dimension;
-                    }
-                    if (this.userMedia) {
-                        const height = this.userMedia.getRawHeight(responsive);
-                        const dimension = {
+                    } else if (this.userMedia) {
+                        let height = this.userMedia.getRawHeight(responsive);
+                        if (void 0 !== height && this.options.video.width) {
+                            const ratio = this.getRatio();
+                            if (void 0 !== ratio) {
+                                const idealHeight = this.options.video.width * ratio;
+                                height = Math.min(idealHeight, height);
+                            }
+                        }
+                        recorderHeight = {
                             unit: "px",
                             value: height
                         };
-                        return dimension;
+                    } else if (responsive && this.options.video.height) recorderHeight = this.calculateHeight(responsive);
+                    else if (this.options.video.height) {
+                        const height = this.options.video.height;
+                        recorderHeight = {
+                            unit: "px",
+                            value: height
+                        };
                     }
-                    if (responsive && this.options.video.height) return this.calculateHeight(responsive);
-                    const height = this.options.video.height;
-                    const dimension = {
-                        unit: "px",
-                        value: height
-                    };
-                    return dimension;
+                    return recorderHeight;
                 }
                 getRatio() {
                     let ratio;
@@ -17615,13 +17670,25 @@
                     let videoHeight;
                     if (this.userMedia) videoHeight = this.userMedia.getVideoHeight();
                     else if (this.recorderElement) videoHeight = this.recorderElement.videoHeight || this.recorderElement.height;
-                    return dimensions_calculateWidth(responsive, videoHeight, this.options, this.getRatio());
+                    const ratio = this.getRatio();
+                    return dimensions_calculateWidth(responsive, this.options, videoHeight, ratio);
                 }
                 calculateHeight(responsive) {
-                    let videoWidth;
-                    if (this.userMedia) videoWidth = this.userMedia.getVideoWidth();
-                    else if (this.recorderElement) videoWidth = this.recorderElement.videoWidth || this.recorderElement.width;
-                    return dimensions_calculateHeight(responsive, videoWidth, this.options, this.getRatio(), this.recorderElement);
+                    let videoDimension;
+                    if (this.userMedia) {
+                        const videoHeight = this.userMedia.getVideoHeight();
+                        videoDimension = {
+                            value: videoHeight,
+                            unit: "px"
+                        };
+                    } else if (this.recorderElement) {
+                        const videoHeight = this.recorderElement.videoHeight || this.recorderElement.height;
+                        videoDimension = {
+                            value: videoHeight,
+                            unit: "px"
+                        };
+                    } else videoDimension = dimensions_calculateHeight(responsive, void 0, this.options, this.getRatio(), this.recorderElement);
+                    return videoDimension;
                 }
                 getRawVisualUserMedia() {
                     return this.recorderElement;
@@ -17684,7 +17751,7 @@
                         height = this.videomail.height;
                         if (width) ratio = height / width;
                     }
-                    if (!width) width = dimensions_calculateWidth(responsive, videoHeight, this.options, ratio);
+                    if (!width) width = dimensions_calculateWidth(responsive, this.options, videoHeight, ratio);
                     if (!height) {
                         let element = this.visuals.getElement();
                         if (!element) element = document.body;
@@ -17953,10 +18020,12 @@
                             widthDimension = this.getRecorderWidth(true);
                             heightDimension = this.getRecorderHeight(true);
                         }
-                        if (widthDimension) this.visualsElement.style.width = `${widthDimension.value}${widthDimension.unit}`;
+                        if (widthDimension?.value) this.visualsElement.style.width = `${widthDimension.value}${widthDimension.unit}`;
                         else this.visualsElement.style.removeProperty("width");
-                        if (heightDimension) this.visualsElement.style.height = `${heightDimension.value}${heightDimension.unit}`;
-                        else this.visualsElement.style.removeProperty("height");
+                        if (heightDimension?.value) {
+                            const height = `${heightDimension.value}${heightDimension.unit}`;
+                            this.visualsElement.style.height = height;
+                        } else this.visualsElement.style.removeProperty("height");
                     }
                 }
                 removeDimensions() {
@@ -18268,7 +18337,7 @@
                 }
                 initEvents(playerOnly = false) {
                     this.options.logger.debug(`Container: initEvents (playerOnly = ${playerOnly})`);
-                    window.addEventListener("resize", ()=>{
+                    if (this.options.recalculateDimensionsOnWindowResize) window.addEventListener("resize", ()=>{
                         if (!this.built) return;
                         this.emit("WINDOW_RESIZE", "container");
                     });
@@ -18349,7 +18418,7 @@
                         const widthDimension = this.visuals.getRecorderWidth(true);
                         const heightDimension = this.visuals.getRecorderHeight(true);
                         videomailFormData.width = widthDimension?.value;
-                        videomailFormData.height = heightDimension.value;
+                        videomailFormData.height = heightDimension?.value;
                         return await this.resource.post(videomailFormData);
                     }
                     if (method === FormMethod.PUT) return await this.resource.put(videomailFormData);
