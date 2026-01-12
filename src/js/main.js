@@ -1,5 +1,5 @@
 // Remember, you can't use any import/require statements here
-const PLUGIN_VERSION = "9.1.1";
+const PLUGIN_VERSION = "10.0.0";
 
 // manual switch to have more stuff printed to console
 let DEBUG = false;
@@ -86,7 +86,10 @@ const VideomailFieldController = Marionette.Object.extend({
     Backbone.Radio.DEBUG = Backbone.Radio.DEBUG || verbose;
 
     this.videomailClient = new VideomailClient.VideomailClient({
-      siteName: this.fieldModel.get("site_name"),
+      // this.fieldModel.get("site_name") is for backward compatibility which can be
+      // removed later once all legacy whitelist entries have been migrated.
+      whitelistKey:
+        this.fieldModel.get("whitelist_key") || this.fieldModel.get("site_name"),
       video: {
         limitSeconds: this.fieldModel.get("limit_seconds") || 90,
         width: this.fieldModel.get("width") || 320,

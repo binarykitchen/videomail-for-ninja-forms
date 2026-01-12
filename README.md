@@ -16,6 +16,13 @@ Requires the [Ninja Forms plugin](https://github.com/wpninjas/ninja-forms).
 
 In short: this add-on runs on the Ninja Forms plugin engine where you can configure forms very easily. Upon installation, a new type will be added to enable recordable videos.
 
+## Playground
+
+If you would like to have a quick play, you can quickly spawn a temporary WordPress site using TasteWP with this URL:<br/>
+https://tastewp.com/recipe/5384480fa0
+
+Just note that it will last 6 days only and that you'll have to create a [new whitelist entry](https://www.videomail.io/whitelist) for that.
+
 ## Development (Personal)
 
 1. Install WordPress locally or use [Local by Flywheel](https://local.getflywheel.com/)
