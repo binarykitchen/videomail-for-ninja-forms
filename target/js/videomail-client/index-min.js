@@ -10577,7 +10577,7 @@
                 MP4: "mp4"
             };
             const constants = {
-                SITE_NAME_LABEL: "x-videomail-site-name",
+                WHITELIST_KEY_LABEL: "x-videomail-whitelist-key",
                 VERSION_LABEL: "videomailClientVersion",
                 public: {
                     ENC_TYPE_APP_JSON: "application/json",
@@ -10737,7 +10737,7 @@
             var client = __webpack_require__("./node_modules/superagent/lib/client.js");
             var client_default = /*#__PURE__*/ __webpack_require__.n(client);
             var package_namespaceObject = {
-                rE: "13.6.11"
+                rE: "13.6.14"
             };
             function isAudioEnabled(options) {
                 return Boolean(options.audio.enabled);
@@ -14022,7 +14022,7 @@
                 title = "Error from videomail-client npm package";
                 location = window.location.href;
                 logLines;
-                siteName;
+                whitelistKey;
                 cookie;
                 err;
                 promise;
@@ -14051,7 +14051,7 @@
                     super(message, errData);
                     this.explanation = errData?.explanation;
                     this.logLines = errData?.logLines;
-                    this.siteName = options.siteName;
+                    this.whitelistKey = options.whitelistKey;
                     this.classList = classList;
                     const browser = util_getBrowser(options);
                     const usefulClientData = browser.getUsefulData();
@@ -14704,7 +14704,7 @@
                 async get(identifierName, identifierValue) {
                     const url = `${this.options.apiUrl}/videomail/${identifierName}/${identifierValue}/snapshot`;
                     try {
-                        const request = await client_default()("get", url).type("json").set("Accept", "application/json").withCredentials().set("Timezone-Id", this.timezoneId).set(constants.SITE_NAME_LABEL, this.options.siteName).timeout(this.options.timeouts.connection);
+                        const request = await client_default()("get", url).type("json").set("Accept", "application/json").withCredentials().set("Timezone-Id", this.timezoneId).set(constants.WHITELIST_KEY_LABEL, this.options.whitelistKey).timeout(this.options.timeouts.connection);
                         const videomail = request.body;
                         return videomail;
                     } catch (exc) {
@@ -14716,7 +14716,7 @@
                 }
                 async write(method, videomail) {
                     const queryParams = {
-                        [constants.SITE_NAME_LABEL]: this.options.siteName
+                        [constants.WHITELIST_KEY_LABEL]: this.options.whitelistKey
                     };
                     let url = `${this.options.apiUrl}/videomail/`;
                     if (method === FormMethod.PUT && videomail.key) url += videomail.key;
@@ -14738,7 +14738,7 @@
                 }
                 async reportError(err) {
                     const queryParams = {
-                        [constants.SITE_NAME_LABEL]: this.options.siteName
+                        [constants.WHITELIST_KEY_LABEL]: this.options.whitelistKey
                     };
                     const url = `${this.options.apiUrl}/client-error/`;
                     try {
@@ -14756,7 +14756,7 @@
                             orientation: err.orientation,
                             os: err.os,
                             screen: err.screen,
-                            siteName: err.siteName,
+                            whitelistKey: err.whitelistKey,
                             status: err.status,
                             title: err.title,
                             message: err.message,
@@ -14843,7 +14843,7 @@
                 verbose: !PRODUCTION,
                 apiUrl: "https://videomail.io/api",
                 socketUrl: "wss://videomail.io",
-                siteName: "videomail-client-demo",
+                whitelistKey: "videomail-client-demo",
                 enablePause: true,
                 enableAutoPause: true,
                 enableSpace: true,
@@ -16901,8 +16901,8 @@
                     this.confirmedFrameNumber = this.confirmedSampleNumber = this.samplesCount = this.framesCount = 0;
                     this.sampleProgress = this.frameProgress = void 0;
                     this.key = args.key;
-                    if (args.mp4) this.replay.setMp4Source(`${args.mp4 + constants.SITE_NAME_LABEL}/${this.options.siteName}/videomail.mp4`, true);
-                    if (args.webm) this.replay.setWebMSource(`${args.webm + constants.SITE_NAME_LABEL}/${this.options.siteName}/videomail.webm`, true);
+                    if (args.mp4) this.replay.setMp4Source(`${args.mp4 + constants.WHITELIST_KEY_LABEL}/${this.options.whitelistKey}/videomail.mp4`, true);
+                    if (args.webm) this.replay.setWebMSource(`${args.webm + constants.WHITELIST_KEY_LABEL}/${this.options.whitelistKey}/videomail.webm`, true);
                     this.hide();
                     const widthDimension = this.getRecorderWidth(true);
                     const heightDimension = this.getRecorderHeight(true);
@@ -16922,7 +16922,7 @@
                     if (!this.connected) {
                         this.connecting = true;
                         this.emit("CONNECTING");
-                        const url2Connect = `${this.options.socketUrl}?${encodeURIComponent(constants.SITE_NAME_LABEL)}=${encodeURIComponent(this.options.siteName)}`;
+                        const url2Connect = `${this.options.socketUrl}?${encodeURIComponent(constants.WHITELIST_KEY_LABEL)}=${encodeURIComponent(this.options.whitelistKey)}`;
                         this.options.logger.debug(`Recorder: initializing web socket to ${url2Connect}`);
                         try {
                             this.stream = stream_default()(url2Connect, {

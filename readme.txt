@@ -3,7 +3,7 @@ Contributors: michael.heuberger, kbjohnson90
 Tags: video, email, recorder, sign language
 Requires at least: 6.0
 Tested up to: 6.8.3
-Stable tag: 9.1.1
+Stable tag: 10.0.0
 Requires PHP: 8.1.0
 Donate link: https://videomail.io/faq
 License: CC0-1.0
@@ -52,7 +52,9 @@ Each option is explained well at bottom of this PDF file: [Videomail FAQ](https:
 = How does whitelisting work? =
 For local development, everything will work right away because the localhost URL is already whitelisted on the videomail server.
 
-But once you deploy your Wordpress site out in the wild, we will have to whitelist your production URL. For that, just submit a [Whitelist Request](https://videomail.io/whitelist). Very easy.
+But once you deploy your Wordpress site out in the wild, we will have to whitelist your production URL(s). For that, just submit a [Whitelist Request](https://videomail.io/whitelist). Once your whitelist entry has been approved, you'll get a secret whitelist key. With that key, you can activate this plugin for your site.
+
+Just note that this requires registration on Videomail and that the first three months are free (trial period).
 
 = Is there a live example? =
 There is also the live site [videomail.io](https://videomail.io). Have a look and play.
@@ -69,6 +71,10 @@ To get help, just use any of these contacts at [https://binarykitchen.com](https
 2. Once you have assembled a form and preview it, any browser will ask for webcam access first.
 
 == Changelog ==
+
+= 10.0.0 (12 Jan 2026) =
+**Change:**
+* Breaking: renamed site_name to whitelist_key. Retrieve your whitelist key on https://www.videomail.io/whitelist
 
 = 9.1.1 (8 Jan 2026) =
 **Improvement**

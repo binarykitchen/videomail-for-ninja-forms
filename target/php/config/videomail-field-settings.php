@@ -22,14 +22,14 @@ return apply_filters('ninja_forms_videomail_field_settings', array(
     'help' => __('The audio feature is in beta and needs feedback for improvement. Otherwise leave it disabled and stick to Sign Language, grins')
   ),
 
-  'site_name' => array(
-    'name' => 'site_name',
+  'whitelist_key' => array(
+    'name' => 'whitelist_key',
     'type' => 'textbox',
-    'label' => __('Site Name ID', 'videomail-for-ninja-forms'),
+    'label' => __('Whitelist key', 'videomail-for-ninja-forms'),
     'width' => 'full',
     'group' => 'primary',
     'value' => 'videomail-for-ninja-forms-local',
-    'help' => __('A valid site-name ID must be registered with the developer at www.videomail.io. The default one, videomail-for-ninja-forms-local, always works for local development/testing.', 'videomail-for-ninja-forms')
+    'help' => __('A valid whitelist key must be generated at www.videomail.io/whitelist. The default one, videomail-for-ninja-forms-local, only works for local development/testing.', 'videomail-for-ninja-forms')
   ),
 
   'email_from' => array(
