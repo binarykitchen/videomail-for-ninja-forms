@@ -19,7 +19,7 @@ In short: this add-on runs on the Ninja Forms plugin engine where you can config
 ## Playground
 
 If you would like to have a quick play, you can quickly spawn a temporary WordPress site using TasteWP with this URL:<br/>
-https://tastewp.com/recipe/5384480fa0
+https://tastewp.com/recipe/fba0d4f1cd
 
 Just note that it will last 6 days only and that you'll have to create a [new whitelist entry](https://www.videomail.io/whitelist) for that.
 
