@@ -18,8 +18,8 @@ In short: this add-on runs on the Ninja Forms plugin engine where you can config
 
 ## Playground
 
-If you would like to have a quick play, you can quickly spawn a temporary WordPress site using TasteWP with this URL:<br/>
-https://tastewp.com/recipe/5384480fa0
+If you would like to have a quick play, you can quickly spawn a temporary WordPress site using TasteWP with this URL:
+<https://tastewp.com/recipe/fba0d4f1cd>
 
 Just note that it will last 6 days only and that you'll have to create a [new whitelist entry](https://www.videomail.io/whitelist) for that.
 
@@ -34,25 +34,25 @@ Just note that it will last 6 days only and that you'll have to create a [new wh
    2.2.3 Symlink videomail-for-ninja-forms like that: `ln -s ~/code/binarykitchen/videomail-for-ninja-forms ~/Local\ Sites/videomail-for-ninja-forms/app/public/wp-content/plugins/videomail-for-ninja-forms`
    2.2.4. Activate it on WP admin side
    2.2.5 Import the template form from ./examples/nf_form_video_contact_us.nff
-   2.2.6 Download the PHP Error Log plugin from https://wordpress.org/plugins/error-log-monitor/ and install it locally
+   2.2.6 Download the PHP Error Log plugin from <https://wordpress.org/plugins/error-log-monitor> and install it locally
    2.2.7. Activate it on WP admin side
 3. Install latest nodejs, best with [nvm](https://github.com/creationix/nvm)
 4. `npm install` to install dependencies
-5. `gulp watch --host x --port y` which will open Google Chrome and automatically reloads upon changes (PHP, JS and CSS). Defaults to https://localhost:8890
+5. `gulp watch --host x --port y` which will open Google Chrome and automatically reloads upon changes (PHP, JS and CSS). Defaults to <https://localhost:8890>
 
 Note: depending on your OS the `gulp watch` command might result into errors;
 
 ### Arch Linux Issues
 
-- Afraid have to amend `sudo` before `npm run mh` or so. <-------- !!!
-- Can't use .local domain as it's [reserved under Arch Linux](https://community.localwp.com/t/local-tld-is-not-resolved-when-in-hosts-file-if-used-on-arch-based-linux/43793/6)
+- Afraid have to amend `sudo` before `npm run mh` or so.
+- Can't use .local domain as it's [reserved under Arch Linux](https://community.localwp.com/t/local-tld-is-not-resolved-when-in-hosts-file-if-used-on-arch-based-linux/43793/6).
 
 ### Customize host or port
 
 For custom hosts or ports, you can customize `gulp watch` like that:
 
 `gulp watch --port=8890 --host=wp` and that will open this page for you:
-https://wp:8890/wordpress/wp-admin/admin.php?page=ninja-forms
+<https://wp:8890/wordpress/wp-admin/admin.php?page=ninja-forms>
 
 (for exactly these parameters, there is a short cut: `npm run wp` and `wp:8890` is already whitelisted)
 
@@ -74,7 +74,7 @@ In the `/doc` folder we place in all text and images for the public documentatio
 
 ## Report bugs
 
-https://github.com/binarykitchen/videomail-for-ninja-forms/issues
+<https://github.com/binarykitchen/videomail-for-ninja-forms/issues>
 
 ## Releasing
 
@@ -89,7 +89,7 @@ https://github.com/binarykitchen/videomail-for-ninja-forms/issues
    - src/js/main.js
    - src/php/videomail.php
    - videomail-for-ninja-forms.php
-5. Optional: validate readme.txt with https://wordpress.org/plugins/developers/readme-validator/
+5. Optional: validate readme.txt with <https://wordpress.org/plugins/developers/readme-validator/>
 6. Run `npm run clean`, `npm install` and `npm run build`
 7. Git commit and push
 8. Run `npm run release`
@@ -98,10 +98,10 @@ https://github.com/binarykitchen/videomail-for-ninja-forms/issues
    paste the new version section from readme.txt (just the section without the date and version number)
    (upon any errors, you may try to run manually "gh release create" again to trigger a release on GitHub)
 10. Wait until the release is published and
-    make sure the new version is announced on https://wordpress.org/plugins/videomail-for-ninja-forms as
+    make sure the new version is announced on <https://wordpress.org/plugins/videomail-for-ninja-forms> as
     this can take a while ...
 11. Announce on Social Media
 
 ## Ask for help
 
-https://binarykitchen.com
+<https://binarykitchen.com>

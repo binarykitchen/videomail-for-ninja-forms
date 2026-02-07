@@ -1840,7 +1840,7 @@
             "./node_modules/document-visibility/index.js" (module1, __unused_rspack_exports, __webpack_require__) {
                 "use strict";
                 var document1 = __webpack_require__("./node_modules/global/document.js");
-                var Event1 = __webpack_require__("./node_modules/geval/source.js");
+                var Event = __webpack_require__("./node_modules/geval/source.js");
                 var Keys = __webpack_require__("./node_modules/document-visibility/keys.js");
                 module1.exports = Visibility;
                 function Visibility() {
@@ -1848,7 +1848,7 @@
                     if (!keys) return noopShim();
                     return {
                         visible: visible,
-                        onChange: Event1(listen)
+                        onChange: Event(listen)
                     };
                     function visible() {
                         return !document1[keys.hidden];
@@ -4874,8 +4874,8 @@
                 } : null;
             },
             "./node_modules/geval/event.js" (module1) {
-                module1.exports = Event1;
-                function Event1() {
+                module1.exports = Event;
+                function Event() {
                     var listeners = [];
                     return {
                         broadcast: broadcast,
@@ -4895,10 +4895,10 @@
                 }
             },
             "./node_modules/geval/source.js" (module1, __unused_rspack_exports, __webpack_require__) {
-                var Event1 = __webpack_require__("./node_modules/geval/event.js");
+                var Event = __webpack_require__("./node_modules/geval/event.js");
                 module1.exports = Source;
                 function Source(broadcaster) {
-                    var tuple = Event1();
+                    var tuple = Event();
                     broadcaster(tuple.broadcast);
                     return tuple.listen;
                 }
@@ -10207,12 +10207,18 @@
                             var superProto = getProto(proto);
                             descriptor = gOPD(superProto, Symbol.toStringTag);
                         }
-                        cache['$' + typedArray] = callBind(descriptor.get);
+                        if (descriptor && descriptor.get) {
+                            var bound = callBind(descriptor.get);
+                            cache['$' + typedArray] = bound;
+                        }
                     }
                 }) : forEach(typedArrays, function(typedArray) {
                     var arr = new g[typedArray]();
                     var fn = arr.slice || arr.set;
-                    if (fn) cache['$' + typedArray] = callBind(fn);
+                    if (fn) {
+                        var bound = callBind(fn);
+                        cache['$' + typedArray] = bound;
+                    }
                 });
                 var tryTypedArrays = function(value) {
                     var found = false;
@@ -10584,6 +10590,79 @@
                     ENC_TYPE_FORM: "application/x-www-form-urlencoded"
                 }
             };
+            const isNonErrorSymbol = Symbol('isNonError');
+            function defineProperty(object, key, value) {
+                Object.defineProperty(object, key, {
+                    value,
+                    writable: false,
+                    enumerable: false,
+                    configurable: false
+                });
+            }
+            function stringify(value) {
+                if (void 0 === value) return 'undefined';
+                if (null === value) return 'null';
+                if ('string' == typeof value) return value;
+                if ('number' == typeof value || 'boolean' == typeof value) return String(value);
+                if ('bigint' == typeof value) return `${value}n`;
+                if ('symbol' == typeof value) return value.toString();
+                if ('function' == typeof value) return `[Function${value.name ? ` ${value.name}` : ' (anonymous)'}]`;
+                if (value instanceof Error) try {
+                    return String(value);
+                } catch  {
+                    return '<Unserializable error>';
+                }
+                try {
+                    return JSON.stringify(value);
+                } catch  {
+                    try {
+                        return String(value);
+                    } catch  {
+                        return '<Unserializable value>';
+                    }
+                }
+            }
+            class NonError extends Error {
+                constructor(value, { superclass: Superclass = Error } = {}){
+                    if (NonError.isNonError(value)) return value;
+                    if (value instanceof Error) throw new TypeError('Do not pass Error instances to NonError. Throw the error directly instead.');
+                    super(`Non-error value: ${stringify(value)}`);
+                    if (Superclass !== Error) Object.setPrototypeOf(this, Superclass.prototype);
+                    defineProperty(this, 'name', 'NonError');
+                    defineProperty(this, isNonErrorSymbol, true);
+                    defineProperty(this, 'isNonError', true);
+                    defineProperty(this, 'value', value);
+                }
+                static isNonError(value) {
+                    return value?.[isNonErrorSymbol] === true;
+                }
+                static #handleCallback(callback, arguments_) {
+                    try {
+                        const result = callback(...arguments_);
+                        if (result && 'function' == typeof result.then) return (async ()=>{
+                            try {
+                                return await result;
+                            } catch (error) {
+                                if (error instanceof Error) throw error;
+                                throw new NonError(error);
+                            }
+                        })();
+                        return result;
+                    } catch (error) {
+                        if (error instanceof Error) throw error;
+                        throw new NonError(error);
+                    }
+                }
+                static try(callback) {
+                    return NonError.#handleCallback(callback, []);
+                }
+                static wrap(callback) {
+                    return (...arguments_)=>NonError.#handleCallback(callback, arguments_);
+                }
+                static [Symbol.hasInstance](instance) {
+                    return NonError.isNonError(instance);
+                }
+            }
             const list = [
                 Error,
                 EvalError,
@@ -10601,19 +10680,7 @@
                     constructor
                 ]);
             const errorConstructors = new Map(list);
-            class NonError extends Error {
-                name = 'NonError';
-                constructor(message){
-                    super(NonError._prepareSuperMessage(message));
-                }
-                static _prepareSuperMessage(message) {
-                    try {
-                        return JSON.stringify(message);
-                    } catch  {
-                        return String(message);
-                    }
-                }
-            }
+            const errorFactories = new Map();
             const errorProperties = [
                 {
                     property: 'name',
@@ -10648,79 +10715,107 @@
                 return json;
             };
             const newError = (name)=>{
+                if ('NonError' === name) return new NonError();
+                const factory = errorFactories.get(name);
+                if (factory) return factory();
                 const ErrorConstructor = errorConstructors.get(name) ?? Error;
                 return ErrorConstructor === AggregateError ? new ErrorConstructor([]) : new ErrorConstructor();
             };
             const destroyCircular = ({ from, seen, to, forceEnumerable, maxDepth, depth, useToJSON, serialize })=>{
                 if (!to) to = Array.isArray(from) ? [] : !serialize && isErrorLike(from) ? newError(from.name) : {};
-                seen.push(from);
-                if (depth >= maxDepth) return to;
-                if (useToJSON && 'function' == typeof from.toJSON && !toJsonWasCalled.has(from)) return toJSON(from);
+                seen.add(from);
+                if (depth >= maxDepth) {
+                    seen.delete(from);
+                    return to;
+                }
+                if (useToJSON && 'function' == typeof from.toJSON && !toJsonWasCalled.has(from)) {
+                    seen.delete(from);
+                    return toJSON(from);
+                }
                 const continueDestroyCircular = (value)=>destroyCircular({
                         from: value,
-                        seen: [
-                            ...seen
-                        ],
+                        seen,
                         forceEnumerable,
                         maxDepth,
-                        depth,
+                        depth: depth + 1,
                         useToJSON,
                         serialize
                     });
-                for (const [key, value] of Object.entries(from)){
+                for (const key of Object.keys(from)){
+                    const value = from[key];
                     if (value && value instanceof Uint8Array && 'Buffer' === value.constructor.name) {
-                        to[key] = '[object Buffer]';
+                        to[key] = serialize ? '[object Buffer]' : value;
                         continue;
                     }
                     if (null !== value && 'object' == typeof value && 'function' == typeof value.pipe) {
-                        to[key] = '[object Stream]';
+                        to[key] = serialize ? '[object Stream]' : value;
                         continue;
                     }
-                    if ('function' != typeof value) {
-                        if (!value || 'object' != typeof value) {
-                            try {
-                                to[key] = value;
-                            } catch  {}
-                            continue;
-                        }
-                        if (!seen.includes(from[key])) {
-                            depth++;
-                            to[key] = continueDestroyCircular(from[key]);
-                            continue;
-                        }
-                        to[key] = '[Circular]';
+                    if ('function' == typeof value) {
+                        if (!serialize) to[key] = value;
+                        continue;
                     }
+                    if (serialize && 'bigint' == typeof value) {
+                        to[key] = `${value}n`;
+                        continue;
+                    }
+                    if (!value || 'object' != typeof value) {
+                        try {
+                            to[key] = value;
+                        } catch  {}
+                        continue;
+                    }
+                    if (!seen.has(value)) {
+                        to[key] = continueDestroyCircular(value);
+                        continue;
+                    }
+                    to[key] = '[Circular]';
                 }
-                if (serialize || to instanceof Error) {
-                    for (const { property, enumerable } of errorProperties)if (void 0 !== from[property] && null !== from[property]) Object.defineProperty(to, property, {
-                        value: isErrorLike(from[property]) || Array.isArray(from[property]) ? continueDestroyCircular(from[property]) : from[property],
-                        enumerable: forceEnumerable ? true : enumerable,
+                if (serialize || to instanceof Error) for (const { property, enumerable } of errorProperties){
+                    const value = from[property];
+                    if (null == value) continue;
+                    const descriptor = Object.getOwnPropertyDescriptor(to, property);
+                    if (descriptor?.configurable === false) continue;
+                    let processedValue = value;
+                    if ('object' == typeof value) processedValue = seen.has(value) ? '[Circular]' : continueDestroyCircular(value);
+                    Object.defineProperty(to, property, {
+                        value: processedValue,
+                        enumerable: forceEnumerable || enumerable,
                         configurable: true,
                         writable: true
                     });
                 }
+                seen.delete(from);
                 return to;
             };
             function serializeError(value, options = {}) {
                 const { maxDepth = 1 / 0, useToJSON = true } = options;
                 if ('object' == typeof value && null !== value) return destroyCircular({
                     from: value,
-                    seen: [],
+                    seen: new Set(),
                     forceEnumerable: true,
                     maxDepth,
                     depth: 0,
                     useToJSON,
                     serialize: true
                 });
-                if ('function' == typeof value) return `[Function: ${value.name || 'anonymous'}]`;
-                return value;
+                if ('function' == typeof value) value = '<Function>';
+                return destroyCircular({
+                    from: new NonError(value),
+                    seen: new Set(),
+                    forceEnumerable: true,
+                    maxDepth,
+                    depth: 0,
+                    useToJSON,
+                    serialize: true
+                });
             }
             function deserializeError(value, options = {}) {
                 const { maxDepth = 1 / 0 } = options;
                 if (value instanceof Error) return value;
                 if (isMinimumViableSerializedError(value)) return destroyCircular({
                     from: value,
-                    seen: [],
+                    seen: new Set(),
                     to: newError(value.name),
                     maxDepth,
                     depth: 0,
@@ -10737,7 +10832,7 @@
             var client = __webpack_require__("./node_modules/superagent/lib/client.js");
             var client_default = /*#__PURE__*/ __webpack_require__.n(client);
             var package_namespaceObject = {
-                rE: "13.6.14"
+                rE: "13.7.3"
             };
             function isAudioEnabled(options) {
                 return Boolean(options.audio.enabled);
@@ -10770,12 +10865,12 @@
             const util_pretty = pretty;
             var defined = __webpack_require__("./node_modules/defined/index.js");
             var defined_default = /*#__PURE__*/ __webpack_require__.n(defined);
-            var LIBVERSION = '2.0.7', UA_MAX_LENGTH = 500, USER_AGENT = 'user-agent', EMPTY = '', UNKNOWN = '?', TYPEOF = {
+            var LIBVERSION = '2.0.9', UA_MAX_LENGTH = 500, USER_AGENT = 'user-agent', EMPTY = '', UNKNOWN = '?', TYPEOF = {
                 FUNCTION: 'function',
                 OBJECT: 'object',
                 STRING: 'string',
                 UNDEFINED: 'undefined'
-            }, BROWSER = 'browser', CPU = 'cpu', DEVICE = 'device', ENGINE = 'engine', OS = 'os', RESULT = 'result', NAME = 'name', TYPE = 'type', VENDOR = 'vendor', VERSION = 'version', ARCHITECTURE = 'architecture', MAJOR = 'major', MODEL = 'model', CONSOLE = 'console', MOBILE = 'mobile', TABLET = 'tablet', SMARTTV = 'smarttv', WEARABLE = 'wearable', XR = 'xr', EMBEDDED = 'embedded', INAPP = 'inapp', BRANDS = 'brands', FORMFACTORS = 'formFactors', FULLVERLIST = 'fullVersionList', PLATFORM = 'platform', PLATFORMVER = 'platformVersion', BITNESS = 'bitness', CH = 'sec-ch-ua', CH_FULL_VER_LIST = CH + '-full-version-list', CH_ARCH = CH + '-arch', CH_BITNESS = CH + '-' + BITNESS, CH_FORM_FACTORS = CH + '-form-factors', CH_MOBILE = CH + '-' + MOBILE, CH_MODEL = CH + '-' + MODEL, CH_PLATFORM = CH + '-' + PLATFORM, CH_PLATFORM_VER = CH_PLATFORM + '-version', CH_ALL_VALUES = [
+            }, BROWSER = 'browser', CPU = 'cpu', DEVICE = 'device', ENGINE = 'engine', OS = 'os', RESULT = 'result', NAME = 'name', TYPE = 'type', VENDOR = 'vendor', VERSION = 'version', ARCHITECTURE = 'architecture', MAJOR = 'major', MODEL = 'model', CONSOLE = 'console', MOBILE = 'mobile', TABLET = 'tablet', SMARTTV = 'smarttv', WEARABLE = 'wearable', XR = 'xr', EMBEDDED = 'embedded', FETCHER = 'fetcher', INAPP = 'inapp', BRANDS = 'brands', FORMFACTORS = 'formFactors', FULLVERLIST = 'fullVersionList', PLATFORM = 'platform', PLATFORMVER = 'platformVersion', BITNESS = 'bitness', CH = 'sec-ch-ua', CH_FULL_VER_LIST = CH + '-full-version-list', CH_ARCH = CH + '-arch', CH_BITNESS = CH + '-' + BITNESS, CH_FORM_FACTORS = CH + '-form-factors', CH_MOBILE = CH + '-' + MOBILE, CH_MODEL = CH + '-' + MODEL, CH_PLATFORM = CH + '-' + PLATFORM, CH_PLATFORM_VER = CH_PLATFORM + '-version', CH_ALL_VALUES = [
                 BRANDS,
                 FULLVERLIST,
                 MOBILE,
@@ -11021,8 +11116,9 @@
                         /(lunascape|maxthon|netfront|jasmine|blazer|sleipnir)[\/ ]?([\w\.]*)/i,
                         /(avant|iemobile|slim(?:browser|boat|jet))[\/ ]?([\d\.]*)/i,
                         /(?:ms|\()(ie) ([\w\.]+)/i,
-                        /(atlas|flock|rockmelt|midori|epiphany|silk|skyfire|ovibrowser|bolt|iron|vivaldi|iridium|phantomjs|bowser|qupzilla|falkon|rekonq|puffin|brave|whale(?!.+naver)|qqbrowserlite|duckduckgo|klar|helio|(?=comodo_)?dragon|otter|dooble|(?:lg |qute)browser|palemoon)\/([-\w\.]+)/i,
-                        /(heytap|ovi|115|surf|qwant)browser\/([\d\.]+)/i,
+                        /(atlas|flock|rockmelt|midori|epiphany|silk|skyfire|bolt|iron|vivaldi|iridium|phantomjs|bowser|qupzilla|falkon|rekonq|puffin|whale(?!.+naver)|qqbrowserlite|duckduckgo|klar|helio|(?=comodo_)?dragon|otter|dooble|(?:hi|lg |ovi|qute)browser|palemoon)\/v?([-\w\.]+)/i,
+                        /(brave)(?: chrome)?\/([\d\.]+)/i,
+                        /(aloha|heytap|ovi|115|surf|qwant)browser\/([\d\.]+)/i,
                         /(qwant)(?:ios|mobile)\/([\d\.]+)/i,
                         /(ecosia|weibo)(?:__| \w+@)([\d\.]+)/i
                     ],
@@ -11113,7 +11209,7 @@
                         ]
                     ],
                     [
-                        /(avast|avg)\/([\w\.]+)/i
+                        /(av(?:ast|g|ira))\/([\w\.]+)/i
                     ],
                     [
                         [
@@ -11122,6 +11218,16 @@
                             '$1 Secure' + SUFFIX_BROWSER
                         ],
                         VERSION
+                    ],
+                    [
+                        /norton\/([\w\.]+)/i
+                    ],
+                    [
+                        VERSION,
+                        [
+                            NAME,
+                            'Norton Private' + SUFFIX_BROWSER
+                        ]
                     ],
                     [
                         /\bfocus\/([\w\.]+)/i
@@ -11134,7 +11240,17 @@
                         ]
                     ],
                     [
-                        /\bopt\/([\w\.]+)/i
+                        / mms\/([\w\.]+)$/i
+                    ],
+                    [
+                        VERSION,
+                        [
+                            NAME,
+                            OPERA + ' Neon'
+                        ]
+                    ],
+                    [
+                        / opt\/([\w\.]+)$/i
                     ],
                     [
                         VERSION,
@@ -11265,14 +11381,13 @@
                         VERSION
                     ],
                     [
-                        /(lbbrowser|rekonq|steam(?= (clie|tenf|gameo)))/i
+                        /(lbbrowser|luakit|rekonq|steam(?= (clie|tenf|gameo)))/i
                     ],
                     [
                         NAME
                     ],
                     [
-                        /ome\/([\w\.]+) \w* ?(iron) saf/i,
-                        /ome\/([\w\.]+).+qihu (360)[es]e/i
+                        /ome\/([\w\.]+).+(iron(?= saf)|360(?=[es]e$))/i
                     ],
                     [
                         VERSION,
@@ -11326,7 +11441,7 @@
                         ]
                     ],
                     [
-                        /musical_ly(?:.+app_?version\/|_)([\w\.]+)/i
+                        /(?:musical_ly|trill)(?:.+app_?version\/|_)([\w\.]+)/i
                     ],
                     [
                         VERSION,
@@ -11370,6 +11485,16 @@
                     [
                         NAME,
                         VERSION
+                    ],
+                    [
+                        /ome-(lighthouse)$/i
+                    ],
+                    [
+                        NAME,
+                        [
+                            TYPE,
+                            FETCHER
+                        ]
                     ],
                     [
                         /headlesschrome(?:\/([\w\.]+)| )/i
@@ -11809,7 +11934,7 @@
                         ]
                     ],
                     [
-                        /droid.+; (cph2[3-6]\d[13579]|((gm|hd)19|(ac|be|in|kb)20|(d[en]|eb|le|mt)21|ne22)[0-2]\d|p[g-k]\w[1m]10)\b/i,
+                        /droid.+; (cph2[3-6]\d[13579]|((gm|hd)19|(ac|be|in|kb)20|(d[en]|eb|le|mt)21|ne22)[0-2]\d|p[g-l]\w[1m]10)\b/i,
                         /(?:one)?(?:plus)? (a\d0\d\d)(?: b|\))/i
                     ],
                     [
@@ -11966,7 +12091,7 @@
                         ]
                     ],
                     [
-                        /((?=lg)?[vl]k\-?\d{3}) bui| 3\.[-\w; ]{10}lg?-([06cv9]{3,4})/i
+                        /\b(?:lg)?([vl]k\-?\d{3}) bui| 3\.[-\w; ]{10}lg?-([06cv9]{3,4})/i
                     ],
                     [
                         MODEL,
@@ -13168,7 +13293,7 @@
                         /(presto)\/([\w\.]+)/i,
                         /(webkit|trident|netfront|netsurf|amaya|lynx|w3m|goanna|servo)\/([\w\.]+)/i,
                         /ekioh(flow)\/([\w\.]+)/i,
-                        /(khtml|tasman|links)[\/ ]\(?([\w\.]+)/i,
+                        /(khtml|tasman|links|dillo)[\/ ]\(?([\w\.]+)/i,
                         /(icab)[\/ ]([23]\.[\d\.]+)/i,
                         /\b(libweb)/i
                     ],
@@ -13370,7 +13495,7 @@
                         ]
                     ],
                     [
-                        /mozilla\/[\d\.]+ \((?:mobile|tablet|tv|mobile; [\w ]+); rv:.+ gecko\/([\w\.]+)/i
+                        /mozilla\/[\d\.]+ \((?:mobile[;\w ]*|tablet|tv|[^\)]*(?:viera|lg(?:l25|-d300)|alcatel ?o.+|y300-f1)); rv:([\w\.]+)\).+gecko\//i
                     ],
                     [
                         VERSION,
@@ -13417,7 +13542,7 @@
                         ]
                     ],
                     [
-                        /watch(?: ?os[,\/]|\d,\d\/)([\d\.]+)/i
+                        /watch(?: ?os[,\/ ]|\d,\d\/)([\d\.]+)/i
                     ],
                     [
                         VERSION,
@@ -13427,17 +13552,26 @@
                         ]
                     ],
                     [
-                        /(cros) [\w]+(?:\)| ([\w\.]+)\b)/i
+                        /cros [\w]+(?:\)| ([\w\.]+)\b)/i
                     ],
                     [
+                        VERSION,
                         [
                             NAME,
-                            "Chrome OS"
-                        ],
-                        VERSION
+                            'Chrome OS'
+                        ]
                     ],
                     [
-                        /panasonic;(viera)/i,
+                        /kepler ([\w\.]+); (aft|aeo)/i
+                    ],
+                    [
+                        VERSION,
+                        [
+                            NAME,
+                            'Vega OS'
+                        ]
+                    ],
+                    [
                         /(netrange)mmh/i,
                         /(nettv)\/(\d+\.[\w\.]+)/i,
                         /(nintendo|playstation) (\w+)/i,
@@ -14550,7 +14684,7 @@
                         if (params?.key || this.keyInput?.value) {
                             if (params?.key && this.keyInput) {
                                 this.keyInput.value = params.key;
-                                this.keyInput.dispatchEvent(new Event("input", {
+                                this.keyInput.dispatchEvent(new InputEvent("input", {
                                     bubbles: true
                                 }));
                             }
