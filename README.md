@@ -44,8 +44,8 @@ Note: depending on your OS the `gulp watch` command might result into errors;
 
 ### Arch Linux Issues
 
-- Afraid have to amend `sudo` before `npm run mh` or so. <-------- !!!
-- Can't use .local domain as it's [reserved under Arch Linux](https://community.localwp.com/t/local-tld-is-not-resolved-when-in-hosts-file-if-used-on-arch-based-linux/43793/6)
+- Afraid have to amend `sudo` before `npm run mh` or so.
+- Can't use .local domain as it's [reserved under Arch Linux](https://community.localwp.com/t/local-tld-is-not-resolved-when-in-hosts-file-if-used-on-arch-based-linux/43793/6).
 
 ### Customize host or port
 
