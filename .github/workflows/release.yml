@@ -10,20 +10,20 @@ on:
 jobs:
   release:
     name: Deploy to WP.org
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     environment: live
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v5
+      - name: 🛒 Checkout code
+        uses: actions/checkout@v6
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v6
         with:
-          node-version: 22
+          node-version: 24
 
-      - name: Install npm dependencies
+      - name: 📦 Install npm dependencies
         run: npm ci
 
-      - name: Build assets for production
+      - name: 🔨 Build assets for production
         run: npm run build
 
       - name: WordPress Plugin Deploy
