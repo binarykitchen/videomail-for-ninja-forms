@@ -5,7 +5,7 @@
     else root["VideomailClient"] = factory();
 })(globalThis, ()=>(()=>{
         var __webpack_modules__ = {
-            "./node_modules/@rsbuild/core/compiled/css-loader/index.js??ruleSet[1].rules[13].use[1]!builtin:lightningcss-loader??ruleSet[1].rules[13].use[2]!./node_modules/stylus-loader/dist/cjs.js??ruleSet[1].rules[13].use[3]!./src/styles/main.styl" (module1, __webpack_exports__, __webpack_require__) {
+            "./node_modules/@rsbuild/core/compiled/css-loader/index.js??ruleSet[1].rules[10].oneOf[2].use[1]!builtin:lightningcss-loader??ruleSet[1].rules[10].oneOf[2].use[2]!./node_modules/stylus-loader/dist/cjs.js??ruleSet[1].rules[10].oneOf[2].use[3]!./src/styles/main.styl" (module1, __webpack_exports__, __webpack_require__) {
                 "use strict";
                 __webpack_require__.d(__webpack_exports__, {
                     A: ()=>__rspack_default_export
@@ -2265,7 +2265,7 @@
                     this.decoder = null;
                     this.encoding = null;
                     if (options.encoding) {
-                        if (!StringDecoder) StringDecoder = __webpack_require__("./node_modules/duplexify/node_modules/string_decoder/lib/string_decoder.js").StringDecoder;
+                        if (!StringDecoder) StringDecoder = __webpack_require__("./node_modules/duplexify/node_modules/string_decoder/lib/string_decoder.js").I;
                         this.decoder = new StringDecoder(options.encoding);
                         this.encoding = options.encoding;
                     }
@@ -2364,7 +2364,7 @@
                     return false === this._readableState.flowing;
                 };
                 Readable.prototype.setEncoding = function(enc) {
-                    if (!StringDecoder) StringDecoder = __webpack_require__("./node_modules/duplexify/node_modules/string_decoder/lib/string_decoder.js").StringDecoder;
+                    if (!StringDecoder) StringDecoder = __webpack_require__("./node_modules/duplexify/node_modules/string_decoder/lib/string_decoder.js").I;
                     this._readableState.decoder = new StringDecoder(enc);
                     this._readableState.encoding = enc;
                     return this;
@@ -3557,7 +3557,7 @@
                     if ('string' != typeof nenc && (Buffer.isEncoding === isEncoding || !isEncoding(enc))) throw new Error('Unknown encoding: ' + enc);
                     return nenc || enc;
                 }
-                exports1.StringDecoder = StringDecoder;
+                exports1.I = StringDecoder;
                 function StringDecoder(encoding) {
                     this.encoding = normalizeEncoding(encoding);
                     var nb;
@@ -8599,7 +8599,7 @@
                     this.decoder = null;
                     this.encoding = null;
                     if (options.encoding) {
-                        if (!StringDecoder) StringDecoder = __webpack_require__("./node_modules/websocket-stream/node_modules/string_decoder/lib/string_decoder.js").StringDecoder;
+                        if (!StringDecoder) StringDecoder = __webpack_require__("./node_modules/websocket-stream/node_modules/string_decoder/lib/string_decoder.js").I;
                         this.decoder = new StringDecoder(options.encoding);
                         this.encoding = options.encoding;
                     }
@@ -8698,7 +8698,7 @@
                     return false === this._readableState.flowing;
                 };
                 Readable.prototype.setEncoding = function(enc) {
-                    if (!StringDecoder) StringDecoder = __webpack_require__("./node_modules/websocket-stream/node_modules/string_decoder/lib/string_decoder.js").StringDecoder;
+                    if (!StringDecoder) StringDecoder = __webpack_require__("./node_modules/websocket-stream/node_modules/string_decoder/lib/string_decoder.js").I;
                     this._readableState.decoder = new StringDecoder(enc);
                     this._readableState.encoding = enc;
                     return this;
@@ -9891,7 +9891,7 @@
                     if ('string' != typeof nenc && (Buffer.isEncoding === isEncoding || !isEncoding(enc))) throw new Error('Unknown encoding: ' + enc);
                     return nenc || enc;
                 }
-                exports1.StringDecoder = StringDecoder;
+                exports1.I = StringDecoder;
                 function StringDecoder(encoding) {
                     this.encoding = normalizeEncoding(encoding);
                     var nb;
@@ -10832,7 +10832,7 @@
             var client = __webpack_require__("./node_modules/superagent/lib/client.js");
             var client_default = /*#__PURE__*/ __webpack_require__.n(client);
             var package_namespaceObject = {
-                rE: "13.7.3"
+                rE: "13.8.3"
             };
             function isAudioEnabled(options) {
                 return Boolean(options.audio.enabled);
@@ -14852,7 +14852,8 @@
                     const queryParams = {
                         [constants.WHITELIST_KEY_LABEL]: this.options.whitelistKey
                     };
-                    let url = `${this.options.apiUrl}/videomail/`;
+                    const path = videomail.public ? "wall" : "videomail";
+                    let url = `${this.options.apiUrl}/${path}/`;
                     if (method === FormMethod.PUT && videomail.key) url += videomail.key;
                     try {
                         const request = await client_default()(method, url).query(queryParams).set("Timezone-Id", this.timezoneId).withCredentials().send(videomail).timeout(this.options.timeouts.connection);
@@ -15159,7 +15160,7 @@
             var insertStyleElement_default = /*#__PURE__*/ __webpack_require__.n(insertStyleElement);
             var styleTagTransform = __webpack_require__("./node_modules/@rsbuild/core/compiled/style-loader/runtime/styleTagTransform.js");
             var styleTagTransform_default = /*#__PURE__*/ __webpack_require__.n(styleTagTransform);
-            var main = __webpack_require__("./node_modules/@rsbuild/core/compiled/css-loader/index.js??ruleSet[1].rules[13].use[1]!builtin:lightningcss-loader??ruleSet[1].rules[13].use[2]!./node_modules/stylus-loader/dist/cjs.js??ruleSet[1].rules[13].use[3]!./src/styles/main.styl");
+            var main = __webpack_require__("./node_modules/@rsbuild/core/compiled/css-loader/index.js??ruleSet[1].rules[10].oneOf[2].use[1]!builtin:lightningcss-loader??ruleSet[1].rules[10].oneOf[2].use[2]!./node_modules/stylus-loader/dist/cjs.js??ruleSet[1].rules[10].oneOf[2].use[3]!./src/styles/main.styl");
             var main_options = {};
             main_options.styleTagTransform = styleTagTransform_default();
             main_options.setAttributes = setAttributesWithoutAttributes_default();
@@ -17059,15 +17060,12 @@
                         const url2Connect = `${this.options.socketUrl}?${encodeURIComponent(constants.WHITELIST_KEY_LABEL)}=${encodeURIComponent(this.options.whitelistKey)}`;
                         this.options.logger.debug(`Recorder: initializing web socket to ${url2Connect}`);
                         try {
-                            this.stream = stream_default()(url2Connect, {
-                                perMessageDeflate: false,
-                                objectMode: true
-                            });
+                            this.stream = stream_default()(url2Connect);
                         } catch (exc) {
                             this.connecting = this.connected = false;
                             const err = error_createError({
                                 message: "Failed to connect to server",
-                                explanation: "Please upgrade your browser. Your current version does not seem to support websockets.",
+                                explanation: "If this happens again, please contact us with the details of your environment.",
                                 options: this.options,
                                 exc
                             });
@@ -17096,9 +17094,9 @@
                             });
                             this.stream.on("data", (data)=>{
                                 this.options.logger.debug(`${PIPE_SYMBOL}Stream *data* event emitted`);
-                                let command;
                                 try {
-                                    command = JSON.parse(data.toString());
+                                    const command = JSON.parse(data.toString());
+                                    this.executeCommand(command);
                                 } catch (exc) {
                                     this.options.logger.debug(`Failed to parse command: ${exc}`);
                                     const err = error_createError({
@@ -17110,8 +17108,6 @@
                                     this.emit("ERROR", {
                                         err
                                     });
-                                } finally{
-                                    this.executeCommand(command);
                                 }
                             });
                             this.stream.on("error", (err)=>{
@@ -17370,14 +17366,17 @@
                     this.loop?.dispose();
                 }
                 getIntervalSum() {
+                    if (!this.loop) return;
                     return this.loop.getElapsedTime();
                 }
                 getAvgInterval() {
-                    return this.getIntervalSum() / this.framesCount;
+                    const intervalSum = this.getIntervalSum();
+                    if (!intervalSum) return;
+                    return intervalSum / this.framesCount;
                 }
                 getAvgFps() {
                     const intervalSum = this.getIntervalSum();
-                    if (0 === intervalSum || null == intervalSum) return;
+                    if (!intervalSum) return;
                     return this.framesCount / intervalSum * 1000;
                 }
                 getRecordingStats() {
