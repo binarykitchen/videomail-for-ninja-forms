@@ -10832,7 +10832,7 @@
             var client = __webpack_require__("./node_modules/superagent/lib/client.js");
             var client_default = /*#__PURE__*/ __webpack_require__.n(client);
             var package_namespaceObject = {
-                rE: "13.8.3"
+                rE: "13.8.6"
             };
             function isAudioEnabled(options) {
                 return Boolean(options.audio.enabled);
@@ -17060,7 +17060,9 @@
                         const url2Connect = `${this.options.socketUrl}?${encodeURIComponent(constants.WHITELIST_KEY_LABEL)}=${encodeURIComponent(this.options.whitelistKey)}`;
                         this.options.logger.debug(`Recorder: initializing web socket to ${url2Connect}`);
                         try {
-                            this.stream = stream_default()(url2Connect);
+                            this.stream = stream_default()(url2Connect, {
+                                perMessageDeflate: false
+                            });
                         } catch (exc) {
                             this.connecting = this.connected = false;
                             const err = error_createError({
