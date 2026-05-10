@@ -48,7 +48,24 @@ git commit -m "Final commit of version $PACKAGE_VERSION"
 
 # Merge release branch into master with --no-ff
 git checkout master
-git merge --no-ff "$RELEASE_BRANCH" -m "Merge branch '$RELEASE_BRANCH'"
+if ! git merge --no-ff --no-commit "$RELEASE_BRANCH"; then
+    # ZIP is a binary artifact and can conflict between master/develop histories.
+    # In that specific case, keep the release branch archive on master.
+    UNMERGED_FILES=$(git diff --name-only --diff-filter=U)
+
+    if [[ "$UNMERGED_FILES" == "dist/videomail-for-ninja-forms.zip" ]]; then
+        git checkout --theirs dist/videomail-for-ninja-forms.zip
+        git add dist/videomail-for-ninja-forms.zip
+    else
+        die "Aborting release! Merge conflict(s) detected:\n$UNMERGED_FILES"
+    fi
+fi
+
+if [[ -n "$(git diff --name-only --diff-filter=U)" ]]; then
+    die "Aborting release! Unresolved merge conflicts remain."
+fi
+
+git commit -m "Merge branch '$RELEASE_BRANCH'"
 
 # Create annotated tag on master
 git tag -a "$PACKAGE_VERSION" -m "Completing release of $PACKAGE_VERSION"
