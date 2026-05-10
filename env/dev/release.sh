@@ -5,7 +5,7 @@ export GIT_MERGE_AUTOEDIT=no
 
 die() {
     unset GIT_MERGE_AUTOEDIT
-    echo >&2 "☠ ☠ ☠ ☠ ☠ ☠ ☠  $@  ☠ ☠ ☠ ☠ ☠ ☠ ☠"
+    echo >&2 "☠ ☠ ☠ ☠ ☠ ☠ ☠ $* ☠ ☠ ☠ ☠ ☠ ☠ ☠"
     exit 1
 }
 
@@ -59,6 +59,25 @@ git merge --no-ff "$PACKAGE_VERSION" -m "Merge tag '$PACKAGE_VERSION' into devel
 
 # Push everything to remote
 git push origin master develop --tags
+
+# Create GitHub release entry and attach the plugin zip.
+# A git tag alone does not create a GitHub Release object.
+DIST_ZIP="dist/videomail-for-ninja-forms.zip"
+if [[ ! -f "$DIST_ZIP" ]]; then
+    die "Expected release archive '$DIST_ZIP' is missing."
+fi
+
+if command -v gh >/dev/null 2>&1; then
+    if gh release view "$PACKAGE_VERSION" >/dev/null 2>&1; then
+        echo "GitHub release '$PACKAGE_VERSION' already exists. Skipping creation."
+    else
+        gh release create "$PACKAGE_VERSION" "$DIST_ZIP" \
+            --title "$PACKAGE_VERSION" \
+            --generate-notes
+    fi
+else
+    die "GitHub CLI 'gh' is required to create a GitHub release. Install it and run again."
+fi
 
 # Delete the release branch locally and remotely
 git branch -d "$RELEASE_BRANCH"
