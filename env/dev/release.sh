@@ -5,7 +5,7 @@ export GIT_MERGE_AUTOEDIT=no
 
 die() {
     unset GIT_MERGE_AUTOEDIT
-    echo >&2 "☠ ☠ ☠ ☠ ☠ ☠ ☠  $@  ☠ ☠ ☠ ☠ ☠ ☠ ☠"
+    echo >&2 "☠ ☠ ☠ ☠ ☠ ☠ ☠ $* ☠ ☠ ☠ ☠ ☠ ☠ ☠"
     exit 1
 }
 

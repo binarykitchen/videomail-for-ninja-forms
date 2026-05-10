@@ -64,17 +64,6 @@ This is needed so that this repository can be used right away as a plugin folder
 
 In `dist` you can find a latest version in a zip file for easier distribution. Can be useful sometimes. `env` contains code depending on environment, such as bash scripts for building releases.
 
-## Examples
-
-In the `/examples` folder you can s**Fix**
-
-- Make WebSocket connection more robust
-
-**Chore**
-
-- Upgrade VC dependency
-- Switch Prettier extension some ready-to-import Ninja Forms templates and HTML examples for re-use. They might inspire you …
-
 ## Documentation
 
 In the `/doc` folder we place in all text and images for the public documentation.
