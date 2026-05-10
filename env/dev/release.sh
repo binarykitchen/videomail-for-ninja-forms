@@ -28,7 +28,7 @@ git checkout develop
 git push
 
 # Start a new release
-git flow release start $PACKAGE_VERSION
+git flow release start "$PACKAGE_VERSION"
 
 # Ensure dependencies are okay
 npm install

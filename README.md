@@ -98,7 +98,7 @@ In the `/doc` folder we place in all text and images for the public documentatio
    - videomail-for-ninja-forms.php
 5. Optional: validate readme.txt with <https://wordpress.org/plugins/developers/readme-validator/>
 6. Run `npm run clean`, `npm install` and `npm run build`
-7. Git commit and push
+7. Git commit with `git commit -am 'Rebuilt for the next version` and push that
 8. Run `npm run release`
 9. Tag a new release which will run the release workflow on GitHub with `gh release create`.
    Skip optional title, then under release notes, select "Write my own" and
