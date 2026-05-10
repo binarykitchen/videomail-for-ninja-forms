@@ -15,20 +15,26 @@ if [[ -z "$PACKAGE_VERSION" ]]; then
     die "Aborting the bump! Version is missing."
 fi
 
-echo "Starting new release branch with version $PACKAGE_VERSION..."
+echo "Starting new release with version $PACKAGE_VERSION..."
 
 # Ensures all is committed
 if [[ $(git status --porcelain) ]]; then
     die "Aborting the bump! You have uncommitted changes."
 fi
 
+# Sync with remote branches
 git checkout master
-git push
-git checkout develop
-git push
+git pull origin master
 
-# Start a new release
-git flow release start "$PACKAGE_VERSION"
+git checkout develop
+git pull origin develop
+
+# Create and checkout release branch
+RELEASE_BRANCH="release/$PACKAGE_VERSION"
+if git rev-parse --verify "$RELEASE_BRANCH" >/dev/null 2>&1; then
+    die "Release branch '$RELEASE_BRANCH' already exists."
+fi
+git checkout -b "$RELEASE_BRANCH" develop
 
 # Ensure dependencies are okay
 npm install
@@ -38,16 +44,25 @@ npx gulp build
 npx gulp zip
 
 git add -A
-git commit -am "Final commit of version $PACKAGE_VERSION" --no-edit
+git commit -m "Final commit of version $PACKAGE_VERSION"
 
-# Complete the previous release. This will also tag it.
-git flow release finish $PACKAGE_VERSION -m "Completing release of $PACKAGE_VERSION"
-
-git push
-
+# Merge release branch into master with --no-ff
 git checkout master
-git push
-git push --tags
+git merge --no-ff "$RELEASE_BRANCH" -m "Merge branch '$RELEASE_BRANCH'"
+
+# Create annotated tag on master
+git tag -a "$PACKAGE_VERSION" -m "Completing release of $PACKAGE_VERSION"
+
+# Back-merge tag into develop with --no-ff
+git checkout develop
+git merge --no-ff "$PACKAGE_VERSION" -m "Merge tag '$PACKAGE_VERSION' into develop"
+
+# Push everything to remote
+git push origin master develop --tags
+
+# Delete the release branch locally and remotely
+git branch -d "$RELEASE_BRANCH"
+git push origin --delete "$RELEASE_BRANCH" 2>/dev/null || true
 
 # Prepare the develop branch for the new cycle
 git checkout develop
