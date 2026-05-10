@@ -66,7 +66,14 @@ In `dist` you can find a latest version in a zip file for easier distribution. C
 
 ## Examples
 
-In the `/examples` folder you can see some ready-to-import Ninja Forms templates and HTML examples for re-use. They might inspire you …
+In the `/examples` folder you can s**Fix**
+
+- Make WebSocket connection more robust
+
+**Chore**
+
+- Upgrade VC dependency
+- Switch Prettier extension some ready-to-import Ninja Forms templates and HTML examples for re-use. They might inspire you …
 
 ## Documentation
 
