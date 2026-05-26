@@ -77,8 +77,8 @@ In the `/doc` folder we place in all text and images for the public documentatio
 1. Ensure you are on develop branch
 2. Write changelog in `readme.txt`
 3. Bump versions in `readme.txt`:
+   - "stable tag" using this VC plugin's latest version from changelog
    - If there was a WordPress upgrade, bump it under "tested up to", otherwise
-   - "stable tag" using this plugin's latest version from changelog
 4. Search for current stable tag version and replace it with the new one. Should be these files:
    - package.json
    - readme.txt

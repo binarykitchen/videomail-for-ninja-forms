@@ -5,7 +5,7 @@
     else root["VideomailClient"] = factory();
 })(globalThis, ()=>(()=>{
         var __webpack_modules__ = {
-            "./node_modules/@rsbuild/core/compiled/css-loader/index.js??ruleSet[1].rules[10].oneOf[2].use[1]!builtin:lightningcss-loader??ruleSet[1].rules[10].oneOf[2].use[2]!./node_modules/stylus-loader/dist/cjs.js??ruleSet[1].rules[10].oneOf[2].use[3]!./src/styles/main.styl" (module1, __webpack_exports__, __webpack_require__) {
+            "./node_modules/@rsbuild/core/compiled/css-loader/index.js??ruleSet[1].rules[10].oneOf[3].use[1]!builtin:lightningcss-loader??ruleSet[1].rules[10].oneOf[3].use[2]!./node_modules/stylus-loader/dist/cjs.js??ruleSet[1].rules[10].oneOf[3].use[3]!./src/styles/main.styl" (module1, __webpack_exports__, __webpack_require__) {
                 "use strict";
                 __webpack_require__.d(__webpack_exports__, {
                     A: ()=>__rspack_default_export
@@ -1560,8 +1560,8 @@
                 var applyBind = __webpack_require__("./node_modules/call-bind-apply-helpers/applyBind.js");
                 module1.exports = function(originalFunction) {
                     var func = callBindBasic(arguments);
-                    var adjustedLength = originalFunction.length - (arguments.length - 1);
-                    return setFunctionLength(func, 1 + (adjustedLength > 0 ? adjustedLength : 0), true);
+                    var adjustedLength = 1 + originalFunction.length - (arguments.length - 1);
+                    return setFunctionLength(func, adjustedLength > 0 ? adjustedLength : 0, true);
                 };
                 if ($defineProperty) $defineProperty(module1.exports, 'apply', {
                     value: applyBind
@@ -6006,6 +6006,7 @@
                     parseArrays: true,
                     plainObjects: false,
                     strictDepth: false,
+                    strictMerge: true,
                     strictNullHandling: false,
                     throwOnLimitExceeded: false
                 };
@@ -6028,8 +6029,8 @@
                     var cleanStr = options.ignoreQueryPrefix ? str.replace(/^\?/, '') : str;
                     cleanStr = cleanStr.replace(/%5B/gi, '[').replace(/%5D/gi, ']');
                     var limit = options.parameterLimit === 1 / 0 ? void 0 : options.parameterLimit;
-                    var parts = cleanStr.split(options.delimiter, options.throwOnLimitExceeded ? limit + 1 : limit);
-                    if (options.throwOnLimitExceeded && parts.length > limit) throw new RangeError('Parameter limit exceeded. Only ' + limit + ' parameter' + (1 === limit ? '' : 's') + ' allowed.');
+                    var parts = cleanStr.split(options.delimiter, options.throwOnLimitExceeded && void 0 !== limit ? limit + 1 : limit);
+                    if (options.throwOnLimitExceeded && void 0 !== limit && parts.length > limit) throw new RangeError('Parameter limit exceeded. Only ' + limit + ' parameter' + (1 === limit ? '' : 's') + ' allowed.');
                     var skipIndex = -1;
                     var i;
                     var charset = options.charset;
@@ -6060,9 +6061,13 @@
                         if (part.indexOf('[]=') > -1) val = isArray(val) ? [
                             val
                         ] : val;
+                        if (options.comma && isArray(val) && val.length > options.arrayLimit) {
+                            if (options.throwOnLimitExceeded) throw new RangeError('Array limit exceeded. Only ' + options.arrayLimit + ' element' + (1 === options.arrayLimit ? '' : 's') + ' allowed in an array.');
+                            val = utils.combine([], val, options.arrayLimit, options.plainObjects);
+                        }
                         if (null !== key) {
                             var existing = has.call(obj, key);
-                            if (existing && 'combine' === options.duplicates) obj[key] = utils.combine(obj[key], val, options.arrayLimit, options.plainObjects);
+                            if (existing && ('combine' === options.duplicates || part.indexOf('[]=') > -1)) obj[key] = utils.combine(obj[key], val, options.arrayLimit, options.plainObjects);
                             else if (!existing || 'last' === options.duplicates) obj[key] = val;
                         }
                     }
@@ -6086,10 +6091,15 @@
                             var cleanRoot = '[' === root.charAt(0) && ']' === root.charAt(root.length - 1) ? root.slice(1, -1) : root;
                             var decodedRoot = options.decodeDotInKeys ? cleanRoot.replace(/%2E/g, '.') : cleanRoot;
                             var index = parseInt(decodedRoot, 10);
+                            var isValidArrayIndex = !isNaN(index) && root !== decodedRoot && String(index) === decodedRoot && index >= 0 && options.parseArrays;
                             if (options.parseArrays || '' !== decodedRoot) {
-                                if (!isNaN(index) && root !== decodedRoot && String(index) === decodedRoot && index >= 0 && options.parseArrays && index <= options.arrayLimit) {
+                                if (isValidArrayIndex && index < options.arrayLimit) {
                                     obj = [];
                                     obj[index] = leaf;
+                                } else if (isValidArrayIndex && options.throwOnLimitExceeded) throw new RangeError('Array limit exceeded. Only ' + options.arrayLimit + ' element' + (1 === options.arrayLimit ? '' : 's') + ' allowed in an array.');
+                                else if (isValidArrayIndex) {
+                                    obj[index] = leaf;
+                                    utils.markOverflow(obj, index);
                                 } else if ('__proto__' !== decodedRoot) obj[decodedRoot] = leaf;
                             } else obj = {
                                 0: leaf
@@ -6099,8 +6109,8 @@
                     }
                     return leaf;
                 };
-                var splitKeyIntoSegments = function(givenKey, options) {
-                    var key = options.allowDots ? givenKey.replace(/\.([^.[]+)/g, '[$1]') : givenKey;
+                var splitKeyIntoSegments = function(originalKey, options) {
+                    var key = options.allowDots ? originalKey.replace(/\.([^.[]+)/g, '[$1]') : originalKey;
                     if (options.depth <= 0) {
                         if (!options.plainObjects && has.call(Object.prototype, key)) {
                             if (!options.allowPrototypes) return;
@@ -6109,31 +6119,47 @@
                             key
                         ];
                     }
-                    var brackets = /(\[[^[\]]*])/;
-                    var child = /(\[[^[\]]*])/g;
-                    var segment = brackets.exec(key);
-                    var parent = segment ? key.slice(0, segment.index) : key;
-                    var keys = [];
+                    var segments = [];
+                    var first = key.indexOf('[');
+                    var parent = first >= 0 ? key.slice(0, first) : key;
                     if (parent) {
                         if (!options.plainObjects && has.call(Object.prototype, parent)) {
                             if (!options.allowPrototypes) return;
                         }
-                        keys.push(parent);
+                        segments[segments.length] = parent;
                     }
-                    var i = 0;
-                    while(null !== (segment = child.exec(key)) && i < options.depth){
-                        i += 1;
-                        var segmentContent = segment[1].slice(1, -1);
-                        if (!options.plainObjects && has.call(Object.prototype, segmentContent)) {
-                            if (!options.allowPrototypes) return;
+                    var n = key.length;
+                    var open = first;
+                    var collected = 0;
+                    while(open >= 0 && collected < options.depth){
+                        var level = 1;
+                        var i = open + 1;
+                        var close = -1;
+                        while(i < n && close < 0){
+                            var cu = key.charCodeAt(i);
+                            if (0x5B === cu) level += 1;
+                            else if (0x5D === cu) {
+                                level -= 1;
+                                if (0 === level) close = i;
+                            }
+                            i += 1;
                         }
-                        keys.push(segment[1]);
+                        if (close < 0) {
+                            segments[segments.length] = '[' + key.slice(open) + ']';
+                            return segments;
+                        }
+                        var seg = key.slice(open, close + 1);
+                        var content = seg.slice(1, -1);
+                        if (!options.plainObjects && has.call(Object.prototype, content) && !options.allowPrototypes) return;
+                        segments[segments.length] = seg;
+                        collected += 1;
+                        open = key.indexOf('[', close + 1);
                     }
-                    if (segment) {
+                    if (open >= 0) {
                         if (true === options.strictDepth) throw new RangeError('Input depth exceeded depth option of ' + options.depth + ' and strictDepth is true');
-                        keys.push('[' + key.slice(segment.index) + ']');
+                        segments[segments.length] = '[' + key.slice(open) + ']';
                     }
-                    return keys;
+                    return segments;
                 };
                 var parseKeys = function(givenKey, val, options, valuesParsed) {
                     if (!givenKey) return;
@@ -6172,6 +6198,7 @@
                         parseArrays: false !== opts.parseArrays,
                         plainObjects: 'boolean' == typeof opts.plainObjects ? opts.plainObjects : defaults.plainObjects,
                         strictDepth: 'boolean' == typeof opts.strictDepth ? !!opts.strictDepth : defaults.strictDepth,
+                        strictMerge: 'boolean' == typeof opts.strictMerge ? !!opts.strictMerge : defaults.strictMerge,
                         strictNullHandling: 'boolean' == typeof opts.strictNullHandling ? opts.strictNullHandling : defaults.strictNullHandling,
                         throwOnLimitExceeded: 'boolean' == typeof opts.throwOnLimitExceeded ? opts.throwOnLimitExceeded : false
                     };
@@ -6268,7 +6295,7 @@
                         return value;
                     });
                     if (null === obj) {
-                        if (strictNullHandling) return encoder && !encodeValuesOnly ? encoder(prefix, defaults.encoder, charset, 'key', format) : prefix;
+                        if (strictNullHandling) return formatter(encoder && !encodeValuesOnly ? encoder(prefix, defaults.encoder, charset, 'key', format) : prefix);
                         obj = '';
                     }
                     if (isNonNullishPrimitive(obj) || utils.isBuffer(obj)) {
@@ -6286,7 +6313,9 @@
                     if (void 0 === obj) return values;
                     var objKeys;
                     if ('comma' === generateArrayPrefix && isArray(obj)) {
-                        if (encodeValuesOnly && encoder) obj = utils.maybeMap(obj, encoder);
+                        if (encodeValuesOnly && encoder) obj = utils.maybeMap(obj, function(v) {
+                            return null == v ? v : encoder(v);
+                        });
                         objKeys = [
                             {
                                 value: obj.length > 0 ? obj.join(',') || null : void 0
@@ -6376,13 +6405,15 @@
                     var sideChannel = getSideChannel();
                     for(var i = 0; i < objKeys.length; ++i){
                         var key = objKeys[i];
-                        var value = obj[key];
-                        if (!options.skipNulls || null !== value) pushToArray(keys, stringify(value, key, generateArrayPrefix, commaRoundTrip, options.allowEmptyArrays, options.strictNullHandling, options.skipNulls, options.encodeDotInKeys, options.encode ? options.encoder : null, options.filter, options.sort, options.allowDots, options.serializeDate, options.format, options.formatter, options.encodeValuesOnly, options.charset, sideChannel));
+                        if (null != key) {
+                            var value = obj[key];
+                            if (!options.skipNulls || null !== value) pushToArray(keys, stringify(value, key, generateArrayPrefix, commaRoundTrip, options.allowEmptyArrays, options.strictNullHandling, options.skipNulls, options.encodeDotInKeys, options.encode ? options.encoder : null, options.filter, options.sort, options.allowDots, options.serializeDate, options.format, options.formatter, options.encodeValuesOnly, options.charset, sideChannel));
+                        }
                     }
                     var joined = keys.join(options.delimiter);
                     var prefix = true === options.addQueryPrefix ? '?' : '';
-                    if (options.charsetSentinel) if ('iso-8859-1' === options.charset) prefix += 'utf8=%26%2310003%3B&';
-                    else prefix += 'utf8=%E2%9C%93&';
+                    if (options.charsetSentinel) if ('iso-8859-1' === options.charset) prefix += 'utf8=%26%2310003%3B' + options.delimiter;
+                    else prefix += 'utf8=%E2%9C%93' + options.delimiter;
                     return joined.length > 0 ? prefix + joined : '';
                 };
             },
@@ -6408,7 +6439,7 @@
                 };
                 var hexTable = function() {
                     var array = [];
-                    for(var i = 0; i < 256; ++i)array.push('%' + ((i < 16 ? '0' : '') + i.toString(16)).toUpperCase());
+                    for(var i = 0; i < 256; ++i)array[array.length] = '%' + ((i < 16 ? '0' : '') + i.toString(16)).toUpperCase();
                     return array;
                 }();
                 var compactQueue = function(queue) {
@@ -6417,7 +6448,7 @@
                         var obj = item.obj[item.prop];
                         if (isArray(obj)) {
                             var compacted = [];
-                            for(var j = 0; j < obj.length; ++j)if (void 0 !== obj[j]) compacted.push(obj[j]);
+                            for(var j = 0; j < obj.length; ++j)if (void 0 !== obj[j]) compacted[compacted.length] = obj[j];
                             item.obj[item.prop] = compacted;
                         }
                     }
@@ -6432,8 +6463,11 @@
                 var merge = function merge(target, source, options) {
                     if (!source) return target;
                     if ('object' != typeof source && 'function' != typeof source) {
-                        if (isArray(target)) target.push(source);
-                        else if (!target || 'object' != typeof target) return [
+                        if (isArray(target)) {
+                            var nextIndex = target.length;
+                            if (options && 'number' == typeof options.arrayLimit && nextIndex > options.arrayLimit) return markOverflow(arrayToObject(target.concat(source), options), nextIndex);
+                            target[nextIndex] = source;
+                        } else if (!target || 'object' != typeof target) return [
                             target,
                             source
                         ];
@@ -6441,7 +6475,11 @@
                             var newIndex = getMaxIndex(target) + 1;
                             target[newIndex] = source;
                             setMaxIndex(target, newIndex);
-                        } else if (options && (options.plainObjects || options.allowPrototypes) || !has.call(Object.prototype, source)) target[source] = true;
+                        } else if (options && options.strictMerge) return [
+                            target,
+                            source
+                        ];
+                        else if (options && (options.plainObjects || options.allowPrototypes) || !has.call(Object.prototype, source)) target[source] = true;
                         return target;
                     }
                     if (!target || 'object' != typeof target) {
@@ -6459,9 +6497,11 @@
                             }
                             return markOverflow(result, getMaxIndex(source) + 1);
                         }
-                        return [
+                        var combined = [
                             target
                         ].concat(source);
+                        if (options && 'number' == typeof options.arrayLimit && combined.length > options.arrayLimit) return markOverflow(arrayToObject(combined, options), combined.length - 1);
+                        return combined;
                     }
                     var mergeTarget = target;
                     if (isArray(target) && !isArray(source)) mergeTarget = arrayToObject(target, options);
@@ -6470,7 +6510,7 @@
                             if (has.call(target, i)) {
                                 var targetItem = target[i];
                                 if (targetItem && 'object' == typeof targetItem && item && 'object' == typeof item) target[i] = merge(targetItem, item, options);
-                                else target.push(item);
+                                else target[target.length] = item;
                             } else target[i] = item;
                         });
                         return target;
@@ -6479,6 +6519,11 @@
                         var value = source[key];
                         if (has.call(acc, key)) acc[key] = merge(acc[key], value, options);
                         else acc[key] = value;
+                        if (isOverflow(source) && !isOverflow(acc)) markOverflow(acc, getMaxIndex(source));
+                        if (isOverflow(acc)) {
+                            var keyNum = parseInt(key, 10);
+                            if (String(keyNum) === key && keyNum >= 0 && keyNum > getMaxIndex(acc)) setMaxIndex(acc, keyNum);
+                        }
                         return acc;
                     }, mergeTarget);
                 };
@@ -6554,11 +6599,11 @@
                             var key = keys[j];
                             var val = obj[key];
                             if ('object' == typeof val && null !== val && -1 === refs.indexOf(val)) {
-                                queue.push({
+                                queue[queue.length] = {
                                     obj: obj,
                                     prop: key
-                                });
-                                refs.push(val);
+                                };
+                                refs[refs.length] = val;
                             }
                         }
                     }
@@ -6588,7 +6633,7 @@
                 var maybeMap = function(val, fn) {
                     if (isArray(val)) {
                         var mapped = [];
-                        for(var i = 0; i < val.length; i += 1)mapped.push(fn(val[i]));
+                        for(var i = 0; i < val.length; i += 1)mapped[mapped.length] = fn(val[i]);
                         return mapped;
                     }
                     return fn(val);
@@ -6603,6 +6648,7 @@
                     isBuffer: isBuffer,
                     isOverflow: isOverflow,
                     isRegExp: isRegExp,
+                    markOverflow: markOverflow,
                     maybeMap: maybeMap,
                     merge: merge
                 };
@@ -6737,9 +6783,8 @@
                             if (!channel.has(key)) throw new $TypeError('Side channel does not contain ' + inspect(key));
                         },
                         delete: function(key) {
-                            var root = $o && $o.next;
                             var deletedNode = listDelete($o, key);
-                            if (deletedNode && root && root === deletedNode) $o = void 0;
+                            if (deletedNode && $o && !$o.next) $o = void 0;
                             return !!deletedNode;
                         },
                         get: function(key) {
@@ -10575,8 +10620,9 @@
             "use strict";
             __webpack_require__.r(__webpack_exports__);
             __webpack_require__.d(__webpack_exports__, {
-                VideomailClient: ()=>VideomailClient,
-                VideoType: ()=>VideoType
+                Reactions: ()=>Reactions,
+                VideoType: ()=>VideoType,
+                VideomailClient: ()=>VideomailClient
             });
             const VideoType = {
                 WebM: "webm",
@@ -10832,7 +10878,7 @@
             var client = __webpack_require__("./node_modules/superagent/lib/client.js");
             var client_default = /*#__PURE__*/ __webpack_require__.n(client);
             var package_namespaceObject = {
-                rE: "13.8.6"
+                rE: "13.12.9"
             };
             function isAudioEnabled(options) {
                 return Boolean(options.audio.enabled);
@@ -10865,7 +10911,7 @@
             const util_pretty = pretty;
             var defined = __webpack_require__("./node_modules/defined/index.js");
             var defined_default = /*#__PURE__*/ __webpack_require__.n(defined);
-            var LIBVERSION = '2.0.9', UA_MAX_LENGTH = 500, USER_AGENT = 'user-agent', EMPTY = '', UNKNOWN = '?', TYPEOF = {
+            var LIBVERSION = '2.0.10', UA_MAX_LENGTH = 500, USER_AGENT = 'user-agent', EMPTY = '', UNKNOWN = '?', TYPEOF = {
                 FUNCTION: 'function',
                 OBJECT: 'object',
                 STRING: 'string',
@@ -10908,7 +10954,7 @@
             }, itemListToArray = function(header) {
                 if (!header) return;
                 var arr = [];
-                var tokens = strip(/\\?\"/g, header).split(',');
+                var tokens = normalizeHeaderValue(header).split(',');
                 for(var i = 0; i < tokens.length; i++)if (tokens[i].indexOf(';') > -1) {
                     var token = ua_parser_trim(tokens[i]).split(';v=');
                     arr[i] = {
@@ -10921,6 +10967,8 @@
                 return isString(str) ? str.toLowerCase() : str;
             }, majorize = function(version) {
                 return isString(version) ? strip(/[^\d\.]/g, version).split('.')[0] : void 0;
+            }, normalizeHeaderValue = function(str) {
+                return isString(str) ? ua_parser_trim(strip(/\\?\"/g, str), UA_MAX_LENGTH) : void 0;
             }, setProps = function(arr) {
                 for(var i in arr)if (arr.hasOwnProperty(i)) {
                     var propName = arr[i];
@@ -10930,8 +10978,6 @@
                 return this;
             }, strip = function(pattern, str) {
                 return isString(str) ? str.replace(pattern, EMPTY) : str;
-            }, stripQuotes = function(str) {
-                return strip(/\\?\"/g, str);
             }, ua_parser_trim = function(str, len) {
                 str = strip(/^\s\s*/, String(str));
                 return typeof len === TYPEOF.UNDEFINED ? str : str.substring(0, len);
@@ -10964,6 +11010,8 @@
                     }
                     i += 2;
                 }
+            }, strTest = function(str, map) {
+                return map.test.test(str) ? map.ifTrue : map.ifFalse;
             }, strMapper = function(str, map) {
                 for(var i in map)if (typeof map[i] === TYPEOF.OBJECT && map[i].length > 0) {
                     for(var j = 0; j < map[i].length; j++)if (has(map[i][j], str)) return i === UNKNOWN ? void 0 : i;
@@ -11040,6 +11088,10 @@
                         [
                             NAME,
                             EDGE + ' WebView'
+                        ],
+                        [
+                            TYPE,
+                            INAPP
                         ]
                     ],
                     [
@@ -11147,7 +11199,7 @@
                         ]
                     ],
                     [
-                        /(?:\buc? ?browser|(?:juc.+)ucweb)[\/ ]?([\w\.]+)/i
+                        /(?:\buc? ?browser|(?:juc.+)ucweb| ucpc)[\/ ]?([\w\.]+)/i
                     ],
                     [
                         VERSION,
@@ -11342,6 +11394,16 @@
                         VERSION
                     ],
                     [
+                        / HBPC\/([\w\.]+)/
+                    ],
+                    [
+                        VERSION,
+                        [
+                            NAME,
+                            HUAWEI + SUFFIX_BROWSER
+                        ]
+                    ],
+                    [
                         /samsungbrowser\/([\w\.]+)/i
                     ],
                     [
@@ -11514,17 +11576,25 @@
                         [
                             NAME,
                             EDGE + ' WebView2'
+                        ],
+                        [
+                            TYPE,
+                            INAPP
                         ]
                     ],
                     [
-                        / wv\).+(chrome)\/([\w\.]+)/i
+                        /; wv\).+(chrome)\/([\w\.]+)/i
                     ],
                     [
                         [
                             NAME,
                             CHROME + ' WebView'
                         ],
-                        VERSION
+                        VERSION,
+                        [
+                            TYPE,
+                            INAPP
+                        ]
                     ],
                     [
                         /droid.+ version\/([\w\.]+)\b.+(?:mobile safari|safari)/i
@@ -11916,7 +11986,7 @@
                         /\b(hm[-_ ]?note?[_ ]?(?:\d\w)?) bui/i,
                         /oid[^\)]+; (redmi[\-_ ]?(?:note|k)?[\w_ ]+|m?[12]\d[01]\d\w{3,6}|poco[\w ]+|(shark )?\w{3}-[ah]0|qin ?[1-3](s\+|ultra| pro)?)( bui|; wv|\))/i,
                         /\b(mi[-_ ]?(?:a\d|one|one[_ ]plus|note|max|cc)?[_ ]?(?:\d{0,2}\w?)[_ ]?(?:plus|se|lite|pro)?( 5g|lte)?)(?: bui|\))/i,
-                        / ([\w ]+) miui\/v?\d/i
+                        /; ([\w ]+) miui\/v?\d/i
                     ],
                     [
                         [
@@ -12518,6 +12588,21 @@
                         ]
                     ],
                     [
+                        /blackview ([-\w ]+)( b|\))/i,
+                        /; (bv\d{4}[-\w ]*)( b|\))/i
+                    ],
+                    [
+                        MODEL,
+                        [
+                            VENDOR,
+                            'Blackview'
+                        ],
+                        [
+                            TYPE,
+                            MOBILE
+                        ]
+                    ],
+                    [
                         /; (n159v)/i
                     ],
                     [
@@ -12529,6 +12614,25 @@
                         [
                             TYPE,
                             MOBILE
+                        ]
+                    ],
+                    [
+                        /((revvl[ \w\+]+|tm(?:rv|af)\w*[45]g(?:tb)?))( b|\))/i
+                    ],
+                    [
+                        MODEL,
+                        [
+                            TYPE,
+                            strTest,
+                            {
+                                test: /ta?b/i,
+                                ifTrue: TABLET,
+                                ifFalse: MOBILE
+                            }
+                        ],
+                        [
+                            VENDOR,
+                            'T-Mobile'
                         ]
                     ],
                     [
@@ -12545,7 +12649,7 @@
                     ],
                     [
                         /(blackberry|benq|palm(?=\-)|sonyericsson|acer|asus(?! zenw)|dell|jolla|meizu|motorola|polytron|tecno|micromax|advan)[-_ ]?([-\w]*)/i,
-                        /; (blu|hmd|imo|infinix|lava|oneplus|tcl|wiko)[_ ]([\w\+ ]+?)(?: bui|\)|; r)/i,
+                        /; (blu|coolpad|cubot|hmd|imo|infinix|lava|oneplus|tcl|wiko)[_ ]([-\w\+ ]+?)(?: bui|\)|; r)/i,
                         /(hp) ([\w ]+\w)/i,
                         /(microsoft); (lumia[\w ]+)/i,
                         /(oppo) ?([\w ]+) bui/i,
@@ -13797,19 +13901,19 @@
                     ],
                     [
                         MODEL,
-                        stripQuotes(uach[CH_MODEL])
+                        normalizeHeaderValue(uach[CH_MODEL])
                     ],
                     [
                         PLATFORM,
-                        stripQuotes(uach[CH_PLATFORM])
+                        normalizeHeaderValue(uach[CH_PLATFORM])
                     ],
                     [
                         PLATFORMVER,
-                        stripQuotes(uach[CH_PLATFORM_VER])
+                        normalizeHeaderValue(uach[CH_PLATFORM_VER])
                     ],
                     [
                         ARCHITECTURE,
-                        stripQuotes(uach[CH_ARCH])
+                        normalizeHeaderValue(uach[CH_ARCH])
                     ],
                     [
                         FORMFACTORS,
@@ -13817,7 +13921,7 @@
                     ],
                     [
                         BITNESS,
-                        stripQuotes(uach[CH_BITNESS])
+                        normalizeHeaderValue(uach[CH_BITNESS])
                     ]
                 ]);
                 else for(var prop in uach)if (this.hasOwnProperty(prop) && typeof uach[prop] !== TYPEOF.UNDEFINED) this[prop] = uach[prop];
@@ -13887,9 +13991,11 @@
                         this.set(MAJOR, majorize(this.get(VERSION)));
                         break;
                     case OS:
-                        if ('iOS' == this.get(NAME) && '18.6' == this.get(VERSION)) {
-                            var realVersion = /\) Version\/([\d\.]+)/.exec(this.ua);
-                            if (realVersion && parseInt(realVersion[1].substring(0, 2), 10) >= 26) this.set(VERSION, realVersion[1]);
+                        if ('iOS' == this.get(NAME) && this.get(VERSION)) {
+                            if (/^1[89][^\d]/.exec(this.get(VERSION))) {
+                                var realVersion = /\) Version\/((\d+)[\d\.]*)/.exec(this.ua);
+                                if (realVersion && parseInt(realVersion[2], 10) >= 26) this.set(VERSION, realVersion[1]);
+                            }
                         }
                         break;
                 }
@@ -13983,7 +14089,7 @@
                     headers = normalized;
                 }
                 if (!(this instanceof UAParser)) return new UAParser(ua, extensions, headers).getResult();
-                var userAgent = typeof ua === TYPEOF.STRING ? ua : headers && headers[USER_AGENT] ? headers[USER_AGENT] : NAVIGATOR && NAVIGATOR.userAgent ? NAVIGATOR.userAgent : EMPTY, httpUACH = new UACHData(headers, true), regexMap = extensions ? extend(defaultRegexes, extensions) : defaultRegexes, createItemFunc = function(itemType) {
+                var userAgent = typeof ua === TYPEOF.STRING ? ua : headers && headers[USER_AGENT] ? headers[USER_AGENT] : NAVIGATOR && NAVIGATOR.userAgent ? NAVIGATOR.userAgent : EMPTY, httpUACH = new UACHData(headers, true), regexMap = defaultRegexes, createItemFunc = function(itemType) {
                     if (itemType == RESULT) return function() {
                         return new UAItem(itemType, userAgent, regexMap, httpUACH).set('ua', userAgent).set(BROWSER, this.getBrowser()).set(CPU, this.getCPU()).set(DEVICE, this.getDevice()).set(ENGINE, this.getEngine()).set(OS, this.getOS()).get();
                     };
@@ -14028,8 +14134,15 @@
                             if (isString(ua)) userAgent = ua_parser_trim(ua, UA_MAX_LENGTH);
                             return this;
                         }
+                    ],
+                    [
+                        'useExtension',
+                        function(exts) {
+                            if (exts) regexMap = extend(regexMap, exts);
+                            return this;
+                        }
                     ]
-                ]).setUA(userAgent);
+                ]).setUA(userAgent).useExtension(extensions);
                 return this;
             }
             UAParser.VERSION = LIBVERSION;
@@ -14147,6 +14260,7 @@
             }
             const util_getBrowser = getBrowser;
             class HTTPVideomailError extends Error {
+                name = "VideomailError";
                 code;
                 status;
                 explanation;
@@ -14241,8 +14355,10 @@
                         if (err && "constraint" in err) {
                             const overconstrainedError = err;
                             const constraint = overconstrainedError.constraint;
-                            explanation = "width" === constraint ? "Your webcam does not meet the width requirement." : constraint ? `Unmet constraint: ${constraint}` : err.message;
-                        } else explanation = err?.message;
+                            if ("width" === constraint) explanation = "Your webcam does not meet the width requirement.";
+                            else if (constraint) explanation = `Unmet constraint: ${constraint}`;
+                            else if (err.message) explanation = err.message;
+                        } else if (err?.message) explanation = err.message;
                         break;
                     case "MediaDeviceFailedDueToShutdown":
                         message = "Webcam is shutting down";
@@ -14308,11 +14424,11 @@
                         break;
                     case error_VideomailError.DOM_EXCEPTION:
                         message = "DOM Exception";
-                        explanation = util_pretty(err);
+                        if (err) explanation = util_pretty(err);
                         break;
                     case error_VideomailError.MEDIA_DEVICE_NOT_SUPPORTED:
                         message = "Media device not supported";
-                        explanation = util_pretty(err);
+                        if (err) explanation = util_pretty(err);
                         break;
                     default:
                         {
@@ -14321,11 +14437,7 @@
                             if (!explanation && originalExplanation) explanation = `Inspected: ${originalExplanation}`;
                             if (!explanation && err?.explanation) explanation = err.explanation;
                             if (!message && err?.message) message = err.message;
-                            if (!message) {
-                                if (errName) message = `${errName} (weird)`;
-                                if (!explanation) explanation = util_pretty(err);
-                                if (util_pretty(message) === explanation) explanation = void 0;
-                            }
+                            if (!message && errName) message = `${errName} (weird)`;
                             break;
                         }
                 }
@@ -14355,6 +14467,27 @@
                 return videomailError;
             }
             const error_createError = createError;
+            function findOriginalExc(exc) {
+                if (exc instanceof Error && "response" in exc) {
+                    const response = exc.response;
+                    const body = response.body;
+                    if ("error" in body) {
+                        const message = body.error.message;
+                        const cause = body.error.cause;
+                        const error = new error_HTTPVideomailError(message, {
+                            cause
+                        });
+                        if (body.error.name) error.name = body.error.name;
+                        if (body.error.explanation) error.explanation = body.error.explanation;
+                        if (body.error.stack) error.stack = body.error.stack;
+                        if (body.error.status) error.status = body.error.status;
+                        if (body.error.code) error.code = body.error.code;
+                        return error;
+                    }
+                }
+                return exc;
+            }
+            const error_findOriginalExc = findOriginalExc;
             function _extends() {
                 _extends = Object.assign || function(target) {
                     for(var i = 1; i < arguments.length; i++){
@@ -14792,26 +14925,6 @@
                 }
             }
             const wrappers_form = Form;
-            function findOriginalExc(exc) {
-                if (exc instanceof Error && "response" in exc) {
-                    const response = exc.response;
-                    const body = response.body;
-                    if ("error" in body) {
-                        const message = body.error.message;
-                        const cause = body.error.cause;
-                        const error = new error_HTTPVideomailError(message, {
-                            cause
-                        });
-                        if (body.error.name) error.name = body.error.name;
-                        if (body.error.explanation) error.explanation = body.error.explanation;
-                        if (body.error.stack) error.stack = body.error.stack;
-                        if (body.error.status) error.status = body.error.status;
-                        if (body.error.code) error.code = body.error.code;
-                        return error;
-                    }
-                }
-                return exc;
-            }
             class Resource {
                 options;
                 timezoneId;
@@ -14835,15 +14948,19 @@
                     newVideomail = this.applyDefaultValue(newVideomail, "body");
                     return newVideomail;
                 }
-                async get(identifierName, identifierValue) {
-                    const url = `${this.options.apiUrl}/videomail/${identifierName}/${identifierValue}/snapshot`;
+                async get(identifierName, identifierValue, identifierType) {
+                    const url = `${this.options.apiUrl}/videomail/${identifierName}/${identifierValue}/${identifierType}`;
                     try {
                         const request = await client_default()("get", url).type("json").set("Accept", "application/json").withCredentials().set("Timezone-Id", this.timezoneId).set(constants.WHITELIST_KEY_LABEL, this.options.whitelistKey).timeout(this.options.timeouts.connection);
+                        if ("thread" === identifierType) {
+                            const thread = request.body;
+                            return thread;
+                        }
                         const videomail = request.body;
                         return videomail;
                     } catch (exc) {
                         throw error_createError({
-                            exc: findOriginalExc(exc),
+                            exc: error_findOriginalExc(exc),
                             options: this.options
                         });
                     }
@@ -14854,22 +14971,34 @@
                     };
                     const path = videomail.public ? "wall" : "videomail";
                     let url = `${this.options.apiUrl}/${path}/`;
-                    if (method === FormMethod.PUT && videomail.key) url += videomail.key;
+                    if (method === FormMethod.PUT) {
+                        if (videomail.public) throw error_createError({
+                            message: "A public videomail cannot be updated.",
+                            options: this.options
+                        });
+                        if (videomail.key) url += videomail.key;
+                    }
                     try {
                         const request = await client_default()(method, url).query(queryParams).set("Timezone-Id", this.timezoneId).withCredentials().send(videomail).timeout(this.options.timeouts.connection);
                         return request;
                     } catch (exc) {
                         throw error_createError({
-                            exc: findOriginalExc(exc),
+                            exc: error_findOriginalExc(exc),
                             options: this.options
                         });
                     }
                 }
                 async getByAlias(alias) {
-                    return await this.get("alias", alias);
+                    return await this.get("alias", alias, "snapshot");
                 }
                 async getByKey(key) {
-                    return await this.get("key", key);
+                    return await this.get("key", key, "snapshot");
+                }
+                async getThreadByAlias(alias) {
+                    return await this.get("alias", alias, "thread");
+                }
+                async getThreadByKey(key) {
+                    return await this.get("key", key, "thread");
                 }
                 async reportError(err) {
                     const queryParams = {
@@ -14922,7 +15051,7 @@
                         return res;
                     } catch (exc) {
                         throw error_createError({
-                            exc: findOriginalExc(exc),
+                            exc: error_findOriginalExc(exc),
                             options: this.options
                         });
                     }
@@ -14950,7 +15079,7 @@
                         return res;
                     } catch (exc) {
                         throw error_createError({
-                            exc: findOriginalExc(exc),
+                            exc: error_findOriginalExc(exc),
                             options: this.options
                         });
                     }
@@ -15160,7 +15289,7 @@
             var insertStyleElement_default = /*#__PURE__*/ __webpack_require__.n(insertStyleElement);
             var styleTagTransform = __webpack_require__("./node_modules/@rsbuild/core/compiled/style-loader/runtime/styleTagTransform.js");
             var styleTagTransform_default = /*#__PURE__*/ __webpack_require__.n(styleTagTransform);
-            var main = __webpack_require__("./node_modules/@rsbuild/core/compiled/css-loader/index.js??ruleSet[1].rules[10].oneOf[2].use[1]!builtin:lightningcss-loader??ruleSet[1].rules[10].oneOf[2].use[2]!./node_modules/stylus-loader/dist/cjs.js??ruleSet[1].rules[10].oneOf[2].use[3]!./src/styles/main.styl");
+            var main = __webpack_require__("./node_modules/@rsbuild/core/compiled/css-loader/index.js??ruleSet[1].rules[10].oneOf[3].use[1]!builtin:lightningcss-loader??ruleSet[1].rules[10].oneOf[3].use[2]!./node_modules/stylus-loader/dist/cjs.js??ruleSet[1].rules[10].oneOf[3].use[3]!./src/styles/main.styl");
             var main_options = {};
             main_options.styleTagTransform = styleTagTransform_default();
             main_options.setAttributes = setAttributesWithoutAttributes_default();
@@ -17067,7 +17196,7 @@
                             this.connecting = this.connected = false;
                             const err = error_createError({
                                 message: "Failed to connect to server",
-                                explanation: "If this happens again, please contact us with the details of your environment.",
+                                explanation: `Unable to build websocket to ${url2Connect}. Please check your connection and try again. If the problem persists, contact us.`,
                                 options: this.options,
                                 exc
                             });
@@ -17878,23 +18007,28 @@
                 }
                 correctDimensions(responsive, videoWidth, videoHeight) {
                     if (!this.replayElement) throw new Error("There is no replay element to correct dimensions for.");
-                    let height;
-                    let width;
+                    let heightValue;
+                    let widthValue;
                     let ratio;
                     if (this.videomail) {
-                        width = this.videomail.width;
-                        height = this.videomail.height;
-                        if (width) ratio = height / width;
+                        widthValue = this.videomail.width;
+                        heightValue = this.videomail.height;
+                        if (widthValue && heightValue) ratio = heightValue / widthValue;
                     }
-                    if (!width) width = dimensions_calculateWidth(responsive, this.options, videoHeight, ratio);
-                    if (!height) {
+                    if (!widthValue) {
+                        const newWidthDimensions = dimensions_calculateWidth(responsive, this.options, videoHeight, ratio);
+                        const newWidth = newWidthDimensions.value;
+                        widthValue = newWidth;
+                    }
+                    if (!heightValue) {
                         let element = this.visuals.getElement();
                         if (!element) element = document.body;
-                        height = dimensions_calculateHeight(responsive, videoWidth, this.options, ratio, element);
+                        const newDimensions = dimensions_calculateHeight(responsive, videoWidth, this.options, ratio, element);
+                        heightValue = newDimensions.value;
                     }
-                    if (width > 0) this.replayElement.style.width = `${width}px`;
+                    if (widthValue) this.replayElement.style.width = `${widthValue}px`;
                     else this.replayElement.style.width = "auto";
-                    if (height > 0) this.replayElement.style.height = `${height}px`;
+                    if (heightValue) this.replayElement.style.height = `${heightValue}px`;
                     else this.replayElement.style.height = "auto";
                 }
                 setVideomail(newVideomail, playerOnly = false) {
@@ -18954,6 +19088,14 @@
                     const resource = new src_resource(this.options);
                     return await resource.getByKey(key);
                 }
+                async getThreadByAlias(alias) {
+                    const resource = new src_resource(this.options);
+                    return await resource.getThreadByAlias(alias);
+                }
+                async getThreadByKey(key) {
+                    const resource = new src_resource(this.options);
+                    return await resource.getThreadByKey(key);
+                }
                 isDirty() {
                     return this.container.isDirty();
                 }
@@ -18973,6 +19115,28 @@
                     if (this.options.logger.getLines) return this.options.logger.getLines();
                 }
             }
+            const Reactions = {
+                LOVE: {
+                    key: "love",
+                    label: "Love"
+                },
+                APPLAUSE: {
+                    key: "applause",
+                    label: "Applause"
+                },
+                GRINNING_SWEAT: {
+                    key: "grinningSweat",
+                    label: "Whew!"
+                },
+                FIRE: {
+                    key: "fire",
+                    label: "Fire"
+                },
+                SAD: {
+                    key: "sad",
+                    label: "Sad"
+                }
+            };
         })();
         return __webpack_exports__;
     })());
