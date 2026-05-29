@@ -10878,7 +10878,7 @@
             var client = __webpack_require__("./node_modules/superagent/lib/client.js");
             var client_default = /*#__PURE__*/ __webpack_require__.n(client);
             var package_namespaceObject = {
-                rE: "13.12.9"
+                rE: "13.13.0"
             };
             function isAudioEnabled(options) {
                 return Boolean(options.audio.enabled);
@@ -17186,7 +17186,24 @@
                     if (!this.connected) {
                         this.connecting = true;
                         this.emit("CONNECTING");
-                        const url2Connect = `${this.options.socketUrl}?${encodeURIComponent(constants.WHITELIST_KEY_LABEL)}=${encodeURIComponent(this.options.whitelistKey)}`;
+                        let url2Connect;
+                        try {
+                            const socketUrlObj = new URL(this.options.socketUrl);
+                            socketUrlObj.searchParams.set(constants.WHITELIST_KEY_LABEL, this.options.whitelistKey);
+                            url2Connect = socketUrlObj.toString();
+                        } catch (exc) {
+                            this.connecting = this.connected = false;
+                            const err = error_createError({
+                                message: "Invalid WebSocket URL",
+                                explanation: `The configured socketUrl "${this.options.socketUrl}" is not a valid URL. Please check your videomail-client configuration.`,
+                                options: this.options,
+                                exc
+                            });
+                            this.emit("ERROR", {
+                                err
+                            });
+                            return;
+                        }
                         this.options.logger.debug(`Recorder: initializing web socket to ${url2Connect}`);
                         try {
                             this.stream = stream_default()(url2Connect, {
