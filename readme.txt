@@ -3,7 +3,7 @@ Contributors: michael.heuberger, kbjohnson90
 Tags: video, email, recorder, sign language
 Requires at least: 6.0
 Tested up to: 6.9.1
-Stable tag: 10.5.0
+Stable tag: 10.5.1
 Requires PHP: 8.1.0
 Donate link: https://videomail.io/faq
 License: CC0-1.0
@@ -71,6 +71,11 @@ To get help, just use any of these contacts at [https://binarykitchen.com](https
 2. Once you have assembled a form and preview it, any browser will ask for webcam access first.
 
 == Changelog ==
+
+= 10.5.1 (3 May 2026) =
+
+**Fix**
+* Proper usage of Websocket stream constructors for stricter browser
 
 = 10.5.0 (29 May 2026) =
 

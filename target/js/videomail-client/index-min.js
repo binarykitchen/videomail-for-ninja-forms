@@ -7,9 +7,6 @@
         var __webpack_modules__ = {
             "./node_modules/@rsbuild/core/compiled/css-loader/index.js??ruleSet[1].rules[10].oneOf[3].use[1]!builtin:lightningcss-loader??ruleSet[1].rules[10].oneOf[3].use[2]!./node_modules/stylus-loader/dist/cjs.js??ruleSet[1].rules[10].oneOf[3].use[3]!./src/styles/main.styl" (module1, __webpack_exports__, __webpack_require__) {
                 "use strict";
-                __webpack_require__.d(__webpack_exports__, {
-                    A: ()=>__rspack_default_export
-                });
                 var _node_modules_rsbuild_core_compiled_css_loader_noSourceMaps_js__rspack_import_0 = __webpack_require__("./node_modules/@rsbuild/core/compiled/css-loader/noSourceMaps.js");
                 var _node_modules_rsbuild_core_compiled_css_loader_noSourceMaps_js__rspack_import_0_default = /*#__PURE__*/ __webpack_require__.n(_node_modules_rsbuild_core_compiled_css_loader_noSourceMaps_js__rspack_import_0);
                 var _node_modules_rsbuild_core_compiled_css_loader_api_js__rspack_import_1 = __webpack_require__("./node_modules/@rsbuild/core/compiled/css-loader/api.js");
@@ -157,6 +154,9 @@
                     ""
                 ]);
                 const __rspack_default_export = ___CSS_LOADER_EXPORT___;
+                __webpack_require__.d(__webpack_exports__, {}, {
+                    A: __rspack_default_export
+                });
             },
             "./node_modules/animitter/index.js" (module1, exports1, __webpack_require__) {
                 var EventEmitter = __webpack_require__("./node_modules/events/events.js").EventEmitter, inherits = __webpack_require__("./node_modules/inherits/inherits_browser.js"), raf = __webpack_require__("./node_modules/raf/index.js"), methods;
@@ -1910,7 +1910,7 @@
                 } : false;
             },
             "./node_modules/duplexify/index.js" (module1, __unused_rspack_exports, __webpack_require__) {
-                var Buffer = __webpack_require__("./node_modules/buffer/index.js")["Buffer"];
+                var Buffer = __webpack_require__("./node_modules/buffer/index.js").Buffer;
                 var process = __webpack_require__("./node_modules/process/browser.js");
                 var stream = __webpack_require__("./node_modules/duplexify/node_modules/readable-stream/readable-browser.js");
                 var eos = __webpack_require__("./node_modules/end-of-stream/index.js");
@@ -7778,7 +7778,7 @@
                 exports1.isBrotliEncoding = (res)=>new RegExp(/^\s*(?:br)\s*$/).test(res.headers['content-encoding']);
             },
             "./node_modules/typedarray-to-buffer/index.js" (module1, __unused_rspack_exports, __webpack_require__) {
-                var Buffer = __webpack_require__("./node_modules/buffer/index.js")["Buffer"];
+                var Buffer = __webpack_require__("./node_modules/buffer/index.js").Buffer;
                 /*! typedarray-to-buffer. MIT License. Feross Aboukhadijeh <https://feross.org/opensource> */ module1.exports = function(arr) {
                     return ArrayBuffer.isView(arr) ? Buffer.from(arr.buffer, arr.byteOffset, arr.byteLength) : Buffer.from(arr);
                 };
@@ -10582,11 +10582,15 @@
             };
         })();
         (()=>{
-            __webpack_require__.d = (exports1, definition)=>{
-                for(var key in definition)if (__webpack_require__.o(definition, key) && !__webpack_require__.o(exports1, key)) Object.defineProperty(exports1, key, {
-                    enumerable: true,
-                    get: definition[key]
-                });
+            __webpack_require__.d = (exports1, getters, values)=>{
+                var define1 = (defs, kind)=>{
+                    for(var key in defs)if (__webpack_require__.o(defs, key) && !__webpack_require__.o(exports1, key)) Object.defineProperty(exports1, key, {
+                        enumerable: true,
+                        [kind]: defs[key]
+                    });
+                };
+                define1(getters, "get");
+                define1(values, "value");
             };
         })();
         (()=>{
@@ -10878,7 +10882,7 @@
             var client = __webpack_require__("./node_modules/superagent/lib/client.js");
             var client_default = /*#__PURE__*/ __webpack_require__.n(client);
             var package_namespaceObject = {
-                rE: "13.13.0"
+                rE: "13.13.1"
             };
             function isAudioEnabled(options) {
                 return Boolean(options.audio.enabled);
@@ -16986,7 +16990,7 @@
                 }
             }
             const visuals_userMedia = UserMedia;
-            var Buffer = __webpack_require__("./node_modules/buffer/index.js")["Buffer"];
+            var Buffer = __webpack_require__("./node_modules/buffer/index.js").Buffer;
             const PIPE_SYMBOL = "°º¤ø,¸¸,ø¤º°`°º¤ø,¸,ø¤°º¤ø,¸¸,ø¤º°`°º¤ø,¸ ";
             class Recorder extends util_Despot {
                 visuals;
@@ -17206,7 +17210,7 @@
                         }
                         this.options.logger.debug(`Recorder: initializing web socket to ${url2Connect}`);
                         try {
-                            this.stream = stream_default()(url2Connect, {
+                            this.stream = stream_default()(url2Connect, void 0, {
                                 perMessageDeflate: false
                             });
                         } catch (exc) {
