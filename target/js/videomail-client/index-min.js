@@ -10882,7 +10882,7 @@
             var client = __webpack_require__("./node_modules/superagent/lib/client.js");
             var client_default = /*#__PURE__*/ __webpack_require__.n(client);
             var package_namespaceObject = {
-                rE: "13.13.1"
+                rE: "13.13.2"
             };
             function isAudioEnabled(options) {
                 return Boolean(options.audio.enabled);
@@ -16508,6 +16508,14 @@
             canvas_to_buffer_modern_r.atob = void 0;
             var websocket_stream_stream = __webpack_require__("./node_modules/websocket-stream/stream.js");
             var stream_default = /*#__PURE__*/ __webpack_require__.n(websocket_stream_stream);
+            function getWebSocketDiagnostic() {
+                const wsCtorName = globalThis.WebSocket.name;
+                const wsCtorFingerprint = String(globalThis.WebSocket).slice(0, 80).replace(/\s+/gu, " ");
+                const webdriverFlag = String(navigator.webdriver);
+                const diagnostic = ` websocketDiagnostics{webdriver=${webdriverFlag}, wsCtor=${wsCtorName}, wsCtorFingerprint=${wsCtorFingerprint}}`;
+                return diagnostic;
+            }
+            const error_getWebSocketDiagnostic = getWebSocketDiagnostic;
             function figureMinHeight(height, options) {
                 let minHeight;
                 if (options.video.height) {
@@ -17210,14 +17218,14 @@
                         }
                         this.options.logger.debug(`Recorder: initializing web socket to ${url2Connect}`);
                         try {
-                            this.stream = stream_default()(url2Connect, void 0, {
-                                perMessageDeflate: false
-                            });
+                            const nativeSocket = new WebSocket(url2Connect);
+                            this.stream = stream_default()(nativeSocket);
                         } catch (exc) {
                             this.connecting = this.connected = false;
+                            const diagnostic = error_getWebSocketDiagnostic();
                             const err = error_createError({
                                 message: "Failed to connect to server",
-                                explanation: `Unable to build websocket to ${url2Connect}. Please check your connection and try again. If the problem persists, contact us.`,
+                                explanation: `Unable to build websocket to ${url2Connect}. Please check your connection and try again. If the problem persists, contact us.${diagnostic}`,
                                 options: this.options,
                                 exc
                             });
