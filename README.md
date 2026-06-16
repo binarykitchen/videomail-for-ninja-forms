@@ -75,28 +75,30 @@ In the `/doc` folder we place in all text and images for the public documentatio
 ## Releasing
 
 1. Ensure you are on develop branch
-2. Write changelog in `readme.txt`
-3. Bump versions in `readme.txt`:
+2. Run `npm run clean`,
+3. Write changelog in `readme.txt`
+4. Bump versions in `readme.txt`:
    - "stable tag" using this VC plugin's latest version from changelog
    - If there was a WordPress upgrade, bump it under "tested up to", otherwise
-4. Search for current stable tag version and replace it with the new one. Should be these files:
+5. Search for current stable tag version and replace it with the new one. Should be these files:
    - package.json
    - readme.txt
    - src/js/main.js
    - src/php/videomail.php
    - videomail-for-ninja-forms.php
-5. Optional: validate readme.txt with <https://wordpress.org/plugins/developers/readme-validator/>
-6. Run `npm run clean`, `npm install` and `npm run build`
-7. Git commit with `git commit -am 'Rebuilt for the next version` and push that
-8. Run `npm run release` which will run the release workflow on GitHub
-9. Tag a new release.
-   Skip optional title, then under release notes, select "Write my own" and
-   paste the new version section from readme.txt (just the section without the date and version number)
-   (upon any errors, you may try to run manually "gh release create" again to trigger a release on GitHub)
-10. Wait until the release is published and
+6. Optional: validate readme.txt with <https://wordpress.org/plugins/developers/readme-validator/>
+7. Run `npm install && npm run build`
+8. Review changes, add them with `git add -A`
+9. Git commit with `git commit -am 'Rebuilt for the next version` and push that
+10. Run `npm run release` which will run the release workflow on GitHub
+11. Tag a new release.
+    Skip optional title, then under release notes, select "Write my own" and
+    paste the new version section from readme.txt (just the section without the date and version number)
+    (upon any errors, you may try to run manually "gh release create" again to trigger a release on GitHub)
+12. Wait until the release is published and
     make sure the new version is announced on <https://wordpress.org/plugins/videomail-for-ninja-forms> as
     this can take a while ...
-11. Announce on Social Media
+13. Announce on Social Media
 
 ## Ask for help
 

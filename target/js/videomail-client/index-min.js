@@ -10882,7 +10882,7 @@
             var client = __webpack_require__("./node_modules/superagent/lib/client.js");
             var client_default = /*#__PURE__*/ __webpack_require__.n(client);
             var package_namespaceObject = {
-                rE: "13.13.2"
+                rE: "13.13.4"
             };
             function isAudioEnabled(options) {
                 return Boolean(options.audio.enabled);
@@ -16508,11 +16508,29 @@
             canvas_to_buffer_modern_r.atob = void 0;
             var websocket_stream_stream = __webpack_require__("./node_modules/websocket-stream/stream.js");
             var stream_default = /*#__PURE__*/ __webpack_require__.n(websocket_stream_stream);
-            function getWebSocketDiagnostic() {
-                const wsCtorName = globalThis.WebSocket.name;
+            function getEdgeCodes(value, amount, fromEnd) {
+                const chars = fromEnd ? value.slice(-amount) : value.slice(0, amount);
+                const codes = Array.from(chars, (char)=>String(char.codePointAt(0))).join(".");
+                return codes || "none";
+            }
+            function hasControlCharacters(value) {
+                return Array.from(value).some((char)=>{
+                    const code = char.codePointAt(0);
+                    if (void 0 === code) return false;
+                    return code <= 31 || 127 === code;
+                });
+            }
+            function getWebSocketDiagnostic(url2Connect) {
                 const wsCtorFingerprint = String(globalThis.WebSocket).slice(0, 80).replace(/\s+/gu, " ");
-                const webdriverFlag = String(navigator.webdriver);
-                const diagnostic = ` websocketDiagnostics{webdriver=${webdriverFlag}, wsCtor=${wsCtorName}, wsCtorFingerprint=${wsCtorFingerprint}}`;
+                const wsCtorNative = wsCtorFingerprint.includes("[native code]");
+                let urlParsedProtocol = "invalid";
+                try {
+                    urlParsedProtocol = new URL(url2Connect).protocol;
+                } catch (_exc) {}
+                const urlHasWhitespace = /\s/u.test(url2Connect);
+                const urlHasControlChars = hasControlCharacters(url2Connect);
+                const urlHasReplacementChar = url2Connect.includes("\uFFFD");
+                const diagnostic = `websocketDiagnostics{webdriver=${String(navigator.webdriver)}, wsCtorNative=${String(wsCtorNative)}, urlLen=${url2Connect.length}, urlParsedProtocol=${urlParsedProtocol}, locationProtocol=${location.protocol}, secureContext=${String(globalThis.isSecureContext)}, online=${String(navigator.onLine)}, urlHasWhitespace=${String(urlHasWhitespace)}, urlHasControlChars=${String(urlHasControlChars)}, urlHasReplacementChar=${String(urlHasReplacementChar)}, urlFirstCodes=${getEdgeCodes(url2Connect, 4)}, urlLastCodes=${getEdgeCodes(url2Connect, 4, true)}}`;
                 return diagnostic;
             }
             const error_getWebSocketDiagnostic = getWebSocketDiagnostic;
@@ -17216,16 +17234,31 @@
                             });
                             return;
                         }
-                        this.options.logger.debug(`Recorder: initializing web socket to ${url2Connect}`);
+                        this.options.logger.debug(`Recorder: initializing web socket stream to ${url2Connect}`);
+                        let nativeSocket;
                         try {
-                            const nativeSocket = new WebSocket(url2Connect);
+                            nativeSocket = new WebSocket(url2Connect);
+                        } catch (exc) {
+                            this.connecting = this.connected = false;
+                            const diagnostic = error_getWebSocketDiagnostic(url2Connect);
+                            const err = error_createError({
+                                message: `Failed to construct WebSocket to ${url2Connect}`,
+                                explanation: `Please check your connection and try again. If the problem persists, contact us. Diagnostic: ${diagnostic}`,
+                                options: this.options,
+                                exc
+                            });
+                            this.emit("ERROR", {
+                                err
+                            });
+                            return;
+                        }
+                        try {
                             this.stream = stream_default()(nativeSocket);
                         } catch (exc) {
                             this.connecting = this.connected = false;
-                            const diagnostic = error_getWebSocketDiagnostic();
                             const err = error_createError({
-                                message: "Failed to connect to server",
-                                explanation: `Unable to build websocket to ${url2Connect}. Please check your connection and try again. If the problem persists, contact us.${diagnostic}`,
+                                message: `Failed to create a stream to ${url2Connect}`,
+                                explanation: "Please check your connection and try again. If the problem persists, contact us.",
                                 options: this.options,
                                 exc
                             });
