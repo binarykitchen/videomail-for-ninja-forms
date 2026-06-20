@@ -10882,7 +10882,7 @@
             var client = __webpack_require__(5734);
             var client_default = /*#__PURE__*/ __webpack_require__.n(client);
             var package_namespaceObject = {
-                rE: "13.13.5"
+                rE: "13.14.0"
             };
             function isAudioEnabled(options) {
                 return Boolean(options.audio.enabled);
@@ -16581,8 +16581,10 @@
                     `urlLastCodes=${getEdgeCodes(url2Connect, 4, true)}`,
                     "ipAsnCheck=server_side_only"
                 ];
-                const diagnostic = `websocketDiagnostics(v3): ${diagnosticPairs.join("; ")}`;
-                return diagnostic;
+                return {
+                    text: `websocketDiagnostics(v3): ${diagnosticPairs.join("; ")}`,
+                    looksAutomated: automationSignals.looksAutomated
+                };
             }
             const error_getWebSocketDiagnostic = getWebSocketDiagnostic;
             function figureMinHeight(height, options) {
@@ -17292,9 +17294,11 @@
                         } catch (exc) {
                             this.connecting = this.connected = false;
                             const diagnostic = error_getWebSocketDiagnostic(url2Connect);
+                            const message = diagnostic.looksAutomated ? "Automated crawler: WebSocket not supported in this environment" : `Failed to construct WebSocket to ${url2Connect}`;
+                            const explanation = diagnostic.looksAutomated ? "Headless crawlers cannot use Videomail's WebSocket. No action needed." : `Please check your connection and try again. If the problem persists, contact us. Diagnostic: ${diagnostic.text}`;
                             const err = error_createError({
-                                message: `Failed to construct WebSocket to ${url2Connect}`,
-                                explanation: `Please check your connection and try again. If the problem persists, contact us. Diagnostic: ${diagnostic}`,
+                                message,
+                                explanation,
                                 options: this.options,
                                 exc
                             });
