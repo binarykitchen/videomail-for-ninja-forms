@@ -78,8 +78,8 @@ In the `/doc` folder we place in all text and images for the public documentatio
 2. Run `npm run clean`,
 3. Write changelog in `readme.txt`
 4. Bump versions in `readme.txt`:
-   - "stable tag" using this VC plugin's latest version from changelog
-   - If there was a WordPress upgrade, bump it under "tested up to", otherwise
+   - Change "stable tag" for this VC plugin's using latest version from changelog
+   - If there was a WordPress upgrade, bump it under "tested up to" (test first)
 5. Search for current stable tag version and replace it with the new one. Should be these files:
    - package.json
    - readme.txt
@@ -91,8 +91,7 @@ In the `/doc` folder we place in all text and images for the public documentatio
 8. Review changes, add them with `git add -A`
 9. Git commit with `git commit -am 'Rebuilt for the next version` and push that
 10. Run `npm run release` which will run the release workflow on GitHub
-11. Wait until the release is published and make sure the new version is announced on <https://wordpress.org/plugins/videomail-for-ninja-forms> as
-    this can take a while ...
+11. Wait until the release is published and make sure the new version is announced on <https://wordpress.org/plugins/videomail-for-ninja-forms>
 12. Announce on Social Media
 
 ## Ask for help
