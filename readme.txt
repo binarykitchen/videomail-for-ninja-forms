@@ -3,7 +3,7 @@ Contributors: michael.heuberger, kbjohnson90
 Tags: video, email, recorder, sign language
 Requires at least: 6.0
 Tested up to: 6.9.1
-Stable tag: 10.5.5
+Stable tag: 11.0.0
 Requires PHP: 8.1.0
 Donate link: https://videomail.io/faq
 License: CC0-1.0
@@ -71,6 +71,19 @@ To get help, just use any of these contacts at [https://binarykitchen.com](https
 2. Once you have assembled a form and preview it, any browser will ask for webcam access first.
 
 == Changelog ==
+
+= 11.0.0 (6 July 2026) =
+
+**Change:**
+* Breaking: new Websocket endpoint for recording
+
+**Security**
+* Better detection of bots and fake recordings
+* Block fake recordings from virtual cameras
+
+**Improvement**
+* Faster loading times thanks to the new Brotli compression algorithm
+* In error reports, all Videomail-related versions are collected for easier investigating.
 
 = 10.5.5 (20 Jun 2026) =
 

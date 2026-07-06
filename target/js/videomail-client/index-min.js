@@ -10882,7 +10882,7 @@
             var client = __webpack_require__(5734);
             var client_default = /*#__PURE__*/ __webpack_require__.n(client);
             var package_namespaceObject = {
-                rE: "13.14.0"
+                rE: "14.0.0"
             };
             function isAudioEnabled(options) {
                 return Boolean(options.audio.enabled);
@@ -15017,7 +15017,7 @@
                             cpu: err.cpu,
                             device: err.device,
                             engine: err.engine,
-                            err: serializeError(err.err),
+                            err: err.err ? serializeError(err.err) : void 0,
                             explanation: err.explanation,
                             location: err.location,
                             logLines: err.logLines,
@@ -15110,7 +15110,7 @@
                 logStackSize: 30,
                 verbose: !PRODUCTION,
                 apiUrl: "https://videomail.io/api",
-                socketUrl: "wss://videomail.io",
+                socketUrl: "wss://videomail.io/ws",
                 whitelistKey: "videomail-client-demo",
                 enablePause: true,
                 enableAutoPause: true,
@@ -16779,6 +16779,20 @@
                 "volumechange"
             ];
             const mediaEvents = MEDIA_EVENTS;
+            const VIRTUAL_KEYWORDS = [
+                "obs",
+                "virtual",
+                "manycam",
+                "vcam",
+                "splitcam",
+                "droidcam"
+            ];
+            function isVirtualCamera(videoTrack) {
+                const capabilities = videoTrack.getCapabilities();
+                if (!capabilities.frameRate) return true;
+                return VIRTUAL_KEYWORDS.some((keyword)=>videoTrack.label.toLowerCase().includes(keyword));
+            }
+            const util_isVirtualCamera = isVirtualCamera;
             const EVENT_ASCII = "|—O—|";
             class UserMedia extends util_Despot {
                 recorder;
@@ -16790,6 +16804,7 @@
                 onPlayReached = false;
                 onLoadedMetaDataReached = false;
                 playingPromiseReached = false;
+                videoTrackLabel;
                 constructor(recorder, options){
                     super("UserMedia", options);
                     this.recorder = recorder;
@@ -16850,6 +16865,7 @@
                     this.onPlayReached = false;
                     this.onLoadedMetaDataReached = false;
                     this.playingPromiseReached = false;
+                    this.videoTrackLabel = void 0;
                     if (isAudioEnabled(this.options)) this.audioRecorder ??= new media_AudioRecorder(this, this.options);
                     const unloadAllEventListeners = ()=>{
                         this.options.logger.debug("UserMedia: unloadAllEventListeners()");
@@ -16941,12 +16957,19 @@
                     };
                     try {
                         const videoTrack = media_getFirstVideoTrack(localMediaStream);
-                        if (videoTrack) if (videoTrack.enabled) {
+                        this.videoTrackLabel = videoTrack?.label;
+                        if (videoTrack) if (videoTrack.enabled) if (util_isVirtualCamera(videoTrack)) throw error_createError({
+                            message: "Virtual cameras are not allowed.",
+                            explanation: `Please use a real camera, not "${videoTrack.label}".`,
+                            options: this.options
+                        });
+                        else {
                             let description = "";
-                            if (videoTrack.label && videoTrack.label.length > 0) description = description.concat(videoTrack.label);
+                            if (videoTrack.label.length > 0) description = description.concat(videoTrack.label);
                             description = description.concat(` with enabled=${videoTrack.enabled}, muted=${videoTrack.muted}, readyState=${videoTrack.readyState}`);
                             this.options.logger.debug(`UserMedia: ${videoTrack.kind} detected. ${description}`);
-                        } else throw error_createError({
+                        }
+                        else throw error_createError({
                             message: "Webcam is disabled",
                             explanation: "The video track seems to be disabled. Enable it in your system.",
                             options: this.options
@@ -16964,6 +16987,9 @@
                             exc
                         });
                     }
+                }
+                getVideoTrackLabel() {
+                    return this.videoTrackLabel;
                 }
                 isReady() {
                     return Boolean(this.rawVisualUserMedia?.src);
@@ -17654,6 +17680,7 @@
                             framesCount: this.framesCount,
                             videoType
                         };
+                        if (this.userMedia) this.recordingStats.videoTrackLabel = this.userMedia.getVideoTrackLabel();
                         if (isAudioEnabled(this.options) && this.userMedia) {
                             this.recordingStats.samplesCount = this.samplesCount;
                             this.recordingStats.sampleRate = this.userMedia.getAudioSampleRate();
@@ -18719,6 +18746,7 @@
                         else if (params.exc.message) this.options.logger.error(params.exc.message);
                     } else this.options.logger.error(params.exc);
                     if (this.options.displayErrors && params.err) this.visuals.error(params.err);
+                    else if (this.options.displayErrors && params.exc && params.exc instanceof error_VideomailError) this.visuals.error(params.exc);
                     else this.visuals.reset();
                 }
                 initEvents(playerOnly = false) {
