@@ -28,8 +28,8 @@
     "url": "https://github.com/binarykitchen/videomail-for-ninja-forms.git"
   },
   "engines": {
-    "node": "^v24.15.0",
-    "npm": "^11.12.1"
+    "node": "^26.5.0",
+    "npm": ">=11.16.0"
   },
   "scripts": {
     "wp": "gulp watch --host=wp",

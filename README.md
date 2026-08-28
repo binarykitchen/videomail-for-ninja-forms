@@ -91,7 +91,7 @@ In the `/doc` folder we place in all text and images for the public documentatio
 8. Review changes, add them with `git add -A`
 9. Git commit with `git commit -am 'Rebuilt for the next version` and push that
 10. Run `npm run release` which will run the release workflow on GitHub
-11. Wait until the release is published and make sure the new version is announced on <https://wordpress.org/plugins/videomail-for-ninja-forms>
+11. Wait until the release is published and make sure the new version is shown on <https://wordpress.org/plugins/videomail-for-ninja-forms>
 12. Announce on Social Media
 
 ## Ask for help
