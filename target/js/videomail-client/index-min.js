@@ -5,7 +5,575 @@
     else root["VideomailClient"] = factory();
 })(globalThis, ()=>(()=>{
         var __webpack_modules__ = {
-            6846 (module1, __webpack_exports__, __webpack_require__) {
+            6546 (__unused_rspack_module, __webpack_exports__, __webpack_require__) {
+                "use strict";
+                /*! Capacitor: https://capacitorjs.com/ - MIT License */ var ExceptionCode;
+                (function(ExceptionCode) {
+                    ExceptionCode["Unimplemented"] = "UNIMPLEMENTED";
+                    ExceptionCode["Unavailable"] = "UNAVAILABLE";
+                })(ExceptionCode || (ExceptionCode = {}));
+                class CapacitorException extends Error {
+                    constructor(message, code, data){
+                        super(message);
+                        this.message = message;
+                        this.code = code;
+                        this.data = data;
+                    }
+                }
+                const getPlatformId = (win)=>{
+                    var _a, _b;
+                    if (null == win ? void 0 : win.androidBridge) return 'android';
+                    if (null == (_b = null == (_a = null == win ? void 0 : win.webkit) ? void 0 : _a.messageHandlers) ? void 0 : _b.bridge) return 'ios';
+                    return 'web';
+                };
+                const createCapacitor = (win)=>{
+                    const capCustomPlatform = win.CapacitorCustomPlatform || null;
+                    const cap = win.Capacitor || {};
+                    const Plugins = cap.Plugins = cap.Plugins || {};
+                    const getPlatform = ()=>null !== capCustomPlatform ? capCustomPlatform.name : getPlatformId(win);
+                    const isNativePlatform = ()=>'web' !== getPlatform();
+                    const isPluginAvailable = (pluginName)=>{
+                        const plugin = registeredPlugins.get(pluginName);
+                        if (null == plugin ? void 0 : plugin.platforms.has(getPlatform())) return true;
+                        if (getPluginHeader(pluginName)) return true;
+                        return false;
+                    };
+                    const getPluginHeader = (pluginName)=>{
+                        var _a;
+                        return null == (_a = cap.PluginHeaders) ? void 0 : _a.find((h)=>h.name === pluginName);
+                    };
+                    const handleError = (err)=>win.console.error(err);
+                    const registeredPlugins = new Map();
+                    const registerPlugin = (pluginName, jsImplementations = {})=>{
+                        const registeredPlugin = registeredPlugins.get(pluginName);
+                        if (registeredPlugin) {
+                            console.warn(`Capacitor plugin "${pluginName}" already registered. Cannot register plugins twice.`);
+                            return registeredPlugin.proxy;
+                        }
+                        const platform = getPlatform();
+                        const pluginHeader = getPluginHeader(pluginName);
+                        let jsImplementation;
+                        const loadPluginImplementation = async ()=>{
+                            if (!jsImplementation && platform in jsImplementations) jsImplementation = 'function' == typeof jsImplementations[platform] ? jsImplementation = await jsImplementations[platform]() : jsImplementation = jsImplementations[platform];
+                            else if (null !== capCustomPlatform && !jsImplementation && 'web' in jsImplementations) jsImplementation = 'function' == typeof jsImplementations['web'] ? jsImplementation = await jsImplementations['web']() : jsImplementation = jsImplementations['web'];
+                            return jsImplementation;
+                        };
+                        const createPluginMethod = (impl, prop)=>{
+                            var _a, _b;
+                            if (pluginHeader) {
+                                const methodHeader = null == pluginHeader ? void 0 : pluginHeader.methods.find((m)=>prop === m.name);
+                                if (methodHeader) if ('promise' === methodHeader.rtype) return (options)=>cap.nativePromise(pluginName, prop.toString(), options);
+                                else return (options, callback)=>cap.nativeCallback(pluginName, prop.toString(), options, callback);
+                                if (impl) return null == (_a = impl[prop]) ? void 0 : _a.bind(impl);
+                            } else if (impl) return null == (_b = impl[prop]) ? void 0 : _b.bind(impl);
+                            else throw new CapacitorException(`"${pluginName}" plugin is not implemented on ${platform}`, ExceptionCode.Unimplemented);
+                        };
+                        const createPluginMethodWrapper = (prop)=>{
+                            let remove;
+                            const wrapper = (...args)=>{
+                                const p = loadPluginImplementation().then((impl)=>{
+                                    const fn = createPluginMethod(impl, prop);
+                                    if (fn) {
+                                        const p = fn(...args);
+                                        remove = null == p ? void 0 : p.remove;
+                                        return p;
+                                    }
+                                    throw new CapacitorException(`"${pluginName}.${prop}()" is not implemented on ${platform}`, ExceptionCode.Unimplemented);
+                                });
+                                if ('addListener' === prop) p.remove = async ()=>remove();
+                                return p;
+                            };
+                            wrapper.toString = ()=>`${prop.toString()}() { [capacitor code] }`;
+                            Object.defineProperty(wrapper, 'name', {
+                                value: prop,
+                                writable: false,
+                                configurable: false
+                            });
+                            return wrapper;
+                        };
+                        const addListener = createPluginMethodWrapper('addListener');
+                        const removeListener = createPluginMethodWrapper('removeListener');
+                        const addListenerNative = (eventName, callback)=>{
+                            const call = addListener({
+                                eventName
+                            }, callback);
+                            const remove = async ()=>{
+                                const callbackId = await call;
+                                removeListener({
+                                    eventName,
+                                    callbackId
+                                }, callback);
+                            };
+                            const p = new Promise((resolve)=>call.then(()=>resolve({
+                                        remove
+                                    })));
+                            p.remove = async ()=>{
+                                console.warn("Using addListener() without 'await' is deprecated.");
+                                await remove();
+                            };
+                            return p;
+                        };
+                        const proxy = new Proxy({}, {
+                            get (_, prop) {
+                                switch(prop){
+                                    case '$$typeof':
+                                        return;
+                                    case 'toJSON':
+                                        return ()=>({});
+                                    case 'addListener':
+                                        return pluginHeader ? addListenerNative : addListener;
+                                    case 'removeListener':
+                                        return removeListener;
+                                    default:
+                                        return createPluginMethodWrapper(prop);
+                                }
+                            }
+                        });
+                        Plugins[pluginName] = proxy;
+                        registeredPlugins.set(pluginName, {
+                            name: pluginName,
+                            proxy,
+                            platforms: new Set([
+                                ...Object.keys(jsImplementations),
+                                ...pluginHeader ? [
+                                    platform
+                                ] : []
+                            ])
+                        });
+                        return proxy;
+                    };
+                    if (!cap.convertFileSrc) cap.convertFileSrc = (filePath)=>filePath;
+                    cap.getPlatform = getPlatform;
+                    cap.handleError = handleError;
+                    cap.isNativePlatform = isNativePlatform;
+                    cap.isPluginAvailable = isPluginAvailable;
+                    cap.registerPlugin = registerPlugin;
+                    cap.Exception = CapacitorException;
+                    cap.DEBUG = !!cap.DEBUG;
+                    cap.isLoggingEnabled = !!cap.isLoggingEnabled;
+                    return cap;
+                };
+                const initCapacitorGlobal = (win)=>win.Capacitor = createCapacitor(win);
+                const Capacitor = /*#__PURE__*/ initCapacitorGlobal("u" > typeof globalThis ? globalThis : "u" > typeof self ? self : "u" > typeof window ? window : void 0 !== __webpack_require__.g ? __webpack_require__.g : {});
+                const registerPlugin = Capacitor.registerPlugin;
+                class WebPlugin {
+                    constructor(){
+                        this.listeners = {};
+                        this.retainedEventArguments = {};
+                        this.windowListeners = {};
+                    }
+                    addListener(eventName, listenerFunc) {
+                        let firstListener = false;
+                        const listeners = this.listeners[eventName];
+                        if (!listeners) {
+                            this.listeners[eventName] = [];
+                            firstListener = true;
+                        }
+                        this.listeners[eventName].push(listenerFunc);
+                        const windowListener = this.windowListeners[eventName];
+                        if (windowListener && !windowListener.registered) this.addWindowListener(windowListener);
+                        if (firstListener) this.sendRetainedArgumentsForEvent(eventName);
+                        const remove = async ()=>this.removeListener(eventName, listenerFunc);
+                        const p = Promise.resolve({
+                            remove
+                        });
+                        return p;
+                    }
+                    async removeAllListeners() {
+                        this.listeners = {};
+                        for(const listener in this.windowListeners)this.removeWindowListener(this.windowListeners[listener]);
+                        this.windowListeners = {};
+                    }
+                    notifyListeners(eventName, data, retainUntilConsumed) {
+                        const listeners = this.listeners[eventName];
+                        if (!listeners) {
+                            if (retainUntilConsumed) {
+                                let args = this.retainedEventArguments[eventName];
+                                if (!args) args = [];
+                                args.push(data);
+                                this.retainedEventArguments[eventName] = args;
+                            }
+                            return;
+                        }
+                        listeners.forEach((listener)=>listener(data));
+                    }
+                    hasListeners(eventName) {
+                        var _a;
+                        return !!(null == (_a = this.listeners[eventName]) ? void 0 : _a.length);
+                    }
+                    registerWindowListener(windowEventName, pluginEventName) {
+                        this.windowListeners[pluginEventName] = {
+                            registered: false,
+                            windowEventName,
+                            pluginEventName,
+                            handler: (event)=>{
+                                this.notifyListeners(pluginEventName, event);
+                            }
+                        };
+                    }
+                    unimplemented(msg = 'not implemented') {
+                        return new Capacitor.Exception(msg, ExceptionCode.Unimplemented);
+                    }
+                    unavailable(msg = 'not available') {
+                        return new Capacitor.Exception(msg, ExceptionCode.Unavailable);
+                    }
+                    async removeListener(eventName, listenerFunc) {
+                        const listeners = this.listeners[eventName];
+                        if (!listeners) return;
+                        const index = listeners.indexOf(listenerFunc);
+                        this.listeners[eventName].splice(index, 1);
+                        if (!this.listeners[eventName].length) this.removeWindowListener(this.windowListeners[eventName]);
+                    }
+                    addWindowListener(handle) {
+                        window.addEventListener(handle.windowEventName, handle.handler);
+                        handle.registered = true;
+                    }
+                    removeWindowListener(handle) {
+                        if (!handle) return;
+                        window.removeEventListener(handle.windowEventName, handle.handler);
+                        handle.registered = false;
+                    }
+                    sendRetainedArgumentsForEvent(eventName) {
+                        const args = this.retainedEventArguments[eventName];
+                        if (!args) return;
+                        delete this.retainedEventArguments[eventName];
+                        args.forEach((arg)=>{
+                            this.notifyListeners(eventName, arg);
+                        });
+                    }
+                }
+                const encode = (str)=>encodeURIComponent(str).replace(/%(2[346B]|5E|60|7C)/g, decodeURIComponent).replace(/[()]/g, escape);
+                const decode = (str)=>str.replace(/(%[\dA-F]{2})+/gi, decodeURIComponent);
+                class CapacitorCookiesPluginWeb extends WebPlugin {
+                    async getCookies() {
+                        const cookies = document.cookie;
+                        const cookieMap = {};
+                        cookies.split(';').forEach((cookie)=>{
+                            if (cookie.length <= 0) return;
+                            let [key, value] = cookie.replace(/=/, 'CAP_COOKIE').split('CAP_COOKIE');
+                            key = decode(key).trim();
+                            value = decode(value).trim();
+                            cookieMap[key] = value;
+                        });
+                        return cookieMap;
+                    }
+                    async setCookie(options) {
+                        try {
+                            const encodedKey = encode(options.key);
+                            const encodedValue = encode(options.value);
+                            const expires = options.expires ? `; expires=${options.expires.replace('expires=', '')}` : '';
+                            const path = (options.path || '/').replace('path=', '');
+                            const domain = null != options.url && options.url.length > 0 ? `domain=${options.url}` : '';
+                            document.cookie = `${encodedKey}=${encodedValue || ''}${expires}; path=${path}; ${domain};`;
+                        } catch (error) {
+                            return Promise.reject(error);
+                        }
+                    }
+                    async deleteCookie(options) {
+                        try {
+                            document.cookie = `${options.key}=; Max-Age=0`;
+                        } catch (error) {
+                            return Promise.reject(error);
+                        }
+                    }
+                    async clearCookies() {
+                        try {
+                            const cookies = document.cookie.split(';') || [];
+                            for (const cookie of cookies)document.cookie = cookie.replace(/^ +/, '').replace(/=.*/, `=;expires=${new Date().toUTCString()};path=/`);
+                        } catch (error) {
+                            return Promise.reject(error);
+                        }
+                    }
+                    async clearAllCookies() {
+                        try {
+                            await this.clearCookies();
+                        } catch (error) {
+                            return Promise.reject(error);
+                        }
+                    }
+                }
+                registerPlugin('CapacitorCookies', {
+                    web: ()=>new CapacitorCookiesPluginWeb()
+                });
+                const readBlobAsBase64 = async (blob)=>new Promise((resolve, reject)=>{
+                        const reader = new FileReader();
+                        reader.onload = ()=>{
+                            const base64String = reader.result;
+                            resolve(base64String.indexOf(',') >= 0 ? base64String.split(',')[1] : base64String);
+                        };
+                        reader.onerror = (error)=>reject(error);
+                        reader.readAsDataURL(blob);
+                    });
+                const normalizeHttpHeaders = (headers = {})=>{
+                    const originalKeys = Object.keys(headers);
+                    const loweredKeys = Object.keys(headers).map((k)=>k.toLocaleLowerCase());
+                    const normalized = loweredKeys.reduce((acc, key, index)=>{
+                        acc[key] = headers[originalKeys[index]];
+                        return acc;
+                    }, {});
+                    return normalized;
+                };
+                const buildUrlParams = (params, shouldEncode = true)=>{
+                    if (!params) return null;
+                    const output = Object.entries(params).reduce((accumulator, entry)=>{
+                        const [key, value] = entry;
+                        let encodedValue;
+                        let item;
+                        if (Array.isArray(value)) {
+                            item = '';
+                            value.forEach((str)=>{
+                                encodedValue = shouldEncode ? encodeURIComponent(str) : str;
+                                item += `${key}=${encodedValue}&`;
+                            });
+                            item.slice(0, -1);
+                        } else {
+                            encodedValue = shouldEncode ? encodeURIComponent(value) : value;
+                            item = `${key}=${encodedValue}`;
+                        }
+                        return `${accumulator}&${item}`;
+                    }, '');
+                    return output.substr(1);
+                };
+                const buildRequestInit = (options, extra = {})=>{
+                    const output = Object.assign({
+                        method: options.method || 'GET',
+                        headers: options.headers
+                    }, extra);
+                    const headers = normalizeHttpHeaders(options.headers);
+                    const type = headers['content-type'] || '';
+                    if ('string' == typeof options.data) output.body = options.data;
+                    else if (type.includes('application/x-www-form-urlencoded')) {
+                        const params = new URLSearchParams();
+                        for (const [key, value] of Object.entries(options.data || {}))params.set(key, value);
+                        output.body = params.toString();
+                    } else if (type.includes('multipart/form-data') || options.data instanceof FormData) {
+                        const form = new FormData();
+                        if (options.data instanceof FormData) options.data.forEach((value, key)=>{
+                            form.append(key, value);
+                        });
+                        else for (const key of Object.keys(options.data))form.append(key, options.data[key]);
+                        output.body = form;
+                        const headers = new Headers(output.headers);
+                        headers.delete('content-type');
+                        output.headers = headers;
+                    } else if (type.includes('application/json') || 'object' == typeof options.data) output.body = JSON.stringify(options.data);
+                    return output;
+                };
+                class CapacitorHttpPluginWeb extends WebPlugin {
+                    async request(options) {
+                        const requestInit = buildRequestInit(options, options.webFetchExtra);
+                        const urlParams = buildUrlParams(options.params, options.shouldEncodeUrlParams);
+                        const url = urlParams ? `${options.url}?${urlParams}` : options.url;
+                        const response = await fetch(url, requestInit);
+                        const contentType = response.headers.get('content-type') || '';
+                        let { responseType = 'text' } = response.ok ? options : {};
+                        if (contentType.includes('application/json')) responseType = 'json';
+                        let data;
+                        let blob;
+                        switch(responseType){
+                            case 'arraybuffer':
+                            case 'blob':
+                                blob = await response.blob();
+                                data = await readBlobAsBase64(blob);
+                                break;
+                            case 'json':
+                                data = await response.json();
+                                break;
+                            case 'document':
+                            case 'text':
+                            default:
+                                data = await response.text();
+                        }
+                        const headers = {};
+                        response.headers.forEach((value, key)=>{
+                            headers[key] = value;
+                        });
+                        return {
+                            data,
+                            headers,
+                            status: response.status,
+                            url: response.url
+                        };
+                    }
+                    async get(options) {
+                        return this.request(Object.assign(Object.assign({}, options), {
+                            method: 'GET'
+                        }));
+                    }
+                    async post(options) {
+                        return this.request(Object.assign(Object.assign({}, options), {
+                            method: 'POST'
+                        }));
+                    }
+                    async put(options) {
+                        return this.request(Object.assign(Object.assign({}, options), {
+                            method: 'PUT'
+                        }));
+                    }
+                    async patch(options) {
+                        return this.request(Object.assign(Object.assign({}, options), {
+                            method: 'PATCH'
+                        }));
+                    }
+                    async delete(options) {
+                        return this.request(Object.assign(Object.assign({}, options), {
+                            method: 'DELETE'
+                        }));
+                    }
+                }
+                registerPlugin('CapacitorHttp', {
+                    web: ()=>new CapacitorHttpPluginWeb()
+                });
+                var SystemBarsStyle;
+                (function(SystemBarsStyle) {
+                    SystemBarsStyle["Dark"] = "DARK";
+                    SystemBarsStyle["Light"] = "LIGHT";
+                    SystemBarsStyle["Default"] = "DEFAULT";
+                })(SystemBarsStyle || (SystemBarsStyle = {}));
+                var SystemBarType;
+                (function(SystemBarType) {
+                    SystemBarType["StatusBar"] = "StatusBar";
+                    SystemBarType["NavigationBar"] = "NavigationBar";
+                })(SystemBarType || (SystemBarType = {}));
+                class SystemBarsPluginWeb extends WebPlugin {
+                    async setStyle() {
+                        this.unavailable('not available for web');
+                    }
+                    async setAnimation() {
+                        this.unavailable('not available for web');
+                    }
+                    async show() {
+                        this.unavailable('not available for web');
+                    }
+                    async hide() {
+                        this.unavailable('not available for web');
+                    }
+                }
+                registerPlugin('SystemBars', {
+                    web: ()=>new SystemBarsPluginWeb()
+                });
+                __webpack_require__.d(__webpack_exports__, {
+                    E_: ()=>WebPlugin
+                }, {
+                    F3: registerPlugin
+                });
+            },
+            5303 (__unused_rspack_module, __webpack_exports__, __webpack_require__) {
+                "use strict";
+                var _capacitor_core__rspack_import_0 = __webpack_require__(6546);
+                class DeviceWeb extends _capacitor_core__rspack_import_0.E_ {
+                    async getId() {
+                        return {
+                            identifier: this.getUid()
+                        };
+                    }
+                    async getInfo() {
+                        if ("u" < typeof navigator || !navigator.userAgent) throw this.unavailable('Device API not available in this browser');
+                        const ua = navigator.userAgent;
+                        const uaFields = this.parseUa(ua);
+                        return {
+                            model: uaFields.model,
+                            platform: 'web',
+                            operatingSystem: uaFields.operatingSystem,
+                            osVersion: uaFields.osVersion,
+                            manufacturer: navigator.vendor,
+                            isVirtual: false,
+                            webViewVersion: uaFields.browserVersion
+                        };
+                    }
+                    async getBatteryInfo() {
+                        if ("u" < typeof navigator || !navigator.getBattery) throw this.unavailable('Device API not available in this browser');
+                        let battery = {};
+                        try {
+                            battery = await navigator.getBattery();
+                        } catch (e) {}
+                        return {
+                            batteryLevel: battery.level,
+                            isCharging: battery.charging
+                        };
+                    }
+                    async getLanguageCode() {
+                        return {
+                            value: navigator.language.split('-')[0].toLowerCase()
+                        };
+                    }
+                    async getLanguageTag() {
+                        return {
+                            value: navigator.language
+                        };
+                    }
+                    parseUa(ua) {
+                        const uaFields = {};
+                        const start = ua.indexOf('(') + 1;
+                        let end = ua.indexOf(') AppleWebKit');
+                        if (-1 !== ua.indexOf(') Gecko')) end = ua.indexOf(') Gecko');
+                        const fields = ua.substring(start, end);
+                        if (-1 !== ua.indexOf('Android')) {
+                            const tmpFields = fields.replace('; wv', '').split('; ').pop();
+                            if (tmpFields) uaFields.model = tmpFields.split(' Build')[0];
+                            uaFields.osVersion = fields.split('; ')[1];
+                        } else {
+                            uaFields.model = fields.split('; ')[0];
+                            if ("u" > typeof navigator && navigator.oscpu) uaFields.osVersion = navigator.oscpu;
+                            else if (-1 !== ua.indexOf('Windows')) uaFields.osVersion = fields;
+                            else {
+                                const tmpFields = fields.split('; ').pop();
+                                if (tmpFields) {
+                                    const lastParts = tmpFields.replace(' like Mac OS X', '').split(' ');
+                                    uaFields.osVersion = lastParts[lastParts.length - 1].replace(/_/g, '.');
+                                }
+                            }
+                        }
+                        if (/android/i.test(ua)) uaFields.operatingSystem = 'android';
+                        else if (/iPad|iPhone|iPod/.test(ua) && !window.MSStream) uaFields.operatingSystem = 'ios';
+                        else if (/Win/.test(ua)) uaFields.operatingSystem = 'windows';
+                        else if (/Mac/i.test(ua)) uaFields.operatingSystem = 'mac';
+                        else uaFields.operatingSystem = 'unknown';
+                        const isSafari = !!window.ApplePaySession;
+                        const isChrome = !!window.chrome;
+                        const isFirefox = /Firefox/.test(ua);
+                        const isEdge = /Edg/.test(ua);
+                        const isFirefoxIOS = /FxiOS/.test(ua);
+                        const isChromeIOS = /CriOS/.test(ua);
+                        const isEdgeIOS = /EdgiOS/.test(ua);
+                        if (isSafari || isChrome && !isEdge || isFirefoxIOS || isChromeIOS || isEdgeIOS) {
+                            let searchWord;
+                            searchWord = isFirefoxIOS ? 'FxiOS' : isChromeIOS ? 'CriOS' : isEdgeIOS ? 'EdgiOS' : isSafari ? 'Version' : 'Chrome';
+                            const words = ua.split(' ');
+                            for (const word of words)if (word.includes(searchWord)) {
+                                const version = word.split('/')[1];
+                                uaFields.browserVersion = version;
+                            }
+                        } else if (isFirefox || isEdge) {
+                            const reverseUA = ua.split('').reverse().join('');
+                            const reverseVersion = reverseUA.split('/')[0];
+                            const version = reverseVersion.split('').reverse().join('');
+                            uaFields.browserVersion = version;
+                        }
+                        return uaFields;
+                    }
+                    getUid() {
+                        if ("u" > typeof window && window.localStorage) {
+                            let uid = window.localStorage.getItem('_capuid');
+                            if (uid) return uid;
+                            uid = this.uuid4();
+                            window.localStorage.setItem('_capuid', uid);
+                            return uid;
+                        }
+                        return this.uuid4();
+                    }
+                    uuid4() {
+                        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+                            const r = 16 * Math.random() | 0, v = 'x' === c ? r : 0x3 & r | 0x8;
+                            return v.toString(16);
+                        });
+                    }
+                }
+                __webpack_require__.d(__webpack_exports__, {
+                    DeviceWeb: ()=>DeviceWeb
+                });
+            },
+            2791 (module1, __webpack_exports__, __webpack_require__) {
                 "use strict";
                 var _node_modules_rsbuild_core_compiled_css_loader_noSourceMaps_js__rspack_import_0 = __webpack_require__(5068);
                 var _node_modules_rsbuild_core_compiled_css_loader_noSourceMaps_js__rspack_import_0_default = /*#__PURE__*/ __webpack_require__.n(_node_modules_rsbuild_core_compiled_css_loader_noSourceMaps_js__rspack_import_0);
@@ -6015,8 +6583,19 @@
                         return String.fromCharCode(parseInt(numberStr, 10));
                     });
                 };
-                var parseArrayValue = function(val, options, currentArrayLength) {
-                    if (val && 'string' == typeof val && options.comma && val.indexOf(',') > -1) return val.split(',');
+                var parseArrayValue = function(val, options, currentArrayLength, isFlatArrayValue) {
+                    if (val && 'string' == typeof val && options.comma && val.indexOf(',') > -1) {
+                        if (isFlatArrayValue && options.throwOnLimitExceeded) {
+                            var commaCount = 0;
+                            var commaIndex = val.indexOf(',');
+                            while(commaIndex > -1){
+                                commaCount += 1;
+                                if (commaCount >= options.arrayLimit) throw new RangeError('Array limit exceeded. Only ' + options.arrayLimit + ' element' + (1 === options.arrayLimit ? '' : 's') + ' allowed in an array.');
+                                commaIndex = val.indexOf(',', commaIndex + 1);
+                            }
+                        }
+                        return val.split(',');
+                    }
                     if (options.throwOnLimitExceeded && currentArrayLength >= options.arrayLimit) throw new RangeError('Array limit exceeded. Only ' + options.arrayLimit + ' element' + (1 === options.arrayLimit ? '' : 's') + ' allowed in an array.');
                     return val;
                 };
@@ -6053,7 +6632,7 @@
                             val = options.strictNullHandling ? null : '';
                         } else {
                             key = options.decoder(part.slice(0, pos), defaults.decoder, charset, 'key');
-                            if (null !== key) val = utils.maybeMap(parseArrayValue(part.slice(pos + 1), options, isArray(obj[key]) ? obj[key].length : 0), function(encodedVal) {
+                            if (null !== key) val = utils.maybeMap(parseArrayValue(part.slice(pos + 1), options, isArray(obj[key]) ? obj[key].length : 0, -1 === part.indexOf('[]=')), function(encodedVal) {
                                 return options.decoder(encodedVal, defaults.decoder, charset, 'value');
                             });
                         }
@@ -6061,13 +6640,10 @@
                         if (part.indexOf('[]=') > -1) val = isArray(val) ? [
                             val
                         ] : val;
-                        if (options.comma && isArray(val) && val.length > options.arrayLimit) {
-                            if (options.throwOnLimitExceeded) throw new RangeError('Array limit exceeded. Only ' + options.arrayLimit + ' element' + (1 === options.arrayLimit ? '' : 's') + ' allowed in an array.');
-                            val = utils.combine([], val, options.arrayLimit, options.plainObjects);
-                        }
+                        if (options.comma && isArray(val) && val.length > options.arrayLimit) val = utils.combine([], val, options.arrayLimit, options.plainObjects, options.throwOnLimitExceeded);
                         if (null !== key) {
                             var existing = has.call(obj, key);
-                            if (existing && ('combine' === options.duplicates || part.indexOf('[]=') > -1)) obj[key] = utils.combine(obj[key], val, options.arrayLimit, options.plainObjects);
+                            if (existing && ('combine' === options.duplicates || part.indexOf('[]=') > -1)) obj[key] = utils.combine(obj[key], val, options.arrayLimit, options.plainObjects, options.throwOnLimitExceeded);
                             else if (!existing || 'last' === options.duplicates) obj[key] = val;
                         }
                     }
@@ -6083,7 +6659,7 @@
                     for(var i = chain.length - 1; i >= 0; --i){
                         var obj;
                         var root = chain[i];
-                        if ('[]' === root && options.parseArrays) obj = utils.isOverflow(leaf) ? leaf : options.allowEmptyArrays && ('' === leaf || options.strictNullHandling && null === leaf) ? [] : utils.combine([], leaf, options.arrayLimit, options.plainObjects);
+                        if ('[]' === root && options.parseArrays) obj = utils.isOverflow(leaf) ? leaf : options.allowEmptyArrays && ('' === leaf || options.strictNullHandling && null === leaf) ? [] : utils.combine([], leaf, options.arrayLimit, options.plainObjects, options.throwOnLimitExceeded);
                         else {
                             obj = options.plainObjects ? {
                                 __proto__: null
@@ -6421,6 +6997,7 @@
                 "use strict";
                 var formats = __webpack_require__(4765);
                 var getSideChannel = __webpack_require__(920);
+                var defineProperty = __webpack_require__(655);
                 var has = Object.prototype.hasOwnProperty;
                 var isArray = Array.isArray;
                 var overflowChannel = getSideChannel();
@@ -6460,12 +7037,24 @@
                     for(var i = 0; i < source.length; ++i)if (void 0 !== source[i]) obj[i] = source[i];
                     return obj;
                 };
+                var setProperty = function(obj, key, value) {
+                    if ('__proto__' === key && defineProperty) defineProperty(obj, key, {
+                        configurable: true,
+                        enumerable: true,
+                        value: value,
+                        writable: true
+                    });
+                    else obj[key] = value;
+                };
                 var merge = function merge(target, source, options) {
                     if (!source) return target;
                     if ('object' != typeof source && 'function' != typeof source) {
                         if (isArray(target)) {
                             var nextIndex = target.length;
-                            if (options && 'number' == typeof options.arrayLimit && nextIndex > options.arrayLimit) return markOverflow(arrayToObject(target.concat(source), options), nextIndex);
+                            if (options && 'number' == typeof options.arrayLimit && nextIndex >= options.arrayLimit) {
+                                if (options.throwOnLimitExceeded) throw new RangeError('Array limit exceeded. Only ' + options.arrayLimit + ' element' + (1 === options.arrayLimit ? '' : 's') + ' allowed in an array.');
+                                return markOverflow(arrayToObject(target.concat(source), options), nextIndex);
+                            }
                             target[nextIndex] = source;
                         } else if (!target || 'object' != typeof target) return [
                             target,
@@ -6500,7 +7089,10 @@
                         var combined = [
                             target
                         ].concat(source);
-                        if (options && 'number' == typeof options.arrayLimit && combined.length > options.arrayLimit) return markOverflow(arrayToObject(combined, options), combined.length - 1);
+                        if (options && 'number' == typeof options.arrayLimit && combined.length > options.arrayLimit) {
+                            if (options.throwOnLimitExceeded) throw new RangeError('Array limit exceeded. Only ' + options.arrayLimit + ' element' + (1 === options.arrayLimit ? '' : 's') + ' allowed in an array.');
+                            return markOverflow(arrayToObject(combined, options), combined.length - 1);
+                        }
                         return combined;
                     }
                     var mergeTarget = target;
@@ -6513,12 +7105,15 @@
                                 else target[target.length] = item;
                             } else target[i] = item;
                         });
+                        if (options && 'number' == typeof options.arrayLimit && target.length > options.arrayLimit) {
+                            if (options.throwOnLimitExceeded) throw new RangeError('Array limit exceeded. Only ' + options.arrayLimit + ' element' + (1 === options.arrayLimit ? '' : 's') + ' allowed in an array.');
+                            return markOverflow(arrayToObject(target, options), target.length - 1);
+                        }
                         return target;
                     }
                     return Object.keys(source).reduce(function(acc, key) {
                         var value = source[key];
-                        if (has.call(acc, key)) acc[key] = merge(acc[key], value, options);
-                        else acc[key] = value;
+                        has.call(acc, key) ? setProperty(acc, key, merge(acc[key], value, options)) : setProperty(acc, key, value);
                         if (isOverflow(source) && !isOverflow(acc)) markOverflow(acc, getMaxIndex(source));
                         if (isOverflow(acc)) {
                             var keyNum = parseInt(key, 10);
@@ -6529,7 +7124,7 @@
                 };
                 var assign = function(target, source) {
                     return Object.keys(source).reduce(function(acc, key) {
-                        acc[key] = source[key];
+                        setProperty(acc, key, source[key]);
                         return acc;
                     }, target);
                 };
@@ -6554,6 +7149,13 @@
                     var out = '';
                     for(var j = 0; j < string.length; j += limit){
                         var segment = string.length >= limit ? string.slice(j, j + limit) : string;
+                        if (j + limit < string.length) {
+                            var last = segment.charCodeAt(segment.length - 1);
+                            if (last >= 0xD800 && last <= 0xDBFF) {
+                                segment = segment.slice(0, -1);
+                                j -= 1;
+                            }
+                        }
                         var arr = [];
                         for(var i = 0; i < segment.length; ++i){
                             var c = segment.charCodeAt(i);
@@ -6590,7 +7192,7 @@
                             prop: 'o'
                         }
                     ];
-                    var refs = [];
+                    var refs = getSideChannel();
                     for(var i = 0; i < queue.length; ++i){
                         var item = queue[i];
                         var obj = item.obj[item.prop];
@@ -6598,12 +7200,12 @@
                         for(var j = 0; j < keys.length; ++j){
                             var key = keys[j];
                             var val = obj[key];
-                            if ('object' == typeof val && null !== val && -1 === refs.indexOf(val)) {
+                            if ('object' == typeof val && null !== val && !refs.has(val)) {
                                 queue[queue.length] = {
                                     obj: obj,
                                     prop: key
                                 };
-                                refs[refs.length] = val;
+                                refs.set(val, true);
                             }
                         }
                     }
@@ -6617,17 +7219,21 @@
                     if (!obj || 'object' != typeof obj) return false;
                     return !!(obj.constructor && obj.constructor.isBuffer && obj.constructor.isBuffer(obj));
                 };
-                var combine = function(a, b, arrayLimit, plainObjects) {
+                var combine = function(a, b, arrayLimit, plainObjects, throwOnLimitExceeded) {
                     if (isOverflow(a)) {
+                        if (throwOnLimitExceeded) throw new RangeError('Array limit exceeded. Only ' + arrayLimit + ' element' + (1 === arrayLimit ? '' : 's') + ' allowed in an array.');
                         var newIndex = getMaxIndex(a) + 1;
                         a[newIndex] = b;
                         setMaxIndex(a, newIndex);
                         return a;
                     }
                     var result = [].concat(a, b);
-                    if (result.length > arrayLimit) return markOverflow(arrayToObject(result, {
-                        plainObjects: plainObjects
-                    }), result.length - 1);
+                    if (result.length > arrayLimit) {
+                        if (throwOnLimitExceeded) throw new RangeError('Array limit exceeded. Only ' + arrayLimit + ' element' + (1 === arrayLimit ? '' : 's') + ' allowed in an array.');
+                        return markOverflow(arrayToObject(result, {
+                            plainObjects: plainObjects
+                        }), result.length - 1);
+                    }
                     return result;
                 };
                 var maybeMap = function(val, fn) {
@@ -6908,7 +7514,10 @@
                     var $channelData;
                     var channel = {
                         assert: function(key) {
-                            if (!channel.has(key)) throw new $TypeError('Side channel does not contain ' + inspect(key));
+                            if (!channel.has(key)) {
+                                var keyDesc = key && Object(key) === key ? 'the given object key' : inspect(key);
+                                throw new $TypeError('Side channel does not contain ' + keyDesc);
+                            }
                         },
                         delete: function(key) {
                             return !!$channelData && $channelData['delete'](key);
@@ -10265,7 +10874,7 @@
                         cache['$' + typedArray] = bound;
                     }
                 });
-                var tryTypedArrays = function(value) {
+                function tryTypedArrays(value) {
                     var found = false;
                     forEach(cache, function(getter, typedArray) {
                         if (!found) try {
@@ -10273,8 +10882,8 @@
                         } catch (e) {}
                     });
                     return found;
-                };
-                var trySlices = function(value) {
+                }
+                function trySlices(value) {
                     var found = false;
                     forEach(cache, function(getter, name) {
                         if (!found) try {
@@ -10283,12 +10892,15 @@
                         } catch (e) {}
                     });
                     return found;
-                };
+                }
+                function isTATag(tag) {
+                    return $indexOf(typedArrays, tag) > -1;
+                }
                 module1.exports = function(value) {
                     if (!value || 'object' != typeof value) return false;
                     if (!hasToStringTag) {
                         var tag = $slice($toString(value), 8, -1);
-                        if ($indexOf(typedArrays, tag) > -1) return tag;
+                        if (isTATag(tag)) return tag;
                         if ('Object' !== tag) return false;
                         return trySlices(value);
                     }
@@ -10626,7 +11238,8 @@
             __webpack_require__.d(__webpack_exports__, {
                 Reactions: ()=>Reactions,
                 VideoType: ()=>VideoType,
-                VideomailClient: ()=>VideomailClient
+                VideomailClient: ()=>VideomailClient,
+                getCapacitorDeviceMetadata: ()=>util_getCapacitorDeviceMetadata
             });
             const VideoType = {
                 WebM: "webm",
@@ -10882,7 +11495,7 @@
             var client = __webpack_require__(5734);
             var client_default = /*#__PURE__*/ __webpack_require__.n(client);
             var package_namespaceObject = {
-                rE: "14.0.0"
+                rE: "15.2.0"
             };
             function isAudioEnabled(options) {
                 return Boolean(options.audio.enabled);
@@ -14492,6 +15105,45 @@
                 return exc;
             }
             const error_findOriginalExc = findOriginalExc;
+            var dist = __webpack_require__(6546);
+            const Device = (0, dist.F3)('Device', {
+                web: ()=>Promise.resolve().then(__webpack_require__.bind(__webpack_require__, 5303)).then((m)=>new m.DeviceWeb())
+            });
+            async function getCapacitorDeviceMetadata() {
+                const errors = [];
+                let battery;
+                let info;
+                let languageCode;
+                let languageTag;
+                try {
+                    info = await Device.getInfo();
+                } catch (exc) {
+                    errors.push(serializeError(exc));
+                }
+                try {
+                    battery = await Device.getBatteryInfo();
+                } catch (exc) {
+                    errors.push(serializeError(exc));
+                }
+                try {
+                    languageCode = await Device.getLanguageCode();
+                } catch (exc) {
+                    errors.push(serializeError(exc));
+                }
+                try {
+                    languageTag = await Device.getLanguageTag();
+                } catch (exc) {
+                    errors.push(serializeError(exc));
+                }
+                const metadata = {};
+                if (battery) metadata.battery = battery;
+                if (errors.length > 0) metadata.errors = errors;
+                if (info) metadata.info = info;
+                if (languageCode) metadata.languageCode = languageCode;
+                if (languageTag) metadata.languageTag = languageTag;
+                return metadata;
+            }
+            const util_getCapacitorDeviceMetadata = getCapacitorDeviceMetadata;
             function _extends() {
                 _extends = Object.assign || function(target) {
                     for(var i = 1; i < arguments.length; i++){
@@ -15009,35 +15661,33 @@
                         [constants.WHITELIST_KEY_LABEL]: this.options.whitelistKey
                     };
                     const url = `${this.options.apiUrl}/client-error/`;
-                    try {
-                        const fullVideomailErrorData = {
-                            browser: err.browser,
-                            code: err.code,
-                            cookie: err.cookie,
-                            cpu: err.cpu,
-                            device: err.device,
-                            engine: err.engine,
-                            err: err.err ? serializeError(err.err) : void 0,
-                            explanation: err.explanation,
-                            location: err.location,
-                            logLines: err.logLines,
-                            orientation: err.orientation,
-                            os: err.os,
-                            screen: err.screen,
-                            whitelistKey: err.whitelistKey,
-                            status: err.status,
-                            title: err.title,
-                            message: err.message,
-                            stack: err.stack,
-                            versions: {
-                                videomailClient: package_namespaceObject.rE,
-                                videomailNinjaFormPlugin: this.options.versions?.videomailNinjaFormPlugin
-                            }
-                        };
-                        await client_default()(FormMethod.POST, url).query(queryParams).set("Timezone-Id", this.timezoneId).withCredentials().send(fullVideomailErrorData).timeout(this.options.timeouts.connection);
-                    } catch (exc) {
-                        console.error(exc);
-                    }
+                    const capacitorDevice = await util_getCapacitorDeviceMetadata();
+                    const fullVideomailErrorData = {
+                        capacitorDevice,
+                        browser: err.browser,
+                        code: err.code,
+                        cookie: err.cookie,
+                        cpu: err.cpu,
+                        device: err.device,
+                        engine: err.engine,
+                        err: err.err ? serializeError(err.err) : void 0,
+                        explanation: err.explanation,
+                        location: err.location,
+                        logLines: err.logLines,
+                        orientation: err.orientation,
+                        os: err.os,
+                        screen: err.screen,
+                        whitelistKey: err.whitelistKey,
+                        status: err.status,
+                        title: err.title,
+                        message: err.message,
+                        stack: err.stack,
+                        versions: {
+                            videomailClient: package_namespaceObject.rE,
+                            videomailNinjaFormPlugin: this.options.versions?.videomailNinjaFormPlugin
+                        }
+                    };
+                    await client_default()(FormMethod.POST, url).query(queryParams).set("Timezone-Id", this.timezoneId).withCredentials().send(fullVideomailErrorData).timeout(this.options.timeouts.connection);
                 }
                 async post(videomail) {
                     const newVideomail = this.applyDefaultValues(videomail);
@@ -15293,7 +15943,7 @@
             var insertStyleElement_default = /*#__PURE__*/ __webpack_require__.n(insertStyleElement);
             var styleTagTransform = __webpack_require__(2045);
             var styleTagTransform_default = /*#__PURE__*/ __webpack_require__.n(styleTagTransform);
-            var main = __webpack_require__(6846);
+            var main = __webpack_require__(2791);
             var main_options = {};
             main_options.styleTagTransform = styleTagTransform_default();
             main_options.setAttributes = setAttributesWithoutAttributes_default();
@@ -16455,7 +17105,7 @@
                 "png"
             ];
             let canvas_to_buffer_modern_s;
-            class canvas_to_buffer_modern_r {
+            class r {
                 constructor(t, e = canvas_to_buffer_modern_i, s = .5){
                     if (this.quality = void 0, this.types = void 0, this.canvas = void 0, e.length > 2) throw new Error("Too many image types are specified!");
                     this.canvas = t, this.quality = s, this.types = e;
@@ -16487,7 +17137,7 @@
                     const s = i.split(",")[1];
                     let o;
                     if (!s) throw new Error("Empty uri string given!");
-                    if (o = canvas_to_buffer_modern_e ? window.atob(s) : null == canvas_to_buffer_modern_r.atob ? void 0 : canvas_to_buffer_modern_r.atob(s), !o) throw new Error("Byte are empty, something within atob went wrong.");
+                    if (o = canvas_to_buffer_modern_e ? window.atob(s) : null == r.atob ? void 0 : r.atob(s), !o) throw new Error("Byte are empty, something within atob went wrong.");
                     const n = new Uint8Array(o.length);
                     for(let t = 0, e = o.length; t < e; t++)n[t] = o.charCodeAt(t);
                     return typedarray_to_buffer(n);
@@ -16505,7 +17155,7 @@
                     return canvas_to_buffer_modern_s && canvas_to_buffer_modern_e || (canvas_to_buffer_modern_s = this.figureMimeType()), canvas_to_buffer_modern_s;
                 }
             }
-            canvas_to_buffer_modern_r.atob = void 0;
+            r.atob = void 0;
             var websocket_stream_stream = __webpack_require__(9967);
             var stream_default = /*#__PURE__*/ __webpack_require__.n(websocket_stream_stream);
             function getEdgeCodes(value, amount, fromEnd) {
@@ -16653,17 +17303,32 @@
                 return dimension;
             }
             const dimensions_calculateWidth = calculateWidth;
-            class audio_sample_modern_t {
-                constructor(r){
-                    this.float32Array = void 0, this.float32Array = r;
-                }
+            function _define_property(obj, key, value) {
+                if (key in obj) Object.defineProperty(obj, key, {
+                    value: value,
+                    enumerable: true,
+                    configurable: true,
+                    writable: true
+                });
+                else obj[key] = value;
+                return obj;
+            }
+            class AudioSample {
                 toBuffer() {
-                    const t = new Int16Array(this.float32Array.length);
-                    return this.float32Array.forEach((r, a)=>{
-                        t[a] = 32767 * Math.min(1, r);
-                    }), typedarray_to_buffer(t);
+                    const l = this.float32Array.length;
+                    const arr = new Int16Array(l);
+                    this.float32Array.forEach((sample, i)=>{
+                        arr[i] = 0x7fff * Math.min(1, sample);
+                    });
+                    return typedarray_to_buffer(arr);
+                }
+                constructor(float32Array){
+                    _define_property(this, "float32Array", void 0);
+                    this.float32Array = float32Array;
                 }
             }
+            const esm_src = AudioSample;
+            const esm = esm_src;
             var is_power_of_two = __webpack_require__(8646);
             var is_power_of_two_default = /*#__PURE__*/ __webpack_require__.n(is_power_of_two);
             const CHANNELS = 1;
@@ -16693,7 +17358,7 @@
                 onAudioProcess(e, cb) {
                     if (!this.userMedia.isRecording() || this.userMedia.isPaused()) return;
                     const float32Array = e.inputBuffer.getChannelData(0);
-                    cb(new audio_sample_modern_t(float32Array));
+                    cb(new esm(float32Array));
                 }
                 init(localMediaStream) {
                     this.options.logger.debug("AudioRecorder: init()");
@@ -16790,7 +17455,8 @@
             function isVirtualCamera(videoTrack) {
                 const capabilities = videoTrack.getCapabilities();
                 if (!capabilities.frameRate) return true;
-                return VIRTUAL_KEYWORDS.some((keyword)=>videoTrack.label.toLowerCase().includes(keyword));
+                const isVirtual = VIRTUAL_KEYWORDS.some((keyword)=>videoTrack.label.toLowerCase().includes(keyword));
+                return isVirtual;
             }
             const util_isVirtualCamera = isVirtualCamera;
             const EVENT_ASCII = "|—O—|";
@@ -17372,10 +18038,10 @@
                                     const command = JSON.parse(data.toString());
                                     this.executeCommand(command);
                                 } catch (exc) {
-                                    this.options.logger.debug(`Failed to parse command: ${exc}`);
+                                    this.options.logger.error(`Failed to parse command: ${exc}`);
                                     const err = error_createError({
                                         message: "Invalid server command",
-                                        explanation: `Contact us asap. Bad command was ${data.toString()}. `,
+                                        explanation: `Contact us. The invalid command was: ${data.toString()}.`,
                                         options: this.options,
                                         exc
                                     });
@@ -17645,12 +18311,12 @@
                 }
                 getAvgInterval() {
                     const intervalSum = this.getIntervalSum();
-                    if (!intervalSum) return;
+                    if (void 0 === intervalSum || intervalSum <= 0) return;
                     return intervalSum / this.framesCount;
                 }
                 getAvgFps() {
                     const intervalSum = this.getIntervalSum();
-                    if (!intervalSum) return;
+                    if (void 0 === intervalSum || intervalSum <= 0) return;
                     return this.framesCount / intervalSum * 1000;
                 }
                 getRecordingStats() {
@@ -17869,7 +18535,7 @@
                         });
                         return;
                     }
-                    this.frame = new canvas_to_buffer_modern_r(this.canvas, this.options.image.types, this.options.image.quality);
+                    this.frame = new r(this.canvas, this.options.image.types, this.options.image.quality);
                     this.options.logger.debug("Recorder: record()");
                     this.userMedia.record();
                     this.emit("RECORDING", {
