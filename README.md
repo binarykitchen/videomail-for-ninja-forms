@@ -78,8 +78,8 @@ In the `/doc` folder we place in all text and images for the public documentatio
 2. Run `npm run clean`,
 3. Write changelog in `readme.txt`
 4. Bump versions in `readme.txt`:
-   - Change "stable tag" for this VC plugin's using latest version from changelog
-   - If there was a WordPress upgrade, bump it under "tested up to" (test first)
+   - Check "stable tag" for this VC plugin's using latest version. Align it with `readme.txt`
+   - (Optional) If there was a WordPress upgrade, bump it under "tested up to" (test first)
 5. Search for current stable tag version and replace it with the new one. Should be these files:
    - package.json
    - readme.txt
