@@ -58,7 +58,7 @@
     ]
   },
   "dependencies": {
-    "videomail-client": "14.0.0"
+    "videomail-client": "15.2.0"
   },
   "devDependencies": {
     "@babel/core": "7.29.7",
@@ -88,7 +88,7 @@
     "gulp-zip": "5.1.0",
     "minimist": "1.2.8",
     "nib": "1.2.0",
-    "prettier": "3.9.4",
+    "prettier": "3.9.6",
     "yargs": "17.7.2"
   }
 }
