@@ -11495,7 +11495,7 @@
             var client = __webpack_require__(5734);
             var client_default = /*#__PURE__*/ __webpack_require__.n(client);
             var package_namespaceObject = {
-                rE: "15.2.0"
+                rE: "15.3.2"
             };
             function isAudioEnabled(options) {
                 return Boolean(options.audio.enabled);
@@ -14881,6 +14881,8 @@
                 code;
                 status;
                 explanation;
+                constraint;
+                usedConstraints;
             }
             const error_HTTPVideomailError = HTTPVideomailError;
             class VideomailError extends error_HTTPVideomailError {
@@ -15074,6 +15076,8 @@
                 if (err) {
                     videomailError.status = err.status;
                     videomailError.code = err.code;
+                    videomailError.constraint = err.constraint;
+                    videomailError.usedConstraints = err.usedConstraints;
                 }
                 if (options.reportErrors) {
                     const resource = new src_resource(options);
@@ -15118,7 +15122,10 @@
                 try {
                     info = await Device.getInfo();
                 } catch (exc) {
-                    errors.push(serializeError(exc));
+                    const err = serializeError(exc);
+                    let ignore = false;
+                    if (err.message?.includes("Device API not available in this browser")) ignore = true;
+                    if (!ignore) errors.push(err);
                 }
                 try {
                     battery = await Device.getBatteryInfo();
@@ -15662,6 +15669,8 @@
                     };
                     const url = `${this.options.apiUrl}/client-error/`;
                     const capacitorDevice = await util_getCapacitorDeviceMetadata();
+                    const supportedConstraints = navigator.mediaDevices.getSupportedConstraints();
+                    const enumerateDevices = await navigator.mediaDevices.enumerateDevices();
                     const fullVideomailErrorData = {
                         capacitorDevice,
                         browser: err.browser,
@@ -15682,6 +15691,9 @@
                         title: err.title,
                         message: err.message,
                         stack: err.stack,
+                        supportedConstraints,
+                        enumerateDevices,
+                        usedConstraints: err.usedConstraints,
                         versions: {
                             videomailClient: package_namespaceObject.rE,
                             videomailNinjaFormPlugin: this.options.versions?.videomailNinjaFormPlugin
@@ -18097,7 +18109,7 @@
                     if (notifying) return true;
                     return this.blocking;
                 }
-                userMediaErrorCallback(err) {
+                userMediaErrorCallback(err, usedConstraints) {
                     this.userMediaLoading = false;
                     this.clearUserMediaTimeout();
                     const characteristics = this.userMedia?.getCharacteristics();
@@ -18107,7 +18119,8 @@
                         if (err.name !== error_VideomailError.MEDIA_DEVICE_NOT_SUPPORTED) {
                             const videomailError = error_createError({
                                 err,
-                                options: this.options
+                                options: this.options,
+                                usedConstraints
                             });
                             this.emit("ERROR", {
                                 err: videomailError
@@ -18173,11 +18186,11 @@
                     }
                     this.options.logger.debug(`Recorder: our webcam constraints are: ${util_pretty(constraints)}`);
                     this.options.logger.debug(`Recorder: available webcam constraints are: ${util_pretty(navigator.mediaDevices.getSupportedConstraints())}`);
-                    const genuineUserMediaRequest = navigator.mediaDevices.getUserMedia(constraints);
-                    genuineUserMediaRequest.then((localStream)=>{
+                    const streamPromise = navigator.mediaDevices.getUserMedia(constraints);
+                    streamPromise.then((localStream)=>{
                         this.getUserMediaCallback(localStream, params);
                     }).catch((reason)=>{
-                        this.userMediaErrorCallback(reason);
+                        this.userMediaErrorCallback(reason, constraints);
                     });
                 }
                 loadUserMedia(params) {
@@ -18802,9 +18815,6 @@
                         replayParentElement.appendChild(this.replayElement);
                     }
                 }
-                isStandalone() {
-                    return "HTMLDivElement" === this.visuals.constructor.name;
-                }
                 copyAttributes(newVideomail) {
                     let attributeContainer;
                     Object.keys(newVideomail).forEach((attribute)=>{
@@ -18890,10 +18900,10 @@
                     this.replayElement.setAttribute("autobuffer", "true");
                     this.replayElement.setAttribute("playsinline", "true");
                     this.replayElement.setAttribute("webkit-playsinline", "webkit-playsinline");
-                    this.replayElement.setAttribute("controls", "controls");
                     this.replayElement.setAttribute("preload", "auto");
                     if (!this.built) {
-                        if (!this.isStandalone()) this.on("PREVIEW", (params)=>{
+                        this.on("PREVIEW", (params)=>{
+                            this.replayElement?.setAttribute("controls", "controls");
                             this.show(params?.width, params?.height, params?.hasAudio);
                         });
                         this.replayElement.addEventListener("touchstart", (e)=>{
@@ -19010,8 +19020,13 @@
                     });
                 }
                 hide() {
-                    if (this.isStandalone()) this.visuals.hide();
-                    else if (this.replayElement) {
+                    if (this.replayElement) {
+                        this.replayElement.pause();
+                        this.replayElement.removeAttribute("controls");
+                        if (this.replayElement.hasAttribute("src")) {
+                            this.replayElement.removeAttribute("src");
+                            this.replayElement.load();
+                        }
                         html_hideElement(this.replayElement);
                         html_hideElement(this.replayElement.parentElement);
                     }
