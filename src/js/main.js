@@ -1,10 +1,10 @@
 // Remember, you can't use any import/require statements here
-const PLUGIN_VERSION = "11.1.0";
+const PLUGIN_VERSION = "11.1.1";
 
-// manual switch to have more stuff printed to console
+// Manual switch to have more stuff printed to console
 let DEBUG = false;
 
-// good documentation on backbone event handling
+// Good documentation on backbone event handling
 // http://backbonejs.org/#Events
 
 const VideomailFieldController = Marionette.Object.extend({

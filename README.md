@@ -80,7 +80,7 @@ In the `/doc` folder we place in all text and images for the public documentatio
 4. Bump versions in `readme.txt`:
    - Check "stable tag" for this VC plugin's using latest version. Align it with `readme.txt`
    - (Optional) If there was a WordPress upgrade, bump it under "tested up to" (test first)
-5. Search for current stable tag version and replace it with the new one. Should be these files:
+5. Search for current version and replace it with the new one. Should be these files:
    - package.json
    - readme.txt
    - src/js/main.js
