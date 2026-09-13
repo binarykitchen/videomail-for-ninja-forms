@@ -75,24 +75,26 @@ In the `/doc` folder we place in all text and images for the public documentatio
 ## Releasing
 
 1. Ensure you are on develop branch
-2. Run `npm run clean`,
-3. Write changelog in `readme.txt`
-4. Bump versions in `readme.txt`:
-   - Check "stable tag" for this VC plugin's using latest version. Align it with `readme.txt`
+2. Consider any updates with `ncu`
+3. Run `npm run clean`,
+4. Write changelog in `readme.txt`
+5. Bump version(s) if any, in `readme.txt`:
+   - Check "stable tag" for this VC plugin's using latest version.
+     - Align it with `readme.txt`
    - (Optional) If there was a WordPress upgrade, bump it under "tested up to" (test first)
-5. Search for current version and replace it with the new one. Should be these files:
+6. Search for current version and replace it with the new one. Should be these files:
    - package.json
    - readme.txt
    - src/js/main.js
    - src/php/videomail.php
    - videomail-for-ninja-forms.php
-6. Optional: validate readme.txt with <https://wordpress.org/plugins/developers/readme-validator/>
-7. Run `npm install && npm run build`
-8. Review changes, add them with `git add -A`
-9. Git commit with `git commit -am 'Rebuilt for the next version` and push that
-10. Run `npm run release` which will run the release workflow on GitHub
-11. Wait until the release is published and make sure the new version is shown on <https://wordpress.org/plugins/videomail-for-ninja-forms>
-12. Announce on Social Media
+7. Optional: validate readme.txt with <https://wordpress.org/plugins/developers/readme-validator/>
+8. Run `npm install && npm run build`
+9. Review changes, add them with `git add -A`
+10. Git commit with `git commit -am 'Rebuilt for the next version` and push that
+11. Run `npm run release` which will run the release workflow on GitHub
+12. Wait until the release is published and make sure the new version is shown on <https://wordpress.org/plugins/videomail-for-ninja-forms>
+13. Announce on Social Media
 
 ## Ask for help
 
