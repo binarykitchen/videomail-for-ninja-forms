@@ -10938,7 +10938,7 @@
             var client = __webpack_require__(5734);
             var client_default = /*#__PURE__*/ __webpack_require__.n(client);
             var package_namespaceObject = {
-                rE: "15.7.2"
+                rE: "15.7.5"
             };
             function isAudioEnabled(options) {
                 return Boolean(options.audio.enabled);
@@ -10955,9 +10955,10 @@
             function inspect(element) {
                 return util_default().inspect(element, {
                     colors: false,
-                    compact: true,
+                    compact: false,
                     depth: 4,
-                    breakLength: 1 / 0
+                    breakLength: 1 / 0,
+                    showHidden: true
                 }).replace(/\s+/gu, " ").replace(/\r?\n/gu, "");
             }
             function pretty(anything) {
@@ -14344,6 +14345,7 @@
                 os;
                 screen;
                 orientation;
+                versions;
                 classList;
                 static PERMISSION_DENIED = "PERMISSION_DENIED";
                 static NOT_ALLOWED_ERROR = "NotAllowedError";
@@ -14522,6 +14524,10 @@
                     videomailError.constraint = err.constraint;
                     videomailError.usedConstraints = err.usedConstraints;
                 }
+                videomailError.versions = {
+                    videomailClient: package_namespaceObject.rE,
+                    videomailNinjaFormPlugin: options.versions?.videomailNinjaFormPlugin
+                };
                 if (options.reportErrors) {
                     const resource = new src_resource(options);
                     resource.reportError(videomailError).catch((reason)=>{
@@ -15092,11 +15098,7 @@
                         stack: err.stack,
                         supportedConstraints,
                         enumerateDevices,
-                        usedConstraints: err.usedConstraints,
-                        versions: {
-                            videomailClient: package_namespaceObject.rE,
-                            videomailNinjaFormPlugin: this.options.versions?.videomailNinjaFormPlugin
-                        }
+                        usedConstraints: err.usedConstraints
                     };
                     await client_default()(FormMethod.POST, url).query(queryParams).set("Timezone-Id", this.timezoneId).withCredentials().send(fullVideomailErrorData).timeout(this.options.timeouts.connection);
                 }
@@ -15297,7 +15299,7 @@
                 }
                 lifo(level, parameters) {
                     const line = parameters.join();
-                    if (this.stack.length > this.options.logStackSize) this.stack.pop();
+                    if (this.stack.length >= this.options.logStackSize) this.stack.shift();
                     this.stack.push(`[${level}] ${line}`);
                     return line;
                 }
@@ -16714,6 +16716,10 @@
                 return dimension;
             }
             const dimensions_calculateWidth = calculateWidth;
+            function isAutomatedUserAgent(userAgent = navigator.userAgent) {
+                return /bot|crawler|spider|headlesschrome|phantomjs|puppeteer|playwright/iu.test(userAgent);
+            }
+            const util_isAutomatedUserAgent = isAutomatedUserAgent;
             function _define_property(obj, key, value) {
                 if (key in obj) Object.defineProperty(obj, key, {
                     value: value,
@@ -17319,7 +17325,8 @@
                     const online = navigator.onLine;
                     const elapsedMs = this.connectingStartedAt ? Date.now() - this.connectingStartedAt : void 0;
                     const closeEvent = this.lastCloseEvent;
-                    this.options.logger.debug(`Recorder: failConnection() diagnostic - cause=${cause}, online=${online}, elapsedMs=${elapsedMs ?? "unknown"}, closeCode=${closeEvent?.code ?? "none"}, closeReason=${closeEvent?.reason || "none"}, wasClean=${closeEvent?.wasClean ?? "unknown"}`);
+                    const debugLine = `Recorder: failConnection() diagnostic - cause=${cause}, online=${online}, elapsedMs=${elapsedMs ?? "unknown"}, closeCode=${closeEvent?.code ?? "none"}, closeReason=${closeEvent?.reason || "none"}, wasClean=${closeEvent?.wasClean ?? "unknown"}`;
+                    this.options.logger.debug(debugLine);
                     let explanation;
                     if (online) if ("timeout" === cause) explanation = `The server at ${url2Connect} did not respond within ${this.options.timeouts.connection}ms, even though your device is online. This usually points to a firewall or proxy silently dropping the connection. Please try a different network. If the problem persists, contact us.`;
                     else {
@@ -17410,6 +17417,11 @@
                 }
                 initSocket(cb) {
                     if (!this.connected) {
+                        if (util_isAutomatedUserAgent()) {
+                            this.connecting = false;
+                            this.options.logger.debug("Recorder: skipping web socket connection for an automated crawler");
+                            return;
+                        }
                         this.connecting = true;
                         this.connectionFailed = false;
                         this.connectingStartedAt = Date.now();
@@ -17487,10 +17499,12 @@
                                 const neverConnected = this.connecting && !this.connected;
                                 this.clearConnectionTimeout();
                                 this.connecting = this.connected = false;
-                                if (neverConnected) this.failConnection({
-                                    url2Connect,
-                                    cause: "closed"
-                                });
+                                if (neverConnected) window.setTimeout(()=>{
+                                    this.failConnection({
+                                        url2Connect,
+                                        cause: "closed"
+                                    });
+                                }, 0);
                                 else if (this.userMediaLoaded) this.initSocket();
                             });
                             this.stream.on("connect", ()=>{
