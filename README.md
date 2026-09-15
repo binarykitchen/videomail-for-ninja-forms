@@ -83,11 +83,11 @@ In the `/doc` folder we place in all text and images for the public documentatio
      - Align it with `readme.txt`
    - (Optional) If there was a WordPress upgrade, bump it under "tested up to" (test first)
 6. Search for current version and replace it with the new one. Should be these files:
-   - package.json
-   - readme.txt
-   - src/js/main.js
-   - src/php/videomail.php
-   - videomail-for-ninja-forms.php
+   - [package.json](package.json)
+   - [readme.txt](readme.txt)
+   - [src/js/main.js](src/js/main.js)
+   - [src/php/videomail.php](src/php/videomail.php)
+   - [videomail-for-ninja-forms.php](videomail-for-ninja-forms.php)
 7. Optional: validate readme.txt with <https://wordpress.org/plugins/developers/readme-validator/>
 8. Run `npm install && npm run build`
 9. Review changes, add them with `git add -A`
