@@ -10976,7 +10976,7 @@
             var client = __webpack_require__("Q");
             var client_default = /*#__PURE__*/ __webpack_require__.n(client);
             var package_namespaceObject = {
-                rE: "15.7.10"
+                rE: "15.7.13"
             };
             function isAudioEnabled(options) {
                 return Boolean(options.audio.enabled);
@@ -17376,13 +17376,27 @@
                     const online = navigator.onLine;
                     const elapsedMs = this.connectingStartedAt ? Date.now() - this.connectingStartedAt : void 0;
                     const closeEvent = this.lastCloseEvent;
-                    const debugLine = `Recorder: failConnection() diagnostic - cause=${cause}, online=${online}, elapsedMs=${elapsedMs ?? "unknown"}, closeCode=${closeEvent?.code ?? "none"}, closeReason=${closeEvent?.reason || "none"}, wasClean=${closeEvent?.wasClean ?? "unknown"}`;
+                    const diagnosticLines = [
+                        `  • cause: ${cause}`,
+                        `  • closeCode: ${closeEvent?.code ?? "undefined"}`,
+                        `  • closeReason: ${closeEvent?.reason || "undefined"}`,
+                        `  • elapsedMs: ${elapsedMs ?? "undefined"}`,
+                        `  • online: ${online}`,
+                        `  • unloaded: ${this.unloaded ?? "undefined"}`,
+                        `  • userMediaLoaded: ${this.userMediaLoaded ?? "undefined"}`,
+                        `  • userMediaLoading: ${this.userMediaLoading}`,
+                        `  • wasClean: ${closeEvent?.wasClean ?? "undefined"}`
+                    ];
+                    const debugLine = [
+                        "🔎 Recorder: failConnection() diagnostic",
+                        ...diagnosticLines
+                    ].join("\n");
                     this.options.logger.debug(debugLine);
                     let explanation;
                     if (online) if ("timeout" === cause) explanation = `The server at ${url2Connect} did not respond within ${this.options.timeouts.connection}ms, even though your device is online. This usually points to a firewall or proxy silently dropping the connection. Please try a different network. If the problem persists, contact us.`;
                     else {
-                        const closeSuffix = closeEvent ? ` (close code ${closeEvent.code})` : "";
-                        explanation = `The connection to ${url2Connect} was refused or could not be reached${closeSuffix}. Please check your internet connection and try again. If the problem persists, contact us.`;
+                        const closeSuffix = closeEvent ? ` (code ${closeEvent.code})` : "";
+                        explanation = `Connection to ${url2Connect} is closed${closeSuffix}. Please check your internet connection and try again. If the problem persists, contact us.`;
                     }
                     else explanation = "Your device appears to be offline. Please check your internet connection and try again.";
                     if (this.stream) {
@@ -17546,20 +17560,19 @@
                                 });
                             }, connectionTimeoutMs);
                             this.stream.on("close", ()=>{
-                                this.options.logger.debug(`${PIPE_SYMBOL}Stream has closed`);
-                                const neverConnected = this.connecting && !this.connected;
-                                this.clearConnectionTimeout();
-                                this.connecting = this.connected = false;
-                                if (neverConnected) window.setTimeout(()=>{
+                                this.options.logger.debug(`${PIPE_SYMBOL}Stream has closed, connecting=${this.connecting}, connected=${this.connected}, userMediaLoaded=${this.userMediaLoaded}`);
+                                const tryReconnect = this.connected && this.userMediaLoaded;
+                                this.connected = false;
+                                if (tryReconnect) this.initSocket();
+                                else if (!this.connecting) window.setTimeout(()=>{
                                     this.failConnection({
                                         url2Connect,
                                         cause: "closed"
                                     });
                                 }, 0);
-                                else if (this.userMediaLoaded) this.initSocket();
                             });
-                            this.stream.on("connect", ()=>{
-                                this.options.logger.debug(`${PIPE_SYMBOL}Stream *connect* event emitted`);
+                            this.stream.on("connect", (args)=>{
+                                this.options.logger.debug(`${PIPE_SYMBOL}Stream *connect* event emitted with args: ${util_pretty(args)}`);
                                 this.clearConnectionTimeout();
                                 const isClosing = this.stream?.socket.readyState === WebSocket.CLOSING;
                                 if (!this.connected && !isClosing && !this.unloaded) {
@@ -17593,35 +17606,35 @@
                             this.stream.on("drain", ()=>{
                                 this.options.logger.debug(`${PIPE_SYMBOL}Stream *drain* event emitted (should not happen!)`);
                             });
-                            this.stream.on("preend", ()=>{
-                                this.options.logger.debug(`${PIPE_SYMBOL}Stream *preend* event emitted`);
+                            this.stream.on("preend", (args)=>{
+                                this.options.logger.debug(`${PIPE_SYMBOL}Stream *preend* event emitted with args: ${util_pretty(args)}`);
                             });
                             this.stream.on("end", ()=>{
                                 this.options.logger.debug(`${PIPE_SYMBOL}Stream *end* event emitted`);
                             });
-                            this.stream.on("drain", ()=>{
-                                this.options.logger.debug(`${PIPE_SYMBOL}Stream *drain* event emitted`);
+                            this.stream.on("drain", (args)=>{
+                                this.options.logger.debug(`${PIPE_SYMBOL}Stream *drain* event emitted with args: ${util_pretty(args)}`);
                             });
-                            this.stream.on("pipe", ()=>{
-                                this.options.logger.debug(`${PIPE_SYMBOL}Stream *pipe* event emitted`);
+                            this.stream.on("pipe", (src)=>{
+                                this.options.logger.debug(`${PIPE_SYMBOL}Stream *pipe* event emitted with src: ${util_pretty(src)}`);
                             });
-                            this.stream.on("unpipe", ()=>{
-                                this.options.logger.debug(`${PIPE_SYMBOL}Stream *unpipe* event emitted`);
+                            this.stream.on("unpipe", (src)=>{
+                                this.options.logger.debug(`${PIPE_SYMBOL}Stream *unpipe* event emitted with src: ${util_pretty(src)}`);
                             });
-                            this.stream.on("resume", ()=>{
-                                this.options.logger.debug(`${PIPE_SYMBOL}Stream *resume* event emitted`);
+                            this.stream.on("resume", (args)=>{
+                                this.options.logger.debug(`${PIPE_SYMBOL}Stream *resume* event emitted with args: ${util_pretty(args)}`);
                             });
-                            this.stream.on("uncork", ()=>{
-                                this.options.logger.debug(`${PIPE_SYMBOL}Stream *uncork* event emitted`);
+                            this.stream.on("uncork", (args)=>{
+                                this.options.logger.debug(`${PIPE_SYMBOL}Stream *uncork* event emitted with args: ${util_pretty(args)}`);
                             });
-                            this.stream.on("readable", ()=>{
-                                this.options.logger.debug(`${PIPE_SYMBOL}Stream *preend* event emitted`);
+                            this.stream.on("readable", (args)=>{
+                                this.options.logger.debug(`${PIPE_SYMBOL}Stream *readable* event emitted with args: ${util_pretty(args)}`);
                             });
-                            this.stream.on("prefinish", ()=>{
-                                this.options.logger.debug(`${PIPE_SYMBOL}Stream *preend* event emitted`);
+                            this.stream.on("prefinish", (args)=>{
+                                this.options.logger.debug(`${PIPE_SYMBOL}Stream *prefinish* event emitted with args: ${util_pretty(args)}`);
                             });
-                            this.stream.on("finish", ()=>{
-                                this.options.logger.debug(`${PIPE_SYMBOL}Stream *preend* event emitted`);
+                            this.stream.on("finish", (args)=>{
+                                this.options.logger.debug(`${PIPE_SYMBOL}Stream *finish* event emitted with args: ${util_pretty(args)}`);
                             });
                         }
                     }
@@ -18019,7 +18032,7 @@
                 record() {
                     if (this.unloaded) return;
                     if (!this.connected) {
-                        this.options.logger.debug("Recorder: reconnecting before recording ...");
+                        this.options.logger.debug("Recorder: reconnecting before recording …");
                         this.initSocket(()=>{
                             this.once("USER_MEDIA_READY", this.record.bind(this));
                         });
