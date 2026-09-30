@@ -23,28 +23,32 @@ const VideomailFieldController = Marionette.Object.extend({
     // ugly workaround to make it work with the conditional plugin
     this.listenTo(this.channel, "all", function (eventName) {
       DEBUG && console.log("Videomail channel event triggered:", eventName);
-
-      // must be coming back from a multi-step where
-      // videomail has already been initialised. so just resume it.
-      this.listenTo(nfRadio.channel("nfMP"), "change:part", function (params) {
-        DEBUG && console.log("nfMP channel event triggered:", "change:part");
-
-        const currentModels =
-          params.currentElement?.attributes?.formContentData?.models || [];
-
-        const currentCid = this.fieldModel.cid;
-
-        const currentModel = currentModels.find(function (model) {
-          return model.cid === currentCid;
-        });
-
-        if (currentModel) {
-          this.loadVideomailClient();
-        } else {
-          this.videomailClient.unload();
-        }
-      });
     });
+
+    this.listenTo(nfRadio.channel("nfMP"), "change:part", this.onPartChange);
+  },
+
+  onPartChange: function (params) {
+    DEBUG && console.log("nfMP channel event triggered:", "change:part");
+
+    if (!this.fieldModel) {
+      return;
+    }
+
+    const currentModels =
+      params.currentElement?.attributes?.formContentData?.models || [];
+
+    const currentCid = this.fieldModel.cid;
+
+    const currentModel = currentModels.find(function (model) {
+      return model.cid === currentCid;
+    });
+
+    if (currentModel) {
+      this.loadVideomailClient();
+    } else if (this.videomailClient) {
+      this.videomailClient.unload();
+    }
   },
 
   getFormId: function () {
@@ -71,6 +75,10 @@ const VideomailFieldController = Marionette.Object.extend({
   },
 
   loadVideomailClient: function () {
+    if (this.videomailClient) {
+      this.videomailClient.unload();
+    }
+
     let imageQualityPercentage = this.fieldModel.get("image_quality") || 40;
 
     if (imageQualityPercentage > 100) {
@@ -280,8 +288,10 @@ const VideomailFieldController = Marionette.Object.extend({
   },
 
   onBeforeDestroy: function () {
-    this.videomailClient.unload();
-    delete this.videomailClient;
+    if (this.videomailClient) {
+      this.videomailClient.unload();
+      delete this.videomailClient;
+    }
   },
 });
 

@@ -99,9 +99,12 @@ final class NF_Videomail {
   public static function template($file_name = '', array $data = array()) {
     if (!$file_name) return;
 
-    extract($data);
+    $templatePath = self::$templatesDir . basename($file_name);
+    if (!is_readable($templatePath)) return;
 
-    include self::$templatesDir . $file_name;
+    extract($data, EXTR_SKIP);
+
+    include $templatePath;
   }
 
   public static function config($file_name) {

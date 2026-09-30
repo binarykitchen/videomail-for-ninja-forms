@@ -73,14 +73,18 @@ class NF_Videomail_Fields_Videomail extends NF_Abstracts_Field {
   }
 
   public function process ($field, $data) {
+    if (empty($data['extra']['videomail']) || !is_array($data['extra']['videomail'])) {
+      return $data;
+    }
+
     $videomail = $data['extra']['videomail'];
 
     $videomailFieldId = $field['id'];
 
     // now set some merge tag values for the videomail object itself
-    Ninja_Forms()->merge_tags['video']->setUrl($videomail['url']);
-    Ninja_Forms()->merge_tags['video']->setAlias($videomail['alias']);
-    Ninja_Forms()->merge_tags['video']->setReplyUrl($videomail['replyUrl']);
+    Ninja_Forms()->merge_tags['video']->setUrl(esc_url_raw($videomail['url'] ?? ''));
+    Ninja_Forms()->merge_tags['video']->setAlias(sanitize_text_field($videomail['alias'] ?? ''));
+    Ninja_Forms()->merge_tags['video']->setReplyUrl(sanitize_text_field($videomail['replyUrl'] ?? ''));
 
     $enableMediaLibrary = $field['media_library'];
 
@@ -88,65 +92,87 @@ class NF_Videomail_Fields_Videomail extends NF_Abstracts_Field {
       register_shutdown_function(array($this, 'downloadVideomailToMediaLibrary'), $videomail);
     }
 
-    $data['fields'][$videomailFieldId]['value'] = $videomail['url'];
+    $data['fields'][$videomailFieldId]['value'] = esc_url_raw($videomail['url'] ?? '');
 
     return $data;
   }
 
   public function downloadVideomailToMediaLibrary($videomail) {
-    if ($videomail['webm']) {
+    $videoUrl = '';
+    $videoType = '';
+
+    if (!empty($videomail['webm'])) {
       $videoUrl = $videomail['webm'];
-    } else if ($videomail['mp4']) {
+      $videoType = 'webm';
+    } else if (!empty($videomail['mp4'])) {
       $videoUrl = $videomail['mp4'];
+      $videoType = 'mp4';
     }
 
-    if ($videoUrl) {
-      $tempFile = download_url($videoUrl, 300);
-
-      if (is_wp_error($tempFile)) {
-        @unlink($tempFile);
-        return $tempFile;
-      } else {
-        // Need to require these files
-        if (!function_exists('media_handle_upload')) {
-          require_once(ABSPATH . "wp-admin" . '/includes/image.php');
-          require_once(ABSPATH . "wp-admin" . '/includes/file.php');
-          require_once(ABSPATH . "wp-admin" . '/includes/media.php');
-        }
-
-        $videoType = $videomail['recordingStats']['videoType'];
-
-        if (!$videomail['subject']) {
-          // use alias as the subject instead
-          $subject = $videomail['alias'];
-        } else {
-          $subject = $videomail['subject'];
-        }
-
-        // Array based on $_FILE as seen in PHP file uploads
-        $file = array(
-          'name' => $subject . '.' . $videoType,
-          'type' => wp_check_filetype($tempFile),
-          'tmp_name' => $tempFile,
-          'error' => 0,
-          'size' => filesize($tempFile),
-        );
-
-        // Move the temporary file into the uploads directory
-        $results = media_handle_sideload($file, 0, $subject);
-
-        // If error storing permanently, unlink
-        if (is_wp_error($results)) {
-          @unlink($tempFile);
-          return $results;
-        }
-      }
+    if (!$videoUrl || !$this->isTrustedVideomailUrl($videoUrl)) {
+      return new WP_Error(
+        'invalid_videomail_url',
+        __('The video URL is invalid.', 'videomail-for-ninja-forms')
+      );
     }
+
+    if (!function_exists('download_url')) {
+      require_once ABSPATH . 'wp-admin/includes/file.php';
+    }
+
+    $tempFile = download_url($videoUrl, 300);
+
+    if (is_wp_error($tempFile)) {
+      return $tempFile;
+    }
+
+    if (!function_exists('media_handle_sideload')) {
+      require_once ABSPATH . 'wp-admin/includes/image.php';
+      require_once ABSPATH . 'wp-admin/includes/media.php';
+    }
+
+    if (empty($videomail['subject'])) {
+      // use alias as the subject instead
+      $subject = sanitize_text_field($videomail['alias'] ?? 'videomail');
+    } else {
+      $subject = sanitize_text_field($videomail['subject']);
+    }
+
+    // Array based on $_FILE as seen in PHP file uploads
+    $file = array(
+      'name' => sanitize_file_name($subject . '.' . $videoType),
+      'type' => 'video/' . $videoType,
+      'tmp_name' => $tempFile,
+      'error' => 0,
+      'size' => filesize($tempFile),
+    );
+
+    // Move the temporary file into the uploads directory
+    $results = media_handle_sideload($file, 0, $subject);
+
+    if (is_wp_error($results)) {
+      @unlink($tempFile);
+    }
+
+    return $results;
+  }
+
+  private function isTrustedVideomailUrl($url) {
+    $parsedUrl = wp_parse_url($url);
+
+    if (!$parsedUrl || empty($parsedUrl['scheme']) || empty($parsedUrl['host'])) {
+      return false;
+    }
+
+    $host = strtolower($parsedUrl['host']);
+
+    return 'https' === strtolower($parsedUrl['scheme']) &&
+      ('videomail.io' === $host || str_ends_with($host, '.videomail.io'));
   }
 
   public function admin_form_element($id, $value) {
     if (empty($value)) {
-      return __('No Video Recorded');
+      return __('No Video Recorded', 'videomail-for-ninja-forms');
     }
 
     NF_Videomail::template('admin-form-element.html.php', compact('value'));
@@ -189,10 +215,12 @@ class NF_Videomail_Fields_Videomail extends NF_Abstracts_Field {
     }
 
     if (empty($value)) {
-      return __('No Video Recorded');
+      return __('No Video Recorded', 'videomail-for-ninja-forms');
     }
 
     // ok, value is a videomail
-    return '<a href="' . $value . '">' . __('View Online', 'videomail-for-ninja-forms') . '</a>';
+    return '<a href="' . esc_url($value) . '">' .
+      esc_html__('View Online', 'videomail-for-ninja-forms') .
+      '</a>';
   }
 }

@@ -45,7 +45,7 @@ Note: depending on your OS the `gulp watch` command might result into errors;
 ### Arch Linux Issues
 
 - Afraid have to amend `sudo` before `npm run mh` or so.
-- Can't use .local domain as it's [reserved under Arch Linux](https://community.localwp.com/t/local-tld-is-not-resolved-when-in-hosts-file-if-used-on-arch-based-linux/43793/6).
+- Can't use .local domain as it's [reserved under Arch Linux](https://community.localwp.com/t/local-tld-is-not-resolved-when-in-hosts-file-if-used-on-arch-basedgit -linux/43793/6).
 
 ### Customize host or port
 
@@ -74,27 +74,15 @@ In the `/doc` folder we place in all text and images for the public documentatio
 
 ## Releasing
 
-1. Ensure you are on develop branch
-2. Consider any updates with `ncu`
-3. Run `npm run clean`,
-4. Write changelog in `readme.txt`
-5. Bump version(s) if any, in `readme.txt`:
-   - Check "stable tag" for this VC plugin's using latest version.
-     - Align it with `readme.txt`
-   - (Optional) If there was a WordPress upgrade, bump it under "tested up to" (test first)
-6. Search for current version and replace it with the new one. Should be these files:
-   - [package.json](package.json)
-   - [readme.txt](readme.txt)
-   - [src/js/main.js](src/js/main.js)
-   - [src/php/videomail.php](src/php/videomail.php)
-   - [videomail-for-ninja-forms.php](videomail-for-ninja-forms.php)
-7. Optional: validate readme.txt with <https://wordpress.org/plugins/developers/readme-validator/>
-8. Run `npm install && npm run build`
-9. Review changes, add them with `git add -A`
-10. Git commit with `git commit -am 'Rebuilt for the next version` and push that
-11. Run `npm run release` which will run the release workflow on GitHub
-12. Wait until the release is published and make sure the new version is shown on <https://wordpress.org/plugins/videomail-for-ninja-forms>
-13. Announce on Social Media
+1. Ensure `develop` is clean and current, then run `nvm use && npm ci`.
+2. Review dependency updates with `npm outdated`.
+3. Add the new changelog section to `readme.txt`.
+4. Set the version once with `npm version 11.5.0 --no-git-tag-version`. The npm lifecycle synchronizes the stable tag, plugin header, PHP constant, JavaScript diagnostic version, and lockfile.
+5. Optionally update "Tested up to" after testing the corresponding WordPress release.
+6. Run `npm run check`, review the generated files, commit everything, and push `develop`.
+7. Wait for the Test Runner workflow to pass.
+8. Run `npm run release`. The script validates and packages the plugin, merges and tags the release, then creates the GitHub release.
+9. The release workflow deploys to WordPress.org and attaches its canonical ZIP to GitHub. Verify the new version on <https://wordpress.org/plugins/videomail-for-ninja-forms>.
 
 ## Ask for help
 

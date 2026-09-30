@@ -4,11 +4,17 @@
   Plugin URI: https://github.com/binarykitchen/videomail-for-ninja-forms
   Description: Express yourself in more than just words. Record and send a short video from your webcam.
   Version: 11.4.0
+  Requires at least: 6.0
+  Requires PHP: 8.1
+  Requires Plugins: ninja-forms
   Author: Michael Heuberger + Kyle B. Johnson
   Author URI: https://videomail.io
-  Author URI: http://kylebjohnson.me
   Text Domain: videomail-for-ninja-forms
 */
+
+if (!defined('ABSPATH')) {
+  exit;
+}
 
 if (version_compare(get_option('ninja_forms_version', '0.0.0'), '3', '<') ||
     get_option('ninja_forms_load_deprecated', false)) {

@@ -5,6 +5,9 @@ if (!class_exists('NF_Abstracts_MergeTags')) return;
 class NF_Videomail_Tags_Merge_Video extends NF_Abstracts_MergeTags {
 
   protected $id = 'video';
+  protected $alias = '';
+  protected $url = '';
+  protected $replyUrl = '';
 
   public function __construct() {
     parent::__construct();
@@ -15,19 +18,19 @@ class NF_Videomail_Tags_Merge_Video extends NF_Abstracts_MergeTags {
       'alias' => array(
         'id' => 'alias',
         'tag' => '{videomail:alias}',
-        'label' => __('Alias'),
+        'label' => __('Alias', 'videomail-for-ninja-forms'),
         'callback' => 'alias'
       ),
       'url' => array(
         'id' => 'url',
         'tag' => '{videomail:url}',
-        'label' => __('URL'),
+        'label' => __('URL', 'videomail-for-ninja-forms'),
         'callback' => 'url'
       ),
       'replyUrl' => array(
         'id' => 'replyUrl',
         'tag' => '{videomail:replyUrl}',
-        'label' => __('Reply URL'),
+        'label' => __('Reply URL', 'videomail-for-ninja-forms'),
         'callback' => 'replyUrl'
       )
     );
