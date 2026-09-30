@@ -7,6 +7,13 @@ on:
   release:
     types: [released]
 
+permissions:
+  contents: write
+
+concurrency:
+  group: wordpress-org-release
+  cancel-in-progress: false
+
 jobs:
   release:
     name: Deploy to WP.org
@@ -18,7 +25,14 @@ jobs:
 
       - uses: actions/setup-node@v7
         with:
-          node-version: 26
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.1"
+          coverage: none
 
       - name: 📦 Install npm dependencies
         run: npm ci
