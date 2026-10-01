@@ -75,7 +75,7 @@ In the `/doc` folder we place in all text and images for the public documentatio
 ## Releasing
 
 1. Ensure `develop` is clean and current, then run `nvm use && npm ci`.
-2. Review dependency updates with `npm outdated`.
+2. (Optional) Review dependency updates with `npm outdated`.
 3. Add the new changelog section to `readme.txt`.
 4. Set the version to the new version number once, for example with `npm version 11.5.0 --no-git-tag-version`. The npm lifecycle synchronizes the stable tag, plugin header, PHP constant, JavaScript diagnostic version, and lockfile.
 5. Optionally update "Tested up to" after testing the corresponding WordPress release.
