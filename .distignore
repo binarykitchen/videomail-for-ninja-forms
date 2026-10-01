@@ -18,10 +18,13 @@ README.md
 TODO.md
 yarn.lock
 package-lock.json
+scripts
 doc
 videomail-for-ninja-forms.code-workspace
 .github
 .eslintignore
 .eslintrc.js
+eslint.config.js
 .nvmrc
 .prettierrc
+prettier.config.cjs
