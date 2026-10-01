@@ -27,4 +27,4 @@ videomail-for-ninja-forms.code-workspace
 eslint.config.js
 .nvmrc
 .prettierrc
-prettier.config.cjs
+prettier.config.js

@@ -42,14 +42,14 @@
     "lint": "eslint src/js gulpfile.js scripts",
     "lint:fix": "npm run lint -- --fix",
     "lint:php": "find src/php videomail-for-ninja-forms.php index.php -name '*.php' -print0 | xargs -0 -n1 php -l",
-    "prettier": "prettier --check src/js gulpfile.js scripts eslint.config.js prettier.config.cjs package.json .github/workflows/*.yml",
-    "prettier:fix": "prettier --write src/js gulpfile.js scripts eslint.config.js prettier.config.cjs package.json .github/workflows/*.yml",
-    "version": "node scripts/sync-version.mjs",
-    "version:check": "node scripts/sync-version.mjs --check",
+    "prettier": "prettier --check src/js gulpfile.js scripts eslint.config.js prettier.config.js package.json .github/workflows/*.yml",
+    "prettier:fix": "prettier --write src/js gulpfile.js scripts eslint.config.js prettier.config.js package.json .github/workflows/*.yml",
+    "version": "node scripts/sync-version.js",
+    "version:check": "node scripts/sync-version.js --check",
     "clean": "gulp clean",
     "release": "./env/dev/release.sh"
   },
-  "prettier": "./prettier.config.cjs",
+  "prettier": "./prettier.config.js",
   "dependencies": {
     "videomail-client": "15.8.1"
   },
