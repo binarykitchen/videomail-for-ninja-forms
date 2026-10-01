@@ -45,7 +45,7 @@ Note: depending on your OS the `gulp watch` command might result into errors;
 ### Arch Linux Issues
 
 - Afraid have to amend `sudo` before `npm run mh` or so.
-- Can't use .local domain as it's [reserved under Arch Linux](https://community.localwp.com/t/local-tld-is-not-resolved-when-in-hosts-file-if-used-on-arch-basedgit -linux/43793/6).
+- Can't use .local domain as it's [reserved under Arch Linux](<https://community.localwp.com/t/local-tld-is-not-resolved-when-in-hosts-file-if-used-on-arch-basedgit> -linux/43793/6).
 
 ### Customize host or port
 
@@ -77,7 +77,7 @@ In the `/doc` folder we place in all text and images for the public documentatio
 1. Ensure `develop` is clean and current, then run `nvm use && npm ci`.
 2. Review dependency updates with `npm outdated`.
 3. Add the new changelog section to `readme.txt`.
-4. Set the version once with `npm version 11.5.0 --no-git-tag-version`. The npm lifecycle synchronizes the stable tag, plugin header, PHP constant, JavaScript diagnostic version, and lockfile.
+4. Set the version to the new version number once, for example with `npm version 11.5.0 --no-git-tag-version`. The npm lifecycle synchronizes the stable tag, plugin header, PHP constant, JavaScript diagnostic version, and lockfile.
 5. Optionally update "Tested up to" after testing the corresponding WordPress release.
 6. Run `npm run check`, review the generated files, commit everything, and push `develop`.
 7. Wait for the Test Runner workflow to pass.
