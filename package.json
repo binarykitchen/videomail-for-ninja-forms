@@ -39,8 +39,8 @@
     "lint": "eslint ./src gulpfile.js",
     "lint:fix": "npm run lint -- --fix",
     "lint:php": "find src/php videomail-for-ninja-forms.php index.php -name '*.php' -print0 | xargs -0 -n1 php -l",
-    "prettier": "prettier --check ./src gulpfile.js .eslintrc.js",
-    "prettier:fix": "prettier --write ./src gulpfile.js .eslintrc.js",
+    "prettier": "prettier --check src/js gulpfile.js scripts eslint.config.js prettier.config.cjs package.json .github/workflows/*.yml",
+    "prettier:fix": "prettier --write src/js gulpfile.js scripts eslint.config.js prettier.config.cjs package.json .github/workflows/*.yml",
     "clean": "rm -rf node_modules && rm -rf target && rm -rf package-lock.json",
     "release": "./env/dev/release.sh"
   },
