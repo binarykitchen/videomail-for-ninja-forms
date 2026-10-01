@@ -77,8 +77,9 @@ In the `/doc` folder we place in all text and images for the public documentatio
 1. Ensure `develop` is clean and current, then run `nvm use && npm ci`.
 2. (Optional) Review dependency updates with `npm outdated`.
 3. Add the new changelog section to `readme.txt`.
-4. Set the version to the new version number once, for example with `npm version 11.5.0 --no-git-tag-version`. The npm lifecycle synchronizes the stable tag, plugin header, PHP constant, JavaScript diagnostic version, and lockfile.
-5. Optionally update "Tested up to" after testing the corresponding WordPress release.
+4. (Optional) Set the version to the new version number once, for example with `npm version 11.5.0 --no-git-tag-version`.
+   - The npm lifecycle synchronizes the stable tag, plugin header, PHP constant, JavaScript diagnostic version, and lockfile.
+5. (Optional) update "Tested up to" after testing the corresponding WordPress release.
 6. Run `npm run check`, review the generated files, commit everything, and push `develop`.
 7. Wait for the Test Runner workflow to pass.
 8. Run `npm run release`. The script validates and packages the plugin, merges and tags the release, then creates the GitHub release.
