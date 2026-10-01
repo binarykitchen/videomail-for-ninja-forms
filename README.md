@@ -19,9 +19,20 @@ In short: this add-on runs on the Ninja Forms plugin engine where you can config
 ## Playground
 
 If you would like to have a quick play, you can quickly spawn a temporary WordPress site using TasteWP with this URL:
-<https://tastewp.com/recipe/fba0d4f1cd>
+<https://buildglass.s2-tastewp.com/?nf_preview_form=2>
 
-Just note that it will last 6 days only and that you'll have to create a [new whitelist entry](https://www.videomail.io/whitelist) for that.
+### Playground Note
+
+For any major updates of this plugin, we developers should do the following:
+
+1. Log into <https://tastewp.com/dashboard/>
+2. Delete and recreate the temporary WordPress site.
+3. Install & Activate the Ninja Forms plugin.
+4. Install & Activate the Videomail for Ninja Forms plugin.
+5. In the WordPress admin, go to Ninja Forms > Import /Export
+   and import the template form from ./examples/nf_form_video_contact_us.nff
+6. Click on "Preview changes" to see the form in action.
+7. Update that preview URL in this documentation accordingly.
 
 ## Development (Personal)
 
