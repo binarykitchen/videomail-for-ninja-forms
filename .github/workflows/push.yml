@@ -51,6 +51,9 @@ jobs:
       - name: Verify committed build output
         run: |
           if [[ -n "$(git status --porcelain -- target)" ]]; then
+            echo "::error::Generated build output under target/ is missing from the commit or out of date."
+            echo "Run 'npm run build', review the changes, and commit the updated target/ files."
+            echo "Git status for target/:"
             git status --short -- target
             exit 1
           fi
