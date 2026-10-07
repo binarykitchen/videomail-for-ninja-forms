@@ -22,16 +22,18 @@ If you would like to have a quick play, you can quickly spawn a temporary WordPr
 
 ### Playground Note
 
-For any major updates of this plugin, we developers should do the following:
+For any updates of this plugin, we developers can try to do the following:
 
-1. Log into <https://tastewp.com/dashboard/>
-2. Delete and recreate the temporary WordPress site.
-3. Install & Activate the Ninja Forms plugin.
-4. Install & Activate the Videomail for Ninja Forms plugin.
-5. In the WordPress admin, go to Ninja Forms > Import /Export
+1. Wait a while after `npm run release` to ensure the release process has completed.
+2. Log into <https://tastewp.com/dashboard/>
+3. Ensure the latest release of the plugin is available.
+4. Delete and recreate the temporary WordPress site.
+5. Install & Activate the Ninja Forms plugin.
+6. Install & Activate the Videomail for Ninja Forms plugin.
+7. In the WordPress admin, go to Ninja Forms > Import /Export
    and import the template form from ./examples/nf_form_video_contact_us.nff
-6. Click on "Preview changes" to see the form in action.
-7. Update that preview URL in this documentation accordingly.
+8. Click on "Preview changes" to see the form in action.
+9. Update that preview URL in this documentation accordingly.
 
 ## Development (Personal)
 
@@ -95,7 +97,7 @@ In the `/doc` folder we place in all text and images for the public documentatio
 7. Commit everything with a short summary which ...
    - can be extracted from the [readme.txt](readme.txt)
    - and then push to `develop`.
-8. Wait for the Test Runner workflow to pass.
+8. Wait for the Test Runner workflow to pass, see [our Github action page](https://github.com/binarykitchen/videomail-for-ninja-forms/actions)
 9. Run `npm run release`. The script validates and packages the plugin, merges and tags the release, then creates the GitHub release.
 10. The release workflow deploys to WordPress.org and attaches its canonical ZIP to GitHub. Verify the new version on <https://wordpress.org/plugins/videomail-for-ninja-forms>.
 
