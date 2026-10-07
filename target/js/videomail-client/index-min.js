@@ -429,7 +429,7 @@
                     return parts.join('');
                 }
             },
-            dY (__unused_rspack_module, exports1, __webpack_require__) {
+            dY2 (__unused_rspack_module, exports1, __webpack_require__) {
                 "use strict";
                 /*!
  * The buffer module from node.js, for the browser.
@@ -1712,7 +1712,7 @@
                     return null === arg || 'boolean' == typeof arg || 'number' == typeof arg || 'string' == typeof arg || 'symbol' == typeof arg || void 0 === arg;
                 }
                 exports1.isPrimitive = isPrimitive;
-                exports1.isBuffer = __webpack_require__("dY").Buffer.isBuffer;
+                exports1.isBuffer = __webpack_require__("dY2").Buffer.isBuffer;
                 function objectToString(o) {
                     return Object.prototype.toString.call(o);
                 }
@@ -1838,7 +1838,7 @@
             xF (module1, __unused_rspack_exports, __webpack_require__) {
                 "use strict";
                 var document1 = __webpack_require__("g");
-                var Event = __webpack_require__("cE");
+                var Event1 = __webpack_require__("cE");
                 var Keys = __webpack_require__("Dy");
                 module1.exports = Visibility;
                 function Visibility() {
@@ -1846,7 +1846,7 @@
                     if (!keys) return noopShim();
                     return {
                         visible: visible,
-                        onChange: Event(listen)
+                        onChange: Event1(listen)
                     };
                     function visible() {
                         return !document1[keys.hidden];
@@ -1908,7 +1908,7 @@
                 } : false;
             },
             Y4 (module1, __unused_rspack_exports, __webpack_require__) {
-                var Buffer = __webpack_require__("dY").Buffer;
+                var Buffer = __webpack_require__("dY2").Buffer;
                 var process = __webpack_require__("zT");
                 var stream = __webpack_require__("GB");
                 var eos = __webpack_require__("Qd");
@@ -3468,7 +3468,7 @@
                 exports1.PassThrough = __webpack_require__("P");
             },
             Uf (module1, exports1, __webpack_require__) {
-                var buffer = __webpack_require__("dY");
+                var buffer = __webpack_require__("dY2");
                 var Buffer = buffer.Buffer;
                 function copyProps(src, dst) {
                     for(var key in src)dst[key] = src[key];
@@ -4874,8 +4874,8 @@
                 } : null;
             },
             Ne (module1) {
-                module1.exports = Event;
-                function Event() {
+                module1.exports = Event1;
+                function Event1() {
                     var listeners = [];
                     return {
                         broadcast: broadcast,
@@ -4895,10 +4895,10 @@
                 }
             },
             cE (module1, __unused_rspack_exports, __webpack_require__) {
-                var Event = __webpack_require__("Ne");
+                var Event1 = __webpack_require__("Ne");
                 module1.exports = Source;
                 function Source(broadcaster) {
-                    var tuple = Event();
+                    var tuple = Event1();
                     broadcaster(tuple.broadcast);
                     return tuple.listen;
                 }
@@ -6789,7 +6789,7 @@
                     return fn;
                 };
             },
-            x5 (module1, __unused_rspack_exports, __webpack_require__) {
+            x (module1, __unused_rspack_exports, __webpack_require__) {
                 "use strict";
                 var inspect = __webpack_require__("L");
                 var $TypeError = __webpack_require__("N");
@@ -6950,7 +6950,7 @@
                 "use strict";
                 var $TypeError = __webpack_require__("N");
                 var inspect = __webpack_require__("L");
-                var getSideChannelList = __webpack_require__("x5");
+                var getSideChannelList = __webpack_require__("x");
                 var getSideChannelMap = __webpack_require__("J");
                 var getSideChannelWeakMap = __webpack_require__("c");
                 var makeChannel = getSideChannelWeakMap || getSideChannelMap || getSideChannelList;
@@ -7050,7 +7050,7 @@
                 const Emitter = __webpack_require__("r");
                 const safeStringify = __webpack_require__("X");
                 const qs = __webpack_require__("b");
-                const RequestBase = __webpack_require__("d");
+                const RequestBase = __webpack_require__("dY");
                 const { isObject, mixin, hasOwn, isSafeKey } = __webpack_require__("Dp");
                 const ResponseBase = __webpack_require__("e");
                 const Agent = __webpack_require__("pf");
@@ -7465,7 +7465,7 @@
                     return request_;
                 };
             },
-            d (module1, __unused_rspack_exports, __webpack_require__) {
+            dY (module1, __unused_rspack_exports, __webpack_require__) {
                 "use strict";
                 const { isObject, hasOwn, isSafeKey } = __webpack_require__("Dp");
                 module1.exports = RequestBase;
@@ -7868,7 +7868,7 @@
                 exports1.isBrotliEncoding = (res)=>/^\s*br\s*$/i.test(res.headers['content-encoding']);
             },
             E (module1, __unused_rspack_exports, __webpack_require__) {
-                var Buffer = __webpack_require__("dY").Buffer;
+                var Buffer = __webpack_require__("dY2").Buffer;
                 /*! typedarray-to-buffer. MIT License. Feross Aboukhadijeh <https://feross.org/opensource> */ module1.exports = function(arr) {
                     return ArrayBuffer.isView(arr) ? Buffer.from(arr.buffer, arr.byteOffset, arr.byteLength) : Buffer.from(arr);
                 };
@@ -9939,7 +9939,7 @@
                 exports1.PassThrough = __webpack_require__("X2");
             },
             CX (module1, exports1, __webpack_require__) {
-                var buffer = __webpack_require__("dY");
+                var buffer = __webpack_require__("dY2");
                 var Buffer = buffer.Buffer;
                 function copyProps(src, dst) {
                     for(var key in src)dst[key] = src[key];
@@ -10854,9 +10854,11 @@
             const toJsonWasCalled = new WeakSet();
             const toJSON = (from)=>{
                 toJsonWasCalled.add(from);
-                const json = from.toJSON();
-                toJsonWasCalled.delete(from);
-                return json;
+                try {
+                    return from.toJSON();
+                } finally{
+                    toJsonWasCalled.delete(from);
+                }
             };
             const newError = (name)=>{
                 if ('NonError' === name) return new NonError();
@@ -10976,7 +10978,7 @@
             var client = __webpack_require__("Q");
             var client_default = /*#__PURE__*/ __webpack_require__.n(client);
             var package_namespaceObject = {
-                rE: "15.7.13"
+                rE: "15.10.0"
             };
             function isAudioEnabled(options) {
                 return Boolean(options.audio.enabled);
@@ -10990,6 +10992,52 @@
             }
             var util = __webpack_require__("S");
             var util_default = /*#__PURE__*/ __webpack_require__.n(util);
+            function getEventDetails(event) {
+                const eventWithErrorDetails = event;
+                const details = {
+                    constructor: event.constructor.name,
+                    type: event.type,
+                    isTrusted: event.isTrusted,
+                    bubbles: event.bubbles,
+                    cancelable: event.cancelable,
+                    composed: event.composed,
+                    defaultPrevented: event.defaultPrevented,
+                    eventPhase: event.eventPhase,
+                    timeStamp: event.timeStamp,
+                    returnValue: eventWithErrorDetails.returnValue,
+                    cancelBubble: eventWithErrorDetails.cancelBubble
+                };
+                for (const property of [
+                    "message",
+                    "filename",
+                    "lineno",
+                    "colno"
+                ]){
+                    const value = eventWithErrorDetails[property];
+                    if (void 0 !== value) details[property] = value;
+                }
+                if (eventWithErrorDetails.error instanceof Error) details.error = serializeError(eventWithErrorDetails.error);
+                if (event.target) {
+                    const target = event.target;
+                    const targetDetails = {
+                        constructor: target.constructor.name
+                    };
+                    for (const property of [
+                        "url",
+                        "readyState",
+                        "protocol",
+                        "extensions",
+                        "binaryType",
+                        "bufferedAmount"
+                    ]){
+                        const value = target[property];
+                        if (void 0 !== value) targetDetails[property] = value;
+                    }
+                    details.target = targetDetails;
+                }
+                return details;
+            }
+            const error_getEventDetails = getEventDetails;
             function inspect(element) {
                 return util_default().inspect(element, {
                     colors: false,
@@ -11005,6 +11053,7 @@
                     else if (anything.className) return `.${anything.className}`;
                     return "(No HTML identifier available)";
                 }
+                if ("u" > typeof Event && anything instanceof Event) return inspect(error_getEventDetails(anything));
                 return inspect(anything);
             }
             const util_pretty = pretty;
@@ -14551,6 +14600,7 @@
                 ].filter(Boolean).join(", ");
                 options.logger.debug(`VideomailError: create(${args})`);
                 const errData = {
+                    cause: errorParams.cause,
                     explanation,
                     logLines,
                     err
@@ -14711,11 +14761,18 @@
                 });
             class Despot {
                 name;
+                emitter;
                 options;
-                static EMITTER = createNanoEvents();
+                static emitters = new WeakMap();
                 constructor(name, options){
                     this.name = name;
                     this.options = options;
+                    let emitter = Despot.emitters.get(options);
+                    if (!emitter) {
+                        emitter = createNanoEvents();
+                        Despot.emitters.set(options, emitter);
+                    }
+                    this.emitter = emitter;
                 }
                 emit(eventName, ...params) {
                     const firstParam = params[0];
@@ -14723,18 +14780,18 @@
                     if (showParams) this.options.logger.debug(`${this.name} emits ${eventName} with ${util_pretty(params)}`);
                     else this.options.logger.debug(`${this.name} emits ${eventName}`);
                     try {
-                        Despot.EMITTER.emit(eventName, ...params);
+                        this.emitter.emit(eventName, ...params);
                     } catch (exc) {
-                        if (exc instanceof error_VideomailError) Despot.EMITTER.emit("ERROR", {
+                        if (exc instanceof error_VideomailError) this.emitter.emit("ERROR", {
                             err: exc
                         });
-                        else Despot.EMITTER.emit("ERROR", {
+                        else this.emitter.emit("ERROR", {
                             exc
                         });
                     }
                 }
                 on(eventName, callback) {
-                    return Despot.EMITTER.on(eventName, callback);
+                    return this.emitter.on(eventName, callback);
                 }
                 once(eventName, listener) {
                     const callback = (...params)=>{
@@ -14744,14 +14801,14 @@
                     const unbind = this.on(eventName, callback);
                     return unbind;
                 }
-                static getListeners(eventName) {
-                    return Despot.EMITTER.events[eventName];
+                getListeners(eventName) {
+                    return this.emitter.events[eventName];
                 }
-                static removeListener(eventName) {
-                    delete Despot.EMITTER.events[eventName];
+                removeListener(eventName) {
+                    delete this.emitter.events[eventName];
                 }
-                static removeAllListeners() {
-                    Despot.EMITTER.events = {};
+                removeAllListeners() {
+                    this.emitter.events = {};
                 }
             }
             const util_Despot = Despot;
@@ -14774,12 +14831,12 @@
                 element.style.removeProperty("display");
             }
             const html_showElement = showElement;
-            const REGEX = /[ ,]+/u;
+            const EMAIL_SEPARATOR_REGEX = /[ ,]+/gu;
             function trimEmail(email) {
-                return email.replace(REGEX, "");
+                return email.replace(EMAIL_SEPARATOR_REGEX, "");
             }
             function trimEmails(emails) {
-                const trimmedEmails = emails.split(REGEX).map((item)=>item.trim()).filter(Boolean);
+                const trimmedEmails = emails.split(EMAIL_SEPARATOR_REGEX).map((item)=>item.trim()).filter(Boolean);
                 return trimmedEmails;
             }
             const FormMethod = {
@@ -14790,6 +14847,9 @@
             class Form extends util_Despot {
                 container;
                 formElement;
+                validate = (event)=>{
+                    this.container.validate(event);
+                };
                 keyInput;
                 FORM_FIELDS = {};
                 constructor(container, formElement, options){
@@ -14848,27 +14908,33 @@
                     this.options.logger.debug("Form: loadVideomail()");
                     for (const formControl of this.formElement.elements){
                         const name = formControl.getAttribute("name");
-                        if (name) {
+                        if (name && this.isRegisteredFormField(formControl)) {
                             let value = videomail[name];
                             const tagName = formControl.tagName;
                             if (this.options.callbacks.adjustFormValueBeforePopulating) value = this.options.callbacks.adjustFormValueBeforePopulating(name, value, videomail);
-                            switch(tagName){
+                            if (null != value) switch(tagName){
                                 case "INPUT":
                                     {
                                         const inputControl = formControl;
                                         if (Array.isArray(value)) inputControl.value = value.join(", ");
-                                        else inputControl.value = value;
+                                        else inputControl.value = String(value);
                                         break;
                                     }
                                 case "TEXTAREA":
                                     {
                                         const textArea = formControl;
-                                        textArea.value = value;
+                                        textArea.value = String(value);
+                                        break;
+                                    }
+                                case "SELECT":
+                                    {
+                                        const select = formControl;
+                                        select.value = String(value);
                                         break;
                                     }
                                 default:
                                     throw error_createError({
-                                        message: `Unsupported form control tag name $${tagName} found`,
+                                        message: `Unsupported form control tag name ${tagName} found`,
                                         options: this.options
                                     });
                             }
@@ -14917,8 +14983,8 @@
                         for(let i = 0, len = inputElements.length; i < len; i++){
                             const inputElement = inputElements[i];
                             const type = inputElement?.getAttribute("type");
-                            if ("radio" === type || "select" === type) inputElement?.addEventListener("change", this.container.validate.bind(this.container));
-                            else inputElement?.addEventListener("input", this.container.validate.bind(this.container));
+                            if ("radio" === type || inputElement?.tagName === "SELECT") inputElement?.addEventListener("change", this.validate);
+                            else inputElement?.addEventListener("input", this.validate);
                         }
                     }
                     this.on("PREVIEW", (params)=>{
@@ -14961,8 +15027,8 @@
                     const inputElements = this.getRegisteredFormElements();
                     for (const inputElement of inputElements){
                         const type = inputElement.getAttribute("type");
-                        if ("radio" === type || "select" === type) inputElement.removeEventListener("change", this.container.validate.bind(this.container));
-                        else inputElement.removeEventListener("input", this.container.validate.bind(this.container));
+                        if ("radio" === type || "SELECT" === inputElement.tagName) inputElement.removeEventListener("change", this.validate);
+                        else inputElement.removeEventListener("input", this.validate);
                     }
                 }
                 hideSubmitButton() {
@@ -14972,7 +15038,7 @@
                 unload() {
                     this.options.logger.debug("Form: unload()");
                     this.removeAllInputListeners();
-                    util_Despot.removeAllListeners();
+                    this.removeAllListeners();
                     this.stopListeningToSubmitEvents();
                     this.resetForm();
                 }
@@ -14982,7 +15048,7 @@
                     const inputElements = this.getRegisteredFormElements();
                     for (const inputElement of inputElements){
                         const type = inputElement.getAttribute("type");
-                        if (type?.toLowerCase() === "hidden") inputElement.setAttribute("value", "");
+                        if (type?.toLowerCase() === "hidden") inputElement.value = "";
                     }
                 }
                 startListeningToSubmitEvents() {
@@ -15057,7 +15123,8 @@
                     return newVideomail;
                 }
                 async get(identifierName, identifierValue, identifierType) {
-                    const url = `${this.options.apiUrl}/videomail/${identifierName}/${identifierValue}/${identifierType}`;
+                    const encodedIdentifier = encodeURIComponent(identifierValue);
+                    const url = `${this.options.apiUrl}/videomail/${identifierName}/${encodedIdentifier}/${identifierType}`;
                     try {
                         const request = await client_default()("get", url).type("json").set("Accept", "application/json").withCredentials().set("Timezone-Id", this.timezoneId).set(constants.WHITELIST_KEY_LABEL, this.options.whitelistKey).timeout(this.options.timeouts.connection);
                         if ("thread" === identifierType) {
@@ -15084,7 +15151,11 @@
                             message: "A public videomail cannot be updated.",
                             options: this.options
                         });
-                        if (videomail.key) url += videomail.key;
+                        if (!videomail.key) throw error_createError({
+                            message: "A videomail key is required when updating a videomail.",
+                            options: this.options
+                        });
+                        url += encodeURIComponent(videomail.key);
                     }
                     try {
                         const request = await client_default()(method, url).query(queryParams).set("Timezone-Id", this.timezoneId).withCredentials().send(videomail).timeout(this.options.timeouts.connection);
@@ -15132,6 +15203,7 @@
                         browser: err.browser,
                         code: err.code,
                         cookie: err.cookie,
+                        cause: err.cause instanceof Error ? serializeError(err.cause) : err.cause,
                         cpu: err.cpu,
                         device: err.device,
                         engine: err.engine,
@@ -15418,6 +15490,2000 @@
             main.A && main.A.locals && main.A.locals;
             var document_visibility = __webpack_require__("xF");
             var document_visibility_default = /*#__PURE__*/ __webpack_require__.n(document_visibility);
+            /*! @license DOMPurify 3.4.16 | (c) Cure53 and other contributors | Released under the Apache license 2.0 and Mozilla Public License 2.0 | github.com/cure53/DOMPurify/blob/3.4.16/LICENSE */ function _OverloadYield(e, d) {
+                this.v = e, this.k = d;
+            }
+            function _arrayLikeToArray(r, a) {
+                (null == a || a > r.length) && (a = r.length);
+                for(var e = 0, n = Array(a); e < a; e++)n[e] = r[e];
+                return n;
+            }
+            function _arrayWithHoles(r) {
+                if (Array.isArray(r)) return r;
+            }
+            function _iterableToArrayLimit(r, l) {
+                var t = null == r ? null : "u" > typeof Symbol && r[Symbol.iterator] || r["@@iterator"];
+                if (null != t) {
+                    var e, n, i, u, a = [], f = !0, o = !1;
+                    try {
+                        if (i = (t = t.call(r)).next, 0 === l) {
+                            if (Object(t) !== t) return;
+                            f = !1;
+                        } else for(; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0);
+                    } catch (r) {
+                        o = !0, n = r;
+                    } finally{
+                        try {
+                            if (!f && null != t.return && (u = t.return(), Object(u) !== u)) return;
+                        } finally{
+                            if (o) throw n;
+                        }
+                    }
+                    return a;
+                }
+            }
+            function _nonIterableRest() {
+                throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+            }
+            /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ function _slicedToArray(r, e) {
+                return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest();
+            }
+            function _unsupportedIterableToArray(r, a) {
+                if (r) {
+                    if ("string" == typeof r) return _arrayLikeToArray(r, a);
+                    var t = ({}).toString.call(r).slice(8, -1);
+                    return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0;
+                }
+            }
+            function AsyncGenerator(e) {
+                var t, n;
+                function resume(t, n) {
+                    try {
+                        var r = e[t](n), o = r.value, u = o instanceof _OverloadYield;
+                        Promise.resolve(u ? o.v : o).then(function(n) {
+                            if (u) {
+                                var i = "return" === t && o.k ? t : "next";
+                                if (!o.k || n.done) return resume(i, n);
+                                n = e[i](n).value;
+                            }
+                            settle(!!r.done, n);
+                        }, function(e) {
+                            resume("throw", e);
+                        });
+                    } catch (e) {
+                        settle(2, e);
+                    }
+                }
+                function settle(e, r) {
+                    2 === e ? t.reject(r) : t.resolve({
+                        value: r,
+                        done: e
+                    }), (t = t.next) ? resume(t.key, t.arg) : n = null;
+                }
+                this._invoke = function(e, r) {
+                    return new Promise(function(o, u) {
+                        var i = {
+                            key: e,
+                            arg: r,
+                            resolve: o,
+                            reject: u,
+                            next: null
+                        };
+                        n ? n = n.next = i : (t = n = i, resume(e, r));
+                    });
+                }, "function" != typeof e.return && (this.return = void 0);
+            }
+            AsyncGenerator.prototype["function" == typeof Symbol && Symbol.asyncIterator || "@@asyncIterator"] = function() {
+                return this;
+            }, AsyncGenerator.prototype.next = function(e) {
+                return this._invoke("next", e);
+            }, AsyncGenerator.prototype.throw = function(e) {
+                return this._invoke("throw", e);
+            }, AsyncGenerator.prototype.return = function(e) {
+                return this._invoke("return", e);
+            };
+            const entries = Object.entries;
+            const setPrototypeOf = Object.setPrototypeOf;
+            const isFrozen = Object.isFrozen;
+            const getPrototypeOf = Object.getPrototypeOf;
+            const getOwnPropertyDescriptor = Object.getOwnPropertyDescriptor;
+            let purify_es_freeze = Object.freeze;
+            let purify_es_seal = Object.seal;
+            let create = Object.create;
+            let _ref = "u" > typeof Reflect && Reflect;
+            let purify_es_apply = _ref.apply;
+            let purify_es_construct = _ref.construct;
+            if (!purify_es_freeze) purify_es_freeze = function(x) {
+                return x;
+            };
+            if (!purify_es_seal) purify_es_seal = function(x) {
+                return x;
+            };
+            if (!purify_es_apply) purify_es_apply = function(func, thisArg) {
+                for(var _len = arguments.length, args = new Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++)args[_key - 2] = arguments[_key];
+                return func.apply(thisArg, args);
+            };
+            if (!purify_es_construct) purify_es_construct = function(Func) {
+                for(var _len2 = arguments.length, args = new Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++)args[_key2 - 1] = arguments[_key2];
+                return new Func(...args);
+            };
+            const arrayForEach = unapply(Array.prototype.forEach);
+            Array.prototype.indexOf;
+            const arrayLastIndexOf = unapply(Array.prototype.lastIndexOf);
+            const arrayPop = unapply(Array.prototype.pop);
+            const arrayPush = unapply(Array.prototype.push);
+            Array.prototype.slice;
+            const arraySplice = unapply(Array.prototype.splice);
+            const arrayIsArray = Array.isArray;
+            const stringToLowerCase = unapply(String.prototype.toLowerCase);
+            const stringToString = unapply(String.prototype.toString);
+            const stringMatch = unapply(String.prototype.match);
+            const stringReplace = unapply(String.prototype.replace);
+            const stringIndexOf = unapply(String.prototype.indexOf);
+            const stringTrim = unapply(String.prototype.trim);
+            const numberToString = unapply(Number.prototype.toString);
+            const booleanToString = unapply(Boolean.prototype.toString);
+            const bigintToString = "u" < typeof BigInt ? null : unapply(BigInt.prototype.toString);
+            const symbolToString = "u" < typeof Symbol ? null : unapply(Symbol.prototype.toString);
+            const objectHasOwnProperty = unapply(Object.prototype.hasOwnProperty);
+            const objectToString = unapply(Object.prototype.toString);
+            const regExpTest = unapply(RegExp.prototype.test);
+            const typeErrorCreate = unconstruct(TypeError);
+            function unapply(func) {
+                return function(thisArg) {
+                    if (thisArg instanceof RegExp) thisArg.lastIndex = 0;
+                    for(var _len3 = arguments.length, args = new Array(_len3 > 1 ? _len3 - 1 : 0), _key3 = 1; _key3 < _len3; _key3++)args[_key3 - 1] = arguments[_key3];
+                    return purify_es_apply(func, thisArg, args);
+                };
+            }
+            function unconstruct(Func) {
+                return function() {
+                    for(var _len4 = arguments.length, args = new Array(_len4), _key4 = 0; _key4 < _len4; _key4++)args[_key4] = arguments[_key4];
+                    return purify_es_construct(Func, args);
+                };
+            }
+            function addToSet(set, array) {
+                let transformCaseFunc = arguments.length > 2 && void 0 !== arguments[2] ? arguments[2] : stringToLowerCase;
+                if (setPrototypeOf) setPrototypeOf(set, null);
+                if (!arrayIsArray(array)) return set;
+                let l = array.length;
+                while(l--){
+                    let element = array[l];
+                    if ("string" == typeof element) {
+                        const lcElement = transformCaseFunc(element);
+                        if (lcElement !== element) {
+                            if (!isFrozen(array)) array[l] = lcElement;
+                            element = lcElement;
+                        }
+                    }
+                    set[element] = true;
+                }
+                return set;
+            }
+            function cleanArray(array) {
+                for(let index = 0; index < array.length; index++)if (!objectHasOwnProperty(array, index)) array[index] = null;
+                return array;
+            }
+            function clone(object) {
+                const newObject = create(null);
+                for (const _ref2 of entries(object)){
+                    var _ref3 = _slicedToArray(_ref2, 2);
+                    const property = _ref3[0];
+                    const value = _ref3[1];
+                    if (objectHasOwnProperty(object, property)) if (arrayIsArray(value)) newObject[property] = cleanArray(value);
+                    else if (value && "object" == typeof value && value.constructor === Object) newObject[property] = clone(value);
+                    else newObject[property] = value;
+                }
+                return newObject;
+            }
+            function stringifyValue(value) {
+                switch(typeof value){
+                    case "string":
+                        return value;
+                    case "number":
+                        return numberToString(value);
+                    case "boolean":
+                        return booleanToString(value);
+                    case "bigint":
+                        return bigintToString ? bigintToString(value) : "0";
+                    case "symbol":
+                        return symbolToString ? symbolToString(value) : "Symbol()";
+                    case "undefined":
+                        return objectToString(value);
+                    case "function":
+                    case "object":
+                        {
+                            if (null === value) return objectToString(value);
+                            const valueAsRecord = value;
+                            const valueToString = lookupGetter(valueAsRecord, "toString");
+                            if ("function" == typeof valueToString) {
+                                const stringified = valueToString(valueAsRecord);
+                                return "string" == typeof stringified ? stringified : objectToString(stringified);
+                            }
+                            return objectToString(value);
+                        }
+                    default:
+                        return objectToString(value);
+                }
+            }
+            function lookupGetter(object, prop) {
+                while(null !== object){
+                    const desc = getOwnPropertyDescriptor(object, prop);
+                    if (desc) {
+                        if (desc.get) return unapply(desc.get);
+                        if ("function" == typeof desc.value) return unapply(desc.value);
+                    }
+                    object = getPrototypeOf(object);
+                }
+                function fallbackValue() {
+                    return null;
+                }
+                return fallbackValue;
+            }
+            function isRegex(value) {
+                try {
+                    regExpTest(value, "");
+                    return true;
+                } catch (_unused) {
+                    return false;
+                }
+            }
+            const html$1 = purify_es_freeze([
+                "a",
+                "abbr",
+                "acronym",
+                "address",
+                "area",
+                "article",
+                "aside",
+                "audio",
+                "b",
+                "bdi",
+                "bdo",
+                "big",
+                "blink",
+                "blockquote",
+                "body",
+                "br",
+                "button",
+                "canvas",
+                "caption",
+                "center",
+                "cite",
+                "code",
+                "col",
+                "colgroup",
+                "content",
+                "data",
+                "datalist",
+                "dd",
+                "decorator",
+                "del",
+                "details",
+                "dfn",
+                "dialog",
+                "dir",
+                "div",
+                "dl",
+                "dt",
+                "element",
+                "em",
+                "fieldset",
+                "figcaption",
+                "figure",
+                "font",
+                "footer",
+                "form",
+                "h1",
+                "h2",
+                "h3",
+                "h4",
+                "h5",
+                "h6",
+                "head",
+                "header",
+                "hgroup",
+                "hr",
+                "html",
+                "i",
+                "img",
+                "input",
+                "ins",
+                "kbd",
+                "label",
+                "legend",
+                "li",
+                "main",
+                "map",
+                "mark",
+                "marquee",
+                "menu",
+                "menuitem",
+                "meter",
+                "nav",
+                "nobr",
+                "ol",
+                "optgroup",
+                "option",
+                "output",
+                "p",
+                "picture",
+                "pre",
+                "progress",
+                "q",
+                "rp",
+                "rt",
+                "ruby",
+                "s",
+                "samp",
+                "search",
+                "section",
+                "select",
+                "shadow",
+                "slot",
+                "small",
+                "source",
+                "spacer",
+                "span",
+                "strike",
+                "strong",
+                "style",
+                "sub",
+                "summary",
+                "sup",
+                "table",
+                "tbody",
+                "td",
+                "template",
+                "textarea",
+                "tfoot",
+                "th",
+                "thead",
+                "time",
+                "tr",
+                "track",
+                "tt",
+                "u",
+                "ul",
+                "var",
+                "video",
+                "wbr"
+            ]);
+            const svg$1 = purify_es_freeze([
+                "svg",
+                "a",
+                "altglyph",
+                "altglyphdef",
+                "altglyphitem",
+                "animatecolor",
+                "animatemotion",
+                "animatetransform",
+                "circle",
+                "clippath",
+                "defs",
+                "desc",
+                "ellipse",
+                "enterkeyhint",
+                "exportparts",
+                "filter",
+                "font",
+                "g",
+                "glyph",
+                "glyphref",
+                "hkern",
+                "image",
+                "inputmode",
+                "line",
+                "lineargradient",
+                "marker",
+                "mask",
+                "metadata",
+                "mpath",
+                "part",
+                "path",
+                "pattern",
+                "polygon",
+                "polyline",
+                "radialgradient",
+                "rect",
+                "stop",
+                "style",
+                "switch",
+                "symbol",
+                "text",
+                "textpath",
+                "title",
+                "tref",
+                "tspan",
+                "view",
+                "vkern"
+            ]);
+            const svgFilters = purify_es_freeze([
+                "feBlend",
+                "feColorMatrix",
+                "feComponentTransfer",
+                "feComposite",
+                "feConvolveMatrix",
+                "feDiffuseLighting",
+                "feDisplacementMap",
+                "feDistantLight",
+                "feDropShadow",
+                "feFlood",
+                "feFuncA",
+                "feFuncB",
+                "feFuncG",
+                "feFuncR",
+                "feGaussianBlur",
+                "feImage",
+                "feMerge",
+                "feMergeNode",
+                "feMorphology",
+                "feOffset",
+                "fePointLight",
+                "feSpecularLighting",
+                "feSpotLight",
+                "feTile",
+                "feTurbulence"
+            ]);
+            const svgDisallowed = purify_es_freeze([
+                "animate",
+                "color-profile",
+                "cursor",
+                "discard",
+                "font-face",
+                "font-face-format",
+                "font-face-name",
+                "font-face-src",
+                "font-face-uri",
+                "foreignobject",
+                "hatch",
+                "hatchpath",
+                "mesh",
+                "meshgradient",
+                "meshpatch",
+                "meshrow",
+                "missing-glyph",
+                "script",
+                "set",
+                "solidcolor",
+                "unknown",
+                "use"
+            ]);
+            const mathMl$1 = purify_es_freeze([
+                "math",
+                "menclose",
+                "merror",
+                "mfenced",
+                "mfrac",
+                "mglyph",
+                "mi",
+                "mlabeledtr",
+                "mmultiscripts",
+                "mn",
+                "mo",
+                "mover",
+                "mpadded",
+                "mphantom",
+                "mroot",
+                "mrow",
+                "ms",
+                "mspace",
+                "msqrt",
+                "mstyle",
+                "msub",
+                "msup",
+                "msubsup",
+                "mtable",
+                "mtd",
+                "mtext",
+                "mtr",
+                "munder",
+                "munderover",
+                "mprescripts"
+            ]);
+            const mathMlDisallowed = purify_es_freeze([
+                "maction",
+                "maligngroup",
+                "malignmark",
+                "mlongdiv",
+                "mscarries",
+                "mscarry",
+                "msgroup",
+                "mstack",
+                "msline",
+                "msrow",
+                "semantics",
+                "annotation",
+                "annotation-xml",
+                "mprescripts",
+                "none"
+            ]);
+            const purify_es_text = purify_es_freeze([
+                "#text"
+            ]);
+            const purify_es_html = purify_es_freeze([
+                "accept",
+                "action",
+                "align",
+                "alt",
+                "autocapitalize",
+                "autocomplete",
+                "autopictureinpicture",
+                "autoplay",
+                "background",
+                "bgcolor",
+                "border",
+                "capture",
+                "cellpadding",
+                "cellspacing",
+                "checked",
+                "cite",
+                "class",
+                "clear",
+                "color",
+                "cols",
+                "colspan",
+                "command",
+                "commandfor",
+                "controls",
+                "controlslist",
+                "coords",
+                "crossorigin",
+                "datetime",
+                "decoding",
+                "default",
+                "dir",
+                "disabled",
+                "disablepictureinpicture",
+                "disableremoteplayback",
+                "download",
+                "draggable",
+                "enctype",
+                "enterkeyhint",
+                "exportparts",
+                "face",
+                "for",
+                "headers",
+                "height",
+                "hidden",
+                "high",
+                "href",
+                "hreflang",
+                "id",
+                "inert",
+                "inputmode",
+                "integrity",
+                "ismap",
+                "kind",
+                "label",
+                "lang",
+                "list",
+                "loading",
+                "loop",
+                "low",
+                "max",
+                "maxlength",
+                "media",
+                "method",
+                "min",
+                "minlength",
+                "multiple",
+                "muted",
+                "name",
+                "nonce",
+                "noshade",
+                "novalidate",
+                "nowrap",
+                "open",
+                "optimum",
+                "part",
+                "pattern",
+                "placeholder",
+                "playsinline",
+                "popover",
+                "popovertarget",
+                "popovertargetaction",
+                "poster",
+                "preload",
+                "pubdate",
+                "radiogroup",
+                "readonly",
+                "rel",
+                "required",
+                "rev",
+                "reversed",
+                "role",
+                "rows",
+                "rowspan",
+                "spellcheck",
+                "scope",
+                "selected",
+                "shape",
+                "size",
+                "sizes",
+                "slot",
+                "span",
+                "srclang",
+                "start",
+                "src",
+                "srcset",
+                "step",
+                "style",
+                "summary",
+                "tabindex",
+                "title",
+                "translate",
+                "type",
+                "usemap",
+                "valign",
+                "value",
+                "width",
+                "wrap",
+                "xmlns"
+            ]);
+            const svg = purify_es_freeze([
+                "accent-height",
+                "accumulate",
+                "additive",
+                "alignment-baseline",
+                "amplitude",
+                "ascent",
+                "attributename",
+                "attributetype",
+                "azimuth",
+                "basefrequency",
+                "baseline-shift",
+                "begin",
+                "bias",
+                "by",
+                "class",
+                "clip",
+                "clippathunits",
+                "clip-path",
+                "clip-rule",
+                "color",
+                "color-interpolation",
+                "color-interpolation-filters",
+                "color-profile",
+                "color-rendering",
+                "cx",
+                "cy",
+                "d",
+                "dx",
+                "dy",
+                "diffuseconstant",
+                "direction",
+                "display",
+                "divisor",
+                "dominant-baseline",
+                "dur",
+                "edgemode",
+                "elevation",
+                "end",
+                "exponent",
+                "fill",
+                "fill-opacity",
+                "fill-rule",
+                "filter",
+                "filterunits",
+                "flood-color",
+                "flood-opacity",
+                "font-family",
+                "font-size",
+                "font-size-adjust",
+                "font-stretch",
+                "font-style",
+                "font-variant",
+                "font-weight",
+                "fx",
+                "fy",
+                "g1",
+                "g2",
+                "glyph-name",
+                "glyphref",
+                "gradientunits",
+                "gradienttransform",
+                "height",
+                "href",
+                "id",
+                "image-rendering",
+                "in",
+                "in2",
+                "intercept",
+                "k",
+                "k1",
+                "k2",
+                "k3",
+                "k4",
+                "kerning",
+                "keypoints",
+                "keysplines",
+                "keytimes",
+                "lang",
+                "lengthadjust",
+                "letter-spacing",
+                "kernelmatrix",
+                "kernelunitlength",
+                "lighting-color",
+                "local",
+                "marker-end",
+                "marker-mid",
+                "marker-start",
+                "markerheight",
+                "markerunits",
+                "markerwidth",
+                "maskcontentunits",
+                "maskunits",
+                "max",
+                "mask",
+                "mask-type",
+                "media",
+                "method",
+                "mode",
+                "min",
+                "name",
+                "numoctaves",
+                "offset",
+                "operator",
+                "opacity",
+                "order",
+                "orient",
+                "orientation",
+                "origin",
+                "overflow",
+                "paint-order",
+                "path",
+                "pathlength",
+                "patterncontentunits",
+                "patterntransform",
+                "patternunits",
+                "pointer-events",
+                "points",
+                "preservealpha",
+                "preserveaspectratio",
+                "primitiveunits",
+                "r",
+                "rx",
+                "ry",
+                "radius",
+                "refx",
+                "refy",
+                "repeatcount",
+                "repeatdur",
+                "restart",
+                "result",
+                "rotate",
+                "scale",
+                "seed",
+                "shape-rendering",
+                "slope",
+                "specularconstant",
+                "specularexponent",
+                "spreadmethod",
+                "startoffset",
+                "stddeviation",
+                "stitchtiles",
+                "stop-color",
+                "stop-opacity",
+                "stroke-dasharray",
+                "stroke-dashoffset",
+                "stroke-linecap",
+                "stroke-linejoin",
+                "stroke-miterlimit",
+                "stroke-opacity",
+                "stroke",
+                "stroke-width",
+                "style",
+                "surfacescale",
+                "systemlanguage",
+                "tabindex",
+                "tablevalues",
+                "targetx",
+                "targety",
+                "transform",
+                "transform-origin",
+                "text-anchor",
+                "text-decoration",
+                "text-orientation",
+                "text-rendering",
+                "textlength",
+                "type",
+                "u1",
+                "u2",
+                "unicode",
+                "values",
+                "vector-effect",
+                "viewbox",
+                "visibility",
+                "version",
+                "vert-adv-y",
+                "vert-origin-x",
+                "vert-origin-y",
+                "width",
+                "word-spacing",
+                "wrap",
+                "writing-mode",
+                "xchannelselector",
+                "ychannelselector",
+                "x",
+                "x1",
+                "x2",
+                "xmlns",
+                "y",
+                "y1",
+                "y2",
+                "z",
+                "zoomandpan"
+            ]);
+            const mathMl = purify_es_freeze([
+                "accent",
+                "accentunder",
+                "align",
+                "bevelled",
+                "close",
+                "columnalign",
+                "columnlines",
+                "columnspacing",
+                "columnspan",
+                "denomalign",
+                "depth",
+                "dir",
+                "display",
+                "displaystyle",
+                "encoding",
+                "fence",
+                "frame",
+                "height",
+                "href",
+                "id",
+                "largeop",
+                "length",
+                "linethickness",
+                "lquote",
+                "lspace",
+                "mathbackground",
+                "mathcolor",
+                "mathsize",
+                "mathvariant",
+                "maxsize",
+                "minsize",
+                "movablelimits",
+                "notation",
+                "numalign",
+                "open",
+                "rowalign",
+                "rowlines",
+                "rowspacing",
+                "rowspan",
+                "rspace",
+                "rquote",
+                "scriptlevel",
+                "scriptminsize",
+                "scriptsizemultiplier",
+                "selection",
+                "separator",
+                "separators",
+                "stretchy",
+                "subscriptshift",
+                "supscriptshift",
+                "symmetric",
+                "voffset",
+                "width",
+                "xmlns"
+            ]);
+            const xml = purify_es_freeze([
+                "xlink:href",
+                "xml:id",
+                "xlink:title",
+                "xml:space",
+                "xmlns:xlink"
+            ]);
+            const MUSTACHE_EXPR = purify_es_seal(/{{[\w\W]*|^[\w\W]*}}/g);
+            const ERB_EXPR = purify_es_seal(/<%[\w\W]*|^[\w\W]*%>/g);
+            const TMPLIT_EXPR = purify_es_seal(/\${[\w\W]*/g);
+            const DATA_ATTR = purify_es_seal(/^data-[\-\w.\u00B7-\uFFFF]+$/);
+            const ARIA_ATTR = purify_es_seal(/^aria-[\-\w]+$/);
+            const IS_ALLOWED_URI = purify_es_seal(/^(?:(?:(?:f|ht)tps?|mailto|tel|callto|sms|cid|xmpp|matrix):|[^a-z]|[a-z+.\-]+(?:[^a-z+.\-:]|$))/i);
+            const IS_SCRIPT_OR_DATA = purify_es_seal(/^(?:\w+script|data):/i);
+            const ATTR_WHITESPACE = purify_es_seal(/[\u0000-\u0020\u00A0\u1680\u180E\u2000-\u2029\u205F\u3000]/g);
+            const DOCTYPE_NAME = purify_es_seal(/^html$/i);
+            const CUSTOM_ELEMENT = purify_es_seal(/^[a-z][.\w]*(-[.\w]+)+$/i);
+            const ELEMENT_MARKUP_PROBE = purify_es_seal(/<[/\w!]/g);
+            const COMMENT_MARKUP_PROBE = purify_es_seal(/<[/\w]/g);
+            const FALLBACK_TAG_CLOSE = purify_es_seal(/<\/no(script|embed|frames)/i);
+            const SELF_CLOSING_TAG = purify_es_seal(/\/>/i);
+            const NODE_TYPE = {
+                element: 1,
+                attribute: 2,
+                text: 3,
+                cdataSection: 4,
+                entityReference: 5,
+                entityNode: 6,
+                processingInstruction: 7,
+                comment: 8,
+                document: 9,
+                documentType: 10,
+                documentFragment: 11,
+                notation: 12
+            };
+            const LITERAL_TEXT_ELEMENT_NAMES = [
+                "style",
+                "script",
+                "xmp",
+                "iframe",
+                "noembed",
+                "noframes",
+                "plaintext",
+                "noscript"
+            ];
+            const LITERAL_TEXT_ELEMENTS = purify_es_freeze(addToSet({}, LITERAL_TEXT_ELEMENT_NAMES));
+            const LITERAL_TEXT_CLOSE = function() {
+                const map = {};
+                arrayForEach(LITERAL_TEXT_ELEMENT_NAMES, (name)=>{
+                    map[name] = purify_es_seal(new RegExp("</" + name + "(?=[\\t\\n\\f\\r />])", "i"));
+                });
+                return purify_es_freeze(map);
+            }();
+            const purify_es_getGlobal = function() {
+                return "u" < typeof window ? null : window;
+            };
+            const purify_es_createTrustedTypesPolicy = function(trustedTypes, purifyHostElement) {
+                if ("object" != typeof trustedTypes || "function" != typeof trustedTypes.createPolicy) return null;
+                let suffix = null;
+                const ATTR_NAME = "data-tt-policy-suffix";
+                if (purifyHostElement && purifyHostElement.hasAttribute(ATTR_NAME)) suffix = purifyHostElement.getAttribute(ATTR_NAME);
+                const policyName = "dompurify" + (suffix ? "#" + suffix : "");
+                try {
+                    return trustedTypes.createPolicy(policyName, {
+                        createHTML (html) {
+                            return html;
+                        },
+                        createScriptURL (scriptUrl) {
+                            return scriptUrl;
+                        }
+                    });
+                } catch (_) {
+                    console.warn("TrustedTypes policy " + policyName + " could not be created.");
+                    return null;
+                }
+            };
+            const purify_es_createHooksMap = function() {
+                return {
+                    afterSanitizeAttributes: [],
+                    afterSanitizeElements: [],
+                    afterSanitizeShadowDOM: [],
+                    beforeSanitizeAttributes: [],
+                    beforeSanitizeElements: [],
+                    beforeSanitizeShadowDOM: [],
+                    uponSanitizeAttribute: [],
+                    uponSanitizeElement: [],
+                    uponSanitizeShadowNode: []
+                };
+            };
+            const purify_es_resolveSetOption = function(cfg, key, fallback, options) {
+                return objectHasOwnProperty(cfg, key) && arrayIsArray(cfg[key]) ? addToSet(options.base ? clone(options.base) : {}, cfg[key], options.transform) : fallback;
+            };
+            const purify_es_resolveObjectOption = function(cfg, key, makeFallback) {
+                const value = objectHasOwnProperty(cfg, key) ? cfg[key] : void 0;
+                return value && "object" == typeof value ? clone(value) : makeFallback();
+            };
+            function createDOMPurify() {
+                let window1 = arguments.length > 0 && void 0 !== arguments[0] ? arguments[0] : purify_es_getGlobal();
+                const DOMPurify = (root)=>createDOMPurify(root);
+                DOMPurify.version = "3.4.16";
+                DOMPurify.removed = [];
+                if (!window1 || !window1.document || window1.document.nodeType !== NODE_TYPE.document || !window1.Element) {
+                    DOMPurify.isSupported = false;
+                    return DOMPurify;
+                }
+                let document1 = window1.document;
+                const originalDocument = document1;
+                const currentScript = originalDocument.currentScript;
+                window1.DocumentFragment;
+                const HTMLTemplateElement = window1.HTMLTemplateElement, Node = window1.Node, Element = window1.Element, NodeFilter = window1.NodeFilter;
+                void 0 === window1.NamedNodeMap && (window1.NamedNodeMap || window1.MozNamedAttrMap);
+                window1.HTMLFormElement;
+                const DOMParser = window1.DOMParser, trustedTypes = window1.trustedTypes;
+                const ElementPrototype = Element.prototype;
+                const cloneNode = lookupGetter(ElementPrototype, "cloneNode");
+                const remove = lookupGetter(ElementPrototype, "remove");
+                const removeAttributeNode = lookupGetter(ElementPrototype, "removeAttributeNode");
+                const getNextSibling = lookupGetter(ElementPrototype, "nextSibling");
+                const getChildNodes = lookupGetter(ElementPrototype, "childNodes");
+                const getParentNode = lookupGetter(ElementPrototype, "parentNode");
+                const getShadowRoot = lookupGetter(ElementPrototype, "shadowRoot");
+                const getAttributes = lookupGetter(ElementPrototype, "attributes");
+                const getNodeType = Node && Node.prototype ? lookupGetter(Node.prototype, "nodeType") : null;
+                const getNodeName = Node && Node.prototype ? lookupGetter(Node.prototype, "nodeName") : null;
+                const getOwnerDocument = Node && Node.prototype ? lookupGetter(Node.prototype, "ownerDocument") : null;
+                const _readNodeType = function(node) {
+                    return getNodeType ? getNodeType(node) : node.nodeType;
+                };
+                const _readNodeName = function(node) {
+                    return getNodeName ? getNodeName(node) : node.nodeName;
+                };
+                if ("function" == typeof HTMLTemplateElement) {
+                    const template = document1.createElement("template");
+                    if (template.content && template.content.ownerDocument) document1 = template.content.ownerDocument;
+                }
+                let trustedTypesPolicy;
+                let emptyHTML = "";
+                let defaultTrustedTypesPolicy;
+                let defaultTrustedTypesPolicyResolved = false;
+                let IN_TRUSTED_TYPES_POLICY = 0;
+                const _assertNotInTrustedTypesPolicy = function() {
+                    if (IN_TRUSTED_TYPES_POLICY > 0) throw typeErrorCreate("A configured TRUSTED_TYPES_POLICY callback (createHTML or createScriptURL) must not call DOMPurify.sanitize, as that causes infinite recursion. Do not pass a policy whose callbacks wrap DOMPurify as TRUSTED_TYPES_POLICY; see the \"DOMPurify and Trusted Types\" section of the README.");
+                };
+                const _createTrustedHTML = function(html) {
+                    _assertNotInTrustedTypesPolicy();
+                    IN_TRUSTED_TYPES_POLICY++;
+                    try {
+                        return trustedTypesPolicy.createHTML(html);
+                    } finally{
+                        IN_TRUSTED_TYPES_POLICY--;
+                    }
+                };
+                const _createTrustedScriptURL = function(scriptUrl) {
+                    _assertNotInTrustedTypesPolicy();
+                    IN_TRUSTED_TYPES_POLICY++;
+                    try {
+                        return trustedTypesPolicy.createScriptURL(scriptUrl);
+                    } finally{
+                        IN_TRUSTED_TYPES_POLICY--;
+                    }
+                };
+                const _getDefaultTrustedTypesPolicy = function() {
+                    if (!defaultTrustedTypesPolicyResolved) {
+                        defaultTrustedTypesPolicy = purify_es_createTrustedTypesPolicy(trustedTypes, currentScript);
+                        defaultTrustedTypesPolicyResolved = true;
+                    }
+                    return defaultTrustedTypesPolicy;
+                };
+                const _document = document1, implementation = _document.implementation, createNodeIterator = _document.createNodeIterator, createDocumentFragment = _document.createDocumentFragment, getElementsByTagName = _document.getElementsByTagName;
+                const importNode = originalDocument.importNode;
+                let hooks = purify_es_createHooksMap();
+                DOMPurify.isSupported = "function" == typeof entries && "function" == typeof getParentNode && implementation && void 0 !== implementation.createHTMLDocument;
+                const MUSTACHE_EXPR$1 = MUSTACHE_EXPR, ERB_EXPR$1 = ERB_EXPR, TMPLIT_EXPR$1 = TMPLIT_EXPR, DATA_ATTR$1 = DATA_ATTR, ARIA_ATTR$1 = ARIA_ATTR, IS_SCRIPT_OR_DATA$1 = IS_SCRIPT_OR_DATA, ATTR_WHITESPACE$1 = ATTR_WHITESPACE, CUSTOM_ELEMENT$1 = CUSTOM_ELEMENT;
+                let IS_ALLOWED_URI$1 = IS_ALLOWED_URI;
+                let ALLOWED_TAGS = null;
+                const DEFAULT_ALLOWED_TAGS = addToSet({}, [
+                    ...html$1,
+                    ...svg$1,
+                    ...svgFilters,
+                    ...mathMl$1,
+                    ...purify_es_text
+                ]);
+                let ALLOWED_ATTR = null;
+                const DEFAULT_ALLOWED_ATTR = addToSet({}, [
+                    ...purify_es_html,
+                    ...svg,
+                    ...mathMl,
+                    ...xml
+                ]);
+                let CUSTOM_ELEMENT_HANDLING = Object.seal(create(null, {
+                    tagNameCheck: {
+                        writable: true,
+                        configurable: false,
+                        enumerable: true,
+                        value: null
+                    },
+                    attributeNameCheck: {
+                        writable: true,
+                        configurable: false,
+                        enumerable: true,
+                        value: null
+                    },
+                    allowCustomizedBuiltInElements: {
+                        writable: true,
+                        configurable: false,
+                        enumerable: true,
+                        value: false
+                    }
+                }));
+                let FORBID_TAGS = null;
+                let FORBID_ATTR = null;
+                const EXTRA_ELEMENT_HANDLING = Object.seal(create(null, {
+                    tagCheck: {
+                        writable: true,
+                        configurable: false,
+                        enumerable: true,
+                        value: null
+                    },
+                    attributeCheck: {
+                        writable: true,
+                        configurable: false,
+                        enumerable: true,
+                        value: null
+                    }
+                }));
+                let ALLOW_ARIA_ATTR = true;
+                let ALLOW_DATA_ATTR = true;
+                let ALLOW_UNKNOWN_PROTOCOLS = false;
+                let ALLOW_SELF_CLOSE_IN_ATTR = true;
+                let SAFE_FOR_TEMPLATES = false;
+                let SAFE_FOR_XML = true;
+                let WHOLE_DOCUMENT = false;
+                let SET_CONFIG = false;
+                let SET_CONFIG_ALLOWED_TAGS = null;
+                let SET_CONFIG_ALLOWED_ATTR = null;
+                let FORCE_BODY = false;
+                let RETURN_DOM = false;
+                let RETURN_DOM_FRAGMENT = false;
+                let RETURN_TRUSTED_TYPE = false;
+                let SANITIZE_DOM = true;
+                let SANITIZE_NAMED_PROPS = false;
+                const SANITIZE_NAMED_PROPS_PREFIX = "user-content-";
+                let KEEP_CONTENT = true;
+                let IN_PLACE = false;
+                let USE_PROFILES = {};
+                let FORBID_CONTENTS = null;
+                const DEFAULT_FORBID_CONTENTS = addToSet({}, [
+                    "annotation-xml",
+                    "audio",
+                    "colgroup",
+                    "desc",
+                    "foreignobject",
+                    "head",
+                    "iframe",
+                    "math",
+                    "mi",
+                    "mn",
+                    "mo",
+                    "ms",
+                    "mtext",
+                    "noembed",
+                    "noframes",
+                    "noscript",
+                    "plaintext",
+                    "script",
+                    "selectedcontent",
+                    "style",
+                    "svg",
+                    "template",
+                    "thead",
+                    "title",
+                    "video",
+                    "xmp"
+                ]);
+                let DATA_URI_TAGS = null;
+                const DEFAULT_DATA_URI_TAGS = addToSet({}, [
+                    "audio",
+                    "video",
+                    "img",
+                    "source",
+                    "image",
+                    "track"
+                ]);
+                let URI_SAFE_ATTRIBUTES = null;
+                const DEFAULT_URI_SAFE_ATTRIBUTES = addToSet({}, [
+                    "alt",
+                    "class",
+                    "for",
+                    "id",
+                    "label",
+                    "name",
+                    "pattern",
+                    "placeholder",
+                    "role",
+                    "summary",
+                    "title",
+                    "value",
+                    "style",
+                    "xmlns"
+                ]);
+                const MATHML_NAMESPACE = "http://www.w3.org/1998/Math/MathML";
+                const SVG_NAMESPACE = "http://www.w3.org/2000/svg";
+                const HTML_NAMESPACE = "http://www.w3.org/1999/xhtml";
+                let NAMESPACE = HTML_NAMESPACE;
+                let IS_EMPTY_INPUT = false;
+                let ALLOWED_NAMESPACES = null;
+                const DEFAULT_ALLOWED_NAMESPACES = addToSet({}, [
+                    MATHML_NAMESPACE,
+                    SVG_NAMESPACE,
+                    HTML_NAMESPACE
+                ], stringToString);
+                const DEFAULT_MATHML_TEXT_INTEGRATION_POINTS = purify_es_freeze([
+                    "mi",
+                    "mo",
+                    "mn",
+                    "ms",
+                    "mtext"
+                ]);
+                let MATHML_TEXT_INTEGRATION_POINTS = addToSet({}, DEFAULT_MATHML_TEXT_INTEGRATION_POINTS);
+                const DEFAULT_HTML_INTEGRATION_POINTS = purify_es_freeze([
+                    "annotation-xml"
+                ]);
+                let HTML_INTEGRATION_POINTS = addToSet({}, DEFAULT_HTML_INTEGRATION_POINTS);
+                const COMMON_SVG_AND_HTML_ELEMENTS = addToSet({}, [
+                    "title",
+                    "style",
+                    "font",
+                    "a",
+                    "script"
+                ]);
+                let PARSER_MEDIA_TYPE = null;
+                const SUPPORTED_PARSER_MEDIA_TYPES = [
+                    "application/xhtml+xml",
+                    "text/html"
+                ];
+                const DEFAULT_PARSER_MEDIA_TYPE = "text/html";
+                let transformCaseFunc = null;
+                let CONFIG = null;
+                const formElement = document1.createElement("form");
+                const isRegexOrFunction = function(testValue) {
+                    return testValue instanceof RegExp || testValue instanceof Function;
+                };
+                const _parseConfig = function() {
+                    let cfg = arguments.length > 0 && void 0 !== arguments[0] ? arguments[0] : {};
+                    if (CONFIG && CONFIG === cfg) return;
+                    if (!cfg || "object" != typeof cfg) cfg = {};
+                    cfg = clone(cfg);
+                    PARSER_MEDIA_TYPE = -1 === SUPPORTED_PARSER_MEDIA_TYPES.indexOf(cfg.PARSER_MEDIA_TYPE) ? DEFAULT_PARSER_MEDIA_TYPE : cfg.PARSER_MEDIA_TYPE;
+                    transformCaseFunc = "application/xhtml+xml" === PARSER_MEDIA_TYPE ? stringToString : stringToLowerCase;
+                    ALLOWED_TAGS = purify_es_resolveSetOption(cfg, "ALLOWED_TAGS", DEFAULT_ALLOWED_TAGS, {
+                        transform: transformCaseFunc
+                    });
+                    ALLOWED_ATTR = purify_es_resolveSetOption(cfg, "ALLOWED_ATTR", DEFAULT_ALLOWED_ATTR, {
+                        transform: transformCaseFunc
+                    });
+                    ALLOWED_NAMESPACES = purify_es_resolveSetOption(cfg, "ALLOWED_NAMESPACES", DEFAULT_ALLOWED_NAMESPACES, {
+                        transform: stringToString
+                    });
+                    URI_SAFE_ATTRIBUTES = purify_es_resolveSetOption(cfg, "ADD_URI_SAFE_ATTR", DEFAULT_URI_SAFE_ATTRIBUTES, {
+                        transform: transformCaseFunc,
+                        base: DEFAULT_URI_SAFE_ATTRIBUTES
+                    });
+                    DATA_URI_TAGS = purify_es_resolveSetOption(cfg, "ADD_DATA_URI_TAGS", DEFAULT_DATA_URI_TAGS, {
+                        transform: transformCaseFunc,
+                        base: DEFAULT_DATA_URI_TAGS
+                    });
+                    FORBID_CONTENTS = purify_es_resolveSetOption(cfg, "FORBID_CONTENTS", DEFAULT_FORBID_CONTENTS, {
+                        transform: transformCaseFunc
+                    });
+                    FORBID_TAGS = purify_es_resolveSetOption(cfg, "FORBID_TAGS", clone({}), {
+                        transform: transformCaseFunc
+                    });
+                    FORBID_ATTR = purify_es_resolveSetOption(cfg, "FORBID_ATTR", clone({}), {
+                        transform: transformCaseFunc
+                    });
+                    USE_PROFILES = objectHasOwnProperty(cfg, "USE_PROFILES") ? cfg.USE_PROFILES && "object" == typeof cfg.USE_PROFILES ? clone(cfg.USE_PROFILES) : cfg.USE_PROFILES : false;
+                    ALLOW_ARIA_ATTR = false !== cfg.ALLOW_ARIA_ATTR;
+                    ALLOW_DATA_ATTR = false !== cfg.ALLOW_DATA_ATTR;
+                    ALLOW_UNKNOWN_PROTOCOLS = cfg.ALLOW_UNKNOWN_PROTOCOLS || false;
+                    ALLOW_SELF_CLOSE_IN_ATTR = false !== cfg.ALLOW_SELF_CLOSE_IN_ATTR;
+                    SAFE_FOR_TEMPLATES = cfg.SAFE_FOR_TEMPLATES || false;
+                    SAFE_FOR_XML = false !== cfg.SAFE_FOR_XML;
+                    WHOLE_DOCUMENT = cfg.WHOLE_DOCUMENT || false;
+                    RETURN_DOM = cfg.RETURN_DOM || false;
+                    RETURN_DOM_FRAGMENT = cfg.RETURN_DOM_FRAGMENT || false;
+                    RETURN_TRUSTED_TYPE = cfg.RETURN_TRUSTED_TYPE || false;
+                    FORCE_BODY = cfg.FORCE_BODY || false;
+                    SANITIZE_DOM = false !== cfg.SANITIZE_DOM;
+                    SANITIZE_NAMED_PROPS = cfg.SANITIZE_NAMED_PROPS || false;
+                    KEEP_CONTENT = false !== cfg.KEEP_CONTENT;
+                    IN_PLACE = cfg.IN_PLACE || false;
+                    IS_ALLOWED_URI$1 = isRegex(cfg.ALLOWED_URI_REGEXP) ? cfg.ALLOWED_URI_REGEXP : IS_ALLOWED_URI;
+                    NAMESPACE = "string" == typeof cfg.NAMESPACE ? cfg.NAMESPACE : HTML_NAMESPACE;
+                    MATHML_TEXT_INTEGRATION_POINTS = purify_es_resolveObjectOption(cfg, "MATHML_TEXT_INTEGRATION_POINTS", ()=>addToSet({}, DEFAULT_MATHML_TEXT_INTEGRATION_POINTS));
+                    HTML_INTEGRATION_POINTS = purify_es_resolveObjectOption(cfg, "HTML_INTEGRATION_POINTS", ()=>addToSet({}, DEFAULT_HTML_INTEGRATION_POINTS));
+                    const customElementHandling = purify_es_resolveObjectOption(cfg, "CUSTOM_ELEMENT_HANDLING", ()=>create(null));
+                    CUSTOM_ELEMENT_HANDLING = create(null);
+                    if (objectHasOwnProperty(customElementHandling, "tagNameCheck") && isRegexOrFunction(customElementHandling.tagNameCheck)) CUSTOM_ELEMENT_HANDLING.tagNameCheck = customElementHandling.tagNameCheck;
+                    if (objectHasOwnProperty(customElementHandling, "attributeNameCheck") && isRegexOrFunction(customElementHandling.attributeNameCheck)) CUSTOM_ELEMENT_HANDLING.attributeNameCheck = customElementHandling.attributeNameCheck;
+                    if (objectHasOwnProperty(customElementHandling, "allowCustomizedBuiltInElements") && "boolean" == typeof customElementHandling.allowCustomizedBuiltInElements) CUSTOM_ELEMENT_HANDLING.allowCustomizedBuiltInElements = customElementHandling.allowCustomizedBuiltInElements;
+                    purify_es_seal(CUSTOM_ELEMENT_HANDLING);
+                    if (SAFE_FOR_TEMPLATES) ALLOW_DATA_ATTR = false;
+                    if (RETURN_DOM_FRAGMENT) RETURN_DOM = true;
+                    if (USE_PROFILES) {
+                        ALLOWED_TAGS = addToSet({}, purify_es_text);
+                        ALLOWED_ATTR = create(null);
+                        if (true === USE_PROFILES.html) {
+                            addToSet(ALLOWED_TAGS, html$1);
+                            addToSet(ALLOWED_ATTR, purify_es_html);
+                        }
+                        if (true === USE_PROFILES.svg) {
+                            addToSet(ALLOWED_TAGS, svg$1);
+                            addToSet(ALLOWED_ATTR, svg);
+                            addToSet(ALLOWED_ATTR, xml);
+                        }
+                        if (true === USE_PROFILES.svgFilters) {
+                            addToSet(ALLOWED_TAGS, svgFilters);
+                            addToSet(ALLOWED_ATTR, svg);
+                            addToSet(ALLOWED_ATTR, xml);
+                        }
+                        if (true === USE_PROFILES.mathMl) {
+                            addToSet(ALLOWED_TAGS, mathMl$1);
+                            addToSet(ALLOWED_ATTR, mathMl);
+                            addToSet(ALLOWED_ATTR, xml);
+                        }
+                    }
+                    EXTRA_ELEMENT_HANDLING.tagCheck = null;
+                    EXTRA_ELEMENT_HANDLING.attributeCheck = null;
+                    if (objectHasOwnProperty(cfg, "ADD_TAGS")) {
+                        if ("function" == typeof cfg.ADD_TAGS) EXTRA_ELEMENT_HANDLING.tagCheck = cfg.ADD_TAGS;
+                        else if (arrayIsArray(cfg.ADD_TAGS)) {
+                            if (ALLOWED_TAGS === DEFAULT_ALLOWED_TAGS) ALLOWED_TAGS = clone(ALLOWED_TAGS);
+                            addToSet(ALLOWED_TAGS, cfg.ADD_TAGS, transformCaseFunc);
+                        }
+                    }
+                    if (objectHasOwnProperty(cfg, "ADD_ATTR")) {
+                        if ("function" == typeof cfg.ADD_ATTR) EXTRA_ELEMENT_HANDLING.attributeCheck = cfg.ADD_ATTR;
+                        else if (arrayIsArray(cfg.ADD_ATTR)) {
+                            if (ALLOWED_ATTR === DEFAULT_ALLOWED_ATTR) ALLOWED_ATTR = clone(ALLOWED_ATTR);
+                            addToSet(ALLOWED_ATTR, cfg.ADD_ATTR, transformCaseFunc);
+                        }
+                    }
+                    if (objectHasOwnProperty(cfg, "ADD_FORBID_CONTENTS") && arrayIsArray(cfg.ADD_FORBID_CONTENTS)) {
+                        if (FORBID_CONTENTS === DEFAULT_FORBID_CONTENTS) FORBID_CONTENTS = clone(FORBID_CONTENTS);
+                        addToSet(FORBID_CONTENTS, cfg.ADD_FORBID_CONTENTS, transformCaseFunc);
+                    }
+                    if (KEEP_CONTENT) ALLOWED_TAGS["#text"] = true;
+                    if (WHOLE_DOCUMENT) addToSet(ALLOWED_TAGS, [
+                        "html",
+                        "head",
+                        "body"
+                    ]);
+                    if (ALLOWED_TAGS.table) {
+                        addToSet(ALLOWED_TAGS, [
+                            "tbody"
+                        ]);
+                        delete FORBID_TAGS.tbody;
+                    }
+                    if (cfg.TRUSTED_TYPES_POLICY) {
+                        if ("function" != typeof cfg.TRUSTED_TYPES_POLICY.createHTML) throw typeErrorCreate("TRUSTED_TYPES_POLICY configuration option must provide a \"createHTML\" hook.");
+                        if ("function" != typeof cfg.TRUSTED_TYPES_POLICY.createScriptURL) throw typeErrorCreate("TRUSTED_TYPES_POLICY configuration option must provide a \"createScriptURL\" hook.");
+                        const previousTrustedTypesPolicy = trustedTypesPolicy;
+                        trustedTypesPolicy = cfg.TRUSTED_TYPES_POLICY;
+                        try {
+                            emptyHTML = _createTrustedHTML("");
+                        } catch (error) {
+                            trustedTypesPolicy = previousTrustedTypesPolicy;
+                            throw error;
+                        }
+                    } else if (null === cfg.TRUSTED_TYPES_POLICY) {
+                        trustedTypesPolicy = void 0;
+                        emptyHTML = "";
+                    } else {
+                        if (void 0 === trustedTypesPolicy) trustedTypesPolicy = _getDefaultTrustedTypesPolicy();
+                        if (trustedTypesPolicy && "string" == typeof emptyHTML) emptyHTML = _createTrustedHTML("");
+                    }
+                    if (purify_es_freeze) purify_es_freeze(cfg);
+                    CONFIG = cfg;
+                };
+                const ALL_SVG_TAGS = addToSet({}, [
+                    ...svg$1,
+                    ...svgFilters,
+                    ...svgDisallowed
+                ]);
+                const ALL_MATHML_TAGS = addToSet({}, [
+                    ...mathMl$1,
+                    ...mathMlDisallowed
+                ]);
+                const _checkSvgNamespace = function(tagName, parent, parentTagName) {
+                    if (parent.namespaceURI === HTML_NAMESPACE) return "svg" === tagName;
+                    if (parent.namespaceURI === MATHML_NAMESPACE) return "svg" === tagName && ("annotation-xml" === parentTagName || MATHML_TEXT_INTEGRATION_POINTS[parentTagName]);
+                    return Boolean(ALL_SVG_TAGS[tagName]);
+                };
+                const _checkMathMlNamespace = function(tagName, parent, parentTagName) {
+                    if (parent.namespaceURI === HTML_NAMESPACE) return "math" === tagName;
+                    if (parent.namespaceURI === SVG_NAMESPACE) return "math" === tagName && HTML_INTEGRATION_POINTS[parentTagName];
+                    return Boolean(ALL_MATHML_TAGS[tagName]);
+                };
+                const _checkHtmlNamespace = function(tagName, parent, parentTagName) {
+                    if (parent.namespaceURI === SVG_NAMESPACE && !HTML_INTEGRATION_POINTS[parentTagName]) return false;
+                    if (parent.namespaceURI === MATHML_NAMESPACE && !MATHML_TEXT_INTEGRATION_POINTS[parentTagName]) return false;
+                    return !ALL_MATHML_TAGS[tagName] && (COMMON_SVG_AND_HTML_ELEMENTS[tagName] || !ALL_SVG_TAGS[tagName]);
+                };
+                const _checkValidNamespace = function(element) {
+                    let parent = getParentNode(element);
+                    if (!parent || !parent.tagName) parent = {
+                        namespaceURI: NAMESPACE,
+                        tagName: "template"
+                    };
+                    const tagName = stringToLowerCase(element.tagName);
+                    const parentTagName = stringToLowerCase(parent.tagName);
+                    if (!ALLOWED_NAMESPACES[element.namespaceURI]) return false;
+                    if (element.namespaceURI === SVG_NAMESPACE) return _checkSvgNamespace(tagName, parent, parentTagName);
+                    if (element.namespaceURI === MATHML_NAMESPACE) return _checkMathMlNamespace(tagName, parent, parentTagName);
+                    if (element.namespaceURI === HTML_NAMESPACE) return _checkHtmlNamespace(tagName, parent, parentTagName);
+                    if ("application/xhtml+xml" === PARSER_MEDIA_TYPE && ALLOWED_NAMESPACES[element.namespaceURI]) return true;
+                    return false;
+                };
+                const _forceRemove = function(node) {
+                    arrayPush(DOMPurify.removed, {
+                        element: node
+                    });
+                    try {
+                        getParentNode(node).removeChild(node);
+                    } catch (_) {
+                        remove(node);
+                        if (!getParentNode(node)) throw typeErrorCreate("a node selected for removal could not be detached from its tree and cannot be safely returned; refusing to sanitize in place");
+                    }
+                };
+                const _stripAttributeNode = function(element, attribute, name) {
+                    try {
+                        removeAttributeNode(element, attribute);
+                    } catch (_) {
+                        try {
+                            element.removeAttribute(name);
+                        } catch (_) {}
+                    }
+                };
+                const _neutralizeRoot = function(root) {
+                    _neutralizeSubtree(root);
+                    const childNodes = getChildNodes(root);
+                    if (childNodes) {
+                        const snapshot = [];
+                        arrayForEach(childNodes, (child)=>{
+                            arrayPush(snapshot, child);
+                        });
+                        arrayForEach(snapshot, (child)=>{
+                            try {
+                                remove(child);
+                            } catch (_) {}
+                        });
+                    }
+                    const attributes = getAttributes(root);
+                    if (attributes) for(let i = attributes.length - 1; i >= 0; --i){
+                        const attribute = attributes[i];
+                        const name = attribute && attribute.name;
+                        if ("string" == typeof name) _stripAttributeNode(root, attribute, name);
+                    }
+                };
+                const _removeAttribute = function(name, element, attr) {
+                    if (!attr) try {
+                        attr = element.getAttributeNode(name);
+                    } catch (_) {
+                        attr = null;
+                    }
+                    arrayPush(DOMPurify.removed, {
+                        attribute: attr || null,
+                        from: element
+                    });
+                    try {
+                        if (attr) removeAttributeNode(element, attr);
+                        else element.removeAttribute(name);
+                    } catch (_) {
+                        try {
+                            element.removeAttribute(name);
+                        } catch (_) {}
+                    }
+                    if ("is" === name) if (RETURN_DOM || RETURN_DOM_FRAGMENT) try {
+                        _forceRemove(element);
+                    } catch (_) {}
+                    else try {
+                        element.setAttribute(name, "");
+                    } catch (_) {}
+                };
+                const _stripDisallowedAttributes = function(element) {
+                    const attributes = getAttributes(element);
+                    if (!attributes) return;
+                    for(let i = attributes.length - 1; i >= 0; --i){
+                        const attribute = attributes[i];
+                        const name = attribute && attribute.name;
+                        if ("string" == typeof name && !ALLOWED_ATTR[transformCaseFunc(name)]) _stripAttributeNode(element, attribute, name);
+                    }
+                };
+                const _neutralizeSubtree = function(root) {
+                    const stack = [
+                        root
+                    ];
+                    while(stack.length > 0){
+                        const node = stack.pop();
+                        if (_readNodeType(node) === NODE_TYPE.element) _stripDisallowedAttributes(node);
+                        const childNodes = getChildNodes(node);
+                        if (childNodes) for(let i = childNodes.length - 1; i >= 0; --i)stack.push(childNodes[i]);
+                    }
+                };
+                const _isPatchLinkageAttribute = function(lcName, lcTag) {
+                    if (!SAFE_FOR_XML) return false;
+                    if ("patchsrc" === lcName) return true;
+                    return "for" === lcName && "label" !== lcTag && "output" !== lcTag;
+                };
+                const _neutralizePatchLinkage = function(root) {
+                    if (!SAFE_FOR_XML) return;
+                    const stack = [
+                        root
+                    ];
+                    while(stack.length > 0){
+                        const node = stack.pop();
+                        const nodeType = _readNodeType(node);
+                        if (nodeType === NODE_TYPE.processingInstruction || nodeType === NODE_TYPE.comment && regExpTest(COMMENT_MARKUP_PROBE, node.data)) {
+                            try {
+                                remove(node);
+                            } catch (_) {}
+                            continue;
+                        }
+                        if (nodeType === NODE_TYPE.element) {
+                            const element = node;
+                            const lcTag = transformCaseFunc(_readNodeName(node));
+                            try {
+                                if (element.hasAttribute && element.hasAttribute("patchsrc")) element.removeAttribute("patchsrc");
+                                if (element.hasAttribute && element.hasAttribute("for") && _isPatchLinkageAttribute("for", lcTag)) element.removeAttribute("for");
+                            } catch (_) {}
+                        }
+                        const childNodes = getChildNodes(node);
+                        if (childNodes) for(let i = childNodes.length - 1; i >= 0; --i)stack.push(childNodes[i]);
+                    }
+                };
+                const _initDocument = function(dirty) {
+                    let doc = null;
+                    let leadingWhitespace = null;
+                    if (FORCE_BODY) dirty = "<remove></remove>" + dirty;
+                    else {
+                        const matches = stringMatch(dirty, /^[\r\n\t ]+/);
+                        leadingWhitespace = matches && matches[0];
+                    }
+                    if ("application/xhtml+xml" === PARSER_MEDIA_TYPE && NAMESPACE === HTML_NAMESPACE) dirty = "<html xmlns=\"http://www.w3.org/1999/xhtml\"><head></head><body>" + dirty + "</body></html>";
+                    const dirtyPayload = trustedTypesPolicy ? _createTrustedHTML(dirty) : dirty;
+                    if (NAMESPACE === HTML_NAMESPACE) try {
+                        doc = new DOMParser().parseFromString(dirtyPayload, PARSER_MEDIA_TYPE);
+                    } catch (_) {}
+                    if (!doc || !doc.documentElement) {
+                        doc = implementation.createDocument(NAMESPACE, "template", null);
+                        try {
+                            doc.documentElement.innerHTML = IS_EMPTY_INPUT ? emptyHTML : dirtyPayload;
+                        } catch (_) {}
+                    }
+                    const body = doc.body || doc.documentElement;
+                    if (dirty && leadingWhitespace) body.insertBefore(document1.createTextNode(leadingWhitespace), body.childNodes[0] || null);
+                    if (NAMESPACE === HTML_NAMESPACE) return getElementsByTagName.call(doc, WHOLE_DOCUMENT ? "html" : "body")[0];
+                    return WHOLE_DOCUMENT ? doc.documentElement : body;
+                };
+                const _createNodeIterator = function(root) {
+                    const doc = getOwnerDocument ? getOwnerDocument(root) : root.ownerDocument;
+                    return createNodeIterator.call(doc || root, root, NodeFilter.SHOW_ELEMENT | NodeFilter.SHOW_COMMENT | NodeFilter.SHOW_TEXT | NodeFilter.SHOW_PROCESSING_INSTRUCTION | NodeFilter.SHOW_CDATA_SECTION, null);
+                };
+                const _stripTemplateExpressions = function(value) {
+                    value = stringReplace(value, MUSTACHE_EXPR$1, " ");
+                    value = stringReplace(value, ERB_EXPR$1, " ");
+                    value = stringReplace(value, TMPLIT_EXPR$1, " ");
+                    return value;
+                };
+                const _scrubTemplateExpressions2 = function(node) {
+                    var _node$querySelectorAl;
+                    node.normalize();
+                    const doc = getOwnerDocument ? getOwnerDocument(node) : node.ownerDocument;
+                    const walker = createNodeIterator.call(doc || node, node, NodeFilter.SHOW_TEXT | NodeFilter.SHOW_COMMENT | NodeFilter.SHOW_CDATA_SECTION | NodeFilter.SHOW_PROCESSING_INSTRUCTION, null);
+                    let currentNode = walker.nextNode();
+                    while(currentNode){
+                        currentNode.data = _stripTemplateExpressions(currentNode.data);
+                        currentNode = walker.nextNode();
+                    }
+                    const templates = null == (_node$querySelectorAl = node.querySelectorAll) ? void 0 : _node$querySelectorAl.call(node, "template");
+                    if (templates) arrayForEach(templates, (tmpl)=>{
+                        if (_isDocumentFragment(tmpl.content)) _scrubTemplateExpressions2(tmpl.content);
+                    });
+                };
+                const _isClobbered = function(element) {
+                    const realTagName = getNodeName ? getNodeName(element) : null;
+                    if ("string" != typeof realTagName) return false;
+                    if ("form" !== transformCaseFunc(realTagName)) return false;
+                    return "string" != typeof element.nodeName || "string" != typeof element.textContent || "function" != typeof element.removeChild || element.attributes !== getAttributes(element) || "function" != typeof element.removeAttribute || "function" != typeof element.removeAttributeNode || "function" != typeof element.getAttributeNode || "function" != typeof element.setAttribute || "string" != typeof element.namespaceURI || "function" != typeof element.insertBefore || "function" != typeof element.hasChildNodes || element.nodeType !== getNodeType(element) || element.childNodes !== getChildNodes(element);
+                };
+                const _isDocumentFragment = function(value) {
+                    if (!getNodeType || "object" != typeof value || null === value) return false;
+                    try {
+                        return getNodeType(value) === NODE_TYPE.documentFragment;
+                    } catch (_) {
+                        return false;
+                    }
+                };
+                const _isNode = function(value) {
+                    if (!getNodeType || "object" != typeof value || null === value) return false;
+                    try {
+                        return "number" == typeof getNodeType(value);
+                    } catch (_) {
+                        return false;
+                    }
+                };
+                function _executeHooks(hooks, currentNode, data) {
+                    if (0 === hooks.length) return;
+                    arrayForEach(hooks, (hook)=>{
+                        hook.call(DOMPurify, currentNode, data, CONFIG);
+                    });
+                }
+                const _isUnsafeNode = function(currentNode, tagName) {
+                    if (SAFE_FOR_XML && currentNode.hasChildNodes() && !_isNode(currentNode.firstElementChild) && regExpTest(ELEMENT_MARKUP_PROBE, currentNode.textContent) && regExpTest(ELEMENT_MARKUP_PROBE, currentNode.innerHTML)) return true;
+                    if (SAFE_FOR_XML && currentNode.namespaceURI === HTML_NAMESPACE && LITERAL_TEXT_ELEMENTS[tagName] && (_isNode(currentNode.firstElementChild) || "string" == typeof currentNode.textContent && regExpTest(LITERAL_TEXT_CLOSE[tagName], currentNode.textContent))) return true;
+                    if (currentNode.nodeType === NODE_TYPE.processingInstruction) return true;
+                    if (SAFE_FOR_XML && currentNode.nodeType === NODE_TYPE.comment && regExpTest(COMMENT_MARKUP_PROBE, currentNode.data)) return true;
+                    return false;
+                };
+                const _matchesNameCheck = function(check, name) {
+                    if (check instanceof RegExp) return regExpTest(check, name);
+                    if (check instanceof Function) {
+                        for(var _len = arguments.length, args = new Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++)args[_key - 2] = arguments[_key];
+                        return Boolean(check(name, ...args));
+                    }
+                    return false;
+                };
+                const _sanitizeDisallowedNode = function(currentNode, tagName, root) {
+                    if (!FORBID_TAGS[tagName] && _isBasicCustomElement(tagName) && _matchesNameCheck(CUSTOM_ELEMENT_HANDLING.tagNameCheck, tagName)) return false;
+                    if (KEEP_CONTENT && !FORBID_CONTENTS[tagName]) {
+                        const parentNode = getParentNode(currentNode);
+                        const childNodes = getChildNodes(currentNode);
+                        if (childNodes && parentNode) {
+                            const childCount = childNodes.length;
+                            for(let i = childCount - 1; i >= 0; --i){
+                                const hoisted = currentNode === root ? cloneNode(childNodes[i], true) : childNodes[i];
+                                parentNode.insertBefore(hoisted, getNextSibling(currentNode));
+                            }
+                        }
+                    }
+                    _forceRemove(currentNode);
+                    return true;
+                };
+                const _forkSharedAllowlist = function(hookList, set, defaultSet, setConfigSet) {
+                    if (0 === hookList.length) return set;
+                    return set === defaultSet || set === setConfigSet ? clone(set) : set;
+                };
+                const _handleHookDetachedNode = function(currentNode, root) {
+                    if (currentNode === root || null !== getParentNode(currentNode)) return false;
+                    if (IN_PLACE) _neutralizeSubtree(currentNode);
+                    return true;
+                };
+                const _sanitizeElements = function(currentNode, root) {
+                    _executeHooks(hooks.beforeSanitizeElements, currentNode, null);
+                    if (_handleHookDetachedNode(currentNode, root)) return true;
+                    if (_isClobbered(currentNode)) {
+                        _forceRemove(currentNode);
+                        return true;
+                    }
+                    const tagName = transformCaseFunc(_readNodeName(currentNode));
+                    ALLOWED_TAGS = _forkSharedAllowlist(hooks.uponSanitizeElement, ALLOWED_TAGS, DEFAULT_ALLOWED_TAGS, SET_CONFIG_ALLOWED_TAGS);
+                    _executeHooks(hooks.uponSanitizeElement, currentNode, {
+                        tagName,
+                        allowedTags: ALLOWED_TAGS
+                    });
+                    if (_handleHookDetachedNode(currentNode, root)) return true;
+                    if (_isUnsafeNode(currentNode, tagName)) {
+                        _forceRemove(currentNode);
+                        return true;
+                    }
+                    if (FORBID_TAGS[tagName] || !(EXTRA_ELEMENT_HANDLING.tagCheck instanceof Function && EXTRA_ELEMENT_HANDLING.tagCheck(tagName)) && !ALLOWED_TAGS[tagName]) {
+                        const removed = _sanitizeDisallowedNode(currentNode, tagName, root);
+                        if (false === removed) {
+                            _executeHooks(hooks.afterSanitizeElements, currentNode, null);
+                            if (_handleHookDetachedNode(currentNode, root)) return true;
+                        }
+                        return removed;
+                    }
+                    if (_readNodeType(currentNode) === NODE_TYPE.element && !_checkValidNamespace(currentNode)) {
+                        _forceRemove(currentNode);
+                        return true;
+                    }
+                    if (("noscript" === tagName || "noembed" === tagName || "noframes" === tagName) && regExpTest(FALLBACK_TAG_CLOSE, currentNode.innerHTML)) {
+                        _forceRemove(currentNode);
+                        return true;
+                    }
+                    if (SAFE_FOR_TEMPLATES && currentNode.nodeType === NODE_TYPE.text) {
+                        const content = _stripTemplateExpressions(currentNode.textContent);
+                        if (currentNode.textContent !== content) {
+                            arrayPush(DOMPurify.removed, {
+                                element: currentNode.cloneNode()
+                            });
+                            currentNode.textContent = content;
+                        }
+                    }
+                    _executeHooks(hooks.afterSanitizeElements, currentNode, null);
+                    return _handleHookDetachedNode(currentNode, root);
+                };
+                const _isValidAttribute = function(lcTag, lcName, value) {
+                    if (FORBID_ATTR[lcName]) return false;
+                    if (_isPatchLinkageAttribute(lcName, lcTag)) return false;
+                    if (SANITIZE_DOM && ("id" === lcName || "name" === lcName) && (value in document1 || value in formElement)) return false;
+                    const nameIsPermitted = ALLOWED_ATTR[lcName] || EXTRA_ELEMENT_HANDLING.attributeCheck instanceof Function && EXTRA_ELEMENT_HANDLING.attributeCheck(lcName, lcTag);
+                    if (ALLOW_DATA_ATTR && regExpTest(DATA_ATTR$1, lcName)) return true;
+                    if (ALLOW_ARIA_ATTR && regExpTest(ARIA_ATTR$1, lcName)) return true;
+                    if (!nameIsPermitted) return _isBasicCustomElement(lcTag) && _matchesNameCheck(CUSTOM_ELEMENT_HANDLING.tagNameCheck, lcTag) && _matchesNameCheck(CUSTOM_ELEMENT_HANDLING.attributeNameCheck, lcName, lcTag) || "is" === lcName && CUSTOM_ELEMENT_HANDLING.allowCustomizedBuiltInElements && _matchesNameCheck(CUSTOM_ELEMENT_HANDLING.tagNameCheck, value);
+                    if (URI_SAFE_ATTRIBUTES[lcName]) return true;
+                    if (regExpTest(IS_ALLOWED_URI$1, stringReplace(value, ATTR_WHITESPACE$1, ""))) return true;
+                    if (("src" === lcName || "xlink:href" === lcName || "href" === lcName) && "script" !== lcTag && 0 === stringIndexOf(value, "data:") && DATA_URI_TAGS[lcTag]) return true;
+                    if (ALLOW_UNKNOWN_PROTOCOLS && !regExpTest(IS_SCRIPT_OR_DATA$1, stringReplace(value, ATTR_WHITESPACE$1, ""))) return true;
+                    return !value;
+                };
+                const RESERVED_CUSTOM_ELEMENT_NAMES = addToSet({}, [
+                    "annotation-xml",
+                    "color-profile",
+                    "font-face",
+                    "font-face-format",
+                    "font-face-name",
+                    "font-face-src",
+                    "font-face-uri",
+                    "missing-glyph"
+                ]);
+                const _isBasicCustomElement = function(tagName) {
+                    return !RESERVED_CUSTOM_ELEMENT_NAMES[stringToLowerCase(tagName)] && regExpTest(CUSTOM_ELEMENT$1, tagName);
+                };
+                const _applyTrustedTypesToAttribute = function(lcTag, lcName, namespaceURI, value) {
+                    if (trustedTypesPolicy && "object" == typeof trustedTypes && "function" == typeof trustedTypes.getAttributeType && !namespaceURI) switch(trustedTypes.getAttributeType(lcTag, lcName)){
+                        case "TrustedHTML":
+                            return _createTrustedHTML(value);
+                        case "TrustedScriptURL":
+                            return _createTrustedScriptURL(value);
+                    }
+                    return value;
+                };
+                const _setAttributeValue = function(currentNode, name, namespaceURI, value) {
+                    try {
+                        if (namespaceURI) currentNode.setAttributeNS(namespaceURI, name, value);
+                        else currentNode.setAttribute(name, value);
+                        if (_isClobbered(currentNode)) {
+                            _forceRemove(currentNode);
+                            return false;
+                        }
+                        return true;
+                    } catch (_) {
+                        _removeAttribute(name, currentNode);
+                        return false;
+                    }
+                };
+                const _sanitizeAttributes = function(currentNode, root) {
+                    _executeHooks(hooks.beforeSanitizeAttributes, currentNode, null);
+                    if (_handleHookDetachedNode(currentNode, root)) return;
+                    const attributes = currentNode.attributes;
+                    if (!attributes || _isClobbered(currentNode)) return;
+                    ALLOWED_ATTR = _forkSharedAllowlist(hooks.uponSanitizeAttribute, ALLOWED_ATTR, DEFAULT_ALLOWED_ATTR, SET_CONFIG_ALLOWED_ATTR);
+                    const hookEvent = {
+                        attrName: "",
+                        attrValue: "",
+                        keepAttr: true,
+                        allowedAttributes: ALLOWED_ATTR,
+                        forceKeepAttr: void 0
+                    };
+                    let l = attributes.length;
+                    const lcTag = transformCaseFunc(currentNode.nodeName);
+                    while(l--){
+                        const attr = attributes[l];
+                        const name = attr.name, namespaceURI = attr.namespaceURI, attrValue = attr.value;
+                        const lcName = transformCaseFunc(name);
+                        const initValue = attrValue;
+                        let value = "value" === name ? initValue : stringTrim(initValue);
+                        let recreatedNamedProp = false;
+                        hookEvent.attrName = lcName;
+                        hookEvent.attrValue = value;
+                        hookEvent.keepAttr = true;
+                        hookEvent.forceKeepAttr = void 0;
+                        _executeHooks(hooks.uponSanitizeAttribute, currentNode, hookEvent);
+                        value = hookEvent.attrValue;
+                        if (SANITIZE_NAMED_PROPS && ("id" === lcName || "name" === lcName) && 0 !== stringIndexOf(value, SANITIZE_NAMED_PROPS_PREFIX)) {
+                            _removeAttribute(name, currentNode, attr);
+                            value = SANITIZE_NAMED_PROPS_PREFIX + value;
+                            recreatedNamedProp = true;
+                        }
+                        if (SAFE_FOR_XML && regExpTest(/((--!?|])>)|<\/(style|script|title|xmp|textarea|noscript|iframe|noembed|noframes)/i, value)) {
+                            _removeAttribute(name, currentNode, attr);
+                            continue;
+                        }
+                        if ("attributename" === lcName && stringMatch(value, "href")) {
+                            _removeAttribute(name, currentNode, attr);
+                            continue;
+                        }
+                        if (hookEvent.forceKeepAttr) continue;
+                        if (!hookEvent.keepAttr) {
+                            _removeAttribute(name, currentNode, attr);
+                            continue;
+                        }
+                        if (!ALLOW_SELF_CLOSE_IN_ATTR && regExpTest(SELF_CLOSING_TAG, value)) {
+                            _removeAttribute(name, currentNode, attr);
+                            continue;
+                        }
+                        if (SAFE_FOR_TEMPLATES) value = _stripTemplateExpressions(value);
+                        if (!_isValidAttribute(lcTag, lcName, value)) {
+                            _removeAttribute(name, currentNode, attr);
+                            continue;
+                        }
+                        value = _applyTrustedTypesToAttribute(lcTag, lcName, namespaceURI, value);
+                        if (value !== initValue) {
+                            if (_setAttributeValue(currentNode, name, namespaceURI, value) && recreatedNamedProp) arrayPop(DOMPurify.removed);
+                        }
+                    }
+                    _executeHooks(hooks.afterSanitizeAttributes, currentNode, null);
+                    _handleHookDetachedNode(currentNode, root);
+                };
+                const _sanitizeShadowDOM2 = function(fragment) {
+                    let shadowNode = null;
+                    const shadowIterator = _createNodeIterator(fragment);
+                    _executeHooks(hooks.beforeSanitizeShadowDOM, fragment, null);
+                    while(shadowNode = shadowIterator.nextNode()){
+                        _executeHooks(hooks.uponSanitizeShadowNode, shadowNode, null);
+                        _sanitizeElements(shadowNode, fragment);
+                        _sanitizeAttributes(shadowNode, fragment);
+                        if (_isDocumentFragment(shadowNode.content)) _sanitizeShadowDOM2(shadowNode.content);
+                        if (_readNodeType(shadowNode) === NODE_TYPE.element) {
+                            const innerSr = getShadowRoot(shadowNode);
+                            if (_isDocumentFragment(innerSr)) {
+                                _sanitizeAttachedShadowRoots(innerSr);
+                                _sanitizeShadowDOM2(innerSr);
+                            }
+                        }
+                    }
+                    _executeHooks(hooks.afterSanitizeShadowDOM, fragment, null);
+                };
+                const _sanitizeAttachedShadowRoots = function(root) {
+                    const stack = [
+                        {
+                            node: root,
+                            shadow: null
+                        }
+                    ];
+                    while(stack.length > 0){
+                        const item = stack.pop();
+                        if (item.shadow) {
+                            _sanitizeShadowDOM2(item.shadow);
+                            continue;
+                        }
+                        const node = item.node;
+                        const isElement = _readNodeType(node) === NODE_TYPE.element;
+                        const childNodes = getChildNodes(node);
+                        if (childNodes) for(let i = childNodes.length - 1; i >= 0; --i)stack.push({
+                            node: childNodes[i],
+                            shadow: null
+                        });
+                        if (isElement) {
+                            const rootName = getNodeName ? getNodeName(node) : null;
+                            if ("string" == typeof rootName && "template" === transformCaseFunc(rootName)) {
+                                const content = node.content;
+                                if (_isDocumentFragment(content)) stack.push({
+                                    node: content,
+                                    shadow: null
+                                });
+                            }
+                        }
+                        if (isElement) {
+                            const sr = getShadowRoot(node);
+                            if (_isDocumentFragment(sr)) stack.push({
+                                node: null,
+                                shadow: sr
+                            }, {
+                                node: sr,
+                                shadow: null
+                            });
+                        }
+                    }
+                };
+                DOMPurify.sanitize = function(dirty) {
+                    let cfg = arguments.length > 1 && void 0 !== arguments[1] ? arguments[1] : {};
+                    let body = null;
+                    let importedNode = null;
+                    let currentNode = null;
+                    let returnNode = null;
+                    IS_EMPTY_INPUT = !dirty;
+                    if (IS_EMPTY_INPUT) dirty = "<!-->";
+                    if ("string" != typeof dirty && !_isNode(dirty)) {
+                        dirty = stringifyValue(dirty);
+                        if ("string" != typeof dirty) throw typeErrorCreate("dirty is not a string, aborting");
+                    }
+                    if (!DOMPurify.isSupported) return dirty;
+                    if (SET_CONFIG) {
+                        ALLOWED_TAGS = SET_CONFIG_ALLOWED_TAGS;
+                        ALLOWED_ATTR = SET_CONFIG_ALLOWED_ATTR;
+                    } else _parseConfig(cfg);
+                    if (hooks.uponSanitizeElement.length > 0 || hooks.uponSanitizeAttribute.length > 0) ALLOWED_TAGS = clone(ALLOWED_TAGS);
+                    if (hooks.uponSanitizeAttribute.length > 0) ALLOWED_ATTR = clone(ALLOWED_ATTR);
+                    DOMPurify.removed = [];
+                    const inPlace = IN_PLACE && "string" != typeof dirty && _isNode(dirty);
+                    if (inPlace) {
+                        _neutralizePatchLinkage(dirty);
+                        const nn = _readNodeName(dirty);
+                        if ("string" == typeof nn) {
+                            const tagName = transformCaseFunc(nn);
+                            if (!ALLOWED_TAGS[tagName] || FORBID_TAGS[tagName]) {
+                                _neutralizeRoot(dirty);
+                                throw typeErrorCreate("root node is forbidden and cannot be sanitized in-place");
+                            }
+                        }
+                        if (_isClobbered(dirty)) {
+                            _neutralizeRoot(dirty);
+                            throw typeErrorCreate("root node is clobbered and cannot be sanitized in-place");
+                        }
+                        try {
+                            _sanitizeAttachedShadowRoots(dirty);
+                        } catch (error) {
+                            _neutralizeRoot(dirty);
+                            throw error;
+                        }
+                    } else if (_isNode(dirty)) {
+                        body = _initDocument("<!---->");
+                        importedNode = body.ownerDocument.importNode(dirty, true);
+                        if (importedNode.nodeType === NODE_TYPE.element && "BODY" === importedNode.nodeName) body = importedNode;
+                        else if ("HTML" === importedNode.nodeName) body = importedNode;
+                        else body.appendChild(importedNode);
+                        _sanitizeAttachedShadowRoots(body);
+                    } else {
+                        if (!RETURN_DOM && !SAFE_FOR_TEMPLATES && !WHOLE_DOCUMENT && -1 === dirty.indexOf("<")) return trustedTypesPolicy && RETURN_TRUSTED_TYPE ? _createTrustedHTML(dirty) : dirty;
+                        body = _initDocument(dirty);
+                        if (!body) return RETURN_DOM ? null : RETURN_TRUSTED_TYPE ? emptyHTML : "";
+                    }
+                    if (body && FORCE_BODY) _forceRemove(body.firstChild);
+                    const walkRoot = inPlace ? dirty : body;
+                    try {
+                        const nodeIterator = _createNodeIterator(walkRoot);
+                        while(currentNode = nodeIterator.nextNode()){
+                            _sanitizeElements(currentNode, walkRoot);
+                            _sanitizeAttributes(currentNode, walkRoot);
+                            if (_isDocumentFragment(currentNode.content)) _sanitizeShadowDOM2(currentNode.content);
+                        }
+                    } catch (error) {
+                        if (inPlace) {
+                            _neutralizeRoot(dirty);
+                            arrayForEach(DOMPurify.removed, (entry)=>{
+                                if (entry.element) _neutralizeSubtree(entry.element);
+                            });
+                        }
+                        throw error;
+                    }
+                    if (inPlace) {
+                        let rootWasRemoved = false;
+                        arrayForEach(DOMPurify.removed, (entry)=>{
+                            if (entry.element) {
+                                if (entry.element === dirty) rootWasRemoved = true;
+                                _neutralizeSubtree(entry.element);
+                            }
+                        });
+                        if (rootWasRemoved) throw typeErrorCreate("a node selected for removal could not be safely returned; refusing to sanitize in place");
+                        if (SAFE_FOR_TEMPLATES) _scrubTemplateExpressions2(dirty);
+                        return dirty;
+                    }
+                    if (RETURN_DOM) {
+                        if (SAFE_FOR_TEMPLATES) _scrubTemplateExpressions2(body);
+                        if (RETURN_DOM_FRAGMENT) {
+                            returnNode = createDocumentFragment.call(body.ownerDocument);
+                            while(body.firstChild)returnNode.appendChild(body.firstChild);
+                        } else returnNode = body;
+                        if (ALLOWED_ATTR.shadowroot || ALLOWED_ATTR.shadowrootmode) returnNode = importNode.call(originalDocument, returnNode, true);
+                        return returnNode;
+                    }
+                    let serializedHTML = WHOLE_DOCUMENT ? body.outerHTML : body.innerHTML;
+                    if (WHOLE_DOCUMENT && ALLOWED_TAGS["!doctype"] && body.ownerDocument && body.ownerDocument.doctype && body.ownerDocument.doctype.name && regExpTest(DOCTYPE_NAME, body.ownerDocument.doctype.name)) serializedHTML = "<!DOCTYPE " + body.ownerDocument.doctype.name + ">\n" + serializedHTML;
+                    if (SAFE_FOR_TEMPLATES) serializedHTML = _stripTemplateExpressions(serializedHTML);
+                    return trustedTypesPolicy && RETURN_TRUSTED_TYPE ? _createTrustedHTML(serializedHTML) : serializedHTML;
+                };
+                DOMPurify.setConfig = function() {
+                    let cfg = arguments.length > 0 && void 0 !== arguments[0] ? arguments[0] : {};
+                    _parseConfig(cfg);
+                    SET_CONFIG = true;
+                    SET_CONFIG_ALLOWED_TAGS = ALLOWED_TAGS;
+                    SET_CONFIG_ALLOWED_ATTR = ALLOWED_ATTR;
+                };
+                DOMPurify.clearConfig = function() {
+                    CONFIG = null;
+                    SET_CONFIG = false;
+                    SET_CONFIG_ALLOWED_TAGS = null;
+                    SET_CONFIG_ALLOWED_ATTR = null;
+                    trustedTypesPolicy = defaultTrustedTypesPolicy;
+                    emptyHTML = "";
+                };
+                DOMPurify.isValidAttribute = function(tag, attr, value) {
+                    if (!CONFIG) _parseConfig({});
+                    const lcTag = transformCaseFunc(tag);
+                    const lcName = transformCaseFunc(attr);
+                    return _isValidAttribute(lcTag, lcName, value);
+                };
+                DOMPurify.addHook = function(entryPoint, hookFunction) {
+                    if ("function" != typeof hookFunction) return;
+                    if (!objectHasOwnProperty(hooks, entryPoint)) return;
+                    arrayPush(hooks[entryPoint], hookFunction);
+                };
+                DOMPurify.removeHook = function(entryPoint, hookFunction) {
+                    if (!objectHasOwnProperty(hooks, entryPoint)) return;
+                    if (void 0 !== hookFunction) {
+                        const index = arrayLastIndexOf(hooks[entryPoint], hookFunction);
+                        return -1 === index ? void 0 : arraySplice(hooks[entryPoint], index, 1)[0];
+                    }
+                    return arrayPop(hooks[entryPoint]);
+                };
+                DOMPurify.removeHooks = function(entryPoint) {
+                    if (!objectHasOwnProperty(hooks, entryPoint)) return;
+                    hooks[entryPoint] = [];
+                };
+                DOMPurify.removeAllHooks = function() {
+                    hooks = purify_es_createHooksMap();
+                };
+                return DOMPurify;
+            }
+            var purify_default = createDOMPurify();
             function limitHeight(height, options, calledFrom) {
                 const dimension = {
                     unit: "px"
@@ -15561,7 +17627,7 @@
                         buttonElement.classList.add(buttonClass);
                         if (this.options.selectors.buttonClass) buttonElement.classList.add(this.options.selectors.buttonClass);
                         buttonElement = html_adjustButton(buttonElement, show, type, disabled);
-                        buttonElement.innerHTML = text;
+                        buttonElement.textContent = text;
                         if (this.submitButton && contains_default()(this.buttonsElement, this.submitButton)) this.buttonsElement?.insertBefore(buttonElement, this.submitButton);
                         else this.buttonsElement?.appendChild(buttonElement);
                     }
@@ -15867,7 +17933,7 @@
                     if (this.built) {
                         this.reset();
                         this.options.logger.debug("Buttons: unload()");
-                        util_Despot.removeAllListeners();
+                        this.removeAllListeners();
                         this.hide();
                         this.built = false;
                     }
@@ -15904,6 +17970,7 @@
                 options;
                 countdownElement;
                 intervalId;
+                fireTimeoutId;
                 countdown;
                 paused = false;
                 constructor(visuals, options){
@@ -15913,7 +17980,8 @@
                 fire(cb) {
                     this.unload();
                     this.hide();
-                    setTimeout(function() {
+                    this.fireTimeoutId = window.setTimeout(()=>{
+                        this.fireTimeoutId = void 0;
                         cb();
                     }, 0);
                 }
@@ -15923,15 +17991,16 @@
                         if (void 0 !== this.countdown) {
                             this.countdown--;
                             if (this.countdown < 1) this.fire(cb);
-                            else if (this.countdownElement) this.countdownElement.innerHTML = this.countdown.toString();
+                            else if (this.countdownElement) this.countdownElement.textContent = this.countdown.toString();
                         }
                     }
                 }
                 start(cb) {
                     if (!this.countdownElement) throw new Error("Unable to start countdown without an element");
                     if ("number" != typeof this.options.video.countdown) throw new TypeError(`The defined countdown is not a valid number: ${this.options.video.countdown}`);
+                    this.unload();
                     this.countdown = this.options.video.countdown;
-                    this.countdownElement.innerHTML = this.countdown.toString();
+                    this.countdownElement.textContent = this.countdown.toString();
                     this.show();
                     this.intervalId = window.setInterval(this.countBackward.bind(this, cb), 950);
                 }
@@ -15955,12 +18024,14 @@
                     html_showElement(this.countdownElement);
                 }
                 isCountingDown() {
-                    return Boolean(this.intervalId);
+                    return void 0 !== this.intervalId;
                 }
                 unload() {
-                    clearInterval(this.intervalId);
+                    if (void 0 !== this.intervalId) window.clearInterval(this.intervalId);
+                    if (void 0 !== this.fireTimeoutId) window.clearTimeout(this.fireTimeoutId);
                     this.paused = false;
                     this.intervalId = void 0;
+                    this.fireTimeoutId = void 0;
                 }
                 hide() {
                     html_hideElement(this.countdownElement);
@@ -15986,7 +18057,7 @@
                     else {
                         this.facingModeElement = document.createElement("button");
                         this.facingModeElement.classList.add("facingMode");
-                        this.facingModeElement.innerHTML = "⤾";
+                        this.facingModeElement.textContent = "⤾";
                         this.facingModeElement.onclick = (e)=>{
                             e?.preventDefault();
                             try {
@@ -16028,15 +18099,15 @@
                     this.pausedHeaderElement = this.visuals.getElement()?.querySelector(".pausedHeader");
                     if (this.pausedHeaderElement) {
                         this.hide();
-                        this.pausedHeaderElement.innerHTML = this.options.text.pausedHeader;
-                        if (this.options.text.pausedHint && this.pausedHintElement) this.pausedHintElement.innerHTML = this.options.text.pausedHint;
+                        this.pausedHeaderElement.textContent = this.options.text.pausedHeader;
+                        if (this.options.text.pausedHint && this.pausedHintElement) this.pausedHintElement.textContent = this.options.text.pausedHint;
                     } else {
                         this.pausedBlockElement = document.createElement("div");
                         this.pausedBlockElement.classList.add("paused");
                         this.pausedHeaderElement = document.createElement("p");
                         this.pausedHeaderElement.classList.add("pausedHeader");
                         this.hide();
-                        this.pausedHeaderElement.innerHTML = this.options.text.pausedHeader;
+                        this.pausedHeaderElement.textContent = this.options.text.pausedHeader;
                         this.pausedBlockElement.appendChild(this.pausedHeaderElement);
                         if (this.hasPausedHintText()) {
                             this.pausedHintElement = this.visuals.getElement()?.querySelector(".pausedHint");
@@ -16045,7 +18116,7 @@
                                 this.pausedHintElement.classList.add("pausedHint");
                                 this.pausedBlockElement.appendChild(this.pausedHintElement);
                             }
-                            if (this.options.text.pausedHint) this.pausedHintElement.innerHTML = this.options.text.pausedHint;
+                            if (this.options.text.pausedHint) this.pausedHintElement.textContent = this.options.text.pausedHint;
                         }
                         this.visuals.appendChild(this.pausedBlockElement);
                     }
@@ -16160,7 +18231,7 @@
                             this.options.logger.debug(`End is nigh, ${this.countdown} seconds to go`);
                         }
                     }
-                    if (this.recordTimerElement) this.recordTimerElement.innerHTML = `${mins}:${util_pad(secs)}`;
+                    if (this.recordTimerElement) this.recordTimerElement.textContent = `${mins}:${util_pad(secs)}`;
                 }
                 hide() {
                     html_hideElement(this.recordTimerElement);
@@ -16472,7 +18543,7 @@
                     }
                     if (message.length > 0) if (this.messageElement) {
                         const problem = messageOptions?.problem;
-                        this.messageElement.innerHTML = (problem ? "&#x2639; " : "") + message;
+                        this.messageElement.textContent = (problem ? "\u2639 " : "") + message;
                     } else this.options.logger.warn("There is no message element for displaying a message");
                     else this.options.logger.warn("Not going to update notifierMessage element because message is empty");
                     html_showElement(this.messageElement);
@@ -16485,7 +18556,7 @@
                         if (this.notifyElement) this.notifyElement.appendChild(this.explanationElement);
                         else this.options.logger.warn(`Unable to show explanation because notifyElement is empty: ${explanation}`);
                     }
-                    this.explanationElement.innerHTML = explanation;
+                    this.explanationElement.textContent = explanation;
                     html_showElement(this.explanationElement);
                 }
                 build() {
@@ -16569,7 +18640,7 @@
                 "png"
             ];
             let canvas_to_buffer_modern_s;
-            class r {
+            class canvas_to_buffer_modern_r {
                 constructor(t, e = canvas_to_buffer_modern_i, s = .5){
                     if (this.quality = void 0, this.types = void 0, this.canvas = void 0, e.length > 2) throw new Error("Too many image types are specified!");
                     this.canvas = t, this.quality = s, this.types = e;
@@ -16601,7 +18672,7 @@
                     const s = i.split(",")[1];
                     let o;
                     if (!s) throw new Error("Empty uri string given!");
-                    if (o = canvas_to_buffer_modern_e ? window.atob(s) : null == r.atob ? void 0 : r.atob(s), !o) throw new Error("Byte are empty, something within atob went wrong.");
+                    if (o = canvas_to_buffer_modern_e ? window.atob(s) : null == canvas_to_buffer_modern_r.atob ? void 0 : canvas_to_buffer_modern_r.atob(s), !o) throw new Error("Byte are empty, something within atob went wrong.");
                     const n = new Uint8Array(o.length);
                     for(let t = 0, e = o.length; t < e; t++)n[t] = o.charCodeAt(t);
                     return typedarray_to_buffer(n);
@@ -16619,7 +18690,7 @@
                     return canvas_to_buffer_modern_s && canvas_to_buffer_modern_e || (canvas_to_buffer_modern_s = this.figureMimeType()), canvas_to_buffer_modern_s;
                 }
             }
-            r.atob = void 0;
+            canvas_to_buffer_modern_r.atob = void 0;
             var websocket_stream_stream = __webpack_require__("U");
             var stream_default = /*#__PURE__*/ __webpack_require__.n(websocket_stream_stream);
             function getEdgeCodes(value, amount, fromEnd) {
@@ -16771,6 +18842,46 @@
                 return /bot|crawler|spider|headlesschrome|phantomjs|puppeteer|playwright/iu.test(userAgent);
             }
             const util_isAutomatedUserAgent = isAutomatedUserAgent;
+            function summarize(title, contents) {
+                const lines = Object.entries(contents).sort(([keyA], [keyB])=>keyA.localeCompare(keyB)).map(([key, value])=>{
+                    const formattedValue = void 0 === value ? "undefined" : "object" == typeof value ? util_pretty(value) : value;
+                    return `  • ${key}: ${formattedValue}`;
+                });
+                const line = [
+                    `🔎 ${title}`,
+                    ...lines
+                ].join("\n");
+                return line;
+            }
+            const util_summarize = summarize;
+            function getFirstVideoTrack(localMediaStream) {
+                const videoTracks = localMediaStream.getVideoTracks();
+                let videoTrack;
+                if (videoTracks[0]) videoTrack = videoTracks[0];
+                return videoTrack;
+            }
+            const media_getFirstVideoTrack = getFirstVideoTrack;
+            const MEDIA_EVENTS = [
+                "loadstart",
+                "suspend",
+                "progress",
+                "abort",
+                "emptied",
+                "stalled",
+                "pause",
+                "loadeddata",
+                "waiting",
+                "playing",
+                "canplay",
+                "canplaythrough",
+                "seeking",
+                "seeked",
+                "ended",
+                "ratechange",
+                "durationchange",
+                "volumechange"
+            ];
+            const mediaEvents = MEDIA_EVENTS;
             function _define_property(obj, key, value) {
                 if (key in obj) Object.defineProperty(obj, key, {
                     value: value,
@@ -16842,12 +18953,12 @@
                     }
                     let { bufferSize } = this.options.audio;
                     if ("auto" === bufferSize) bufferSize = util_getBrowser(this.options).isFirefox() ? 512 : 2048;
-                    if (!is_power_of_two_default()(bufferSize)) throw error_createError({
-                        message: "Audio buffer size must be a power of two.",
+                    if (void 0 === bufferSize || !is_power_of_two_default()(bufferSize)) throw error_createError({
+                        message: `Audio buffer size must be a power of two. The current buffer size is ${bufferSize}.`,
                         options: this.options
                     });
-                    if (!this.options.audio.volume || src_options.audio.volume > 1) throw error_createError({
-                        message: "Audio volume must be between zero and one.",
+                    if (!Number.isFinite(this.options.audio.volume) || this.options.audio.volume < 0 || this.options.audio.volume > 1) throw error_createError({
+                        message: `Audio volume must be between zero and one. The current volume is ${this.options.audio.volume}.`,
                         options: this.options
                     });
                     volume.gain.value = this.options.audio.volume;
@@ -16870,12 +18981,12 @@
                     if (this.hasAudioContext()) this.getAudioContext().close().then(()=>{
                         this.options.logger.debug("AudioRecorder: audio context is closed");
                         this.vcAudioContext = void 0;
-                    }).catch(function(err) {
-                        if (err instanceof Error) throw error_createError({
+                    }).catch((err)=>{
+                        if (err instanceof Error) return void this.options.logger.error(error_createError({
                             err,
-                            options: src_options
-                        });
-                        throw err;
+                            options: this.options
+                        }));
+                        this.options.logger.error(err);
                     });
                 }
                 getSampleRate() {
@@ -16884,34 +18995,6 @@
                 }
             }
             const media_AudioRecorder = AudioRecorder;
-            function getFirstVideoTrack(localMediaStream) {
-                const videoTracks = localMediaStream.getVideoTracks();
-                let videoTrack;
-                if (videoTracks[0]) videoTrack = videoTracks[0];
-                return videoTrack;
-            }
-            const media_getFirstVideoTrack = getFirstVideoTrack;
-            const MEDIA_EVENTS = [
-                "loadstart",
-                "suspend",
-                "progress",
-                "abort",
-                "emptied",
-                "stalled",
-                "pause",
-                "loadeddata",
-                "waiting",
-                "playing",
-                "canplay",
-                "canplaythrough",
-                "seeking",
-                "seeked",
-                "ended",
-                "ratechange",
-                "durationchange",
-                "volumechange"
-            ];
-            const mediaEvents = MEDIA_EVENTS;
             const VIRTUAL_KEYWORDS = [
                 "obs",
                 "virtual",
@@ -16939,18 +19022,32 @@
                 onLoadedMetaDataReached = false;
                 playingPromiseReached = false;
                 videoTrackLabel;
+                outputEvent = (e)=>{
+                    this.logEvent(e.type, {
+                        readyState: this.rawVisualUserMedia?.readyState
+                    });
+                    this.rawVisualUserMedia?.removeEventListener(e.type, this.outputEvent);
+                };
+                handleMediaError = (event)=>{
+                    this.options.logger.warn(`Caught video element error event: ${util_pretty(event)}`);
+                };
                 constructor(recorder, options){
                     super("UserMedia", options);
                     this.recorder = recorder;
                     this.rawVisualUserMedia = recorder.getRawVisualUserMedia();
                     mediaEvents.forEach((eventName)=>{
-                        this.rawVisualUserMedia?.addEventListener(eventName, this.outputEvent.bind(this), false);
+                        this.rawVisualUserMedia?.addEventListener(eventName, this.outputEvent, false);
                     });
                 }
                 attachMediaStream(stream) {
-                    this.currentVisualStream = stream;
-                    if (this.rawVisualUserMedia) this.rawVisualUserMedia.srcObject = stream;
-                    else throw error_createError({
+                    if (this.rawVisualUserMedia) {
+                        this.rawVisualUserMedia.srcObject = stream;
+                        const previousStream = this.currentVisualStream;
+                        this.currentVisualStream = stream;
+                        if (previousStream && previousStream !== stream) previousStream.getTracks().forEach((track)=>{
+                            track.stop();
+                        });
+                    } else throw error_createError({
                         message: "Error attaching stream to element.",
                         explanation: "Contact the developer about this",
                         options: this.options
@@ -16959,8 +19056,10 @@
                 setVisualStream(localMediaStream) {
                     if (localMediaStream) this.attachMediaStream(localMediaStream);
                     else {
-                        this.rawVisualUserMedia?.removeAttribute("srcObject");
-                        this.rawVisualUserMedia?.removeAttribute("src");
+                        if (this.rawVisualUserMedia) {
+                            this.rawVisualUserMedia.srcObject = null;
+                            this.rawVisualUserMedia.removeAttribute("src");
+                        }
                         this.currentVisualStream = void 0;
                     }
                 }
@@ -16969,26 +19068,22 @@
                     return !this.currentVisualStream?.active;
                 }
                 hasInvalidDimensions() {
-                    if (this.rawVisualUserMedia?.videoWidth && this.rawVisualUserMedia.videoWidth < 3 || this.rawVisualUserMedia?.height && this.rawVisualUserMedia.height < 3) return true;
-                    return false;
+                    if (!this.rawVisualUserMedia) return false;
+                    const { videoWidth, videoHeight } = this.rawVisualUserMedia;
+                    return videoWidth > 0 && videoWidth < 3 || videoHeight > 0 && videoHeight < 3;
                 }
                 logEvent(eventType, params) {
                     this.options.logger.debug(`UserMedia: ... ${EVENT_ASCII} event ${eventType}: ${util_pretty(params)}`);
                 }
-                outputEvent(e) {
-                    this.logEvent(e.type, {
-                        readyState: this.rawVisualUserMedia?.readyState
-                    });
-                    this.rawVisualUserMedia?.removeEventListener(e.type, this.outputEvent.bind(this));
-                }
                 unloadRemainingEventListeners() {
                     this.options.logger.debug("UserMedia: unloadRemainingEventListeners()");
                     mediaEvents.forEach((eventName)=>{
-                        this.rawVisualUserMedia?.removeEventListener(eventName, this.outputEvent.bind(this));
+                        this.rawVisualUserMedia?.removeEventListener(eventName, this.outputEvent);
                     });
+                    this.rawVisualUserMedia?.removeEventListener("error", this.handleMediaError);
                 }
                 audioRecord(audioCallback) {
-                    util_Despot.removeListener("SENDING_FIRST_FRAME");
+                    this.removeListener("SENDING_FIRST_FRAME");
                     this.audioRecorder?.record(audioCallback);
                 }
                 init(localMediaStream, videoCallback, audioCallback, endedEarlyCallback, switchingFacingMode) {
@@ -17004,7 +19099,7 @@
                     const unloadAllEventListeners = ()=>{
                         this.options.logger.debug("UserMedia: unloadAllEventListeners()");
                         this.unloadRemainingEventListeners();
-                        util_Despot.removeListener("SENDING_FIRST_FRAME");
+                        this.removeListener("SENDING_FIRST_FRAME");
                         this.rawVisualUserMedia?.removeEventListener("play", onPlay);
                         this.rawVisualUserMedia?.removeEventListener("loadedmetadata", onLoadedMetaData);
                     };
@@ -17020,11 +19115,14 @@
                                     }
                                 }).catch((exc)=>{
                                     if (exc instanceof Error) this.options.logger.warn(`Caught pending user media promise exception: ${exc.toString()}`);
-                                    else throw error_createError({
-                                        message: "Failed to play user media upon play event.",
-                                        exc,
-                                        options: this.options
-                                    });
+                                    else {
+                                        unloadAllEventListeners();
+                                        endedEarlyCallback(error_createError({
+                                            message: "Failed to play user media upon play event.",
+                                            exc,
+                                            options: this.options
+                                        }));
+                                    }
                                 });
                             }
                         } catch (exc) {
@@ -17035,18 +19133,18 @@
                     const fireCallbacks = ()=>{
                         const readyState = this.rawVisualUserMedia?.readyState;
                         this.options.logger.debug(`UserMedia: fireCallbacks(readyState=${readyState}, onPlayReached=${this.onPlayReached}, onLoadedMetaDataReached=${this.onLoadedMetaDataReached})`);
-                        if (this.onPlayReached && this.onLoadedMetaDataReached) {
+                        if (this.onPlayReached && this.onLoadedMetaDataReached) if (this.audioRecorder) try {
+                            this.audioRecorder.init(localMediaStream);
+                            this.on("SENDING_FIRST_FRAME", ()=>{
+                                this.audioRecord(audioCallback);
+                            });
                             videoCallback();
-                            if (this.audioRecorder) try {
-                                this.audioRecorder.init(localMediaStream);
-                                this.on("SENDING_FIRST_FRAME", ()=>{
-                                    this.audioRecord(audioCallback);
-                                });
-                            } catch (exc) {
-                                unloadAllEventListeners();
-                                endedEarlyCallback(exc);
-                            }
+                        } catch (exc) {
+                            unloadAllEventListeners();
+                            this.stop();
+                            endedEarlyCallback(exc);
                         }
+                        else videoCallback();
                     };
                     const onPlay = ()=>{
                         try {
@@ -17111,9 +19209,8 @@
                         else this.options.logger.debug("UserMedia: detected (but no video tracks exist");
                         this.rawVisualUserMedia?.addEventListener("loadedmetadata", onLoadedMetaData);
                         this.rawVisualUserMedia?.addEventListener("play", onPlay);
-                        this.rawVisualUserMedia?.addEventListener("error", (err)=>{
-                            this.options.logger.warn(`Caught video element error event: ${util_pretty(err)}`);
-                        });
+                        this.rawVisualUserMedia?.removeEventListener("error", this.handleMediaError);
+                        this.rawVisualUserMedia?.addEventListener("error", this.handleMediaError);
                         this.setVisualStream(localMediaStream);
                         play();
                     } catch (exc) {
@@ -17126,7 +19223,7 @@
                     return this.videoTrackLabel;
                 }
                 isReady() {
-                    return Boolean(this.rawVisualUserMedia?.src);
+                    return Boolean(this.rawVisualUserMedia?.srcObject || this.rawVisualUserMedia?.currentSrc);
                 }
                 stop(visualStream, params) {
                     try {
@@ -17229,7 +19326,7 @@
                 }
             }
             const visuals_userMedia = UserMedia;
-            var Buffer = __webpack_require__("dY").Buffer;
+            var Buffer = __webpack_require__("dY2").Buffer;
             const PIPE_SYMBOL = "°º¤ø,¸¸,ø¤º°`°º¤ø,¸,ø¤°º¤ø,¸¸,ø¤º°`°º¤ø,¸ ";
             class Recorder extends util_Despot {
                 visuals;
@@ -17245,7 +19342,9 @@
                 userMedia;
                 userMediaTimeout;
                 retryTimeout;
+                reconnectTimeout;
                 connectionTimeout;
+                stopTimeout;
                 frameProgress;
                 sampleProgress;
                 canvas;
@@ -17259,12 +19358,15 @@
                 connecting = false;
                 connected = false;
                 connectionFailed = false;
+                reconnecting = false;
+                reconnectAttempts = 0;
                 blocking = false;
                 built = false;
                 key;
                 waitingTime;
                 connectingStartedAt;
                 lastCloseEvent;
+                lastSocketError;
                 pingInterval;
                 frame;
                 recordingBuffer;
@@ -17319,13 +19421,16 @@
                     }
                 }
                 sendPings() {
+                    this.stopPings();
                     this.pingInterval = window.setInterval(()=>{
                         this.options.logger.debug("Recorder: pinging...");
                         this.writeStream(Buffer.from(""));
                     }, this.options.timeouts.pingInterval);
                 }
                 stopPings() {
-                    clearInterval(this.pingInterval);
+                    if (void 0 === this.pingInterval) return;
+                    window.clearInterval(this.pingInterval);
+                    this.pingInterval = void 0;
                 }
                 onAudioSample(audioSample) {
                     this.samplesCount++;
@@ -17341,6 +19446,7 @@
                         const switchingFacingMode = params?.switchingFacingMode;
                         this.userMediaLoading = this.blocking = this.unloaded = this.submitting = false;
                         this.userMediaLoaded = true;
+                        this.clearUserMediaTimeout();
                         if (!switchingFacingMode) this.loop = this.createLoop();
                         this.show();
                         if (params?.recordWhenReady) this.record();
@@ -17356,57 +19462,101 @@
                     }
                 }
                 clearRetryTimeout() {
-                    if (!this.retryTimeout) return;
+                    if (void 0 === this.retryTimeout) return;
                     this.options.logger.debug("Recorder: clearRetryTimeout()");
                     window.clearTimeout(this.retryTimeout);
                     this.retryTimeout = void 0;
                 }
                 clearConnectionTimeout() {
-                    if (!this.connectionTimeout) return;
+                    if (void 0 === this.connectionTimeout) return;
                     this.options.logger.debug("Recorder: clearConnectionTimeout()");
                     window.clearTimeout(this.connectionTimeout);
                     this.connectionTimeout = void 0;
+                }
+                clearReconnectTimeout() {
+                    if (void 0 === this.reconnectTimeout) return;
+                    this.options.logger.debug("Recorder: clearReconnectTimeout()");
+                    window.clearTimeout(this.reconnectTimeout);
+                    this.reconnectTimeout = void 0;
+                }
+                handleConnectionFailure(params) {
+                    if (this.retryConnection(params)) return;
+                    this.failConnection(params);
+                }
+                retryConnection(params) {
+                    if (!this.reconnecting || !this.userMediaLoaded || !this.isOnline() || this.unloaded || this.blocking) return false;
+                    if (void 0 !== this.reconnectTimeout) return true;
+                    const delayMs = Math.min(1000 * 2 ** this.reconnectAttempts, 10000);
+                    this.reconnectAttempts++;
+                    this.connecting = false;
+                    this.clearConnectionTimeout();
+                    this.discardSocket();
+                    this.options.logger.debug(`Recorder: retrying WebSocket connection in ${delayMs}ms (cause ${params.cause}).`);
+                    this.reconnectTimeout = window.setTimeout(()=>{
+                        this.reconnectTimeout = void 0;
+                        if (this.reconnecting && !this.unloaded && !this.blocking) this.initSocket();
+                    }, delayMs);
+                    return true;
+                }
+                discardSocket() {
+                    this.options.logger.debug("Recorder: discarding socket stream ...");
+                    const stream = this.stream;
+                    this.stream = void 0;
+                    if (stream && !stream.destroyed) stream.destroy();
+                }
+                isOnline() {
+                    return navigator.onLine;
                 }
                 failConnection(params) {
                     if (this.connectionFailed || this.connected || this.unloaded) return;
                     this.connectionFailed = true;
                     this.connecting = false;
+                    this.reconnecting = false;
+                    this.reconnectAttempts = 0;
+                    this.clearReconnectTimeout();
                     this.clearConnectionTimeout();
                     const { url2Connect, cause } = params;
-                    const online = navigator.onLine;
+                    const online = this.isOnline();
                     const elapsedMs = this.connectingStartedAt ? Date.now() - this.connectingStartedAt : void 0;
                     const closeEvent = this.lastCloseEvent;
-                    const diagnosticLines = [
-                        `  • cause: ${cause}`,
-                        `  • closeCode: ${closeEvent?.code ?? "undefined"}`,
-                        `  • closeReason: ${closeEvent?.reason || "undefined"}`,
-                        `  • elapsedMs: ${elapsedMs ?? "undefined"}`,
-                        `  • online: ${online}`,
-                        `  • unloaded: ${this.unloaded ?? "undefined"}`,
-                        `  • userMediaLoaded: ${this.userMediaLoaded ?? "undefined"}`,
-                        `  • userMediaLoading: ${this.userMediaLoading}`,
-                        `  • wasClean: ${closeEvent?.wasClean ?? "undefined"}`
-                    ];
-                    const debugLine = [
-                        "🔎 Recorder: failConnection() diagnostic",
-                        ...diagnosticLines
-                    ].join("\n");
+                    const socketError = this.lastSocketError;
+                    const contents = {
+                        cause,
+                        closeCode: closeEvent?.code,
+                        closeReason: closeEvent?.reason,
+                        elapsedMs,
+                        online,
+                        secureContext: globalThis.isSecureContext,
+                        socketReadyState: this.stream?.socket.readyState,
+                        timeoutMs: this.options.timeouts.connection,
+                        url: url2Connect,
+                        unloaded: this.unloaded,
+                        userMediaLoaded: this.userMediaLoaded,
+                        userMediaLoading: this.userMediaLoading,
+                        wasClean: closeEvent?.wasClean,
+                        socketError,
+                        blocking: this.blocking,
+                        visibilityState: document.visibilityState
+                    };
+                    const debugLine = util_summarize("Recorder: failConnection() diagnostic", contents);
                     this.options.logger.debug(debugLine);
                     let explanation;
                     if (online) if ("timeout" === cause) explanation = `The server at ${url2Connect} did not respond within ${this.options.timeouts.connection}ms, even though your device is online. This usually points to a firewall or proxy silently dropping the connection. Please try a different network. If the problem persists, contact us.`;
+                    else if ("error" === cause) explanation = `An error occurred while connecting to ${url2Connect}. Please check your internet connection and try again. If the problem persists, contact us.`;
                     else {
                         const closeSuffix = closeEvent ? ` (code ${closeEvent.code})` : "";
                         explanation = `Connection to ${url2Connect} is closed${closeSuffix}. Please check your internet connection and try again. If the problem persists, contact us.`;
                     }
                     else explanation = "Your device appears to be offline. Please check your internet connection and try again.";
-                    if (this.stream) {
-                        this.stream.destroy();
-                        this.stream = void 0;
-                    }
+                    this.discardSocket();
                     const err = error_createError({
                         message: "Unable to connect to the server",
                         explanation,
-                        options: this.options
+                        options: this.options,
+                        cause: contents,
+                        exc: socketError ? new Error("WebSocket connection error", {
+                            cause: socketError
+                        }) : void 0
                     });
                     this.emit("ERROR", {
                         err
@@ -17481,162 +19631,209 @@
                     this.recordingStats.waitingTime = this.waitingTime;
                 }
                 initSocket(cb) {
-                    if (!this.connected) {
-                        if (util_isAutomatedUserAgent()) {
-                            this.connecting = false;
-                            this.options.logger.debug("Recorder: skipping web socket connection for an automated crawler");
-                            return;
-                        }
-                        this.connecting = true;
-                        this.connectionFailed = false;
-                        this.connectingStartedAt = Date.now();
-                        this.lastCloseEvent = void 0;
-                        this.emit("CONNECTING");
-                        let url2Connect;
-                        try {
-                            const socketUrlObj = new URL(this.options.socketUrl);
-                            socketUrlObj.searchParams.set(constants.WHITELIST_KEY_LABEL, this.options.whitelistKey);
-                            url2Connect = socketUrlObj.toString();
-                        } catch (exc) {
-                            this.connecting = this.connected = false;
-                            const err = error_createError({
-                                message: "Invalid WebSocket URL",
-                                explanation: `The configured socketUrl "${this.options.socketUrl}" is not a valid URL. Please check your videomail-client configuration.`,
-                                options: this.options,
-                                exc
-                            });
-                            this.emit("ERROR", {
-                                err
-                            });
-                            return;
-                        }
-                        this.options.logger.debug(`Recorder: initializing web socket stream to ${url2Connect}`);
-                        let nativeSocket;
-                        try {
-                            nativeSocket = new WebSocket(url2Connect);
-                            nativeSocket.addEventListener("close", (event)=>{
-                                this.lastCloseEvent = {
-                                    code: event.code,
-                                    reason: event.reason,
-                                    wasClean: event.wasClean
-                                };
-                            });
-                        } catch (exc) {
-                            this.connecting = this.connected = false;
-                            const diagnostic = error_getWebSocketDiagnostic(url2Connect);
-                            const message = diagnostic.looksAutomated ? "Automated crawler: WebSocket not supported in this environment" : `Failed to construct WebSocket to ${url2Connect}`;
-                            const explanation = diagnostic.looksAutomated ? "Headless crawlers cannot use Videomail's WebSocket. No action needed." : `Please check your connection and try again. If the problem persists, contact us. Diagnostic: ${diagnostic.text}`;
-                            const err = error_createError({
-                                message,
-                                explanation,
-                                options: this.options,
-                                exc
-                            });
-                            this.emit("ERROR", {
-                                err
-                            });
-                            return;
-                        }
-                        try {
-                            this.stream = stream_default()(nativeSocket);
-                        } catch (exc) {
-                            this.connecting = this.connected = false;
-                            const err = error_createError({
-                                message: `Failed to create a stream to ${url2Connect}`,
-                                explanation: "Please check your connection and try again. If the problem persists, contact us.",
-                                options: this.options,
-                                exc
-                            });
-                            this.emit("ERROR", {
-                                err
-                            });
-                        }
-                        if (this.stream) {
-                            const connectionTimeoutMs = this.options.timeouts.connection;
-                            this.connectionTimeout = window.setTimeout(()=>{
-                                this.failConnection({
+                    if (this.connected) {
+                        this.options.logger.debug("Recorder: already **connected**. Not going to initialize a new WebSocket connection.");
+                        cb?.();
+                        return;
+                    }
+                    if (this.connecting) return void this.options.logger.debug("Recorder: already **connecting**. Not going to initialize a new WebSocket connection.");
+                    this.clearReconnectTimeout();
+                    if (util_isAutomatedUserAgent()) {
+                        this.connecting = false;
+                        this.options.logger.debug("Recorder: skipping web socket connection for an automated crawler");
+                        return;
+                    }
+                    this.connecting = true;
+                    this.connectionFailed = false;
+                    this.connectingStartedAt = Date.now();
+                    this.lastCloseEvent = void 0;
+                    this.lastSocketError = void 0;
+                    this.emit("CONNECTING");
+                    let url2Connect;
+                    try {
+                        const socketUrlObj = new URL(this.options.socketUrl);
+                        socketUrlObj.searchParams.set(constants.WHITELIST_KEY_LABEL, this.options.whitelistKey);
+                        url2Connect = socketUrlObj.toString();
+                    } catch (exc) {
+                        this.connecting = this.connected = false;
+                        const err = error_createError({
+                            message: "Invalid WebSocket URL",
+                            explanation: `The configured socketUrl "${this.options.socketUrl}" is not a valid URL. Please check your videomail-client configuration.`,
+                            options: this.options,
+                            exc
+                        });
+                        this.emit("ERROR", {
+                            err
+                        });
+                        return;
+                    }
+                    this.options.logger.debug(`Recorder: initializing web socket stream to ${url2Connect}`);
+                    let nativeSocket;
+                    try {
+                        nativeSocket = new WebSocket(url2Connect);
+                        nativeSocket.addEventListener("close", (event)=>{
+                            this.lastCloseEvent = {
+                                code: event.code,
+                                reason: event.reason,
+                                wasClean: event.wasClean
+                            };
+                        });
+                        nativeSocket.addEventListener("error", (event)=>{
+                            this.lastSocketError = error_getEventDetails(event);
+                        });
+                    } catch (exc) {
+                        this.connecting = this.connected = false;
+                        const diagnostic = error_getWebSocketDiagnostic(url2Connect);
+                        const message = diagnostic.looksAutomated ? "Automated crawler: WebSocket not supported in this environment" : `Failed to construct WebSocket to ${url2Connect}`;
+                        const explanation = diagnostic.looksAutomated ? "Headless crawlers cannot use Videomail's WebSocket. No action needed." : `Please check your connection and try again. If the problem persists, contact us. Diagnostic: ${diagnostic.text}`;
+                        const err = error_createError({
+                            message,
+                            explanation,
+                            options: this.options,
+                            exc
+                        });
+                        this.emit("ERROR", {
+                            err
+                        });
+                        return;
+                    }
+                    try {
+                        this.stream = stream_default()(nativeSocket);
+                    } catch (exc) {
+                        this.connecting = this.connected = false;
+                        const err = error_createError({
+                            message: `Failed to create a stream to ${url2Connect}`,
+                            explanation: "Please check your connection and try again. If the problem persists, contact us.",
+                            options: this.options,
+                            exc
+                        });
+                        this.emit("ERROR", {
+                            err
+                        });
+                    }
+                    if (this.stream) {
+                        const connectionTimeoutMs = this.options.timeouts.connection;
+                        this.connectionTimeout = window.setTimeout(()=>{
+                            if (this.isOnline() && this.isUserMediaLoaded()) {
+                                this.options.logger.debug(`${PIPE_SYMBOL}Reconnecting due to connection timeout.`);
+                                this.reconnecting = true;
+                                this.handleConnectionFailure({
                                     url2Connect,
                                     cause: "timeout"
                                 });
-                            }, connectionTimeoutMs);
-                            this.stream.on("close", ()=>{
-                                this.options.logger.debug(`${PIPE_SYMBOL}Stream has closed, connecting=${this.connecting}, connected=${this.connected}, userMediaLoaded=${this.userMediaLoaded}`);
-                                const tryReconnect = this.connected && this.userMediaLoaded;
-                                this.connected = false;
-                                if (tryReconnect) this.initSocket();
-                                else if (!this.connecting) window.setTimeout(()=>{
-                                    this.failConnection({
-                                        url2Connect,
-                                        cause: "closed"
-                                    });
-                                }, 0);
+                            } else this.handleConnectionFailure({
+                                url2Connect,
+                                cause: "timeout"
                             });
-                            this.stream.on("connect", (args)=>{
-                                this.options.logger.debug(`${PIPE_SYMBOL}Stream *connect* event emitted with args: ${util_pretty(args)}`);
-                                this.clearConnectionTimeout();
-                                const isClosing = this.stream?.socket.readyState === WebSocket.CLOSING;
-                                if (!this.connected && !isClosing && !this.unloaded) {
-                                    this.connected = true;
-                                    this.connecting = this.unloaded = false;
-                                    this.emit("CONNECTED");
-                                    cb?.();
-                                }
+                        }, connectionTimeoutMs);
+                        this.stream.on("close", ()=>{
+                            const debugLine = util_summarize(`${PIPE_SYMBOL}Stream has closed:`, {
+                                connecting: this.connecting,
+                                connected: this.connected,
+                                userMediaLoaded: this.userMediaLoaded,
+                                blocking: this.blocking
                             });
-                            this.stream.on("data", (data)=>{
-                                this.options.logger.debug(`${PIPE_SYMBOL}Stream *data* event emitted`);
-                                try {
-                                    const command = JSON.parse(data.toString());
-                                    this.executeCommand(command);
-                                } catch (exc) {
-                                    this.options.logger.error(`Failed to parse command: ${exc}`);
-                                    const err = error_createError({
-                                        message: "Invalid server command",
-                                        explanation: `Contact us. The invalid command was: ${data.toString()}.`,
-                                        options: this.options,
-                                        exc
-                                    });
-                                    this.emit("ERROR", {
-                                        err
-                                    });
-                                }
+                            this.options.logger.debug(debugLine);
+                            const tryReconnect = this.connected && this.userMediaLoaded;
+                            this.connected = false;
+                            if (tryReconnect) {
+                                this.reconnecting = true;
+                                this.initSocket();
+                            } else if (!this.connecting && !this.blocking) window.setTimeout(()=>{
+                                this.handleConnectionFailure({
+                                    url2Connect,
+                                    cause: "closed"
+                                });
+                            }, 0);
+                        });
+                        this.stream.on("connect", (args)=>{
+                            this.options.logger.debug(`${PIPE_SYMBOL}Stream *connect* event emitted with args: ${util_pretty(args)}`);
+                            this.clearConnectionTimeout();
+                            const isClosing = this.stream?.socket.readyState === WebSocket.CLOSING;
+                            if (!this.connected && !isClosing && !this.unloaded) {
+                                this.connected = true;
+                                this.connecting = this.unloaded = false;
+                                this.reconnecting = false;
+                                this.reconnectAttempts = 0;
+                                this.clearReconnectTimeout();
+                                this.emit("CONNECTED");
+                                cb?.();
+                            }
+                        });
+                        this.stream.on("data", (data)=>{
+                            this.options.logger.debug(`${PIPE_SYMBOL}Stream *data* event emitted`);
+                            try {
+                                const command = JSON.parse(data.toString());
+                                this.executeCommand(command);
+                            } catch (exc) {
+                                this.options.logger.error(`Failed to parse command: ${exc}`);
+                                const err = error_createError({
+                                    message: "Invalid server command",
+                                    explanation: `Contact us. The invalid command was: ${data.toString()}.`,
+                                    options: this.options,
+                                    exc
+                                });
+                                this.emit("ERROR", {
+                                    err
+                                });
+                            }
+                        });
+                        this.stream.on("error", (err)=>{
+                            if ("u" > typeof Event && err instanceof Event) this.lastSocketError = error_getEventDetails(err);
+                            else this.lastSocketError = serializeError(err);
+                            const debugLine = util_summarize(`${PIPE_SYMBOL}Stream *error* event emitted:`, {
+                                error: serializeError(err)
                             });
-                            this.stream.on("error", (err)=>{
-                                this.options.logger.debug(`${PIPE_SYMBOL}Stream *error* event emitted: ${util_pretty(err)}`);
+                            this.options.logger.debug(debugLine);
+                            if (!this.connected) return void this.handleConnectionFailure({
+                                url2Connect,
+                                cause: "error"
                             });
-                            this.stream.on("drain", ()=>{
-                                this.options.logger.debug(`${PIPE_SYMBOL}Stream *drain* event emitted (should not happen!)`);
+                            const streamError = err instanceof Error ? err : new Error("WebSocket stream emitted an error event", {
+                                cause: this.lastSocketError ?? err
                             });
-                            this.stream.on("preend", (args)=>{
-                                this.options.logger.debug(`${PIPE_SYMBOL}Stream *preend* event emitted with args: ${util_pretty(args)}`);
+                            this.emit("ERROR", {
+                                err: error_createError({
+                                    message: "WebSocket stream error",
+                                    explanation: `The WebSocket stream emitted an error event. Details: ${util_pretty(err)}`,
+                                    options: this.options,
+                                    exc: streamError
+                                })
                             });
-                            this.stream.on("end", ()=>{
-                                this.options.logger.debug(`${PIPE_SYMBOL}Stream *end* event emitted`);
-                            });
-                            this.stream.on("drain", (args)=>{
-                                this.options.logger.debug(`${PIPE_SYMBOL}Stream *drain* event emitted with args: ${util_pretty(args)}`);
-                            });
-                            this.stream.on("pipe", (src)=>{
-                                this.options.logger.debug(`${PIPE_SYMBOL}Stream *pipe* event emitted with src: ${util_pretty(src)}`);
-                            });
-                            this.stream.on("unpipe", (src)=>{
-                                this.options.logger.debug(`${PIPE_SYMBOL}Stream *unpipe* event emitted with src: ${util_pretty(src)}`);
-                            });
-                            this.stream.on("resume", (args)=>{
-                                this.options.logger.debug(`${PIPE_SYMBOL}Stream *resume* event emitted with args: ${util_pretty(args)}`);
-                            });
-                            this.stream.on("uncork", (args)=>{
-                                this.options.logger.debug(`${PIPE_SYMBOL}Stream *uncork* event emitted with args: ${util_pretty(args)}`);
-                            });
-                            this.stream.on("readable", (args)=>{
-                                this.options.logger.debug(`${PIPE_SYMBOL}Stream *readable* event emitted with args: ${util_pretty(args)}`);
-                            });
-                            this.stream.on("prefinish", (args)=>{
-                                this.options.logger.debug(`${PIPE_SYMBOL}Stream *prefinish* event emitted with args: ${util_pretty(args)}`);
-                            });
-                            this.stream.on("finish", (args)=>{
-                                this.options.logger.debug(`${PIPE_SYMBOL}Stream *finish* event emitted with args: ${util_pretty(args)}`);
-                            });
-                        }
+                        });
+                        this.stream.on("drain", ()=>{
+                            this.options.logger.debug(`${PIPE_SYMBOL}Stream *drain* event emitted (should not happen!)`);
+                        });
+                        this.stream.on("preend", (args)=>{
+                            this.options.logger.debug(`${PIPE_SYMBOL}Stream *preend* event emitted with args: ${util_pretty(args)}`);
+                        });
+                        this.stream.on("end", ()=>{
+                            this.options.logger.debug(`${PIPE_SYMBOL}Stream *end* event emitted`);
+                        });
+                        this.stream.on("drain", (args)=>{
+                            this.options.logger.debug(`${PIPE_SYMBOL}Stream *drain* event emitted with args: ${util_pretty(args)}`);
+                        });
+                        this.stream.on("pipe", (src)=>{
+                            this.options.logger.debug(`${PIPE_SYMBOL}Stream *pipe* event emitted with src: ${util_pretty(src)}`);
+                        });
+                        this.stream.on("unpipe", (src)=>{
+                            this.options.logger.debug(`${PIPE_SYMBOL}Stream *unpipe* event emitted with src: ${util_pretty(src)}`);
+                        });
+                        this.stream.on("resume", (args)=>{
+                            this.options.logger.debug(`${PIPE_SYMBOL}Stream *resume* event emitted with args: ${util_pretty(args)}`);
+                        });
+                        this.stream.on("uncork", (args)=>{
+                            this.options.logger.debug(`${PIPE_SYMBOL}Stream *uncork* event emitted with args: ${util_pretty(args)}`);
+                        });
+                        this.stream.on("readable", (args)=>{
+                            this.options.logger.debug(`${PIPE_SYMBOL}Stream *readable* event emitted with args: ${util_pretty(args)}`);
+                        });
+                        this.stream.on("prefinish", (args)=>{
+                            this.options.logger.debug(`${PIPE_SYMBOL}Stream *prefinish* event emitted with args: ${util_pretty(args)}`);
+                        });
+                        this.stream.on("finish", (args)=>{
+                            this.options.logger.debug(`${PIPE_SYMBOL}Stream *finish* event emitted with args: ${util_pretty(args)}`);
+                        });
                     }
                 }
                 showUserMedia() {
@@ -17648,24 +19845,28 @@
                     return this.blocking;
                 }
                 userMediaErrorCallback(err, usedConstraints) {
+                    if (this.unloaded) return void this.options.logger.debug(`Recorder: already unloaded. Not going to throw error ${util_pretty(err)}`);
                     this.userMediaLoading = false;
                     this.clearUserMediaTimeout();
                     const characteristics = this.userMedia?.getCharacteristics();
                     this.options.logger.debug(`Recorder: userMediaErrorCallback(), name: ${err.name}, message: ${err.message} and Webcam characteristics: ${characteristics ? util_pretty(characteristics) : "none"}`);
-                    const errorListeners = util_Despot.getListeners("ERROR");
-                    if (errorListeners?.length) {
-                        if (err.name !== error_VideomailError.MEDIA_DEVICE_NOT_SUPPORTED) {
-                            const videomailError = error_createError({
-                                err,
-                                options: this.options,
-                                usedConstraints
-                            });
-                            this.emit("ERROR", {
-                                err: videomailError
-                            });
-                        } else this.options.logger.debug(`Recorder: ignore user media error ${util_pretty(err)}`);
-                        this.retryTimeout = window.setTimeout(this.initSocket.bind(this), this.options.timeouts.userMedia);
-                    } else if (this.unloaded) this.options.logger.debug(`Recorder: already unloaded. Not going to throw error ${util_pretty(err)}`);
+                    const errorListeners = this.getListeners("ERROR");
+                    if (errorListeners?.length) if (err.name !== error_VideomailError.MEDIA_DEVICE_NOT_SUPPORTED) {
+                        const videomailError = error_createError({
+                            err,
+                            options: this.options,
+                            usedConstraints
+                        });
+                        this.emit("ERROR", {
+                            err: videomailError
+                        });
+                    } else {
+                        this.options.logger.debug(`Recorder: ignore user media error ${util_pretty(err)}`);
+                        this.retryTimeout = window.setTimeout(()=>{
+                            this.retryTimeout = void 0;
+                            if (!this.unloaded) this.loadUserMedia();
+                        }, this.options.timeouts.userMedia);
+                    }
                     else {
                         this.options.logger.debug(`Recorder: no error listeners attached but throwing error ${util_pretty(err)}`);
                         throw error_createError({
@@ -17676,26 +19877,46 @@
                     }
                 }
                 getUserMediaCallback(localStream, params) {
-                    if (!this.userMedia) throw new Error("No user media is defined");
+                    if (!this.userMedia) {
+                        localStream.getTracks().forEach((track)=>{
+                            track.stop();
+                        });
+                        throw error_createError({
+                            message: "No user media is defined",
+                            options: this.options
+                        });
+                    }
                     this.options.logger.debug(`Recorder: getUserMediaCallback(${params ? util_pretty(params) : ""})`);
                     if (this.showUserMedia()) try {
-                        this.clearUserMediaTimeout();
                         this.userMedia.init(localStream, ()=>{
-                            this.onUserMediaReady(params);
+                            if (!this.unloaded) this.onUserMediaReady(params);
                         }, this.onAudioSample.bind(this), (err)=>{
-                            this.emit("ERROR", {
-                                err
+                            if (!this.unloaded) this.userMediaErrorCallback(err, {
+                                audio: isAudioEnabled(this.options)
                             });
                         }, params?.switchingFacingMode);
                     } catch (exc) {
+                        localStream.getTracks().forEach((track)=>{
+                            track.stop();
+                        });
+                        this.userMediaLoading = false;
+                        this.clearUserMediaTimeout();
                         this.emit("ERROR", {
                             exc
                         });
+                    }
+                    else {
+                        localStream.getTracks().forEach((track)=>{
+                            track.stop();
+                        });
+                        this.userMediaLoading = false;
+                        this.clearUserMediaTimeout();
                     }
                 }
                 loadGenuineUserMedia(params) {
                     this.options.logger.debug(`Recorder: loadGenuineUserMedia(${params ? util_pretty(params) : ""})`);
                     this.emit("ASKING_WEBCAM_PERMISSION");
+                    this.userMediaLoading = true;
                     const constraints = {
                         video: {
                             frameRate: {
@@ -17722,13 +19943,16 @@
                             ideal: idealHeight
                         };
                     }
-                    this.options.logger.debug(`Recorder: our webcam constraints are: ${util_pretty(constraints)}`);
-                    this.options.logger.debug(`Recorder: available webcam constraints are: ${util_pretty(navigator.mediaDevices.getSupportedConstraints())}`);
+                    this.options.logger.debug(util_summarize("Recorder: our webcam constraints are:", constraints));
+                    this.options.logger.debug(util_summarize("Recorder: available webcam constraints are:", navigator.mediaDevices.getSupportedConstraints()));
                     const streamPromise = navigator.mediaDevices.getUserMedia(constraints);
                     streamPromise.then((localStream)=>{
+                        if (this.unloaded) return void localStream.getTracks().forEach((track)=>{
+                            track.stop();
+                        });
                         this.getUserMediaCallback(localStream, params);
                     }).catch((reason)=>{
-                        this.userMediaErrorCallback(reason, constraints);
+                        if (!this.unloaded) this.userMediaErrorCallback(reason, constraints);
                     });
                 }
                 loadUserMedia(params) {
@@ -17742,7 +19966,8 @@
                     try {
                         if (!navigator.mediaDevices) throw new Error("No media devices are available.");
                         this.userMediaTimeout = window.setTimeout(()=>{
-                            if (!this.isReady()) {
+                            if (!this.userMediaLoaded) {
+                                this.userMediaLoading = false;
                                 const err = util_getBrowser(this.options).getNoAccessIssue();
                                 this.emit("ERROR", {
                                     err
@@ -17755,7 +19980,7 @@
                         this.clearUserMediaTimeout();
                         this.options.logger.debug("Recorder: failed to load genuine user media");
                         this.userMediaLoading = false;
-                        const errorListeners = util_Despot.getListeners("ERROR");
+                        const errorListeners = this.getListeners("ERROR");
                         if (errorListeners?.length) this.emit("ERROR", {
                             exc
                         });
@@ -17768,8 +19993,10 @@
                 executeCommand(command) {
                     if (this.unloaded) return;
                     try {
-                        if (command.args) this.options.logger.debug(`Server commanded: ${command.command} with ${util_pretty(command.args)}`);
-                        else this.options.logger.debug(`Server commanded: ${command.command}`);
+                        if (command.args) {
+                            const debugLine = util_summarize(`Server commanded: ${command.command} with:`, command.args);
+                            this.options.logger.debug(debugLine);
+                        } else this.options.logger.debug(`Server commanded: ${command.command}`);
                         switch(command.command){
                             case "ready":
                                 this.emit("SERVER_READY");
@@ -17839,16 +20066,16 @@
                                 command,
                                 args
                             };
-                            this.writeStream(Buffer.from(JSON.stringify(commandObj)));
-                            if (cb) setTimeout(function() {
-                                cb();
-                            }, 0);
+                            this.writeStream(Buffer.from(JSON.stringify(commandObj)), cb ? {
+                                onFlushedCallback: ()=>{
+                                    queueMicrotask(cb);
+                                }
+                            } : void 0);
                         }
                     } else {
                         this.options.logger.debug(`Reconnecting for the command ${command} …`);
                         this.initSocket(()=>{
-                            this.writeCommand(command, args);
-                            cb?.();
+                            this.writeCommand(command, args, cb);
                         });
                     }
                 }
@@ -17883,7 +20110,8 @@
                         limitReached
                     });
                     this.loop?.complete();
-                    setTimeout(()=>{
+                    this.stopTimeout = window.setTimeout(()=>{
+                        this.stopTimeout = void 0;
                         this.stopTime = Date.now();
                         const videoType = this.replay.getVideoType();
                         if (!videoType) throw new Error("Unable to video record when no video type is defined.");
@@ -17918,6 +20146,7 @@
                 reInitializeAudio() {
                     this.options.logger.debug("Recorder: reInitializeAudio()");
                     this.clearUserMediaTimeout();
+                    this.userMediaLoading = false;
                     this.userMedia?.stop();
                     this.userMediaLoaded = this.key = this.canvas = this.ctx = void 0;
                     this.loadUserMedia();
@@ -17932,14 +20161,17 @@
                     this.reset();
                     this.clearUserMediaTimeout();
                     this.clearConnectionTimeout();
+                    this.clearReconnectTimeout();
+                    this.clearRetryTimeout();
+                    this.clearStopTimeout();
+                    this.stopPings();
+                    this.userMediaLoading = false;
                     this.connecting = false;
+                    this.reconnecting = false;
+                    this.reconnectAttempts = 0;
                     if (this.userMedia) this.userMedia.unloadRemainingEventListeners();
                     if (this.submitting) ;
-                    else if (this.stream) {
-                        this.options.logger.debug("Recorder: destroying stream ...");
-                        this.stream.destroy();
-                        this.stream = void 0;
-                    }
+                    else if (this.stream) this.discardSocket();
                     this.unloaded = true;
                     this.built = this.connecting = this.connected = false;
                 }
@@ -17954,11 +20186,16 @@
                     }
                 }
                 clearUserMediaTimeout() {
-                    if (this.userMediaTimeout) {
+                    if (void 0 !== this.userMediaTimeout) {
                         this.options.logger.debug("Recorder: clearUserMediaTimeout()");
                         window.clearTimeout(this.userMediaTimeout);
                         this.userMediaTimeout = void 0;
                     }
+                }
+                clearStopTimeout() {
+                    if (void 0 === this.stopTimeout) return;
+                    window.clearTimeout(this.stopTimeout);
+                    this.stopTimeout = void 0;
                 }
                 validate() {
                     return this.connected && void 0 === this.canvas;
@@ -18034,7 +20271,13 @@
                     if (!this.connected) {
                         this.options.logger.debug("Recorder: reconnecting before recording …");
                         this.initSocket(()=>{
-                            this.once("USER_MEDIA_READY", this.record.bind(this));
+                            this.once("SERVER_READY", ()=>{
+                                if (this.unloaded) return;
+                                if (this.userMediaLoaded || this.options.loadUserMediaOnRecord) this.record();
+                                else this.once("USER_MEDIA_READY", ()=>{
+                                    if (!this.unloaded) this.record();
+                                });
+                            });
                         });
                         return;
                     }
@@ -18087,7 +20330,7 @@
                         });
                         return;
                     }
-                    this.frame = new r(this.canvas, this.options.image.types, this.options.image.quality);
+                    this.frame = new canvas_to_buffer_modern_r(this.canvas, this.options.image.types, this.options.image.quality);
                     this.options.logger.debug("Recorder: record()");
                     this.userMedia.record();
                     this.emit("RECORDING", {
@@ -18341,6 +20584,21 @@
                 built = false;
                 replayElement;
                 videomail;
+                canPlayThroughHandler;
+                togglePlayback = (e)=>{
+                    e.preventDefault();
+                    if (this.replayElement?.paused) this.replayElement.play().catch((exc)=>{
+                        const err = error_createError({
+                            message: `Failed to play replay video upon ${e.type} event.`,
+                            exc,
+                            options: this.options
+                        });
+                        this.emit("ERROR", {
+                            err
+                        });
+                    });
+                    else this.replayElement?.pause();
+                };
                 constructor(visuals, options){
                     super("Replay", options);
                     this.visuals = visuals;
@@ -18360,7 +20618,7 @@
                         attributeContainer = this.replayElement?.parentNode?.querySelector(`.${attribute}`);
                         if (attributeContainer) {
                             const empty = !attributeContainer.innerHTML || attributeContainer.innerHTML.length < 1;
-                            if (empty) attributeContainer.innerHTML = newVideomail[attribute];
+                            if (empty) attributeContainer.textContent = String(newVideomail[attribute]);
                         }
                     });
                 }
@@ -18374,12 +20632,12 @@
                         heightValue = this.videomail.height;
                         if (widthValue && heightValue) ratio = heightValue / widthValue;
                     }
-                    if (!widthValue) {
+                    if (!widthValue && (videoHeight > 0 || this.options.video.height)) {
                         const newWidthDimensions = dimensions_calculateWidth(responsive, this.options, videoHeight, ratio);
                         const newWidth = newWidthDimensions.value;
                         widthValue = newWidth;
                     }
-                    if (!heightValue) {
+                    if (!heightValue && (videoWidth > 0 || this.options.video.width)) {
                         let element = this.visuals.getElement();
                         if (!element) element = document.body;
                         const newDimensions = dimensions_calculateHeight(responsive, videoWidth, this.options, ratio, element);
@@ -18392,6 +20650,7 @@
                 }
                 setVideomail(newVideomail, playerOnly = false) {
                     this.videomail = newVideomail;
+                    this.replayElement?.setAttribute("controls", "controls");
                     if (this.videomail.mp4) this.setMp4Source(this.videomail.mp4);
                     if (this.videomail.webm) this.setWebMSource(this.videomail.webm);
                     if (this.videomail.vtt) this.setTrackSource(this.videomail.vtt);
@@ -18414,17 +20673,16 @@
                     } else html_showElement(this.replayElement);
                     if (playerOnly) html_showElement(this.replayElement.parentElement);
                     else this.visuals.show();
-                    if (hasAudio) this.replayElement.setAttribute("volume", "1");
+                    if (hasAudio) this.replayElement.volume = 1;
                     else if (!isAudioEnabled(this.options)) this.replayElement.setAttribute("muted", "true");
                     this.replayElement.load();
-                    if (this.videomail) this.replayElement.addEventListener("canplaythrough", ()=>{
-                        this.emit("REPLAY_SHOWN");
-                    }, {
-                        once: true
-                    });
-                    else this.replayElement.addEventListener("canplaythrough", ()=>{
-                        this.emit("PREVIEW_SHOWN");
-                    }, {
+                    if (this.canPlayThroughHandler) this.replayElement.removeEventListener("canplaythrough", this.canPlayThroughHandler);
+                    const eventName = this.videomail ? "REPLAY_SHOWN" : "PREVIEW_SHOWN";
+                    this.canPlayThroughHandler = ()=>{
+                        this.canPlayThroughHandler = void 0;
+                        this.emit(eventName);
+                    };
+                    this.replayElement.addEventListener("canplaythrough", this.canPlayThroughHandler, {
                         once: true
                     });
                 }
@@ -18445,37 +20703,21 @@
                             this.replayElement?.setAttribute("controls", "controls");
                             this.show(params?.width, params?.height, params?.hasAudio);
                         });
-                        this.replayElement.addEventListener("touchstart", (e)=>{
-                            e.preventDefault();
-                            if (this.replayElement?.paused) this.replayElement.play().catch((exc)=>{
-                                throw error_createError({
-                                    message: "Failed to play replay video while paused upon touchstart event.",
-                                    exc,
-                                    options: this.options
-                                });
-                            });
-                            else this.replayElement?.pause();
-                        }, {
-                            passive: true
-                        });
-                        this.replayElement.addEventListener("click", (e)=>{
-                            e.preventDefault();
-                            if (this.replayElement?.paused) this.replayElement.play().catch((exc)=>{
-                                throw error_createError({
-                                    message: "Failed to play replay video while paused upon click event.",
-                                    exc,
-                                    options: this.options
-                                });
-                            });
-                            else this.replayElement?.pause();
-                        });
+                        this.replayElement.addEventListener("touchstart", this.togglePlayback);
+                        this.replayElement.addEventListener("click", this.togglePlayback);
                     }
                     this.built = true;
                     this.options.logger.debug("Replay: built.");
                 }
                 unload(params) {
                     this.options.logger.debug("Replay: unload()");
-                    util_Despot.removeAllListeners();
+                    if (this.canPlayThroughHandler) {
+                        this.replayElement?.removeEventListener("canplaythrough", this.canPlayThroughHandler);
+                        this.canPlayThroughHandler = void 0;
+                    }
+                    this.replayElement?.removeEventListener("touchstart", this.togglePlayback);
+                    this.replayElement?.removeEventListener("click", this.togglePlayback);
+                    this.removeAllListeners();
                     if (params?.startingOver) this.hide();
                     else {
                         this.replayElement?.remove();
@@ -18517,7 +20759,7 @@
                     let source = this.getVideoSource(type);
                     let url = src;
                     if (url && bustCache) url += `?${Date.now()}`;
-                    if (source) if (src) source.setAttribute("src", src);
+                    if (source) if (url) source.setAttribute("src", url);
                     else source.remove();
                     else if (src) {
                         const { fps } = this.options.video;
@@ -18600,9 +20842,9 @@
                 }
                 buildNoScriptTag() {
                     let noScriptElement = this.container.querySelector("noscript");
-                    if (noScriptElement) {
+                    if (!noScriptElement) {
                         noScriptElement = document.createElement("noscript");
-                        noScriptElement.innerHTML = "Please enable Javascript";
+                        noScriptElement.textContent = "Please enable JavaScript";
                         this.visualsElement?.appendChild(noScriptElement);
                     }
                 }
@@ -18889,6 +21131,25 @@
                 lastValidation = false;
                 containerElement;
                 built = false;
+                stopListeningToVisibility;
+                handleWindowResize = ()=>{
+                    if (this.built) this.emit("WINDOW_RESIZE", "container");
+                };
+                handleBeforeUnload = (e)=>{
+                    this.unload({
+                        e
+                    });
+                };
+                handleKeyDown = (e)=>{
+                    const element = e.target;
+                    const tagName = element.tagName;
+                    const isEditable = element.isContentEditable || "true" === element.contentEditable;
+                    if (!isEditable && tagName && "INPUT" !== tagName.toUpperCase() && "TEXTAREA" !== tagName.toUpperCase() && "Space" === e.code) {
+                        e.preventDefault();
+                        if (this.options.enablePause) this.visuals.pauseOrResume();
+                        else this.visuals.recordOrStop();
+                    }
+                };
                 constructor(options){
                     super("Container", options);
                     this.visuals = new wrappers_visuals(this, options);
@@ -18971,18 +21232,11 @@
                 }
                 initEvents(playerOnly = false) {
                     this.options.logger.debug(`Container: initEvents (playerOnly = ${playerOnly})`);
-                    if (this.options.recalculateDimensionsOnWindowResize) window.addEventListener("resize", ()=>{
-                        if (!this.built) return;
-                        this.emit("WINDOW_RESIZE", "container");
-                    });
-                    if (this.options.enableAutoUnload) window.addEventListener("beforeunload", (e)=>{
-                        this.unload({
-                            e
-                        });
-                    }, {
+                    if (this.options.recalculateDimensionsOnWindowResize) window.addEventListener("resize", this.handleWindowResize);
+                    if (this.options.enableAutoUnload) window.addEventListener("beforeunload", this.handleBeforeUnload, {
                         once: true
                     });
-                    if (!playerOnly) this.visibility.onChange((visible)=>{
+                    if (!playerOnly) this.stopListeningToVisibility = this.visibility.onChange((visible)=>{
                         if (this.built) if (visible) {
                             if (isAutoPauseEnabled(this.options) && this.isCountingDown()) this.resume();
                             this.emit("VISIBLE");
@@ -18992,19 +21246,7 @@
                         }
                     });
                     if (this.options.enableSpace) {
-                        if (!playerOnly) window.addEventListener("keydown", (e)=>{
-                            const element = e.target;
-                            const tagName = element.tagName;
-                            const isEditable = element.isContentEditable || "true" === element.contentEditable;
-                            if (!isEditable && tagName && "INPUT" !== tagName.toUpperCase() && "TEXTAREA" !== tagName.toUpperCase()) {
-                                const code = e.code;
-                                if ("Space" === code) {
-                                    e.preventDefault();
-                                    if (this.options.enablePause) this.visuals.pauseOrResume();
-                                    else this.visuals.recordOrStop();
-                                }
-                            }
-                        });
+                        if (!playerOnly) window.addEventListener("keydown", this.handleKeyDown);
                     }
                     this.on("ERROR", (params)=>{
                         this.processError(params);
@@ -19040,6 +21282,13 @@
                         this.form = void 0;
                     }
                     this.endWaiting();
+                }
+                removeBrowserEventListeners() {
+                    window.removeEventListener("resize", this.handleWindowResize);
+                    window.removeEventListener("beforeunload", this.handleBeforeUnload);
+                    window.removeEventListener("keydown", this.handleKeyDown);
+                    this.stopListeningToVisibility?.();
+                    this.stopListeningToVisibility = void 0;
                 }
                 hideMySelf() {
                     html_hideElement(this.containerElement);
@@ -19107,7 +21356,8 @@
                             exc
                         });
                     } finally{
-                        util_Despot.removeAllListeners();
+                        this.removeBrowserEventListeners();
+                        this.removeAllListeners();
                         this.built = this.submitted = false;
                     }
                 }
@@ -19310,7 +21560,7 @@
                             err
                         });
                     } finally{
-                        if (response?.text && "text/html" === response.type) document.body.innerHTML = response.text;
+                        if (response?.text && "text/html" === response.type) document.body.innerHTML = purify_default.sanitize(response.text);
                         this.endWaiting();
                     }
                 }
@@ -19384,7 +21634,6 @@
                 constructor(options = {}){
                     super("VideomailClient", options_mergeWithDefaultOptions(options));
                     this.validateOptions();
-                    util_Despot.removeAllListeners();
                     this.container = new wrappers_container(this.options);
                 }
                 validateOptions() {

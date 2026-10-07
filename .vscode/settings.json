@@ -2,5 +2,5 @@
   "editor.tabSize": 2,
   "files.trimTrailingWhitespace": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "prettier.configPath": "./prettier.config.cjs"
+  "prettier.configPath": "./prettier.config.js"
 }

@@ -3,14 +3,14 @@
 return apply_filters('ninja_forms_videomail_field_settings', array(
 
   'media_library' => array(
-		'name'  => 'media_library',
-		'type'  => 'toggle',
-		'value' => 'false',
-		'label' => __('Save to Media Library', 'videomail-for-ninja-forms'),
-		'group' => 'primary',
-		'width' => 'one-half',
-		'help'  => __('Save to Media Library.', 'videomail-for-ninja-forms'),
-	),
+    'name'  => 'media_library',
+    'type'  => 'toggle',
+    'value' => 'false',
+    'label' => __('Save to Media Library', 'videomail-for-ninja-forms'),
+    'group' => 'primary',
+    'width' => 'one-half',
+    'help'  => __('Save to Media Library.', 'videomail-for-ninja-forms'),
+  ),
 
   'audio_enabled' => array(
     'name' => 'audio_enabled',
@@ -19,7 +19,7 @@ return apply_filters('ninja_forms_videomail_field_settings', array(
     'width' => 'one-half',
     'group' => 'primary',
     'value' => true,
-    'help' => __('The audio feature is in beta and needs feedback for improvement. Otherwise leave it disabled and stick to Sign Language, grins')
+    'help' => __('The audio feature is in beta and needs feedback for improvement. Otherwise leave it disabled and stick to Sign Language, grins', 'videomail-for-ninja-forms')
   ),
 
   'whitelist_key' => array(

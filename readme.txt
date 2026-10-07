@@ -3,7 +3,7 @@ Contributors: michael.heuberger, kbjohnson90
 Tags: video, email, recorder, sign language
 Requires at least: 6.0
 Tested up to: 6.9.5
-Stable tag: 11.3.1
+Stable tag: 12.1.0
 Requires PHP: 8.1.0
 Donate link: https://videomail.io/faq
 License: CC0-1.0
@@ -71,6 +71,41 @@ To get help, just use any of these contacts at [https://binarykitchen.com](https
 2. Once you have assembled a form and preview it, any browser will ask for webcam access first.
 
 == Changelog ==
+
+= 12.1.0 (7 Oct 2026) =
+
+**Improvement**
+* Reconnect upon network failures, after 1s, 2s, 4s and 10s permanently.
+
+**Change:**
+* Improve deployment docs.
+* Reformat line-breaks in our documentation
+
+= 12.0.0 (1 Oct 2026) =
+
+**Change:**
+* Overhaul releasing procedure
+* Simpler version handling for developers
+
+**Fix:**
+* Upon form errors, include the source for WordPress administrators
+* Always give undefined PHP values a variable
+* For mobile phones, it now can reconnect during network interruptions
+* Do not process videomails without an alias any longer
+
+**Security:**
+* Escape any sources, URL and API responses
+
+= 11.4.0 (29 Sep 2026) =
+
+**Improvement**
+* Duplicate browser windows while recording are now supported
+
+**Change:**
+* Fake cameras are now blocked
+
+**Fix:**
+* For mobile phones, it now can reconnect during network interruptions
 
 = 11.3.1 (27 Sep 2026) =
 

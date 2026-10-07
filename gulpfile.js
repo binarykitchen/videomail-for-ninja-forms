@@ -1,113 +1,144 @@
-const gulp = require("gulp");
-const nib = require("nib");
-const plugins = require("gulp-load-plugins")();
-const argv = require("yargs").argv;
-const sourcemaps = require("gulp-sourcemaps");
-const del = require("del");
-const minimist = require("minimist");
-const log = require("fancy-log");
-const browserSync = require("browser-sync").create();
+import autoprefixer from "autoprefixer";
+import browserSyncPackage from "browser-sync";
+import cssnano from "cssnano";
+import { build as esbuild } from "esbuild";
+import gulp from "gulp";
+import zipPlugin from "gulp-zip";
+import nib from "nib";
+import { copyFile, mkdir, readFile, rm, writeFile } from "node:fs/promises";
+import path from "node:path";
+import { parseArgs } from "node:util";
+import postcss from "postcss";
+import stylus from "stylus";
 
-const defaultOptions = {
-  importance: null,
-  version: null,
-};
+const { dest, parallel, series, src, watch: watchFiles } = gulp;
+const browserSync = browserSyncPackage.create();
 
-const options = minimist(process.argv.slice(2), { default: defaultOptions });
+const targetDirectory = "target";
+const cssOutput = path.join(targetDirectory, "css", "main-min.css");
+const videomailClientOutput = path.join(
+  targetDirectory,
+  "js",
+  "videomail-client",
+  "index-min.js",
+);
 
-log.info("Options:", options);
+function getDevelopmentServerOptions() {
+  const { values } = parseArgs({
+    args: process.argv.slice(2),
+    allowPositionals: true,
+    strict: false,
+    options: {
+      host: { type: "string", default: "localhost" },
+      port: { type: "string", default: "8890" },
+    },
+  });
 
-function start(done) {
-  const port = argv.port || 8890;
-  const host = argv.host || "localhost";
-
-  let projectUrl = "https://" + host;
-
-  if (port) {
-    projectUrl += ":" + port;
-  }
-
-  projectUrl += "/wp-admin/admin.php?page=ninja-forms";
-
-  const options = {
-    proxy: projectUrl,
-    browser: "google chrome",
-    port,
-    open: false,
-    injectChanges: true,
-  };
-
-  // http://www.browsersync.io/docs/options/
-  browserSync.init(options, done);
+  return values;
 }
 
-function bundle() {
-  return (
-    gulp
-      .src("src/js/main.js")
-      .pipe(sourcemaps.init())
-      .pipe(plugins.uglify())
-      .pipe(plugins.rename({ suffix: "-min" }))
-      // TODO fix, sourcemaps do not seem to work (switch to webpack?)
-      .pipe(sourcemaps.write())
-      .pipe(gulp.dest("target/js"))
+function start(done) {
+  const { host, port } = getDevelopmentServerOptions();
+  const numericPort = Number(port);
+  const projectUrl = `https://${host}:${numericPort}/wp-admin/admin.php?page=ninja-forms`;
+
+  browserSync.init(
+    {
+      proxy: projectUrl,
+      browser: "google chrome",
+      port: numericPort,
+      open: false,
+      injectChanges: true,
+    },
+    done,
   );
 }
 
-function copyVideomailClient() {
-  return gulp
-    .src("node_modules/videomail-client/dist/umd/index.js")
-    .pipe(plugins.rename({ suffix: "-min" }))
-    .pipe(gulp.dest("target/js/videomail-client"));
+async function bundle() {
+  await esbuild({
+    entryPoints: ["src/js/main.js"],
+    entryNames: "[name]-min",
+    outdir: path.join(targetDirectory, "js"),
+    format: "iife",
+    target: "es2019",
+    minify: true,
+    sourcemap: true,
+    legalComments: "none",
+  });
 }
 
-function css() {
-  return gulp
-    .src("src/styl/main.styl")
-    .pipe(plugins.plumber())
-    .pipe(
-      plugins.stylus({
-        use: [nib()],
-        errors: true,
-      }),
-    )
-    .pipe(plugins.autoprefixer("last 3 versions", "> 2%"))
-    .pipe(plugins.bytediff.start())
-    .pipe(plugins.cssnano())
-    .pipe(plugins.rename({ suffix: "-min" }))
-    .pipe(plugins.bytediff.stop())
-    .pipe(browserSync.stream())
-    .pipe(gulp.dest("target/css"));
+async function copyVideomailClient() {
+  await mkdir(path.dirname(videomailClientOutput), { recursive: true });
+  await copyFile(
+    "node_modules/videomail-client/dist/umd/index.js",
+    videomailClientOutput,
+  );
 }
 
-function cleanPhp() {
-  return del(["target/**/*.{php,html}"]);
+async function compileStylus(source, filename) {
+  return new Promise((resolve, reject) => {
+    stylus(source)
+      .set("filename", filename)
+      .use(nib())
+      .render((error, css) => {
+        if (error) reject(error);
+        else resolve(css);
+      });
+  });
+}
+
+async function css() {
+  const sourceFile = "src/styl/main.styl";
+  const source = await readFile(sourceFile, "utf8");
+  const compiledCss = await compileStylus(source, sourceFile);
+  const result = await postcss([autoprefixer(), cssnano()]).process(compiledCss, {
+    from: sourceFile,
+    to: cssOutput,
+    map: { inline: false },
+  });
+
+  await mkdir(path.dirname(cssOutput), { recursive: true });
+  await writeFile(cssOutput, result.css);
+
+  if (result.map) {
+    await writeFile(`${cssOutput}.map`, result.map.toString());
+  }
+}
+
+async function clean() {
+  await rm(targetDirectory, { recursive: true, force: true });
+}
+
+async function cleanPhp() {
+  await rm(path.join(targetDirectory, "php"), { recursive: true, force: true });
 }
 
 function copyPhp() {
-  return gulp.src("src/**/*.{php,html}").pipe(gulp.dest("target"));
+  return src("src/**/*.{php,html}").pipe(dest(targetDirectory));
 }
 
-const php = gulp.series(cleanPhp, copyPhp);
+const php = series(cleanPhp, copyPhp);
 
-function watch() {
-  gulp.watch("src/**/*.{php,html}", php).on("change", browserSync.reload);
-  gulp.watch("src/js/**/*.js", bundle).on("change", browserSync.reload);
-  gulp.watch("src/styl/**/*.styl", css).on("change", browserSync.reload);
+function reload(done) {
+  browserSync.reload();
+  done();
+}
+
+function watchSources() {
+  watchFiles("src/**/*.{php,html}", series(php, reload));
+  watchFiles("src/js/**/*.js", series(bundle, reload));
+  watchFiles("src/styl/**/*.styl", series(css, reload));
 }
 
 function zip() {
-  return gulp
-    .src(["index.php", "readme.txt", "videomail-for-ninja-forms.php", "target/**"], {
-      base: "./",
-    })
-    .pipe(plugins.zip("videomail-for-ninja-forms.zip"))
-    .pipe(gulp.dest("dist"));
+  return src(["index.php", "readme.txt", "videomail-for-ninja-forms.php", "target/**"], {
+    base: "./",
+  })
+    .pipe(zipPlugin("videomail-for-ninja-forms.zip"))
+    .pipe(dest("dist"));
 }
 
-// just builds assets once, nothing else
-const build = gulp.series(css, bundle, copyVideomailClient, php);
+const build = series(clean, parallel(css, bundle, copyVideomailClient, copyPhp));
+const watch = series(build, start, watchSources);
 
-exports.build = build;
-exports.zip = zip;
-exports.watch = gulp.series(build, start, watch);
+export { build, clean, watch, zip };

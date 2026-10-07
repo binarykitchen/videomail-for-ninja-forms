@@ -4,10 +4,19 @@ on:
   push:
     branches:
       - develop
+      - master
 
   pull_request:
     branches:
       - develop
+      - master
+
+permissions:
+  contents: read
+
+concurrency:
+  group: checks-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   prettier-lint-and-build:
@@ -18,20 +27,33 @@ jobs:
       - name: 🛒 Checkout code
         uses: actions/checkout@v7
 
-      - name: 🪛 Install Node.js via nvm
-        shell: bash --login {0}
-        run: |
-          nvm install --no-progress
-          echo "$(dirname $(nvm which node))" >> $GITHUB_PATH
+      - name: 🪛 Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.1"
+          coverage: none
 
       - name: 📦 Install npm dependencies
         run: npm ci
 
-      - name: 🔎 Run prettier
-        run: npm run prettier
+      - name: Check PHP syntax
+        run: npm run lint:php
 
-      - name: 🔎 Run linter
-        run: npm run lint
+      - name: Check formatting, JavaScript and build
+        run: npm run check
 
-      - name: 🔨 Build
-        run: npm run build
+      - name: Verify committed build output
+        run: |
+          if [[ -n "$(git status --porcelain -- target)" ]]; then
+            echo "::error::Generated build output under target/ is missing from the commit or out of date."
+            echo "Run 'npm run build', review the changes, and commit the updated target/ files."
+            echo "Git status for target/:"
+            git status --short -- target
+            exit 1
+          fi

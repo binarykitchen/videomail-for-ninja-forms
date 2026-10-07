@@ -16,12 +16,17 @@ final class NF_Videomail_Admin_Metaboxes_Submission extends NF_Abstracts_Submiss
 
   public function render_metabox($post, $metabox) {
     $videomail = $this->sub->get_extra_value('videomail');
+    if (!is_array($videomail) || empty($videomail['alias'])) {
+      return;
+    }
+
+    $alias = rawurlencode(sanitize_text_field($videomail['alias']));
 
     $data = array(
-      'poster' => $videomail['poster'],
+      'poster' => $videomail['poster'] ?? '',
       'source' => array(
-        'video/webm' => 'https://videomail.io/videomail/' . $videomail['alias'] . '/type/webm',
-        'video/mp4'  => 'https://videomail.io/videomail/' . $videomail['alias'] . '/type/mp4',
+        'video/webm' => 'https://videomail.io/videomail/' . $alias . '/type/webm',
+        'video/mp4'  => 'https://videomail.io/videomail/' . $alias . '/type/mp4',
       ),
       'text' => array(
         'download' => __('Download', 'videomail-for-ninja-forms')

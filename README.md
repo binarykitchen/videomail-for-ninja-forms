@@ -18,10 +18,20 @@ In short: this add-on runs on the Ninja Forms plugin engine where you can config
 
 ## Playground
 
-If you would like to have a quick play, you can quickly spawn a temporary WordPress site using TasteWP with this URL:
-<https://tastewp.com/recipe/fba0d4f1cd>
+If you would like to have a quick play, you can quickly spawn a temporary WordPress site using TasteWP with this URL: <https://buildglass.s2-tastewp.com/?nf_preview_form=2>
 
-Just note that it will last 6 days only and that you'll have to create a [new whitelist entry](https://www.videomail.io/whitelist) for that.
+### Playground Note
+
+For any major updates of this plugin, we developers should do the following:
+
+1. Log into <https://tastewp.com/dashboard/>
+2. Delete and recreate the temporary WordPress site.
+3. Install & Activate the Ninja Forms plugin.
+4. Install & Activate the Videomail for Ninja Forms plugin.
+5. In the WordPress admin, go to Ninja Forms > Import /Export
+   and import the template form from ./examples/nf_form_video_contact_us.nff
+6. Click on "Preview changes" to see the form in action.
+7. Update that preview URL in this documentation accordingly.
 
 ## Development (Personal)
 
@@ -45,7 +55,7 @@ Note: depending on your OS the `gulp watch` command might result into errors;
 ### Arch Linux Issues
 
 - Afraid have to amend `sudo` before `npm run mh` or so.
-- Can't use .local domain as it's [reserved under Arch Linux](https://community.localwp.com/t/local-tld-is-not-resolved-when-in-hosts-file-if-used-on-arch-based-linux/43793/6).
+- Can't use .local domain as it's [reserved under Arch Linux](<https://community.localwp.com/t/local-tld-is-not-resolved-when-in-hosts-file-if-used-on-arch-basedgit> -linux/43793/6).
 
 ### Customize host or port
 
@@ -74,27 +84,20 @@ In the `/doc` folder we place in all text and images for the public documentatio
 
 ## Releasing
 
-1. Ensure you are on develop branch
-2. Consider any updates with `ncu`
-3. Run `npm run clean`,
-4. Write changelog in `readme.txt`
-5. Bump version(s) if any, in `readme.txt`:
-   - Check "stable tag" for this VC plugin's using latest version.
-     - Align it with `readme.txt`
-   - (Optional) If there was a WordPress upgrade, bump it under "tested up to" (test first)
-6. Search for current version and replace it with the new one. Should be these files:
-   - [package.json](package.json)
-   - [readme.txt](readme.txt)
-   - [src/js/main.js](src/js/main.js)
-   - [src/php/videomail.php](src/php/videomail.php)
-   - [videomail-for-ninja-forms.php](videomail-for-ninja-forms.php)
-7. Optional: validate readme.txt with <https://wordpress.org/plugins/developers/readme-validator/>
-8. Run `npm install && npm run build`
-9. Review changes, add them with `git add -A`
-10. Git commit with `git commit -am 'Rebuilt for the next version` and push that
-11. Run `npm run release` which will run the release workflow on GitHub
-12. Wait until the release is published and make sure the new version is shown on <https://wordpress.org/plugins/videomail-for-ninja-forms>
-13. Announce on Social Media
+1. Ensure the `develop` branch remains clean and current.
+2. Review dependency updates with `npm outdated`.
+   - Whenever updated, test all over again.
+3. Add the new changelog section to `readme.txt`.
+4. Set the version to the new version number once, for example like this: `npm version 12.1.0 --no-git-tag-version`.
+   - This npm lifecycle synchronizes the stable tag, plugin header, PHP constant, JavaScript diagnostic version, and lockfile, all in one go.
+5. (Optional) update "Tested up to" after testing the corresponding WordPress release.
+6. Run `npm run check`, review the generated files
+7. Commit everything with a short summary which ...
+   - can be extracted from the [readme.txt](readme.txt)
+   - and then push to `develop`.
+8. Wait for the Test Runner workflow to pass.
+9. Run `npm run release`. The script validates and packages the plugin, merges and tags the release, then creates the GitHub release.
+10. The release workflow deploys to WordPress.org and attaches its canonical ZIP to GitHub. Verify the new version on <https://wordpress.org/plugins/videomail-for-ninja-forms>.
 
 ## Ask for help
 

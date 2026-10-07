@@ -2,7 +2,7 @@
 final class NF_Videomail {
 
   const NAME = 'Videomail';
-  const VERSION = '11.3.1';
+  const VERSION = '12.1.0';
   const AUTHOR = 'Michael Heuberger + Kyle B. Johnson';
   const SLUG = 'videomail';
   const PREFIX = 'NF_Videomail';
@@ -99,9 +99,12 @@ final class NF_Videomail {
   public static function template($file_name = '', array $data = array()) {
     if (!$file_name) return;
 
-    extract($data);
+    $templatePath = self::$templatesDir . basename($file_name);
+    if (!is_readable($templatePath)) return;
 
-    include self::$templatesDir . $file_name;
+    extract($data, EXTR_SKIP);
+
+    include $templatePath;
   }
 
   public static function config($file_name) {
