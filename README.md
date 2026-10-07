@@ -18,8 +18,7 @@ In short: this add-on runs on the Ninja Forms plugin engine where you can config
 
 ## Playground
 
-If you would like to have a quick play, you can quickly spawn a temporary WordPress site using TasteWP with this URL:
-<https://buildglass.s2-tastewp.com/?nf_preview_form=2>
+If you would like to have a quick play, you can quickly spawn a temporary WordPress site using TasteWP with this URL: <https://buildglass.s2-tastewp.com/?nf_preview_form=2>
 
 ### Playground Note
 
@@ -85,16 +84,20 @@ In the `/doc` folder we place in all text and images for the public documentatio
 
 ## Releasing
 
-1. Ensure `develop` is clean and current, then run `nvm use && npm ci`.
-2. (Optional) Review dependency updates with `npm outdated`.
+1. Ensure the `develop` branch remains clean and current.
+2. Review dependency updates with `npm outdated`.
+   - Whenever updated, test all over again.
 3. Add the new changelog section to `readme.txt`.
-4. (Optional) Set the version to the new version number once, for example with `npm version 11.5.0 --no-git-tag-version`.
-   - The npm lifecycle synchronizes the stable tag, plugin header, PHP constant, JavaScript diagnostic version, and lockfile.
+4. Set the version to the new version number once, for example like this: `npm version 12.1.0 --no-git-tag-version`.
+   - This npm lifecycle synchronizes the stable tag, plugin header, PHP constant, JavaScript diagnostic version, and lockfile, all in one go.
 5. (Optional) update "Tested up to" after testing the corresponding WordPress release.
-6. Run `npm run check`, review the generated files, commit everything, and push `develop`.
-7. Wait for the Test Runner workflow to pass.
-8. Run `npm run release`. The script validates and packages the plugin, merges and tags the release, then creates the GitHub release.
-9. The release workflow deploys to WordPress.org and attaches its canonical ZIP to GitHub. Verify the new version on <https://wordpress.org/plugins/videomail-for-ninja-forms>.
+6. Run `npm run check`, review the generated files
+7. Commit everything with a short summary which ...
+   - can be extracted from the [readme.txt](readme.txt)
+   - and then push to `develop`.
+8. Wait for the Test Runner workflow to pass.
+9. Run `npm run release`. The script validates and packages the plugin, merges and tags the release, then creates the GitHub release.
+10. The release workflow deploys to WordPress.org and attaches its canonical ZIP to GitHub. Verify the new version on <https://wordpress.org/plugins/videomail-for-ninja-forms>.
 
 ## Ask for help
 

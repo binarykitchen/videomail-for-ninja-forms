@@ -429,7 +429,7 @@
                     return parts.join('');
                 }
             },
-            dY (__unused_rspack_module, exports1, __webpack_require__) {
+            dY2 (__unused_rspack_module, exports1, __webpack_require__) {
                 "use strict";
                 /*!
  * The buffer module from node.js, for the browser.
@@ -1712,7 +1712,7 @@
                     return null === arg || 'boolean' == typeof arg || 'number' == typeof arg || 'string' == typeof arg || 'symbol' == typeof arg || void 0 === arg;
                 }
                 exports1.isPrimitive = isPrimitive;
-                exports1.isBuffer = __webpack_require__("dY").Buffer.isBuffer;
+                exports1.isBuffer = __webpack_require__("dY2").Buffer.isBuffer;
                 function objectToString(o) {
                     return Object.prototype.toString.call(o);
                 }
@@ -1908,7 +1908,7 @@
                 } : false;
             },
             Y4 (module1, __unused_rspack_exports, __webpack_require__) {
-                var Buffer = __webpack_require__("dY").Buffer;
+                var Buffer = __webpack_require__("dY2").Buffer;
                 var process = __webpack_require__("zT");
                 var stream = __webpack_require__("GB");
                 var eos = __webpack_require__("Qd");
@@ -3468,7 +3468,7 @@
                 exports1.PassThrough = __webpack_require__("P");
             },
             Uf (module1, exports1, __webpack_require__) {
-                var buffer = __webpack_require__("dY");
+                var buffer = __webpack_require__("dY2");
                 var Buffer = buffer.Buffer;
                 function copyProps(src, dst) {
                     for(var key in src)dst[key] = src[key];
@@ -4766,7 +4766,7 @@
                     ]
                 };
                 var bind = __webpack_require__("zO");
-                var hasOwn = __webpack_require__("Zw");
+                var hasOwn = __webpack_require__("Z");
                 var $concat = bind.call($call, Array.prototype.concat);
                 var $spliceApply = bind.call($apply, Array.prototype.splice);
                 var $replace = bind.call($call, String.prototype.replace);
@@ -4991,7 +4991,7 @@
                     return hasSymbols() && !!Symbol.toStringTag;
                 };
             },
-            Zw (module1, __unused_rspack_exports, __webpack_require__) {
+            Z (module1, __unused_rspack_exports, __webpack_require__) {
                 "use strict";
                 var call = Function.prototype.call;
                 var $hasOwn = Object.prototype.hasOwnProperty;
@@ -5226,7 +5226,7 @@
                 "use strict";
                 var callBound = __webpack_require__("F");
                 var hasToStringTag = __webpack_require__("bT")();
-                var hasOwn = __webpack_require__("Zw");
+                var hasOwn = __webpack_require__("Z");
                 var gOPD = __webpack_require__("D");
                 var fn;
                 if (hasToStringTag) {
@@ -7050,7 +7050,7 @@
                 const Emitter = __webpack_require__("r");
                 const safeStringify = __webpack_require__("X");
                 const qs = __webpack_require__("b");
-                const RequestBase = __webpack_require__("d");
+                const RequestBase = __webpack_require__("dY");
                 const { isObject, mixin, hasOwn, isSafeKey } = __webpack_require__("Dp");
                 const ResponseBase = __webpack_require__("e");
                 const Agent = __webpack_require__("pf");
@@ -7465,7 +7465,7 @@
                     return request_;
                 };
             },
-            d (module1, __unused_rspack_exports, __webpack_require__) {
+            dY (module1, __unused_rspack_exports, __webpack_require__) {
                 "use strict";
                 const { isObject, hasOwn, isSafeKey } = __webpack_require__("Dp");
                 module1.exports = RequestBase;
@@ -7868,7 +7868,7 @@
                 exports1.isBrotliEncoding = (res)=>/^\s*br\s*$/i.test(res.headers['content-encoding']);
             },
             E (module1, __unused_rspack_exports, __webpack_require__) {
-                var Buffer = __webpack_require__("dY").Buffer;
+                var Buffer = __webpack_require__("dY2").Buffer;
                 /*! typedarray-to-buffer. MIT License. Feross Aboukhadijeh <https://feross.org/opensource> */ module1.exports = function(arr) {
                     return ArrayBuffer.isView(arr) ? Buffer.from(arr.buffer, arr.byteOffset, arr.byteLength) : Buffer.from(arr);
                 };
@@ -8734,7 +8734,7 @@
                     this.decoder = null;
                     this.encoding = null;
                     if (options.encoding) {
-                        if (!StringDecoder) StringDecoder = __webpack_require__("Zwc").I;
+                        if (!StringDecoder) StringDecoder = __webpack_require__("Zw").I;
                         this.decoder = new StringDecoder(options.encoding);
                         this.encoding = options.encoding;
                     }
@@ -8833,7 +8833,7 @@
                     return false === this._readableState.flowing;
                 };
                 Readable.prototype.setEncoding = function(enc) {
-                    if (!StringDecoder) StringDecoder = __webpack_require__("Zwc").I;
+                    if (!StringDecoder) StringDecoder = __webpack_require__("Zw").I;
                     this._readableState.decoder = new StringDecoder(enc);
                     this._readableState.encoding = enc;
                     return this;
@@ -9939,7 +9939,7 @@
                 exports1.PassThrough = __webpack_require__("X2");
             },
             CX (module1, exports1, __webpack_require__) {
-                var buffer = __webpack_require__("dY");
+                var buffer = __webpack_require__("dY2");
                 var Buffer = buffer.Buffer;
                 function copyProps(src, dst) {
                     for(var key in src)dst[key] = src[key];
@@ -9974,7 +9974,7 @@
                     return buffer.SlowBuffer(size);
                 };
             },
-            Zwc (__unused_rspack_module, exports1, __webpack_require__) {
+            Zw (__unused_rspack_module, exports1, __webpack_require__) {
                 "use strict";
                 var Buffer = __webpack_require__("CX").Buffer;
                 var isEncoding = Buffer.isEncoding || function(encoding) {
@@ -10978,7 +10978,7 @@
             var client = __webpack_require__("Q");
             var client_default = /*#__PURE__*/ __webpack_require__.n(client);
             var package_namespaceObject = {
-                rE: "15.8.1"
+                rE: "15.10.0"
             };
             function isAudioEnabled(options) {
                 return Boolean(options.audio.enabled);
@@ -14600,6 +14600,7 @@
                 ].filter(Boolean).join(", ");
                 options.logger.debug(`VideomailError: create(${args})`);
                 const errData = {
+                    cause: errorParams.cause,
                     explanation,
                     logLines,
                     err
@@ -14830,12 +14831,12 @@
                 element.style.removeProperty("display");
             }
             const html_showElement = showElement;
-            const REGEX = /[ ,]+/u;
+            const EMAIL_SEPARATOR_REGEX = /[ ,]+/gu;
             function trimEmail(email) {
-                return email.replace(REGEX, "");
+                return email.replace(EMAIL_SEPARATOR_REGEX, "");
             }
             function trimEmails(emails) {
-                const trimmedEmails = emails.split(REGEX).map((item)=>item.trim()).filter(Boolean);
+                const trimmedEmails = emails.split(EMAIL_SEPARATOR_REGEX).map((item)=>item.trim()).filter(Boolean);
                 return trimmedEmails;
             }
             const FormMethod = {
@@ -15202,6 +15203,7 @@
                         browser: err.browser,
                         code: err.code,
                         cookie: err.cookie,
+                        cause: err.cause instanceof Error ? serializeError(err.cause) : err.cause,
                         cpu: err.cpu,
                         device: err.device,
                         engine: err.engine,
@@ -18852,6 +18854,34 @@
                 return line;
             }
             const util_summarize = summarize;
+            function getFirstVideoTrack(localMediaStream) {
+                const videoTracks = localMediaStream.getVideoTracks();
+                let videoTrack;
+                if (videoTracks[0]) videoTrack = videoTracks[0];
+                return videoTrack;
+            }
+            const media_getFirstVideoTrack = getFirstVideoTrack;
+            const MEDIA_EVENTS = [
+                "loadstart",
+                "suspend",
+                "progress",
+                "abort",
+                "emptied",
+                "stalled",
+                "pause",
+                "loadeddata",
+                "waiting",
+                "playing",
+                "canplay",
+                "canplaythrough",
+                "seeking",
+                "seeked",
+                "ended",
+                "ratechange",
+                "durationchange",
+                "volumechange"
+            ];
+            const mediaEvents = MEDIA_EVENTS;
             function _define_property(obj, key, value) {
                 if (key in obj) Object.defineProperty(obj, key, {
                     value: value,
@@ -18923,12 +18953,12 @@
                     }
                     let { bufferSize } = this.options.audio;
                     if ("auto" === bufferSize) bufferSize = util_getBrowser(this.options).isFirefox() ? 512 : 2048;
-                    if (!is_power_of_two_default()(bufferSize)) throw error_createError({
-                        message: "Audio buffer size must be a power of two.",
+                    if (void 0 === bufferSize || !is_power_of_two_default()(bufferSize)) throw error_createError({
+                        message: `Audio buffer size must be a power of two. The current buffer size is ${bufferSize}.`,
                         options: this.options
                     });
-                    if (this.options.audio.volume < 0 || this.options.audio.volume > 1) throw error_createError({
-                        message: "Audio volume must be between zero and one.",
+                    if (!Number.isFinite(this.options.audio.volume) || this.options.audio.volume < 0 || this.options.audio.volume > 1) throw error_createError({
+                        message: `Audio volume must be between zero and one. The current volume is ${this.options.audio.volume}.`,
                         options: this.options
                     });
                     volume.gain.value = this.options.audio.volume;
@@ -18965,34 +18995,6 @@
                 }
             }
             const media_AudioRecorder = AudioRecorder;
-            function getFirstVideoTrack(localMediaStream) {
-                const videoTracks = localMediaStream.getVideoTracks();
-                let videoTrack;
-                if (videoTracks[0]) videoTrack = videoTracks[0];
-                return videoTrack;
-            }
-            const media_getFirstVideoTrack = getFirstVideoTrack;
-            const MEDIA_EVENTS = [
-                "loadstart",
-                "suspend",
-                "progress",
-                "abort",
-                "emptied",
-                "stalled",
-                "pause",
-                "loadeddata",
-                "waiting",
-                "playing",
-                "canplay",
-                "canplaythrough",
-                "seeking",
-                "seeked",
-                "ended",
-                "ratechange",
-                "durationchange",
-                "volumechange"
-            ];
-            const mediaEvents = MEDIA_EVENTS;
             const VIRTUAL_KEYWORDS = [
                 "obs",
                 "virtual",
@@ -19038,9 +19040,14 @@
                     });
                 }
                 attachMediaStream(stream) {
-                    this.currentVisualStream = stream;
-                    if (this.rawVisualUserMedia) this.rawVisualUserMedia.srcObject = stream;
-                    else throw error_createError({
+                    if (this.rawVisualUserMedia) {
+                        this.rawVisualUserMedia.srcObject = stream;
+                        const previousStream = this.currentVisualStream;
+                        this.currentVisualStream = stream;
+                        if (previousStream && previousStream !== stream) previousStream.getTracks().forEach((track)=>{
+                            track.stop();
+                        });
+                    } else throw error_createError({
                         message: "Error attaching stream to element.",
                         explanation: "Contact the developer about this",
                         options: this.options
@@ -19108,11 +19115,14 @@
                                     }
                                 }).catch((exc)=>{
                                     if (exc instanceof Error) this.options.logger.warn(`Caught pending user media promise exception: ${exc.toString()}`);
-                                    else throw error_createError({
-                                        message: "Failed to play user media upon play event.",
-                                        exc,
-                                        options: this.options
-                                    });
+                                    else {
+                                        unloadAllEventListeners();
+                                        endedEarlyCallback(error_createError({
+                                            message: "Failed to play user media upon play event.",
+                                            exc,
+                                            options: this.options
+                                        }));
+                                    }
                                 });
                             }
                         } catch (exc) {
@@ -19123,18 +19133,18 @@
                     const fireCallbacks = ()=>{
                         const readyState = this.rawVisualUserMedia?.readyState;
                         this.options.logger.debug(`UserMedia: fireCallbacks(readyState=${readyState}, onPlayReached=${this.onPlayReached}, onLoadedMetaDataReached=${this.onLoadedMetaDataReached})`);
-                        if (this.onPlayReached && this.onLoadedMetaDataReached) {
+                        if (this.onPlayReached && this.onLoadedMetaDataReached) if (this.audioRecorder) try {
+                            this.audioRecorder.init(localMediaStream);
+                            this.on("SENDING_FIRST_FRAME", ()=>{
+                                this.audioRecord(audioCallback);
+                            });
                             videoCallback();
-                            if (this.audioRecorder) try {
-                                this.audioRecorder.init(localMediaStream);
-                                this.on("SENDING_FIRST_FRAME", ()=>{
-                                    this.audioRecord(audioCallback);
-                                });
-                            } catch (exc) {
-                                unloadAllEventListeners();
-                                endedEarlyCallback(exc);
-                            }
+                        } catch (exc) {
+                            unloadAllEventListeners();
+                            this.stop();
+                            endedEarlyCallback(exc);
                         }
+                        else videoCallback();
                     };
                     const onPlay = ()=>{
                         try {
@@ -19316,7 +19326,7 @@
                 }
             }
             const visuals_userMedia = UserMedia;
-            var Buffer = __webpack_require__("dY").Buffer;
+            var Buffer = __webpack_require__("dY2").Buffer;
             const PIPE_SYMBOL = "°º¤ø,¸¸,ø¤º°`°º¤ø,¸,ø¤°º¤ø,¸¸,ø¤º°`°º¤ø,¸ ";
             class Recorder extends util_Despot {
                 visuals;
@@ -19332,6 +19342,7 @@
                 userMedia;
                 userMediaTimeout;
                 retryTimeout;
+                reconnectTimeout;
                 connectionTimeout;
                 stopTimeout;
                 frameProgress;
@@ -19347,6 +19358,8 @@
                 connecting = false;
                 connected = false;
                 connectionFailed = false;
+                reconnecting = false;
+                reconnectAttempts = 0;
                 blocking = false;
                 built = false;
                 key;
@@ -19433,6 +19446,7 @@
                         const switchingFacingMode = params?.switchingFacingMode;
                         this.userMediaLoading = this.blocking = this.unloaded = this.submitting = false;
                         this.userMediaLoaded = true;
+                        this.clearUserMediaTimeout();
                         if (!switchingFacingMode) this.loop = this.createLoop();
                         this.show();
                         if (params?.recordWhenReady) this.record();
@@ -19459,6 +19473,37 @@
                     window.clearTimeout(this.connectionTimeout);
                     this.connectionTimeout = void 0;
                 }
+                clearReconnectTimeout() {
+                    if (void 0 === this.reconnectTimeout) return;
+                    this.options.logger.debug("Recorder: clearReconnectTimeout()");
+                    window.clearTimeout(this.reconnectTimeout);
+                    this.reconnectTimeout = void 0;
+                }
+                handleConnectionFailure(params) {
+                    if (this.retryConnection(params)) return;
+                    this.failConnection(params);
+                }
+                retryConnection(params) {
+                    if (!this.reconnecting || !this.userMediaLoaded || !this.isOnline() || this.unloaded || this.blocking) return false;
+                    if (void 0 !== this.reconnectTimeout) return true;
+                    const delayMs = Math.min(1000 * 2 ** this.reconnectAttempts, 10000);
+                    this.reconnectAttempts++;
+                    this.connecting = false;
+                    this.clearConnectionTimeout();
+                    this.discardSocket();
+                    this.options.logger.debug(`Recorder: retrying WebSocket connection in ${delayMs}ms (cause ${params.cause}).`);
+                    this.reconnectTimeout = window.setTimeout(()=>{
+                        this.reconnectTimeout = void 0;
+                        if (this.reconnecting && !this.unloaded && !this.blocking) this.initSocket();
+                    }, delayMs);
+                    return true;
+                }
+                discardSocket() {
+                    this.options.logger.debug("Recorder: discarding socket stream ...");
+                    const stream = this.stream;
+                    this.stream = void 0;
+                    if (stream && !stream.destroyed) stream.destroy();
+                }
                 isOnline() {
                     return navigator.onLine;
                 }
@@ -19466,6 +19511,9 @@
                     if (this.connectionFailed || this.connected || this.unloaded) return;
                     this.connectionFailed = true;
                     this.connecting = false;
+                    this.reconnecting = false;
+                    this.reconnectAttempts = 0;
+                    this.clearReconnectTimeout();
                     this.clearConnectionTimeout();
                     const { url2Connect, cause } = params;
                     const online = this.isOnline();
@@ -19478,12 +19526,17 @@
                         closeReason: closeEvent?.reason,
                         elapsedMs,
                         online,
+                        secureContext: globalThis.isSecureContext,
+                        socketReadyState: this.stream?.socket.readyState,
+                        timeoutMs: this.options.timeouts.connection,
+                        url: url2Connect,
                         unloaded: this.unloaded,
                         userMediaLoaded: this.userMediaLoaded,
                         userMediaLoading: this.userMediaLoading,
                         wasClean: closeEvent?.wasClean,
                         socketError,
-                        blocking: this.blocking
+                        blocking: this.blocking,
+                        visibilityState: document.visibilityState
                     };
                     const debugLine = util_summarize("Recorder: failConnection() diagnostic", contents);
                     this.options.logger.debug(debugLine);
@@ -19495,14 +19548,12 @@
                         explanation = `Connection to ${url2Connect} is closed${closeSuffix}. Please check your internet connection and try again. If the problem persists, contact us.`;
                     }
                     else explanation = "Your device appears to be offline. Please check your internet connection and try again.";
-                    if (this.stream) {
-                        this.stream.destroy();
-                        this.stream = void 0;
-                    }
+                    this.discardSocket();
                     const err = error_createError({
                         message: "Unable to connect to the server",
                         explanation,
                         options: this.options,
+                        cause: contents,
                         exc: socketError ? new Error("WebSocket connection error", {
                             cause: socketError
                         }) : void 0
@@ -19580,195 +19631,209 @@
                     this.recordingStats.waitingTime = this.waitingTime;
                 }
                 initSocket(cb) {
-                    if (!this.connected) {
-                        if (util_isAutomatedUserAgent()) {
-                            this.connecting = false;
-                            this.options.logger.debug("Recorder: skipping web socket connection for an automated crawler");
-                            return;
-                        }
-                        this.connecting = true;
-                        this.connectionFailed = false;
-                        this.connectingStartedAt = Date.now();
-                        this.lastCloseEvent = void 0;
-                        this.lastSocketError = void 0;
-                        this.emit("CONNECTING");
-                        let url2Connect;
-                        try {
-                            const socketUrlObj = new URL(this.options.socketUrl);
-                            socketUrlObj.searchParams.set(constants.WHITELIST_KEY_LABEL, this.options.whitelistKey);
-                            url2Connect = socketUrlObj.toString();
-                        } catch (exc) {
-                            this.connecting = this.connected = false;
-                            const err = error_createError({
-                                message: "Invalid WebSocket URL",
-                                explanation: `The configured socketUrl "${this.options.socketUrl}" is not a valid URL. Please check your videomail-client configuration.`,
-                                options: this.options,
-                                exc
-                            });
-                            this.emit("ERROR", {
-                                err
-                            });
-                            return;
-                        }
-                        this.options.logger.debug(`Recorder: initializing web socket stream to ${url2Connect}`);
-                        let nativeSocket;
-                        try {
-                            nativeSocket = new WebSocket(url2Connect);
-                            nativeSocket.addEventListener("close", (event)=>{
-                                this.lastCloseEvent = {
-                                    code: event.code,
-                                    reason: event.reason,
-                                    wasClean: event.wasClean
-                                };
-                            });
-                            nativeSocket.addEventListener("error", (event)=>{
-                                this.lastSocketError = error_getEventDetails(event);
-                            });
-                        } catch (exc) {
-                            this.connecting = this.connected = false;
-                            const diagnostic = error_getWebSocketDiagnostic(url2Connect);
-                            const message = diagnostic.looksAutomated ? "Automated crawler: WebSocket not supported in this environment" : `Failed to construct WebSocket to ${url2Connect}`;
-                            const explanation = diagnostic.looksAutomated ? "Headless crawlers cannot use Videomail's WebSocket. No action needed." : `Please check your connection and try again. If the problem persists, contact us. Diagnostic: ${diagnostic.text}`;
-                            const err = error_createError({
-                                message,
-                                explanation,
-                                options: this.options,
-                                exc
-                            });
-                            this.emit("ERROR", {
-                                err
-                            });
-                            return;
-                        }
-                        try {
-                            this.stream = stream_default()(nativeSocket);
-                        } catch (exc) {
-                            this.connecting = this.connected = false;
-                            const err = error_createError({
-                                message: `Failed to create a stream to ${url2Connect}`,
-                                explanation: "Please check your connection and try again. If the problem persists, contact us.",
-                                options: this.options,
-                                exc
-                            });
-                            this.emit("ERROR", {
-                                err
-                            });
-                        }
-                        if (this.stream) {
-                            const connectionTimeoutMs = this.options.timeouts.connection;
-                            this.connectionTimeout = window.setTimeout(()=>{
-                                if (this.isOnline() && this.isUserMediaLoaded()) {
-                                    this.options.logger.debug(`${PIPE_SYMBOL}Reconnecting due to connection timeout.`);
-                                    this.initSocket();
-                                } else this.failConnection({
+                    if (this.connected) {
+                        this.options.logger.debug("Recorder: already **connected**. Not going to initialize a new WebSocket connection.");
+                        cb?.();
+                        return;
+                    }
+                    if (this.connecting) return void this.options.logger.debug("Recorder: already **connecting**. Not going to initialize a new WebSocket connection.");
+                    this.clearReconnectTimeout();
+                    if (util_isAutomatedUserAgent()) {
+                        this.connecting = false;
+                        this.options.logger.debug("Recorder: skipping web socket connection for an automated crawler");
+                        return;
+                    }
+                    this.connecting = true;
+                    this.connectionFailed = false;
+                    this.connectingStartedAt = Date.now();
+                    this.lastCloseEvent = void 0;
+                    this.lastSocketError = void 0;
+                    this.emit("CONNECTING");
+                    let url2Connect;
+                    try {
+                        const socketUrlObj = new URL(this.options.socketUrl);
+                        socketUrlObj.searchParams.set(constants.WHITELIST_KEY_LABEL, this.options.whitelistKey);
+                        url2Connect = socketUrlObj.toString();
+                    } catch (exc) {
+                        this.connecting = this.connected = false;
+                        const err = error_createError({
+                            message: "Invalid WebSocket URL",
+                            explanation: `The configured socketUrl "${this.options.socketUrl}" is not a valid URL. Please check your videomail-client configuration.`,
+                            options: this.options,
+                            exc
+                        });
+                        this.emit("ERROR", {
+                            err
+                        });
+                        return;
+                    }
+                    this.options.logger.debug(`Recorder: initializing web socket stream to ${url2Connect}`);
+                    let nativeSocket;
+                    try {
+                        nativeSocket = new WebSocket(url2Connect);
+                        nativeSocket.addEventListener("close", (event)=>{
+                            this.lastCloseEvent = {
+                                code: event.code,
+                                reason: event.reason,
+                                wasClean: event.wasClean
+                            };
+                        });
+                        nativeSocket.addEventListener("error", (event)=>{
+                            this.lastSocketError = error_getEventDetails(event);
+                        });
+                    } catch (exc) {
+                        this.connecting = this.connected = false;
+                        const diagnostic = error_getWebSocketDiagnostic(url2Connect);
+                        const message = diagnostic.looksAutomated ? "Automated crawler: WebSocket not supported in this environment" : `Failed to construct WebSocket to ${url2Connect}`;
+                        const explanation = diagnostic.looksAutomated ? "Headless crawlers cannot use Videomail's WebSocket. No action needed." : `Please check your connection and try again. If the problem persists, contact us. Diagnostic: ${diagnostic.text}`;
+                        const err = error_createError({
+                            message,
+                            explanation,
+                            options: this.options,
+                            exc
+                        });
+                        this.emit("ERROR", {
+                            err
+                        });
+                        return;
+                    }
+                    try {
+                        this.stream = stream_default()(nativeSocket);
+                    } catch (exc) {
+                        this.connecting = this.connected = false;
+                        const err = error_createError({
+                            message: `Failed to create a stream to ${url2Connect}`,
+                            explanation: "Please check your connection and try again. If the problem persists, contact us.",
+                            options: this.options,
+                            exc
+                        });
+                        this.emit("ERROR", {
+                            err
+                        });
+                    }
+                    if (this.stream) {
+                        const connectionTimeoutMs = this.options.timeouts.connection;
+                        this.connectionTimeout = window.setTimeout(()=>{
+                            if (this.isOnline() && this.isUserMediaLoaded()) {
+                                this.options.logger.debug(`${PIPE_SYMBOL}Reconnecting due to connection timeout.`);
+                                this.reconnecting = true;
+                                this.handleConnectionFailure({
                                     url2Connect,
                                     cause: "timeout"
                                 });
-                            }, connectionTimeoutMs);
-                            this.stream.on("close", ()=>{
-                                const debugLine = util_summarize(`${PIPE_SYMBOL}Stream has closed:`, {
-                                    connecting: this.connecting,
-                                    connected: this.connected,
-                                    userMediaLoaded: this.userMediaLoaded,
-                                    blocking: this.blocking
-                                });
-                                this.options.logger.debug(debugLine);
-                                const tryReconnect = this.connected && this.userMediaLoaded;
-                                this.connected = false;
-                                if (tryReconnect) this.initSocket();
-                                else if (!this.connecting && !this.blocking) window.setTimeout(()=>{
-                                    this.failConnection({
-                                        url2Connect,
-                                        cause: "closed"
-                                    });
-                                }, 0);
+                            } else this.handleConnectionFailure({
+                                url2Connect,
+                                cause: "timeout"
                             });
-                            this.stream.on("connect", (args)=>{
-                                this.options.logger.debug(`${PIPE_SYMBOL}Stream *connect* event emitted with args: ${util_pretty(args)}`);
-                                this.clearConnectionTimeout();
-                                const isClosing = this.stream?.socket.readyState === WebSocket.CLOSING;
-                                if (!this.connected && !isClosing && !this.unloaded) {
-                                    this.connected = true;
-                                    this.connecting = this.unloaded = false;
-                                    this.emit("CONNECTED");
-                                    cb?.();
-                                }
+                        }, connectionTimeoutMs);
+                        this.stream.on("close", ()=>{
+                            const debugLine = util_summarize(`${PIPE_SYMBOL}Stream has closed:`, {
+                                connecting: this.connecting,
+                                connected: this.connected,
+                                userMediaLoaded: this.userMediaLoaded,
+                                blocking: this.blocking
                             });
-                            this.stream.on("data", (data)=>{
-                                this.options.logger.debug(`${PIPE_SYMBOL}Stream *data* event emitted`);
-                                try {
-                                    const command = JSON.parse(data.toString());
-                                    this.executeCommand(command);
-                                } catch (exc) {
-                                    this.options.logger.error(`Failed to parse command: ${exc}`);
-                                    const err = error_createError({
-                                        message: "Invalid server command",
-                                        explanation: `Contact us. The invalid command was: ${data.toString()}.`,
-                                        options: this.options,
-                                        exc
-                                    });
-                                    this.emit("ERROR", {
-                                        err
-                                    });
-                                }
-                            });
-                            this.stream.on("error", (err)=>{
-                                if ("u" > typeof Event && err instanceof Event) this.lastSocketError = error_getEventDetails(err);
-                                else this.lastSocketError = serializeError(err);
-                                const debugLine = util_summarize(`${PIPE_SYMBOL}Stream *error* event emitted:`, {
-                                    error: serializeError(err)
-                                });
-                                this.options.logger.debug(debugLine);
-                                if (!this.connected) return void this.failConnection({
+                            this.options.logger.debug(debugLine);
+                            const tryReconnect = this.connected && this.userMediaLoaded;
+                            this.connected = false;
+                            if (tryReconnect) {
+                                this.reconnecting = true;
+                                this.initSocket();
+                            } else if (!this.connecting && !this.blocking) window.setTimeout(()=>{
+                                this.handleConnectionFailure({
                                     url2Connect,
-                                    cause: "error"
+                                    cause: "closed"
                                 });
-                                const streamError = err instanceof Error ? err : new Error("WebSocket stream emitted an error event", {
-                                    cause: this.lastSocketError ?? err
+                            }, 0);
+                        });
+                        this.stream.on("connect", (args)=>{
+                            this.options.logger.debug(`${PIPE_SYMBOL}Stream *connect* event emitted with args: ${util_pretty(args)}`);
+                            this.clearConnectionTimeout();
+                            const isClosing = this.stream?.socket.readyState === WebSocket.CLOSING;
+                            if (!this.connected && !isClosing && !this.unloaded) {
+                                this.connected = true;
+                                this.connecting = this.unloaded = false;
+                                this.reconnecting = false;
+                                this.reconnectAttempts = 0;
+                                this.clearReconnectTimeout();
+                                this.emit("CONNECTED");
+                                cb?.();
+                            }
+                        });
+                        this.stream.on("data", (data)=>{
+                            this.options.logger.debug(`${PIPE_SYMBOL}Stream *data* event emitted`);
+                            try {
+                                const command = JSON.parse(data.toString());
+                                this.executeCommand(command);
+                            } catch (exc) {
+                                this.options.logger.error(`Failed to parse command: ${exc}`);
+                                const err = error_createError({
+                                    message: "Invalid server command",
+                                    explanation: `Contact us. The invalid command was: ${data.toString()}.`,
+                                    options: this.options,
+                                    exc
                                 });
                                 this.emit("ERROR", {
-                                    err: error_createError({
-                                        message: "WebSocket stream error",
-                                        explanation: `The WebSocket stream emitted an error event. Details: ${util_pretty(err)}`,
-                                        options: this.options,
-                                        exc: streamError
-                                    })
+                                    err
                                 });
+                            }
+                        });
+                        this.stream.on("error", (err)=>{
+                            if ("u" > typeof Event && err instanceof Event) this.lastSocketError = error_getEventDetails(err);
+                            else this.lastSocketError = serializeError(err);
+                            const debugLine = util_summarize(`${PIPE_SYMBOL}Stream *error* event emitted:`, {
+                                error: serializeError(err)
                             });
-                            this.stream.on("drain", ()=>{
-                                this.options.logger.debug(`${PIPE_SYMBOL}Stream *drain* event emitted (should not happen!)`);
+                            this.options.logger.debug(debugLine);
+                            if (!this.connected) return void this.handleConnectionFailure({
+                                url2Connect,
+                                cause: "error"
                             });
-                            this.stream.on("preend", (args)=>{
-                                this.options.logger.debug(`${PIPE_SYMBOL}Stream *preend* event emitted with args: ${util_pretty(args)}`);
+                            const streamError = err instanceof Error ? err : new Error("WebSocket stream emitted an error event", {
+                                cause: this.lastSocketError ?? err
                             });
-                            this.stream.on("end", ()=>{
-                                this.options.logger.debug(`${PIPE_SYMBOL}Stream *end* event emitted`);
+                            this.emit("ERROR", {
+                                err: error_createError({
+                                    message: "WebSocket stream error",
+                                    explanation: `The WebSocket stream emitted an error event. Details: ${util_pretty(err)}`,
+                                    options: this.options,
+                                    exc: streamError
+                                })
                             });
-                            this.stream.on("drain", (args)=>{
-                                this.options.logger.debug(`${PIPE_SYMBOL}Stream *drain* event emitted with args: ${util_pretty(args)}`);
-                            });
-                            this.stream.on("pipe", (src)=>{
-                                this.options.logger.debug(`${PIPE_SYMBOL}Stream *pipe* event emitted with src: ${util_pretty(src)}`);
-                            });
-                            this.stream.on("unpipe", (src)=>{
-                                this.options.logger.debug(`${PIPE_SYMBOL}Stream *unpipe* event emitted with src: ${util_pretty(src)}`);
-                            });
-                            this.stream.on("resume", (args)=>{
-                                this.options.logger.debug(`${PIPE_SYMBOL}Stream *resume* event emitted with args: ${util_pretty(args)}`);
-                            });
-                            this.stream.on("uncork", (args)=>{
-                                this.options.logger.debug(`${PIPE_SYMBOL}Stream *uncork* event emitted with args: ${util_pretty(args)}`);
-                            });
-                            this.stream.on("readable", (args)=>{
-                                this.options.logger.debug(`${PIPE_SYMBOL}Stream *readable* event emitted with args: ${util_pretty(args)}`);
-                            });
-                            this.stream.on("prefinish", (args)=>{
-                                this.options.logger.debug(`${PIPE_SYMBOL}Stream *prefinish* event emitted with args: ${util_pretty(args)}`);
-                            });
-                            this.stream.on("finish", (args)=>{
-                                this.options.logger.debug(`${PIPE_SYMBOL}Stream *finish* event emitted with args: ${util_pretty(args)}`);
-                            });
-                        }
+                        });
+                        this.stream.on("drain", ()=>{
+                            this.options.logger.debug(`${PIPE_SYMBOL}Stream *drain* event emitted (should not happen!)`);
+                        });
+                        this.stream.on("preend", (args)=>{
+                            this.options.logger.debug(`${PIPE_SYMBOL}Stream *preend* event emitted with args: ${util_pretty(args)}`);
+                        });
+                        this.stream.on("end", ()=>{
+                            this.options.logger.debug(`${PIPE_SYMBOL}Stream *end* event emitted`);
+                        });
+                        this.stream.on("drain", (args)=>{
+                            this.options.logger.debug(`${PIPE_SYMBOL}Stream *drain* event emitted with args: ${util_pretty(args)}`);
+                        });
+                        this.stream.on("pipe", (src)=>{
+                            this.options.logger.debug(`${PIPE_SYMBOL}Stream *pipe* event emitted with src: ${util_pretty(src)}`);
+                        });
+                        this.stream.on("unpipe", (src)=>{
+                            this.options.logger.debug(`${PIPE_SYMBOL}Stream *unpipe* event emitted with src: ${util_pretty(src)}`);
+                        });
+                        this.stream.on("resume", (args)=>{
+                            this.options.logger.debug(`${PIPE_SYMBOL}Stream *resume* event emitted with args: ${util_pretty(args)}`);
+                        });
+                        this.stream.on("uncork", (args)=>{
+                            this.options.logger.debug(`${PIPE_SYMBOL}Stream *uncork* event emitted with args: ${util_pretty(args)}`);
+                        });
+                        this.stream.on("readable", (args)=>{
+                            this.options.logger.debug(`${PIPE_SYMBOL}Stream *readable* event emitted with args: ${util_pretty(args)}`);
+                        });
+                        this.stream.on("prefinish", (args)=>{
+                            this.options.logger.debug(`${PIPE_SYMBOL}Stream *prefinish* event emitted with args: ${util_pretty(args)}`);
+                        });
+                        this.stream.on("finish", (args)=>{
+                            this.options.logger.debug(`${PIPE_SYMBOL}Stream *finish* event emitted with args: ${util_pretty(args)}`);
+                        });
                     }
                 }
                 showUserMedia() {
@@ -19780,6 +19845,7 @@
                     return this.blocking;
                 }
                 userMediaErrorCallback(err, usedConstraints) {
+                    if (this.unloaded) return void this.options.logger.debug(`Recorder: already unloaded. Not going to throw error ${util_pretty(err)}`);
                     this.userMediaLoading = false;
                     this.clearUserMediaTimeout();
                     const characteristics = this.userMedia?.getCharacteristics();
@@ -19798,10 +19864,9 @@
                         this.options.logger.debug(`Recorder: ignore user media error ${util_pretty(err)}`);
                         this.retryTimeout = window.setTimeout(()=>{
                             this.retryTimeout = void 0;
-                            this.loadUserMedia();
+                            if (!this.unloaded) this.loadUserMedia();
                         }, this.options.timeouts.userMedia);
                     }
-                    else if (this.unloaded) this.options.logger.debug(`Recorder: already unloaded. Not going to throw error ${util_pretty(err)}`);
                     else {
                         this.options.logger.debug(`Recorder: no error listeners attached but throwing error ${util_pretty(err)}`);
                         throw error_createError({
@@ -19812,26 +19877,46 @@
                     }
                 }
                 getUserMediaCallback(localStream, params) {
-                    if (!this.userMedia) throw new Error("No user media is defined");
+                    if (!this.userMedia) {
+                        localStream.getTracks().forEach((track)=>{
+                            track.stop();
+                        });
+                        throw error_createError({
+                            message: "No user media is defined",
+                            options: this.options
+                        });
+                    }
                     this.options.logger.debug(`Recorder: getUserMediaCallback(${params ? util_pretty(params) : ""})`);
                     if (this.showUserMedia()) try {
-                        this.clearUserMediaTimeout();
                         this.userMedia.init(localStream, ()=>{
-                            this.onUserMediaReady(params);
+                            if (!this.unloaded) this.onUserMediaReady(params);
                         }, this.onAudioSample.bind(this), (err)=>{
-                            this.emit("ERROR", {
-                                err
+                            if (!this.unloaded) this.userMediaErrorCallback(err, {
+                                audio: isAudioEnabled(this.options)
                             });
                         }, params?.switchingFacingMode);
                     } catch (exc) {
+                        localStream.getTracks().forEach((track)=>{
+                            track.stop();
+                        });
+                        this.userMediaLoading = false;
+                        this.clearUserMediaTimeout();
                         this.emit("ERROR", {
                             exc
                         });
+                    }
+                    else {
+                        localStream.getTracks().forEach((track)=>{
+                            track.stop();
+                        });
+                        this.userMediaLoading = false;
+                        this.clearUserMediaTimeout();
                     }
                 }
                 loadGenuineUserMedia(params) {
                     this.options.logger.debug(`Recorder: loadGenuineUserMedia(${params ? util_pretty(params) : ""})`);
                     this.emit("ASKING_WEBCAM_PERMISSION");
+                    this.userMediaLoading = true;
                     const constraints = {
                         video: {
                             frameRate: {
@@ -19862,9 +19947,12 @@
                     this.options.logger.debug(util_summarize("Recorder: available webcam constraints are:", navigator.mediaDevices.getSupportedConstraints()));
                     const streamPromise = navigator.mediaDevices.getUserMedia(constraints);
                     streamPromise.then((localStream)=>{
+                        if (this.unloaded) return void localStream.getTracks().forEach((track)=>{
+                            track.stop();
+                        });
                         this.getUserMediaCallback(localStream, params);
                     }).catch((reason)=>{
-                        this.userMediaErrorCallback(reason, constraints);
+                        if (!this.unloaded) this.userMediaErrorCallback(reason, constraints);
                     });
                 }
                 loadUserMedia(params) {
@@ -19878,7 +19966,8 @@
                     try {
                         if (!navigator.mediaDevices) throw new Error("No media devices are available.");
                         this.userMediaTimeout = window.setTimeout(()=>{
-                            if (!this.isReady()) {
+                            if (!this.userMediaLoaded) {
+                                this.userMediaLoading = false;
                                 const err = util_getBrowser(this.options).getNoAccessIssue();
                                 this.emit("ERROR", {
                                     err
@@ -19977,16 +20066,16 @@
                                 command,
                                 args
                             };
-                            this.writeStream(Buffer.from(JSON.stringify(commandObj)));
-                            if (cb) setTimeout(function() {
-                                cb();
-                            }, 0);
+                            this.writeStream(Buffer.from(JSON.stringify(commandObj)), cb ? {
+                                onFlushedCallback: ()=>{
+                                    queueMicrotask(cb);
+                                }
+                            } : void 0);
                         }
                     } else {
                         this.options.logger.debug(`Reconnecting for the command ${command} …`);
                         this.initSocket(()=>{
-                            this.writeCommand(command, args);
-                            cb?.();
+                            this.writeCommand(command, args, cb);
                         });
                     }
                 }
@@ -20057,6 +20146,7 @@
                 reInitializeAudio() {
                     this.options.logger.debug("Recorder: reInitializeAudio()");
                     this.clearUserMediaTimeout();
+                    this.userMediaLoading = false;
                     this.userMedia?.stop();
                     this.userMediaLoaded = this.key = this.canvas = this.ctx = void 0;
                     this.loadUserMedia();
@@ -20071,17 +20161,17 @@
                     this.reset();
                     this.clearUserMediaTimeout();
                     this.clearConnectionTimeout();
+                    this.clearReconnectTimeout();
                     this.clearRetryTimeout();
                     this.clearStopTimeout();
                     this.stopPings();
+                    this.userMediaLoading = false;
                     this.connecting = false;
+                    this.reconnecting = false;
+                    this.reconnectAttempts = 0;
                     if (this.userMedia) this.userMedia.unloadRemainingEventListeners();
                     if (this.submitting) ;
-                    else if (this.stream) {
-                        this.options.logger.debug("Recorder: destroying stream ...");
-                        this.stream.destroy();
-                        this.stream = void 0;
-                    }
+                    else if (this.stream) this.discardSocket();
                     this.unloaded = true;
                     this.built = this.connecting = this.connected = false;
                 }
@@ -20181,7 +20271,13 @@
                     if (!this.connected) {
                         this.options.logger.debug("Recorder: reconnecting before recording …");
                         this.initSocket(()=>{
-                            this.once("USER_MEDIA_READY", this.record.bind(this));
+                            this.once("SERVER_READY", ()=>{
+                                if (this.unloaded) return;
+                                if (this.userMediaLoaded || this.options.loadUserMediaOnRecord) this.record();
+                                else this.once("USER_MEDIA_READY", ()=>{
+                                    if (!this.unloaded) this.record();
+                                });
+                            });
                         });
                         return;
                     }
