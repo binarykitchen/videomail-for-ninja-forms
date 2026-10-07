@@ -14,7 +14,7 @@ die() {
     exit 1
 }
 
-for command in git gh jq npm; do
+for command in git gh jq npm php; do
     command -v "$command" >/dev/null 2>&1 || die "Required command '$command' is not installed."
 done
 
@@ -61,6 +61,10 @@ fi
 
 echo "Starting new release with version $PACKAGE_VERSION..."
 
+# Validate the fast-forwarded sources before creating any release branch or tag.
+npm ci
+npm run quality
+
 # Create and checkout release branch
 RELEASE_BRANCH="release/$PACKAGE_VERSION"
 if git rev-parse --verify "$RELEASE_BRANCH" >/dev/null 2>&1; then
@@ -68,9 +72,7 @@ if git rev-parse --verify "$RELEASE_BRANCH" >/dev/null 2>&1; then
 fi
 git checkout -b "$RELEASE_BRANCH" develop
 
-# Install the exact dependency graph, validate sources, and package the plugin.
-npm ci
-npm run check
+# Package only the validated build.
 npm run package
 
 DIST_ZIP="dist/videomail-for-ninja-forms.zip"

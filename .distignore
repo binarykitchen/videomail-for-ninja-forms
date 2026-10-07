@@ -19,6 +19,7 @@ TODO.md
 yarn.lock
 package-lock.json
 scripts
+tests
 doc
 videomail-for-ninja-forms.code-workspace
 .github
