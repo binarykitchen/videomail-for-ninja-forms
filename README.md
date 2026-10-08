@@ -24,7 +24,7 @@ In short: this add-on runs on the Ninja Forms plugin engine where you can config
 
 If you would like to have a quick play, you can quickly spawn a temporary WordPress site using TasteWP with this URL: <https://tastewp.com/>
 
-There you always get a fresh WordPress installation where you can test the plugin without affecting your local setup.
+There you always get a fresh WordPress installation where you can install & activate and test our plugin the simple way 😎
 
 ### Playground Notes
 
