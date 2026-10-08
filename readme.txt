@@ -3,7 +3,7 @@ Contributors: michael.heuberger, kbjohnson90
 Tags: video, email, recorder, sign language
 Requires at least: 6.0
 Tested up to: 6.9.5
-Stable tag: 12.1.1
+Stable tag: 12.1.2
 Requires PHP: 8.1.0
 Donate link: https://videomail.io/faq
 License: CC0-1.0

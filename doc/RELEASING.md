@@ -14,7 +14,7 @@
 7. (Optional) update "Tested up to" after testing the corresponding WordPress release.
 8. Build the project by running `npm run build`.
 9. Commit everything with a short summary which ...
-   - can be copied and pasted from the latest version section in [readme.txt](./../readme.txt)
+   - can be copied and pasted from the latest version section in [readme.txt](./../readme.txt#changelog)
    - and then push to `develop`.
 10. Wait for the Test Runner workflow to pass, see [our Github action page](https://github.com/binarykitchen/videomail-for-ninja-forms/actions)
 11. Run `npm run release` 🚀
