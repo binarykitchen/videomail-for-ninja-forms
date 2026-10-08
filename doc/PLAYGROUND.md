@@ -13,10 +13,13 @@ For any updates of this plugin, we developers can try to do the following:
    - **Install** & **Activate** the Ninja Forms plugin in two separate steps.
 6. Then also search by "Videomail", then
    - **Install** & **Activate** the Videomail for Ninja Forms plugin in two separate steps.
+   - Confirm both Ninja Forms and Videomail for Ninja Forms are **active** on Plugins > Installed Plugins. An active plugin shows **Deactivate**, not **Activate**.
+   - If the builder reports `Field type "videomail" not found`, check this first. An imported form retains its Videomail field even when the plugin is inactive; importing the template does not activate the plugin.
 7. Once reloaded, under WP Admin, go to Ninja Forms > Import /Export and
 
    - select [the example template form](./../examples/nf_form_video_contact_us.nff), and
    - hit the import form button.
 
 8. Click on "View form" to see the form in action.
+   - In the builder, confirm Video Message has a video-camera icon rather than an Unknown field. If you activated the plugin with the builder already open, reload the builder.
 9. Update that preview URL in this documentation accordingly.

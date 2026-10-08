@@ -7,16 +7,17 @@
    - When those are just patches or minor updates, apply them.
    - Otherwise, when it is a major update, review the changes carefully and test all over again.
 3. Then, run `npm run quality` to test everything.
-4. Add the new changelog section honouring that latest version to [readme.txt](./../readme.txt).
-5. Set that latest version with this example: `npm version 12.1.0 --no-git-tag-version`. Which will call the the npm version lifecycle.
+4. Add the new changelog section honouring that latest version to [readme.txt](./../readme.txt#changelog).
+5. Run one final git commit to capture all changes before setting the new version.
+6. Set that latest version with this example: `npm version 12.1.2 --no-git-tag-version`. Which will call the the npm version lifecycle.
    - This npm lifecycle synchronizes the stable tag, plugin header, PHP constant, JavaScript diagnostic version, and lockfile, all in one go.
-6. (Optional) update "Tested up to" after testing the corresponding WordPress release.
-7. Build the project by running `npm run build`.
-8. Commit everything with a short summary which ...
+7. (Optional) update "Tested up to" after testing the corresponding WordPress release.
+8. Build the project by running `npm run build`.
+9. Commit everything with a short summary which ...
    - can be copied and pasted from the latest version section in [readme.txt](./../readme.txt)
    - and then push to `develop`.
-9. Wait for the Test Runner workflow to pass, see [our Github action page](https://github.com/binarykitchen/videomail-for-ninja-forms/actions)
-10. Run `npm run release` 🚀
+10. Wait for the Test Runner workflow to pass, see [our Github action page](https://github.com/binarykitchen/videomail-for-ninja-forms/actions)
+11. Run `npm run release` 🚀
 
 ## Next Steps
 

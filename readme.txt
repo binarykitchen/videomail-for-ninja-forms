@@ -72,6 +72,11 @@ To get help, just use any of these contacts at [https://binarykitchen.com](https
 
 == Changelog ==
 
+= 12.1.2 (8 Oct 2026) =
+
+**Fix:**
+* Activate Videomail for Ninja Forms upon load
+
 = 12.1.1 (8 Oct 2026) =
 
 **Change:**

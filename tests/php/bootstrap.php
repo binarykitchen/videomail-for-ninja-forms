@@ -75,6 +75,7 @@ function update_option($name, $value) {
   $GLOBALS['options'][$name] = $value;
 }
 function plugin_dir_path($file) { return dirname($file) . DIRECTORY_SEPARATOR; }
+function plugin_dir_url($file) { return 'https://example.test/plugins/videomail-for-ninja-forms/'; }
 function wp_enqueue_style(...$args) { record_call('wp_enqueue_style', ...$args); }
 function wp_register_script(...$args) { record_call('wp_register_script', ...$args); }
 function wp_enqueue_script(...$args) { record_call('wp_enqueue_script', ...$args); }
@@ -83,6 +84,8 @@ function Ninja_Forms() { return $GLOBALS['ninja_forms']; }
 
 reset_environment();
 $root = dirname(__DIR__, 2);
+if (defined('VIDEOMAIL_TEST_STARTUP')) return;
+
 require $root . '/src/php/videomail.php';
 require $root . '/src/php/tags/merge/video.php';
 require $root . '/src/php/fields/videomail.php';

@@ -12,4 +12,6 @@ The [JavaScript tests](../tests/js) execute the actual browser controller with m
 
 The [PHP tests](../tests/php) use deliberately small WordPress/Ninja Forms doubles to exercise field processing, merge tags, trusted media URLs, download/sideload errors, asset dependencies, hooks and admin rendering. These doubles do **not** certify real WordPress sanitization, Ninja Forms compatibility, or actual media uploads. No tests access cameras or contact videomail.io. The build checks Stylus/CSS compilation, but is not a visual regression test.
 
+Startup regression tests run PHP in isolated processes against the real plugin entry point and source PHP copied into the deployed directory layout. Unlike the behavior tests, they do not preload Videomail classes: they exercise autoloading, the Ninja Forms startup hook and field-registration filter, and confirm that the example form's Videomail field type resolves. Missing, older and deprecated Ninja Forms dependency configurations are also checked.
+
 Both push/PR and deployment workflows run the same quality gate. Test files are excluded from WordPress.org distributions.
