@@ -42,11 +42,8 @@ jobs:
           PACKAGE_VERSION="$(node -p "require('./package.json').version")"
           test "$PACKAGE_VERSION" = "$GITHUB_REF_NAME"
 
-      - name: Check PHP syntax
-        run: npm run lint:php
-
-      - name: Check formatting, JavaScript and build
-        run: npm run check
+      - name: Run quality gate
+        run: npm run quality
 
       - name: WordPress Plugin Deploy
         id: deploy

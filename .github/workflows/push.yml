@@ -19,8 +19,8 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  prettier-lint-and-build:
-    name: Run Prettier, Linter and Build
+  quality:
+    name: Run tests, lint and build
     runs-on: ubuntu-latest
 
     steps:
@@ -42,11 +42,8 @@ jobs:
       - name: 📦 Install npm dependencies
         run: npm ci
 
-      - name: Check PHP syntax
-        run: npm run lint:php
-
-      - name: Check formatting, JavaScript and build
-        run: npm run check
+      - name: Run quality gate
+        run: npm run quality
 
       - name: Verify committed build output
         run: |
