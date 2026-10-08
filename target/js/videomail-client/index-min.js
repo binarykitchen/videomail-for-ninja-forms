@@ -10978,7 +10978,7 @@
             var client = __webpack_require__("Q");
             var client_default = /*#__PURE__*/ __webpack_require__.n(client);
             var package_namespaceObject = {
-                rE: "15.10.0"
+                rE: "15.10.1"
             };
             function isAudioEnabled(options) {
                 return Boolean(options.audio.enabled);
@@ -19348,6 +19348,7 @@
                 frameProgress;
                 sampleProgress;
                 canvas;
+                recordingDimensions;
                 ctx;
                 userMediaLoaded;
                 userMediaLoading = false;
@@ -20139,6 +20140,7 @@
                 }
                 back(cb) {
                     this.emit("GOING_BACK");
+                    this.recordingDimensions = void 0;
                     this.unloaded = false;
                     this.show();
                     this.writeCommand("back", void 0, cb);
@@ -20148,6 +20150,7 @@
                     this.clearUserMediaTimeout();
                     this.userMediaLoading = false;
                     this.userMedia?.stop();
+                    this.recordingDimensions = void 0;
                     this.userMediaLoaded = this.key = this.canvas = this.ctx = void 0;
                     this.loadUserMedia();
                 }
@@ -20159,6 +20162,7 @@
                     const prettyCause = cause ? `, cause: ${cause}` : "";
                     this.options.logger.debug(`Recorder: unload()${prettyCause}`);
                     this.reset();
+                    this.recordingDimensions = void 0;
                     this.clearUserMediaTimeout();
                     this.clearConnectionTimeout();
                     this.clearReconnectTimeout();
@@ -20296,6 +20300,7 @@
                         }
                         return;
                     }
+                    this.recordingDimensions = void 0;
                     try {
                         if (!this.userMedia) throw new Error("No user media defined, unable to create canvas");
                         this.canvas = this.userMedia.createCanvas();
@@ -20330,6 +20335,10 @@
                         });
                         return;
                     }
+                    this.recordingDimensions = {
+                        width: this.canvas.width,
+                        height: this.canvas.height
+                    };
                     this.frame = new canvas_to_buffer_modern_r(this.canvas, this.options.image.types, this.options.image.quality);
                     this.options.logger.debug("Recorder: record()");
                     this.userMedia.record();
@@ -20493,6 +20502,11 @@
                         value: this.options.video.width
                     };
                     return dimension;
+                }
+                getRecordingDimensions() {
+                    return this.recordingDimensions && {
+                        ...this.recordingDimensions
+                    };
                 }
                 getRecorderHeight(responsive, useBoundingClientRect) {
                     let recorderHeight;
@@ -21021,6 +21035,9 @@
                 getRecordingStats() {
                     return this.recorder.getRecordingStats();
                 }
+                getRecordingDimensions() {
+                    return this.recorder.getRecordingDimensions();
+                }
                 getAudioSampleRate() {
                     return this.recorder.getAudioSampleRate();
                 }
@@ -21298,10 +21315,13 @@
                     if (!videomailFormData) throw new Error("No videomail form data defined");
                     if (method === FormMethod.POST) {
                         videomailFormData.recordingStats = this.visuals.getRecordingStats();
-                        const widthDimension = this.visuals.getRecorderWidth(true);
-                        const heightDimension = this.visuals.getRecorderHeight(true);
-                        videomailFormData.width = widthDimension?.value;
-                        videomailFormData.height = heightDimension?.value;
+                        const dimensions = this.visuals.getRecordingDimensions();
+                        if (!dimensions) throw error_createError({
+                            message: "Recorded frame dimensions are missing.",
+                            options: this.options
+                        });
+                        videomailFormData.width = dimensions.width;
+                        videomailFormData.height = dimensions.height;
                         return await this.resource.post(videomailFormData);
                     } else if (method === FormMethod.PUT) return await this.resource.put(videomailFormData);
                     throw error_createError({
