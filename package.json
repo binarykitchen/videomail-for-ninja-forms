@@ -55,7 +55,7 @@
   },
   "prettier": "./prettier.config.js",
   "dependencies": {
-    "videomail-client": "15.10.0"
+    "videomail-client": "15.10.1"
   },
   "overrides": {
     "websocket-stream": {
