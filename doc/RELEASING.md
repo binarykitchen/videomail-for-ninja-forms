@@ -16,12 +16,12 @@
    - can be copied and pasted from the latest version section in [readme.txt](./../readme.txt)
    - and then push to `develop`.
 9. Wait for the Test Runner workflow to pass, see [our Github action page](https://github.com/binarykitchen/videomail-for-ninja-forms/actions)
-10. Run `npm run release`.
+10. Run `npm run release` 🚀
 
 ## Next Steps
 
 - Wait for email confirmation that the release has been successfully deployed.
-- Verify the new version on <https://wordpress.org/plugins/videomail-for-ninja-forms>.
+- Verify the new version on <https://wordpress.org/plugins/videomail-for-ninja-forms>
 - Go to the playground [Playground](./PLAYGROUND.md) to test the new release.
 
 ## TODO
