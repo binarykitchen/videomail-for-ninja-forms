@@ -1,6 +1,6 @@
 {
   "name": "videomail-for-ninja-forms",
-  "version": "12.1.3",
+  "version": "12.1.4",
   "type": "module",
   "description": "With this add-on recording videos in Wordpress Ninja Forms comes true.",
   "author": "Michael Heuberger <michael.heuberger@binarykitchen.com>",
@@ -46,12 +46,12 @@
     "lint": "eslint src/js gulpfile.js scripts tests/js eslint.config.js prettier.config.js --max-warnings=0",
     "lint:fix": "npm run lint -- --fix",
     "lint:php": "node scripts/lint-php.js",
-    "prettier": "prettier --check src/js gulpfile.js scripts tests/js eslint.config.js prettier.config.js package.json .github/workflows/*.yml",
-    "prettier:fix": "prettier --write src/js gulpfile.js scripts tests/js eslint.config.js prettier.config.js package.json .github/workflows/*.yml",
+    "prettier": "node scripts/prettier.js --check",
+    "prettier:fix": "node scripts/prettier.js --write",
     "version": "node scripts/sync-version.js",
     "version:check": "node scripts/sync-version.js --check",
     "clean": "gulp clean",
-    "release": "npm run quality && ./env/dev/release.sh"
+    "release": "node scripts/release.js"
   },
   "prettier": "./prettier.config.js",
   "dependencies": {
@@ -63,12 +63,13 @@
     }
   },
   "devDependencies": {
-    "@eslint/js": "9.39.5",
+    "@eslint/js": "10.0.1",
+    "@inquirer/prompts": "8.7.3",
     "autoprefixer": "10.6.1",
     "browser-sync": "3.0.4",
-    "cssnano": "7.1.9",
+    "cssnano": "9.4.0",
     "esbuild": "0.28.2",
-    "eslint": "9.39.5",
+    "eslint": "10.12.0",
     "globals": "17.13.0",
     "gulp": "5.0.1",
     "gulp-zip": "6.1.0",

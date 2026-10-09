@@ -11,6 +11,12 @@ import {
 import os from "node:os";
 import path from "node:path";
 import { test } from "node:test";
+import {
+  suggestReleaseVersions,
+  updateReadme,
+  validateChangelogEntry,
+  validateReleaseVersion,
+} from "../../scripts/utils/release-helpers.js";
 
 const root = new URL("../../", import.meta.url);
 const manifest = JSON.parse(readFileSync(new URL("package.json", root), "utf8"));
@@ -92,40 +98,66 @@ test("missing version markers fail explicitly", (t) => {
   assert.match(result.stderr, /Could not find the version marker in readme.txt/);
 });
 
-for (const exitCode of [0, 1]) {
-  test(`npm release only starts after quality succeeds (exit=${exitCode})`, (t) => {
-    const directory = fixture(t);
-    mkdirSync(path.join(directory, "env/dev"), { recursive: true });
-    writeFileSync(
-      path.join(directory, "env/dev/release.sh"),
-      "#!/bin/sh\nprintf started > release-started\n",
-      { mode: 0o755 },
-    );
-    writeFileSync(
-      path.join(directory, "package.json"),
-      JSON.stringify({
-        scripts: {
-          quality: `node -e "process.exit(${exitCode})"`,
-          release: manifest.scripts.release,
-        },
-      }),
-    );
-    const result = spawnSync("npm", ["run", "release"], {
-      cwd: directory,
-      encoding: "utf8",
-    });
-    assert.equal(result.status, exitCode, result.stderr);
-    if (exitCode === 0)
-      assert.equal(
-        readFileSync(path.join(directory, "release-started"), "utf8"),
-        "started",
-      );
-    else
-      assert.throws(() => readFileSync(path.join(directory, "release-started")), {
-        code: "ENOENT",
-      });
+test("release command uses the interactive release orchestrator", () => {
+  assert.equal(manifest.scripts.release, "node scripts/release.js");
+  assert.equal(manifest.scripts["release:publish"], undefined);
+});
+
+test("release version must be a greater stable semantic version", () => {
+  assert.equal(validateReleaseVersion("12.1.4", "12.1.3"), true);
+  assert.equal(validateReleaseVersion("12.2.0", "12.1.3"), true);
+  assert.match(validateReleaseVersion("12.1.3", "12.1.3"), /greater than/);
+  assert.match(validateReleaseVersion("11.9.9", "12.1.3"), /greater than/);
+  assert.match(validateReleaseVersion("12.1", "12.1.3"), /major.minor.patch/);
+});
+
+test("release version suggestions clearly show patch, minor, and major bumps", () => {
+  assert.deepEqual(suggestReleaseVersions("12.1.3"), {
+    patch: "12.1.4",
+    minor: "12.2.0",
+    major: "13.0.0",
   });
-}
+});
+
+test("changelog entry is validated and inserted at the top of the changelog", () => {
+  const entry = validateChangelogEntry(
+    "= 12.1.4 (9 Oct 2026) =\n\n**Change:**\n* Improve releases",
+    "12.1.4",
+  );
+  const readme = "Tested up to: 6.9.5\n\n== Changelog ==\n\n= 12.1.3 (8 Oct 2026) =\n";
+  assert.equal(
+    updateReadme(readme, entry, "7.0.0"),
+    "Tested up to: 7.0.0\n\n== Changelog ==\n\n= 12.1.4 (9 Oct 2026) =\n\n**Change:**\n* Improve releases\n\n= 12.1.3 (8 Oct 2026) =\n",
+  );
+});
+
+test("invalid or duplicate changelog entries fail explicitly", () => {
+  assert.throws(
+    () => validateChangelogEntry("= 12.1.4 (9 Oct 2026) =\nNo bullets", "12.1.4"),
+    /at least one bullet/,
+  );
+  assert.throws(
+    () => validateChangelogEntry("= 12.1.3 (9 Oct 2026) =\n* Change", "12.1.4"),
+    /must start with/,
+  );
+  assert.throws(
+    () =>
+      updateReadme(
+        "== Changelog ==\n\n= 12.1.4 (8 Oct 2026) =\n",
+        "= 12.1.4 (9 Oct 2026) =\n* Change\n",
+      ),
+    /already contains/,
+  );
+  assert.throws(
+    () => updateReadme("No changelog section", "= 12.1.4 (9 Oct 2026) =\n* Change\n"),
+    /Could not find the changelog section/,
+  );
+  assert.throws(
+    () =>
+      updateReadme("== Changelog ==\n", "= 12.1.4 (9 Oct 2026) =\n* Change\n", "7.0.0"),
+    /Could not find the WordPress 'Tested up to' field/,
+  );
+});
 
 test("direct release aborts on quality failure before creating a branch, package or tag", (t) => {
   const directory = versionFixture(t);
