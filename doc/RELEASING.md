@@ -2,39 +2,35 @@
 
 ## Steps
 
-TODO: Automate the release process within a prompt.
+Run `npm run release` from a clean, up-to-date `develop` branch. This is the one
+supported release command; it runs the interactive preparation and then the
+existing `env/dev/release.sh` publisher. The interactive script:
 
-1. Ensure the `develop` branch remains clean and current.
-2. Review dependency updates with `npm outdated`:
-   - When those are patches or minor updates, apply them.
-   - Otherwise, when it is a major update, review the changes carefully and test all over again.
-3. Build the project by running `npm run build`.
-4. Then, run `npm run quality` to test everything.
-5. Add the new changelog section honouring
-   - the latest version to [readme.txt](./../readme.txt#changelog).
-   - keep the language consistent with previous entries.
-6. Set that latest version with an example like this: `npm version 12.x.x --no-git-tag-version`.
-   - Which will call the the npm version lifecycle.
-   - This npm lifecycle also synchronizes with
-     - the stable tag,
-     - plugin header,
-     - PHP constant,
-     - JavaScript diagnostic version,
-     - and lockfile, all in one go.
-7. (Optional) update "Tested up to" after testing the corresponding WordPress release.
-8. Commit everything with a short summary which ...
-   - can be copied and pasted from the latest version section from [readme.txt](./../readme.txt#changelog)
-   - and then push to `develop`.
-9. Wait for the Test Runner workflow to pass, see [our Github action page](https://github.com/binarykitchen/videomail-for-ninja-forms/actions)
-10. Run `npm run release` 🚀
+1. Checks the branch, worktree, GitHub CLI authentication, and that local `develop`
+   matches `origin/develop`.
+2. Displays `npm outdated` and asks you to confirm you reviewed dependency updates.
+   Apply desired updates and commit them before starting the release.
+3. Shows the current version and offers patch (recommended), minor, major, or
+   manual version choices, then opens your editor for a dated changelog section
+   consistent with [readme.txt](./../readme.txt#changelog).
+4. Optionally updates WordPress' "Tested up to" value.
+5. Synchronizes the version across the plugin via `npm version`, updates the
+   changelog, and runs the full `npm run quality` gate.
+6. Commits the release preparation to `develop`, pushes it, and waits for the
+   `Test Runner` workflow to pass on that commit.
+7. Runs the existing publisher, which validates again, creates the release branch,
+   merges and tags the release, pushes the release refs, and creates the GitHub
+   release.
+
+The script asks for confirmation before making release changes. A failure before
+the preparation commit is pushed may leave version or changelog edits in the
+worktree; review and resolve those before retrying. If a failure occurs after the
+preparation commit is pushed, do not rerun the preparation prompts. Resolve any CI
+failure and confirm the `Test Runner` passes, then resume the final publishing step
+with `bash env/dev/release.sh`.
 
 ## Next Steps
 
 - Wait for email confirmation that the release has been successfully deployed.
 - Verify the new version on <https://wordpress.org/plugins/videomail-for-ninja-forms>
 - Go to the playground [Playground](./PLAYGROUND.md) to test the new release.
-
-## TODO
-
-- Automate the release process as much as possible to reduce human error and ensure consistency.
-  - For example a new `npm run release` prompt entering the changelog and version number could encapsulate all the steps from updating dependencies to pushing the final release.

@@ -51,7 +51,7 @@
     "version": "node scripts/sync-version.js",
     "version:check": "node scripts/sync-version.js --check",
     "clean": "gulp clean",
-    "release": "npm run quality && ./env/dev/release.sh"
+    "release": "node scripts/release.js"
   },
   "prettier": "./prettier.config.js",
   "dependencies": {
@@ -64,6 +64,7 @@
   },
   "devDependencies": {
     "@eslint/js": "10.0.1",
+    "@inquirer/prompts": "8.7.3",
     "autoprefixer": "10.6.1",
     "browser-sync": "3.0.4",
     "cssnano": "9.4.0",
