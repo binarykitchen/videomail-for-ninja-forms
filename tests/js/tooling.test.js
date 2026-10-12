@@ -159,6 +159,152 @@ test("invalid or duplicate changelog entries fail explicitly", () => {
   );
 });
 
+function releaseFixture(t) {
+  const directory = versionFixture(t);
+  const bin = path.join(directory, "bin");
+  const prompts = path.join(directory, "node_modules/@inquirer/prompts");
+  mkdirSync(bin);
+  mkdirSync(prompts, { recursive: true });
+  mkdirSync(path.join(directory, "scripts/utils"));
+  mkdirSync(path.join(directory, "target/js/videomail-client"), { recursive: true });
+  copyFileSync(
+    new URL("scripts/release.js", root),
+    path.join(directory, "scripts/release.js"),
+  );
+  copyFileSync(
+    new URL("scripts/utils/release-helpers.js", root),
+    path.join(directory, "scripts/utils/release-helpers.js"),
+  );
+  writeFileSync(
+    path.join(directory, "readme.txt"),
+    "Stable tag: 2.3.4\nTested up to: 6.9.5\n\n== Changelog ==\n\n= 2.3.4 (7 Oct 2026) =\n",
+  );
+  writeFileSync(path.join(directory, "target/js/videomail-client/index-min.js"), "stale");
+  writeFileSync(
+    path.join(prompts, "package.json"),
+    JSON.stringify({ type: "module", exports: "./index.js" }),
+  );
+  writeFileSync(
+    path.join(prompts, "index.js"),
+    `export async function select({ choices }) { return choices[0].value; }
+export async function input({ default: value }) { return value; }
+export async function editor({ default: value }) { return value; }
+export async function confirm({ message }) {
+  return message.startsWith("Prepare and publish") && process.env.CANCEL_RELEASE !== "1";
+}
+`,
+  );
+  const commands = {
+    git: `#!/bin/sh
+printf 'git %s\\n' "$*" >> calls
+case "$*" in
+  "branch --show-current") echo develop ;;
+  "status --porcelain") echo " M target/js/videomail-client/index-min.js" ;;
+  "status --porcelain -- . :(exclude)target") printf '%s' "$SOURCE_STATUS" ;;
+  "rev-parse HEAD"|"rev-parse refs/remotes/origin/develop") echo abc123 ;;
+  "add -A") cmp node_modules/videomail-client/dist/umd/index.js target/js/videomail-client/index-min.js ;;
+esac
+`,
+    gh: `#!/bin/sh
+printf 'gh %s\\n' "$*" >> calls
+case "$*" in
+  "run list "*) echo '[{"databaseId":42,"status":"completed","conclusion":"success"}]' ;;
+  "run watch "*) if [ "$FAIL_CI" = "1" ]; then exit 1; fi ;;
+esac
+`,
+    npm: `#!/bin/sh
+printf 'npm %s\\n' "$*" >> calls
+if [ "$*" = "$FAIL_NPM_COMMAND" ]; then exit 1; fi
+case "$*" in
+  "ci")
+    mkdir -p node_modules/videomail-client/dist/umd
+    printf '%s' fresh > node_modules/videomail-client/dist/umd/index.js
+    ;;
+  "run quality") cp node_modules/videomail-client/dist/umd/index.js target/js/videomail-client/index-min.js ;;
+esac
+`,
+    bash: "#!/bin/sh\nprintf 'publish %s\\n' \"$*\" >> calls\n",
+  };
+  for (const [command, content] of Object.entries(commands)) {
+    writeFileSync(path.join(bin, command), content, { mode: 0o755 });
+  }
+  return directory;
+}
+
+function release(directory, environment = {}) {
+  return spawnSync(process.execPath, ["scripts/release.js"], {
+    cwd: directory,
+    env: {
+      ...process.env,
+      PATH: `${path.join(directory, "bin")}${path.delimiter}${process.env.PATH}`,
+      ...environment,
+    },
+    encoding: "utf8",
+  });
+}
+
+test("interactive release installs and rebuilds stale assets before committing", (t) => {
+  const directory = releaseFixture(t);
+  const result = release(directory);
+  assert.equal(result.status, 0, result.stderr);
+  const calls = readFileSync(path.join(directory, "calls"), "utf8");
+  assert.match(
+    calls,
+    /npm ci\nnpm version 2\.3\.5 --no-git-tag-version\nnpm run quality\ngit add -A\ngit commit -m Prepare release 2\.3\.5\ngit push origin develop\n/,
+  );
+  assert.match(calls, /gh run watch 42 --exit-status\npublish env\/dev\/release\.sh\n$/);
+  assert.doesNotMatch(calls, /npm outdated/);
+  assert.equal(
+    readFileSync(path.join(directory, "target/js/videomail-client/index-min.js"), "utf8"),
+    "fresh",
+  );
+});
+
+for (const command of ["ci", "run quality"]) {
+  test(`interactive release aborts on npm ${command} failure before committing or publishing`, (t) => {
+    const directory = releaseFixture(t);
+    const result = release(directory, { FAIL_NPM_COMMAND: command });
+    assert.equal(result.status, 1, result.stderr);
+    assert.match(result.stderr, /failed with exit code 1/);
+    const calls = readFileSync(path.join(directory, "calls"), "utf8");
+    assert.doesNotMatch(calls, /git add|git commit|git push|gh run|publish/);
+    if (command === "ci") {
+      assert.doesNotMatch(calls, /npm version|npm run quality/);
+    }
+  });
+}
+
+test("interactive release cancellation does not install or change files", (t) => {
+  const directory = releaseFixture(t);
+  const readmePath = path.join(directory, "readme.txt");
+  const originalReadme = readFileSync(readmePath, "utf8");
+  const result = release(directory, { CANCEL_RELEASE: "1" });
+  assert.equal(result.status, 0, result.stderr);
+  assert.doesNotMatch(
+    readFileSync(path.join(directory, "calls"), "utf8"),
+    /npm |publish/,
+  );
+  assert.equal(readFileSync(readmePath, "utf8"), originalReadme);
+});
+
+test("interactive release still rejects uncommitted source changes", (t) => {
+  const directory = releaseFixture(t);
+  const result = release(directory, { SOURCE_STATUS: " M src/js/main.js" });
+  assert.equal(result.status, 1, result.stderr);
+  assert.match(result.stderr, /Commit or stash changes outside target\//);
+  assert.doesNotMatch(
+    readFileSync(path.join(directory, "calls"), "utf8"),
+    /npm |publish/,
+  );
+});
+
+test("interactive release does not publish when CI fails", (t) => {
+  const directory = releaseFixture(t);
+  const result = release(directory, { FAIL_CI: "1" });
+  assert.equal(result.status, 1, result.stderr);
+  assert.doesNotMatch(readFileSync(path.join(directory, "calls"), "utf8"), /publish/);
+});
+
 test("direct release aborts on quality failure before creating a branch, package or tag", (t) => {
   const directory = versionFixture(t);
   const bin = path.join(directory, "bin");

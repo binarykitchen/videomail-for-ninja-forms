@@ -46,10 +46,11 @@ jobs:
         run: npm run quality
 
       - name: Verify committed build output
+        if: ${{ github.ref == 'refs/heads/master' || github.base_ref == 'master' }}
         run: |
           if [[ -n "$(git status --porcelain -- target)" ]]; then
             echo "::error::Generated build output under target/ is missing from the commit or out of date."
-            echo "Run 'npm run build', review the changes, and commit the updated target/ files."
+            echo "Prepare releases with 'npm run release' to rebuild and commit the target/ files."
             echo "Git status for target/:"
             git status --short -- target
             exit 1
