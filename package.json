@@ -55,7 +55,7 @@
   },
   "prettier": "./prettier.config.js",
   "dependencies": {
-    "videomail-client": "15.10.1"
+    "videomail-client": "15.11.0"
   },
   "overrides": {
     "websocket-stream": {
@@ -75,7 +75,7 @@
     "gulp-zip": "6.1.0",
     "nib": "1.2.0",
     "postcss": "8.5.29",
-    "prettier": "3.9.9",
+    "prettier": "3.9.10",
     "stylus": "0.64.0"
   }
 }
