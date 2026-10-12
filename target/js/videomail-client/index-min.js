@@ -429,7 +429,7 @@
                     return parts.join('');
                 }
             },
-            dY2 (__unused_rspack_module, exports1, __webpack_require__) {
+            dY (__unused_rspack_module, exports1, __webpack_require__) {
                 "use strict";
                 /*!
  * The buffer module from node.js, for the browser.
@@ -1712,7 +1712,7 @@
                     return null === arg || 'boolean' == typeof arg || 'number' == typeof arg || 'string' == typeof arg || 'symbol' == typeof arg || void 0 === arg;
                 }
                 exports1.isPrimitive = isPrimitive;
-                exports1.isBuffer = __webpack_require__("dY2").Buffer.isBuffer;
+                exports1.isBuffer = __webpack_require__("dY").Buffer.isBuffer;
                 function objectToString(o) {
                     return Object.prototype.toString.call(o);
                 }
@@ -1908,7 +1908,7 @@
                 } : false;
             },
             Y4 (module1, __unused_rspack_exports, __webpack_require__) {
-                var Buffer = __webpack_require__("dY2").Buffer;
+                var Buffer = __webpack_require__("dY").Buffer;
                 var process = __webpack_require__("zT");
                 var stream = __webpack_require__("GB");
                 var eos = __webpack_require__("Qd");
@@ -3468,7 +3468,7 @@
                 exports1.PassThrough = __webpack_require__("P");
             },
             Uf (module1, exports1, __webpack_require__) {
-                var buffer = __webpack_require__("dY2");
+                var buffer = __webpack_require__("dY");
                 var Buffer = buffer.Buffer;
                 function copyProps(src, dst) {
                     for(var key in src)dst[key] = src[key];
@@ -7050,7 +7050,7 @@
                 const Emitter = __webpack_require__("r");
                 const safeStringify = __webpack_require__("X");
                 const qs = __webpack_require__("b");
-                const RequestBase = __webpack_require__("dY");
+                const RequestBase = __webpack_require__("d");
                 const { isObject, mixin, hasOwn, isSafeKey } = __webpack_require__("Dp");
                 const ResponseBase = __webpack_require__("e");
                 const Agent = __webpack_require__("pf");
@@ -7465,7 +7465,7 @@
                     return request_;
                 };
             },
-            dY (module1, __unused_rspack_exports, __webpack_require__) {
+            d (module1, __unused_rspack_exports, __webpack_require__) {
                 "use strict";
                 const { isObject, hasOwn, isSafeKey } = __webpack_require__("Dp");
                 module1.exports = RequestBase;
@@ -7868,7 +7868,7 @@
                 exports1.isBrotliEncoding = (res)=>/^\s*br\s*$/i.test(res.headers['content-encoding']);
             },
             E (module1, __unused_rspack_exports, __webpack_require__) {
-                var Buffer = __webpack_require__("dY2").Buffer;
+                var Buffer = __webpack_require__("dY").Buffer;
                 /*! typedarray-to-buffer. MIT License. Feross Aboukhadijeh <https://feross.org/opensource> */ module1.exports = function(arr) {
                     return ArrayBuffer.isView(arr) ? Buffer.from(arr.buffer, arr.byteOffset, arr.byteLength) : Buffer.from(arr);
                 };
@@ -9939,7 +9939,7 @@
                 exports1.PassThrough = __webpack_require__("X2");
             },
             CX (module1, exports1, __webpack_require__) {
-                var buffer = __webpack_require__("dY2");
+                var buffer = __webpack_require__("dY");
                 var Buffer = buffer.Buffer;
                 function copyProps(src, dst) {
                     for(var key in src)dst[key] = src[key];
@@ -10477,7 +10477,7 @@
                     return i[1];
                 };
             },
-            R (module1) {
+            RR (module1) {
                 "use strict";
                 var stylesInDOM = [];
                 function getIndexByIdentifier(identifier) {
@@ -10978,7 +10978,7 @@
             var client = __webpack_require__("Q");
             var client_default = /*#__PURE__*/ __webpack_require__.n(client);
             var package_namespaceObject = {
-                rE: "15.10.1"
+                rE: "15.11.0"
             };
             function isAudioEnabled(options) {
                 return Boolean(options.audio.enabled);
@@ -11056,7 +11056,7 @@
                 if ("u" > typeof Event && anything instanceof Event) return inspect(error_getEventDetails(anything));
                 return inspect(anything);
             }
-            const util_pretty = pretty;
+            const string_pretty = pretty;
             var defined = __webpack_require__("MO");
             var defined_default = /*#__PURE__*/ __webpack_require__.n(defined);
             var LIBVERSION = '2.0.10', UA_MAX_LENGTH = 500, USER_AGENT = 'user-agent', EMPTY = '', UNKNOWN = '?', TYPEOF = {
@@ -14575,16 +14575,16 @@
                         break;
                     case error_VideomailError.DOM_EXCEPTION:
                         message = "DOM Exception";
-                        if (err) explanation = util_pretty(err);
+                        if (err) explanation = string_pretty(err);
                         break;
                     case error_VideomailError.MEDIA_DEVICE_NOT_SUPPORTED:
                         message = "Media device not supported";
-                        if (err) explanation = util_pretty(err);
+                        if (err) explanation = string_pretty(err);
                         break;
                     default:
                         {
                             const originalExplanation = explanation;
-                            if (explanation && "object" == typeof explanation) explanation = util_pretty(explanation);
+                            if (explanation && "object" == typeof explanation) explanation = string_pretty(explanation);
                             if (!explanation && originalExplanation) explanation = `Inspected: ${originalExplanation}`;
                             if (!explanation && err?.explanation) explanation = err.explanation;
                             if (!message && err?.message) message = err.message;
@@ -14777,7 +14777,7 @@
                 emit(eventName, ...params) {
                     const firstParam = params[0];
                     const showParams = firstParam && ("object" != typeof firstParam || "object" == typeof firstParam && Object.keys(firstParam).filter(Boolean).length > 0);
-                    if (showParams) this.options.logger.debug(`${this.name} emits ${eventName} with ${util_pretty(params)}`);
+                    if (showParams) this.options.logger.debug(`${this.name} emits ${eventName} with ${string_pretty(params)}`);
                     else this.options.logger.debug(`${this.name} emits ${eventName}`);
                     try {
                         this.emitter.emit(eventName, ...params);
@@ -15061,7 +15061,7 @@
                 }
                 async doTheSubmit(e) {
                     if (e) {
-                        this.options.logger.debug(`Form: doTheSubmit(${util_pretty(e)})`);
+                        this.options.logger.debug(`Form: doTheSubmit(${string_pretty(e)})`);
                         e.preventDefault();
                     } else this.options.logger.debug("Form: doTheSubmit()");
                     const url = this.formElement.getAttribute("action") ?? this.options.apiUrl;
@@ -15285,12 +15285,12 @@
             function getNodeEnv() {
                 return "production";
             }
-            const util_getNodeEnv = getNodeEnv;
-            function isProductionMode() {
-                return util_getNodeEnv() === NodeEnvType.PRODUCTION;
+            const env_getNodeEnv = getNodeEnv;
+            function isProduction() {
+                return env_getNodeEnv() === NodeEnvType.PRODUCTION;
             }
-            const util_isProductionMode = isProductionMode;
-            const PRODUCTION = util_isProductionMode();
+            const env_isProduction = isProduction;
+            const PRODUCTION = env_isProduction();
             const options_options = {
                 logger: console,
                 logStackSize: 30,
@@ -15454,7 +15454,7 @@
             function isTest() {
                 return "test" === process.env.ENVIRON;
             }
-            const util_isTest = isTest;
+            const env_isTest = isTest;
             function mergeWithDefaultOptions(options = {}) {
                 const newOptions = cjs_default()(src_options, options, {
                     arrayMerge (_destination, source) {
@@ -15463,11 +15463,11 @@
                 });
                 const collectLogger = new util_CollectLogger(newOptions);
                 newOptions.logger = collectLogger;
-                if (util_isTest()) newOptions.verbose = false;
+                if (env_isTest()) newOptions.verbose = false;
                 return newOptions;
             }
             const options_mergeWithDefaultOptions = mergeWithDefaultOptions;
-            var injectStylesIntoStyleTag = __webpack_require__("R");
+            var injectStylesIntoStyleTag = __webpack_require__("RR");
             var injectStylesIntoStyleTag_default = /*#__PURE__*/ __webpack_require__.n(injectStylesIntoStyleTag);
             var styleDomAPI = __webpack_require__("Bd");
             var styleDomAPI_default = /*#__PURE__*/ __webpack_require__.n(styleDomAPI);
@@ -18169,7 +18169,7 @@
                 if (absNum < 10) return n < 0 ? `-0${absNum}` : `0${absNum}`;
                 return String(n);
             }
-            const util_pad = pad;
+            const string_pad = pad;
             class RecordTimer {
                 visuals;
                 recordNote;
@@ -18231,7 +18231,7 @@
                             this.options.logger.debug(`End is nigh, ${this.countdown} seconds to go`);
                         }
                     }
-                    if (this.recordTimerElement) this.recordTimerElement.textContent = `${mins}:${util_pad(secs)}`;
+                    if (this.recordTimerElement) this.recordTimerElement.textContent = `${mins}:${string_pad(secs)}`;
                 }
                 hide() {
                     html_hideElement(this.recordTimerElement);
@@ -18519,7 +18519,7 @@
                 error(err) {
                     const message = err.message;
                     const explanation = err.explanation;
-                    if (!message) this.options.logger.debug(`Weird empty error message generated for error ${util_pretty(err)}`);
+                    if (!message) this.options.logger.debug(`Weird empty error message generated for error ${string_pretty(err)}`);
                     this.notify(message, explanation, {
                         blocking: true,
                         problem: true,
@@ -18693,6 +18693,34 @@
             canvas_to_buffer_modern_r.atob = void 0;
             var websocket_stream_stream = __webpack_require__("U");
             var stream_default = /*#__PURE__*/ __webpack_require__.n(websocket_stream_stream);
+            const DEFAULT_MAX_QUEUED_BYTES = 1048576;
+            class BoundedWriteQueue {
+                maxBytes;
+                writes = [];
+                queuedBytes = 0;
+                constructor(maxBytes = DEFAULT_MAX_QUEUED_BYTES){
+                    this.maxBytes = maxBytes;
+                }
+                enqueue(buffer, params) {
+                    if (this.queuedBytes + buffer.length > this.maxBytes) return false;
+                    this.writes.push({
+                        buffer,
+                        params
+                    });
+                    this.queuedBytes += buffer.length;
+                    return true;
+                }
+                dequeue() {
+                    const write = this.writes.shift();
+                    if (write) this.queuedBytes -= write.buffer.length;
+                    return write;
+                }
+                clear() {
+                    this.writes.length = 0;
+                    this.queuedBytes = 0;
+                }
+            }
+            const boundedWriteQueue = BoundedWriteQueue;
             function getEdgeCodes(value, amount, fromEnd) {
                 const chars = fromEnd ? value.slice(-amount) : value.slice(0, amount);
                 const codes = Array.from(chars, (char)=>String(char.codePointAt(0))).join(".");
@@ -18844,7 +18872,7 @@
             const util_isAutomatedUserAgent = isAutomatedUserAgent;
             function summarize(title, contents) {
                 const lines = Object.entries(contents).sort(([keyA], [keyB])=>keyA.localeCompare(keyB)).map(([key, value])=>{
-                    const formattedValue = void 0 === value ? "undefined" : "object" == typeof value ? util_pretty(value) : value;
+                    const formattedValue = void 0 === value ? "undefined" : "object" == typeof value ? string_pretty(value) : value;
                     return `  • ${key}: ${formattedValue}`;
                 });
                 const line = [
@@ -18853,7 +18881,7 @@
                 ].join("\n");
                 return line;
             }
-            const util_summarize = summarize;
+            const string_summarize = summarize;
             function getFirstVideoTrack(localMediaStream) {
                 const videoTracks = localMediaStream.getVideoTracks();
                 let videoTrack;
@@ -19029,7 +19057,7 @@
                     this.rawVisualUserMedia?.removeEventListener(e.type, this.outputEvent);
                 };
                 handleMediaError = (event)=>{
-                    this.options.logger.warn(`Caught video element error event: ${util_pretty(event)}`);
+                    this.options.logger.warn(`Caught video element error event: ${string_pretty(event)}`);
                 };
                 constructor(recorder, options){
                     super("UserMedia", options);
@@ -19073,7 +19101,7 @@
                     return videoWidth > 0 && videoWidth < 3 || videoHeight > 0 && videoHeight < 3;
                 }
                 logEvent(eventType, params) {
-                    this.options.logger.debug(`UserMedia: ... ${EVENT_ASCII} event ${eventType}: ${util_pretty(params)}`);
+                    this.options.logger.debug(`UserMedia: ... ${EVENT_ASCII} event ${eventType}: ${string_pretty(params)}`);
                 }
                 unloadRemainingEventListeners() {
                     this.options.logger.debug("UserMedia: unloadRemainingEventListeners()");
@@ -19107,7 +19135,7 @@
                         try {
                             this.rawVisualUserMedia?.load();
                             if (this.rawVisualUserMedia?.paused) {
-                                this.options.logger.debug(`UserMedia: play(): media.readyState=${this.rawVisualUserMedia.readyState}, media.paused=${this.rawVisualUserMedia.paused}, media.ended=${this.rawVisualUserMedia.ended}, media.played=${util_pretty(this.rawVisualUserMedia.played)}`);
+                                this.options.logger.debug(`UserMedia: play(): media.readyState=${this.rawVisualUserMedia.readyState}, media.paused=${this.rawVisualUserMedia.paused}, media.ended=${this.rawVisualUserMedia.ended}, media.played=${string_pretty(this.rawVisualUserMedia.played)}`);
                                 this.rawVisualUserMedia.play().then(()=>{
                                     if (!this.playingPromiseReached) {
                                         this.options.logger.debug("UserMedia: play promise successful. Playing now.");
@@ -19326,11 +19354,12 @@
                 }
             }
             const visuals_userMedia = UserMedia;
-            var Buffer = __webpack_require__("dY2").Buffer;
+            var Buffer = __webpack_require__("dY").Buffer;
             const PIPE_SYMBOL = "°º¤ø,¸¸,ø¤º°`°º¤ø,¸,ø¤°º¤ø,¸¸,ø¤º°`°º¤ø,¸ ";
             class Recorder extends util_Despot {
                 visuals;
                 replay;
+                pendingWrites = new boundedWriteQueue();
                 loop;
                 originalAnimationFrameObject;
                 samplesCount = 0;
@@ -19344,6 +19373,7 @@
                 retryTimeout;
                 reconnectTimeout;
                 connectionTimeout;
+                backpressureTimeout;
                 stopTimeout;
                 frameProgress;
                 sampleProgress;
@@ -19356,6 +19386,11 @@
                 unloaded;
                 stopTime;
                 stream;
+                streamBackpressured = false;
+                resumeAfterDrain = false;
+                mediaTransmissionStarted = false;
+                recordingActive = false;
+                recordingTransportFailed = false;
                 connecting = false;
                 connected = false;
                 connectionFailed = false;
@@ -19378,6 +19413,9 @@
                     this.replay = replay;
                     this.facingMode = options.video.facingMode;
                 }
+                hasExceededWebSocketSendBuffer(buffer, opts) {
+                    return buffer.length > 0 && !this.pendingWrites.enqueue(buffer, opts);
+                }
                 writeStream(buffer, opts) {
                     if (this.stream) if (this.stream.destroyed) {
                         this.stopPings();
@@ -19386,40 +19424,181 @@
                             explanation: "Sorry, connection to the server has been destroyed. Please reload.",
                             options: this.options
                         });
-                        this.emit("ERROR", {
-                            err
+                        this.handleWriteFailure(err);
+                    } else if (this.streamBackpressured) {
+                        if (this.hasExceededWebSocketSendBuffer(buffer, opts)) this.failMediaTransmission(error_createError({
+                            message: "WebSocket send buffer limit exceeded",
+                            explanation: "The connection to the server is too slow to keep up with this recording. The recording has been stopped; please start a new one.",
+                            options: this.options
+                        }));
+                    } else this.writeToStream(this.stream, buffer, opts);
+                }
+                writeToStream(stream, buffer, opts) {
+                    const onFlushedCallback = opts?.onFlushedCallback;
+                    try {
+                        const canContinue = stream.write(buffer, ()=>{
+                            if (!onFlushedCallback) return;
+                            try {
+                                onFlushedCallback(opts);
+                            } catch (exc) {
+                                const err = error_createError({
+                                    message: "Failed to write stream buffer",
+                                    explanation: `stream.write() failed because of ${string_pretty(exc)}`,
+                                    options: this.options,
+                                    exc
+                                });
+                                this.emit("ERROR", {
+                                    err
+                                });
+                            }
                         });
-                    } else {
-                        const onFlushedCallback = opts?.onFlushedCallback;
-                        try {
-                            this.stream.write(buffer, ()=>{
-                                if (!onFlushedCallback) return;
-                                try {
-                                    onFlushedCallback(opts);
-                                } catch (exc) {
-                                    const err = error_createError({
-                                        message: "Failed to write stream buffer",
-                                        explanation: `stream.write() failed because of ${util_pretty(exc)}`,
-                                        options: this.options,
-                                        exc
-                                    });
-                                    this.emit("ERROR", {
-                                        err
-                                    });
-                                }
-                            });
-                        } catch (exc) {
-                            const err = error_createError({
-                                message: "Failed writing to server",
-                                explanation: `stream.write() failed because of ${util_pretty(exc)}`,
-                                options: this.options,
-                                exc
-                            });
-                            this.emit("ERROR", {
-                                err
-                            });
+                        if (!canContinue) {
+                            this.streamBackpressured = true;
+                            this.startBackpressureTimeout();
+                            this.pauseForBackpressure();
+                            return false;
                         }
+                        return true;
+                    } catch (exc) {
+                        const err = error_createError({
+                            message: "Failed writing to server",
+                            explanation: `stream.write() failed because of ${string_pretty(exc)}`,
+                            options: this.options,
+                            exc
+                        });
+                        this.handleWriteFailure(err);
+                        return false;
                     }
+                }
+                flushPendingWrites(stream) {
+                    if (this.isStaleStream(stream)) return;
+                    this.streamBackpressured = false;
+                    this.clearBackpressureTimeout();
+                    let pendingWrite = this.pendingWrites.dequeue();
+                    while(pendingWrite){
+                        if (!this.writeToStream(stream, pendingWrite.buffer, pendingWrite.params)) return;
+                        pendingWrite = this.pendingWrites.dequeue();
+                    }
+                    this.resumeRecordingAfterDrain();
+                }
+                isStaleStream(stream) {
+                    return this.stream !== stream || stream.destroyed;
+                }
+                canPauseForBackpressure() {
+                    return Boolean(this.recordingActive && !this.userMedia?.isPaused() && this.loop?.isRunning());
+                }
+                pauseForBackpressure() {
+                    if (!this.canPauseForBackpressure()) return;
+                    this.resumeAfterDrain = true;
+                    this.loop.stop();
+                }
+                resumeRecordingAfterDrain() {
+                    if (!this.resumeAfterDrain) return;
+                    this.resumeAfterDrain = false;
+                    if (this.canResumeAfterDrain()) this.loop?.start();
+                }
+                canResumeAfterDrain() {
+                    return this.recordingActive && !this.userMedia?.isPaused();
+                }
+                handleWriteFailure(err) {
+                    if (this.mediaTransmissionStarted) return void this.failMediaTransmission(err);
+                    this.emit("ERROR", {
+                        err
+                    });
+                }
+                failMediaTransmission(err) {
+                    if (this.recordingTransportFailed) return;
+                    this.recordingTransportFailed = true;
+                    this.recordingActive = false;
+                    this.mediaTransmissionStarted = false;
+                    this.streamBackpressured = false;
+                    this.resumeAfterDrain = false;
+                    this.pendingWrites.clear();
+                    this.connected = false;
+                    this.connecting = false;
+                    this.reconnecting = false;
+                    this.clearReconnectTimeout();
+                    this.clearBackpressureTimeout();
+                    this.discardSocket();
+                    this.reset();
+                    this.framesCount = this.samplesCount = 0;
+                    this.confirmedFrameNumber = this.confirmedSampleNumber = 0;
+                    delete this.recordingStats;
+                    this.recordingDimensions = void 0;
+                    this.emit("ERROR", {
+                        err
+                    });
+                }
+                startBackpressureTimeout() {
+                    if (!this.shouldStartBackpressureTimeout()) return;
+                    this.backpressureTimeout = window.setTimeout(()=>{
+                        this.backpressureTimeout = void 0;
+                        if (this.shouldIgnoreBackpressureTimeout()) return;
+                        const err = error_createError({
+                            message: "WebSocket write timed out",
+                            explanation: "The server stopped accepting recording data. The recording has been stopped; please check your connection and start a new one.",
+                            options: this.options
+                        });
+                        this.failMediaTransmission(err);
+                    }, this.options.timeouts.connection);
+                }
+                shouldStartBackpressureTimeout() {
+                    return void 0 === this.backpressureTimeout && this.mediaTransmissionStarted;
+                }
+                shouldIgnoreBackpressureTimeout() {
+                    return !this.streamBackpressured || this.recordingTransportFailed;
+                }
+                failInterruptedRecording() {
+                    const unconfirmedFrames = Math.max(0, this.framesCount - this.confirmedFrameNumber);
+                    const unconfirmedSamples = Math.max(0, this.samplesCount - this.confirmedSampleNumber);
+                    const err = error_createError({
+                        message: "Recording interrupted",
+                        explanation: "The server connection closed before this recording completed. It cannot be safely resumed, so it has been stopped. Please start a new recording.",
+                        options: this.options,
+                        cause: {
+                            unconfirmedFrames,
+                            unconfirmedSamples
+                        }
+                    });
+                    this.failMediaTransmission(err);
+                }
+                handleStreamDrain(stream) {
+                    this.options.logger.debug(`${PIPE_SYMBOL}Stream *drain* event emitted`);
+                    this.flushPendingWrites(stream);
+                }
+                canReconnectAfterStreamClose() {
+                    return Boolean(this.connected && this.userMediaLoaded);
+                }
+                shouldReportStreamClose() {
+                    return !this.connecting && !this.blocking;
+                }
+                handleStreamClose(url2Connect) {
+                    const debugLine = string_summarize(`${PIPE_SYMBOL}Stream has closed:`, {
+                        connecting: this.connecting,
+                        connected: this.connected,
+                        userMediaLoaded: this.userMediaLoaded,
+                        blocking: this.blocking
+                    });
+                    this.options.logger.debug(debugLine);
+                    const canReconnect = this.canReconnectAfterStreamClose();
+                    this.connected = false;
+                    if (this.shouldIgnoreStreamClose()) return;
+                    if (this.mediaTransmissionStarted) this.failInterruptedRecording();
+                    else if (canReconnect) {
+                        this.pendingWrites.clear();
+                        this.streamBackpressured = false;
+                        this.resumeAfterDrain = false;
+                        this.reconnecting = true;
+                        this.initSocket();
+                    } else if (this.shouldReportStreamClose()) window.setTimeout(()=>{
+                        this.handleConnectionFailure({
+                            url2Connect,
+                            cause: "closed"
+                        });
+                    }, 0);
+                }
+                shouldIgnoreStreamClose() {
+                    return this.recordingTransportFailed || Boolean(this.unloaded);
                 }
                 sendPings() {
                     this.stopPings();
@@ -19434,7 +19613,9 @@
                     this.pingInterval = void 0;
                 }
                 onAudioSample(audioSample) {
+                    if (this.recordingTransportFailed) return;
                     this.samplesCount++;
+                    this.mediaTransmissionStarted = true;
                     const audioBuffer = audioSample.toBuffer();
                     this.writeStream(audioBuffer);
                 }
@@ -19443,7 +19624,7 @@
                 }
                 onUserMediaReady(params) {
                     try {
-                        this.options.logger.debug(`Recorder: onUserMediaReady(${params ? util_pretty(params) : ""})`);
+                        this.options.logger.debug(`Recorder: onUserMediaReady(${params ? string_pretty(params) : ""})`);
                         const switchingFacingMode = params?.switchingFacingMode;
                         this.userMediaLoading = this.blocking = this.unloaded = this.submitting = false;
                         this.userMediaLoaded = true;
@@ -19474,6 +19655,11 @@
                     window.clearTimeout(this.connectionTimeout);
                     this.connectionTimeout = void 0;
                 }
+                clearBackpressureTimeout() {
+                    if (void 0 === this.backpressureTimeout) return;
+                    window.clearTimeout(this.backpressureTimeout);
+                    this.backpressureTimeout = void 0;
+                }
                 clearReconnectTimeout() {
                     if (void 0 === this.reconnectTimeout) return;
                     this.options.logger.debug("Recorder: clearReconnectTimeout()");
@@ -19485,7 +19671,7 @@
                     this.failConnection(params);
                 }
                 retryConnection(params) {
-                    if (!this.reconnecting || !this.userMediaLoaded || !this.isOnline() || this.unloaded || this.blocking) return false;
+                    if (!this.canRetryConnection()) return false;
                     if (void 0 !== this.reconnectTimeout) return true;
                     const delayMs = Math.min(1000 * 2 ** this.reconnectAttempts, 10000);
                     this.reconnectAttempts++;
@@ -19495,12 +19681,22 @@
                     this.options.logger.debug(`Recorder: retrying WebSocket connection in ${delayMs}ms (cause ${params.cause}).`);
                     this.reconnectTimeout = window.setTimeout(()=>{
                         this.reconnectTimeout = void 0;
-                        if (this.reconnecting && !this.unloaded && !this.blocking) this.initSocket();
+                        if (this.shouldContinueReconnect()) this.initSocket();
                     }, delayMs);
                     return true;
                 }
+                canRetryConnection() {
+                    return Boolean(this.reconnecting && this.userMediaLoaded && this.isOnline() && !this.unloaded && !this.blocking);
+                }
+                shouldContinueReconnect() {
+                    return this.reconnecting && !this.unloaded && !this.blocking;
+                }
                 discardSocket() {
                     this.options.logger.debug("Recorder: discarding socket stream ...");
+                    this.clearBackpressureTimeout();
+                    this.pendingWrites.clear();
+                    this.streamBackpressured = false;
+                    this.resumeAfterDrain = false;
                     const stream = this.stream;
                     this.stream = void 0;
                     if (stream && !stream.destroyed) stream.destroy();
@@ -19509,7 +19705,7 @@
                     return navigator.onLine;
                 }
                 failConnection(params) {
-                    if (this.connectionFailed || this.connected || this.unloaded) return;
+                    if (this.shouldIgnoreConnectionFailure()) return;
                     this.connectionFailed = true;
                     this.connecting = false;
                     this.reconnecting = false;
@@ -19539,7 +19735,7 @@
                         blocking: this.blocking,
                         visibilityState: document.visibilityState
                     };
-                    const debugLine = util_summarize("Recorder: failConnection() diagnostic", contents);
+                    const debugLine = string_summarize("Recorder: failConnection() diagnostic", contents);
                     this.options.logger.debug(debugLine);
                     let explanation;
                     if (online) if ("timeout" === cause) explanation = `The server at ${url2Connect} did not respond within ${this.options.timeouts.connection}ms, even though your device is online. This usually points to a firewall or proxy silently dropping the connection. Please try a different network. If the problem persists, contact us.`;
@@ -19562,6 +19758,9 @@
                     this.emit("ERROR", {
                         err
                     });
+                }
+                shouldIgnoreConnectionFailure() {
+                    return this.connectionFailed || this.connected || Boolean(this.unloaded);
                 }
                 calculateFrameProgress() {
                     return `${(this.confirmedFrameNumber / (this.framesCount || 1) * 100).toFixed(2)}%`;
@@ -19611,6 +19810,9 @@
                         options: this.options
                     });
                     const hasAudio = this.samplesCount > 0;
+                    this.mediaTransmissionStarted = false;
+                    this.recordingActive = false;
+                    this.recordingTransportFailed = false;
                     this.confirmedFrameNumber = this.confirmedSampleNumber = this.samplesCount = this.framesCount = 0;
                     this.sampleProgress = this.frameProgress = void 0;
                     this.key = args.key;
@@ -19712,7 +19914,8 @@
                             err
                         });
                     }
-                    if (this.stream) {
+                    const stream = this.stream;
+                    if (stream) {
                         const connectionTimeoutMs = this.options.timeouts.connection;
                         this.connectionTimeout = window.setTimeout(()=>{
                             if (this.isOnline() && this.isUserMediaLoaded()) {
@@ -19727,28 +19930,11 @@
                                 cause: "timeout"
                             });
                         }, connectionTimeoutMs);
-                        this.stream.on("close", ()=>{
-                            const debugLine = util_summarize(`${PIPE_SYMBOL}Stream has closed:`, {
-                                connecting: this.connecting,
-                                connected: this.connected,
-                                userMediaLoaded: this.userMediaLoaded,
-                                blocking: this.blocking
-                            });
-                            this.options.logger.debug(debugLine);
-                            const tryReconnect = this.connected && this.userMediaLoaded;
-                            this.connected = false;
-                            if (tryReconnect) {
-                                this.reconnecting = true;
-                                this.initSocket();
-                            } else if (!this.connecting && !this.blocking) window.setTimeout(()=>{
-                                this.handleConnectionFailure({
-                                    url2Connect,
-                                    cause: "closed"
-                                });
-                            }, 0);
+                        stream.on("close", ()=>{
+                            this.handleStreamClose(url2Connect);
                         });
-                        this.stream.on("connect", (args)=>{
-                            this.options.logger.debug(`${PIPE_SYMBOL}Stream *connect* event emitted with args: ${util_pretty(args)}`);
+                        stream.on("connect", (args)=>{
+                            this.options.logger.debug(`${PIPE_SYMBOL}Stream *connect* event emitted with args: ${string_pretty(args)}`);
                             this.clearConnectionTimeout();
                             const isClosing = this.stream?.socket.readyState === WebSocket.CLOSING;
                             if (!this.connected && !isClosing && !this.unloaded) {
@@ -19761,7 +19947,7 @@
                                 cb?.();
                             }
                         });
-                        this.stream.on("data", (data)=>{
+                        stream.on("data", (data)=>{
                             this.options.logger.debug(`${PIPE_SYMBOL}Stream *data* event emitted`);
                             try {
                                 const command = JSON.parse(data.toString());
@@ -19779,10 +19965,10 @@
                                 });
                             }
                         });
-                        this.stream.on("error", (err)=>{
+                        stream.on("error", (err)=>{
                             if ("u" > typeof Event && err instanceof Event) this.lastSocketError = error_getEventDetails(err);
                             else this.lastSocketError = serializeError(err);
-                            const debugLine = util_summarize(`${PIPE_SYMBOL}Stream *error* event emitted:`, {
+                            const debugLine = string_summarize(`${PIPE_SYMBOL}Stream *error* event emitted:`, {
                                 error: serializeError(err)
                             });
                             this.options.logger.debug(debugLine);
@@ -19793,47 +19979,45 @@
                             const streamError = err instanceof Error ? err : new Error("WebSocket stream emitted an error event", {
                                 cause: this.lastSocketError ?? err
                             });
+                            if (this.mediaTransmissionStarted) return void this.failInterruptedRecording();
                             this.emit("ERROR", {
                                 err: error_createError({
                                     message: "WebSocket stream error",
-                                    explanation: `The WebSocket stream emitted an error event. Details: ${util_pretty(err)}`,
+                                    explanation: `The WebSocket stream emitted an error event. Details: ${string_pretty(err)}`,
                                     options: this.options,
                                     exc: streamError
                                 })
                             });
                         });
-                        this.stream.on("drain", ()=>{
-                            this.options.logger.debug(`${PIPE_SYMBOL}Stream *drain* event emitted (should not happen!)`);
+                        stream.on("drain", ()=>{
+                            this.handleStreamDrain(stream);
                         });
-                        this.stream.on("preend", (args)=>{
-                            this.options.logger.debug(`${PIPE_SYMBOL}Stream *preend* event emitted with args: ${util_pretty(args)}`);
+                        stream.on("preend", (args)=>{
+                            this.options.logger.debug(`${PIPE_SYMBOL}Stream *preend* event emitted with args: ${string_pretty(args)}`);
                         });
-                        this.stream.on("end", ()=>{
+                        stream.on("end", ()=>{
                             this.options.logger.debug(`${PIPE_SYMBOL}Stream *end* event emitted`);
                         });
-                        this.stream.on("drain", (args)=>{
-                            this.options.logger.debug(`${PIPE_SYMBOL}Stream *drain* event emitted with args: ${util_pretty(args)}`);
+                        stream.on("pipe", (src)=>{
+                            this.options.logger.debug(`${PIPE_SYMBOL}Stream *pipe* event emitted with src: ${string_pretty(src)}`);
                         });
-                        this.stream.on("pipe", (src)=>{
-                            this.options.logger.debug(`${PIPE_SYMBOL}Stream *pipe* event emitted with src: ${util_pretty(src)}`);
+                        stream.on("unpipe", (src)=>{
+                            this.options.logger.debug(`${PIPE_SYMBOL}Stream *unpipe* event emitted with src: ${string_pretty(src)}`);
                         });
-                        this.stream.on("unpipe", (src)=>{
-                            this.options.logger.debug(`${PIPE_SYMBOL}Stream *unpipe* event emitted with src: ${util_pretty(src)}`);
+                        stream.on("resume", (args)=>{
+                            this.options.logger.debug(`${PIPE_SYMBOL}Stream *resume* event emitted with args: ${string_pretty(args)}`);
                         });
-                        this.stream.on("resume", (args)=>{
-                            this.options.logger.debug(`${PIPE_SYMBOL}Stream *resume* event emitted with args: ${util_pretty(args)}`);
+                        stream.on("uncork", (args)=>{
+                            this.options.logger.debug(`${PIPE_SYMBOL}Stream *uncork* event emitted with args: ${string_pretty(args)}`);
                         });
-                        this.stream.on("uncork", (args)=>{
-                            this.options.logger.debug(`${PIPE_SYMBOL}Stream *uncork* event emitted with args: ${util_pretty(args)}`);
+                        stream.on("readable", (args)=>{
+                            this.options.logger.debug(`${PIPE_SYMBOL}Stream *readable* event emitted with args: ${string_pretty(args)}`);
                         });
-                        this.stream.on("readable", (args)=>{
-                            this.options.logger.debug(`${PIPE_SYMBOL}Stream *readable* event emitted with args: ${util_pretty(args)}`);
+                        stream.on("prefinish", (args)=>{
+                            this.options.logger.debug(`${PIPE_SYMBOL}Stream *prefinish* event emitted with args: ${string_pretty(args)}`);
                         });
-                        this.stream.on("prefinish", (args)=>{
-                            this.options.logger.debug(`${PIPE_SYMBOL}Stream *prefinish* event emitted with args: ${util_pretty(args)}`);
-                        });
-                        this.stream.on("finish", (args)=>{
-                            this.options.logger.debug(`${PIPE_SYMBOL}Stream *finish* event emitted with args: ${util_pretty(args)}`);
+                        stream.on("finish", (args)=>{
+                            this.options.logger.debug(`${PIPE_SYMBOL}Stream *finish* event emitted with args: ${string_pretty(args)}`);
                         });
                     }
                 }
@@ -19846,11 +20030,11 @@
                     return this.blocking;
                 }
                 userMediaErrorCallback(err, usedConstraints) {
-                    if (this.unloaded) return void this.options.logger.debug(`Recorder: already unloaded. Not going to throw error ${util_pretty(err)}`);
+                    if (this.unloaded) return void this.options.logger.debug(`Recorder: already unloaded. Not going to throw error ${string_pretty(err)}`);
                     this.userMediaLoading = false;
                     this.clearUserMediaTimeout();
                     const characteristics = this.userMedia?.getCharacteristics();
-                    this.options.logger.debug(`Recorder: userMediaErrorCallback(), name: ${err.name}, message: ${err.message} and Webcam characteristics: ${characteristics ? util_pretty(characteristics) : "none"}`);
+                    this.options.logger.debug(`Recorder: userMediaErrorCallback(), name: ${err.name}, message: ${err.message} and Webcam characteristics: ${characteristics ? string_pretty(characteristics) : "none"}`);
                     const errorListeners = this.getListeners("ERROR");
                     if (errorListeners?.length) if (err.name !== error_VideomailError.MEDIA_DEVICE_NOT_SUPPORTED) {
                         const videomailError = error_createError({
@@ -19862,14 +20046,14 @@
                             err: videomailError
                         });
                     } else {
-                        this.options.logger.debug(`Recorder: ignore user media error ${util_pretty(err)}`);
+                        this.options.logger.debug(`Recorder: ignore user media error ${string_pretty(err)}`);
                         this.retryTimeout = window.setTimeout(()=>{
                             this.retryTimeout = void 0;
                             if (!this.unloaded) this.loadUserMedia();
                         }, this.options.timeouts.userMedia);
                     }
                     else {
-                        this.options.logger.debug(`Recorder: no error listeners attached but throwing error ${util_pretty(err)}`);
+                        this.options.logger.debug(`Recorder: no error listeners attached but throwing error ${string_pretty(err)}`);
                         throw error_createError({
                             err,
                             message: "Unable to process this error since there are no error listeners anymore.",
@@ -19887,7 +20071,7 @@
                             options: this.options
                         });
                     }
-                    this.options.logger.debug(`Recorder: getUserMediaCallback(${params ? util_pretty(params) : ""})`);
+                    this.options.logger.debug(`Recorder: getUserMediaCallback(${params ? string_pretty(params) : ""})`);
                     if (this.showUserMedia()) try {
                         this.userMedia.init(localStream, ()=>{
                             if (!this.unloaded) this.onUserMediaReady(params);
@@ -19915,7 +20099,7 @@
                     }
                 }
                 loadGenuineUserMedia(params) {
-                    this.options.logger.debug(`Recorder: loadGenuineUserMedia(${params ? util_pretty(params) : ""})`);
+                    this.options.logger.debug(`Recorder: loadGenuineUserMedia(${params ? string_pretty(params) : ""})`);
                     this.emit("ASKING_WEBCAM_PERMISSION");
                     this.userMediaLoading = true;
                     const constraints = {
@@ -19926,26 +20110,9 @@
                         },
                         audio: isAudioEnabled(this.options)
                     };
-                    if (params?.switchingFacingMode && constraints.video && true !== constraints.video) constraints.video.facingMode = params.switchingFacingMode;
-                    if (this.options.video.width && constraints.video && true !== constraints.video) {
-                        const idealWidth = this.options.video.width;
-                        if (idealWidth) constraints.video.width = {
-                            ideal: idealWidth
-                        };
-                    } else if (constraints.video && true !== constraints.video) {
-                        const limitedWidth = this.limitWidth();
-                        if (limitedWidth?.value) constraints.video.width = {
-                            ideal: limitedWidth.value
-                        };
-                    }
-                    if (this.options.video.height && constraints.video && true !== constraints.video) {
-                        const idealHeight = this.options.video.height;
-                        if (idealHeight) constraints.video.height = {
-                            ideal: idealHeight
-                        };
-                    }
-                    this.options.logger.debug(util_summarize("Recorder: our webcam constraints are:", constraints));
-                    this.options.logger.debug(util_summarize("Recorder: available webcam constraints are:", navigator.mediaDevices.getSupportedConstraints()));
+                    this.configureVideoConstraints(constraints, params);
+                    this.options.logger.debug(string_summarize("Recorder: our webcam constraints are:", constraints));
+                    this.options.logger.debug(string_summarize("Recorder: available webcam constraints are:", navigator.mediaDevices.getSupportedConstraints()));
                     const streamPromise = navigator.mediaDevices.getUserMedia(constraints);
                     streamPromise.then((localStream)=>{
                         if (this.unloaded) return void localStream.getTracks().forEach((track)=>{
@@ -19956,13 +20123,30 @@
                         if (!this.unloaded) this.userMediaErrorCallback(reason, constraints);
                     });
                 }
+                configureVideoConstraints(constraints, params) {
+                    const videoConstraints = "object" == typeof constraints.video ? constraints.video : void 0;
+                    if (!videoConstraints) return;
+                    if (params?.switchingFacingMode) videoConstraints.facingMode = params.switchingFacingMode;
+                    if (this.options.video.width) videoConstraints.width = {
+                        ideal: this.options.video.width
+                    };
+                    else {
+                        const limitedWidth = this.limitWidth();
+                        if (limitedWidth?.value) videoConstraints.width = {
+                            ideal: limitedWidth.value
+                        };
+                    }
+                    if (this.options.video.height) videoConstraints.height = {
+                        ideal: this.options.video.height
+                    };
+                }
                 loadUserMedia(params) {
                     if (this.userMediaLoaded) {
                         this.options.logger.debug("Recorder: skipping loadUserMedia() because it is already loaded");
                         this.onUserMediaReady(params);
                         return;
                     } else if (this.userMediaLoading) return void this.options.logger.debug("Recorder: skipping loadUserMedia() because it is already asking for permission");
-                    this.options.logger.debug(`Recorder: loadUserMedia(${params ? util_pretty(params) : ""})`);
+                    this.options.logger.debug(`Recorder: loadUserMedia(${params ? string_pretty(params) : ""})`);
                     this.emit("LOADING_USER_MEDIA");
                     try {
                         if (!navigator.mediaDevices) throw new Error("No media devices are available.");
@@ -19995,7 +20179,7 @@
                     if (this.unloaded) return;
                     try {
                         if (command.args) {
-                            const debugLine = util_summarize(`Server commanded: ${command.command} with:`, command.args);
+                            const debugLine = string_summarize(`Server commanded: ${command.command} with:`, command.args);
                             this.options.logger.debug(debugLine);
                         } else this.options.logger.debug(`Server commanded: ${command.command}`);
                         switch(command.command){
@@ -20061,7 +20245,7 @@
                 writeCommand(command, args, cb) {
                     if (this.connected) {
                         if (this.stream) {
-                            if (args) this.options.logger.debug(`$ ${command} with ${util_pretty(args)}`);
+                            if (args) this.options.logger.debug(`$ ${command} with ${string_pretty(args)}`);
                             else this.options.logger.debug(`$ ${command}`);
                             const commandObj = {
                                 command,
@@ -20088,14 +20272,17 @@
                     return this.loop.getElapsedTime();
                 }
                 getAvgInterval() {
-                    const intervalSum = this.getIntervalSum();
-                    if (void 0 === intervalSum || intervalSum <= 0) return;
+                    const intervalSum = this.getIntervalSum() ?? 0;
+                    if (!this.hasValidInterval(intervalSum)) return;
                     return intervalSum / this.framesCount;
                 }
                 getAvgFps() {
-                    const intervalSum = this.getIntervalSum();
-                    if (void 0 === intervalSum || intervalSum <= 0) return;
+                    const intervalSum = this.getIntervalSum() ?? 0;
+                    if (!this.hasValidInterval(intervalSum)) return;
                     return this.framesCount / intervalSum * 1000;
+                }
+                hasValidInterval(intervalSum) {
+                    return intervalSum > 0;
                 }
                 getRecordingStats() {
                     return this.recordingStats;
@@ -20105,7 +20292,8 @@
                 }
                 stop(params) {
                     if (!this.userMedia) throw new Error("No user media defined, unable to stop");
-                    this.options.logger.debug(`Recorder: stop(${params ? util_pretty(params) : ""})`);
+                    this.options.logger.debug(`Recorder: stop(${params ? string_pretty(params) : ""})`);
+                    this.recordingActive = false;
                     const limitReached = params?.limitReached;
                     this.emit("STOPPING", {
                         limitReached
@@ -20161,6 +20349,8 @@
                     if (e) cause = e.type;
                     const prettyCause = cause ? `, cause: ${cause}` : "";
                     this.options.logger.debug(`Recorder: unload()${prettyCause}`);
+                    this.recordingActive = false;
+                    this.mediaTransmissionStarted = false;
                     this.reset();
                     this.recordingDimensions = void 0;
                     this.clearUserMediaTimeout();
@@ -20208,7 +20398,7 @@
                     return this.userMedia?.isReady();
                 }
                 pause(params) {
-                    if (params) this.options.logger.debug(`pause() at frame ${this.framesCount} with ${util_pretty(params)}`);
+                    if (params) this.options.logger.debug(`pause() at frame ${this.framesCount} with ${string_pretty(params)}`);
                     else this.options.logger.debug(`pause() at frame ${this.framesCount}`);
                     this.userMedia?.pause();
                     this.loop.stop();
@@ -20220,13 +20410,15 @@
                     this.stopPings();
                     this.emit("RESUMING");
                     this.userMedia?.resume();
-                    this.loop.start();
+                    if (this.streamBackpressured) this.resumeAfterDrain = true;
+                    else this.loop.start();
                 }
                 onFlushed(opts) {
                     const frameNumber = opts.frameNumber;
                     if (1 === frameNumber) this.emit("FIRST_FRAME_SENT");
                 }
                 draw(_deltaTime, elapsedTime) {
+                    if (this.recordingTransportFailed) return;
                     if (!this.userMedia) throw new Error("No user media defined, unable to draw on canvas");
                     try {
                         if (!this.isPaused() && this.stream && this.ctx) {
@@ -20246,6 +20438,7 @@
                                         this.recordingBuffer,
                                         frameControlBuffer
                                     ]);
+                                    this.mediaTransmissionStarted = true;
                                     this.writeStream(frameBuffer, {
                                         frameNumber: this.framesCount,
                                         onFlushedCallback: this.onFlushed.bind(this)
@@ -20341,6 +20534,9 @@
                     };
                     this.frame = new canvas_to_buffer_modern_r(this.canvas, this.options.image.types, this.options.image.quality);
                     this.options.logger.debug("Recorder: record()");
+                    this.recordingActive = true;
+                    this.recordingTransportFailed = false;
+                    this.mediaTransmissionStarted = false;
                     this.userMedia.record();
                     this.emit("RECORDING", {
                         framesCount: this.framesCount
@@ -20405,7 +20601,7 @@
                     if (!util_getBrowser(this.options).isMobile()) return;
                     if ("user" === this.facingMode) this.facingMode = "environment";
                     else if ("environment" === this.facingMode) this.facingMode = "user";
-                    else this.options.logger.warn(`Recorder: unsupported facing mode ${util_pretty(this.facingMode)}`);
+                    else this.options.logger.warn(`Recorder: unsupported facing mode ${string_pretty(this.facingMode)}`);
                     this.loadGenuineUserMedia({
                         switchingFacingMode: this.facingMode
                     });
@@ -20701,7 +20897,7 @@
                     });
                 }
                 build(replayParentElement) {
-                    this.options.logger.debug(`Replay: build (replayParentElement="${util_pretty(replayParentElement)}")`);
+                    this.options.logger.debug(`Replay: build (replayParentElement="${string_pretty(replayParentElement)}")`);
                     this.replayElement = this.visuals.getElement()?.querySelector(`video.${this.options.selectors.replayClass}`);
                     if (!this.replayElement) this.buildElement(replayParentElement);
                     if (!this.replayElement) throw new Error("There is no replayElement to build on");
@@ -20864,7 +21060,7 @@
                 }
                 buildChildren(playerOnly = false, visualsElement) {
                     if (!visualsElement) throw new Error("Unable to build children without a visuals element");
-                    this.options.logger.debug(`Visuals: buildChildren (playerOnly = ${playerOnly}, visualsElement="${util_pretty(visualsElement)}"})`);
+                    this.options.logger.debug(`Visuals: buildChildren (playerOnly = ${playerOnly}, visualsElement="${string_pretty(visualsElement)}"})`);
                     this.buildNoScriptTag();
                     if (!playerOnly) {
                         this.notifier.build();
@@ -20933,7 +21129,7 @@
                     return this.recorderInsides.isCountingDown();
                 }
                 build(playerOnly = false, parentElement) {
-                    const parentElementInfo = parentElement ? `, parentElement="${util_pretty(parentElement)}"` : "";
+                    const parentElementInfo = parentElement ? `, parentElement="${string_pretty(parentElement)}"` : "";
                     this.options.logger.debug(`Visuals: build (playerOnly = ${playerOnly}${parentElementInfo})`);
                     if (parentElement) this.visualsElement = parentElement.querySelector(`.${this.options.selectors.visualsClass}`);
                     else this.visualsElement = this.container.querySelector(`.${this.options.selectors.visualsClass}`);
@@ -20993,7 +21189,7 @@
                 unload(params) {
                     if (!this.built) return;
                     const e = params?.e;
-                    this.options.logger.debug(`Visuals: unload(${e ? util_pretty(e) : ""})`);
+                    this.options.logger.debug(`Visuals: unload(${e ? string_pretty(e) : ""})`);
                     this.recorder.unload(params);
                     this.recorderInsides.unload();
                     this.replay.unload(params);
@@ -21174,14 +21370,14 @@
                     this.resource = new src_resource(options);
                 }
                 buildChildren(playerOnly = false, parentElement) {
-                    const parentElementInfo = parentElement ? `, parentElement="${util_pretty(parentElement)}"` : "";
+                    const parentElementInfo = parentElement ? `, parentElement="${string_pretty(parentElement)}"` : "";
                     this.options.logger.debug(`Container: buildChildren (playerOnly = ${playerOnly}${parentElementInfo})`);
                     if (this.containerElement) this.containerElement.classList.add(this.options.selectors.containerClass);
                     if (!playerOnly) this.buttons.build();
                     this.visuals.build(playerOnly, parentElement);
                 }
                 build(buildOptions) {
-                    this.options.logger.debug(`Container: build (${buildOptions ? util_pretty(buildOptions) : ""})`);
+                    this.options.logger.debug(`Container: build (${buildOptions ? string_pretty(buildOptions) : ""})`);
                     try {
                         const containerId = this.options.selectors.containerId;
                         if (containerId) this.containerElement = document.getElementById(containerId);
@@ -21367,7 +21563,7 @@
                     try {
                         if (!this.built) return;
                         const e = params?.e;
-                        this.options.logger.debug(`Container: unload(${e ? util_pretty(e) : ""})`);
+                        this.options.logger.debug(`Container: unload(${e ? string_pretty(e) : ""})`);
                         this.emit("UNLOADING");
                         this.unloadChildren(params);
                         this.hide();

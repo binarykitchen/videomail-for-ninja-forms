@@ -43,8 +43,8 @@ function checkPreconditions() {
   if (output("git", ["branch", "--show-current"]) !== "develop") {
     throw new Error("Releases must start on the develop branch.");
   }
-  if (output("git", ["status", "--porcelain"])) {
-    throw new Error("Commit or stash all changes before starting a release.");
+  if (output("git", ["status", "--porcelain", "--", ".", ":(exclude)target"])) {
+    throw new Error("Commit or stash changes outside target/ before starting a release.");
   }
   output("gh", ["auth", "status"]);
   run("git", ["fetch", "origin", "--prune"]);
@@ -69,20 +69,6 @@ function checkReleaseAvailable(version) {
   }
   if (output("git", ["branch", "--remotes", "--list", `origin/release/${version}`])) {
     throw new Error(`Remote release branch 'origin/release/${version}' already exists.`);
-  }
-}
-
-function showOutdatedDependencies() {
-  console.log(
-    "\n🔎 Checking for outdated dependencies (npm outdated may exit 1 when updates exist):",
-  );
-  const result = spawnSync("npm", ["outdated"], {
-    cwd: projectRoot,
-    stdio: "inherit",
-  });
-  if (result.error) throw result.error;
-  if (result.status !== 0 && result.status !== 1) {
-    throw new Error(`npm outdated failed with exit code ${result.status}.`);
   }
 }
 
@@ -125,17 +111,6 @@ async function main() {
   );
   const readmePath = path.join(projectRoot, "readme.txt");
   const readme = readFileSync(readmePath, "utf8");
-
-  showOutdatedDependencies();
-  if (
-    !(await confirm({
-      message: "Have you reviewed the dependency updates and applied any you want?",
-      default: false,
-    }))
-  ) {
-    console.log("⚠️ Release cancelled without changing files.");
-    return;
-  }
 
   const suggestions = suggestReleaseVersions(packageJson.version);
   const selectedVersion = await select({
@@ -197,13 +172,16 @@ async function main() {
 
   if (
     !(await confirm({
-      message: `Prepare and publish release ${version}? This will commit and push to develop, then create the GitHub release after CI passes.`,
+      message: `Prepare and publish release ${version}? Dependencies will be installed and assets rebuilt and checked before committing, pushing and publishing after CI passes.`,
       default: false,
     }))
   ) {
     console.log("⚠️ Release cancelled without changing files.");
     return;
   }
+
+  console.log("\nInstalling locked dependencies...");
+  run("npm", ["ci"]);
 
   run("npm", ["version", version, "--no-git-tag-version"]);
   writeFileSync(
