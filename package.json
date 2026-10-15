@@ -29,7 +29,7 @@
     "url": "https://github.com/binarykitchen/videomail-for-ninja-forms.git"
   },
   "engines": {
-    "node": "^26.5.0",
+    "node": "^26.12.0",
     "npm": ">=11.16.0"
   },
   "scripts": {
@@ -55,7 +55,7 @@
   },
   "prettier": "./prettier.config.js",
   "dependencies": {
-    "videomail-client": "15.11.0"
+    "videomail-client": "16.0.0"
   },
   "overrides": {
     "websocket-stream": {
@@ -67,14 +67,14 @@
     "@inquirer/prompts": "8.7.3",
     "autoprefixer": "10.6.1",
     "browser-sync": "3.0.4",
-    "cssnano": "9.4.0",
+    "cssnano": "9.8.0",
     "esbuild": "0.28.2",
     "eslint": "10.12.0",
     "globals": "17.13.0",
     "gulp": "5.0.1",
     "gulp-zip": "6.1.0",
     "nib": "1.2.0",
-    "postcss": "8.5.29",
+    "postcss": "8.5.30",
     "prettier": "3.9.10",
     "stylus": "0.64.0"
   }
