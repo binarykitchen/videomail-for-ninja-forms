@@ -10978,7 +10978,7 @@
             var client = __webpack_require__("Q");
             var client_default = /*#__PURE__*/ __webpack_require__.n(client);
             var package_namespaceObject = {
-                rE: "15.11.0"
+                rE: "16.0.0"
             };
             function isAudioEnabled(options) {
                 return Boolean(options.audio.enabled);
@@ -15064,6 +15064,7 @@
                         this.options.logger.debug(`Form: doTheSubmit(${string_pretty(e)})`);
                         e.preventDefault();
                     } else this.options.logger.debug("Form: doTheSubmit()");
+                    const hasHostAction = this.formElement.hasAttribute("action");
                     const url = this.formElement.getAttribute("action") ?? this.options.apiUrl;
                     const method = this.formElement.getAttribute("method");
                     let chosenMethod;
@@ -15077,7 +15078,7 @@
                         default:
                             chosenMethod = FormMethod.POST;
                     }
-                    if (this.container.hasElement()) await this.container.submitAll(this.getData(), chosenMethod, url);
+                    if (this.container.hasElement()) await this.container.submitAll(this.getData(), chosenMethod, url, hasHostAction);
                     return false;
                 }
                 getInvalidElement() {
@@ -15337,7 +15338,7 @@
                 audio: {
                     enabled: false,
                     switch: false,
-                    volume: 0.2,
+                    volume: 1,
                     bufferSize: "auto"
                 },
                 video: {
@@ -15490,7 +15491,7 @@
             main.A && main.A.locals && main.A.locals;
             var document_visibility = __webpack_require__("xF");
             var document_visibility_default = /*#__PURE__*/ __webpack_require__.n(document_visibility);
-            /*! @license DOMPurify 3.4.16 | (c) Cure53 and other contributors | Released under the Apache license 2.0 and Mozilla Public License 2.0 | github.com/cure53/DOMPurify/blob/3.4.16/LICENSE */ function _OverloadYield(e, d) {
+            /*! @license DOMPurify 3.4.17 | (c) Cure53 and other contributors | Released under the Apache license 2.0 and Mozilla Public License 2.0 | github.com/cure53/DOMPurify/blob/3.4.17/LICENSE */ function _OverloadYield(e, d) {
                 this.v = e, this.k = d;
             }
             function _arrayLikeToArray(r, a) {
@@ -15612,9 +15613,12 @@
             const arrayLastIndexOf = unapply(Array.prototype.lastIndexOf);
             const arrayPop = unapply(Array.prototype.pop);
             const arrayPush = unapply(Array.prototype.push);
-            Array.prototype.slice;
+            const arraySlice = unapply(Array.prototype.slice);
             const arraySplice = unapply(Array.prototype.splice);
             const arrayIsArray = Array.isArray;
+            const setCreate = unconstruct(Set);
+            const setAdd = unapply(Set.prototype.add);
+            const setHas = unapply(Set.prototype.has);
             const stringToLowerCase = unapply(String.prototype.toLowerCase);
             const stringToString = unapply(String.prototype.toString);
             const stringMatch = unapply(String.prototype.match);
@@ -15719,6 +15723,14 @@
                     return null;
                 }
                 return fallbackValue;
+            }
+            function lookupAccessor(object, prop) {
+                while(null !== object){
+                    const desc = getOwnPropertyDescriptor(object, prop);
+                    if (desc) return desc.get ? unapply(desc.get) : null;
+                    object = getPrototypeOf(object);
+                }
+                return null;
             }
             function isRegex(value) {
                 try {
@@ -16406,7 +16418,7 @@
                 documentFragment: 11,
                 notation: 12
             };
-            const LITERAL_TEXT_ELEMENT_NAMES = [
+            const LITERAL_TEXT_ELEMENTS = purify_es_freeze(addToSet({}, [
                 "style",
                 "script",
                 "xmp",
@@ -16415,15 +16427,7 @@
                 "noframes",
                 "plaintext",
                 "noscript"
-            ];
-            const LITERAL_TEXT_ELEMENTS = purify_es_freeze(addToSet({}, LITERAL_TEXT_ELEMENT_NAMES));
-            const LITERAL_TEXT_CLOSE = function() {
-                const map = {};
-                arrayForEach(LITERAL_TEXT_ELEMENT_NAMES, (name)=>{
-                    map[name] = purify_es_seal(new RegExp("</" + name + "(?=[\\t\\n\\f\\r />])", "i"));
-                });
-                return purify_es_freeze(map);
-            }();
+            ]));
             const purify_es_getGlobal = function() {
                 return "u" < typeof window ? null : window;
             };
@@ -16470,7 +16474,7 @@
             function createDOMPurify() {
                 let window1 = arguments.length > 0 && void 0 !== arguments[0] ? arguments[0] : purify_es_getGlobal();
                 const DOMPurify = (root)=>createDOMPurify(root);
-                DOMPurify.version = "3.4.16";
+                DOMPurify.version = "3.4.17";
                 DOMPurify.removed = [];
                 if (!window1 || !window1.document || window1.document.nodeType !== NODE_TYPE.document || !window1.Element) {
                     DOMPurify.isSupported = false;
@@ -16501,6 +16505,10 @@
                 };
                 const _readNodeName = function(node) {
                     return getNodeName ? getNodeName(node) : node.nodeName;
+                };
+                const getNamespaceURI = lookupAccessor(ElementPrototype, "namespaceURI");
+                const _readNamespaceURI = function(element) {
+                    return getNamespaceURI ? getNamespaceURI(element) : element.namespaceURI;
                 };
                 if ("function" == typeof HTMLTemplateElement) {
                     const template = document1.createElement("template");
@@ -16615,6 +16623,7 @@
                 const SANITIZE_NAMED_PROPS_PREFIX = "user-content-";
                 let KEEP_CONTENT = true;
                 let IN_PLACE = false;
+                let IN_PLACE_VISITED = null;
                 let USE_PROFILES = {};
                 let FORBID_CONTENTS = null;
                 const DEFAULT_FORBID_CONTENTS = addToSet({}, [
@@ -16875,18 +16884,27 @@
                     return !ALL_MATHML_TAGS[tagName] && (COMMON_SVG_AND_HTML_ELEMENTS[tagName] || !ALL_SVG_TAGS[tagName]);
                 };
                 const _checkValidNamespace = function(element) {
-                    let parent = getParentNode(element);
-                    if (!parent || !parent.tagName) parent = {
-                        namespaceURI: NAMESPACE,
-                        tagName: "template"
-                    };
-                    const tagName = stringToLowerCase(element.tagName);
-                    const parentTagName = stringToLowerCase(parent.tagName);
-                    if (!ALLOWED_NAMESPACES[element.namespaceURI]) return false;
-                    if (element.namespaceURI === SVG_NAMESPACE) return _checkSvgNamespace(tagName, parent, parentTagName);
-                    if (element.namespaceURI === MATHML_NAMESPACE) return _checkMathMlNamespace(tagName, parent, parentTagName);
-                    if (element.namespaceURI === HTML_NAMESPACE) return _checkHtmlNamespace(tagName, parent, parentTagName);
-                    if ("application/xhtml+xml" === PARSER_MEDIA_TYPE && ALLOWED_NAMESPACES[element.namespaceURI]) return true;
+                    const elementNamespace = _readNamespaceURI(element);
+                    const tagName = stringToLowerCase(_readNodeName(element));
+                    const parentNode = getParentNode(element);
+                    let parent;
+                    let parentTagName;
+                    if (parentNode && _readNodeType(parentNode) === NODE_TYPE.element) {
+                        parent = {
+                            namespaceURI: _readNamespaceURI(parentNode)
+                        };
+                        parentTagName = stringToLowerCase(_readNodeName(parentNode));
+                    } else {
+                        parent = {
+                            namespaceURI: NAMESPACE
+                        };
+                        parentTagName = "template";
+                    }
+                    if (!ALLOWED_NAMESPACES[elementNamespace]) return false;
+                    if (elementNamespace === SVG_NAMESPACE) return _checkSvgNamespace(tagName, parent, parentTagName);
+                    if (elementNamespace === MATHML_NAMESPACE) return _checkMathMlNamespace(tagName, parent, parentTagName);
+                    if (elementNamespace === HTML_NAMESPACE) return _checkHtmlNamespace(tagName, parent, parentTagName);
+                    if ("application/xhtml+xml" === PARSER_MEDIA_TYPE && ALLOWED_NAMESPACES[elementNamespace]) return true;
                     return false;
                 };
                 const _forceRemove = function(node) {
@@ -16912,18 +16930,12 @@
                 const _neutralizeRoot = function(root) {
                     _neutralizeSubtree(root);
                     const childNodes = getChildNodes(root);
-                    if (childNodes) {
-                        const snapshot = [];
-                        arrayForEach(childNodes, (child)=>{
-                            arrayPush(snapshot, child);
-                        });
-                        arrayForEach(snapshot, (child)=>{
-                            try {
-                                remove(child);
-                            } catch (_) {}
-                        });
-                    }
-                    const attributes = getAttributes(root);
+                    if (childNodes) arrayForEach(arraySlice(childNodes), (child)=>{
+                        try {
+                            remove(child);
+                        } catch (_) {}
+                    });
+                    const attributes = _readNodeType(root) === NODE_TYPE.element ? getAttributes(root) : null;
                     if (attributes) for(let i = attributes.length - 1; i >= 0; --i){
                         const attribute = attributes[i];
                         const name = attribute && attribute.name;
@@ -16964,16 +16976,97 @@
                         if ("string" == typeof name && !ALLOWED_ATTR[transformCaseFunc(name)]) _stripAttributeNode(element, attribute, name);
                     }
                 };
-                const _neutralizeSubtree = function(root) {
+                const _walkTree = function(root, visit) {
+                    let intoShadow = arguments.length > 2 && void 0 !== arguments[2] ? arguments[2] : false;
                     const stack = [
                         root
                     ];
                     while(stack.length > 0){
                         const node = stack.pop();
-                        if (_readNodeType(node) === NODE_TYPE.element) _stripDisallowedAttributes(node);
+                        if (false === visit(node)) continue;
+                        if (intoShadow && _readNodeType(node) === NODE_TYPE.element) {
+                            const shadowRoot = getShadowRoot(node);
+                            if (_isDocumentFragment(shadowRoot)) stack.push(shadowRoot);
+                        }
                         const childNodes = getChildNodes(node);
                         if (childNodes) for(let i = childNodes.length - 1; i >= 0; --i)stack.push(childNodes[i]);
                     }
+                };
+                const _neutralizeSubtree = function(root) {
+                    _walkTree(root, (node)=>{
+                        if (_readNodeType(node) === NODE_TYPE.element) _stripDisallowedAttributes(node);
+                    });
+                };
+                const _collectLiveNodes = function(root) {
+                    const nodes = [];
+                    _walkTree(root, (node)=>{
+                        nodes.push(node);
+                    }, true);
+                    return nodes;
+                };
+                const _neutralizeEscapedElements = function(root, before) {
+                    const reachable = setCreate();
+                    arrayForEach(_collectLiveNodes(root), (node)=>{
+                        if (_readNodeType(node) === NODE_TYPE.element) setAdd(reachable, node);
+                    });
+                    arrayForEach(before, (node)=>{
+                        if (_readNodeType(node) === NODE_TYPE.element && !setHas(reachable, node)) _stripDisallowedAttributes(node);
+                    });
+                };
+                const _neutralizeDiscarded = function(root, before) {
+                    let rootRemoved = false;
+                    arrayForEach(DOMPurify.removed, (entry)=>{
+                        if (entry.element) {
+                            rootRemoved = rootRemoved || entry.element === root;
+                            _neutralizeSubtree(entry.element);
+                        }
+                    });
+                    _neutralizeEscapedElements(root, before);
+                    return rootRemoved;
+                };
+                const MAX_UNVISITED_ROUNDS = 8;
+                const _sanitizeUnvisitedNodes = function(root, before) {
+                    const visited = IN_PLACE_VISITED;
+                    let original = null;
+                    const getOriginal = ()=>{
+                        if (!original) {
+                            original = setCreate();
+                            arrayForEach(before, (beforeNode)=>{
+                                setAdd(original, beforeNode);
+                            });
+                        }
+                        return original;
+                    };
+                    for(let round = 0;; round++){
+                        const live = _collectLiveNodes(root);
+                        const containers = [
+                            root
+                        ];
+                        let pending = false;
+                        arrayForEach(live, (node)=>{
+                            if (_readNodeType(node) === NODE_TYPE.documentFragment) arrayPush(containers, node);
+                            else if (!pending && !setHas(visited, node)) pending = setHas(getOriginal(), node);
+                        });
+                        if (!pending) return;
+                        if (round >= MAX_UNVISITED_ROUNDS) throw typeErrorCreate("the tree kept changing during in-place sanitization; refusing to return it");
+                        arrayForEach(containers, (container, index)=>{
+                            _sanitizeUnvisitedIn(container, index > 0, root, getOriginal());
+                        });
+                    }
+                };
+                const _sanitizeUnvisitedIn = function(container, inShadow, root, original) {
+                    const iterator = _createNodeIterator(container);
+                    let node;
+                    while(node = iterator.nextNode()){
+                        if (!setHas(original, node) || setHas(IN_PLACE_VISITED, node)) continue;
+                        if (inShadow) _executeHooks(hooks.uponSanitizeShadowNode, node, null);
+                        _sanitizeElements(node, root);
+                        _sanitizeAttributes(node, root);
+                        if (_isDocumentFragment(node.content)) _sanitizeShadowDOM2(node.content);
+                    }
+                };
+                const _markVisited = function(node) {
+                    if (IN_PLACE_VISITED) setAdd(IN_PLACE_VISITED, node);
                 };
                 const _isPatchLinkageAttribute = function(lcName, lcTag) {
                     if (!SAFE_FOR_XML) return false;
@@ -16982,17 +17075,13 @@
                 };
                 const _neutralizePatchLinkage = function(root) {
                     if (!SAFE_FOR_XML) return;
-                    const stack = [
-                        root
-                    ];
-                    while(stack.length > 0){
-                        const node = stack.pop();
+                    _walkTree(root, (node)=>{
                         const nodeType = _readNodeType(node);
                         if (nodeType === NODE_TYPE.processingInstruction || nodeType === NODE_TYPE.comment && regExpTest(COMMENT_MARKUP_PROBE, node.data)) {
                             try {
                                 remove(node);
                             } catch (_) {}
-                            continue;
+                            return false;
                         }
                         if (nodeType === NODE_TYPE.element) {
                             const element = node;
@@ -17002,9 +17091,8 @@
                                 if (element.hasAttribute && element.hasAttribute("for") && _isPatchLinkageAttribute("for", lcTag)) element.removeAttribute("for");
                             } catch (_) {}
                         }
-                        const childNodes = getChildNodes(node);
-                        if (childNodes) for(let i = childNodes.length - 1; i >= 0; --i)stack.push(childNodes[i]);
-                    }
+                        return true;
+                    });
                 };
                 const _initDocument = function(dirty) {
                     let doc = null;
@@ -17042,6 +17130,13 @@
                 };
                 const _scrubTemplateExpressions2 = function(node) {
                     var _node$querySelectorAl;
+                    _scrubOwnCharacterData(node);
+                    const templates = null == (_node$querySelectorAl = node.querySelectorAll) ? void 0 : _node$querySelectorAl.call(node, "template");
+                    if (templates) arrayForEach(templates, (tmpl)=>{
+                        if (_isDocumentFragment(tmpl.content)) _scrubTemplateExpressions2(tmpl.content);
+                    });
+                };
+                const _scrubOwnCharacterData = function(node) {
                     node.normalize();
                     const doc = getOwnerDocument ? getOwnerDocument(node) : node.ownerDocument;
                     const walker = createNodeIterator.call(doc || node, node, NodeFilter.SHOW_TEXT | NodeFilter.SHOW_COMMENT | NodeFilter.SHOW_CDATA_SECTION | NodeFilter.SHOW_PROCESSING_INSTRUCTION, null);
@@ -17050,10 +17145,6 @@
                         currentNode.data = _stripTemplateExpressions(currentNode.data);
                         currentNode = walker.nextNode();
                     }
-                    const templates = null == (_node$querySelectorAl = node.querySelectorAll) ? void 0 : _node$querySelectorAl.call(node, "template");
-                    if (templates) arrayForEach(templates, (tmpl)=>{
-                        if (_isDocumentFragment(tmpl.content)) _scrubTemplateExpressions2(tmpl.content);
-                    });
                 };
                 const _isClobbered = function(element) {
                     const realTagName = getNodeName ? getNodeName(element) : null;
@@ -17085,7 +17176,7 @@
                 }
                 const _isUnsafeNode = function(currentNode, tagName) {
                     if (SAFE_FOR_XML && currentNode.hasChildNodes() && !_isNode(currentNode.firstElementChild) && regExpTest(ELEMENT_MARKUP_PROBE, currentNode.textContent) && regExpTest(ELEMENT_MARKUP_PROBE, currentNode.innerHTML)) return true;
-                    if (SAFE_FOR_XML && currentNode.namespaceURI === HTML_NAMESPACE && LITERAL_TEXT_ELEMENTS[tagName] && (_isNode(currentNode.firstElementChild) || "string" == typeof currentNode.textContent && regExpTest(LITERAL_TEXT_CLOSE[tagName], currentNode.textContent))) return true;
+                    if (SAFE_FOR_XML && LITERAL_TEXT_ELEMENTS[tagName] && _readNodeType(currentNode) === NODE_TYPE.element && _readNamespaceURI(currentNode) === HTML_NAMESPACE && (_isNode(currentNode.firstElementChild) || "string" == typeof currentNode.textContent && regExpTest(ELEMENT_MARKUP_PROBE, currentNode.textContent))) return true;
                     if (currentNode.nodeType === NODE_TYPE.processingInstruction) return true;
                     if (SAFE_FOR_XML && currentNode.nodeType === NODE_TYPE.comment && regExpTest(COMMENT_MARKUP_PROBE, currentNode.data)) return true;
                     return false;
@@ -17100,7 +17191,7 @@
                 };
                 const _sanitizeDisallowedNode = function(currentNode, tagName, root) {
                     if (!FORBID_TAGS[tagName] && _isBasicCustomElement(tagName) && _matchesNameCheck(CUSTOM_ELEMENT_HANDLING.tagNameCheck, tagName)) return false;
-                    if (KEEP_CONTENT && !FORBID_CONTENTS[tagName]) {
+                    if (KEEP_CONTENT && !FORBID_CONTENTS[tagName] && !FORBID_CONTENTS[stringToLowerCase(tagName)]) {
                         const parentNode = getParentNode(currentNode);
                         const childNodes = getChildNodes(currentNode);
                         if (childNodes && parentNode) {
@@ -17124,6 +17215,7 @@
                     return true;
                 };
                 const _sanitizeElements = function(currentNode, root) {
+                    _markVisited(currentNode);
                     _executeHooks(hooks.beforeSanitizeElements, currentNode, null);
                     if (_handleHookDetachedNode(currentNode, root)) return true;
                     if (_isClobbered(currentNode)) {
@@ -17219,6 +17311,10 @@
                         return false;
                     }
                 };
+                const _isUnsafeAttributeValue = function(name, value) {
+                    if (SAFE_FOR_XML && regExpTest(/((--!?|])>)|<\/(style|script|title|xmp|textarea|noscript|iframe|noembed|noframes)/i, value)) return true;
+                    return "attributename" === stringToLowerCase(name) && null !== stringMatch(value, "href");
+                };
                 const _sanitizeAttributes = function(currentNode, root) {
                     _executeHooks(hooks.beforeSanitizeAttributes, currentNode, null);
                     if (_handleHookDetachedNode(currentNode, root)) return;
@@ -17252,11 +17348,7 @@
                             value = SANITIZE_NAMED_PROPS_PREFIX + value;
                             recreatedNamedProp = true;
                         }
-                        if (SAFE_FOR_XML && regExpTest(/((--!?|])>)|<\/(style|script|title|xmp|textarea|noscript|iframe|noembed|noframes)/i, value)) {
-                            _removeAttribute(name, currentNode, attr);
-                            continue;
-                        }
-                        if ("attributename" === lcName && stringMatch(value, "href")) {
+                        if (_isUnsafeAttributeValue(name, value)) {
                             _removeAttribute(name, currentNode, attr);
                             continue;
                         }
@@ -17299,6 +17391,7 @@
                             }
                         }
                     }
+                    if (SAFE_FOR_TEMPLATES) _scrubOwnCharacterData(fragment);
                     _executeHooks(hooks.afterSanitizeShadowDOM, fragment, null);
                 };
                 const _sanitizeAttachedShadowRoots = function(root) {
@@ -17364,6 +17457,8 @@
                     if (hooks.uponSanitizeAttribute.length > 0) ALLOWED_ATTR = clone(ALLOWED_ATTR);
                     DOMPurify.removed = [];
                     const inPlace = IN_PLACE && "string" != typeof dirty && _isNode(dirty);
+                    let inPlaceNodes = [];
+                    const outerVisited = IN_PLACE_VISITED;
                     if (inPlace) {
                         _neutralizePatchLinkage(dirty);
                         const nn = _readNodeName(dirty);
@@ -17378,12 +17473,8 @@
                             _neutralizeRoot(dirty);
                             throw typeErrorCreate("root node is clobbered and cannot be sanitized in-place");
                         }
-                        try {
-                            _sanitizeAttachedShadowRoots(dirty);
-                        } catch (error) {
-                            _neutralizeRoot(dirty);
-                            throw error;
-                        }
+                        inPlaceNodes = _collectLiveNodes(dirty);
+                        IN_PLACE_VISITED = setCreate();
                     } else if (_isNode(dirty)) {
                         body = _initDocument("<!---->");
                         importedNode = body.ownerDocument.importNode(dirty, true);
@@ -17399,30 +17490,25 @@
                     if (body && FORCE_BODY) _forceRemove(body.firstChild);
                     const walkRoot = inPlace ? dirty : body;
                     try {
+                        if (inPlace) _sanitizeAttachedShadowRoots(dirty);
                         const nodeIterator = _createNodeIterator(walkRoot);
                         while(currentNode = nodeIterator.nextNode()){
                             _sanitizeElements(currentNode, walkRoot);
                             _sanitizeAttributes(currentNode, walkRoot);
                             if (_isDocumentFragment(currentNode.content)) _sanitizeShadowDOM2(currentNode.content);
                         }
+                        if (inPlace) _sanitizeUnvisitedNodes(dirty, inPlaceNodes);
                     } catch (error) {
                         if (inPlace) {
                             _neutralizeRoot(dirty);
-                            arrayForEach(DOMPurify.removed, (entry)=>{
-                                if (entry.element) _neutralizeSubtree(entry.element);
-                            });
+                            _neutralizeDiscarded(dirty, inPlaceNodes);
                         }
                         throw error;
+                    } finally{
+                        IN_PLACE_VISITED = outerVisited;
                     }
                     if (inPlace) {
-                        let rootWasRemoved = false;
-                        arrayForEach(DOMPurify.removed, (entry)=>{
-                            if (entry.element) {
-                                if (entry.element === dirty) rootWasRemoved = true;
-                                _neutralizeSubtree(entry.element);
-                            }
-                        });
-                        if (rootWasRemoved) throw typeErrorCreate("a node selected for removal could not be safely returned; refusing to sanitize in place");
+                        if (_neutralizeDiscarded(dirty, inPlaceNodes)) throw typeErrorCreate("a node selected for removal could not be safely returned; refusing to sanitize in place");
                         if (SAFE_FOR_TEMPLATES) _scrubTemplateExpressions2(dirty);
                         return dirty;
                     }
@@ -17459,6 +17545,7 @@
                     if (!CONFIG) _parseConfig({});
                     const lcTag = transformCaseFunc(tag);
                     const lcName = transformCaseFunc(attr);
+                    if ("string" == typeof value && (_isUnsafeAttributeValue(attr, value) || !ALLOW_SELF_CLOSE_IN_ATTR && regExpTest(SELF_CLOSING_TAG, value))) return false;
                     return _isValidAttribute(lcTag, lcName, value);
                 };
                 DOMPurify.addHook = function(entryPoint, hookFunction) {
@@ -18925,7 +19012,8 @@
                     const l = this.float32Array.length;
                     const arr = new Int16Array(l);
                     this.float32Array.forEach((sample, i)=>{
-                        arr[i] = 0x7fff * Math.min(1, sample);
+                        const clampedSample = Number.isFinite(sample) ? Math.max(-1, sample) : sample;
+                        arr[i] = 0x7fff * Math.min(1, clampedSample);
                     });
                     return typedarray_to_buffer(arr);
                 }
@@ -18991,10 +19079,9 @@
                     });
                     volume.gain.value = this.options.audio.volume;
                     this.scriptProcessor = this.getAudioContext().createScriptProcessor(bufferSize, CHANNELS, CHANNELS);
-                    this.audioInput.connect(this.scriptProcessor);
-                    this.scriptProcessor.connect(this.getAudioContext().destination);
                     this.audioInput.connect(volume);
                     volume.connect(this.scriptProcessor);
+                    this.scriptProcessor.connect(this.getAudioContext().destination);
                 }
                 record(cb) {
                     this.options.logger.debug("AudioRecorder: record()");
@@ -21341,6 +21428,7 @@
                 form;
                 hasError = false;
                 submitted = false;
+                pendingHostSubmission;
                 lastValidation = false;
                 containerElement;
                 built = false;
@@ -21575,6 +21663,7 @@
                         this.removeBrowserEventListeners();
                         this.removeAllListeners();
                         this.built = this.submitted = false;
+                        this.pendingHostSubmission = void 0;
                     }
                 }
                 show(params) {
@@ -21610,6 +21699,7 @@
                         const keepHidden = params?.keepHidden;
                         this.options.logger.debug(`Container: startOver(keepHidden = ${keepHidden})`);
                         this.submitted = false;
+                        this.pendingHostSubmission = void 0;
                         const replay = this.getReplay();
                         replay.hide();
                         replay.reset();
@@ -21739,10 +21829,15 @@
                 buttonsAreReady() {
                     return this.buttons.isReady();
                 }
-                async submitAll(formData, method, url) {
+                getPendingHostSubmissionResponse(key) {
+                    return this.pendingHostSubmission?.key === key ? this.pendingHostSubmission?.response : void 0;
+                }
+                async submitAll(formData, method, url, hasHostAction = false) {
                     let response;
+                    let hostResponse;
+                    const videomailKey = formData[this.options.selectors.keyInputName];
                     try {
-                        const hasVideomailKey = Boolean(formData[this.options.selectors.keyInputName]);
+                        const hasVideomailKey = Boolean(videomailKey);
                         if (!hasVideomailKey && !this.options.enableAutoSubmission) return;
                         const output = [
                             method,
@@ -21753,7 +21848,19 @@
                         if (this.options.disableFormWhenSubmitting) this.disableForm(true);
                         this.emit("SUBMITTING");
                         if (hasVideomailKey) {
-                            response = await this.submitVideomail(formData, method);
+                            response = this.getPendingHostSubmissionResponse(videomailKey) ?? await this.submitVideomail(formData, method);
+                            if (this.options.enableAutoSubmission && hasHostAction) {
+                                if (videomailKey) this.pendingHostSubmission = {
+                                    key: videomailKey,
+                                    response
+                                };
+                                const hostFormData = {
+                                    ...formData
+                                };
+                                if (this.options.submitWithVideomail) hostFormData.videomail = response.body.videomail;
+                                hostResponse = await this.resource.form(hostFormData, url);
+                                this.pendingHostSubmission = void 0;
+                            }
                             this.submitted = true;
                             this.emit("SUBMITTED", {
                                 videomail: response.body.videomail,
@@ -21776,7 +21883,8 @@
                             err
                         });
                     } finally{
-                        if (response?.text && "text/html" === response.type) document.body.innerHTML = purify_default.sanitize(response.text);
+                        const finalResponse = hostResponse ?? response;
+                        if (finalResponse?.text && "text/html" === finalResponse.type) document.body.innerHTML = purify_default.sanitize(finalResponse.text);
                         this.endWaiting();
                     }
                 }
