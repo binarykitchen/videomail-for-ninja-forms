@@ -76,13 +76,13 @@ To get help, just use any of these contacts at [https://binarykitchen.com](https
 
 **Improvement:**
 * Video previews now stay forever until you click the send button or close the browser (no more
-  timouts)
+  timeouts)
 
 **Change:**
 * Includes server handshakes to keep connection alive on any network
 
 **Patches**
-* Senitive data is redacted in error reports
+* Sensitive data is redacted in error reports
 
 = 13.0.0 (15 Oct 2026) =
 
@@ -95,7 +95,7 @@ To get help, just use any of these contacts at [https://binarykitchen.com](https
 * ^ Based on this, we also re-connect after any mobile interruptions
 
 **Patches**
-* Plenty. For a starter, it's now avaiable in any format/version for any WordPress user.
+* Plenty. For a starter, it's now available in any format/version for any WordPress user.
 
 = 12.2.0 (12 Oct 2026) =
 
