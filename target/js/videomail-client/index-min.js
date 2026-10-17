@@ -5983,9 +5983,57 @@
             },
             s1 (module1, __unused_rspack_exports, __webpack_require__) {
                 "use strict";
+                var getSideChannel = __webpack_require__("M");
                 var utils = __webpack_require__("K0");
                 var has = Object.prototype.hasOwnProperty;
                 var isArray = Array.isArray;
+                var getPrototypeOf = Object.getPrototypeOf;
+                var isPlainContainer = function(value) {
+                    if (!value || 'object' != typeof value) return false;
+                    if (isArray(value)) return true;
+                    var proto = getPrototypeOf(value);
+                    return proto === Object.prototype || null === proto;
+                };
+                var emptyCopyOf = function(value) {
+                    if (isArray(value)) {
+                        var arr = [];
+                        arr.length = value.length;
+                        return arr;
+                    }
+                    return null === getPrototypeOf(value) ? {
+                        __proto__: null
+                    } : {};
+                };
+                var copyInput = function(input) {
+                    var copies = getSideChannel();
+                    var result = {};
+                    var queue = [
+                        {
+                            source: input,
+                            target: result
+                        }
+                    ];
+                    for(var i = 0; i < queue.length; ++i){
+                        var source = queue[i].source;
+                        var target = queue[i].target;
+                        var keys = Object.keys(source);
+                        for(var j = 0; j < keys.length; ++j){
+                            var value = source[keys[j]];
+                            if (isPlainContainer(value)) {
+                                if (!copies.has(value)) {
+                                    var copy = emptyCopyOf(value);
+                                    copies.set(value, copy);
+                                    queue[queue.length] = {
+                                        source: value,
+                                        target: copy
+                                    };
+                                }
+                                target[keys[j]] = copies.get(value);
+                            } else target[keys[j]] = value;
+                        }
+                    }
+                    return result;
+                };
                 var defaults = {
                     allowDots: false,
                     allowEmptyArrays: false,
@@ -6057,6 +6105,7 @@
                         var part = parts[i];
                         var bracketEqualsPos = part.indexOf(']=');
                         var pos = -1 === bracketEqualsPos ? part.indexOf('=') : bracketEqualsPos + 1;
+                        var isEmptyBracketKey = pos > 1 && '[]' === part.slice(pos - 2, pos);
                         var key;
                         var val;
                         if (-1 === pos) {
@@ -6069,13 +6118,13 @@
                             });
                         }
                         if (val && options.interpretNumericEntities && 'iso-8859-1' === charset) val = interpretNumericEntities(String(val));
-                        if (part.indexOf('[]=') > -1) val = isArray(val) ? [
+                        if (isEmptyBracketKey) val = isArray(val) ? [
                             val
                         ] : val;
                         if (options.comma && isArray(val) && val.length > options.arrayLimit) val = utils.combine([], val, options.arrayLimit, options.plainObjects, options.throwOnLimitExceeded);
                         if (null !== key) {
                             var existing = has.call(obj, key);
-                            if (existing && ('combine' === options.duplicates || part.indexOf('[]=') > -1)) obj[key] = utils.combine(obj[key], val, options.arrayLimit, options.plainObjects, options.throwOnLimitExceeded);
+                            if (existing && ('combine' === options.duplicates || isEmptyBracketKey)) obj[key] = utils.combine(obj[key], val, options.arrayLimit, options.plainObjects, options.throwOnLimitExceeded);
                             else if (!existing || 'last' === options.duplicates) obj[key] = val;
                         }
                     }
@@ -6117,8 +6166,29 @@
                     }
                     return leaf;
                 };
+                var topLevelDotsToBrackets = function(key) {
+                    var result = '';
+                    var depth = 0;
+                    for(var i = 0; i < key.length; i += 1){
+                        var cu = key.charCodeAt(i);
+                        if (0x5B === cu) {
+                            depth += 1;
+                            result += '[';
+                        } else if (0x5D === cu) {
+                            if (depth > 0) depth -= 1;
+                            result += ']';
+                        } else if (0x2E === cu && 0 === depth && i + 1 < key.length && 0x2E !== key.charCodeAt(i + 1) && 0x5B !== key.charCodeAt(i + 1)) {
+                            var start = i + 1;
+                            var j = start;
+                            while(j < key.length && 0x2E !== key.charCodeAt(j) && 0x5B !== key.charCodeAt(j))j += 1;
+                            result += '[' + key.slice(start, j) + ']';
+                            i = j - 1;
+                        } else result += key.charAt(i);
+                    }
+                    return result;
+                };
                 var splitKeyIntoSegments = function(originalKey, options) {
-                    var key = options.allowDots ? originalKey.replace(/\.([^.[]+)/g, '[$1]') : originalKey;
+                    var key = options.allowDots ? topLevelDotsToBrackets(originalKey) : originalKey;
                     if (options.depth <= 0) {
                         if (!options.plainObjects && has.call(Object.prototype, key)) {
                             if (!options.allowPrototypes) return;
@@ -6216,7 +6286,7 @@
                     if ('' === str || null == str) return options.plainObjects ? {
                         __proto__: null
                     } : {};
-                    var tempObj = 'string' == typeof str ? parseValues(str, options) : str;
+                    var tempObj = 'string' == typeof str ? parseValues(str, options) : copyInput(str);
                     var obj = options.plainObjects ? {
                         __proto__: null
                     } : {};
@@ -6324,11 +6394,11 @@
                     var objKeys;
                     if ('comma' === generateArrayPrefix && isArray(obj)) {
                         if (encodeValuesOnly && encoder) obj = utils.maybeMap(obj, function(v) {
-                            return null == v ? v : encoder(v);
+                            return null == v ? v : encoder(v, defaults.encoder, charset, 'value', format);
                         });
                         objKeys = [
                             {
-                                value: obj.length > 0 ? obj.join(',') || null : void 0
+                                value: obj.length > 0 ? utils.toCoercible(obj).join(',') || null : void 0
                             }
                         ];
                     } else if (isArray(filter)) objKeys = filter;
@@ -6336,7 +6406,7 @@
                         var keys = Object.keys(obj);
                         objKeys = sort ? keys.sort(sort) : keys;
                     }
-                    var encodedPrefix = encodeDotInKeys ? String(prefix).replace(/\./g, '%2E') : String(prefix);
+                    var encodedPrefix = String(prefix);
                     var adjustedPrefix = commaRoundTrip && isArray(obj) && 1 === obj.length ? encodedPrefix + '[]' : encodedPrefix;
                     if (allowEmptyArrays && isArray(obj) && 0 === obj.length && 0 === Object.keys(obj).length) return adjustedPrefix + '[]';
                     for(var j = 0; j < objKeys.length; ++j){
@@ -6369,7 +6439,7 @@
                     var filter = defaults.filter;
                     if ('function' == typeof opts.filter || isArray(opts.filter)) filter = opts.filter;
                     var arrayFormat;
-                    arrayFormat = opts.arrayFormat in arrayPrefixGenerators ? opts.arrayFormat : 'indices' in opts ? opts.indices ? 'indices' : 'repeat' : defaults.arrayFormat;
+                    arrayFormat = has.call(arrayPrefixGenerators, opts.arrayFormat) ? opts.arrayFormat : 'indices' in opts ? opts.indices ? 'indices' : 'repeat' : defaults.arrayFormat;
                     if ('commaRoundTrip' in opts && 'boolean' != typeof opts.commaRoundTrip) throw new TypeError('`commaRoundTrip` must be a boolean, or absent');
                     var allowDots = void 0 === opts.allowDots ? true === opts.encodeDotInKeys ? true : defaults.allowDots : !!opts.allowDots;
                     return {
@@ -6452,6 +6522,17 @@
                 var setMaxIndex = function(obj, maxIndex) {
                     overflowChannel.set(obj, maxIndex);
                 };
+                var conflictChannel = getSideChannel();
+                var markConflict = function(obj, maxIndex) {
+                    conflictChannel.set(obj, maxIndex);
+                    return obj;
+                };
+                var isConflict = function(obj) {
+                    return conflictChannel.has(obj);
+                };
+                var getConflictIndex = function(obj) {
+                    return conflictChannel.get(obj);
+                };
                 var hexTable = function() {
                     var array = [];
                     for(var i = 0; i < 256; ++i)array[array.length] = '%' + ((i < 16 ? '0' : '') + i.toString(16)).toUpperCase();
@@ -6484,6 +6565,26 @@
                     });
                     else obj[key] = value;
                 };
+                var maxNumericIndex = function(obj, min) {
+                    var max = min;
+                    var keys = Object.keys(obj);
+                    for(var i = 0; i < keys.length; ++i){
+                        var num = parseInt(keys[i], 10);
+                        if (String(num) === keys[i] && num > max) max = num;
+                    }
+                    return max;
+                };
+                var limitedPair = function(first, second, options) {
+                    var pair = [
+                        first,
+                        second
+                    ];
+                    if (options && 'number' == typeof options.arrayLimit && pair.length > options.arrayLimit) {
+                        if (options.throwOnLimitExceeded) throw new RangeError('Array limit exceeded. Only ' + options.arrayLimit + ' element' + (1 === options.arrayLimit ? '' : 's') + ' allowed in an array.');
+                        return markOverflow(arrayToObject(pair, options), 1);
+                    }
+                    return pair;
+                };
                 var merge = function merge(target, source, options) {
                     if (!source) return target;
                     if ('object' != typeof source && 'function' != typeof source) {
@@ -6494,19 +6595,20 @@
                                 return markOverflow(arrayToObject(target.concat(source), options), nextIndex);
                             }
                             target[nextIndex] = source;
-                        } else if (!target || 'object' != typeof target) return [
-                            target,
-                            source
-                        ];
+                        } else if (!target || 'object' != typeof target) return limitedPair(target, source, options);
                         else if (isOverflow(target)) {
                             var newIndex = getMaxIndex(target) + 1;
                             target[newIndex] = source;
                             setMaxIndex(target, newIndex);
-                        } else if (options && options.strictMerge) return [
-                            target,
-                            source
-                        ];
-                        else if (options && (options.plainObjects || options.allowPrototypes) || !has.call(Object.prototype, source)) target[source] = true;
+                        } else if (options && options.strictMerge && isConflict(target)) {
+                            var nextConflict = getConflictIndex(target) + 1;
+                            if (options.throwOnLimitExceeded && 'number' == typeof options.arrayLimit && nextConflict >= options.arrayLimit) throw new RangeError('Array limit exceeded. Only ' + options.arrayLimit + ' element' + (1 === options.arrayLimit ? '' : 's') + ' allowed in an array.');
+                            target[nextConflict] = source;
+                            markConflict(target, nextConflict);
+                        } else if (options && options.strictMerge) {
+                            var conflict = limitedPair(target, source, options);
+                            return isArray(conflict) ? markConflict(conflict, 1) : conflict;
+                        } else if (options && (options.plainObjects || options.allowPrototypes) || !has.call(Object.prototype, source)) target[source] = true;
                         return target;
                     }
                     if (!target || 'object' != typeof target) {
@@ -6534,7 +6636,10 @@
                         return combined;
                     }
                     var mergeTarget = target;
-                    if (isArray(target) && !isArray(source)) mergeTarget = arrayToObject(target, options);
+                    if (isArray(target) && !isArray(source)) {
+                        mergeTarget = arrayToObject(target, options);
+                        if (isConflict(target)) markConflict(mergeTarget, target.length - 1);
+                    }
                     if (isArray(target) && isArray(source)) {
                         source.forEach(function(item, i) {
                             if (has.call(target, i)) {
@@ -6552,10 +6657,14 @@
                     return Object.keys(source).reduce(function(acc, key) {
                         var value = source[key];
                         has.call(acc, key) ? setProperty(acc, key, merge(acc[key], value, options)) : setProperty(acc, key, value);
-                        if (isOverflow(source) && !isOverflow(acc)) markOverflow(acc, getMaxIndex(source));
+                        if (isOverflow(source) && !isOverflow(acc)) markOverflow(acc, maxNumericIndex(acc, getMaxIndex(source)));
                         if (isOverflow(acc)) {
                             var keyNum = parseInt(key, 10);
                             if (String(keyNum) === key && keyNum >= 0 && keyNum > getMaxIndex(acc)) setMaxIndex(acc, keyNum);
+                        }
+                        if (isConflict(acc)) {
+                            var conflictKey = parseInt(key, 10);
+                            if (String(conflictKey) === key && conflictKey > getConflictIndex(acc)) markConflict(acc, conflictKey);
                         }
                         return acc;
                     }, mergeTarget);
@@ -6567,6 +6676,7 @@
                     }, target);
                 };
                 var decode = function(str, defaultDecoder, charset) {
+                    if ('string' == typeof str && -1 === str.indexOf('%')) return -1 === str.indexOf('+') ? str : str.replace(/\+/g, ' ');
                     var strWithoutPlus = str.replace(/\+/g, ' ');
                     if ('iso-8859-1' === charset) return strWithoutPlus.replace(/%[0-9a-f]{2}/gi, unescape);
                     try {
@@ -6575,15 +6685,47 @@
                         return strWithoutPlus;
                     }
                 };
+                var hasToPrimitive = 'function' == typeof Symbol && 'symbol' == typeof Symbol.toPrimitive;
+                var arrayJoin = Array.prototype.join;
+                var arrayToString = Array.prototype.toString;
+                var objectToString = Object.prototype.toString;
+                var toCoercible = function toCoercible(value, joining) {
+                    if (!value || 'object' != typeof value && 'function' != typeof value) return value;
+                    if (hasToPrimitive && null != value[Symbol.toPrimitive]) return value;
+                    if (isArray(value) && value.toString === arrayToString && value.join === arrayJoin) {
+                        var ancestors = joining || getSideChannel();
+                        if (ancestors.has(value)) return '';
+                        ancestors.set(value, true);
+                        var copy;
+                        for(var i = 0; i < value.length; i += 1){
+                            var item = value[i];
+                            var coerced = toCoercible(item, ancestors);
+                            if (!copy && coerced !== item) {
+                                copy = [];
+                                for(var j = 0; j < i; j += 1)copy[j] = value[j];
+                            }
+                            if (copy) copy[i] = coerced;
+                        }
+                        ancestors['delete'](value);
+                        return copy || value;
+                    }
+                    if ('function' == typeof value.toString) return value;
+                    var valueOf = value.valueOf;
+                    if ('function' == typeof valueOf) {
+                        var primitive = valueOf.call(value);
+                        if (!primitive || 'object' != typeof primitive && 'function' != typeof primitive) return String(primitive);
+                    }
+                    return objectToString.call(value);
+                };
                 var limit = 1024;
                 var encode = function(str, defaultEncoder, charset, kind, format) {
                     if (0 === str.length) return str;
                     var string = str;
                     if ('symbol' == typeof str) string = Symbol.prototype.toString.call(str);
-                    else if ('string' != typeof str) string = String(str);
+                    else if ('string' != typeof str) string = String(toCoercible(str));
                     if ('iso-8859-1' === charset) return escape(string).replace(/%u[0-9a-f]{4}/gi, function($0) {
                         return '%26%23' + parseInt($0.slice(2), 16) + '%3B';
-                    });
+                    }).replace(/\+/g, '%2B');
                     var out = '';
                     for(var j = 0; j < string.length; j += limit){
                         var segment = string.length >= limit ? string.slice(j, j + limit) : string;
@@ -6700,7 +6842,8 @@
                     isRegExp: isRegExp,
                     markOverflow: markOverflow,
                     maybeMap: maybeMap,
-                    merge: merge
+                    merge: merge,
+                    toCoercible: toCoercible
                 };
             },
             jY (module1, __unused_rspack_exports, __webpack_require__) {
@@ -8111,7 +8254,7 @@
                     });
                 });
             },
-            S (__unused_rspack_module, exports1, __webpack_require__) {
+            Sy (__unused_rspack_module, exports1, __webpack_require__) {
                 var process = __webpack_require__("zT");
                 var getOwnPropertyDescriptors = Object.getOwnPropertyDescriptors || function(obj) {
                     var keys = Object.keys(obj);
@@ -10477,7 +10620,7 @@
                     return i[1];
                 };
             },
-            RR (module1) {
+            R (module1) {
                 "use strict";
                 var stylesInDOM = [];
                 function getIndexByIdentifier(identifier) {
@@ -10978,7 +11121,7 @@
             var client = __webpack_require__("Q");
             var client_default = /*#__PURE__*/ __webpack_require__.n(client);
             var package_namespaceObject = {
-                rE: "16.0.0"
+                rE: "16.0.2"
             };
             function isAudioEnabled(options) {
                 return Boolean(options.audio.enabled);
@@ -10990,7 +11133,7 @@
             function isAutoPauseEnabled(options) {
                 return options.enableAutoPause && options.enablePause;
             }
-            var util = __webpack_require__("S");
+            var util = __webpack_require__("Sy");
             var util_default = /*#__PURE__*/ __webpack_require__.n(util);
             function getEventDetails(event) {
                 const eventWithErrorDetails = event;
@@ -14421,7 +14564,6 @@
                 location = window.location.href;
                 logLines;
                 whitelistKey;
-                cookie;
                 err;
                 promise;
                 reason;
@@ -14459,9 +14601,6 @@
                     this.device = usefulClientData.device.type ? usefulClientData.device : void 0;
                     this.engine = usefulClientData.engine;
                     this.os = usefulClientData.os;
-                    let cookie;
-                    if (__webpack_require__.g.document.cookie.length > 0) cookie = __webpack_require__.g.document.cookie.split(",").map((c)=>c.trim());
-                    this.cookie = cookie && cookie.length > 0 ? cookie : void 0;
                     this.screen = [
                         screen.width,
                         screen.height,
@@ -14646,6 +14785,51 @@
                 return exc;
             }
             const error_findOriginalExc = findOriginalExc;
+            const REDACTED = "[redacted]";
+            const PRIVATE_FIELDS = "cookies?|set[-_]?cookie|(?:proxy[-_]?)?authorization|pass(?:word|phrase|wd)|(?:client[-_]?)?secret|(?:x[-_]?)?api[-_]?key|(?:access|refresh|id|auth|session)[-_]?token|token|(?:x[-_]?)?(?:csrf|xsrf)(?:[-_]?token)?|session(?:[-_]?id)?|e[-_]?mail|from|to|cc|bcc|recipients?|sender";
+            const PRIVATE_FIELD = new RegExp(`^(?:${PRIVATE_FIELDS})$`, "iu");
+            const PRIVATE_CONTENT_FIELD = /^(?:subject|body)$/iu;
+            const URL_FIELD = /^(?:url|uri|href|location|recordLocation|blockedURI|responseURL)$/iu;
+            const LOG_ASSIGNMENT = String.raw`(["']?\b(?:${PRIVATE_FIELDS}|subject|body)["']?\s*[:=]\s*)`;
+            const LOG_VALUES = [
+                /"(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*'/u.source,
+                /(?:Bearer|Basic)\s+[^\s,;}]+/u.source,
+                /[^\s,;{}[\]]+/u.source
+            ].join("|");
+            const PRIVATE_LOG_VALUE = new RegExp(`${LOG_ASSIGNMENT}(?:${LOG_VALUES})`, "giu");
+            function sanitizeUrl(value, base) {
+                try {
+                    const url = new URL(value, base);
+                    url.username = "";
+                    url.password = "";
+                    url.search = "";
+                    url.hash = "";
+                    return url.href;
+                } catch  {
+                    return REDACTED;
+                }
+            }
+            function sanitizeText(text) {
+                return text.replace(/\b(?:https?|wss?):\/\/[^\s"'<>(){}]+/giu, (value)=>{
+                    const position = /:\d+:\d+$/u.exec(value)?.[0] ?? "";
+                    const address = position ? value.slice(0, -position.length) : value;
+                    return `${sanitizeUrl(address)}${position}`;
+                }).replace(PRIVATE_LOG_VALUE, `$1${REDACTED}`).replace(/\b(Bearer|Basic)\s+[\w.+/~=-]+/giu, `$1 ${REDACTED}`).replace(/\b[\w.%+-]+@[\w.-]+\.[a-z]{2,}\b/giu, REDACTED);
+            }
+            function sanitizeErrorReport(report) {
+                function redactField(key, value) {
+                    if (PRIVATE_FIELD.test(key)) return REDACTED;
+                    if ("string" != typeof value) return value;
+                    if (PRIVATE_CONTENT_FIELD.test(key)) return REDACTED;
+                    const text = URL_FIELD.test(key) ? sanitizeUrl(value, report.location) : value;
+                    return sanitizeText(text);
+                }
+                const json = JSON.stringify(serializeError(report), redactField);
+                const sanitized = JSON.parse(json);
+                if (null === sanitized || "object" != typeof sanitized) throw new TypeError("An error report must serialize to an object.");
+                return sanitized;
+            }
+            const error_sanitizeErrorReport = sanitizeErrorReport;
             function _extends() {
                 _extends = Object.assign || function(target) {
                     for(var i = 1; i < arguments.length; i++){
@@ -15203,7 +15387,6 @@
                         },
                         browser: err.browser,
                         code: err.code,
-                        cookie: err.cookie,
                         cause: err.cause instanceof Error ? serializeError(err.cause) : err.cause,
                         cpu: err.cpu,
                         device: err.device,
@@ -15224,7 +15407,7 @@
                         enumerateDevices,
                         usedConstraints: err.usedConstraints
                     };
-                    await client_default()(FormMethod.POST, url).query(queryParams).set("Timezone-Id", this.timezoneId).withCredentials().send(fullVideomailErrorData).timeout(this.options.timeouts.connection);
+                    await client_default()(FormMethod.POST, url).query(queryParams).set("Timezone-Id", this.timezoneId).withCredentials().send(error_sanitizeErrorReport(fullVideomailErrorData)).timeout(this.options.timeouts.connection);
                 }
                 async post(videomail) {
                     const newVideomail = this.applyDefaultValues(videomail);
@@ -15468,7 +15651,7 @@
                 return newOptions;
             }
             const options_mergeWithDefaultOptions = mergeWithDefaultOptions;
-            var injectStylesIntoStyleTag = __webpack_require__("RR");
+            var injectStylesIntoStyleTag = __webpack_require__("R");
             var injectStylesIntoStyleTag_default = /*#__PURE__*/ __webpack_require__.n(injectStylesIntoStyleTag);
             var styleDomAPI = __webpack_require__("Bd");
             var styleDomAPI_default = /*#__PURE__*/ __webpack_require__.n(styleDomAPI);
@@ -19669,6 +19852,7 @@
                     this.options.logger.debug(debugLine);
                     const canReconnect = this.canReconnectAfterStreamClose();
                     this.connected = false;
+                    this.stopPings();
                     if (this.shouldIgnoreStreamClose()) return;
                     if (this.mediaTransmissionStarted) this.failInterruptedRecording();
                     else if (canReconnect) {
@@ -19685,7 +19869,37 @@
                     }, 0);
                 }
                 shouldIgnoreStreamClose() {
-                    return this.recordingTransportFailed || Boolean(this.unloaded);
+                    return this.recordingTransportFailed || Boolean(this.unloaded) || this.validate();
+                }
+                handleStreamError(url2Connect, err) {
+                    if ("u" > typeof Event && err instanceof Event) this.lastSocketError = error_getEventDetails(err);
+                    else this.lastSocketError = serializeError(err);
+                    const debugLine = string_summarize(`${PIPE_SYMBOL}Stream *error* event emitted:`, {
+                        error: serializeError(err)
+                    });
+                    this.options.logger.debug(debugLine);
+                    if (this.validate()) {
+                        this.connected = false;
+                        this.stopPings();
+                        this.discardSocket();
+                        return;
+                    }
+                    if (!this.connected) return void this.handleConnectionFailure({
+                        url2Connect,
+                        cause: "error"
+                    });
+                    const streamError = err instanceof Error ? err : new Error("WebSocket stream emitted an error event", {
+                        cause: this.lastSocketError ?? err
+                    });
+                    if (this.mediaTransmissionStarted) return void this.failInterruptedRecording();
+                    this.emit("ERROR", {
+                        err: error_createError({
+                            message: "WebSocket stream error",
+                            explanation: `The WebSocket stream emitted an error event. Details: ${string_pretty(err)}`,
+                            options: this.options,
+                            exc: streamError
+                        })
+                    });
                 }
                 sendPings() {
                     this.stopPings();
@@ -19696,6 +19910,7 @@
                 }
                 stopPings() {
                     if (void 0 === this.pingInterval) return;
+                    this.options.logger.debug("Recorder: stopping pings...");
                     window.clearInterval(this.pingInterval);
                     this.pingInterval = void 0;
                 }
@@ -19847,7 +20062,7 @@
                     });
                 }
                 shouldIgnoreConnectionFailure() {
-                    return this.connectionFailed || this.connected || Boolean(this.unloaded);
+                    return this.connectionFailed || this.connected || Boolean(this.unloaded) || this.validate();
                 }
                 calculateFrameProgress() {
                     return `${(this.confirmedFrameNumber / (this.framesCount || 1) * 100).toFixed(2)}%`;
@@ -20053,28 +20268,7 @@
                             }
                         });
                         stream.on("error", (err)=>{
-                            if ("u" > typeof Event && err instanceof Event) this.lastSocketError = error_getEventDetails(err);
-                            else this.lastSocketError = serializeError(err);
-                            const debugLine = string_summarize(`${PIPE_SYMBOL}Stream *error* event emitted:`, {
-                                error: serializeError(err)
-                            });
-                            this.options.logger.debug(debugLine);
-                            if (!this.connected) return void this.handleConnectionFailure({
-                                url2Connect,
-                                cause: "error"
-                            });
-                            const streamError = err instanceof Error ? err : new Error("WebSocket stream emitted an error event", {
-                                cause: this.lastSocketError ?? err
-                            });
-                            if (this.mediaTransmissionStarted) return void this.failInterruptedRecording();
-                            this.emit("ERROR", {
-                                err: error_createError({
-                                    message: "WebSocket stream error",
-                                    explanation: `The WebSocket stream emitted an error event. Details: ${string_pretty(err)}`,
-                                    options: this.options,
-                                    exc: streamError
-                                })
-                            });
+                            this.handleStreamError(url2Connect, err);
                         });
                         stream.on("drain", ()=>{
                             this.handleStreamDrain(stream);
@@ -20415,6 +20609,7 @@
                 }
                 back(cb) {
                     this.emit("GOING_BACK");
+                    this.key = void 0;
                     this.recordingDimensions = void 0;
                     this.unloaded = false;
                     this.show();
@@ -20479,7 +20674,7 @@
                     this.stopTimeout = void 0;
                 }
                 validate() {
-                    return this.connected && void 0 === this.canvas;
+                    return Boolean(this.key) && void 0 === this.canvas;
                 }
                 isReady() {
                     return this.userMedia?.isReady();

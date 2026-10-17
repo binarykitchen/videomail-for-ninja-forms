@@ -3,7 +3,7 @@ Contributors: michael.heuberger, kbjohnson90
 Tags: video, email, recorder, sign language
 Requires at least: 6.0
 Tested up to: 6.9.5
-Stable tag: 13.0.0
+Stable tag: 13.1.0
 Requires PHP: 8.1.0
 Donate link: https://videomail.io/faq
 License: CC0-1.0
@@ -71,6 +71,18 @@ To get help, just use any of these contacts at [https://binarykitchen.com](https
 2. Once you have assembled a form and preview it, any browser will ask for webcam access first.
 
 == Changelog ==
+
+= 13.1.0 (17 Oct 2026) =
+
+**Improvement:**
+* Video previews now stay forever until you click the send button or close the browser (no more
+  timouts)
+
+**Change:**
+* Includes server handshakes to keep connection alive on any network
+
+**Patches**
+* Senitive data is redacted in error reports
 
 = 13.0.0 (15 Oct 2026) =
 
