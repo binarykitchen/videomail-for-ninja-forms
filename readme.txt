@@ -3,7 +3,7 @@ Contributors: michael.heuberger, kbjohnson90
 Tags: video, email, recorder, sign language
 Requires at least: 6.0
 Tested up to: 6.9.5
-Stable tag: 13.1.0
+Stable tag: 13.1.1
 Requires PHP: 8.1.0
 Donate link: https://videomail.io/faq
 License: CC0-1.0
@@ -72,17 +72,23 @@ To get help, just use any of these contacts at [https://binarykitchen.com](https
 
 == Changelog ==
 
+= 13.1.1 (22 Oct 2026) =
+
+**Change:**
+* Bump npm
+* Include new heartbeat properly
+
 = 13.1.0 (17 Oct 2026) =
 
 **Improvement:**
 * Video previews now stay forever until you click the send button or close the browser (no more
-  timouts)
+  timeouts)
 
 **Change:**
 * Includes server handshakes to keep connection alive on any network
 
 **Patches**
-* Senitive data is redacted in error reports
+* Sensitive data is redacted in error reports
 
 = 13.0.0 (15 Oct 2026) =
 
@@ -95,7 +101,7 @@ To get help, just use any of these contacts at [https://binarykitchen.com](https
 * ^ Based on this, we also re-connect after any mobile interruptions
 
 **Patches**
-* Plenty. For a starter, it's now avaiable in any format/version for any WordPress user.
+* Plenty. For a starter, it's now available in any format/version for any WordPress user.
 
 = 12.2.0 (12 Oct 2026) =
 
