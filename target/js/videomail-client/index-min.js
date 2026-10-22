@@ -5,13 +5,13 @@
     else root["VideomailClient"] = factory();
 })(globalThis, ()=>(()=>{
         var __webpack_modules__ = {
-            eq (module1, __webpack_exports__, __webpack_require__) {
+            pJ (module1, __webpack_exports__, __webpack_require__) {
                 "use strict";
-                var _node_modules_rsbuild_core_compiled_css_loader_noSourceMaps_js__rspack_import_1 = __webpack_require__("erX");
-                var _node_modules_rsbuild_core_compiled_css_loader_noSourceMaps_js__rspack_import_1_default = /*#__PURE__*/ __webpack_require__.n(_node_modules_rsbuild_core_compiled_css_loader_noSourceMaps_js__rspack_import_1);
-                var _node_modules_rsbuild_core_compiled_css_loader_api_js__rspack_import_0 = __webpack_require__("zm");
-                var _node_modules_rsbuild_core_compiled_css_loader_api_js__rspack_import_0_default = /*#__PURE__*/ __webpack_require__.n(_node_modules_rsbuild_core_compiled_css_loader_api_js__rspack_import_0);
-                var ___CSS_LOADER_EXPORT___ = _node_modules_rsbuild_core_compiled_css_loader_api_js__rspack_import_0_default()(_node_modules_rsbuild_core_compiled_css_loader_noSourceMaps_js__rspack_import_1_default());
+                var _node_modules_rslib_core_node_modules_rsbuild_core_compiled_css_loader_noSourceMaps_js__rspack_import_1 = __webpack_require__("K7");
+                var _node_modules_rslib_core_node_modules_rsbuild_core_compiled_css_loader_noSourceMaps_js__rspack_import_1_default = /*#__PURE__*/ __webpack_require__.n(_node_modules_rslib_core_node_modules_rsbuild_core_compiled_css_loader_noSourceMaps_js__rspack_import_1);
+                var _node_modules_rslib_core_node_modules_rsbuild_core_compiled_css_loader_api_js__rspack_import_0 = __webpack_require__("Ly");
+                var _node_modules_rslib_core_node_modules_rsbuild_core_compiled_css_loader_api_js__rspack_import_0_default = /*#__PURE__*/ __webpack_require__.n(_node_modules_rslib_core_node_modules_rsbuild_core_compiled_css_loader_api_js__rspack_import_0);
+                var ___CSS_LOADER_EXPORT___ = _node_modules_rslib_core_node_modules_rsbuild_core_compiled_css_loader_api_js__rspack_import_0_default()(_node_modules_rslib_core_node_modules_rsbuild_core_compiled_css_loader_noSourceMaps_js__rspack_import_1_default());
                 ___CSS_LOADER_EXPORT___.push([
                     module1.id,
                     `@keyframes blink {
@@ -159,7 +159,7 @@
                 });
             },
             b6 (module1, exports1, __webpack_require__) {
-                var EventEmitter = __webpack_require__("q").EventEmitter, inherits = __webpack_require__("c5"), raf = __webpack_require__("jY"), methods;
+                var EventEmitter = __webpack_require__("qU").EventEmitter, inherits = __webpack_require__("c5"), raf = __webpack_require__("jY"), methods;
                 var defaultRAFObject = {
                     requestAnimationFrame: raf,
                     cancelAnimationFrame: raf.cancel
@@ -1837,7 +1837,7 @@
             },
             xF (module1, __unused_rspack_exports, __webpack_require__) {
                 "use strict";
-                var document1 = __webpack_require__("g");
+                var document1 = __webpack_require__("gM");
                 var Event1 = __webpack_require__("cE");
                 var Keys = __webpack_require__("Dy");
                 module1.exports = Visibility;
@@ -2192,7 +2192,7 @@
                 var isArray = __webpack_require__("ab");
                 var Duplex;
                 Readable.ReadableState = ReadableState;
-                __webpack_require__("q").EventEmitter;
+                __webpack_require__("qU").EventEmitter;
                 var EElistenerCount = function(emitter, type) {
                     return emitter.listeners(type).length;
                 };
@@ -3456,7 +3456,7 @@
                 };
             },
             tb (module1, __unused_rspack_exports, __webpack_require__) {
-                module1.exports = __webpack_require__("q").EventEmitter;
+                module1.exports = __webpack_require__("qU").EventEmitter;
             },
             GB (module1, exports1, __webpack_require__) {
                 exports1 = module1.exports = __webpack_require__("rp");
@@ -3853,7 +3853,7 @@
                 "use strict";
                 module1.exports = Object;
             },
-            q (module1) {
+            qU (module1) {
                 "use strict";
                 var R = 'object' == typeof Reflect ? Reflect : null;
                 var ReflectApply = R && 'function' == typeof R.apply ? R.apply : function(target, receiver, args) {
@@ -4903,7 +4903,7 @@
                     return tuple.listen;
                 }
             },
-            g (module1, __unused_rspack_exports, __webpack_require__) {
+            gM (module1, __unused_rspack_exports, __webpack_require__) {
                 var topLevel = void 0 !== __webpack_require__.g ? __webpack_require__.g : "u" > typeof window ? window : {};
                 var minDoc = __webpack_require__("MM");
                 var doccy;
@@ -8806,7 +8806,7 @@
                 var isArray = __webpack_require__("N3");
                 var Duplex;
                 Readable.ReadableState = ReadableState;
-                __webpack_require__("q").EventEmitter;
+                __webpack_require__("qU").EventEmitter;
                 var EElistenerCount = function(emitter, type) {
                     return emitter.listeners(type).length;
                 };
@@ -8825,7 +8825,7 @@
                 var debug = void 0;
                 debug = debugUtil && debugUtil.debuglog ? debugUtil.debuglog('stream') : function() {};
                 var BufferList = __webpack_require__("aI");
-                var destroyImpl = __webpack_require__("R5");
+                var destroyImpl = __webpack_require__("R");
                 var StringDecoder;
                 util.inherits(Readable, Stream);
                 var kProxyEvents = [
@@ -9560,7 +9560,7 @@
                 function _isUint8Array(obj) {
                     return Buffer.isBuffer(obj) || obj instanceof OurUint8Array;
                 }
-                var destroyImpl = __webpack_require__("R5");
+                var destroyImpl = __webpack_require__("R");
                 util.inherits(Writable, Stream);
                 function nop() {}
                 function WritableState(options, stream) {
@@ -10014,7 +10014,7 @@
                     return this.constructor.name + ' ' + obj;
                 };
             },
-            R5 (module1, __unused_rspack_exports, __webpack_require__) {
+            R (module1, __unused_rspack_exports, __webpack_require__) {
                 "use strict";
                 var pna = __webpack_require__("sj");
                 function destroy(err, cb) {
@@ -10070,7 +10070,7 @@
                 };
             },
             O (module1, __unused_rspack_exports, __webpack_require__) {
-                module1.exports = __webpack_require__("q").EventEmitter;
+                module1.exports = __webpack_require__("qU").EventEmitter;
             },
             Fo (module1, exports1, __webpack_require__) {
                 exports1 = module1.exports = __webpack_require__("w");
@@ -10560,7 +10560,7 @@
             a () {},
             Av () {},
             eD () {},
-            zm (module1) {
+            Ly (module1) {
                 "use strict";
                 module1.exports = function(cssWithMappingToString) {
                     var list = [];
@@ -10614,13 +10614,13 @@
                     return list;
                 };
             },
-            erX (module1) {
+            K7 (module1) {
                 "use strict";
                 module1.exports = function(i) {
                     return i[1];
                 };
             },
-            R (module1) {
+            q (module1) {
                 "use strict";
                 var stylesInDOM = [];
                 function getIndexByIdentifier(identifier) {
@@ -10699,7 +10699,7 @@
                     };
                 };
             },
-            uZ (module1) {
+            f (module1) {
                 "use strict";
                 var memo = {};
                 function getTarget(target) {
@@ -10721,7 +10721,7 @@
                 }
                 module1.exports = insertBySelector;
             },
-            mK (module1) {
+            z7 (module1) {
                 "use strict";
                 function insertStyleElement(options) {
                     var element = document.createElement("style");
@@ -10731,7 +10731,7 @@
                 }
                 module1.exports = insertStyleElement;
             },
-            kU (module1, __unused_rspack_exports, __webpack_require__) {
+            g (module1, __unused_rspack_exports, __webpack_require__) {
                 "use strict";
                 function setAttributesWithoutAttributes(styleElement) {
                     var nonce = __webpack_require__.nc;
@@ -10739,7 +10739,7 @@
                 }
                 module1.exports = setAttributesWithoutAttributes;
             },
-            Bd (module1) {
+            V (module1) {
                 "use strict";
                 function apply(styleElement, options, obj) {
                     var css = "";
@@ -10776,7 +10776,7 @@
                 }
                 module1.exports = domAPI;
             },
-            snK (module1) {
+            AD (module1) {
                 "use strict";
                 function styleTagTransform(css, styleElement) {
                     if (styleElement.styleSheet) styleElement.styleSheet.cssText = css;
@@ -11121,7 +11121,7 @@
             var client = __webpack_require__("Q");
             var client_default = /*#__PURE__*/ __webpack_require__.n(client);
             var package_namespaceObject = {
-                rE: "16.0.2"
+                rE: "16.1.1"
             };
             function isAudioEnabled(options) {
                 return Boolean(options.audio.enabled);
@@ -15029,12 +15029,14 @@
                 GET: "get"
             };
             class Form extends util_Despot {
+                static nextFormId = 0;
                 container;
                 formElement;
-                validate = (event)=>{
-                    this.container.validate(event);
-                };
                 keyInput;
+                submitButton;
+                submitButtonFormAttribute = null;
+                generatedFormId;
+                isSubmitting = false;
                 FORM_FIELDS = {};
                 constructor(container, formElement, options){
                     super("Form", options);
@@ -15052,6 +15054,12 @@
                         sendCopy: options.selectors.sendCopyInputName
                     };
                 }
+                validate = (event)=>{
+                    this.container.validate(event);
+                };
+                handleSubmit = (event)=>{
+                    if (!event.defaultPrevented) this.doTheSubmit(event);
+                };
                 getData() {
                     return getFormData(this.formElement, {
                         includeDisabled: true
@@ -15235,19 +15243,42 @@
                         if (type?.toLowerCase() === "hidden") inputElement.value = "";
                     }
                 }
-                startListeningToSubmitEvents() {
+                connectSubmitButton() {
                     const submitButton = this.container.getSubmitButton();
-                    if (submitButton) submitButton.onclick = this.doTheSubmit.bind(this);
+                    if (!submitButton) return;
+                    if (submitButton.form === this.formElement) return;
+                    if (!this.formElement.id) {
+                        let formId;
+                        do formId = `videomail-form-${Form.nextFormId++}`;
+                        while (document.getElementById(formId))
+                        this.formElement.id = formId;
+                        this.generatedFormId = formId;
+                    }
+                    this.submitButton = submitButton;
+                    this.submitButtonFormAttribute = submitButton.getAttribute("form");
+                    submitButton.setAttribute("form", this.formElement.id);
+                }
+                startListeningToSubmitEvents() {
+                    this.connectSubmitButton();
+                    this.formElement.addEventListener("submit", this.handleSubmit);
                 }
                 stopListeningToSubmitEvents() {
-                    const submitButton = this.container.getSubmitButton();
-                    if (submitButton) submitButton.onclick = null;
+                    this.formElement.removeEventListener("submit", this.handleSubmit);
+                    if (this.submitButton) {
+                        if (null === this.submitButtonFormAttribute) this.submitButton.removeAttribute("form");
+                        else this.submitButton.setAttribute("form", this.submitButtonFormAttribute);
+                        this.submitButton = void 0;
+                        this.submitButtonFormAttribute = null;
+                    }
+                    if (this.generatedFormId === this.formElement.id) this.formElement.removeAttribute("id");
+                    this.generatedFormId = void 0;
                 }
                 async doTheSubmit(e) {
                     if (e) {
                         this.options.logger.debug(`Form: doTheSubmit(${string_pretty(e)})`);
                         e.preventDefault();
                     } else this.options.logger.debug("Form: doTheSubmit()");
+                    if (this.isSubmitting) return false;
                     const hasHostAction = this.formElement.hasAttribute("action");
                     const url = this.formElement.getAttribute("action") ?? this.options.apiUrl;
                     const method = this.formElement.getAttribute("method");
@@ -15262,7 +15293,14 @@
                         default:
                             chosenMethod = FormMethod.POST;
                     }
-                    if (this.container.hasElement()) await this.container.submitAll(this.getData(), chosenMethod, url, hasHostAction);
+                    if (this.container.hasElement()) {
+                        this.isSubmitting = true;
+                        try {
+                            await this.container.submitAll(this.getData(), chosenMethod, url, hasHostAction);
+                        } finally{
+                            this.isSubmitting = false;
+                        }
+                    }
                     return false;
                 }
                 getInvalidElement() {
@@ -15651,19 +15689,19 @@
                 return newOptions;
             }
             const options_mergeWithDefaultOptions = mergeWithDefaultOptions;
-            var injectStylesIntoStyleTag = __webpack_require__("R");
+            var injectStylesIntoStyleTag = __webpack_require__("q");
             var injectStylesIntoStyleTag_default = /*#__PURE__*/ __webpack_require__.n(injectStylesIntoStyleTag);
-            var styleDomAPI = __webpack_require__("Bd");
+            var styleDomAPI = __webpack_require__("V");
             var styleDomAPI_default = /*#__PURE__*/ __webpack_require__.n(styleDomAPI);
-            var insertBySelector = __webpack_require__("uZ");
+            var insertBySelector = __webpack_require__("f");
             var insertBySelector_default = /*#__PURE__*/ __webpack_require__.n(insertBySelector);
-            var setAttributesWithoutAttributes = __webpack_require__("kU");
+            var setAttributesWithoutAttributes = __webpack_require__("g");
             var setAttributesWithoutAttributes_default = /*#__PURE__*/ __webpack_require__.n(setAttributesWithoutAttributes);
-            var insertStyleElement = __webpack_require__("mK");
+            var insertStyleElement = __webpack_require__("z7");
             var insertStyleElement_default = /*#__PURE__*/ __webpack_require__.n(insertStyleElement);
-            var styleTagTransform = __webpack_require__("snK");
+            var styleTagTransform = __webpack_require__("AD");
             var styleTagTransform_default = /*#__PURE__*/ __webpack_require__.n(styleTagTransform);
-            var main = __webpack_require__("eq");
+            var main = __webpack_require__("pJ");
             var main_options = {};
             main_options.styleTagTransform = styleTagTransform_default();
             main_options.setAttributes = setAttributesWithoutAttributes_default();
@@ -17888,7 +17926,7 @@
                     html_disableElement(radioButtonElement);
                     return radioButtonElement;
                 }
-                makeButton(buttonClass, text, clickHandler, show, id, type, selector, disabled = true) {
+                makeButton(buttonClass, text, clickHandler, show, id, type = "button", selector, disabled = true) {
                     let buttonElement;
                     buttonElement = id ? document.querySelector(`#${id}`) : selector ? document.querySelector(selector) : this.buttonsElement?.querySelector(`.${buttonClass}`);
                     if (buttonElement) buttonElement = html_adjustButton(buttonElement, show, type, disabled);
@@ -18598,10 +18636,14 @@
                     this.on("USER_MEDIA_READY", ()=>{
                         this.facingMode?.show();
                     });
+                    this.on("CAMERA_RECOVERING", ()=>{
+                        this.facingMode?.hide();
+                    });
                     this.on("RECORDING", ()=>{
                         this.startRecording();
                     });
                     this.on("RESUMING", ()=>{
+                        this.hidePause();
                         this.resumeRecording();
                     });
                     this.on("STOPPING", ()=>{
@@ -19216,6 +19258,7 @@
             class AudioRecorder {
                 scriptProcessor;
                 audioInput;
+                volume;
                 vcAudioContext;
                 userMedia;
                 options;
@@ -19238,9 +19281,19 @@
                     const float32Array = e.inputBuffer.getChannelData(0);
                     cb(new esm(float32Array));
                 }
+                disconnect() {
+                    if (this.scriptProcessor) {
+                        this.scriptProcessor.onaudioprocess = null;
+                        this.scriptProcessor.disconnect();
+                    }
+                    this.audioInput?.disconnect();
+                    this.volume?.disconnect();
+                }
                 init(localMediaStream) {
                     this.options.logger.debug("AudioRecorder: init()");
+                    this.disconnect();
                     const volume = this.getAudioContext().createGain();
+                    this.volume = volume;
                     try {
                         this.audioInput = this.getAudioContext().createMediaStreamSource(localMediaStream);
                     } catch (exc) {
@@ -19272,10 +19325,13 @@
                         this.onAudioProcess(e, cb);
                     };
                 }
+                async resume() {
+                    const context = this.getAudioContext();
+                    if ("running" !== context.state) await context.resume();
+                }
                 stop() {
                     this.options.logger.debug("AudioRecorder: stop()");
-                    if (this.scriptProcessor) this.scriptProcessor.onaudioprocess = null;
-                    if (this.audioInput) this.audioInput.disconnect();
+                    this.disconnect();
                     if (this.hasAudioContext()) this.getAudioContext().close().then(()=>{
                         this.options.logger.debug("AudioRecorder: audio context is closed");
                         this.vcAudioContext = void 0;
@@ -19320,6 +19376,8 @@
                 onLoadedMetaDataReached = false;
                 playingPromiseReached = false;
                 videoTrackLabel;
+                clearInitializationListeners;
+                initializationId = 0;
                 outputEvent = (e)=>{
                     this.logEvent(e.type, {
                         readyState: this.rawVisualUserMedia?.readyState
@@ -19361,6 +19419,16 @@
                         this.currentVisualStream = void 0;
                     }
                 }
+                async restorePlayback() {
+                    if (!this.rawVisualUserMedia) throw new Error("No camera preview is available.");
+                    await this.rawVisualUserMedia.play();
+                    await this.audioRecorder?.resume();
+                }
+                hasLiveStream() {
+                    const videoReady = this.currentVisualStream?.getVideoTracks().some((track)=>"live" === track.readyState && track.enabled && !track.muted);
+                    const audioReady = !isAudioEnabled(this.options) || this.currentVisualStream?.getAudioTracks().some((track)=>"live" === track.readyState && track.enabled && !track.muted);
+                    return Boolean(this.currentVisualStream?.active && videoReady && audioReady);
+                }
                 hasEnded() {
                     if (this.rawVisualUserMedia?.ended) return this.rawVisualUserMedia.ended;
                     return !this.currentVisualStream?.active;
@@ -19375,6 +19443,7 @@
                 }
                 unloadRemainingEventListeners() {
                     this.options.logger.debug("UserMedia: unloadRemainingEventListeners()");
+                    this.clearInitializationListeners?.();
                     mediaEvents.forEach((eventName)=>{
                         this.rawVisualUserMedia?.removeEventListener(eventName, this.outputEvent);
                     });
@@ -19384,11 +19453,13 @@
                     this.removeListener("SENDING_FIRST_FRAME");
                     this.audioRecorder?.record(audioCallback);
                 }
-                init(localMediaStream, videoCallback, audioCallback, endedEarlyCallback, switchingFacingMode) {
+                init(localMediaStream, videoCallback, audioCallback, endedEarlyCallback, params) {
+                    this.clearInitializationListeners?.();
                     this.stop(localMediaStream, {
                         aboutToInitialize: true,
-                        switchingFacingMode
+                        preserveRecordingState: Boolean(params?.switchingFacingMode || params?.recovering)
                     });
+                    const initializationId = ++this.initializationId;
                     this.onPlayReached = false;
                     this.onLoadedMetaDataReached = false;
                     this.playingPromiseReached = false;
@@ -19401,18 +19472,25 @@
                         this.rawVisualUserMedia?.removeEventListener("play", onPlay);
                         this.rawVisualUserMedia?.removeEventListener("loadedmetadata", onLoadedMetaData);
                     };
+                    this.clearInitializationListeners = ()=>{
+                        this.rawVisualUserMedia?.removeEventListener("play", onPlay);
+                        this.rawVisualUserMedia?.removeEventListener("loadedmetadata", onLoadedMetaData);
+                        this.clearInitializationListeners = void 0;
+                    };
                     const play = ()=>{
                         try {
                             this.rawVisualUserMedia?.load();
                             if (this.rawVisualUserMedia?.paused) {
                                 this.options.logger.debug(`UserMedia: play(): media.readyState=${this.rawVisualUserMedia.readyState}, media.paused=${this.rawVisualUserMedia.paused}, media.ended=${this.rawVisualUserMedia.ended}, media.played=${string_pretty(this.rawVisualUserMedia.played)}`);
                                 this.rawVisualUserMedia.play().then(()=>{
+                                    if (initializationId !== this.initializationId) return;
                                     if (!this.playingPromiseReached) {
                                         this.options.logger.debug("UserMedia: play promise successful. Playing now.");
                                         this.playingPromiseReached = true;
                                     }
                                 }).catch((exc)=>{
-                                    if (exc instanceof Error) this.options.logger.warn(`Caught pending user media promise exception: ${exc.toString()}`);
+                                    if (initializationId !== this.initializationId) return;
+                                    if (exc instanceof Error && !params?.recovering) this.options.logger.warn(`Caught pending user media promise exception: ${exc.toString()}`);
                                     else {
                                         unloadAllEventListeners();
                                         endedEarlyCallback(error_createError({
@@ -19433,16 +19511,28 @@
                         this.options.logger.debug(`UserMedia: fireCallbacks(readyState=${readyState}, onPlayReached=${this.onPlayReached}, onLoadedMetaDataReached=${this.onLoadedMetaDataReached})`);
                         if (this.onPlayReached && this.onLoadedMetaDataReached) if (this.audioRecorder) try {
                             this.audioRecorder.init(localMediaStream);
-                            this.on("SENDING_FIRST_FRAME", ()=>{
-                                this.audioRecord(audioCallback);
-                            });
-                            videoCallback();
+                            const onAudioReady = ()=>{
+                                if (initializationId !== this.initializationId || this.currentVisualStream !== localMediaStream) return;
+                                if (this.recording) this.audioRecord(audioCallback);
+                                else this.on("SENDING_FIRST_FRAME", ()=>{
+                                    this.audioRecord(audioCallback);
+                                });
+                                this.clearInitializationListeners?.();
+                                videoCallback();
+                            };
+                            if (params?.recovering) this.audioRecorder.resume().then(onAudioReady).catch(endedEarlyCallback);
+                            else onAudioReady();
                         } catch (exc) {
                             unloadAllEventListeners();
-                            this.stop();
+                            this.stop(void 0, {
+                                preserveRecordingState: Boolean(params?.recovering)
+                            });
                             endedEarlyCallback(exc);
                         }
-                        else videoCallback();
+                        else {
+                            this.clearInitializationListeners?.();
+                            videoCallback();
+                        }
                     };
                     const onPlay = ()=>{
                         try {
@@ -19512,9 +19602,8 @@
                         this.setVisualStream(localMediaStream);
                         play();
                     } catch (exc) {
-                        this.emit("ERROR", {
-                            exc
-                        });
+                        unloadAllEventListeners();
+                        endedEarlyCallback(exc);
                     }
                 }
                 getVideoTrackLabel() {
@@ -19527,6 +19616,8 @@
                     try {
                         let chosenStream = visualStream;
                         if (!params?.aboutToInitialize) {
+                            this.initializationId++;
+                            this.clearInitializationListeners?.();
                             chosenStream ??= this.currentVisualStream;
                             const tracks = chosenStream?.getTracks();
                             if (tracks) tracks.forEach((track)=>{
@@ -19536,7 +19627,7 @@
                             this.audioRecorder?.stop();
                             this.audioRecorder = void 0;
                         }
-                        if (!params?.switchingFacingMode) this.paused = this.recording = false;
+                        if (!params?.preserveRecordingState) this.paused = this.recording = false;
                     } catch (exc) {
                         this.emit("ERROR", {
                             exc
@@ -19634,6 +19725,7 @@
                 originalAnimationFrameObject;
                 samplesCount = 0;
                 framesCount = 0;
+                recordingAudioSampleRate;
                 recordingStats;
                 confirmedFrameNumber = 0;
                 confirmedSampleNumber = 0;
@@ -19652,6 +19744,10 @@
                 ctx;
                 userMediaLoaded;
                 userMediaLoading = false;
+                mediaRequestId = 0;
+                cameraRecovery;
+                resolveCameraRecovery;
+                resumeAfterCameraRecovery = false;
                 submitting = false;
                 unloaded;
                 stopTime;
@@ -19915,7 +20011,9 @@
                     this.pingInterval = void 0;
                 }
                 onAudioSample(audioSample) {
-                    if (this.recordingTransportFailed) return;
+                    if (this.recordingTransportFailed || this.cameraRecovery) return;
+                    const sampleRate = this.userMedia?.getAudioSampleRate();
+                    if (sampleRate && sampleRate > 0) this.recordingAudioSampleRate ??= sampleRate;
                     this.samplesCount++;
                     this.mediaTransmissionStarted = true;
                     const audioBuffer = audioSample.toBuffer();
@@ -19928,19 +20026,26 @@
                     try {
                         this.options.logger.debug(`Recorder: onUserMediaReady(${params ? string_pretty(params) : ""})`);
                         const switchingFacingMode = params?.switchingFacingMode;
+                        if (params?.recovering) {
+                            if (!this.userMedia?.hasLiveStream()) return void this.failCameraRecovery(new Error("The restored camera has no live tracks."));
+                            if (void 0 !== this.recordingAudioSampleRate && this.userMedia.getAudioSampleRate() !== this.recordingAudioSampleRate) return void this.failCameraRecovery(new Error("The audio sample rate changed during recovery."));
+                        }
                         this.userMediaLoading = this.blocking = this.unloaded = this.submitting = false;
                         this.userMediaLoaded = true;
                         this.clearUserMediaTimeout();
-                        if (!switchingFacingMode) this.loop = this.createLoop();
+                        if (!switchingFacingMode && !params?.recovering) this.loop = this.createLoop();
                         this.show();
                         if (params?.recordWhenReady) this.record();
                         this.emit("USER_MEDIA_READY", {
                             switchingFacingMode: params?.switchingFacingMode,
+                            recovering: params?.recovering,
                             paused: this.isPaused(),
                             recordWhenReady: params?.recordWhenReady
                         });
+                        if (params?.recovering) this.finishCameraRecovery(true);
                     } catch (exc) {
-                        this.emit("ERROR", {
+                        if (params?.recovering) this.failCameraRecovery(exc);
+                        else this.emit("ERROR", {
                             exc
                         });
                     }
@@ -20311,6 +20416,7 @@
                     return this.blocking;
                 }
                 userMediaErrorCallback(err, usedConstraints) {
+                    if (this.cameraRecovery) return void this.failCameraRecovery(err);
                     if (this.unloaded) return void this.options.logger.debug(`Recorder: already unloaded. Not going to throw error ${string_pretty(err)}`);
                     this.userMediaLoading = false;
                     this.clearUserMediaTimeout();
@@ -20342,7 +20448,7 @@
                         });
                     }
                 }
-                getUserMediaCallback(localStream, params) {
+                getUserMediaCallback(localStream, params, requestId = this.mediaRequestId) {
                     if (!this.userMedia) {
                         localStream.getTracks().forEach((track)=>{
                             track.stop();
@@ -20355,20 +20461,20 @@
                     this.options.logger.debug(`Recorder: getUserMediaCallback(${params ? string_pretty(params) : ""})`);
                     if (this.showUserMedia()) try {
                         this.userMedia.init(localStream, ()=>{
-                            if (!this.unloaded) this.onUserMediaReady(params);
+                            if (!this.unloaded && requestId === this.mediaRequestId) this.onUserMediaReady(params);
                         }, this.onAudioSample.bind(this), (err)=>{
-                            if (!this.unloaded) this.userMediaErrorCallback(err, {
+                            if (!this.unloaded && requestId === this.mediaRequestId) this.userMediaErrorCallback(err, {
                                 audio: isAudioEnabled(this.options)
                             });
-                        }, params?.switchingFacingMode);
+                        }, params);
                     } catch (exc) {
                         localStream.getTracks().forEach((track)=>{
                             track.stop();
                         });
                         this.userMediaLoading = false;
                         this.clearUserMediaTimeout();
-                        this.emit("ERROR", {
-                            exc
+                        this.userMediaErrorCallback(exc, {
+                            audio: isAudioEnabled(this.options)
                         });
                     }
                     else {
@@ -20377,12 +20483,14 @@
                         });
                         this.userMediaLoading = false;
                         this.clearUserMediaTimeout();
+                        this.cancelCameraRecovery();
                     }
                 }
                 loadGenuineUserMedia(params) {
                     this.options.logger.debug(`Recorder: loadGenuineUserMedia(${params ? string_pretty(params) : ""})`);
                     this.emit("ASKING_WEBCAM_PERMISSION");
                     this.userMediaLoading = true;
+                    const requestId = ++this.mediaRequestId;
                     const constraints = {
                         video: {
                             frameRate: {
@@ -20396,18 +20504,18 @@
                     this.options.logger.debug(string_summarize("Recorder: available webcam constraints are:", navigator.mediaDevices.getSupportedConstraints()));
                     const streamPromise = navigator.mediaDevices.getUserMedia(constraints);
                     streamPromise.then((localStream)=>{
-                        if (this.unloaded) return void localStream.getTracks().forEach((track)=>{
+                        if (this.unloaded || requestId !== this.mediaRequestId) return void localStream.getTracks().forEach((track)=>{
                             track.stop();
                         });
-                        this.getUserMediaCallback(localStream, params);
+                        this.getUserMediaCallback(localStream, params, requestId);
                     }).catch((reason)=>{
-                        if (!this.unloaded) this.userMediaErrorCallback(reason, constraints);
+                        if (!this.unloaded && requestId === this.mediaRequestId) this.userMediaErrorCallback(reason, constraints);
                     });
                 }
                 configureVideoConstraints(constraints, params) {
                     const videoConstraints = "object" == typeof constraints.video ? constraints.video : void 0;
                     if (!videoConstraints) return;
-                    if (params?.switchingFacingMode) videoConstraints.facingMode = params.switchingFacingMode;
+                    if (params?.switchingFacingMode || params?.recovering) videoConstraints.facingMode = params.switchingFacingMode || this.facingMode;
                     if (this.options.video.width) videoConstraints.width = {
                         ideal: this.options.video.width
                     };
@@ -20435,8 +20543,8 @@
                             if (!this.userMediaLoaded) {
                                 this.userMediaLoading = false;
                                 const err = util_getBrowser(this.options).getNoAccessIssue();
-                                this.emit("ERROR", {
-                                    err
+                                this.userMediaErrorCallback(err, {
+                                    audio: isAudioEnabled(this.options)
                                 });
                             }
                         }, this.options.timeouts.userMedia);
@@ -20446,6 +20554,7 @@
                         this.clearUserMediaTimeout();
                         this.options.logger.debug("Recorder: failed to load genuine user media");
                         this.userMediaLoading = false;
+                        if (this.cameraRecovery) return void this.failCameraRecovery(exc);
                         const errorListeners = this.getListeners("ERROR");
                         if (errorListeners?.length) this.emit("ERROR", {
                             exc
@@ -20569,9 +20678,10 @@
                     return this.recordingStats;
                 }
                 getAudioSampleRate() {
-                    return this.userMedia?.getAudioSampleRate();
+                    return this.recordingAudioSampleRate ?? this.userMedia?.getAudioSampleRate();
                 }
                 stop(params) {
+                    this.cancelCameraRecovery();
                     if (!this.userMedia) throw new Error("No user media defined, unable to stop");
                     this.options.logger.debug(`Recorder: stop(${params ? string_pretty(params) : ""})`);
                     this.recordingActive = false;
@@ -20597,7 +20707,7 @@
                         if (this.userMedia) this.recordingStats.videoTrackLabel = this.userMedia.getVideoTrackLabel();
                         if (isAudioEnabled(this.options) && this.userMedia) {
                             this.recordingStats.samplesCount = this.samplesCount;
-                            this.recordingStats.sampleRate = this.userMedia.getAudioSampleRate();
+                            this.recordingStats.sampleRate = this.recordingAudioSampleRate ?? this.userMedia.getAudioSampleRate();
                         }
                         this.writeCommand("stop", this.recordingStats, ()=>{
                             this.emit("STOPPED", {
@@ -20652,6 +20762,7 @@
                     this.built = this.connecting = this.connected = false;
                 }
                 reset() {
+                    this.cancelCameraRecovery();
                     if (!this.unloaded) {
                         this.options.logger.debug("Recorder: reset()");
                         this.emit("RESETTING");
@@ -20679,7 +20790,70 @@
                 isReady() {
                     return this.userMedia?.isReady();
                 }
+                finishCameraRecovery(restored) {
+                    this.clearUserMediaTimeout();
+                    const resolve = this.resolveCameraRecovery;
+                    const resumeRequested = restored && this.resumeAfterCameraRecovery;
+                    this.cameraRecovery = void 0;
+                    this.resolveCameraRecovery = void 0;
+                    this.resumeAfterCameraRecovery = false;
+                    resolve?.(restored);
+                    if (resumeRequested && this.isPaused()) this.resume();
+                }
+                cancelCameraRecovery() {
+                    if (!this.cameraRecovery) return;
+                    this.mediaRequestId++;
+                    this.userMediaLoading = false;
+                    this.userMediaLoaded = false;
+                    this.clearUserMediaTimeout();
+                    this.userMedia?.stop(void 0, {
+                        preserveRecordingState: true
+                    });
+                    this.finishCameraRecovery(false);
+                }
+                failCameraRecovery(exc) {
+                    this.cancelCameraRecovery();
+                    const err = error_createError({
+                        message: "Camera recovery failed",
+                        explanation: "Your recording is still paused. Check camera permissions, then try Resume again or stop to keep the recorded part.",
+                        exc,
+                        options: this.options
+                    });
+                    this.emit("CAMERA_RECOVERY_FAILED", {
+                        err
+                    });
+                }
+                recoverCamera() {
+                    if (this.cameraRecovery) return this.cameraRecovery;
+                    if (!this.built || this.unloaded || !this.userMedia || this.userMediaLoading || this.submitting || this.key || void 0 !== this.stopTimeout || this.recordingTransportFailed) return Promise.resolve(false);
+                    const liveStream = this.userMedia.hasLiveStream();
+                    if (liveStream && this.isRecording()) return Promise.resolve(true);
+                    if (!liveStream && this.recordingActive && !this.isPaused()) this.pause();
+                    const recovery = new Promise((resolve)=>{
+                        this.resolveCameraRecovery = resolve;
+                    });
+                    this.cameraRecovery = recovery;
+                    this.emit("CAMERA_RECOVERING");
+                    if (liveStream) {
+                        this.userMediaTimeout = window.setTimeout(()=>{
+                            this.failCameraRecovery(new Error("Camera playback recovery timed out."));
+                        }, this.options.timeouts.userMedia);
+                        this.userMedia.restorePlayback().then(()=>{
+                            if (this.cameraRecovery === recovery) this.finishCameraRecovery(true);
+                        }).catch((exc)=>{
+                            if (this.cameraRecovery === recovery) this.failCameraRecovery(exc);
+                        });
+                    } else {
+                        this.userMediaLoaded = false;
+                        this.loadUserMedia({
+                            recovering: true
+                        });
+                    }
+                    return recovery;
+                }
                 pause(params) {
+                    this.cancelCameraRecovery();
+                    this.resumeAfterDrain = false;
                     if (params) this.options.logger.debug(`pause() at frame ${this.framesCount} with ${string_pretty(params)}`);
                     else this.options.logger.debug(`pause() at frame ${this.framesCount}`);
                     this.userMedia?.pause();
@@ -20688,10 +20862,15 @@
                     this.sendPings();
                 }
                 resume() {
+                    if (this.cameraRecovery || !this.userMedia?.hasLiveStream()) {
+                        this.recoverCamera();
+                        this.resumeAfterCameraRecovery = Boolean(this.cameraRecovery);
+                        return;
+                    }
                     this.options.logger.debug(`Recorder: resume() with frame ${this.framesCount}`);
                     this.stopPings();
                     this.emit("RESUMING");
-                    this.userMedia?.resume();
+                    this.userMedia.resume();
                     if (this.streamBackpressured) this.resumeAfterDrain = true;
                     else this.loop.start();
                 }
@@ -20746,7 +20925,7 @@
                     return newLoop;
                 }
                 record() {
-                    if (this.unloaded) return;
+                    if (this.unloaded || this.cameraRecovery) return;
                     if (!this.connected) {
                         this.options.logger.debug("Recorder: reconnecting before recording …");
                         this.initSocket(()=>{
@@ -20819,6 +20998,7 @@
                     this.recordingActive = true;
                     this.recordingTransportFailed = false;
                     this.mediaTransmissionStarted = false;
+                    this.recordingAudioSampleRate = void 0;
                     this.userMedia.record();
                     this.emit("RECORDING", {
                         framesCount: this.framesCount
@@ -20880,7 +21060,7 @@
                     }
                 }
                 switchFacingMode() {
-                    if (!util_getBrowser(this.options).isMobile()) return;
+                    if (this.cameraRecovery || !util_getBrowser(this.options).isMobile()) return;
                     if ("user" === this.facingMode) this.facingMode = "environment";
                     else if ("environment" === this.facingMode) this.facingMode = "user";
                     else this.options.logger.warn(`Recorder: unsupported facing mode ${string_pretty(this.facingMode)}`);
@@ -20891,12 +21071,14 @@
                 initEvents() {
                     this.options.logger.debug("Recorder: initEvents()");
                     this.on("SUBMITTING", ()=>{
+                        this.cancelCameraRecovery();
                         this.submitting = true;
                     });
                     this.on("SUBMITTED", ()=>{
                         this.submitting = false;
                     });
                     this.on("BLOCKING", ()=>{
+                        this.cancelCameraRecovery();
                         this.blocking = true;
                         this.clearUserMediaTimeout();
                     });
@@ -21324,6 +21506,7 @@
                 notifier;
                 visualsElement;
                 built = false;
+                cameraRecoveryFailed = false;
                 constructor(container, options){
                     super("Visuals", options);
                     this.container = container;
@@ -21357,6 +21540,17 @@
                             this.built = true;
                             this.endWaiting();
                             this.container.enableForm(false);
+                        });
+                        this.on("CAMERA_RECOVERING", ()=>{
+                            this.clearCameraRecoveryNotice();
+                        });
+                        this.on("CAMERA_RECOVERY_FAILED", ({ err })=>{
+                            this.cameraRecoveryFailed = true;
+                            this.options.logger.warn(err);
+                            if (this.options.displayErrors) this.notifier.notify(err.message, err.explanation, {
+                                problem: true
+                            });
+                            this.endWaiting();
                         });
                         this.on("PREVIEW", ()=>{
                             this.endWaiting();
@@ -21436,6 +21630,7 @@
                     child.remove();
                 }
                 reset() {
+                    this.clearCameraRecoveryNotice();
                     this.endWaiting();
                     this.recorder.reset();
                 }
@@ -21446,11 +21641,13 @@
                     this.container.endWaiting();
                 }
                 stop(params) {
+                    this.clearCameraRecoveryNotice();
                     this.recorder.stop(params);
                     this.recorderInsides.hidePause();
                 }
                 back(keepHidden = false, cb) {
                     this.options.logger.debug(`Visuals: back(keepHidden = ${keepHidden})`);
+                    this.cameraRecoveryFailed = false;
                     this.replay.hide();
                     this.notifier.hide();
                     if (keepHidden) {
@@ -21472,6 +21669,7 @@
                     if (!this.built) return;
                     const e = params?.e;
                     this.options.logger.debug(`Visuals: unload(${e ? string_pretty(e) : ""})`);
+                    this.cameraRecoveryFailed = false;
                     this.recorder.unload(params);
                     this.recorderInsides.unload();
                     this.replay.unload(params);
@@ -21485,13 +21683,31 @@
                     this.recorder.pause(params);
                     this.recorderInsides.showPause();
                 }
+                clearCameraRecoveryNotice() {
+                    if (this.cameraRecoveryFailed) {
+                        this.notifier.hide();
+                        this.recorder.show();
+                        this.cameraRecoveryFailed = false;
+                    }
+                }
+                recoverCamera() {
+                    if (this.replay.isShown() || this.isNotifying() && !this.cameraRecoveryFailed) return Promise.resolve(false);
+                    this.clearCameraRecoveryNotice();
+                    return this.recorder.recoverCamera();
+                }
                 resume() {
-                    if (this.recorderInsides.isCountingDown()) this.recorderInsides.resumeCountdown();
-                    else this.recorder.resume();
-                    this.recorderInsides.hidePause();
+                    this.clearCameraRecoveryNotice();
+                    if (this.recorderInsides.isCountingDown()) {
+                        this.recorderInsides.resumeCountdown();
+                        this.recorderInsides.hidePause();
+                    } else {
+                        this.recorder.resume();
+                        if (!this.recorder.isPaused()) this.recorderInsides.hidePause();
+                    }
                 }
                 pauseOrResume() {
-                    if (this.isRecordable()) {
+                    if (this.cameraRecoveryFailed && this.recorder.isPaused()) this.resume();
+                    else if (this.isRecordable()) {
                         if (this.isRecording()) this.pause();
                         else if (this.recorder.isPaused()) this.resume();
                         else if (this.recorder.isReady()) this.recorder.record();
@@ -21734,10 +21950,10 @@
                     });
                     if (!playerOnly) this.stopListeningToVisibility = this.visibility.onChange((visible)=>{
                         if (this.built) if (visible) {
-                            if (isAutoPauseEnabled(this.options) && this.isCountingDown()) this.resume();
+                            if (isAutoPauseEnabled(this.options)) this.recoverCamera();
                             this.emit("VISIBLE");
                         } else {
-                            if (isAutoPauseEnabled(this.options) && (this.isCountingDown() || this.isRecording())) this.pause();
+                            if (isAutoPauseEnabled(this.options)) this.suspend();
                             this.emit("INVISIBLE");
                         }
                     });
@@ -21924,6 +22140,13 @@
                 }
                 pause(params) {
                     this.visuals.pause(params);
+                }
+                suspend() {
+                    if (this.built && (this.isCountingDown() || this.isRecording() || this.isPaused())) this.pause();
+                }
+                recoverCamera() {
+                    if (!this.built || this.hasError || this.submitted) return Promise.resolve(false);
+                    return this.visuals.recoverCamera();
                 }
                 validate(event, force = false) {
                     let runValidation = true;
@@ -22242,6 +22465,12 @@
                 }
                 record() {
                     this.container.record();
+                }
+                pause() {
+                    this.container.suspend();
+                }
+                recoverCamera() {
+                    return this.container.recoverCamera();
                 }
                 getLogLines() {
                     if (this.options.logger.getLines) return this.options.logger.getLines();
