@@ -58,12 +58,6 @@ See [RELEASING.md](doc/RELEASING.md) for detailed instructions on how to release
 
 For tests and checks, go to [doc/QUALITY.md](doc/QUALITY.md).
 
-### Recommended next release improvements
-
-First, there is so much **wow** in this plugin and plenty of ideas for further improvements.
-
-You can inspect our [TODO list](TODO.md) to improve the release process, testing, and CI/CD workflow.
-
 ## Ask for help
 
 <https://binarykitchen.com>
