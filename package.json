@@ -53,14 +53,8 @@
     "clean": "gulp clean",
     "release": "node scripts/release.js"
   },
-  "prettier": "./prettier.config.js",
   "dependencies": {
     "videomail-client": "16.2.0"
-  },
-  "overrides": {
-    "websocket-stream": {
-      "ws": "8.22.0"
-    }
   },
   "devDependencies": {
     "@eslint/js": "10.0.1",
@@ -77,5 +71,14 @@
     "postcss": "8.5.31",
     "prettier": "3.9.10",
     "stylus": "0.64.0"
+  },
+  "prettier": "./prettier.config.js",
+  "overrides": {
+    "websocket-stream": {
+      "ws": "8.22.0"
+    }
+  },
+  "allowScripts": {
+    "esbuild@0.28.2": true
   }
 }
