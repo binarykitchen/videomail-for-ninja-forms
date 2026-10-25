@@ -3,7 +3,7 @@ Contributors: michael.heuberger, kbjohnson90
 Tags: video, email, recorder, sign language
 Requires at least: 6.0
 Tested up to: 6.9.5
-Stable tag: 13.1.1
+Stable tag: 13.2.0
 Requires PHP: 8.1.0
 Donate link: https://videomail.io/faq
 License: CC0-1.0
@@ -71,6 +71,15 @@ To get help, just use any of these contacts at [https://binarykitchen.com](https
 2. Once you have assembled a form and preview it, any browser will ask for webcam access first.
 
 == Changelog ==
+
+= 13.2.0 (25 Oct 2026) =
+
+**Improvement**
+* Multiple tabs of the same page are now supported
+* We now observe the number of connections and reject bots to keep your server up running
+
+**Change:**
+* Always close connections when moving away
 
 = 13.1.1 (22 Oct 2026) =
 

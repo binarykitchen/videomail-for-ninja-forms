@@ -1654,7 +1654,7 @@
                     return 0 === comparison || comparison & DOCUMENT_POSITION_CONTAINED_BY;
                 }
             },
-            T (__unused_rspack_module, exports1, __webpack_require__) {
+            TU (__unused_rspack_module, exports1, __webpack_require__) {
                 function isArray(arg) {
                     if (Array.isArray) return Array.isArray(arg);
                     return '[object Array]' === objectToString(arg);
@@ -2119,7 +2119,7 @@
                     return keys;
                 };
                 module1.exports = Duplex;
-                var util = Object.create(__webpack_require__("T"));
+                var util = Object.create(__webpack_require__("TU"));
                 util.inherits = __webpack_require__("c5");
                 var Readable = __webpack_require__("rp");
                 var Writable = __webpack_require__("pv");
@@ -2173,7 +2173,7 @@
                 "use strict";
                 module1.exports = PassThrough;
                 var Transform = __webpack_require__("It");
-                var util = Object.create(__webpack_require__("T"));
+                var util = Object.create(__webpack_require__("TU"));
                 util.inherits = __webpack_require__("c5");
                 util.inherits(PassThrough, Transform);
                 function PassThrough(options) {
@@ -2205,7 +2205,7 @@
                 function _isUint8Array(obj) {
                     return Buffer.isBuffer(obj) || obj instanceof OurUint8Array;
                 }
-                var util = Object.create(__webpack_require__("T"));
+                var util = Object.create(__webpack_require__("TU"));
                 util.inherits = __webpack_require__("c5");
                 var debugUtil = __webpack_require__("AN");
                 var debug = void 0;
@@ -2832,7 +2832,7 @@
                 "use strict";
                 module1.exports = Transform;
                 var Duplex = __webpack_require__("OO");
-                var util = Object.create(__webpack_require__("T"));
+                var util = Object.create(__webpack_require__("TU"));
                 util.inherits = __webpack_require__("c5");
                 util.inherits(Transform, Duplex);
                 function afterTransform(er, data) {
@@ -2932,7 +2932,7 @@
                 ].indexOf(process.version.slice(0, 5)) > -1 ? setImmediate : pna.nextTick;
                 var Duplex;
                 Writable.WritableState = WritableState;
-                var util = Object.create(__webpack_require__("T"));
+                var util = Object.create(__webpack_require__("TU"));
                 util.inherits = __webpack_require__("c5");
                 var internalUtil = {
                     deprecate: __webpack_require__("NQ")
@@ -8254,7 +8254,7 @@
                     });
                 });
             },
-            Sy (__unused_rspack_module, exports1, __webpack_require__) {
+            S (__unused_rspack_module, exports1, __webpack_require__) {
                 var process = __webpack_require__("zT");
                 var getOwnPropertyDescriptors = Object.getOwnPropertyDescriptors || function(obj) {
                     var keys = Object.keys(obj);
@@ -8733,7 +8733,7 @@
                     return keys;
                 };
                 module1.exports = Duplex;
-                var util = Object.create(__webpack_require__("T"));
+                var util = Object.create(__webpack_require__("TU"));
                 util.inherits = __webpack_require__("c5");
                 var Readable = __webpack_require__("w");
                 var Writable = __webpack_require__("S5");
@@ -8787,7 +8787,7 @@
                 "use strict";
                 module1.exports = PassThrough;
                 var Transform = __webpack_require__("Ge");
-                var util = Object.create(__webpack_require__("T"));
+                var util = Object.create(__webpack_require__("TU"));
                 util.inherits = __webpack_require__("c5");
                 util.inherits(PassThrough, Transform);
                 function PassThrough(options) {
@@ -8819,7 +8819,7 @@
                 function _isUint8Array(obj) {
                     return Buffer.isBuffer(obj) || obj instanceof OurUint8Array;
                 }
-                var util = Object.create(__webpack_require__("T"));
+                var util = Object.create(__webpack_require__("TU"));
                 util.inherits = __webpack_require__("c5");
                 var debugUtil = __webpack_require__("eD");
                 var debug = void 0;
@@ -9446,7 +9446,7 @@
                 "use strict";
                 module1.exports = Transform;
                 var Duplex = __webpack_require__("S7");
-                var util = Object.create(__webpack_require__("T"));
+                var util = Object.create(__webpack_require__("TU"));
                 util.inherits = __webpack_require__("c5");
                 util.inherits(Transform, Duplex);
                 function afterTransform(er, data) {
@@ -9546,7 +9546,7 @@
                 ].indexOf(process.version.slice(0, 5)) > -1 ? setImmediate : pna.nextTick;
                 var Duplex;
                 Writable.WritableState = WritableState;
-                var util = Object.create(__webpack_require__("T"));
+                var util = Object.create(__webpack_require__("TU"));
                 util.inherits = __webpack_require__("c5");
                 var internalUtil = {
                     deprecate: __webpack_require__("NQ")
@@ -11121,7 +11121,7 @@
             var client = __webpack_require__("Q");
             var client_default = /*#__PURE__*/ __webpack_require__.n(client);
             var package_namespaceObject = {
-                rE: "16.1.1"
+                rE: "16.2.0"
             };
             function isAudioEnabled(options) {
                 return Boolean(options.audio.enabled);
@@ -11133,7 +11133,7 @@
             function isAutoPauseEnabled(options) {
                 return options.enableAutoPause && options.enablePause;
             }
-            var util = __webpack_require__("Sy");
+            var util = __webpack_require__("S");
             var util_default = /*#__PURE__*/ __webpack_require__.n(util);
             function getEventDetails(event) {
                 const eventWithErrorDetails = event;
@@ -14996,6 +14996,14 @@
                 }
             }
             const util_Despot = Despot;
+            const EMAIL_SEPARATOR_REGEX = /[ ,]+/gu;
+            function trimEmail(email) {
+                return email.replace(EMAIL_SEPARATOR_REGEX, "");
+            }
+            function trimEmails(emails) {
+                const trimmedEmails = emails.split(EMAIL_SEPARATOR_REGEX).map((item)=>item.trim()).filter(Boolean);
+                return trimmedEmails;
+            }
             function getValidity(element) {
                 const validity = "validity" in element ? element.validity : void 0;
                 return validity;
@@ -15015,14 +15023,6 @@
                 element.style.removeProperty("display");
             }
             const html_showElement = showElement;
-            const EMAIL_SEPARATOR_REGEX = /[ ,]+/gu;
-            function trimEmail(email) {
-                return email.replace(EMAIL_SEPARATOR_REGEX, "");
-            }
-            function trimEmails(emails) {
-                const trimmedEmails = emails.split(EMAIL_SEPARATOR_REGEX).map((item)=>item.trim()).filter(Boolean);
-                return trimmedEmails;
-            }
             const FormMethod = {
                 POST: "post",
                 PUT: "put",
@@ -16705,11 +16705,11 @@
                 const originalDocument = document1;
                 const currentScript = originalDocument.currentScript;
                 window1.DocumentFragment;
-                const HTMLTemplateElement = window1.HTMLTemplateElement, Node = window1.Node, Element = window1.Element, NodeFilter = window1.NodeFilter;
+                const HTMLTemplateElement = window1.HTMLTemplateElement, Node = window1.Node, Element1 = window1.Element, NodeFilter = window1.NodeFilter;
                 void 0 === window1.NamedNodeMap && (window1.NamedNodeMap || window1.MozNamedAttrMap);
                 window1.HTMLFormElement;
                 const DOMParser = window1.DOMParser, trustedTypes = window1.trustedTypes;
-                const ElementPrototype = Element.prototype;
+                const ElementPrototype = Element1.prototype;
                 const cloneNode = lookupGetter(ElementPrototype, "cloneNode");
                 const remove = lookupGetter(ElementPrototype, "remove");
                 const removeAttributeNode = lookupGetter(ElementPrototype, "removeAttributeNode");
@@ -17792,6 +17792,19 @@
                 return DOMPurify;
             }
             var purify_default = createDOMPurify();
+            function isRecipientSelectionValid(recipients) {
+                const hasTo = Boolean(recipients.to?.length);
+                const hasCc = Boolean(recipients.cc?.length);
+                const hasBcc = Boolean(recipients.bcc?.length);
+                const hasConfiguredTo = "to" in recipients;
+                const hasConfiguredCc = "cc" in recipients;
+                const hasConfiguredBcc = "bcc" in recipients;
+                let isValid = true;
+                if (hasConfiguredTo) isValid = hasTo || hasConfiguredCc && hasCc || hasConfiguredBcc && hasBcc;
+                else if (hasConfiguredCc) isValid = hasCc || !hasConfiguredBcc || hasBcc;
+                return isValid;
+            }
+            const email_isRecipientSelectionValid = isRecipientSelectionValid;
             function limitHeight(height, options, calledFrom) {
                 const dimension = {
                     unit: "px"
@@ -18388,7 +18401,7 @@
                     html_showElement(this.facingModeElement);
                 }
             }
-            const facingMode = FacingMode;
+            const recorder_facingMode = FacingMode;
             class PausedNote {
                 visuals;
                 options;
@@ -18609,7 +18622,7 @@
                     this.recordTimer = new recordTimer(visuals, this.recordNote, options);
                     const browser = util_getBrowser(options);
                     if (options.video.countdown) this.countdown = new countdown(visuals, options);
-                    if (options.video.facingModeButton && browser.isMobile()) this.facingMode = new facingMode(visuals, options);
+                    if (options.video.facingModeButton && browser.isMobile()) this.facingMode = new recorder_facingMode(visuals, options);
                     if (options.enablePause) this.pausedNote = new pausedNote(visuals, options);
                 }
                 startRecording() {
@@ -18942,6 +18955,18 @@
                 }
             }
             const notifier = Notifier;
+            function summarize(title, contents) {
+                const lines = Object.entries(contents).sort(([keyA], [keyB])=>keyA.localeCompare(keyB)).map(([key, value])=>{
+                    const formattedValue = void 0 === value ? "undefined" : "object" == typeof value ? string_pretty(value) : value;
+                    return `  • ${key}: ${formattedValue}`;
+                });
+                const line = [
+                    `🔎 ${title}`,
+                    ...lines
+                ].join("\n");
+                return line;
+            }
+            const string_summarize = summarize;
             var animitter = __webpack_require__("b6");
             var animitter_default = /*#__PURE__*/ __webpack_require__.n(animitter);
             var typedarray_to_buffer = __webpack_require__("E");
@@ -19005,34 +19030,6 @@
             canvas_to_buffer_modern_r.atob = void 0;
             var websocket_stream_stream = __webpack_require__("U");
             var stream_default = /*#__PURE__*/ __webpack_require__.n(websocket_stream_stream);
-            const DEFAULT_MAX_QUEUED_BYTES = 1048576;
-            class BoundedWriteQueue {
-                maxBytes;
-                writes = [];
-                queuedBytes = 0;
-                constructor(maxBytes = DEFAULT_MAX_QUEUED_BYTES){
-                    this.maxBytes = maxBytes;
-                }
-                enqueue(buffer, params) {
-                    if (this.queuedBytes + buffer.length > this.maxBytes) return false;
-                    this.writes.push({
-                        buffer,
-                        params
-                    });
-                    this.queuedBytes += buffer.length;
-                    return true;
-                }
-                dequeue() {
-                    const write = this.writes.shift();
-                    if (write) this.queuedBytes -= write.buffer.length;
-                    return write;
-                }
-                clear() {
-                    this.writes.length = 0;
-                    this.queuedBytes = 0;
-                }
-            }
-            const boundedWriteQueue = BoundedWriteQueue;
             function getEdgeCodes(value, amount, fromEnd) {
                 const chars = fromEnd ? value.slice(-amount) : value.slice(0, amount);
                 const codes = Array.from(chars, (char)=>String(char.codePointAt(0))).join(".");
@@ -19112,6 +19109,1355 @@
                 };
             }
             const error_getWebSocketDiagnostic = getWebSocketDiagnostic;
+            function isAutomatedUserAgent(userAgent = navigator.userAgent) {
+                return /bot|crawler|spider|headlesschrome|phantomjs|puppeteer|playwright/iu.test(userAgent);
+            }
+            const util_isAutomatedUserAgent = isAutomatedUserAgent;
+            const DEFAULT_MAX_QUEUED_BYTES = 1048576;
+            class BoundedWriteQueue {
+                maxBytes;
+                writes = [];
+                queuedBytes = 0;
+                constructor(maxBytes = DEFAULT_MAX_QUEUED_BYTES){
+                    this.maxBytes = maxBytes;
+                }
+                enqueue(buffer, params) {
+                    if (this.queuedBytes + buffer.length > this.maxBytes) return false;
+                    this.writes.push({
+                        buffer,
+                        params
+                    });
+                    this.queuedBytes += buffer.length;
+                    return true;
+                }
+                dequeue() {
+                    const write = this.writes.shift();
+                    if (write) this.queuedBytes -= write.buffer.length;
+                    return write;
+                }
+                clear() {
+                    this.writes.length = 0;
+                    this.queuedBytes = 0;
+                }
+            }
+            const boundedWriteQueue = BoundedWriteQueue;
+            const PIPE_SYMBOL = "°º¤ø,¸¸,ø¤º°`°º¤ø,¸,ø¤°º¤ø,¸¸,ø¤º°`°º¤ø,¸ ";
+            class RecorderStreamWriter extends util_Despot {
+                pendingWrites = new boundedWriteQueue();
+                samplesCount = 0;
+                framesCount = 0;
+                recordingStats;
+                confirmedFrameNumber = 0;
+                confirmedSampleNumber = 0;
+                backpressureTimeout;
+                recordingDimensions;
+                stream;
+                streamBackpressured = false;
+                resumeAfterDrain = false;
+                mediaTransmissionStarted = false;
+                recordingActive = false;
+                recordingTransportFailed = false;
+                connecting = false;
+                connected = false;
+                reconnecting = false;
+                constructor(options){
+                    super("Recorder", options);
+                }
+                hasExceededWebSocketSendBuffer(buffer, opts) {
+                    return buffer.length > 0 && !this.pendingWrites.enqueue(buffer, opts);
+                }
+                writeStream(buffer, opts) {
+                    if (this.stream) if (this.stream.destroyed) {
+                        this.stopPings();
+                        const err = error_createError({
+                            message: "Already disconnected",
+                            explanation: "Sorry, connection to the server has been destroyed. Please reload.",
+                            options: this.options
+                        });
+                        this.handleWriteFailure(err);
+                    } else if (this.streamBackpressured) {
+                        if (this.hasExceededWebSocketSendBuffer(buffer, opts)) this.failMediaTransmission(error_createError({
+                            message: "WebSocket send buffer limit exceeded",
+                            explanation: "The connection to the server is too slow to keep up with this recording. The recording has been stopped; please start a new one.",
+                            options: this.options
+                        }));
+                    } else this.writeToStream(this.stream, buffer, opts);
+                }
+                writeToStream(stream, buffer, opts) {
+                    const onFlushedCallback = opts?.onFlushedCallback;
+                    try {
+                        const canContinue = stream.write(buffer, ()=>{
+                            if (!onFlushedCallback) return;
+                            try {
+                                onFlushedCallback(opts);
+                            } catch (exc) {
+                                const err = error_createError({
+                                    message: "Failed to write stream buffer",
+                                    explanation: `stream.write() failed because of ${string_pretty(exc)}`,
+                                    options: this.options,
+                                    exc
+                                });
+                                this.emit("ERROR", {
+                                    err
+                                });
+                            }
+                        });
+                        if (!canContinue) {
+                            this.streamBackpressured = true;
+                            this.startBackpressureTimeout();
+                            this.pauseForBackpressure();
+                            return false;
+                        }
+                        return true;
+                    } catch (exc) {
+                        const err = error_createError({
+                            message: "Failed writing to server",
+                            explanation: `stream.write() failed because of ${string_pretty(exc)}`,
+                            options: this.options,
+                            exc
+                        });
+                        this.handleWriteFailure(err);
+                        return false;
+                    }
+                }
+                flushPendingWrites(stream) {
+                    if (this.isStaleStream(stream)) return;
+                    this.streamBackpressured = false;
+                    this.clearBackpressureTimeout();
+                    let pendingWrite = this.pendingWrites.dequeue();
+                    while(pendingWrite){
+                        if (!this.writeToStream(stream, pendingWrite.buffer, pendingWrite.params)) return;
+                        pendingWrite = this.pendingWrites.dequeue();
+                    }
+                    this.resumeRecordingAfterDrain();
+                }
+                isStaleStream(stream) {
+                    return this.stream !== stream || stream.destroyed;
+                }
+                canPauseForBackpressure() {
+                    return this.recordingActive && !this.isUserMediaPaused() && this.isCaptureLoopRunning();
+                }
+                pauseForBackpressure() {
+                    if (!this.canPauseForBackpressure()) return;
+                    this.resumeAfterDrain = true;
+                    this.stopCaptureLoop();
+                }
+                resumeRecordingAfterDrain() {
+                    if (!this.resumeAfterDrain) return;
+                    this.resumeAfterDrain = false;
+                    if (this.canResumeAfterDrain()) this.startCaptureLoop();
+                }
+                canResumeAfterDrain() {
+                    return this.recordingActive && !this.isUserMediaPaused();
+                }
+                handleWriteFailure(err) {
+                    if (this.mediaTransmissionStarted) return void this.failMediaTransmission(err);
+                    this.emit("ERROR", {
+                        err
+                    });
+                }
+                failMediaTransmission(err) {
+                    if (this.recordingTransportFailed) return;
+                    this.recordingTransportFailed = true;
+                    this.recordingActive = false;
+                    this.mediaTransmissionStarted = false;
+                    this.streamBackpressured = false;
+                    this.resumeAfterDrain = false;
+                    this.pendingWrites.clear();
+                    this.connected = false;
+                    this.connecting = false;
+                    this.reconnecting = false;
+                    this.clearReconnectTimeout();
+                    this.clearBackpressureTimeout();
+                    this.discardSocket();
+                    this.reset();
+                    this.framesCount = this.samplesCount = 0;
+                    this.confirmedFrameNumber = this.confirmedSampleNumber = 0;
+                    delete this.recordingStats;
+                    this.recordingDimensions = void 0;
+                    this.emit("ERROR", {
+                        err
+                    });
+                }
+                startBackpressureTimeout() {
+                    if (!this.shouldStartBackpressureTimeout()) return;
+                    this.backpressureTimeout = window.setTimeout(()=>{
+                        this.backpressureTimeout = void 0;
+                        if (this.shouldIgnoreBackpressureTimeout()) return;
+                        const err = error_createError({
+                            message: "WebSocket write timed out",
+                            explanation: "The server stopped accepting recording data. The recording has been stopped; please check your connection and start a new one.",
+                            options: this.options
+                        });
+                        this.failMediaTransmission(err);
+                    }, this.options.timeouts.connection);
+                }
+                shouldStartBackpressureTimeout() {
+                    return void 0 === this.backpressureTimeout && this.mediaTransmissionStarted;
+                }
+                shouldIgnoreBackpressureTimeout() {
+                    return !this.streamBackpressured || this.recordingTransportFailed;
+                }
+                failInterruptedRecording() {
+                    const unconfirmedFrames = Math.max(0, this.framesCount - this.confirmedFrameNumber);
+                    const unconfirmedSamples = Math.max(0, this.samplesCount - this.confirmedSampleNumber);
+                    const err = error_createError({
+                        message: "Recording interrupted",
+                        explanation: "The server connection closed before this recording completed. It cannot be safely resumed, so it has been stopped. Please start a new recording.",
+                        options: this.options,
+                        cause: {
+                            unconfirmedFrames,
+                            unconfirmedSamples
+                        }
+                    });
+                    this.failMediaTransmission(err);
+                }
+                handleStreamDrain(stream) {
+                    this.options.logger.debug(`${PIPE_SYMBOL}Stream *drain* event emitted`);
+                    this.flushPendingWrites(stream);
+                }
+                clearBackpressureTimeout() {
+                    if (void 0 === this.backpressureTimeout) return;
+                    window.clearTimeout(this.backpressureTimeout);
+                    this.backpressureTimeout = void 0;
+                }
+                discardSocket() {
+                    this.options.logger.debug("Recorder: discarding socket stream ...");
+                    this.clearBackpressureTimeout();
+                    this.pendingWrites.clear();
+                    this.streamBackpressured = false;
+                    this.resumeAfterDrain = false;
+                    const stream = this.stream;
+                    this.stream = void 0;
+                    if (stream && !stream.destroyed) stream.destroy();
+                }
+            }
+            const streamWriter = RecorderStreamWriter;
+            var Buffer = __webpack_require__("dY").Buffer;
+            class RecorderConnection extends streamWriter {
+                reconnectTimeout;
+                connectionTimeout;
+                userMediaLoaded;
+                userMediaLoading = false;
+                unloaded;
+                connectionFailed = false;
+                reconnectAttempts = 0;
+                blocking = false;
+                connectingStartedAt;
+                lastCloseEvent;
+                lastSocketError;
+                pingInterval;
+                constructor(options){
+                    super(options);
+                }
+                canReconnectAfterStreamClose() {
+                    return Boolean(this.connected && this.userMediaLoaded);
+                }
+                shouldReportStreamClose() {
+                    return !this.connecting && !this.blocking;
+                }
+                handleStreamClose(url2Connect) {
+                    const debugLine = string_summarize(`${PIPE_SYMBOL}Stream has closed:`, {
+                        connecting: this.connecting,
+                        connected: this.connected,
+                        userMediaLoaded: this.userMediaLoaded,
+                        blocking: this.blocking
+                    });
+                    this.options.logger.debug(debugLine);
+                    const canReconnect = this.canReconnectAfterStreamClose();
+                    this.connected = false;
+                    this.stopPings();
+                    if (this.shouldIgnoreStreamClose()) return;
+                    if (this.mediaTransmissionStarted) this.failInterruptedRecording();
+                    else if (canReconnect) {
+                        this.pendingWrites.clear();
+                        this.streamBackpressured = false;
+                        this.resumeAfterDrain = false;
+                        this.reconnecting = true;
+                        this.initSocket();
+                    } else if (this.shouldReportStreamClose()) window.setTimeout(()=>{
+                        this.handleConnectionFailure({
+                            url2Connect,
+                            cause: "closed"
+                        });
+                    }, 0);
+                }
+                shouldIgnoreStreamClose() {
+                    return this.recordingTransportFailed || Boolean(this.unloaded) || this.validate();
+                }
+                handleStreamError(url2Connect, err) {
+                    if ("u" > typeof Event && err instanceof Event) this.lastSocketError = error_getEventDetails(err);
+                    else this.lastSocketError = serializeError(err);
+                    const debugLine = string_summarize(`${PIPE_SYMBOL}Stream *error* event emitted:`, {
+                        error: serializeError(err)
+                    });
+                    this.options.logger.debug(debugLine);
+                    if (this.validate()) {
+                        this.connected = false;
+                        this.stopPings();
+                        this.discardSocket();
+                        return;
+                    }
+                    if (!this.connected) return void this.handleConnectionFailure({
+                        url2Connect,
+                        cause: "error"
+                    });
+                    const streamError = err instanceof Error ? err : new Error("WebSocket stream emitted an error event", {
+                        cause: this.lastSocketError ?? err
+                    });
+                    if (this.mediaTransmissionStarted) return void this.failInterruptedRecording();
+                    this.emit("ERROR", {
+                        err: error_createError({
+                            message: "WebSocket stream error",
+                            explanation: `The WebSocket stream emitted an error event. Details: ${string_pretty(err)}`,
+                            options: this.options,
+                            exc: streamError
+                        })
+                    });
+                }
+                sendPings() {
+                    this.stopPings();
+                    this.pingInterval = window.setInterval(()=>{
+                        this.options.logger.debug("Recorder: pinging...");
+                        this.writeStream(Buffer.from(""));
+                    }, this.options.timeouts.pingInterval);
+                }
+                stopPings() {
+                    if (void 0 === this.pingInterval) return;
+                    this.options.logger.debug("Recorder: stopping pings...");
+                    window.clearInterval(this.pingInterval);
+                    this.pingInterval = void 0;
+                }
+                clearConnectionTimeout() {
+                    if (void 0 === this.connectionTimeout) return;
+                    this.options.logger.debug("Recorder: clearConnectionTimeout()");
+                    window.clearTimeout(this.connectionTimeout);
+                    this.connectionTimeout = void 0;
+                }
+                clearReconnectTimeout() {
+                    if (void 0 === this.reconnectTimeout) return;
+                    this.options.logger.debug("Recorder: clearReconnectTimeout()");
+                    window.clearTimeout(this.reconnectTimeout);
+                    this.reconnectTimeout = void 0;
+                }
+                handleConnectionFailure(params) {
+                    if (this.retryConnection(params)) return;
+                    this.failConnection(params);
+                }
+                retryConnection(params) {
+                    if (!this.canRetryConnection()) return false;
+                    if (void 0 !== this.reconnectTimeout) return true;
+                    const delayMs = Math.min(1000 * 2 ** this.reconnectAttempts, 10000);
+                    this.reconnectAttempts++;
+                    this.connecting = false;
+                    this.clearConnectionTimeout();
+                    this.discardSocket();
+                    this.options.logger.debug(`Recorder: retrying WebSocket connection in ${delayMs}ms (cause ${params.cause}).`);
+                    this.reconnectTimeout = window.setTimeout(()=>{
+                        this.reconnectTimeout = void 0;
+                        if (this.shouldContinueReconnect()) this.initSocket();
+                    }, delayMs);
+                    return true;
+                }
+                canRetryConnection() {
+                    return Boolean(this.reconnecting && this.userMediaLoaded && this.isOnline() && !this.unloaded && !this.blocking);
+                }
+                shouldContinueReconnect() {
+                    return this.reconnecting && !this.unloaded && !this.blocking;
+                }
+                isOnline() {
+                    return navigator.onLine;
+                }
+                failConnection(params) {
+                    if (this.shouldIgnoreConnectionFailure()) return;
+                    this.connectionFailed = true;
+                    this.connecting = false;
+                    this.reconnecting = false;
+                    this.reconnectAttempts = 0;
+                    this.clearReconnectTimeout();
+                    this.clearConnectionTimeout();
+                    const { url2Connect, cause } = params;
+                    const online = this.isOnline();
+                    const elapsedMs = this.connectingStartedAt ? Date.now() - this.connectingStartedAt : void 0;
+                    const closeEvent = this.lastCloseEvent;
+                    const socketError = this.lastSocketError;
+                    const contents = {
+                        cause,
+                        closeCode: closeEvent?.code,
+                        closeReason: closeEvent?.reason,
+                        elapsedMs,
+                        online,
+                        secureContext: globalThis.isSecureContext,
+                        socketReadyState: this.stream?.socket.readyState,
+                        timeoutMs: this.options.timeouts.connection,
+                        url: url2Connect,
+                        unloaded: this.unloaded,
+                        userMediaLoaded: this.userMediaLoaded,
+                        userMediaLoading: this.userMediaLoading,
+                        wasClean: closeEvent?.wasClean,
+                        socketError,
+                        blocking: this.blocking,
+                        visibilityState: document.visibilityState
+                    };
+                    const debugLine = string_summarize("Recorder: failConnection() diagnostic", contents);
+                    this.options.logger.debug(debugLine);
+                    let explanation;
+                    if (online) if ("timeout" === cause) explanation = `The server at ${url2Connect} did not respond within ${this.options.timeouts.connection}ms, even though your device is online. This usually points to a firewall or proxy silently dropping the connection. Please try a different network. If the problem persists, contact us.`;
+                    else if ("error" === cause) explanation = `An error occurred while connecting to ${url2Connect}. Please check your internet connection and try again. If the problem persists, contact us.`;
+                    else {
+                        const closeSuffix = closeEvent ? ` (code ${closeEvent.code})` : "";
+                        explanation = `Connection to ${url2Connect} is closed${closeSuffix}. Please check your internet connection and try again. If the problem persists, contact us.`;
+                    }
+                    else explanation = "Your device appears to be offline. Please check your internet connection and try again.";
+                    this.discardSocket();
+                    const err = error_createError({
+                        message: "Unable to connect to the server",
+                        explanation,
+                        options: this.options,
+                        cause: contents,
+                        exc: socketError ? new Error("WebSocket connection error", {
+                            cause: socketError
+                        }) : void 0
+                    });
+                    this.emit("ERROR", {
+                        err
+                    });
+                }
+                shouldIgnoreConnectionFailure() {
+                    return this.connectionFailed || this.connected || Boolean(this.unloaded) || this.validate();
+                }
+                initSocket(cb) {
+                    if (this.connected) {
+                        this.options.logger.debug("Recorder: already **connected**. Not going to initialize a new WebSocket connection.");
+                        cb?.();
+                        return;
+                    }
+                    if (this.connecting) return void this.options.logger.debug("Recorder: already **connecting**. Not going to initialize a new WebSocket connection.");
+                    this.clearReconnectTimeout();
+                    if (util_isAutomatedUserAgent()) {
+                        this.connecting = false;
+                        this.options.logger.debug("Recorder: skipping web socket connection for an automated crawler");
+                        return;
+                    }
+                    this.connecting = true;
+                    this.connectionFailed = false;
+                    this.connectingStartedAt = Date.now();
+                    this.lastCloseEvent = void 0;
+                    this.lastSocketError = void 0;
+                    this.emit("CONNECTING");
+                    let url2Connect;
+                    try {
+                        const socketUrlObj = new URL(this.options.socketUrl);
+                        socketUrlObj.searchParams.set(constants.WHITELIST_KEY_LABEL, this.options.whitelistKey);
+                        url2Connect = socketUrlObj.toString();
+                    } catch (exc) {
+                        this.connecting = this.connected = false;
+                        const err = error_createError({
+                            message: "Invalid WebSocket URL",
+                            explanation: `The configured socketUrl "${this.options.socketUrl}" is not a valid URL. Please check your videomail-client configuration.`,
+                            options: this.options,
+                            exc
+                        });
+                        this.emit("ERROR", {
+                            err
+                        });
+                        return;
+                    }
+                    this.options.logger.debug(`Recorder: initializing web socket stream to ${url2Connect}`);
+                    let nativeSocket;
+                    try {
+                        nativeSocket = new WebSocket(url2Connect);
+                        nativeSocket.addEventListener("close", (event)=>{
+                            this.lastCloseEvent = {
+                                code: event.code,
+                                reason: event.reason,
+                                wasClean: event.wasClean
+                            };
+                        });
+                        nativeSocket.addEventListener("error", (event)=>{
+                            this.lastSocketError = error_getEventDetails(event);
+                        });
+                    } catch (exc) {
+                        this.connecting = this.connected = false;
+                        const diagnostic = error_getWebSocketDiagnostic(url2Connect);
+                        const message = diagnostic.looksAutomated ? "Automated crawler: WebSocket not supported in this environment" : `Failed to construct WebSocket to ${url2Connect}`;
+                        const explanation = diagnostic.looksAutomated ? "Headless crawlers cannot use Videomail's WebSocket. No action needed." : `Please check your connection and try again. If the problem persists, contact us. Diagnostic: ${diagnostic.text}`;
+                        const err = error_createError({
+                            message,
+                            explanation,
+                            options: this.options,
+                            exc
+                        });
+                        this.emit("ERROR", {
+                            err
+                        });
+                        return;
+                    }
+                    try {
+                        this.stream = stream_default()(nativeSocket);
+                    } catch (exc) {
+                        this.connecting = this.connected = false;
+                        const err = error_createError({
+                            message: `Failed to create a stream to ${url2Connect}`,
+                            explanation: "Please check your connection and try again. If the problem persists, contact us.",
+                            options: this.options,
+                            exc
+                        });
+                        this.emit("ERROR", {
+                            err
+                        });
+                    }
+                    const stream = this.stream;
+                    if (stream) {
+                        const connectionTimeoutMs = this.options.timeouts.connection;
+                        this.connectionTimeout = window.setTimeout(()=>{
+                            if (this.isOnline() && this.isUserMediaLoaded()) {
+                                this.options.logger.debug(`${PIPE_SYMBOL}Reconnecting due to connection timeout.`);
+                                this.reconnecting = true;
+                                this.handleConnectionFailure({
+                                    url2Connect,
+                                    cause: "timeout"
+                                });
+                            } else this.handleConnectionFailure({
+                                url2Connect,
+                                cause: "timeout"
+                            });
+                        }, connectionTimeoutMs);
+                        stream.on("close", ()=>{
+                            this.handleStreamClose(url2Connect);
+                        });
+                        stream.on("connect", (args)=>{
+                            this.options.logger.debug(`${PIPE_SYMBOL}Stream *connect* event emitted with args: ${string_pretty(args)}`);
+                            this.clearConnectionTimeout();
+                            const isClosing = this.stream?.socket.readyState === WebSocket.CLOSING;
+                            if (!this.connected && !isClosing && !this.unloaded) {
+                                this.connected = true;
+                                this.connecting = this.unloaded = false;
+                                this.reconnecting = false;
+                                this.reconnectAttempts = 0;
+                                this.clearReconnectTimeout();
+                                this.emit("CONNECTED");
+                                cb?.();
+                            }
+                        });
+                        stream.on("data", (data)=>{
+                            this.options.logger.debug(`${PIPE_SYMBOL}Stream *data* event emitted`);
+                            try {
+                                const command = JSON.parse(data.toString());
+                                this.executeCommand(command);
+                            } catch (exc) {
+                                this.options.logger.error(`Failed to parse command: ${exc}`);
+                                const err = error_createError({
+                                    message: "Invalid server command",
+                                    explanation: `Contact us. The invalid command was: ${data.toString()}.`,
+                                    options: this.options,
+                                    exc
+                                });
+                                this.emit("ERROR", {
+                                    err
+                                });
+                            }
+                        });
+                        stream.on("error", (err)=>{
+                            this.handleStreamError(url2Connect, err);
+                        });
+                        stream.on("drain", ()=>{
+                            this.handleStreamDrain(stream);
+                        });
+                        stream.on("preend", (args)=>{
+                            this.options.logger.debug(`${PIPE_SYMBOL}Stream *preend* event emitted with args: ${string_pretty(args)}`);
+                        });
+                        stream.on("end", ()=>{
+                            this.options.logger.debug(`${PIPE_SYMBOL}Stream *end* event emitted`);
+                        });
+                        stream.on("pipe", (src)=>{
+                            this.options.logger.debug(`${PIPE_SYMBOL}Stream *pipe* event emitted with src: ${string_pretty(src)}`);
+                        });
+                        stream.on("unpipe", (src)=>{
+                            this.options.logger.debug(`${PIPE_SYMBOL}Stream *unpipe* event emitted with src: ${string_pretty(src)}`);
+                        });
+                        stream.on("resume", (args)=>{
+                            this.options.logger.debug(`${PIPE_SYMBOL}Stream *resume* event emitted with args: ${string_pretty(args)}`);
+                        });
+                        stream.on("uncork", (args)=>{
+                            this.options.logger.debug(`${PIPE_SYMBOL}Stream *uncork* event emitted with args: ${string_pretty(args)}`);
+                        });
+                        stream.on("readable", (args)=>{
+                            this.options.logger.debug(`${PIPE_SYMBOL}Stream *readable* event emitted with args: ${string_pretty(args)}`);
+                        });
+                        stream.on("prefinish", (args)=>{
+                            this.options.logger.debug(`${PIPE_SYMBOL}Stream *prefinish* event emitted with args: ${string_pretty(args)}`);
+                        });
+                        stream.on("finish", (args)=>{
+                            this.options.logger.debug(`${PIPE_SYMBOL}Stream *finish* event emitted with args: ${string_pretty(args)}`);
+                        });
+                    }
+                }
+                writeCommand(command, args, cb) {
+                    if (this.connected) {
+                        if (this.stream) {
+                            if (args) this.options.logger.debug(`$ ${command} with ${string_pretty(args)}`);
+                            else this.options.logger.debug(`$ ${command}`);
+                            const commandObj = {
+                                command,
+                                args
+                            };
+                            this.writeStream(Buffer.from(JSON.stringify(commandObj)), cb ? {
+                                onFlushedCallback: ()=>{
+                                    queueMicrotask(cb);
+                                }
+                            } : void 0);
+                        }
+                    } else {
+                        this.options.logger.debug(`Reconnecting for the command ${command} …`);
+                        this.initSocket(()=>{
+                            this.writeCommand(command, args, cb);
+                        });
+                    }
+                }
+            }
+            const connection = RecorderConnection;
+            function createUserMediaConstraints({ options, facingMode, limitedWidth, userMediaParams }) {
+                const video = {
+                    frameRate: {
+                        ideal: options.video.fps
+                    }
+                };
+                if (userMediaParams?.switchingFacingMode || userMediaParams?.recovering) video.facingMode = userMediaParams.switchingFacingMode || facingMode;
+                if (options.video.width) video.width = {
+                    ideal: options.video.width
+                };
+                else if (limitedWidth?.value) video.width = {
+                    ideal: limitedWidth.value
+                };
+                if (options.video.height) video.height = {
+                    ideal: options.video.height
+                };
+                return {
+                    audio: isAudioEnabled(options),
+                    video
+                };
+            }
+            const mediaConstraints = createUserMediaConstraints;
+            class RecorderMedia extends connection {
+                visuals;
+                recorderElement;
+                userMedia;
+                userMediaTimeout;
+                retryTimeout;
+                stopTimeout;
+                mediaRequestId = 0;
+                cameraRecovery;
+                resolveCameraRecovery;
+                resumeAfterCameraRecovery = false;
+                submitting = false;
+                built = false;
+                key;
+                facingMode;
+                constructor(visuals, options){
+                    super(options);
+                    this.visuals = visuals;
+                    this.facingMode = options.video.facingMode;
+                }
+                show() {
+                    html_showElement(this.recorderElement);
+                }
+                clearRetryTimeout() {
+                    if (void 0 === this.retryTimeout) return;
+                    this.options.logger.debug("Recorder: clearRetryTimeout()");
+                    window.clearTimeout(this.retryTimeout);
+                    this.retryTimeout = void 0;
+                }
+                showUserMedia() {
+                    if (!this.connected) return false;
+                    const hidden = this.isHidden();
+                    if (!hidden) return true;
+                    const notifying = this.isNotifying();
+                    if (notifying) return true;
+                    return this.blocking;
+                }
+                userMediaErrorCallback(err, usedConstraints) {
+                    if (this.cameraRecovery) return void this.failCameraRecovery(err);
+                    if (this.unloaded) return void this.options.logger.debug(`Recorder: already unloaded. Not going to throw error ${string_pretty(err)}`);
+                    this.userMediaLoading = false;
+                    this.clearUserMediaTimeout();
+                    const characteristics = this.userMedia?.getCharacteristics();
+                    this.options.logger.debug(`Recorder: userMediaErrorCallback(), name: ${err.name}, message: ${err.message} and Webcam characteristics: ${characteristics ? string_pretty(characteristics) : "none"}`);
+                    const errorListeners = this.getListeners("ERROR");
+                    if (errorListeners?.length) if (err.name !== error_VideomailError.MEDIA_DEVICE_NOT_SUPPORTED) {
+                        const videomailError = error_createError({
+                            err,
+                            options: this.options,
+                            usedConstraints
+                        });
+                        this.emit("ERROR", {
+                            err: videomailError
+                        });
+                    } else {
+                        this.options.logger.debug(`Recorder: ignore user media error ${string_pretty(err)}`);
+                        this.retryTimeout = window.setTimeout(()=>{
+                            this.retryTimeout = void 0;
+                            if (!this.unloaded) this.loadUserMedia();
+                        }, this.options.timeouts.userMedia);
+                    }
+                    else {
+                        this.options.logger.debug(`Recorder: no error listeners attached but throwing error ${string_pretty(err)}`);
+                        throw error_createError({
+                            err,
+                            message: "Unable to process this error since there are no error listeners anymore.",
+                            options: this.options
+                        });
+                    }
+                }
+                getUserMediaCallback(localStream, params, requestId = this.mediaRequestId) {
+                    if (!this.userMedia) {
+                        localStream.getTracks().forEach((track)=>{
+                            track.stop();
+                        });
+                        throw error_createError({
+                            message: "No user media is defined",
+                            options: this.options
+                        });
+                    }
+                    this.options.logger.debug(`Recorder: getUserMediaCallback(${params ? string_pretty(params) : ""})`);
+                    if (this.showUserMedia()) try {
+                        this.userMedia.init(localStream, ()=>{
+                            if (!this.unloaded && requestId === this.mediaRequestId) this.onUserMediaReady(params);
+                        }, this.onAudioSample.bind(this), (err)=>{
+                            if (!this.unloaded && requestId === this.mediaRequestId) this.userMediaErrorCallback(err, {
+                                audio: isAudioEnabled(this.options)
+                            });
+                        }, params);
+                    } catch (exc) {
+                        localStream.getTracks().forEach((track)=>{
+                            track.stop();
+                        });
+                        this.userMediaLoading = false;
+                        this.clearUserMediaTimeout();
+                        this.userMediaErrorCallback(exc, {
+                            audio: isAudioEnabled(this.options)
+                        });
+                    }
+                    else {
+                        localStream.getTracks().forEach((track)=>{
+                            track.stop();
+                        });
+                        this.userMediaLoading = false;
+                        this.clearUserMediaTimeout();
+                        this.cancelCameraRecovery();
+                    }
+                }
+                loadGenuineUserMedia(params) {
+                    this.options.logger.debug(`Recorder: loadGenuineUserMedia(${params ? string_pretty(params) : ""})`);
+                    this.emit("ASKING_WEBCAM_PERMISSION");
+                    this.userMediaLoading = true;
+                    const requestId = ++this.mediaRequestId;
+                    const limitedWidth = this.options.video.width ? void 0 : this.visuals.limitWidth();
+                    const constraints = mediaConstraints({
+                        facingMode: this.facingMode,
+                        limitedWidth,
+                        options: this.options,
+                        userMediaParams: params
+                    });
+                    this.options.logger.debug(string_summarize("Recorder: our webcam constraints are:", constraints));
+                    this.options.logger.debug(string_summarize("Recorder: available webcam constraints are:", navigator.mediaDevices.getSupportedConstraints()));
+                    const streamPromise = navigator.mediaDevices.getUserMedia(constraints);
+                    streamPromise.then((localStream)=>{
+                        if (this.unloaded || requestId !== this.mediaRequestId) return void localStream.getTracks().forEach((track)=>{
+                            track.stop();
+                        });
+                        this.getUserMediaCallback(localStream, params, requestId);
+                    }).catch((reason)=>{
+                        if (!this.unloaded && requestId === this.mediaRequestId) this.userMediaErrorCallback(reason, constraints);
+                    });
+                }
+                loadUserMedia(params) {
+                    if (this.userMediaLoaded) {
+                        this.options.logger.debug("Recorder: skipping loadUserMedia() because it is already loaded");
+                        this.onUserMediaReady(params);
+                        return;
+                    } else if (this.userMediaLoading) return void this.options.logger.debug("Recorder: skipping loadUserMedia() because it is already asking for permission");
+                    this.options.logger.debug(`Recorder: loadUserMedia(${params ? string_pretty(params) : ""})`);
+                    this.emit("LOADING_USER_MEDIA");
+                    try {
+                        if (!navigator.mediaDevices) throw new Error("No media devices are available.");
+                        this.userMediaTimeout = window.setTimeout(()=>{
+                            if (!this.userMediaLoaded) {
+                                this.userMediaLoading = false;
+                                const err = util_getBrowser(this.options).getNoAccessIssue();
+                                this.userMediaErrorCallback(err, {
+                                    audio: isAudioEnabled(this.options)
+                                });
+                            }
+                        }, this.options.timeouts.userMedia);
+                        this.userMediaLoading = true;
+                        this.loadGenuineUserMedia(params);
+                    } catch (exc) {
+                        this.clearUserMediaTimeout();
+                        this.options.logger.debug("Recorder: failed to load genuine user media");
+                        this.userMediaLoading = false;
+                        if (this.cameraRecovery) return void this.failCameraRecovery(exc);
+                        const errorListeners = this.getListeners("ERROR");
+                        if (errorListeners?.length) this.emit("ERROR", {
+                            exc
+                        });
+                        else {
+                            this.options.logger.debug("Recorder: no error listeners attached but throwing exception further");
+                            throw exc;
+                        }
+                    }
+                }
+                isNotifying() {
+                    return this.visuals.isNotifying();
+                }
+                isHidden() {
+                    return !this.recorderElement || html_isHidden(this.recorderElement);
+                }
+                clearUserMediaTimeout() {
+                    if (void 0 !== this.userMediaTimeout) {
+                        this.options.logger.debug("Recorder: clearUserMediaTimeout()");
+                        window.clearTimeout(this.userMediaTimeout);
+                        this.userMediaTimeout = void 0;
+                    }
+                }
+                clearStopTimeout() {
+                    if (void 0 === this.stopTimeout) return;
+                    window.clearTimeout(this.stopTimeout);
+                    this.stopTimeout = void 0;
+                }
+                isReady() {
+                    return this.userMedia?.isReady();
+                }
+                finishCameraRecovery(restored) {
+                    this.clearUserMediaTimeout();
+                    const resolve = this.resolveCameraRecovery;
+                    const resumeRequested = restored && this.resumeAfterCameraRecovery;
+                    this.cameraRecovery = void 0;
+                    this.resolveCameraRecovery = void 0;
+                    this.resumeAfterCameraRecovery = false;
+                    resolve?.(restored);
+                    if (resumeRequested && this.isPaused()) this.resume();
+                }
+                cancelCameraRecovery() {
+                    if (!this.cameraRecovery) return;
+                    this.mediaRequestId++;
+                    this.userMediaLoading = false;
+                    this.userMediaLoaded = false;
+                    this.clearUserMediaTimeout();
+                    this.userMedia?.stop(void 0, {
+                        preserveRecordingState: true
+                    });
+                    this.finishCameraRecovery(false);
+                }
+                failCameraRecovery(exc) {
+                    this.cancelCameraRecovery();
+                    const err = error_createError({
+                        message: "Camera recovery failed",
+                        explanation: "Your recording is still paused. Check camera permissions, then try Resume again or stop to keep the recorded part.",
+                        exc,
+                        options: this.options
+                    });
+                    this.emit("CAMERA_RECOVERY_FAILED", {
+                        err
+                    });
+                }
+                recoverCamera() {
+                    if (this.cameraRecovery) return this.cameraRecovery;
+                    if (!this.built || this.unloaded || !this.userMedia || this.userMediaLoading || this.submitting || this.key || void 0 !== this.stopTimeout || this.recordingTransportFailed) return Promise.resolve(false);
+                    const liveStream = this.userMedia.hasLiveStream();
+                    if (liveStream && this.isRecording()) return Promise.resolve(true);
+                    if (!liveStream && this.recordingActive && !this.isPaused()) this.pause();
+                    const recovery = new Promise((resolve)=>{
+                        this.resolveCameraRecovery = resolve;
+                    });
+                    this.cameraRecovery = recovery;
+                    this.emit("CAMERA_RECOVERING");
+                    if (liveStream) {
+                        this.userMediaTimeout = window.setTimeout(()=>{
+                            this.failCameraRecovery(new Error("Camera playback recovery timed out."));
+                        }, this.options.timeouts.userMedia);
+                        this.userMedia.restorePlayback().then(()=>{
+                            if (this.cameraRecovery === recovery) this.finishCameraRecovery(true);
+                        }).catch((exc)=>{
+                            if (this.cameraRecovery === recovery) this.failCameraRecovery(exc);
+                        });
+                    } else {
+                        this.userMediaLoaded = false;
+                        this.loadUserMedia({
+                            recovering: true
+                        });
+                    }
+                    return recovery;
+                }
+                switchFacingMode() {
+                    if (this.cameraRecovery || !util_getBrowser(this.options).isMobile()) return;
+                    if ("user" === this.facingMode) this.facingMode = "environment";
+                    else if ("environment" === this.facingMode) this.facingMode = "user";
+                    else this.options.logger.warn(`Recorder: unsupported facing mode ${string_pretty(this.facingMode)}`);
+                    this.loadGenuineUserMedia({
+                        switchingFacingMode: this.facingMode
+                    });
+                }
+                hide() {
+                    if (!this.isHidden()) {
+                        if (this.recorderElement) html_hideElement(this.recorderElement);
+                        this.clearUserMediaTimeout();
+                        this.clearRetryTimeout();
+                    }
+                }
+                isUnloaded() {
+                    return this.unloaded;
+                }
+                isUserMediaLoaded() {
+                    return this.userMediaLoaded;
+                }
+            }
+            const media = RecorderMedia;
+            function calculateProgress(confirmedCount, totalCount) {
+                return `${(confirmedCount / (totalCount || 1) * 100).toFixed(2)}%`;
+            }
+            function getConfirmedProgressNumber({ args, kind, options }) {
+                const label = "frame" === kind ? "frame" : "audio sample";
+                if (!args) throw error_createError({
+                    message: `Arguments are missing for updating the ${label} progress`,
+                    options
+                });
+                const confirmedNumber = args[kind];
+                if (!confirmedNumber) throw error_createError({
+                    message: `The ${label} number is missing`,
+                    options
+                });
+                return confirmedNumber;
+            }
+            var capture_Buffer = __webpack_require__("dY").Buffer;
+            class RecorderCapture extends media {
+                replay;
+                loop;
+                originalAnimationFrameObject;
+                recordingAudioSampleRate;
+                frameProgress;
+                sampleProgress;
+                canvas;
+                ctx;
+                stopTime;
+                waitingTime;
+                frame;
+                recordingBuffer;
+                constructor(visuals, replay, options){
+                    super(visuals, options);
+                    this.replay = replay;
+                }
+                onAudioSample(audioSample) {
+                    if (this.recordingTransportFailed || this.cameraRecovery) return;
+                    const sampleRate = this.userMedia?.getAudioSampleRate();
+                    if (sampleRate && sampleRate > 0) this.recordingAudioSampleRate ??= sampleRate;
+                    this.samplesCount++;
+                    this.mediaTransmissionStarted = true;
+                    const audioBuffer = audioSample.toBuffer();
+                    this.writeStream(audioBuffer);
+                }
+                onUserMediaReady(params) {
+                    try {
+                        this.options.logger.debug(`Recorder: onUserMediaReady(${params ? string_pretty(params) : ""})`);
+                        const switchingFacingMode = params?.switchingFacingMode;
+                        if (params?.recovering) {
+                            if (!this.userMedia?.hasLiveStream()) return void this.failCameraRecovery(new Error("The restored camera has no live tracks."));
+                            if (void 0 !== this.recordingAudioSampleRate && this.userMedia.getAudioSampleRate() !== this.recordingAudioSampleRate) return void this.failCameraRecovery(new Error("The audio sample rate changed during recovery."));
+                        }
+                        this.userMediaLoading = this.blocking = this.unloaded = this.submitting = false;
+                        this.userMediaLoaded = true;
+                        this.clearUserMediaTimeout();
+                        if (!switchingFacingMode && !params?.recovering) this.loop = this.createLoop();
+                        this.show();
+                        if (params?.recordWhenReady) this.record();
+                        this.emit("USER_MEDIA_READY", {
+                            switchingFacingMode: params?.switchingFacingMode,
+                            recovering: params?.recovering,
+                            paused: this.isPaused(),
+                            recordWhenReady: params?.recordWhenReady
+                        });
+                        if (params?.recovering) this.finishCameraRecovery(true);
+                    } catch (exc) {
+                        if (params?.recovering) this.failCameraRecovery(exc);
+                        else this.emit("ERROR", {
+                            exc
+                        });
+                    }
+                }
+                calculateFrameProgress() {
+                    return calculateProgress(this.confirmedFrameNumber, this.framesCount);
+                }
+                calculateSampleProgress() {
+                    return calculateProgress(this.confirmedSampleNumber, this.samplesCount);
+                }
+                updateOverallProgress() {
+                    this.frameProgress = this.calculateFrameProgress();
+                    if (isAudioEnabled(this.options)) this.sampleProgress = this.calculateSampleProgress();
+                    this.emit("PROGRESS", {
+                        frameProgress: this.frameProgress,
+                        sampleProgress: this.sampleProgress
+                    });
+                }
+                updateFrameProgress(args) {
+                    this.confirmedFrameNumber = getConfirmedProgressNumber({
+                        args,
+                        kind: "frame",
+                        options: this.options
+                    });
+                    this.frameProgress = this.calculateFrameProgress();
+                    this.updateOverallProgress();
+                }
+                updateSampleProgress(args) {
+                    this.confirmedSampleNumber = getConfirmedProgressNumber({
+                        args,
+                        kind: "sample",
+                        options: this.options
+                    });
+                    this.sampleProgress = this.calculateSampleProgress();
+                    this.updateOverallProgress();
+                }
+                preview(args) {
+                    if (!args) throw error_createError({
+                        message: "Preview arguments are missing.",
+                        options: this.options
+                    });
+                    const hasAudio = this.samplesCount > 0;
+                    this.mediaTransmissionStarted = false;
+                    this.recordingActive = false;
+                    this.recordingTransportFailed = false;
+                    this.confirmedFrameNumber = this.confirmedSampleNumber = this.samplesCount = this.framesCount = 0;
+                    this.sampleProgress = this.frameProgress = void 0;
+                    this.key = args.key;
+                    if (args.mp4) this.replay.setMp4Source(`${args.mp4 + constants.WHITELIST_KEY_LABEL}/${this.options.whitelistKey}/videomail.mp4`, true);
+                    if (args.webm) this.replay.setWebMSource(`${args.webm + constants.WHITELIST_KEY_LABEL}/${this.options.whitelistKey}/videomail.webm`, true);
+                    this.hide();
+                    const widthDimension = this.getRecorderWidth(true);
+                    const heightDimension = this.getRecorderHeight(true);
+                    const duration = args.duration ?? -1;
+                    this.emit("PREVIEW", {
+                        key: this.key,
+                        width: widthDimension?.value,
+                        height: heightDimension?.value,
+                        hasAudio,
+                        duration
+                    });
+                    if (this.stopTime) this.waitingTime = Date.now() - this.stopTime;
+                    this.recordingStats ??= {};
+                    this.recordingStats.waitingTime = this.waitingTime;
+                }
+                cancelAnimationFrame() {
+                    this.loop?.dispose();
+                }
+                getIntervalSum() {
+                    if (!this.loop) return;
+                    return this.loop.getElapsedTime();
+                }
+                getAvgInterval() {
+                    const intervalSum = this.getIntervalSum() ?? 0;
+                    if (!this.hasValidInterval(intervalSum)) return;
+                    return intervalSum / this.framesCount;
+                }
+                getAvgFps() {
+                    const intervalSum = this.getIntervalSum() ?? 0;
+                    if (!this.hasValidInterval(intervalSum)) return;
+                    return this.framesCount / intervalSum * 1000;
+                }
+                hasValidInterval(intervalSum) {
+                    return intervalSum > 0;
+                }
+                getRecordingStats() {
+                    return this.recordingStats;
+                }
+                getAudioSampleRate() {
+                    return this.recordingAudioSampleRate ?? this.userMedia?.getAudioSampleRate();
+                }
+                stop(params) {
+                    this.cancelCameraRecovery();
+                    if (!this.userMedia) throw new Error("No user media defined, unable to stop");
+                    this.options.logger.debug(`Recorder: stop(${params ? string_pretty(params) : ""})`);
+                    this.recordingActive = false;
+                    const limitReached = params?.limitReached;
+                    this.emit("STOPPING", {
+                        limitReached
+                    });
+                    this.loop?.complete?.();
+                    this.stopTimeout = window.setTimeout(()=>{
+                        this.stopTimeout = void 0;
+                        this.stopTime = Date.now();
+                        const videoType = this.replay.getVideoType();
+                        if (!videoType) throw new Error("Unable to video record when no video type is defined.");
+                        this.recordingStats = {
+                            avgFps: this.getAvgFps(),
+                            wantedFps: this.options.video.fps,
+                            avgInterval: this.getAvgInterval(),
+                            wantedInterval: 1e3 / this.options.video.fps,
+                            intervalSum: this.getIntervalSum(),
+                            framesCount: this.framesCount,
+                            videoType
+                        };
+                        if (this.userMedia) this.recordingStats.videoTrackLabel = this.userMedia.getVideoTrackLabel();
+                        if (isAudioEnabled(this.options) && this.userMedia) {
+                            this.recordingStats.samplesCount = this.samplesCount;
+                            this.recordingStats.sampleRate = this.recordingAudioSampleRate ?? this.userMedia.getAudioSampleRate();
+                        }
+                        this.writeCommand("stop", this.recordingStats, ()=>{
+                            this.emit("STOPPED", {
+                                recordingStats: this.recordingStats
+                            });
+                        });
+                        this.reset();
+                    }, 60);
+                }
+                back(cb) {
+                    this.emit("GOING_BACK");
+                    this.key = void 0;
+                    this.recordingDimensions = void 0;
+                    this.unloaded = false;
+                    this.show();
+                    this.writeCommand("back", void 0, cb);
+                }
+                reInitializeAudio() {
+                    this.options.logger.debug("Recorder: reInitializeAudio()");
+                    this.clearUserMediaTimeout();
+                    this.userMediaLoading = false;
+                    this.userMedia?.stop();
+                    this.recordingDimensions = void 0;
+                    this.userMediaLoaded = this.key = this.canvas = this.ctx = void 0;
+                    this.loadUserMedia();
+                }
+                reset() {
+                    this.cancelCameraRecovery();
+                    if (!this.unloaded) {
+                        this.options.logger.debug("Recorder: reset()");
+                        this.emit("RESETTING");
+                        this.cancelAnimationFrame();
+                        this.userMedia?.stop();
+                        this.replay.reset();
+                        this.userMediaLoaded = this.key = this.canvas = this.ctx = this.recordingBuffer = void 0;
+                    }
+                }
+                validate() {
+                    return Boolean(this.key) && void 0 === this.canvas;
+                }
+                pause(params) {
+                    this.cancelCameraRecovery();
+                    this.resumeAfterDrain = false;
+                    const loop = this.loop;
+                    if (!loop) throw new Error("No recording loop defined");
+                    if (params) this.options.logger.debug(`pause() at frame ${this.framesCount} with ${string_pretty(params)}`);
+                    else this.options.logger.debug(`pause() at frame ${this.framesCount}`);
+                    this.userMedia?.pause();
+                    loop.stop();
+                    this.emit("PAUSED");
+                    this.sendPings();
+                }
+                resume() {
+                    if (this.cameraRecovery || !this.userMedia?.hasLiveStream()) {
+                        this.recoverCamera();
+                        this.resumeAfterCameraRecovery = Boolean(this.cameraRecovery);
+                        return;
+                    }
+                    const loop = this.loop;
+                    if (!loop) throw new Error("No recording loop defined");
+                    this.options.logger.debug(`Recorder: resume() with frame ${this.framesCount}`);
+                    this.stopPings();
+                    this.emit("RESUMING");
+                    this.userMedia.resume();
+                    if (this.streamBackpressured) this.resumeAfterDrain = true;
+                    else loop.start();
+                }
+                onFlushed(opts) {
+                    const frameNumber = opts.frameNumber;
+                    if (1 === frameNumber) this.emit("FIRST_FRAME_SENT");
+                }
+                draw(_deltaTime, elapsedTime) {
+                    if (this.recordingTransportFailed) return;
+                    if (!this.userMedia) throw new Error("No user media defined, unable to draw on canvas");
+                    try {
+                        if (!this.isPaused() && this.stream && this.ctx) {
+                            if (0 === this.framesCount) this.emit("SENDING_FIRST_FRAME");
+                            this.framesCount++;
+                            const imageSource = this.userMedia.getRawVisuals();
+                            if (this.canvas && imageSource) this.ctx.drawImage(imageSource, 0, 0, this.canvas.width, this.canvas.height);
+                            else throw new Error("Unable to draw an image without a defined canvas");
+                            this.recordingBuffer = this.frame?.toBuffer();
+                            const recordingBufferLength = this.recordingBuffer?.length;
+                            if (recordingBufferLength) {
+                                if (this.recordingBuffer) {
+                                    const frameControlBuffer = capture_Buffer.from(JSON.stringify({
+                                        frameNumber: this.framesCount
+                                    }));
+                                    const frameBuffer = capture_Buffer.concat([
+                                        this.recordingBuffer,
+                                        frameControlBuffer
+                                    ]);
+                                    this.mediaTransmissionStarted = true;
+                                    this.writeStream(frameBuffer, {
+                                        frameNumber: this.framesCount,
+                                        onFlushedCallback: this.onFlushed.bind(this)
+                                    });
+                                    this.visuals.checkTimer(elapsedTime);
+                                }
+                            } else throw error_createError({
+                                message: "Failed to extract webcam data.",
+                                options: this.options
+                            });
+                        }
+                    } catch (exc) {
+                        this.emit("ERROR", {
+                            exc
+                        });
+                    }
+                }
+                createLoop() {
+                    const newLoop = animitter_default()({
+                        fps: this.options.video.fps
+                    }, this.draw.bind(this));
+                    this.originalAnimationFrameObject = newLoop.getRequestAnimationFrameObject();
+                    return newLoop;
+                }
+                record() {
+                    if (this.unloaded || this.cameraRecovery) return;
+                    if (!this.connected) {
+                        this.options.logger.debug("Recorder: reconnecting before recording …");
+                        this.initSocket(()=>{
+                            this.once("SERVER_READY", ()=>{
+                                if (this.unloaded) return;
+                                if (this.userMediaLoaded || this.options.loadUserMediaOnRecord) this.record();
+                                else this.once("USER_MEDIA_READY", ()=>{
+                                    if (!this.unloaded) this.record();
+                                });
+                            });
+                        });
+                        return;
+                    }
+                    if (!this.userMediaLoaded) {
+                        if (this.options.loadUserMediaOnRecord) this.loadUserMedia({
+                            recordWhenReady: true
+                        });
+                        else {
+                            const err = error_createError({
+                                message: "Load and enable your camera first",
+                                options: this.options
+                            });
+                            this.emit("ERROR", {
+                                err
+                            });
+                        }
+                        return;
+                    }
+                    const loop = this.loop;
+                    if (!loop) throw new Error("No recording loop defined");
+                    this.recordingDimensions = void 0;
+                    try {
+                        if (!this.userMedia) throw new Error("No user media defined, unable to create canvas");
+                        this.canvas = this.userMedia.createCanvas();
+                    } catch (exc) {
+                        const err = error_createError({
+                            exc,
+                            options: this.options
+                        });
+                        this.emit("ERROR", {
+                            err
+                        });
+                        return;
+                    }
+                    this.ctx = this.canvas.getContext("2d");
+                    if (!this.canvas.width) {
+                        const err = error_createError({
+                            message: "Canvas has an invalid width.",
+                            options: this.options
+                        });
+                        this.emit("ERROR", {
+                            err
+                        });
+                        return;
+                    }
+                    if (!this.canvas.height) {
+                        const err = error_createError({
+                            message: "Canvas has an invalid height.",
+                            options: this.options
+                        });
+                        this.emit("ERROR", {
+                            err
+                        });
+                        return;
+                    }
+                    this.recordingDimensions = {
+                        width: this.canvas.width,
+                        height: this.canvas.height
+                    };
+                    this.frame = new canvas_to_buffer_modern_r(this.canvas, this.options.image.types, this.options.image.quality);
+                    this.options.logger.debug("Recorder: record()");
+                    this.recordingActive = true;
+                    this.recordingTransportFailed = false;
+                    this.mediaTransmissionStarted = false;
+                    this.recordingAudioSampleRate = void 0;
+                    this.userMedia.record();
+                    this.emit("RECORDING", {
+                        framesCount: this.framesCount
+                    });
+                    loop.on("update", (_deltaTime, elapsedTime)=>{
+                        let avgFPS;
+                        avgFPS = 0 !== elapsedTime ? Math.round(this.framesCount / elapsedTime * 1000) : void 0;
+                        this.options.logger.debug(`Recorder updates avgFps = ${avgFPS} at frame ${this.framesCount}`);
+                    });
+                    loop.start();
+                }
+                setAnimationFrameObject(newObj) {
+                    if (this.loop) {
+                        const isRecording = this.isRecording();
+                        this.loop.stop();
+                        this.loop.setRequestAnimationFrameObject(newObj);
+                        if (isRecording) this.loop.start();
+                    }
+                }
+                restoreAnimationFrameObject() {
+                    this.options.logger.debug("Recorder: restoreAnimationFrameObject()");
+                    if (this.originalAnimationFrameObject) this.setAnimationFrameObject(this.originalAnimationFrameObject);
+                }
+                loopWithTimeouts() {
+                    this.options.logger.debug("Recorder: loopWithTimeouts()");
+                    const wantedInterval = 1e3 / this.options.video.fps;
+                    let processingTime = 0;
+                    const raf = (fn)=>window.setTimeout(()=>{
+                            const start = Date.now();
+                            fn();
+                            processingTime = Date.now() - start;
+                        }, wantedInterval - processingTime);
+                    const cancel = (id)=>{
+                        window.clearTimeout(id);
+                    };
+                    this.setAnimationFrameObject({
+                        requestAnimationFrame: raf,
+                        cancelAnimationFrame: cancel
+                    });
+                }
+                isPaused() {
+                    return this.userMedia?.isPaused() && !this.loop?.isRunning();
+                }
+                isUserMediaPaused() {
+                    return this.userMedia?.isPaused() ?? false;
+                }
+                isCaptureLoopRunning() {
+                    return this.loop?.isRunning() ?? false;
+                }
+                stopCaptureLoop() {
+                    this.loop?.stop();
+                }
+                startCaptureLoop() {
+                    this.loop?.start();
+                }
+                isRecording() {
+                    return Boolean(this.loop?.isRunning() && !this.isPaused() && !this.isNotifying() && this.stream && !this.stream.destroyed);
+                }
+                getRecordingDimensions() {
+                    return this.recordingDimensions && {
+                        ...this.recordingDimensions
+                    };
+                }
+            }
+            const capture = RecorderCapture;
             function figureMinHeight(height, options) {
                 let minHeight;
                 if (options.video.height) {
@@ -19178,22 +20524,114 @@
                 return dimension;
             }
             const dimensions_calculateWidth = calculateWidth;
-            function isAutomatedUserAgent(userAgent = navigator.userAgent) {
-                return /bot|crawler|spider|headlesschrome|phantomjs|puppeteer|playwright/iu.test(userAgent);
+            class RecorderDimensions {
+                context;
+                constructor(context){
+                    this.context = context;
+                }
+                correctDimensions() {
+                    const recorderElement = this.context.getRecorderElement();
+                    if (!recorderElement) return;
+                    const widthDimension = dimensions_useFullWidth(this.context.options.video.mobileBreakPoint);
+                    if (this.context.options.video.stretch || widthDimension) {
+                        recorderElement.style.width = "100%";
+                        recorderElement.style.removeProperty("height");
+                    } else {
+                        if (this.context.options.video.width) {
+                            const recorderWidth = this.getRecorderWidth(true);
+                            if (recorderWidth?.value) recorderElement.width = recorderWidth.value;
+                            else recorderElement.style.removeProperty("width");
+                        }
+                        if (this.context.options.video.height) {
+                            const recorderHeight = this.getRecorderHeight(true);
+                            if (recorderHeight?.value) recorderElement.height = recorderHeight.value;
+                            else recorderElement.style.removeProperty("height");
+                        }
+                    }
+                }
+                getRecorderWidth(responsive) {
+                    const userMedia = this.context.getUserMedia();
+                    if (userMedia?.hasVideoWidth()) return userMedia.getRawWidth(responsive);
+                    else if (responsive && this.context.options.video.width) return this.context.visuals.limitWidth(this.context.options.video.width);
+                    const dimension = {
+                        unit: "px",
+                        value: this.context.options.video.width
+                    };
+                    return dimension;
+                }
+                getRecorderHeight(responsive, useBoundingClientRect) {
+                    const recorderElement = this.context.getRecorderElement();
+                    const userMedia = this.context.getUserMedia();
+                    let recorderHeight;
+                    if (recorderElement && useBoundingClientRect) {
+                        const height = recorderElement.getBoundingClientRect().height;
+                        recorderHeight = {
+                            unit: "px",
+                            value: height
+                        };
+                    } else if (userMedia) {
+                        let height = userMedia.getRawHeight(responsive);
+                        if (void 0 !== height && this.context.options.video.width) {
+                            const ratio = this.getRatio();
+                            if (void 0 !== ratio) {
+                                const idealHeight = this.context.options.video.width * ratio;
+                                height = Math.min(idealHeight, height);
+                            }
+                        }
+                        recorderHeight = {
+                            unit: "px",
+                            value: height
+                        };
+                    } else if (responsive && this.context.options.video.height) recorderHeight = this.calculateHeight(responsive);
+                    else if (this.context.options.video.height) {
+                        const height = this.context.options.video.height;
+                        recorderHeight = {
+                            unit: "px",
+                            value: height
+                        };
+                    }
+                    return recorderHeight;
+                }
+                getRatio() {
+                    const userMedia = this.context.getUserMedia();
+                    let ratio;
+                    if (userMedia) {
+                        const userMediaVideoWidth = userMedia.getVideoWidth();
+                        const userMediaVideoHeight = userMedia.getVideoHeight();
+                        if (!userMediaVideoWidth || userMediaVideoWidth < 1) ratio = this.context.visuals.getRatio();
+                        else if (userMediaVideoHeight) ratio = userMediaVideoHeight / userMediaVideoWidth;
+                    } else ratio = dimensions_getRatio(this.context.options);
+                    return ratio;
+                }
+                calculateWidth(responsive) {
+                    const userMedia = this.context.getUserMedia();
+                    const recorderElement = this.context.getRecorderElement();
+                    let videoHeight;
+                    if (userMedia) videoHeight = userMedia.getVideoHeight();
+                    else if (recorderElement) videoHeight = recorderElement.videoHeight || recorderElement.height;
+                    return dimensions_calculateWidth(responsive, this.context.options, videoHeight, this.getRatio());
+                }
+                calculateHeight(responsive) {
+                    const userMedia = this.context.getUserMedia();
+                    const recorderElement = this.context.getRecorderElement();
+                    let videoDimension;
+                    if (userMedia) {
+                        const videoHeight = userMedia.getVideoHeight();
+                        videoDimension = {
+                            value: videoHeight,
+                            unit: "px"
+                        };
+                    } else if (recorderElement) {
+                        const videoHeight = recorderElement.videoHeight || recorderElement.height;
+                        videoDimension = {
+                            value: videoHeight,
+                            unit: "px"
+                        };
+                    } else videoDimension = dimensions_calculateHeight(responsive, void 0, this.context.options, this.getRatio(), recorderElement);
+                    return videoDimension;
+                }
             }
-            const util_isAutomatedUserAgent = isAutomatedUserAgent;
-            function summarize(title, contents) {
-                const lines = Object.entries(contents).sort(([keyA], [keyB])=>keyA.localeCompare(keyB)).map(([key, value])=>{
-                    const formattedValue = void 0 === value ? "undefined" : "object" == typeof value ? string_pretty(value) : value;
-                    return `  • ${key}: ${formattedValue}`;
-                });
-                const line = [
-                    `🔎 ${title}`,
-                    ...lines
-                ].join("\n");
-                return line;
-            }
-            const string_summarize = summarize;
+            const recorder_dimensions = RecorderDimensions;
             function getFirstVideoTrack(localMediaStream) {
                 const videoTracks = localMediaStream.getVideoTracks();
                 let videoTrack;
@@ -19715,855 +21153,16 @@
                 }
             }
             const visuals_userMedia = UserMedia;
-            var Buffer = __webpack_require__("dY").Buffer;
-            const PIPE_SYMBOL = "°º¤ø,¸¸,ø¤º°`°º¤ø,¸,ø¤°º¤ø,¸¸,ø¤º°`°º¤ø,¸ ";
-            class Recorder extends util_Despot {
-                visuals;
-                replay;
-                pendingWrites = new boundedWriteQueue();
-                loop;
-                originalAnimationFrameObject;
-                samplesCount = 0;
-                framesCount = 0;
-                recordingAudioSampleRate;
-                recordingStats;
-                confirmedFrameNumber = 0;
-                confirmedSampleNumber = 0;
-                recorderElement;
-                userMedia;
-                userMediaTimeout;
-                retryTimeout;
-                reconnectTimeout;
-                connectionTimeout;
-                backpressureTimeout;
-                stopTimeout;
-                frameProgress;
-                sampleProgress;
-                canvas;
-                recordingDimensions;
-                ctx;
-                userMediaLoaded;
-                userMediaLoading = false;
-                mediaRequestId = 0;
-                cameraRecovery;
-                resolveCameraRecovery;
-                resumeAfterCameraRecovery = false;
-                submitting = false;
-                unloaded;
-                stopTime;
-                stream;
-                streamBackpressured = false;
-                resumeAfterDrain = false;
-                mediaTransmissionStarted = false;
-                recordingActive = false;
-                recordingTransportFailed = false;
-                connecting = false;
-                connected = false;
-                connectionFailed = false;
-                reconnecting = false;
-                reconnectAttempts = 0;
-                blocking = false;
-                built = false;
-                key;
-                waitingTime;
-                connectingStartedAt;
-                lastCloseEvent;
-                lastSocketError;
-                pingInterval;
-                frame;
-                recordingBuffer;
-                facingMode;
+            class Recorder extends capture {
+                dimensions;
                 constructor(visuals, replay, options){
-                    super("Recorder", options);
-                    this.visuals = visuals;
-                    this.replay = replay;
-                    this.facingMode = options.video.facingMode;
-                }
-                hasExceededWebSocketSendBuffer(buffer, opts) {
-                    return buffer.length > 0 && !this.pendingWrites.enqueue(buffer, opts);
-                }
-                writeStream(buffer, opts) {
-                    if (this.stream) if (this.stream.destroyed) {
-                        this.stopPings();
-                        const err = error_createError({
-                            message: "Already disconnected",
-                            explanation: "Sorry, connection to the server has been destroyed. Please reload.",
-                            options: this.options
-                        });
-                        this.handleWriteFailure(err);
-                    } else if (this.streamBackpressured) {
-                        if (this.hasExceededWebSocketSendBuffer(buffer, opts)) this.failMediaTransmission(error_createError({
-                            message: "WebSocket send buffer limit exceeded",
-                            explanation: "The connection to the server is too slow to keep up with this recording. The recording has been stopped; please start a new one.",
-                            options: this.options
-                        }));
-                    } else this.writeToStream(this.stream, buffer, opts);
-                }
-                writeToStream(stream, buffer, opts) {
-                    const onFlushedCallback = opts?.onFlushedCallback;
-                    try {
-                        const canContinue = stream.write(buffer, ()=>{
-                            if (!onFlushedCallback) return;
-                            try {
-                                onFlushedCallback(opts);
-                            } catch (exc) {
-                                const err = error_createError({
-                                    message: "Failed to write stream buffer",
-                                    explanation: `stream.write() failed because of ${string_pretty(exc)}`,
-                                    options: this.options,
-                                    exc
-                                });
-                                this.emit("ERROR", {
-                                    err
-                                });
-                            }
-                        });
-                        if (!canContinue) {
-                            this.streamBackpressured = true;
-                            this.startBackpressureTimeout();
-                            this.pauseForBackpressure();
-                            return false;
-                        }
-                        return true;
-                    } catch (exc) {
-                        const err = error_createError({
-                            message: "Failed writing to server",
-                            explanation: `stream.write() failed because of ${string_pretty(exc)}`,
-                            options: this.options,
-                            exc
-                        });
-                        this.handleWriteFailure(err);
-                        return false;
-                    }
-                }
-                flushPendingWrites(stream) {
-                    if (this.isStaleStream(stream)) return;
-                    this.streamBackpressured = false;
-                    this.clearBackpressureTimeout();
-                    let pendingWrite = this.pendingWrites.dequeue();
-                    while(pendingWrite){
-                        if (!this.writeToStream(stream, pendingWrite.buffer, pendingWrite.params)) return;
-                        pendingWrite = this.pendingWrites.dequeue();
-                    }
-                    this.resumeRecordingAfterDrain();
-                }
-                isStaleStream(stream) {
-                    return this.stream !== stream || stream.destroyed;
-                }
-                canPauseForBackpressure() {
-                    return Boolean(this.recordingActive && !this.userMedia?.isPaused() && this.loop?.isRunning());
-                }
-                pauseForBackpressure() {
-                    if (!this.canPauseForBackpressure()) return;
-                    this.resumeAfterDrain = true;
-                    this.loop.stop();
-                }
-                resumeRecordingAfterDrain() {
-                    if (!this.resumeAfterDrain) return;
-                    this.resumeAfterDrain = false;
-                    if (this.canResumeAfterDrain()) this.loop?.start();
-                }
-                canResumeAfterDrain() {
-                    return this.recordingActive && !this.userMedia?.isPaused();
-                }
-                handleWriteFailure(err) {
-                    if (this.mediaTransmissionStarted) return void this.failMediaTransmission(err);
-                    this.emit("ERROR", {
-                        err
+                    super(visuals, replay, options);
+                    this.dimensions = new recorder_dimensions({
+                        options,
+                        visuals,
+                        getRecorderElement: ()=>this.recorderElement,
+                        getUserMedia: ()=>this.userMedia
                     });
-                }
-                failMediaTransmission(err) {
-                    if (this.recordingTransportFailed) return;
-                    this.recordingTransportFailed = true;
-                    this.recordingActive = false;
-                    this.mediaTransmissionStarted = false;
-                    this.streamBackpressured = false;
-                    this.resumeAfterDrain = false;
-                    this.pendingWrites.clear();
-                    this.connected = false;
-                    this.connecting = false;
-                    this.reconnecting = false;
-                    this.clearReconnectTimeout();
-                    this.clearBackpressureTimeout();
-                    this.discardSocket();
-                    this.reset();
-                    this.framesCount = this.samplesCount = 0;
-                    this.confirmedFrameNumber = this.confirmedSampleNumber = 0;
-                    delete this.recordingStats;
-                    this.recordingDimensions = void 0;
-                    this.emit("ERROR", {
-                        err
-                    });
-                }
-                startBackpressureTimeout() {
-                    if (!this.shouldStartBackpressureTimeout()) return;
-                    this.backpressureTimeout = window.setTimeout(()=>{
-                        this.backpressureTimeout = void 0;
-                        if (this.shouldIgnoreBackpressureTimeout()) return;
-                        const err = error_createError({
-                            message: "WebSocket write timed out",
-                            explanation: "The server stopped accepting recording data. The recording has been stopped; please check your connection and start a new one.",
-                            options: this.options
-                        });
-                        this.failMediaTransmission(err);
-                    }, this.options.timeouts.connection);
-                }
-                shouldStartBackpressureTimeout() {
-                    return void 0 === this.backpressureTimeout && this.mediaTransmissionStarted;
-                }
-                shouldIgnoreBackpressureTimeout() {
-                    return !this.streamBackpressured || this.recordingTransportFailed;
-                }
-                failInterruptedRecording() {
-                    const unconfirmedFrames = Math.max(0, this.framesCount - this.confirmedFrameNumber);
-                    const unconfirmedSamples = Math.max(0, this.samplesCount - this.confirmedSampleNumber);
-                    const err = error_createError({
-                        message: "Recording interrupted",
-                        explanation: "The server connection closed before this recording completed. It cannot be safely resumed, so it has been stopped. Please start a new recording.",
-                        options: this.options,
-                        cause: {
-                            unconfirmedFrames,
-                            unconfirmedSamples
-                        }
-                    });
-                    this.failMediaTransmission(err);
-                }
-                handleStreamDrain(stream) {
-                    this.options.logger.debug(`${PIPE_SYMBOL}Stream *drain* event emitted`);
-                    this.flushPendingWrites(stream);
-                }
-                canReconnectAfterStreamClose() {
-                    return Boolean(this.connected && this.userMediaLoaded);
-                }
-                shouldReportStreamClose() {
-                    return !this.connecting && !this.blocking;
-                }
-                handleStreamClose(url2Connect) {
-                    const debugLine = string_summarize(`${PIPE_SYMBOL}Stream has closed:`, {
-                        connecting: this.connecting,
-                        connected: this.connected,
-                        userMediaLoaded: this.userMediaLoaded,
-                        blocking: this.blocking
-                    });
-                    this.options.logger.debug(debugLine);
-                    const canReconnect = this.canReconnectAfterStreamClose();
-                    this.connected = false;
-                    this.stopPings();
-                    if (this.shouldIgnoreStreamClose()) return;
-                    if (this.mediaTransmissionStarted) this.failInterruptedRecording();
-                    else if (canReconnect) {
-                        this.pendingWrites.clear();
-                        this.streamBackpressured = false;
-                        this.resumeAfterDrain = false;
-                        this.reconnecting = true;
-                        this.initSocket();
-                    } else if (this.shouldReportStreamClose()) window.setTimeout(()=>{
-                        this.handleConnectionFailure({
-                            url2Connect,
-                            cause: "closed"
-                        });
-                    }, 0);
-                }
-                shouldIgnoreStreamClose() {
-                    return this.recordingTransportFailed || Boolean(this.unloaded) || this.validate();
-                }
-                handleStreamError(url2Connect, err) {
-                    if ("u" > typeof Event && err instanceof Event) this.lastSocketError = error_getEventDetails(err);
-                    else this.lastSocketError = serializeError(err);
-                    const debugLine = string_summarize(`${PIPE_SYMBOL}Stream *error* event emitted:`, {
-                        error: serializeError(err)
-                    });
-                    this.options.logger.debug(debugLine);
-                    if (this.validate()) {
-                        this.connected = false;
-                        this.stopPings();
-                        this.discardSocket();
-                        return;
-                    }
-                    if (!this.connected) return void this.handleConnectionFailure({
-                        url2Connect,
-                        cause: "error"
-                    });
-                    const streamError = err instanceof Error ? err : new Error("WebSocket stream emitted an error event", {
-                        cause: this.lastSocketError ?? err
-                    });
-                    if (this.mediaTransmissionStarted) return void this.failInterruptedRecording();
-                    this.emit("ERROR", {
-                        err: error_createError({
-                            message: "WebSocket stream error",
-                            explanation: `The WebSocket stream emitted an error event. Details: ${string_pretty(err)}`,
-                            options: this.options,
-                            exc: streamError
-                        })
-                    });
-                }
-                sendPings() {
-                    this.stopPings();
-                    this.pingInterval = window.setInterval(()=>{
-                        this.options.logger.debug("Recorder: pinging...");
-                        this.writeStream(Buffer.from(""));
-                    }, this.options.timeouts.pingInterval);
-                }
-                stopPings() {
-                    if (void 0 === this.pingInterval) return;
-                    this.options.logger.debug("Recorder: stopping pings...");
-                    window.clearInterval(this.pingInterval);
-                    this.pingInterval = void 0;
-                }
-                onAudioSample(audioSample) {
-                    if (this.recordingTransportFailed || this.cameraRecovery) return;
-                    const sampleRate = this.userMedia?.getAudioSampleRate();
-                    if (sampleRate && sampleRate > 0) this.recordingAudioSampleRate ??= sampleRate;
-                    this.samplesCount++;
-                    this.mediaTransmissionStarted = true;
-                    const audioBuffer = audioSample.toBuffer();
-                    this.writeStream(audioBuffer);
-                }
-                show() {
-                    html_showElement(this.recorderElement);
-                }
-                onUserMediaReady(params) {
-                    try {
-                        this.options.logger.debug(`Recorder: onUserMediaReady(${params ? string_pretty(params) : ""})`);
-                        const switchingFacingMode = params?.switchingFacingMode;
-                        if (params?.recovering) {
-                            if (!this.userMedia?.hasLiveStream()) return void this.failCameraRecovery(new Error("The restored camera has no live tracks."));
-                            if (void 0 !== this.recordingAudioSampleRate && this.userMedia.getAudioSampleRate() !== this.recordingAudioSampleRate) return void this.failCameraRecovery(new Error("The audio sample rate changed during recovery."));
-                        }
-                        this.userMediaLoading = this.blocking = this.unloaded = this.submitting = false;
-                        this.userMediaLoaded = true;
-                        this.clearUserMediaTimeout();
-                        if (!switchingFacingMode && !params?.recovering) this.loop = this.createLoop();
-                        this.show();
-                        if (params?.recordWhenReady) this.record();
-                        this.emit("USER_MEDIA_READY", {
-                            switchingFacingMode: params?.switchingFacingMode,
-                            recovering: params?.recovering,
-                            paused: this.isPaused(),
-                            recordWhenReady: params?.recordWhenReady
-                        });
-                        if (params?.recovering) this.finishCameraRecovery(true);
-                    } catch (exc) {
-                        if (params?.recovering) this.failCameraRecovery(exc);
-                        else this.emit("ERROR", {
-                            exc
-                        });
-                    }
-                }
-                clearRetryTimeout() {
-                    if (void 0 === this.retryTimeout) return;
-                    this.options.logger.debug("Recorder: clearRetryTimeout()");
-                    window.clearTimeout(this.retryTimeout);
-                    this.retryTimeout = void 0;
-                }
-                clearConnectionTimeout() {
-                    if (void 0 === this.connectionTimeout) return;
-                    this.options.logger.debug("Recorder: clearConnectionTimeout()");
-                    window.clearTimeout(this.connectionTimeout);
-                    this.connectionTimeout = void 0;
-                }
-                clearBackpressureTimeout() {
-                    if (void 0 === this.backpressureTimeout) return;
-                    window.clearTimeout(this.backpressureTimeout);
-                    this.backpressureTimeout = void 0;
-                }
-                clearReconnectTimeout() {
-                    if (void 0 === this.reconnectTimeout) return;
-                    this.options.logger.debug("Recorder: clearReconnectTimeout()");
-                    window.clearTimeout(this.reconnectTimeout);
-                    this.reconnectTimeout = void 0;
-                }
-                handleConnectionFailure(params) {
-                    if (this.retryConnection(params)) return;
-                    this.failConnection(params);
-                }
-                retryConnection(params) {
-                    if (!this.canRetryConnection()) return false;
-                    if (void 0 !== this.reconnectTimeout) return true;
-                    const delayMs = Math.min(1000 * 2 ** this.reconnectAttempts, 10000);
-                    this.reconnectAttempts++;
-                    this.connecting = false;
-                    this.clearConnectionTimeout();
-                    this.discardSocket();
-                    this.options.logger.debug(`Recorder: retrying WebSocket connection in ${delayMs}ms (cause ${params.cause}).`);
-                    this.reconnectTimeout = window.setTimeout(()=>{
-                        this.reconnectTimeout = void 0;
-                        if (this.shouldContinueReconnect()) this.initSocket();
-                    }, delayMs);
-                    return true;
-                }
-                canRetryConnection() {
-                    return Boolean(this.reconnecting && this.userMediaLoaded && this.isOnline() && !this.unloaded && !this.blocking);
-                }
-                shouldContinueReconnect() {
-                    return this.reconnecting && !this.unloaded && !this.blocking;
-                }
-                discardSocket() {
-                    this.options.logger.debug("Recorder: discarding socket stream ...");
-                    this.clearBackpressureTimeout();
-                    this.pendingWrites.clear();
-                    this.streamBackpressured = false;
-                    this.resumeAfterDrain = false;
-                    const stream = this.stream;
-                    this.stream = void 0;
-                    if (stream && !stream.destroyed) stream.destroy();
-                }
-                isOnline() {
-                    return navigator.onLine;
-                }
-                failConnection(params) {
-                    if (this.shouldIgnoreConnectionFailure()) return;
-                    this.connectionFailed = true;
-                    this.connecting = false;
-                    this.reconnecting = false;
-                    this.reconnectAttempts = 0;
-                    this.clearReconnectTimeout();
-                    this.clearConnectionTimeout();
-                    const { url2Connect, cause } = params;
-                    const online = this.isOnline();
-                    const elapsedMs = this.connectingStartedAt ? Date.now() - this.connectingStartedAt : void 0;
-                    const closeEvent = this.lastCloseEvent;
-                    const socketError = this.lastSocketError;
-                    const contents = {
-                        cause,
-                        closeCode: closeEvent?.code,
-                        closeReason: closeEvent?.reason,
-                        elapsedMs,
-                        online,
-                        secureContext: globalThis.isSecureContext,
-                        socketReadyState: this.stream?.socket.readyState,
-                        timeoutMs: this.options.timeouts.connection,
-                        url: url2Connect,
-                        unloaded: this.unloaded,
-                        userMediaLoaded: this.userMediaLoaded,
-                        userMediaLoading: this.userMediaLoading,
-                        wasClean: closeEvent?.wasClean,
-                        socketError,
-                        blocking: this.blocking,
-                        visibilityState: document.visibilityState
-                    };
-                    const debugLine = string_summarize("Recorder: failConnection() diagnostic", contents);
-                    this.options.logger.debug(debugLine);
-                    let explanation;
-                    if (online) if ("timeout" === cause) explanation = `The server at ${url2Connect} did not respond within ${this.options.timeouts.connection}ms, even though your device is online. This usually points to a firewall or proxy silently dropping the connection. Please try a different network. If the problem persists, contact us.`;
-                    else if ("error" === cause) explanation = `An error occurred while connecting to ${url2Connect}. Please check your internet connection and try again. If the problem persists, contact us.`;
-                    else {
-                        const closeSuffix = closeEvent ? ` (code ${closeEvent.code})` : "";
-                        explanation = `Connection to ${url2Connect} is closed${closeSuffix}. Please check your internet connection and try again. If the problem persists, contact us.`;
-                    }
-                    else explanation = "Your device appears to be offline. Please check your internet connection and try again.";
-                    this.discardSocket();
-                    const err = error_createError({
-                        message: "Unable to connect to the server",
-                        explanation,
-                        options: this.options,
-                        cause: contents,
-                        exc: socketError ? new Error("WebSocket connection error", {
-                            cause: socketError
-                        }) : void 0
-                    });
-                    this.emit("ERROR", {
-                        err
-                    });
-                }
-                shouldIgnoreConnectionFailure() {
-                    return this.connectionFailed || this.connected || Boolean(this.unloaded) || this.validate();
-                }
-                calculateFrameProgress() {
-                    return `${(this.confirmedFrameNumber / (this.framesCount || 1) * 100).toFixed(2)}%`;
-                }
-                calculateSampleProgress() {
-                    return `${(this.confirmedSampleNumber / (this.samplesCount || 1) * 100).toFixed(2)}%`;
-                }
-                updateOverallProgress() {
-                    this.frameProgress = this.calculateFrameProgress();
-                    if (isAudioEnabled(this.options)) this.sampleProgress = this.calculateSampleProgress();
-                    this.emit("PROGRESS", {
-                        frameProgress: this.frameProgress,
-                        sampleProgress: this.sampleProgress
-                    });
-                }
-                updateFrameProgress(args) {
-                    if (args) {
-                        if (!args.frame) throw error_createError({
-                            message: "The frame number is missing",
-                            options: this.options
-                        });
-                    } else throw error_createError({
-                        message: "Arguments are missing for updating the frame progress",
-                        options: this.options
-                    });
-                    this.confirmedFrameNumber = args.frame;
-                    this.frameProgress = this.calculateFrameProgress();
-                    this.updateOverallProgress();
-                }
-                updateSampleProgress(args) {
-                    if (args) {
-                        if (!args.sample) throw error_createError({
-                            message: "The audio sample number is missing",
-                            options: this.options
-                        });
-                    } else throw error_createError({
-                        message: "Arguments are missing for updating the audio sample progress",
-                        options: this.options
-                    });
-                    this.confirmedSampleNumber = args.sample;
-                    this.sampleProgress = this.calculateSampleProgress();
-                    this.updateOverallProgress();
-                }
-                preview(args) {
-                    if (!args) throw error_createError({
-                        message: "Preview arguments are missing.",
-                        options: this.options
-                    });
-                    const hasAudio = this.samplesCount > 0;
-                    this.mediaTransmissionStarted = false;
-                    this.recordingActive = false;
-                    this.recordingTransportFailed = false;
-                    this.confirmedFrameNumber = this.confirmedSampleNumber = this.samplesCount = this.framesCount = 0;
-                    this.sampleProgress = this.frameProgress = void 0;
-                    this.key = args.key;
-                    if (args.mp4) this.replay.setMp4Source(`${args.mp4 + constants.WHITELIST_KEY_LABEL}/${this.options.whitelistKey}/videomail.mp4`, true);
-                    if (args.webm) this.replay.setWebMSource(`${args.webm + constants.WHITELIST_KEY_LABEL}/${this.options.whitelistKey}/videomail.webm`, true);
-                    this.hide();
-                    const widthDimension = this.getRecorderWidth(true);
-                    const heightDimension = this.getRecorderHeight(true);
-                    const duration = args.duration ?? -1;
-                    this.emit("PREVIEW", {
-                        key: this.key,
-                        width: widthDimension?.value,
-                        height: heightDimension?.value,
-                        hasAudio,
-                        duration
-                    });
-                    if (this.stopTime) this.waitingTime = Date.now() - this.stopTime;
-                    this.recordingStats ??= {};
-                    this.recordingStats.waitingTime = this.waitingTime;
-                }
-                initSocket(cb) {
-                    if (this.connected) {
-                        this.options.logger.debug("Recorder: already **connected**. Not going to initialize a new WebSocket connection.");
-                        cb?.();
-                        return;
-                    }
-                    if (this.connecting) return void this.options.logger.debug("Recorder: already **connecting**. Not going to initialize a new WebSocket connection.");
-                    this.clearReconnectTimeout();
-                    if (util_isAutomatedUserAgent()) {
-                        this.connecting = false;
-                        this.options.logger.debug("Recorder: skipping web socket connection for an automated crawler");
-                        return;
-                    }
-                    this.connecting = true;
-                    this.connectionFailed = false;
-                    this.connectingStartedAt = Date.now();
-                    this.lastCloseEvent = void 0;
-                    this.lastSocketError = void 0;
-                    this.emit("CONNECTING");
-                    let url2Connect;
-                    try {
-                        const socketUrlObj = new URL(this.options.socketUrl);
-                        socketUrlObj.searchParams.set(constants.WHITELIST_KEY_LABEL, this.options.whitelistKey);
-                        url2Connect = socketUrlObj.toString();
-                    } catch (exc) {
-                        this.connecting = this.connected = false;
-                        const err = error_createError({
-                            message: "Invalid WebSocket URL",
-                            explanation: `The configured socketUrl "${this.options.socketUrl}" is not a valid URL. Please check your videomail-client configuration.`,
-                            options: this.options,
-                            exc
-                        });
-                        this.emit("ERROR", {
-                            err
-                        });
-                        return;
-                    }
-                    this.options.logger.debug(`Recorder: initializing web socket stream to ${url2Connect}`);
-                    let nativeSocket;
-                    try {
-                        nativeSocket = new WebSocket(url2Connect);
-                        nativeSocket.addEventListener("close", (event)=>{
-                            this.lastCloseEvent = {
-                                code: event.code,
-                                reason: event.reason,
-                                wasClean: event.wasClean
-                            };
-                        });
-                        nativeSocket.addEventListener("error", (event)=>{
-                            this.lastSocketError = error_getEventDetails(event);
-                        });
-                    } catch (exc) {
-                        this.connecting = this.connected = false;
-                        const diagnostic = error_getWebSocketDiagnostic(url2Connect);
-                        const message = diagnostic.looksAutomated ? "Automated crawler: WebSocket not supported in this environment" : `Failed to construct WebSocket to ${url2Connect}`;
-                        const explanation = diagnostic.looksAutomated ? "Headless crawlers cannot use Videomail's WebSocket. No action needed." : `Please check your connection and try again. If the problem persists, contact us. Diagnostic: ${diagnostic.text}`;
-                        const err = error_createError({
-                            message,
-                            explanation,
-                            options: this.options,
-                            exc
-                        });
-                        this.emit("ERROR", {
-                            err
-                        });
-                        return;
-                    }
-                    try {
-                        this.stream = stream_default()(nativeSocket);
-                    } catch (exc) {
-                        this.connecting = this.connected = false;
-                        const err = error_createError({
-                            message: `Failed to create a stream to ${url2Connect}`,
-                            explanation: "Please check your connection and try again. If the problem persists, contact us.",
-                            options: this.options,
-                            exc
-                        });
-                        this.emit("ERROR", {
-                            err
-                        });
-                    }
-                    const stream = this.stream;
-                    if (stream) {
-                        const connectionTimeoutMs = this.options.timeouts.connection;
-                        this.connectionTimeout = window.setTimeout(()=>{
-                            if (this.isOnline() && this.isUserMediaLoaded()) {
-                                this.options.logger.debug(`${PIPE_SYMBOL}Reconnecting due to connection timeout.`);
-                                this.reconnecting = true;
-                                this.handleConnectionFailure({
-                                    url2Connect,
-                                    cause: "timeout"
-                                });
-                            } else this.handleConnectionFailure({
-                                url2Connect,
-                                cause: "timeout"
-                            });
-                        }, connectionTimeoutMs);
-                        stream.on("close", ()=>{
-                            this.handleStreamClose(url2Connect);
-                        });
-                        stream.on("connect", (args)=>{
-                            this.options.logger.debug(`${PIPE_SYMBOL}Stream *connect* event emitted with args: ${string_pretty(args)}`);
-                            this.clearConnectionTimeout();
-                            const isClosing = this.stream?.socket.readyState === WebSocket.CLOSING;
-                            if (!this.connected && !isClosing && !this.unloaded) {
-                                this.connected = true;
-                                this.connecting = this.unloaded = false;
-                                this.reconnecting = false;
-                                this.reconnectAttempts = 0;
-                                this.clearReconnectTimeout();
-                                this.emit("CONNECTED");
-                                cb?.();
-                            }
-                        });
-                        stream.on("data", (data)=>{
-                            this.options.logger.debug(`${PIPE_SYMBOL}Stream *data* event emitted`);
-                            try {
-                                const command = JSON.parse(data.toString());
-                                this.executeCommand(command);
-                            } catch (exc) {
-                                this.options.logger.error(`Failed to parse command: ${exc}`);
-                                const err = error_createError({
-                                    message: "Invalid server command",
-                                    explanation: `Contact us. The invalid command was: ${data.toString()}.`,
-                                    options: this.options,
-                                    exc
-                                });
-                                this.emit("ERROR", {
-                                    err
-                                });
-                            }
-                        });
-                        stream.on("error", (err)=>{
-                            this.handleStreamError(url2Connect, err);
-                        });
-                        stream.on("drain", ()=>{
-                            this.handleStreamDrain(stream);
-                        });
-                        stream.on("preend", (args)=>{
-                            this.options.logger.debug(`${PIPE_SYMBOL}Stream *preend* event emitted with args: ${string_pretty(args)}`);
-                        });
-                        stream.on("end", ()=>{
-                            this.options.logger.debug(`${PIPE_SYMBOL}Stream *end* event emitted`);
-                        });
-                        stream.on("pipe", (src)=>{
-                            this.options.logger.debug(`${PIPE_SYMBOL}Stream *pipe* event emitted with src: ${string_pretty(src)}`);
-                        });
-                        stream.on("unpipe", (src)=>{
-                            this.options.logger.debug(`${PIPE_SYMBOL}Stream *unpipe* event emitted with src: ${string_pretty(src)}`);
-                        });
-                        stream.on("resume", (args)=>{
-                            this.options.logger.debug(`${PIPE_SYMBOL}Stream *resume* event emitted with args: ${string_pretty(args)}`);
-                        });
-                        stream.on("uncork", (args)=>{
-                            this.options.logger.debug(`${PIPE_SYMBOL}Stream *uncork* event emitted with args: ${string_pretty(args)}`);
-                        });
-                        stream.on("readable", (args)=>{
-                            this.options.logger.debug(`${PIPE_SYMBOL}Stream *readable* event emitted with args: ${string_pretty(args)}`);
-                        });
-                        stream.on("prefinish", (args)=>{
-                            this.options.logger.debug(`${PIPE_SYMBOL}Stream *prefinish* event emitted with args: ${string_pretty(args)}`);
-                        });
-                        stream.on("finish", (args)=>{
-                            this.options.logger.debug(`${PIPE_SYMBOL}Stream *finish* event emitted with args: ${string_pretty(args)}`);
-                        });
-                    }
-                }
-                showUserMedia() {
-                    if (!this.connected) return false;
-                    const hidden = this.isHidden();
-                    if (!hidden) return true;
-                    const notifying = this.isNotifying();
-                    if (notifying) return true;
-                    return this.blocking;
-                }
-                userMediaErrorCallback(err, usedConstraints) {
-                    if (this.cameraRecovery) return void this.failCameraRecovery(err);
-                    if (this.unloaded) return void this.options.logger.debug(`Recorder: already unloaded. Not going to throw error ${string_pretty(err)}`);
-                    this.userMediaLoading = false;
-                    this.clearUserMediaTimeout();
-                    const characteristics = this.userMedia?.getCharacteristics();
-                    this.options.logger.debug(`Recorder: userMediaErrorCallback(), name: ${err.name}, message: ${err.message} and Webcam characteristics: ${characteristics ? string_pretty(characteristics) : "none"}`);
-                    const errorListeners = this.getListeners("ERROR");
-                    if (errorListeners?.length) if (err.name !== error_VideomailError.MEDIA_DEVICE_NOT_SUPPORTED) {
-                        const videomailError = error_createError({
-                            err,
-                            options: this.options,
-                            usedConstraints
-                        });
-                        this.emit("ERROR", {
-                            err: videomailError
-                        });
-                    } else {
-                        this.options.logger.debug(`Recorder: ignore user media error ${string_pretty(err)}`);
-                        this.retryTimeout = window.setTimeout(()=>{
-                            this.retryTimeout = void 0;
-                            if (!this.unloaded) this.loadUserMedia();
-                        }, this.options.timeouts.userMedia);
-                    }
-                    else {
-                        this.options.logger.debug(`Recorder: no error listeners attached but throwing error ${string_pretty(err)}`);
-                        throw error_createError({
-                            err,
-                            message: "Unable to process this error since there are no error listeners anymore.",
-                            options: this.options
-                        });
-                    }
-                }
-                getUserMediaCallback(localStream, params, requestId = this.mediaRequestId) {
-                    if (!this.userMedia) {
-                        localStream.getTracks().forEach((track)=>{
-                            track.stop();
-                        });
-                        throw error_createError({
-                            message: "No user media is defined",
-                            options: this.options
-                        });
-                    }
-                    this.options.logger.debug(`Recorder: getUserMediaCallback(${params ? string_pretty(params) : ""})`);
-                    if (this.showUserMedia()) try {
-                        this.userMedia.init(localStream, ()=>{
-                            if (!this.unloaded && requestId === this.mediaRequestId) this.onUserMediaReady(params);
-                        }, this.onAudioSample.bind(this), (err)=>{
-                            if (!this.unloaded && requestId === this.mediaRequestId) this.userMediaErrorCallback(err, {
-                                audio: isAudioEnabled(this.options)
-                            });
-                        }, params);
-                    } catch (exc) {
-                        localStream.getTracks().forEach((track)=>{
-                            track.stop();
-                        });
-                        this.userMediaLoading = false;
-                        this.clearUserMediaTimeout();
-                        this.userMediaErrorCallback(exc, {
-                            audio: isAudioEnabled(this.options)
-                        });
-                    }
-                    else {
-                        localStream.getTracks().forEach((track)=>{
-                            track.stop();
-                        });
-                        this.userMediaLoading = false;
-                        this.clearUserMediaTimeout();
-                        this.cancelCameraRecovery();
-                    }
-                }
-                loadGenuineUserMedia(params) {
-                    this.options.logger.debug(`Recorder: loadGenuineUserMedia(${params ? string_pretty(params) : ""})`);
-                    this.emit("ASKING_WEBCAM_PERMISSION");
-                    this.userMediaLoading = true;
-                    const requestId = ++this.mediaRequestId;
-                    const constraints = {
-                        video: {
-                            frameRate: {
-                                ideal: this.options.video.fps
-                            }
-                        },
-                        audio: isAudioEnabled(this.options)
-                    };
-                    this.configureVideoConstraints(constraints, params);
-                    this.options.logger.debug(string_summarize("Recorder: our webcam constraints are:", constraints));
-                    this.options.logger.debug(string_summarize("Recorder: available webcam constraints are:", navigator.mediaDevices.getSupportedConstraints()));
-                    const streamPromise = navigator.mediaDevices.getUserMedia(constraints);
-                    streamPromise.then((localStream)=>{
-                        if (this.unloaded || requestId !== this.mediaRequestId) return void localStream.getTracks().forEach((track)=>{
-                            track.stop();
-                        });
-                        this.getUserMediaCallback(localStream, params, requestId);
-                    }).catch((reason)=>{
-                        if (!this.unloaded && requestId === this.mediaRequestId) this.userMediaErrorCallback(reason, constraints);
-                    });
-                }
-                configureVideoConstraints(constraints, params) {
-                    const videoConstraints = "object" == typeof constraints.video ? constraints.video : void 0;
-                    if (!videoConstraints) return;
-                    if (params?.switchingFacingMode || params?.recovering) videoConstraints.facingMode = params.switchingFacingMode || this.facingMode;
-                    if (this.options.video.width) videoConstraints.width = {
-                        ideal: this.options.video.width
-                    };
-                    else {
-                        const limitedWidth = this.limitWidth();
-                        if (limitedWidth?.value) videoConstraints.width = {
-                            ideal: limitedWidth.value
-                        };
-                    }
-                    if (this.options.video.height) videoConstraints.height = {
-                        ideal: this.options.video.height
-                    };
-                }
-                loadUserMedia(params) {
-                    if (this.userMediaLoaded) {
-                        this.options.logger.debug("Recorder: skipping loadUserMedia() because it is already loaded");
-                        this.onUserMediaReady(params);
-                        return;
-                    } else if (this.userMediaLoading) return void this.options.logger.debug("Recorder: skipping loadUserMedia() because it is already asking for permission");
-                    this.options.logger.debug(`Recorder: loadUserMedia(${params ? string_pretty(params) : ""})`);
-                    this.emit("LOADING_USER_MEDIA");
-                    try {
-                        if (!navigator.mediaDevices) throw new Error("No media devices are available.");
-                        this.userMediaTimeout = window.setTimeout(()=>{
-                            if (!this.userMediaLoaded) {
-                                this.userMediaLoading = false;
-                                const err = util_getBrowser(this.options).getNoAccessIssue();
-                                this.userMediaErrorCallback(err, {
-                                    audio: isAudioEnabled(this.options)
-                                });
-                            }
-                        }, this.options.timeouts.userMedia);
-                        this.userMediaLoading = true;
-                        this.loadGenuineUserMedia(params);
-                    } catch (exc) {
-                        this.clearUserMediaTimeout();
-                        this.options.logger.debug("Recorder: failed to load genuine user media");
-                        this.userMediaLoading = false;
-                        if (this.cameraRecovery) return void this.failCameraRecovery(exc);
-                        const errorListeners = this.getListeners("ERROR");
-                        if (errorListeners?.length) this.emit("ERROR", {
-                            exc
-                        });
-                        else {
-                            this.options.logger.debug("Recorder: no error listeners attached but throwing exception further");
-                            throw exc;
-                        }
-                    }
                 }
                 executeCommand(command) {
                     if (this.unloaded) return;
@@ -20626,114 +21225,6 @@
                         });
                     }
                 }
-                isNotifying() {
-                    return this.visuals.isNotifying();
-                }
-                isHidden() {
-                    return !this.recorderElement || html_isHidden(this.recorderElement);
-                }
-                writeCommand(command, args, cb) {
-                    if (this.connected) {
-                        if (this.stream) {
-                            if (args) this.options.logger.debug(`$ ${command} with ${string_pretty(args)}`);
-                            else this.options.logger.debug(`$ ${command}`);
-                            const commandObj = {
-                                command,
-                                args
-                            };
-                            this.writeStream(Buffer.from(JSON.stringify(commandObj)), cb ? {
-                                onFlushedCallback: ()=>{
-                                    queueMicrotask(cb);
-                                }
-                            } : void 0);
-                        }
-                    } else {
-                        this.options.logger.debug(`Reconnecting for the command ${command} …`);
-                        this.initSocket(()=>{
-                            this.writeCommand(command, args, cb);
-                        });
-                    }
-                }
-                cancelAnimationFrame() {
-                    this.loop?.dispose();
-                }
-                getIntervalSum() {
-                    if (!this.loop) return;
-                    return this.loop.getElapsedTime();
-                }
-                getAvgInterval() {
-                    const intervalSum = this.getIntervalSum() ?? 0;
-                    if (!this.hasValidInterval(intervalSum)) return;
-                    return intervalSum / this.framesCount;
-                }
-                getAvgFps() {
-                    const intervalSum = this.getIntervalSum() ?? 0;
-                    if (!this.hasValidInterval(intervalSum)) return;
-                    return this.framesCount / intervalSum * 1000;
-                }
-                hasValidInterval(intervalSum) {
-                    return intervalSum > 0;
-                }
-                getRecordingStats() {
-                    return this.recordingStats;
-                }
-                getAudioSampleRate() {
-                    return this.recordingAudioSampleRate ?? this.userMedia?.getAudioSampleRate();
-                }
-                stop(params) {
-                    this.cancelCameraRecovery();
-                    if (!this.userMedia) throw new Error("No user media defined, unable to stop");
-                    this.options.logger.debug(`Recorder: stop(${params ? string_pretty(params) : ""})`);
-                    this.recordingActive = false;
-                    const limitReached = params?.limitReached;
-                    this.emit("STOPPING", {
-                        limitReached
-                    });
-                    this.loop?.complete();
-                    this.stopTimeout = window.setTimeout(()=>{
-                        this.stopTimeout = void 0;
-                        this.stopTime = Date.now();
-                        const videoType = this.replay.getVideoType();
-                        if (!videoType) throw new Error("Unable to video record when no video type is defined.");
-                        this.recordingStats = {
-                            avgFps: this.getAvgFps(),
-                            wantedFps: this.options.video.fps,
-                            avgInterval: this.getAvgInterval(),
-                            wantedInterval: 1e3 / this.options.video.fps,
-                            intervalSum: this.getIntervalSum(),
-                            framesCount: this.framesCount,
-                            videoType
-                        };
-                        if (this.userMedia) this.recordingStats.videoTrackLabel = this.userMedia.getVideoTrackLabel();
-                        if (isAudioEnabled(this.options) && this.userMedia) {
-                            this.recordingStats.samplesCount = this.samplesCount;
-                            this.recordingStats.sampleRate = this.recordingAudioSampleRate ?? this.userMedia.getAudioSampleRate();
-                        }
-                        this.writeCommand("stop", this.recordingStats, ()=>{
-                            this.emit("STOPPED", {
-                                recordingStats: this.recordingStats
-                            });
-                        });
-                        this.reset();
-                    }, 60);
-                }
-                back(cb) {
-                    this.emit("GOING_BACK");
-                    this.key = void 0;
-                    this.recordingDimensions = void 0;
-                    this.unloaded = false;
-                    this.show();
-                    this.writeCommand("back", void 0, cb);
-                }
-                reInitializeAudio() {
-                    this.options.logger.debug("Recorder: reInitializeAudio()");
-                    this.clearUserMediaTimeout();
-                    this.userMediaLoading = false;
-                    this.userMedia?.stop();
-                    this.recordingDimensions = void 0;
-                    this.userMediaLoaded = this.key = this.canvas = this.ctx = void 0;
-                    this.loadUserMedia();
-                }
                 unload(params) {
                     if (this.unloaded || !this.built) return;
                     const e = params?.e;
@@ -20756,317 +21247,12 @@
                     this.reconnecting = false;
                     this.reconnectAttempts = 0;
                     if (this.userMedia) this.userMedia.unloadRemainingEventListeners();
-                    if (this.submitting) ;
-                    else if (this.stream) this.discardSocket();
                     this.unloaded = true;
+                    this.discardSocket();
                     this.built = this.connecting = this.connected = false;
                 }
-                reset() {
-                    this.cancelCameraRecovery();
-                    if (!this.unloaded) {
-                        this.options.logger.debug("Recorder: reset()");
-                        this.emit("RESETTING");
-                        this.cancelAnimationFrame();
-                        this.userMedia?.stop();
-                        this.replay.reset();
-                        this.userMediaLoaded = this.key = this.canvas = this.ctx = this.recordingBuffer = void 0;
-                    }
-                }
-                clearUserMediaTimeout() {
-                    if (void 0 !== this.userMediaTimeout) {
-                        this.options.logger.debug("Recorder: clearUserMediaTimeout()");
-                        window.clearTimeout(this.userMediaTimeout);
-                        this.userMediaTimeout = void 0;
-                    }
-                }
-                clearStopTimeout() {
-                    if (void 0 === this.stopTimeout) return;
-                    window.clearTimeout(this.stopTimeout);
-                    this.stopTimeout = void 0;
-                }
-                validate() {
-                    return Boolean(this.key) && void 0 === this.canvas;
-                }
-                isReady() {
-                    return this.userMedia?.isReady();
-                }
-                finishCameraRecovery(restored) {
-                    this.clearUserMediaTimeout();
-                    const resolve = this.resolveCameraRecovery;
-                    const resumeRequested = restored && this.resumeAfterCameraRecovery;
-                    this.cameraRecovery = void 0;
-                    this.resolveCameraRecovery = void 0;
-                    this.resumeAfterCameraRecovery = false;
-                    resolve?.(restored);
-                    if (resumeRequested && this.isPaused()) this.resume();
-                }
-                cancelCameraRecovery() {
-                    if (!this.cameraRecovery) return;
-                    this.mediaRequestId++;
-                    this.userMediaLoading = false;
-                    this.userMediaLoaded = false;
-                    this.clearUserMediaTimeout();
-                    this.userMedia?.stop(void 0, {
-                        preserveRecordingState: true
-                    });
-                    this.finishCameraRecovery(false);
-                }
-                failCameraRecovery(exc) {
-                    this.cancelCameraRecovery();
-                    const err = error_createError({
-                        message: "Camera recovery failed",
-                        explanation: "Your recording is still paused. Check camera permissions, then try Resume again or stop to keep the recorded part.",
-                        exc,
-                        options: this.options
-                    });
-                    this.emit("CAMERA_RECOVERY_FAILED", {
-                        err
-                    });
-                }
-                recoverCamera() {
-                    if (this.cameraRecovery) return this.cameraRecovery;
-                    if (!this.built || this.unloaded || !this.userMedia || this.userMediaLoading || this.submitting || this.key || void 0 !== this.stopTimeout || this.recordingTransportFailed) return Promise.resolve(false);
-                    const liveStream = this.userMedia.hasLiveStream();
-                    if (liveStream && this.isRecording()) return Promise.resolve(true);
-                    if (!liveStream && this.recordingActive && !this.isPaused()) this.pause();
-                    const recovery = new Promise((resolve)=>{
-                        this.resolveCameraRecovery = resolve;
-                    });
-                    this.cameraRecovery = recovery;
-                    this.emit("CAMERA_RECOVERING");
-                    if (liveStream) {
-                        this.userMediaTimeout = window.setTimeout(()=>{
-                            this.failCameraRecovery(new Error("Camera playback recovery timed out."));
-                        }, this.options.timeouts.userMedia);
-                        this.userMedia.restorePlayback().then(()=>{
-                            if (this.cameraRecovery === recovery) this.finishCameraRecovery(true);
-                        }).catch((exc)=>{
-                            if (this.cameraRecovery === recovery) this.failCameraRecovery(exc);
-                        });
-                    } else {
-                        this.userMediaLoaded = false;
-                        this.loadUserMedia({
-                            recovering: true
-                        });
-                    }
-                    return recovery;
-                }
-                pause(params) {
-                    this.cancelCameraRecovery();
-                    this.resumeAfterDrain = false;
-                    if (params) this.options.logger.debug(`pause() at frame ${this.framesCount} with ${string_pretty(params)}`);
-                    else this.options.logger.debug(`pause() at frame ${this.framesCount}`);
-                    this.userMedia?.pause();
-                    this.loop.stop();
-                    this.emit("PAUSED");
-                    this.sendPings();
-                }
-                resume() {
-                    if (this.cameraRecovery || !this.userMedia?.hasLiveStream()) {
-                        this.recoverCamera();
-                        this.resumeAfterCameraRecovery = Boolean(this.cameraRecovery);
-                        return;
-                    }
-                    this.options.logger.debug(`Recorder: resume() with frame ${this.framesCount}`);
-                    this.stopPings();
-                    this.emit("RESUMING");
-                    this.userMedia.resume();
-                    if (this.streamBackpressured) this.resumeAfterDrain = true;
-                    else this.loop.start();
-                }
-                onFlushed(opts) {
-                    const frameNumber = opts.frameNumber;
-                    if (1 === frameNumber) this.emit("FIRST_FRAME_SENT");
-                }
-                draw(_deltaTime, elapsedTime) {
-                    if (this.recordingTransportFailed) return;
-                    if (!this.userMedia) throw new Error("No user media defined, unable to draw on canvas");
-                    try {
-                        if (!this.isPaused() && this.stream && this.ctx) {
-                            if (0 === this.framesCount) this.emit("SENDING_FIRST_FRAME");
-                            this.framesCount++;
-                            const imageSource = this.userMedia.getRawVisuals();
-                            if (this.canvas && imageSource) this.ctx.drawImage(imageSource, 0, 0, this.canvas.width, this.canvas.height);
-                            else throw new Error("Unable to draw an image without a defined canvas");
-                            this.recordingBuffer = this.frame?.toBuffer();
-                            const recordingBufferLength = this.recordingBuffer?.length;
-                            if (recordingBufferLength) {
-                                if (this.recordingBuffer) {
-                                    const frameControlBuffer = Buffer.from(JSON.stringify({
-                                        frameNumber: this.framesCount
-                                    }));
-                                    const frameBuffer = Buffer.concat([
-                                        this.recordingBuffer,
-                                        frameControlBuffer
-                                    ]);
-                                    this.mediaTransmissionStarted = true;
-                                    this.writeStream(frameBuffer, {
-                                        frameNumber: this.framesCount,
-                                        onFlushedCallback: this.onFlushed.bind(this)
-                                    });
-                                    this.visuals.checkTimer(elapsedTime);
-                                }
-                            } else throw error_createError({
-                                message: "Failed to extract webcam data.",
-                                options: this.options
-                            });
-                        }
-                    } catch (exc) {
-                        this.emit("ERROR", {
-                            exc
-                        });
-                    }
-                }
-                createLoop() {
-                    const newLoop = animitter_default()({
-                        fps: this.options.video.fps
-                    }, this.draw.bind(this));
-                    this.originalAnimationFrameObject = newLoop.getRequestAnimationFrameObject();
-                    return newLoop;
-                }
-                record() {
-                    if (this.unloaded || this.cameraRecovery) return;
-                    if (!this.connected) {
-                        this.options.logger.debug("Recorder: reconnecting before recording …");
-                        this.initSocket(()=>{
-                            this.once("SERVER_READY", ()=>{
-                                if (this.unloaded) return;
-                                if (this.userMediaLoaded || this.options.loadUserMediaOnRecord) this.record();
-                                else this.once("USER_MEDIA_READY", ()=>{
-                                    if (!this.unloaded) this.record();
-                                });
-                            });
-                        });
-                        return;
-                    }
-                    if (!this.userMediaLoaded) {
-                        if (this.options.loadUserMediaOnRecord) this.loadUserMedia({
-                            recordWhenReady: true
-                        });
-                        else {
-                            const err = error_createError({
-                                message: "Load and enable your camera first",
-                                options: this.options
-                            });
-                            this.emit("ERROR", {
-                                err
-                            });
-                        }
-                        return;
-                    }
-                    this.recordingDimensions = void 0;
-                    try {
-                        if (!this.userMedia) throw new Error("No user media defined, unable to create canvas");
-                        this.canvas = this.userMedia.createCanvas();
-                    } catch (exc) {
-                        const err = error_createError({
-                            exc,
-                            options: this.options
-                        });
-                        this.emit("ERROR", {
-                            err
-                        });
-                        return;
-                    }
-                    this.ctx = this.canvas.getContext("2d");
-                    if (!this.canvas.width) {
-                        const err = error_createError({
-                            message: "Canvas has an invalid width.",
-                            options: this.options
-                        });
-                        this.emit("ERROR", {
-                            err
-                        });
-                        return;
-                    }
-                    if (!this.canvas.height) {
-                        const err = error_createError({
-                            message: "Canvas has an invalid height.",
-                            options: this.options
-                        });
-                        this.emit("ERROR", {
-                            err
-                        });
-                        return;
-                    }
-                    this.recordingDimensions = {
-                        width: this.canvas.width,
-                        height: this.canvas.height
-                    };
-                    this.frame = new canvas_to_buffer_modern_r(this.canvas, this.options.image.types, this.options.image.quality);
-                    this.options.logger.debug("Recorder: record()");
-                    this.recordingActive = true;
-                    this.recordingTransportFailed = false;
-                    this.mediaTransmissionStarted = false;
-                    this.recordingAudioSampleRate = void 0;
-                    this.userMedia.record();
-                    this.emit("RECORDING", {
-                        framesCount: this.framesCount
-                    });
-                    this.loop.on("update", (_deltaTime, elapsedTime)=>{
-                        let avgFPS;
-                        avgFPS = 0 !== elapsedTime ? Math.round(this.framesCount / elapsedTime * 1000) : void 0;
-                        this.options.logger.debug(`Recorder updates avgFps = ${avgFPS} at frame ${this.framesCount}`);
-                    });
-                    this.loop.start();
-                }
-                setAnimationFrameObject(newObj) {
-                    if (this.loop) {
-                        const isRecording = this.isRecording();
-                        this.loop.stop();
-                        this.loop.setRequestAnimationFrameObject(newObj);
-                        if (isRecording) this.loop.start();
-                    }
-                }
-                restoreAnimationFrameObject() {
-                    this.options.logger.debug("Recorder: restoreAnimationFrameObject()");
-                    this.setAnimationFrameObject(this.originalAnimationFrameObject);
-                }
-                loopWithTimeouts() {
-                    this.options.logger.debug("Recorder: loopWithTimeouts()");
-                    const wantedInterval = 1e3 / this.options.video.fps;
-                    let processingTime = 0;
-                    let start;
-                    const raf = (fn)=>setTimeout(()=>{
-                            start = Date.now();
-                            fn();
-                            processingTime = Date.now() - start;
-                        }, wantedInterval - processingTime);
-                    const cancel = (id)=>{
-                        window.clearTimeout(id);
-                    };
-                    this.setAnimationFrameObject({
-                        requestAnimationFrame: raf,
-                        cancelAnimationFrame: cancel
-                    });
-                }
                 correctDimensions() {
-                    if (!this.recorderElement) return;
-                    const widthDimension = dimensions_useFullWidth(this.options.video.mobileBreakPoint);
-                    if (this.options.video.stretch || widthDimension) {
-                        this.recorderElement.style.width = "100%";
-                        this.recorderElement.style.removeProperty("height");
-                    } else {
-                        if (this.options.video.width) {
-                            const recorderWidth = this.getRecorderWidth(true);
-                            if (recorderWidth?.value) this.recorderElement.width = recorderWidth.value;
-                            else this.recorderElement.style.removeProperty("width");
-                        }
-                        if (this.options.video.height) {
-                            const recorderHeight = this.getRecorderHeight(true);
-                            if (recorderHeight?.value) this.recorderElement.height = recorderHeight.value;
-                            else this.recorderElement.style.removeProperty("height");
-                        }
-                    }
-                }
-                switchFacingMode() {
-                    if (this.cameraRecovery || !util_getBrowser(this.options).isMobile()) return;
-                    if ("user" === this.facingMode) this.facingMode = "environment";
-                    else if ("environment" === this.facingMode) this.facingMode = "user";
-                    else this.options.logger.warn(`Recorder: unsupported facing mode ${string_pretty(this.facingMode)}`);
-                    this.loadGenuineUserMedia({
-                        switchingFacingMode: this.facingMode
-                    });
+                    this.dimensions.correctDimensions();
                 }
                 initEvents() {
                     this.options.logger.debug("Recorder: initEvents()");
@@ -21138,100 +21324,20 @@
                     }
                     this.built = true;
                 }
-                isPaused() {
-                    return this.userMedia?.isPaused() && !this.loop.isRunning();
-                }
-                isRecording() {
-                    return Boolean(this.loop?.isRunning() && !this.isPaused() && !this.isNotifying() && this.stream && !this.stream.destroyed);
-                }
-                hide() {
-                    if (!this.isHidden()) {
-                        if (this.recorderElement) html_hideElement(this.recorderElement);
-                        this.clearUserMediaTimeout();
-                        this.clearRetryTimeout();
-                    }
-                }
-                isUnloaded() {
-                    return this.unloaded;
-                }
                 getRecorderWidth(responsive) {
-                    if (this.userMedia?.hasVideoWidth()) return this.userMedia.getRawWidth(responsive);
-                    else if (responsive && this.options.video.width) return this.limitWidth(this.options.video.width);
-                    const dimension = {
-                        unit: "px",
-                        value: this.options.video.width
-                    };
-                    return dimension;
-                }
-                getRecordingDimensions() {
-                    return this.recordingDimensions && {
-                        ...this.recordingDimensions
-                    };
+                    return this.dimensions.getRecorderWidth(responsive);
                 }
                 getRecorderHeight(responsive, useBoundingClientRect) {
-                    let recorderHeight;
-                    if (this.recorderElement && useBoundingClientRect) {
-                        const height = this.recorderElement.getBoundingClientRect().height;
-                        recorderHeight = {
-                            unit: "px",
-                            value: height
-                        };
-                    } else if (this.userMedia) {
-                        let height = this.userMedia.getRawHeight(responsive);
-                        if (void 0 !== height && this.options.video.width) {
-                            const ratio = this.getRatio();
-                            if (void 0 !== ratio) {
-                                const idealHeight = this.options.video.width * ratio;
-                                height = Math.min(idealHeight, height);
-                            }
-                        }
-                        recorderHeight = {
-                            unit: "px",
-                            value: height
-                        };
-                    } else if (responsive && this.options.video.height) recorderHeight = this.calculateHeight(responsive);
-                    else if (this.options.video.height) {
-                        const height = this.options.video.height;
-                        recorderHeight = {
-                            unit: "px",
-                            value: height
-                        };
-                    }
-                    return recorderHeight;
+                    return this.dimensions.getRecorderHeight(responsive, useBoundingClientRect);
                 }
                 getRatio() {
-                    let ratio;
-                    if (this.userMedia) {
-                        const userMediaVideoWidth = this.userMedia.getVideoWidth();
-                        const userMediaVideoHeight = this.userMedia.getVideoHeight();
-                        if (!userMediaVideoWidth || userMediaVideoWidth < 1) ratio = this.visuals.getRatio();
-                        else if (userMediaVideoHeight) ratio = userMediaVideoHeight / userMediaVideoWidth;
-                    } else ratio = dimensions_getRatio(this.options);
-                    return ratio;
+                    return this.dimensions.getRatio();
                 }
                 calculateWidth(responsive) {
-                    let videoHeight;
-                    if (this.userMedia) videoHeight = this.userMedia.getVideoHeight();
-                    else if (this.recorderElement) videoHeight = this.recorderElement.videoHeight || this.recorderElement.height;
-                    const ratio = this.getRatio();
-                    return dimensions_calculateWidth(responsive, this.options, videoHeight, ratio);
+                    return this.dimensions.calculateWidth(responsive);
                 }
                 calculateHeight(responsive) {
-                    let videoDimension;
-                    if (this.userMedia) {
-                        const videoHeight = this.userMedia.getVideoHeight();
-                        videoDimension = {
-                            value: videoHeight,
-                            unit: "px"
-                        };
-                    } else if (this.recorderElement) {
-                        const videoHeight = this.recorderElement.videoHeight || this.recorderElement.height;
-                        videoDimension = {
-                            value: videoHeight,
-                            unit: "px"
-                        };
-                    } else videoDimension = dimensions_calculateHeight(responsive, void 0, this.options, this.getRatio(), this.recorderElement);
-                    return videoDimension;
+                    return this.dimensions.calculateHeight(responsive);
                 }
                 getRawVisualUserMedia() {
                     return this.recorderElement;
@@ -21247,9 +21353,6 @@
                 }
                 limitHeight(height) {
                     return this.visuals.limitHeight(height);
-                }
-                isUserMediaLoaded() {
-                    return this.userMediaLoaded;
                 }
             }
             const visuals_recorder = Recorder;
@@ -22162,7 +22265,8 @@
                     }
                     else runValidation = false;
                     if (runValidation) {
-                        const targetName = event?.target?.name;
+                        const target = event?.target;
+                        const targetName = target instanceof Element ? target.getAttribute("name") : void 0;
                         if (targetName) this.emit("VALIDATING", {
                             targetName
                         });
@@ -22197,27 +22301,10 @@
                                 }
                             }
                             if (valid) {
-                                const recipients = this.form.getRecipients();
-                                const toIsConfigured = "to" in recipients;
-                                const ccIsConfigured = "cc" in recipients;
-                                const bccIsConfigured = "bcc" in recipients;
-                                const hasTo = recipients.to && recipients.to.length > 0;
-                                const hasCc = recipients.cc && recipients.cc.length > 0;
-                                const hasBcc = recipients.bcc && recipients.bcc.length > 0;
-                                if (toIsConfigured) {
-                                    if (!hasTo) if (ccIsConfigured && bccIsConfigured) {
-                                        if (!hasCc && !hasBcc) valid = false;
-                                    } else if (ccIsConfigured) {
-                                        if (!hasCc) valid = false;
-                                    } else if (bccIsConfigured) {
-                                        if (!hasBcc) valid = false;
-                                    } else valid = false;
-                                } else if (ccIsConfigured) {
-                                    if (!hasCc) {
-                                        if (bccIsConfigured && !hasBcc) valid = false;
-                                    }
+                                if (!email_isRecipientSelectionValid(this.form.getRecipients())) {
+                                    valid = false;
+                                    whyInvalid = "At least one recipient is required";
                                 }
-                                if (!valid) whyInvalid = "At least one recipient is required";
                             }
                         } else {
                             valid = visualsValid;
