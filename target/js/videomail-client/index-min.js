@@ -1654,7 +1654,7 @@
                     return 0 === comparison || comparison & DOCUMENT_POSITION_CONTAINED_BY;
                 }
             },
-            TU (__unused_rspack_module, exports1, __webpack_require__) {
+            T (__unused_rspack_module, exports1, __webpack_require__) {
                 function isArray(arg) {
                     if (Array.isArray) return Array.isArray(arg);
                     return '[object Array]' === objectToString(arg);
@@ -2119,7 +2119,7 @@
                     return keys;
                 };
                 module1.exports = Duplex;
-                var util = Object.create(__webpack_require__("TU"));
+                var util = Object.create(__webpack_require__("T"));
                 util.inherits = __webpack_require__("c5");
                 var Readable = __webpack_require__("rp");
                 var Writable = __webpack_require__("pv");
@@ -2173,7 +2173,7 @@
                 "use strict";
                 module1.exports = PassThrough;
                 var Transform = __webpack_require__("It");
-                var util = Object.create(__webpack_require__("TU"));
+                var util = Object.create(__webpack_require__("T"));
                 util.inherits = __webpack_require__("c5");
                 util.inherits(PassThrough, Transform);
                 function PassThrough(options) {
@@ -2205,7 +2205,7 @@
                 function _isUint8Array(obj) {
                     return Buffer.isBuffer(obj) || obj instanceof OurUint8Array;
                 }
-                var util = Object.create(__webpack_require__("TU"));
+                var util = Object.create(__webpack_require__("T"));
                 util.inherits = __webpack_require__("c5");
                 var debugUtil = __webpack_require__("AN");
                 var debug = void 0;
@@ -2832,7 +2832,7 @@
                 "use strict";
                 module1.exports = Transform;
                 var Duplex = __webpack_require__("OO");
-                var util = Object.create(__webpack_require__("TU"));
+                var util = Object.create(__webpack_require__("T"));
                 util.inherits = __webpack_require__("c5");
                 util.inherits(Transform, Duplex);
                 function afterTransform(er, data) {
@@ -2932,7 +2932,7 @@
                 ].indexOf(process.version.slice(0, 5)) > -1 ? setImmediate : pna.nextTick;
                 var Duplex;
                 Writable.WritableState = WritableState;
-                var util = Object.create(__webpack_require__("TU"));
+                var util = Object.create(__webpack_require__("T"));
                 util.inherits = __webpack_require__("c5");
                 var internalUtil = {
                     deprecate: __webpack_require__("NQ")
@@ -5954,7 +5954,8 @@
                 var percentTwenties = /%20/g;
                 var Format = {
                     RFC1738: 'RFC1738',
-                    RFC3986: 'RFC3986'
+                    RFC3986: 'RFC3986',
+                    WHATWG: 'WHATWG'
                 };
                 module1.exports = {
                     default: Format.RFC3986,
@@ -5964,10 +5965,14 @@
                         },
                         RFC3986: function(value) {
                             return String(value);
+                        },
+                        WHATWG: function(value) {
+                            return replace.call(value, percentTwenties, '+');
                         }
                     },
                     RFC1738: Format.RFC1738,
-                    RFC3986: Format.RFC3986
+                    RFC3986: Format.RFC3986,
+                    WHATWG: Format.WHATWG
                 };
             },
             b (module1, __unused_rspack_exports, __webpack_require__) {
@@ -6028,8 +6033,8 @@
                                         target: copy
                                     };
                                 }
-                                target[keys[j]] = copies.get(value);
-                            } else target[keys[j]] = value;
+                                utils.setProperty(target, keys[j], copies.get(value));
+                            } else utils.setProperty(target, keys[j], value);
                         }
                     }
                     return result;
@@ -6076,7 +6081,7 @@
                         }
                         return val.split(',');
                     }
-                    if (options.throwOnLimitExceeded && currentArrayLength >= options.arrayLimit) throw new RangeError('Array limit exceeded. Only ' + options.arrayLimit + ' element' + (1 === options.arrayLimit ? '' : 's') + ' allowed in an array.');
+                    if (options.throwOnLimitExceeded && currentArrayLength >= options.arrayLimit && currentArrayLength > 0) throw new RangeError('Array limit exceeded. Only ' + options.arrayLimit + ' element' + (1 === options.arrayLimit ? '' : 's') + ' allowed in an array.');
                     return val;
                 };
                 var isoSentinel = 'utf8=%26%2310003%3B';
@@ -6113,11 +6118,13 @@
                             val = options.strictNullHandling ? null : '';
                         } else {
                             key = options.decoder(part.slice(0, pos), defaults.decoder, charset, 'key');
-                            if (null !== key) val = utils.maybeMap(parseArrayValue(part.slice(pos + 1), options, isArray(obj[key]) ? obj[key].length : 0), function(encodedVal) {
+                            if (null !== key) val = utils.maybeMap(parseArrayValue(part.slice(pos + 1), options, isArray(obj[key]) && ('combine' === options.duplicates || isEmptyBracketKey) ? obj[key].length : 0), function(encodedVal) {
                                 return options.decoder(encodedVal, defaults.decoder, charset, 'value');
                             });
                         }
-                        if (val && options.interpretNumericEntities && 'iso-8859-1' === charset) val = interpretNumericEntities(String(val));
+                        if (val && options.interpretNumericEntities && 'iso-8859-1' === charset) val = utils.maybeMap(val, function(value) {
+                            return value ? interpretNumericEntities(String(value)) : value;
+                        });
                         if (isEmptyBracketKey) val = isArray(val) ? [
                             val
                         ] : val;
@@ -6146,7 +6153,7 @@
                                 __proto__: null
                             } : {};
                             var cleanRoot = '[' === root.charAt(0) && ']' === root.charAt(root.length - 1) ? root.slice(1, -1) : root;
-                            var decodedRoot = options.decodeDotInKeys ? cleanRoot.replace(/%2E/g, '.') : cleanRoot;
+                            var decodedRoot = options.decodeDotInKeys ? cleanRoot.replace(/%2E/gi, '.') : cleanRoot;
                             var index = parseInt(decodedRoot, 10);
                             var isValidArrayIndex = !isNaN(index) && root !== decodedRoot && String(index) === decodedRoot && index >= 0 && options.parseArrays;
                             if (options.parseArrays || '' !== decodedRoot) {
@@ -6408,7 +6415,7 @@
                     }
                     var encodedPrefix = String(prefix);
                     var adjustedPrefix = commaRoundTrip && isArray(obj) && 1 === obj.length ? encodedPrefix + '[]' : encodedPrefix;
-                    if (allowEmptyArrays && isArray(obj) && 0 === obj.length && 0 === Object.keys(obj).length) return adjustedPrefix + '[]';
+                    if (allowEmptyArrays && isArray(obj) && 0 === obj.length && 0 === Object.keys(obj).length) return formatter(encoder && !encodeValuesOnly ? encoder(adjustedPrefix, defaults.encoder, charset, 'key', format) : adjustedPrefix) + '[]';
                     for(var j = 0; j < objKeys.length; ++j){
                         var key = objKeys[j];
                         var value = 'object' == typeof key && key && void 0 !== key.value ? key.value : obj[key];
@@ -6474,7 +6481,7 @@
                         filter = options.filter;
                         obj = filter('', obj);
                     } else if (isArray(options.filter)) {
-                        filter = options.filter;
+                        filter = options.filter.slice();
                         objKeys = filter;
                     }
                     var keys = [];
@@ -6490,7 +6497,7 @@
                             var value = obj[key];
                             if (!options.skipNulls || null !== value) {
                                 var encodedKey = options.encodeDotInKeys ? String(key).replace(/\./g, '%2E') : String(key);
-                                pushToArray(keys, stringify(value, encodedKey, generateArrayPrefix, commaRoundTrip, options.allowEmptyArrays, options.strictNullHandling, options.skipNulls, options.encodeDotInKeys, options.encode ? options.encoder : null, options.filter, options.sort, options.allowDots, options.serializeDate, options.format, options.formatter, options.encodeValuesOnly, options.charset, sideChannel, options.depth, 0));
+                                pushToArray(keys, stringify(value, encodedKey, generateArrayPrefix, commaRoundTrip, options.allowEmptyArrays, options.strictNullHandling, options.skipNulls, options.encodeDotInKeys, options.encode ? options.encoder : null, filter, options.sort, options.allowDots, options.serializeDate, options.format, options.formatter, options.encodeValuesOnly, options.charset, sideChannel, options.depth, 0));
                             }
                         }
                     }
@@ -6739,7 +6746,7 @@
                         var arr = [];
                         for(var i = 0; i < segment.length; ++i){
                             var c = segment.charCodeAt(i);
-                            if (0x2D === c || 0x2E === c || 0x5F === c || 0x7E === c || c >= 0x30 && c <= 0x39 || c >= 0x41 && c <= 0x5A || c >= 0x61 && c <= 0x7A || format === formats.RFC1738 && (0x28 === c || 0x29 === c)) {
+                            if (0x2D === c || 0x2E === c || 0x5F === c || 0x7E === c && format !== formats.WHATWG || c >= 0x30 && c <= 0x39 || c >= 0x41 && c <= 0x5A || c >= 0x61 && c <= 0x7A || format === formats.RFC1738 && (0x28 === c || 0x29 === c) || format === formats.WHATWG && 0x2A === c) {
                                 arr[arr.length] = segment.charAt(i);
                                 continue;
                             }
@@ -6755,9 +6762,12 @@
                                 arr[arr.length] = hexTable[0xE0 | c >> 12] + hexTable[0x80 | c >> 6 & 0x3F] + hexTable[0x80 | 0x3F & c];
                                 continue;
                             }
-                            i += 1;
-                            c = 0x10000 + ((0x3FF & c) << 10 | 0x3FF & segment.charCodeAt(i));
-                            arr[arr.length] = hexTable[0xF0 | c >> 18] + hexTable[0x80 | c >> 12 & 0x3F] + hexTable[0x80 | c >> 6 & 0x3F] + hexTable[0x80 | 0x3F & c];
+                            var next = segment.charCodeAt(i + 1);
+                            if (c <= 0xDBFF && next >= 0xDC00 && next <= 0xDFFF) {
+                                i += 1;
+                                c = 0x10000 + ((0x3FF & c) << 10 | 0x3FF & next);
+                                arr[arr.length] = hexTable[0xF0 | c >> 18] + hexTable[0x80 | c >> 12 & 0x3F] + hexTable[0x80 | c >> 6 & 0x3F] + hexTable[0x80 | 0x3F & c];
+                            } else arr[arr.length] = '%EF%BF%BD';
                         }
                         out += arr.join('');
                     }
@@ -6843,6 +6853,7 @@
                     markOverflow: markOverflow,
                     maybeMap: maybeMap,
                     merge: merge,
+                    setProperty: setProperty,
                     toCoercible: toCoercible
                 };
             },
@@ -7195,7 +7206,7 @@
                 const qs = __webpack_require__("b");
                 const RequestBase = __webpack_require__("d");
                 const { isObject, mixin, hasOwn, isSafeKey } = __webpack_require__("Dp");
-                const ResponseBase = __webpack_require__("e");
+                const ResponseBase = __webpack_require__("es");
                 const Agent = __webpack_require__("pf");
                 function noop() {}
                 module1.exports = function(method, url) {
@@ -7909,7 +7920,7 @@
                     }, this._responseTimeout);
                 };
             },
-            e (module1, __unused_rspack_exports, __webpack_require__) {
+            es (module1, __unused_rspack_exports, __webpack_require__) {
                 "use strict";
                 const utils = __webpack_require__("Dp");
                 module1.exports = ResponseBase;
@@ -8733,7 +8744,7 @@
                     return keys;
                 };
                 module1.exports = Duplex;
-                var util = Object.create(__webpack_require__("TU"));
+                var util = Object.create(__webpack_require__("T"));
                 util.inherits = __webpack_require__("c5");
                 var Readable = __webpack_require__("w");
                 var Writable = __webpack_require__("S5");
@@ -8787,7 +8798,7 @@
                 "use strict";
                 module1.exports = PassThrough;
                 var Transform = __webpack_require__("Ge");
-                var util = Object.create(__webpack_require__("TU"));
+                var util = Object.create(__webpack_require__("T"));
                 util.inherits = __webpack_require__("c5");
                 util.inherits(PassThrough, Transform);
                 function PassThrough(options) {
@@ -8819,7 +8830,7 @@
                 function _isUint8Array(obj) {
                     return Buffer.isBuffer(obj) || obj instanceof OurUint8Array;
                 }
-                var util = Object.create(__webpack_require__("TU"));
+                var util = Object.create(__webpack_require__("T"));
                 util.inherits = __webpack_require__("c5");
                 var debugUtil = __webpack_require__("eD");
                 var debug = void 0;
@@ -9446,7 +9457,7 @@
                 "use strict";
                 module1.exports = Transform;
                 var Duplex = __webpack_require__("S7");
-                var util = Object.create(__webpack_require__("TU"));
+                var util = Object.create(__webpack_require__("T"));
                 util.inherits = __webpack_require__("c5");
                 util.inherits(Transform, Duplex);
                 function afterTransform(er, data) {
@@ -9546,7 +9557,7 @@
                 ].indexOf(process.version.slice(0, 5)) > -1 ? setImmediate : pna.nextTick;
                 var Duplex;
                 Writable.WritableState = WritableState;
-                var util = Object.create(__webpack_require__("TU"));
+                var util = Object.create(__webpack_require__("T"));
                 util.inherits = __webpack_require__("c5");
                 var internalUtil = {
                     deprecate: __webpack_require__("NQ")
@@ -11121,7 +11132,7 @@
             var client = __webpack_require__("Q");
             var client_default = /*#__PURE__*/ __webpack_require__.n(client);
             var package_namespaceObject = {
-                rE: "16.2.0"
+                rE: "16.4.0"
             };
             function isAudioEnabled(options) {
                 return Boolean(options.audio.enabled);
@@ -20689,51 +20700,172 @@
             const esm = esm_src;
             var is_power_of_two = __webpack_require__("dZ");
             var is_power_of_two_default = /*#__PURE__*/ __webpack_require__.n(is_power_of_two);
-            const CHANNELS = 1;
-            function getAudioContextClass() {
-                return window.AudioContext;
+            const AUDIO_RECORDER_PROCESSOR_NAME = "videomail-pcm-recorder";
+            function registerAudioRecorderProcessor(name, Processor, register) {
+                class PcmRecorderProcessor extends Processor {
+                    constructor(options){
+                        super();
+                        this.samples = new Float32Array(options.processorOptions.bufferSize);
+                        this.offset = 0;
+                        this.recordingId = 0;
+                        this.port.onmessage = (event)=>{
+                            const recordingId = event.data;
+                            if ("number" != typeof recordingId) return;
+                            if (!Number.isSafeInteger(recordingId) || recordingId < -1) return;
+                            this.recordingId = recordingId;
+                            this.offset = 0;
+                        };
+                    }
+                    process(inputs) {
+                        if (this.recordingId < 0) return false;
+                        const channel = inputs[0]?.[0];
+                        if (!channel || 0 === this.recordingId) return true;
+                        let inputOffset = 0;
+                        while(inputOffset < channel.length){
+                            const count = Math.min(this.samples.length - this.offset, channel.length - inputOffset);
+                            this.samples.set(channel.subarray(inputOffset, inputOffset + count), this.offset);
+                            this.offset += count;
+                            inputOffset += count;
+                            if (this.offset === this.samples.length) {
+                                const samples = this.samples;
+                                this.port.postMessage({
+                                    recordingId: this.recordingId,
+                                    samples
+                                }, [
+                                    samples.buffer
+                                ]);
+                                this.samples = new Float32Array(this.offset);
+                                this.offset = 0;
+                            }
+                        }
+                        return true;
+                    }
+                }
+                register(name, PcmRecorderProcessor);
             }
-            class AudioRecorder {
-                scriptProcessor;
+            const CHANNELS = 1;
+            const DEFAULT_BUFFER_SIZE = 2048;
+            const MIN_BUFFER_SIZE = 256;
+            const MAX_BUFFER_SIZE = 16384;
+            class AudioRecorder extends util_Despot {
+                userMedia;
+                worklet;
                 audioInput;
                 volume;
                 vcAudioContext;
-                userMedia;
-                options;
+                workletReady;
+                moduleUrl;
+                audioCallback;
+                initializationId = 0;
+                recordingSequence = 0;
+                recordingId = 0;
                 constructor(userMedia, options){
-                    this.options = options;
+                    super("AudioRecorder", options);
                     this.userMedia = userMedia;
                 }
-                hasAudioContext() {
-                    return Boolean(getAudioContextClass()) && Boolean(this.getAudioContext());
-                }
                 getAudioContext() {
-                    if (!this.vcAudioContext) {
-                        const AudioContext = getAudioContextClass();
-                        this.vcAudioContext = new AudioContext();
-                    }
+                    if (!this.vcAudioContext) this.vcAudioContext = new window.AudioContext();
                     return this.vcAudioContext;
                 }
-                onAudioProcess(e, cb) {
+                getBufferSize() {
+                    const configuredSize = this.options.audio.bufferSize;
+                    const bufferSize = "auto" === configuredSize ? DEFAULT_BUFFER_SIZE : configuredSize;
+                    if (void 0 === bufferSize) throw error_createError({
+                        message: "Audio buffer size is required.",
+                        options: this.options
+                    });
+                    const validBufferSize = Number.isInteger(bufferSize) && bufferSize >= MIN_BUFFER_SIZE && bufferSize <= MAX_BUFFER_SIZE && is_power_of_two_default()(bufferSize);
+                    if (!validBufferSize) throw error_createError({
+                        message: `Audio buffer size must be a power of two between ${MIN_BUFFER_SIZE} and ${MAX_BUFFER_SIZE}. The current buffer size is ${bufferSize}.`,
+                        options: this.options
+                    });
+                    return bufferSize;
+                }
+                validateVolume() {
+                    const { volume } = this.options.audio;
+                    const validVolume = Number.isFinite(volume) && volume >= 0 && volume <= 1;
+                    if (!validVolume) throw error_createError({
+                        message: `Audio volume must be between zero and one. The current volume is ${volume}.`,
+                        options: this.options
+                    });
+                }
+                revokeModuleUrl() {
+                    if (this.moduleUrl) {
+                        URL.revokeObjectURL(this.moduleUrl);
+                        this.moduleUrl = void 0;
+                    }
+                }
+                async loadWorklet(context) {
+                    const source = `(${registerAudioRecorderProcessor.toString()})(${JSON.stringify(AUDIO_RECORDER_PROCESSOR_NAME)}, AudioWorkletProcessor, registerProcessor);`;
+                    const moduleUrl = URL.createObjectURL(new Blob([
+                        source
+                    ], {
+                        type: "text/javascript"
+                    }));
+                    this.moduleUrl = moduleUrl;
+                    try {
+                        await context.audioWorklet.addModule(moduleUrl);
+                    } finally{
+                        if (this.moduleUrl === moduleUrl) this.revokeModuleUrl();
+                    }
+                }
+                onAudioProcess(event) {
+                    const callback = this.audioCallback;
+                    if (!callback) return;
                     if (!this.userMedia.isRecording() || this.userMedia.isPaused()) return;
-                    const float32Array = e.inputBuffer.getChannelData(0);
-                    cb(new esm(float32Array));
+                    const message = event.data;
+                    if ("object" != typeof message || null === message) return;
+                    if (!("recordingId" in message) || message.recordingId !== this.recordingId) return;
+                    if (!("samples" in message) || !(message.samples instanceof Float32Array)) return;
+                    if (0 === message.samples.length) return;
+                    callback(new esm(message.samples));
                 }
                 disconnect() {
-                    if (this.scriptProcessor) {
-                        this.scriptProcessor.onaudioprocess = null;
-                        this.scriptProcessor.disconnect();
+                    if (this.worklet) {
+                        this.worklet.port.onmessage = null;
+                        this.worklet.onprocessorerror = null;
+                        this.worklet.port.postMessage(-1);
+                        this.worklet.port.close();
+                        this.worklet.disconnect();
+                        this.worklet = void 0;
                     }
                     this.audioInput?.disconnect();
                     this.volume?.disconnect();
+                    this.audioInput = void 0;
+                    this.volume = void 0;
+                    this.audioCallback = void 0;
+                    this.recordingId = 0;
                 }
-                init(localMediaStream) {
+                async init(localMediaStream) {
                     this.options.logger.debug("AudioRecorder: init()");
+                    const initializationId = ++this.initializationId;
                     this.disconnect();
-                    const volume = this.getAudioContext().createGain();
-                    this.volume = volume;
+                    const bufferSize = this.getBufferSize();
+                    this.validateVolume();
+                    if ("function" != typeof window.AudioContext) throw error_createError({
+                        message: "Audio recording requires Web Audio support.",
+                        options: this.options
+                    });
+                    const context = this.getAudioContext();
+                    if (void 0 === context.audioWorklet || "function" != typeof window.AudioWorkletNode) throw error_createError({
+                        message: "Audio recording requires AudioWorklet support in a secure context.",
+                        options: this.options
+                    });
+                    const workletReady = this.workletReady ??= this.loadWorklet(context);
                     try {
-                        this.audioInput = this.getAudioContext().createMediaStreamSource(localMediaStream);
+                        await workletReady;
+                    } catch (exc) {
+                        if (this.workletReady === workletReady) this.workletReady = void 0;
+                        if (initializationId !== this.initializationId) return;
+                        throw error_createError({
+                            message: "Unable to load the audio recorder worklet. Check AudioWorklet and Content Security Policy support for blob: scripts.",
+                            cause: exc,
+                            options: this.options
+                        });
+                    }
+                    if (initializationId !== this.initializationId) return;
+                    try {
+                        this.audioInput = context.createMediaStreamSource(localMediaStream);
                     } catch (exc) {
                         throw error_createError({
                             message: "Webcam has no audio",
@@ -20741,38 +20873,69 @@
                             options: this.options
                         });
                     }
-                    let { bufferSize } = this.options.audio;
-                    if ("auto" === bufferSize) bufferSize = util_getBrowser(this.options).isFirefox() ? 512 : 2048;
-                    if (void 0 === bufferSize || !is_power_of_two_default()(bufferSize)) throw error_createError({
-                        message: `Audio buffer size must be a power of two. The current buffer size is ${bufferSize}.`,
-                        options: this.options
-                    });
-                    if (!Number.isFinite(this.options.audio.volume) || this.options.audio.volume < 0 || this.options.audio.volume > 1) throw error_createError({
-                        message: `Audio volume must be between zero and one. The current volume is ${this.options.audio.volume}.`,
-                        options: this.options
-                    });
-                    volume.gain.value = this.options.audio.volume;
-                    this.scriptProcessor = this.getAudioContext().createScriptProcessor(bufferSize, CHANNELS, CHANNELS);
-                    this.audioInput.connect(volume);
-                    volume.connect(this.scriptProcessor);
-                    this.scriptProcessor.connect(this.getAudioContext().destination);
+                    try {
+                        this.volume = context.createGain();
+                        this.volume.gain.value = this.options.audio.volume;
+                        this.worklet = new window.AudioWorkletNode(context, AUDIO_RECORDER_PROCESSOR_NAME, {
+                            channelCount: CHANNELS,
+                            channelCountMode: "explicit",
+                            outputChannelCount: [
+                                CHANNELS
+                            ],
+                            processorOptions: {
+                                bufferSize
+                            }
+                        });
+                        this.worklet.port.onmessage = (event)=>{
+                            this.onAudioProcess(event);
+                        };
+                        this.worklet.onprocessorerror = ()=>{
+                            this.stop();
+                            this.emit("ERROR", {
+                                err: error_createError({
+                                    message: "Audio recording processor failed.",
+                                    options: this.options
+                                })
+                            });
+                        };
+                        this.audioInput.connect(this.volume);
+                        this.volume.connect(this.worklet);
+                        this.worklet.connect(context.destination);
+                    } catch (exc) {
+                        this.disconnect();
+                        throw error_createError({
+                            message: "Failed to connect the audio recorder.",
+                            exc,
+                            options: this.options
+                        });
+                    }
                 }
                 record(cb) {
                     this.options.logger.debug("AudioRecorder: record()");
-                    if (this.scriptProcessor) this.scriptProcessor.onaudioprocess = (e)=>{
-                        this.onAudioProcess(e, cb);
-                    };
+                    this.audioCallback = cb;
+                    this.updateRecordingState();
+                }
+                updateRecordingState() {
+                    if (!this.worklet) return;
+                    const shouldRecord = Boolean(this.audioCallback) && this.userMedia.isRecording() && !this.userMedia.isPaused();
+                    this.recordingId = shouldRecord ? ++this.recordingSequence : 0;
+                    this.worklet.port.postMessage(this.recordingId);
                 }
                 async resume() {
-                    const context = this.getAudioContext();
+                    const context = this.vcAudioContext;
+                    if (!context) return;
                     if ("running" !== context.state) await context.resume();
                 }
                 stop() {
                     this.options.logger.debug("AudioRecorder: stop()");
+                    this.initializationId++;
                     this.disconnect();
-                    if (this.hasAudioContext()) this.getAudioContext().close().then(()=>{
+                    this.revokeModuleUrl();
+                    const context = this.vcAudioContext;
+                    this.vcAudioContext = void 0;
+                    this.workletReady = void 0;
+                    if (context && "closed" !== context.state) context.close().then(()=>{
                         this.options.logger.debug("AudioRecorder: audio context is closed");
-                        this.vcAudioContext = void 0;
                     }).catch((err)=>{
                         if (err instanceof Error) return void this.options.logger.error(error_createError({
                             err,
@@ -20782,7 +20945,7 @@
                     });
                 }
                 getSampleRate() {
-                    if (this.hasAudioContext()) return this.getAudioContext().sampleRate;
+                    if ("function" == typeof window.AudioContext) return this.getAudioContext().sampleRate;
                     return -1;
                 }
             }
@@ -20947,27 +21110,33 @@
                     const fireCallbacks = ()=>{
                         const readyState = this.rawVisualUserMedia?.readyState;
                         this.options.logger.debug(`UserMedia: fireCallbacks(readyState=${readyState}, onPlayReached=${this.onPlayReached}, onLoadedMetaDataReached=${this.onLoadedMetaDataReached})`);
-                        if (this.onPlayReached && this.onLoadedMetaDataReached) if (this.audioRecorder) try {
-                            this.audioRecorder.init(localMediaStream);
-                            const onAudioReady = ()=>{
-                                if (initializationId !== this.initializationId || this.currentVisualStream !== localMediaStream) return;
-                                if (this.recording) this.audioRecord(audioCallback);
-                                else this.on("SENDING_FIRST_FRAME", ()=>{
-                                    this.audioRecord(audioCallback);
-                                });
-                                this.clearInitializationListeners?.();
-                                videoCallback();
+                        if (this.onPlayReached && this.onLoadedMetaDataReached) if (this.audioRecorder) {
+                            const initializeAudio = async (audioRecorder)=>{
+                                try {
+                                    await audioRecorder.init(localMediaStream);
+                                    if (initializationId !== this.initializationId || this.currentVisualStream !== localMediaStream) return;
+                                    const onAudioReady = ()=>{
+                                        if (initializationId !== this.initializationId || this.currentVisualStream !== localMediaStream) return;
+                                        if (this.recording) this.audioRecord(audioCallback);
+                                        else this.on("SENDING_FIRST_FRAME", ()=>{
+                                            this.audioRecord(audioCallback);
+                                        });
+                                        this.clearInitializationListeners?.();
+                                        videoCallback();
+                                    };
+                                    if (params?.recovering) await audioRecorder.resume();
+                                    onAudioReady();
+                                } catch (exc) {
+                                    if (initializationId !== this.initializationId) return;
+                                    unloadAllEventListeners();
+                                    this.stop(void 0, {
+                                        preserveRecordingState: Boolean(params?.recovering)
+                                    });
+                                    endedEarlyCallback(exc);
+                                }
                             };
-                            if (params?.recovering) this.audioRecorder.resume().then(onAudioReady).catch(endedEarlyCallback);
-                            else onAudioReady();
-                        } catch (exc) {
-                            unloadAllEventListeners();
-                            this.stop(void 0, {
-                                preserveRecordingState: Boolean(params?.recovering)
-                            });
-                            endedEarlyCallback(exc);
-                        }
-                        else {
+                            initializeAudio(this.audioRecorder);
+                        } else {
                             this.clearInitializationListeners?.();
                             videoCallback();
                         }
@@ -21124,15 +21293,18 @@
                 }
                 pause() {
                     this.paused = true;
+                    this.audioRecorder?.updateRecordingState();
                 }
                 isPaused() {
                     return this.paused;
                 }
                 resume() {
                     this.paused = false;
+                    this.audioRecorder?.updateRecordingState();
                 }
                 record() {
                     this.recording = true;
+                    this.audioRecorder?.updateRecordingState();
                 }
                 isRecording() {
                     return this.recording;
