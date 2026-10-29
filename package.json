@@ -54,12 +54,12 @@
     "release": "node scripts/release.js"
   },
   "dependencies": {
-    "videomail-client": "16.2.0"
+    "videomail-client": "16.4.0"
   },
   "devDependencies": {
     "@eslint/js": "10.0.1",
-    "@inquirer/prompts": "8.7.4",
-    "autoprefixer": "10.6.1",
+    "@inquirer/prompts": "8.7.5",
+    "autoprefixer": "10.6.2",
     "browser-sync": "3.0.4",
     "cssnano": "9.9.0",
     "esbuild": "0.28.2",
@@ -68,7 +68,7 @@
     "gulp": "5.0.1",
     "gulp-zip": "6.1.0",
     "nib": "1.2.0",
-    "postcss": "8.5.31",
+    "postcss": "8.5.32",
     "prettier": "3.9.10",
     "stylus": "0.64.0"
   },
