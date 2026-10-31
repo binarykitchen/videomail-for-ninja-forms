@@ -5,13 +5,13 @@
     else root["VideomailClient"] = factory();
 })(globalThis, ()=>(()=>{
         var __webpack_modules__ = {
-            pJ (module1, __webpack_exports__, __webpack_require__) {
+            eq (module1, __webpack_exports__, __webpack_require__) {
                 "use strict";
-                var _node_modules_rslib_core_node_modules_rsbuild_core_compiled_css_loader_noSourceMaps_js__rspack_import_1 = __webpack_require__("K7");
-                var _node_modules_rslib_core_node_modules_rsbuild_core_compiled_css_loader_noSourceMaps_js__rspack_import_1_default = /*#__PURE__*/ __webpack_require__.n(_node_modules_rslib_core_node_modules_rsbuild_core_compiled_css_loader_noSourceMaps_js__rspack_import_1);
-                var _node_modules_rslib_core_node_modules_rsbuild_core_compiled_css_loader_api_js__rspack_import_0 = __webpack_require__("Ly");
-                var _node_modules_rslib_core_node_modules_rsbuild_core_compiled_css_loader_api_js__rspack_import_0_default = /*#__PURE__*/ __webpack_require__.n(_node_modules_rslib_core_node_modules_rsbuild_core_compiled_css_loader_api_js__rspack_import_0);
-                var ___CSS_LOADER_EXPORT___ = _node_modules_rslib_core_node_modules_rsbuild_core_compiled_css_loader_api_js__rspack_import_0_default()(_node_modules_rslib_core_node_modules_rsbuild_core_compiled_css_loader_noSourceMaps_js__rspack_import_1_default());
+                var _node_modules_rsbuild_core_compiled_css_loader_noSourceMaps_js__rspack_import_1 = __webpack_require__("erX");
+                var _node_modules_rsbuild_core_compiled_css_loader_noSourceMaps_js__rspack_import_1_default = /*#__PURE__*/ __webpack_require__.n(_node_modules_rsbuild_core_compiled_css_loader_noSourceMaps_js__rspack_import_1);
+                var _node_modules_rsbuild_core_compiled_css_loader_api_js__rspack_import_0 = __webpack_require__("zm");
+                var _node_modules_rsbuild_core_compiled_css_loader_api_js__rspack_import_0_default = /*#__PURE__*/ __webpack_require__.n(_node_modules_rsbuild_core_compiled_css_loader_api_js__rspack_import_0);
+                var ___CSS_LOADER_EXPORT___ = _node_modules_rsbuild_core_compiled_css_loader_api_js__rspack_import_0_default()(_node_modules_rsbuild_core_compiled_css_loader_noSourceMaps_js__rspack_import_1_default());
                 ___CSS_LOADER_EXPORT___.push([
                     module1.id,
                     `@keyframes blink {
@@ -159,7 +159,7 @@
                 });
             },
             b6 (module1, exports1, __webpack_require__) {
-                var EventEmitter = __webpack_require__("qU").EventEmitter, inherits = __webpack_require__("c5"), raf = __webpack_require__("jY"), methods;
+                var EventEmitter = __webpack_require__("q").EventEmitter, inherits = __webpack_require__("c5"), raf = __webpack_require__("jY"), methods;
                 var defaultRAFObject = {
                     requestAnimationFrame: raf,
                     cancelAnimationFrame: raf.cancel
@@ -1837,7 +1837,7 @@
             },
             xF (module1, __unused_rspack_exports, __webpack_require__) {
                 "use strict";
-                var document1 = __webpack_require__("gM");
+                var document1 = __webpack_require__("g");
                 var Event1 = __webpack_require__("cE");
                 var Keys = __webpack_require__("Dy");
                 module1.exports = Visibility;
@@ -2192,7 +2192,7 @@
                 var isArray = __webpack_require__("ab");
                 var Duplex;
                 Readable.ReadableState = ReadableState;
-                __webpack_require__("qU").EventEmitter;
+                __webpack_require__("q").EventEmitter;
                 var EElistenerCount = function(emitter, type) {
                     return emitter.listeners(type).length;
                 };
@@ -3456,7 +3456,7 @@
                 };
             },
             tb (module1, __unused_rspack_exports, __webpack_require__) {
-                module1.exports = __webpack_require__("qU").EventEmitter;
+                module1.exports = __webpack_require__("q").EventEmitter;
             },
             GB (module1, exports1, __webpack_require__) {
                 exports1 = module1.exports = __webpack_require__("rp");
@@ -3853,7 +3853,7 @@
                 "use strict";
                 module1.exports = Object;
             },
-            qU (module1) {
+            q (module1) {
                 "use strict";
                 var R = 'object' == typeof Reflect ? Reflect : null;
                 var ReflectApply = R && 'function' == typeof R.apply ? R.apply : function(target, receiver, args) {
@@ -4903,7 +4903,7 @@
                     return tuple.listen;
                 }
             },
-            gM (module1, __unused_rspack_exports, __webpack_require__) {
+            g (module1, __unused_rspack_exports, __webpack_require__) {
                 var topLevel = void 0 !== __webpack_require__.g ? __webpack_require__.g : "u" > typeof window ? window : {};
                 var minDoc = __webpack_require__("MM");
                 var doccy;
@@ -5993,6 +5993,7 @@
                 var has = Object.prototype.hasOwnProperty;
                 var isArray = Array.isArray;
                 var getPrototypeOf = Object.getPrototypeOf;
+                var fromCharCode = String.fromCharCode;
                 var isPlainContainer = function(value) {
                     if (!value || 'object' != typeof value) return false;
                     if (isArray(value)) return true;
@@ -6065,7 +6066,12 @@
                 };
                 var interpretNumericEntities = function(str) {
                     return str.replace(/&#(\d+);/g, function($0, numberStr) {
-                        return String.fromCharCode(parseInt(numberStr, 10));
+                        var c = parseInt(numberStr, 10);
+                        if (c > 0xFFFF && c <= 0x10FFFF) {
+                            c -= 0x10000;
+                            return fromCharCode(0xD800 | c >> 10, 0xDC00 | 0x3FF & c);
+                        }
+                        return fromCharCode(c);
                     });
                 };
                 var parseArrayValue = function(val, options, currentArrayLength) {
@@ -6137,6 +6143,9 @@
                     }
                     return obj;
                 };
+                var stripWrappingBrackets = function(key) {
+                    return '[' === key.charAt(0) && ']' === key.charAt(key.length - 1) ? key.slice(1, -1) : key;
+                };
                 var parseObject = function(chain, val, options, valuesParsed) {
                     var currentArrayLength = 0;
                     if (chain.length > 0 && '[]' === chain[chain.length - 1]) {
@@ -6152,7 +6161,7 @@
                             obj = options.plainObjects ? {
                                 __proto__: null
                             } : {};
-                            var cleanRoot = '[' === root.charAt(0) && ']' === root.charAt(root.length - 1) ? root.slice(1, -1) : root;
+                            var cleanRoot = stripWrappingBrackets(root);
                             var decodedRoot = options.decodeDotInKeys ? cleanRoot.replace(/%2E/gi, '.') : cleanRoot;
                             var index = parseInt(decodedRoot, 10);
                             var isValidArrayIndex = !isNaN(index) && root !== decodedRoot && String(index) === decodedRoot && index >= 0 && options.parseArrays;
@@ -6165,9 +6174,7 @@
                                     obj[index] = leaf;
                                     utils.markOverflow(obj, index);
                                 } else if ('__proto__' !== decodedRoot) obj[decodedRoot] = leaf;
-                            } else obj = {
-                                0: leaf
-                            };
+                            } else obj[0] = leaf;
                         }
                         leaf = obj;
                     }
@@ -6197,7 +6204,7 @@
                 var splitKeyIntoSegments = function(originalKey, options) {
                     var key = options.allowDots ? topLevelDotsToBrackets(originalKey) : originalKey;
                     if (options.depth <= 0) {
-                        if (!options.plainObjects && has.call(Object.prototype, key)) {
+                        if (!options.plainObjects && has.call(Object.prototype, stripWrappingBrackets(key))) {
                             if (!options.allowPrototypes) return;
                         }
                         return [
@@ -6581,6 +6588,11 @@
                     }
                     return max;
                 };
+                var countElements = function(arr) {
+                    var count = 0;
+                    for(var i = 0; i < arr.length; ++i)if (has.call(arr, i)) count += 1;
+                    return count;
+                };
                 var limitedPair = function(first, second, options) {
                     var pair = [
                         first,
@@ -6597,7 +6609,7 @@
                     if ('object' != typeof source && 'function' != typeof source) {
                         if (isArray(target)) {
                             var nextIndex = target.length;
-                            if (options && 'number' == typeof options.arrayLimit && nextIndex >= options.arrayLimit) {
+                            if (options && 'number' == typeof options.arrayLimit && countElements(target) >= options.arrayLimit) {
                                 if (options.throwOnLimitExceeded) throw new RangeError('Array limit exceeded. Only ' + options.arrayLimit + ' element' + (1 === options.arrayLimit ? '' : 's') + ' allowed in an array.');
                                 return markOverflow(arrayToObject(target.concat(source), options), nextIndex);
                             }
@@ -6655,7 +6667,7 @@
                                 else target[target.length] = item;
                             } else target[i] = item;
                         });
-                        if (options && 'number' == typeof options.arrayLimit && target.length > options.arrayLimit) {
+                        if (options && 'number' == typeof options.arrayLimit && countElements(target) > options.arrayLimit) {
                             if (options.throwOnLimitExceeded) throw new RangeError('Array limit exceeded. Only ' + options.arrayLimit + ' element' + (1 === options.arrayLimit ? '' : 's') + ' allowed in an array.');
                             return markOverflow(arrayToObject(target, options), target.length - 1);
                         }
@@ -8817,7 +8829,7 @@
                 var isArray = __webpack_require__("N3");
                 var Duplex;
                 Readable.ReadableState = ReadableState;
-                __webpack_require__("qU").EventEmitter;
+                __webpack_require__("q").EventEmitter;
                 var EElistenerCount = function(emitter, type) {
                     return emitter.listeners(type).length;
                 };
@@ -8836,7 +8848,7 @@
                 var debug = void 0;
                 debug = debugUtil && debugUtil.debuglog ? debugUtil.debuglog('stream') : function() {};
                 var BufferList = __webpack_require__("aI");
-                var destroyImpl = __webpack_require__("R");
+                var destroyImpl = __webpack_require__("R5");
                 var StringDecoder;
                 util.inherits(Readable, Stream);
                 var kProxyEvents = [
@@ -9571,7 +9583,7 @@
                 function _isUint8Array(obj) {
                     return Buffer.isBuffer(obj) || obj instanceof OurUint8Array;
                 }
-                var destroyImpl = __webpack_require__("R");
+                var destroyImpl = __webpack_require__("R5");
                 util.inherits(Writable, Stream);
                 function nop() {}
                 function WritableState(options, stream) {
@@ -10025,7 +10037,7 @@
                     return this.constructor.name + ' ' + obj;
                 };
             },
-            R (module1, __unused_rspack_exports, __webpack_require__) {
+            R5 (module1, __unused_rspack_exports, __webpack_require__) {
                 "use strict";
                 var pna = __webpack_require__("sj");
                 function destroy(err, cb) {
@@ -10081,7 +10093,7 @@
                 };
             },
             O (module1, __unused_rspack_exports, __webpack_require__) {
-                module1.exports = __webpack_require__("qU").EventEmitter;
+                module1.exports = __webpack_require__("q").EventEmitter;
             },
             Fo (module1, exports1, __webpack_require__) {
                 exports1 = module1.exports = __webpack_require__("w");
@@ -10571,7 +10583,7 @@
             a () {},
             Av () {},
             eD () {},
-            Ly (module1) {
+            zm (module1) {
                 "use strict";
                 module1.exports = function(cssWithMappingToString) {
                     var list = [];
@@ -10625,13 +10637,13 @@
                     return list;
                 };
             },
-            K7 (module1) {
+            erX (module1) {
                 "use strict";
                 module1.exports = function(i) {
                     return i[1];
                 };
             },
-            q (module1) {
+            R (module1) {
                 "use strict";
                 var stylesInDOM = [];
                 function getIndexByIdentifier(identifier) {
@@ -10710,7 +10722,7 @@
                     };
                 };
             },
-            f (module1) {
+            uZ (module1) {
                 "use strict";
                 var memo = {};
                 function getTarget(target) {
@@ -10732,7 +10744,7 @@
                 }
                 module1.exports = insertBySelector;
             },
-            z7 (module1) {
+            mK (module1) {
                 "use strict";
                 function insertStyleElement(options) {
                     var element = document.createElement("style");
@@ -10742,7 +10754,7 @@
                 }
                 module1.exports = insertStyleElement;
             },
-            g (module1, __unused_rspack_exports, __webpack_require__) {
+            kU (module1, __unused_rspack_exports, __webpack_require__) {
                 "use strict";
                 function setAttributesWithoutAttributes(styleElement) {
                     var nonce = __webpack_require__.nc;
@@ -10750,7 +10762,7 @@
                 }
                 module1.exports = setAttributesWithoutAttributes;
             },
-            V (module1) {
+            Bd (module1) {
                 "use strict";
                 function apply(styleElement, options, obj) {
                     var css = "";
@@ -10787,7 +10799,7 @@
                 }
                 module1.exports = domAPI;
             },
-            AD (module1) {
+            snK (module1) {
                 "use strict";
                 function styleTagTransform(css, styleElement) {
                     if (styleElement.styleSheet) styleElement.styleSheet.cssText = css;
@@ -11132,7 +11144,7 @@
             var client = __webpack_require__("Q");
             var client_default = /*#__PURE__*/ __webpack_require__.n(client);
             var package_namespaceObject = {
-                rE: "16.4.0"
+                rE: "16.6.0"
             };
             function isAudioEnabled(options) {
                 return Boolean(options.audio.enabled);
@@ -14647,12 +14659,12 @@
                 const errName = err?.name ?? err?.constructor.name;
                 switch(errName){
                     case error_VideomailError.SECURITY_ERROR:
-                        message = "The operation was insecure";
-                        explanation = "Probably you have disallowed Cookies for this page?";
+                        message = "Your browser blocked this action";
+                        explanation = "Check this page's camera permissions and security settings.";
                         classList.push(error_VideomailError.BROWSER_PROBLEM);
                         break;
                     case error_VideomailError.OVERCONSTRAINED:
-                        message = "Invalid webcam constraints";
+                        message = "Your webcam cannot use these settings";
                         if (err && "constraint" in err) {
                             const overconstrainedError = err;
                             const constraint = overconstrainedError.constraint;
@@ -14663,64 +14675,64 @@
                         break;
                     case "MediaDeviceFailedDueToShutdown":
                         message = "Webcam is shutting down";
-                        explanation = "This happens your webcam is already switching off and not giving you permission to use it.";
+                        explanation = "Wait for your webcam to finish switching off, then try again.";
                         break;
                     case "SourceUnavailableError":
-                        message = "Source of your webcam cannot be accessed";
-                        explanation = "Probably it is locked from another process or has a hardware error.";
+                        message = "Cannot access your webcam";
+                        explanation = "Another app may be using it, or there may be a hardware problem.";
                         break;
                     case "NO_DEVICES_FOUND":
                         if (audioEnabled) {
-                            message = "No webcam nor microphone found";
-                            explanation = "Your browser cannot find a webcam with microphone attached to your machine.";
+                            message = "No webcam or microphone found";
+                            explanation = "Check that your webcam and microphone are connected.";
                         } else {
                             message = "No webcam found";
-                            explanation = "Your browser cannot find a webcam attached to your machine.";
+                            explanation = "Check that your webcam is connected.";
                         }
                         classList.push(error_VideomailError.WEBCAM_PROBLEM);
                         break;
                     case "PermissionDismissedError":
-                        message = "Ooops, you didn't give me any permissions?";
-                        explanation = "Looks like you skipped the webcam permission dialogue.<br/>Please grant access next time the dialogue appears.";
+                        message = "Camera permission is needed";
+                        explanation = "The camera permission prompt was closed.<br/>Please allow access when it appears again.";
                         classList.push(error_VideomailError.WEBCAM_PROBLEM);
                         break;
                     case error_VideomailError.NOT_ALLOWED_ERROR:
                     case error_VideomailError.PERMISSION_DENIED:
                     case "PermissionDeniedError":
                         message = "Permission denied";
-                        explanation = "Cannot access your webcam. This can have two reasons:<br/>a) you blocked access to webcam; or<br/>b) your webcam is already in use.";
+                        explanation = "We cannot access your webcam. Check these possibilities:<ul><li>Camera access is blocked in your browser settings.</li><li>Another app is using your webcam.</li></ul>";
                         classList.push(error_VideomailError.WEBCAM_PROBLEM);
                         break;
                     case "HARDWARE_UNAVAILABLE":
                     case "AbortError":
                         message = "Webcam is unavailable";
-                        explanation = "Maybe it is already busy in another window?";
+                        explanation = "Another window may be using it. Close it and try again.";
                         classList.push(error_VideomailError.WEBCAM_PROBLEM);
                         break;
                     case "NO_VIDEO_FEED":
-                        message = "No video feed found!";
-                        explanation = "Your webcam is already used in another browser.";
+                        message = "No video feed found";
+                        explanation = "Another browser may be using your webcam.";
                         classList.push(error_VideomailError.WEBCAM_PROBLEM);
                         break;
                     case error_VideomailError.STARTING_FAILED:
-                        message = "Starting video failed";
-                        explanation = "Most likely this happens when the webcam is already active in another browser";
+                        message = "Could not start recording";
+                        explanation = "Another browser may be using your webcam.";
                         classList.push(error_VideomailError.WEBCAM_PROBLEM);
                         break;
                     case "DevicesNotFoundError":
-                        message = "No available webcam could be found";
-                        explanation = "Looks like you do not have any webcam attached to your machine; or the one you plugged in is already used.";
+                        message = "No available webcam found";
+                        explanation = "Check that your webcam is connected and not being used by another app.";
                         classList.push(error_VideomailError.WEBCAM_PROBLEM);
                         break;
                     case error_VideomailError.NOT_READABLE_ERROR:
                     case error_VideomailError.TRACK_START_ERROR:
-                        message = "No access to webcam";
-                        explanation = "Perhaps you are already using it in another browser?";
+                        message = "Cannot access your webcam";
+                        explanation = "Another browser may be using it. Close it and try again.";
                         classList.push(error_VideomailError.WEBCAM_PROBLEM);
                         break;
                     case error_VideomailError.INVALID_STATE_ERROR:
-                        message = "Invalid state";
-                        explanation = "Video recording stream from your webcam already has finished";
+                        message = "Your camera stream has ended";
+                        explanation = "The webcam stream is no longer active.";
                         classList.push(error_VideomailError.WEBCAM_PROBLEM);
                         break;
                     case error_VideomailError.DOM_EXCEPTION:
@@ -15048,6 +15060,7 @@
                 submitButtonFormAttribute = null;
                 generatedFormId;
                 isSubmitting = false;
+                submissionDisabledStates = new Map();
                 FORM_FIELDS = {};
                 constructor(container, formElement, options){
                     super("Form", options);
@@ -15171,6 +15184,17 @@
                 }
                 enable(buttonsToo) {
                     this.setDisabled(false, buttonsToo);
+                }
+                disableForSubmission() {
+                    for (const formControl of this.formElement.elements){
+                        this.submissionDisabledStates.set(formControl, formControl.hasAttribute("disabled"));
+                        formControl.setAttribute("disabled", "disabled");
+                    }
+                }
+                restoreAfterFailedSubmission() {
+                    for (const [formControl, wasDisabled] of this.submissionDisabledStates)if (wasDisabled) formControl.setAttribute("disabled", "disabled");
+                    else formControl.removeAttribute("disabled");
+                    this.submissionDisabledStates.clear();
                 }
                 build() {
                     this.options.logger.debug("Form: build()");
@@ -15700,19 +15724,19 @@
                 return newOptions;
             }
             const options_mergeWithDefaultOptions = mergeWithDefaultOptions;
-            var injectStylesIntoStyleTag = __webpack_require__("q");
+            var injectStylesIntoStyleTag = __webpack_require__("R");
             var injectStylesIntoStyleTag_default = /*#__PURE__*/ __webpack_require__.n(injectStylesIntoStyleTag);
-            var styleDomAPI = __webpack_require__("V");
+            var styleDomAPI = __webpack_require__("Bd");
             var styleDomAPI_default = /*#__PURE__*/ __webpack_require__.n(styleDomAPI);
-            var insertBySelector = __webpack_require__("f");
+            var insertBySelector = __webpack_require__("uZ");
             var insertBySelector_default = /*#__PURE__*/ __webpack_require__.n(insertBySelector);
-            var setAttributesWithoutAttributes = __webpack_require__("g");
+            var setAttributesWithoutAttributes = __webpack_require__("kU");
             var setAttributesWithoutAttributes_default = /*#__PURE__*/ __webpack_require__.n(setAttributesWithoutAttributes);
-            var insertStyleElement = __webpack_require__("z7");
+            var insertStyleElement = __webpack_require__("mK");
             var insertStyleElement_default = /*#__PURE__*/ __webpack_require__.n(insertStyleElement);
-            var styleTagTransform = __webpack_require__("AD");
+            var styleTagTransform = __webpack_require__("snK");
             var styleTagTransform_default = /*#__PURE__*/ __webpack_require__.n(styleTagTransform);
-            var main = __webpack_require__("pJ");
+            var main = __webpack_require__("eq");
             var main_options = {};
             main_options.styleTagTransform = styleTagTransform_default();
             main_options.setAttributes = setAttributesWithoutAttributes_default();
@@ -18019,8 +18043,13 @@
                     this.hide();
                 }
                 onUserMediaReady(params) {
-                    this.onFormReady();
+                    this.onFormReady(params);
                     html_showElement(this.buttonsElement);
+                    if (params.recovering && params.paused) {
+                        html_hideElement(this.recordButton);
+                        html_disableElement(this.recordButton);
+                        return;
+                    }
                     html_showElement(this.audioOnRadioPair);
                     html_showElement(this.audioOffRadioPair);
                     if (html_isShown(this.recordButton) && !params.recordWhenReady) html_enableElement(this.recordButton);
@@ -18676,8 +18705,8 @@
                     this.on("PAUSED", ()=>{
                         this.pauseRecording();
                     });
-                    this.on("ERROR", ()=>{
-                        this.onResetting();
+                    this.on("ERROR", ({ recoverable })=>{
+                        if (!recoverable) this.onResetting();
                     });
                     this.on("RESETTING", ()=>{
                         this.onResetting();
@@ -18852,12 +18881,12 @@
                     this.entertainTimeoutId = void 0;
                     this.entertaining = false;
                 }
-                error(err) {
+                error(err, blocking = true) {
                     const message = err.message;
                     const explanation = err.explanation;
                     if (!message) this.options.logger.debug(`Weird empty error message generated for error ${string_pretty(err)}`);
                     this.notify(message, explanation, {
-                        blocking: true,
+                        blocking,
                         problem: true,
                         classList: err.getClassList(),
                         removeDimensions: util_getBrowser(this.options).isMobile()
@@ -19730,11 +19759,11 @@
             const connection = RecorderConnection;
             function createUserMediaConstraints({ options, facingMode, limitedWidth, userMediaParams }) {
                 const video = {
+                    facingMode: userMediaParams?.switchingFacingMode || facingMode,
                     frameRate: {
                         ideal: options.video.fps
                     }
                 };
-                if (userMediaParams?.switchingFacingMode || userMediaParams?.recovering) video.facingMode = userMediaParams.switchingFacingMode || facingMode;
                 if (options.video.width) video.width = {
                     ideal: options.video.width
                 };
@@ -20276,6 +20305,9 @@
                     this.userMedia.resume();
                     if (this.streamBackpressured) this.resumeAfterDrain = true;
                     else loop.start();
+                }
+                resumeMediaForCountdown() {
+                    this.userMedia?.resume();
                 }
                 onFlushed(opts) {
                     const frameNumber = opts.frameNumber;
@@ -20959,10 +20991,7 @@
                 "droidcam"
             ];
             function isVirtualCamera(videoTrack) {
-                const capabilities = videoTrack.getCapabilities();
-                if (!capabilities.frameRate) return true;
-                const isVirtual = VIRTUAL_KEYWORDS.some((keyword)=>videoTrack.label.toLowerCase().includes(keyword));
-                return isVirtual;
+                return VIRTUAL_KEYWORDS.some((keyword)=>videoTrack.label.toLowerCase().includes(keyword));
             }
             const util_isVirtualCamera = isVirtualCamera;
             const EVENT_ASCII = "|—O—|";
@@ -21357,7 +21386,7 @@
                                     let explanation = "(No explanation given)";
                                     if (command.args?.err?.message) explanation = command.args.err.message;
                                     const err = error_createError({
-                                        message: "Websocket error from Videomail server",
+                                        message: "WebSocket error from the Videomail server",
                                         explanation,
                                         err: deserializeError(command.args?.err),
                                         options: this.options
@@ -21970,21 +21999,36 @@
                     this.clearCameraRecoveryNotice();
                     return this.recorder.recoverCamera();
                 }
-                resume() {
+                canResumeCountdown(restored) {
+                    return restored && Boolean(this.recorderInsides.isCountingDown());
+                }
+                async resumeCountdown() {
+                    const restored = await this.recoverCamera();
+                    if (!this.canResumeCountdown(restored)) return;
+                    this.recorder.resumeMediaForCountdown();
+                    this.recorderInsides.resumeCountdown();
+                    this.recorderInsides.hidePause();
+                }
+                async resume() {
                     this.clearCameraRecoveryNotice();
-                    if (this.recorderInsides.isCountingDown()) {
-                        this.recorderInsides.resumeCountdown();
-                        this.recorderInsides.hidePause();
-                    } else {
+                    if (this.recorderInsides.isCountingDown()) await this.resumeCountdown();
+                    else {
                         this.recorder.resume();
                         if (!this.recorder.isPaused()) this.recorderInsides.hidePause();
                     }
                 }
+                resumeFromControl() {
+                    this.resume().catch((exc)=>{
+                        this.emit("ERROR", {
+                            exc
+                        });
+                    });
+                }
                 pauseOrResume() {
-                    if (this.cameraRecoveryFailed && this.recorder.isPaused()) this.resume();
+                    if (this.cameraRecoveryFailed && this.recorder.isPaused()) this.resumeFromControl();
                     else if (this.isRecordable()) {
                         if (this.isRecording()) this.pause();
-                        else if (this.recorder.isPaused()) this.resume();
+                        else if (this.recorder.isPaused()) this.resumeFromControl();
                         else if (this.recorder.isReady()) this.recorder.record();
                     }
                 }
@@ -22013,8 +22057,8 @@
                 isPaused() {
                     return this.recorder.isPaused();
                 }
-                error(err) {
-                    this.notifier.error(err);
+                error(err, blocking = true) {
+                    this.notifier.error(err, blocking);
                 }
                 hide() {
                     if (this.visualsElement) {
@@ -22105,6 +22149,7 @@
                 }
             }
             const wrappers_visuals = Visuals;
+            const INTERACTIVE_SPACE_TARGETS = "button, input, select, textarea, a[href], summary, label, audio[controls], video[controls], [contenteditable]:not([contenteditable='false']), [role='button'], [role='link'], [role='checkbox'], [role='radio'], [role='switch'], [role='menuitem'], [role='tab'], [tabindex]:not([tabindex='-1'])";
             class Container extends util_Despot {
                 visibility = document_visibility_default()();
                 htmlElement = document.querySelector("html");
@@ -22128,14 +22173,16 @@
                     });
                 };
                 handleKeyDown = (e)=>{
-                    const element = e.target;
-                    const tagName = element.tagName;
-                    const isEditable = element.isContentEditable || "true" === element.contentEditable;
-                    if (!isEditable && tagName && "INPUT" !== tagName.toUpperCase() && "TEXTAREA" !== tagName.toUpperCase() && "Space" === e.code) {
-                        e.preventDefault();
-                        if (this.options.enablePause) this.visuals.pauseOrResume();
-                        else this.visuals.recordOrStop();
-                    }
+                    const containerElement = this.containerElement;
+                    if (!containerElement) return;
+                    const eventPath = e.composedPath();
+                    const targetContainerIndex = eventPath.findIndex((eventTarget)=>eventTarget instanceof Element && eventTarget.classList.contains(this.options.selectors.containerClass));
+                    const targetContainer = eventPath[targetContainerIndex];
+                    const isInteractiveTarget = eventPath.slice(0, targetContainerIndex + 1).some((eventTarget)=>eventTarget instanceof Element && eventTarget.matches(INTERACTIVE_SPACE_TARGETS));
+                    if (!eventPath.includes(containerElement) || targetContainer !== containerElement || isInteractiveTarget || e.defaultPrevented || e.repeat || e.altKey || e.ctrlKey || e.metaKey || e.shiftKey || "Space" !== e.code) return;
+                    e.preventDefault();
+                    if (this.options.enablePause) this.visuals.pauseOrResume();
+                    else this.visuals.recordOrStop();
                 };
                 constructor(options){
                     super("Container", options);
@@ -22213,9 +22260,9 @@
                         if (params.exc.stack) this.options.logger.error(params.exc.stack);
                         else if (params.exc.message) this.options.logger.error(params.exc.message);
                     } else this.options.logger.error(params.exc);
-                    if (this.options.displayErrors && params.err) this.visuals.error(params.err);
-                    else if (this.options.displayErrors && params.exc && params.exc instanceof error_VideomailError) this.visuals.error(params.exc);
-                    else this.visuals.reset();
+                    if (this.options.displayErrors && params.err) this.visuals.error(params.err, !params.recoverable);
+                    else if (this.options.displayErrors && params.exc && params.exc instanceof error_VideomailError) this.visuals.error(params.exc, !params.recoverable);
+                    else if (!params.recoverable) this.visuals.reset();
                 }
                 initEvents(playerOnly = false) {
                     this.options.logger.debug(`Container: initEvents (playerOnly = ${playerOnly})`);
@@ -22233,7 +22280,7 @@
                         }
                     });
                     if (this.options.enableSpace) {
-                        if (!playerOnly) window.addEventListener("keydown", this.handleKeyDown);
+                        if (!playerOnly) this.containerElement?.addEventListener("keydown", this.handleKeyDown);
                     }
                     this.on("ERROR", (params)=>{
                         this.processError(params);
@@ -22273,7 +22320,7 @@
                 removeBrowserEventListeners() {
                     window.removeEventListener("resize", this.handleWindowResize);
                     window.removeEventListener("beforeunload", this.handleBeforeUnload);
-                    window.removeEventListener("keydown", this.handleKeyDown);
+                    this.containerElement?.removeEventListener("keydown", this.handleKeyDown);
                     this.stopListeningToVisibility?.();
                     this.stopListeningToVisibility = void 0;
                 }
@@ -22512,6 +22559,7 @@
                 async submitAll(formData, method, url, hasHostAction = false) {
                     let response;
                     let hostResponse;
+                    let submissionFailed = false;
                     const videomailKey = formData[this.options.selectors.keyInputName];
                     try {
                         const hasVideomailKey = Boolean(videomailKey);
@@ -22522,7 +22570,7 @@
                         ].filter(Boolean).join(": ");
                         this.options.logger.debug(`Container: submitAll(${output})`);
                         this.beginWaiting();
-                        if (this.options.disableFormWhenSubmitting) this.disableForm(true);
+                        if (this.options.disableFormWhenSubmitting) this.form?.disableForSubmission();
                         this.emit("SUBMITTING");
                         if (hasVideomailKey) {
                             response = this.getPendingHostSubmissionResponse(videomailKey) ?? await this.submitVideomail(formData, method);
@@ -22552,15 +22600,18 @@
                             });
                         }
                     } catch (exc) {
+                        submissionFailed = true;
                         const err = error_createError({
                             exc,
                             options: this.options
                         });
                         this.emit("ERROR", {
-                            err
+                            err,
+                            recoverable: true
                         });
                     } finally{
                         const finalResponse = hostResponse ?? response;
+                        if (submissionFailed && this.options.disableFormWhenSubmitting) this.form?.restoreAfterFailedSubmission();
                         if (finalResponse?.text && "text/html" === finalResponse.type) document.body.innerHTML = purify_default.sanitize(finalResponse.text);
                         this.endWaiting();
                     }
@@ -22601,7 +22652,7 @@
                 }
                 async submit() {
                     this.options.logger.debug("Container: submit()");
-                    if (this.lastValidation) return await this.form?.doTheSubmit();
+                    if (!this.options.enableAutoValidation || this.lastValidation) return await this.form?.doTheSubmit();
                     return false;
                 }
                 isCountingDown() {
@@ -22614,7 +22665,11 @@
                     this.visuals.record();
                 }
                 resume() {
-                    this.visuals.resume();
+                    this.visuals.resume().catch((exc)=>{
+                        this.emit("ERROR", {
+                            exc
+                        });
+                    });
                 }
                 stop() {
                     this.visuals.stop();
