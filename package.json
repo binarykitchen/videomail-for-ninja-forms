@@ -54,7 +54,7 @@
     "release": "node scripts/release.js"
   },
   "dependencies": {
-    "videomail-client": "16.4.0"
+    "videomail-client": "16.6.0"
   },
   "devDependencies": {
     "@eslint/js": "10.0.1",
