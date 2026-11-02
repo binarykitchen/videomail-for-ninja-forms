@@ -54,7 +54,7 @@
     "release": "node scripts/release.js"
   },
   "dependencies": {
-    "videomail-client": "16.6.0"
+    "videomail-client": "16.7.0"
   },
   "devDependencies": {
     "@eslint/js": "10.0.1",
@@ -63,8 +63,8 @@
     "browser-sync": "3.0.4",
     "cssnano": "9.9.0",
     "esbuild": "0.28.2",
-    "eslint": "10.13.0",
-    "globals": "17.13.0",
+    "eslint": "10.14.0",
+    "globals": "17.14.0",
     "gulp": "5.0.1",
     "gulp-zip": "6.1.0",
     "nib": "1.2.0",
