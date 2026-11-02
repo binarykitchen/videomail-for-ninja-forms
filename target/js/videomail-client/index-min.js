@@ -7218,7 +7218,7 @@
                 const qs = __webpack_require__("b");
                 const RequestBase = __webpack_require__("d");
                 const { isObject, mixin, hasOwn, isSafeKey } = __webpack_require__("Dp");
-                const ResponseBase = __webpack_require__("es");
+                const ResponseBase = __webpack_require__("e");
                 const Agent = __webpack_require__("pf");
                 function noop() {}
                 module1.exports = function(method, url) {
@@ -7932,7 +7932,7 @@
                     }, this._responseTimeout);
                 };
             },
-            es (module1, __unused_rspack_exports, __webpack_require__) {
+            e (module1, __unused_rspack_exports, __webpack_require__) {
                 "use strict";
                 const utils = __webpack_require__("Dp");
                 module1.exports = ResponseBase;
@@ -10643,7 +10643,7 @@
                     return i[1];
                 };
             },
-            R (module1) {
+            RR (module1) {
                 "use strict";
                 var stylesInDOM = [];
                 function getIndexByIdentifier(identifier) {
@@ -11144,7 +11144,7 @@
             var client = __webpack_require__("Q");
             var client_default = /*#__PURE__*/ __webpack_require__.n(client);
             var package_namespaceObject = {
-                rE: "16.6.0"
+                rE: "16.7.0"
             };
             function isAudioEnabled(options) {
                 return Boolean(options.audio.enabled);
@@ -15724,7 +15724,7 @@
                 return newOptions;
             }
             const options_mergeWithDefaultOptions = mergeWithDefaultOptions;
-            var injectStylesIntoStyleTag = __webpack_require__("R");
+            var injectStylesIntoStyleTag = __webpack_require__("RR");
             var injectStylesIntoStyleTag_default = /*#__PURE__*/ __webpack_require__.n(injectStylesIntoStyleTag);
             var styleDomAPI = __webpack_require__("Bd");
             var styleDomAPI_default = /*#__PURE__*/ __webpack_require__.n(styleDomAPI);
@@ -19070,6 +19070,18 @@
             canvas_to_buffer_modern_r.atob = void 0;
             var websocket_stream_stream = __webpack_require__("U");
             var stream_default = /*#__PURE__*/ __webpack_require__.n(websocket_stream_stream);
+            function isAutomatedUserAgent(userAgent = navigator.userAgent) {
+                return /bot|crawler|spider|headlesschrome|phantomjs|puppeteer|playwright/iu.test(userAgent);
+            }
+            const util_isAutomatedUserAgent = isAutomatedUserAgent;
+            function getAutomationSignals() {
+                const webdriver = navigator.webdriver;
+                return {
+                    webdriver: true === webdriver,
+                    userAgentMatched: util_isAutomatedUserAgent()
+                };
+            }
+            const util_getAutomationSignals = getAutomationSignals;
             function getEdgeCodes(value, amount, fromEnd) {
                 const chars = fromEnd ? value.slice(-amount) : value.slice(0, amount);
                 const codes = Array.from(chars, (char)=>String(char.codePointAt(0))).join(".");
@@ -19097,15 +19109,16 @@
                 if (languageList.length > 0) return languageList.join(",");
                 return navigator.language || "none";
             }
-            function getAutomationSignals(probeBase, probeSimpleQuery) {
+            function getDiagnosticSignals(probeBase, probeSimpleQuery) {
                 const reasons = [];
-                if (navigator.webdriver) reasons.push("webdriver=true");
-                if (/HeadlessChrome|PhantomJS|puppeteer|playwright/iu.test(navigator.userAgent)) reasons.push("headless_ua_marker");
+                const automation = util_getAutomationSignals();
+                if (automation.webdriver) reasons.push("webdriver=true");
+                if (automation.userAgentMatched) reasons.push("headless_ua_marker");
                 if (0 === navigator.languages.length) reasons.push("no_languages");
                 if ("ok" !== probeBase) reasons.push("probe_base_failed");
                 if ("ok" !== probeSimpleQuery) reasons.push("probe_simple_query_failed");
                 return {
-                    looksAutomated: reasons.length > 0,
+                    looksAutomated: automation.webdriver || automation.userAgentMatched,
                     reasons: reasons.length > 0 ? reasons.join(",") : "none"
                 };
             }
@@ -19122,7 +19135,7 @@
                 const probeBase = probeWebSocketConstructor("wss://videomail.io");
                 const probeWithSimpleQuery = probeWebSocketConstructor("wss://videomail.io/?a=b");
                 const languages = getLanguagesValue();
-                const automationSignals = getAutomationSignals(probeBase, probeWithSimpleQuery);
+                const automationSignals = getDiagnosticSignals(probeBase, probeWithSimpleQuery);
                 const diagnosticPairs = [
                     `webdriver=${String(navigator.webdriver)}`,
                     `wsCtorNative=${String(wsCtorNative)}`,
@@ -19149,10 +19162,6 @@
                 };
             }
             const error_getWebSocketDiagnostic = getWebSocketDiagnostic;
-            function isAutomatedUserAgent(userAgent = navigator.userAgent) {
-                return /bot|crawler|spider|headlesschrome|phantomjs|puppeteer|playwright/iu.test(userAgent);
-            }
-            const util_isAutomatedUserAgent = isAutomatedUserAgent;
             const DEFAULT_MAX_QUEUED_BYTES = 1048576;
             class BoundedWriteQueue {
                 maxBytes;
@@ -19346,6 +19355,9 @@
                         explanation: "The server connection closed before this recording completed. It cannot be safely resumed, so it has been stopped. Please start a new recording.",
                         options: this.options,
                         cause: {
+                            transportPhase: "recording",
+                            mediaTransmissionStarted: true,
+                            automation: util_getAutomationSignals(),
                             unconfirmedFrames,
                             unconfirmedSamples
                         }
@@ -19387,6 +19399,7 @@
                 lastCloseEvent;
                 lastSocketError;
                 pingInterval;
+                connectionOpenedAt;
                 constructor(options){
                     super(options);
                 }
@@ -19415,15 +19428,32 @@
                         this.resumeAfterDrain = false;
                         this.reconnecting = true;
                         this.initSocket();
-                    } else if (this.shouldReportStreamClose()) window.setTimeout(()=>{
-                        this.handleConnectionFailure({
-                            url2Connect,
-                            cause: "closed"
-                        });
-                    }, 0);
+                    } else if (this.shouldReportStreamClose()) {
+                        const stream = this.stream;
+                        window.setTimeout(()=>{
+                            if (this.stream === stream) this.handleConnectionFailure({
+                                url2Connect,
+                                cause: "closed"
+                            });
+                        }, 0);
+                    }
                 }
                 shouldIgnoreStreamClose() {
-                    return this.recordingTransportFailed || Boolean(this.unloaded) || this.validate();
+                    return this.recordingTransportFailed || Boolean(this.unloaded) || this.validate() || this.blocking && !this.mediaTransmissionStarted;
+                }
+                closeIdleConnection(reason) {
+                    if (this.mediaTransmissionStarted) return;
+                    this.options.logger.debug(string_summarize("Recorder: closing idle connection", {
+                        reason,
+                        connected: this.connected,
+                        connecting: this.connecting,
+                        visibilityState: document.visibilityState
+                    }));
+                    this.connected = this.connecting = this.reconnecting = false;
+                    this.clearConnectionTimeout();
+                    this.clearReconnectTimeout();
+                    this.stopPings();
+                    this.discardSocket();
                 }
                 handleStreamError(url2Connect, err) {
                     if ("u" > typeof Event && err instanceof Event) this.lastSocketError = error_getEventDetails(err);
@@ -19432,27 +19462,19 @@
                         error: serializeError(err)
                     });
                     this.options.logger.debug(debugLine);
-                    if (this.validate()) {
+                    if (this.shouldIgnoreStreamClose()) {
                         this.connected = false;
                         this.stopPings();
                         this.discardSocket();
                         return;
                     }
-                    if (!this.connected) return void this.handleConnectionFailure({
+                    if (this.mediaTransmissionStarted) return void this.failInterruptedRecording();
+                    this.reconnecting ||= this.canReconnectAfterStreamClose();
+                    this.connected = false;
+                    this.stopPings();
+                    this.handleConnectionFailure({
                         url2Connect,
                         cause: "error"
-                    });
-                    const streamError = err instanceof Error ? err : new Error("WebSocket stream emitted an error event", {
-                        cause: this.lastSocketError ?? err
-                    });
-                    if (this.mediaTransmissionStarted) return void this.failInterruptedRecording();
-                    this.emit("ERROR", {
-                        err: error_createError({
-                            message: "WebSocket stream error",
-                            explanation: `The WebSocket stream emitted an error event. Details: ${string_pretty(err)}`,
-                            options: this.options,
-                            exc: streamError
-                        })
                     });
                 }
                 sendPings() {
@@ -19513,6 +19535,7 @@
                     this.connectionFailed = true;
                     this.connecting = false;
                     this.reconnecting = false;
+                    const reconnectAttempts = this.reconnectAttempts;
                     this.reconnectAttempts = 0;
                     this.clearReconnectTimeout();
                     this.clearConnectionTimeout();
@@ -19523,6 +19546,14 @@
                     const socketError = this.lastSocketError;
                     const contents = {
                         cause,
+                        transportPhase: void 0 === this.connectionOpenedAt ? "initial" : "idle",
+                        mediaTransmissionStarted: this.mediaTransmissionStarted,
+                        recordingActive: this.recordingActive,
+                        framesCount: this.framesCount,
+                        samplesCount: this.samplesCount,
+                        reconnectAttempts,
+                        connectionOpenedAt: this.connectionOpenedAt,
+                        automation: util_getAutomationSignals(),
                         closeCode: closeEvent?.code,
                         closeReason: closeEvent?.reason,
                         elapsedMs,
@@ -19564,7 +19595,7 @@
                     });
                 }
                 shouldIgnoreConnectionFailure() {
-                    return this.connectionFailed || this.connected || Boolean(this.unloaded) || this.validate();
+                    return this.connectionFailed || this.connected || Boolean(this.unloaded) || this.validate() || this.blocking && !this.mediaTransmissionStarted;
                 }
                 initSocket(cb) {
                     if (this.connected) {
@@ -19574,7 +19605,8 @@
                     }
                     if (this.connecting) return void this.options.logger.debug("Recorder: already **connecting**. Not going to initialize a new WebSocket connection.");
                     this.clearReconnectTimeout();
-                    if (util_isAutomatedUserAgent()) {
+                    const automation = util_getAutomationSignals();
+                    if (automation.userAgentMatched) {
                         this.connecting = false;
                         this.options.logger.debug("Recorder: skipping web socket connection for an automated crawler");
                         return;
@@ -19608,6 +19640,7 @@
                     try {
                         nativeSocket = new WebSocket(url2Connect);
                         nativeSocket.addEventListener("close", (event)=>{
+                            if (this.stream?.socket !== nativeSocket) return;
                             this.lastCloseEvent = {
                                 code: event.code,
                                 reason: event.reason,
@@ -19615,6 +19648,7 @@
                             };
                         });
                         nativeSocket.addEventListener("error", (event)=>{
+                            if (this.stream?.socket !== nativeSocket) return;
                             this.lastSocketError = error_getEventDetails(event);
                         });
                     } catch (exc) {
@@ -19626,7 +19660,10 @@
                             message,
                             explanation,
                             options: this.options,
-                            exc
+                            exc,
+                            cause: {
+                                automation
+                            }
                         });
                         this.emit("ERROR", {
                             err
@@ -19664,14 +19701,16 @@
                             });
                         }, connectionTimeoutMs);
                         stream.on("close", ()=>{
-                            this.handleStreamClose(url2Connect);
+                            if (this.stream === stream) this.handleStreamClose(url2Connect);
                         });
                         stream.on("connect", (args)=>{
+                            if (this.stream !== stream) return;
                             this.options.logger.debug(`${PIPE_SYMBOL}Stream *connect* event emitted with args: ${string_pretty(args)}`);
                             this.clearConnectionTimeout();
-                            const isClosing = this.stream?.socket.readyState === WebSocket.CLOSING;
+                            const isClosing = stream.socket.readyState === WebSocket.CLOSING;
                             if (!this.connected && !isClosing && !this.unloaded) {
                                 this.connected = true;
+                                this.connectionOpenedAt = Date.now();
                                 this.connecting = this.unloaded = false;
                                 this.reconnecting = false;
                                 this.reconnectAttempts = 0;
@@ -19681,6 +19720,7 @@
                             }
                         });
                         stream.on("data", (data)=>{
+                            if (this.stream !== stream) return;
                             this.options.logger.debug(`${PIPE_SYMBOL}Stream *data* event emitted`);
                             try {
                                 const command = JSON.parse(data.toString());
@@ -19699,10 +19739,10 @@
                             }
                         });
                         stream.on("error", (err)=>{
-                            this.handleStreamError(url2Connect, err);
+                            if (this.stream === stream) this.handleStreamError(url2Connect, err);
                         });
                         stream.on("drain", ()=>{
-                            this.handleStreamDrain(stream);
+                            if (this.stream === stream) this.handleStreamDrain(stream);
                         });
                         stream.on("preend", (args)=>{
                             this.options.logger.debug(`${PIPE_SYMBOL}Stream *preend* event emitted with args: ${string_pretty(args)}`);
@@ -19824,6 +19864,7 @@
                     const characteristics = this.userMedia?.getCharacteristics();
                     this.options.logger.debug(`Recorder: userMediaErrorCallback(), name: ${err.name}, message: ${err.message} and Webcam characteristics: ${characteristics ? string_pretty(characteristics) : "none"}`);
                     const errorListeners = this.getListeners("ERROR");
+                    if (err.name !== error_VideomailError.MEDIA_DEVICE_NOT_SUPPORTED) this.closeIdleConnection("camera-access-failed");
                     if (errorListeners?.length) if (err.name !== error_VideomailError.MEDIA_DEVICE_NOT_SUPPORTED) {
                         const videomailError = error_createError({
                             err,
@@ -21468,6 +21509,7 @@
                         this.cancelCameraRecovery();
                         this.blocking = true;
                         this.clearUserMediaTimeout();
+                        this.closeIdleConnection("blocking-error");
                     });
                     this.on("PREVIEW", ()=>{
                         this.hide();
