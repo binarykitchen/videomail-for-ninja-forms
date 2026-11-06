@@ -8,9 +8,9 @@
             eq (module1, __webpack_exports__, __webpack_require__) {
                 "use strict";
                 var _node_modules_rsbuild_core_compiled_css_loader_noSourceMaps_js__rspack_import_1 = __webpack_require__("erX");
-                var _node_modules_rsbuild_core_compiled_css_loader_noSourceMaps_js__rspack_import_1_default = /*#__PURE__*/ __webpack_require__.n(_node_modules_rsbuild_core_compiled_css_loader_noSourceMaps_js__rspack_import_1);
+                var _node_modules_rsbuild_core_compiled_css_loader_noSourceMaps_js__rspack_import_1_default = __webpack_require__.n(_node_modules_rsbuild_core_compiled_css_loader_noSourceMaps_js__rspack_import_1);
                 var _node_modules_rsbuild_core_compiled_css_loader_api_js__rspack_import_0 = __webpack_require__("zm");
-                var _node_modules_rsbuild_core_compiled_css_loader_api_js__rspack_import_0_default = /*#__PURE__*/ __webpack_require__.n(_node_modules_rsbuild_core_compiled_css_loader_api_js__rspack_import_0);
+                var _node_modules_rsbuild_core_compiled_css_loader_api_js__rspack_import_0_default = __webpack_require__.n(_node_modules_rsbuild_core_compiled_css_loader_api_js__rspack_import_0);
                 var ___CSS_LOADER_EXPORT___ = _node_modules_rsbuild_core_compiled_css_loader_api_js__rspack_import_0_default()(_node_modules_rsbuild_core_compiled_css_loader_noSourceMaps_js__rspack_import_1_default());
                 ___CSS_LOADER_EXPORT___.push([
                     module1.id,
@@ -431,12 +431,7 @@
             },
             dY (__unused_rspack_module, exports1, __webpack_require__) {
                 "use strict";
-                /*!
- * The buffer module from node.js, for the browser.
- *
- * @author   Feross Aboukhadijeh <https://feross.org>
- * @license  MIT
- */ var base64 = __webpack_require__("JO");
+                var base64 = __webpack_require__("JO");
                 var ieee754 = __webpack_require__("rH");
                 var customInspectSymbol = 'function' == typeof Symbol && 'function' == typeof Symbol['for'] ? Symbol['for']('nodejs.util.inspect.custom') : null;
                 exports1.Buffer = Buffer;
@@ -4999,7 +4994,7 @@
                 module1.exports = bind.call(call, $hasOwn);
             },
             rH (__unused_rspack_module, exports1) {
-                /*! ieee754. BSD-3-Clause License. Feross Aboukhadijeh <https://feross.org/opensource> */ exports1.read = function(buffer, offset, isLE, mLen, nBytes) {
+                exports1.read = function(buffer, offset, isLE, mLen, nBytes) {
                     var e, m;
                     var eLen = 8 * nBytes - mLen - 1;
                     var eMax = (1 << eLen) - 1;
@@ -8035,7 +8030,7 @@
             },
             E (module1, __unused_rspack_exports, __webpack_require__) {
                 var Buffer = __webpack_require__("dY").Buffer;
-                /*! typedarray-to-buffer. MIT License. Feross Aboukhadijeh <https://feross.org/opensource> */ module1.exports = function(arr) {
+                module1.exports = function(arr) {
                     return ArrayBuffer.isView(arr) ? Buffer.from(arr.buffer, arr.byteOffset, arr.byteLength) : Buffer.from(arr);
                 };
             },
@@ -10991,6 +10986,7 @@
                 ]);
             const errorConstructors = new Map(list);
             const errorFactories = new Map();
+            const isErrorInstance = (value)=>value instanceof Error || (Error.isError?.(value) ?? '[object Error]' === Object.prototype.toString.call(value));
             const errorProperties = [
                 {
                     property: 'name',
@@ -11026,6 +11022,12 @@
                     toJsonWasCalled.delete(from);
                 }
             };
+            const setProperty = (to, key, value)=>{
+                try {
+                    to[key] = value;
+                } catch  {}
+            };
+            const errorPropertyNames = new Set(errorProperties.map(({ property })=>property));
             const newError = (name)=>{
                 if ('NonError' === name) return new NonError();
                 const factory = errorFactories.get(name);
@@ -11033,87 +11035,83 @@
                 const ErrorConstructor = errorConstructors.get(name) ?? Error;
                 return ErrorConstructor === AggregateError ? new ErrorConstructor([]) : new ErrorConstructor();
             };
-            const destroyCircular = ({ from, seen, to, forceEnumerable, maxDepth, depth, useToJSON, serialize })=>{
-                if (!to) to = Array.isArray(from) ? [] : !serialize && isErrorLike(from) ? newError(from.name) : {};
+            const skip = Symbol('skip');
+            const destroyValue = (value, options, depth)=>{
+                if (value && value instanceof Uint8Array && value.constructor?.name === 'Buffer') return options.serialize ? '[object Buffer]' : value;
+                if (null !== value && 'object' == typeof value && 'function' == typeof value.pipe && 'function' == typeof value.on) return options.serialize ? '[object Stream]' : value;
+                if ('function' == typeof value) return options.serialize ? skip : value;
+                if (options.serialize && 'bigint' == typeof value) return `${value}n`;
+                if (!value || 'object' != typeof value) return value;
+                if (options.seen.has(value)) return '[Circular]';
+                return destroyCircular({
+                    ...options,
+                    from: value,
+                    to: void 0,
+                    depth
+                });
+            };
+            const createTarget = (from, serialize)=>{
+                if (Array.isArray(from)) return [];
+                if (!serialize && isErrorLike(from)) return newError(from.name);
+                return {};
+            };
+            const canRedefine = (to, property)=>Object.getOwnPropertyDescriptor(to, property)?.configurable !== false;
+            const unreadable = Symbol('unreadable');
+            const readProperty = (from, property)=>{
+                try {
+                    return from[property];
+                } catch  {
+                    return unreadable;
+                }
+            };
+            const isAbsent = (from, property, value)=>null == value && !Object.hasOwn(from, property);
+            const destroyCircular = (options)=>{
+                const { from, seen, forceEnumerable, maxDepth, depth, useToJSON, serialize } = options;
+                const to = options.to ?? createTarget(from, serialize);
                 seen.add(from);
                 if (depth >= maxDepth) {
                     seen.delete(from);
                     return to;
                 }
                 if (useToJSON && 'function' == typeof from.toJSON && !toJsonWasCalled.has(from)) {
-                    seen.delete(from);
-                    return toJSON(from);
+                    const json = toJSON(from);
+                    if (json !== from) {
+                        seen.delete(from);
+                        return json;
+                    }
                 }
-                const continueDestroyCircular = (value)=>destroyCircular({
-                        from: value,
-                        seen,
-                        forceEnumerable,
-                        maxDepth,
-                        depth: depth + 1,
-                        useToJSON,
-                        serialize
-                    });
+                const copyErrorProperties = serialize || isErrorInstance(to);
+                if (copyErrorProperties) for (const { property, enumerable } of errorProperties){
+                    const rawValue = readProperty(from, property);
+                    if (rawValue === unreadable || isAbsent(from, property, rawValue)) continue;
+                    const value = destroyValue(rawValue, options, depth + 1);
+                    if (value !== skip) {
+                        if (!canRedefine(to, property)) {
+                            setProperty(to, property, value);
+                            continue;
+                        }
+                        Object.defineProperty(to, property, {
+                            value,
+                            enumerable: forceEnumerable || enumerable,
+                            configurable: true,
+                            writable: true
+                        });
+                    }
+                }
                 for (const key of Object.keys(from)){
-                    const value = from[key];
-                    if (value && value instanceof Uint8Array && 'Buffer' === value.constructor.name) {
-                        to[key] = serialize ? '[object Buffer]' : value;
-                        continue;
-                    }
-                    if (null !== value && 'object' == typeof value && 'function' == typeof value.pipe) {
-                        to[key] = serialize ? '[object Stream]' : value;
-                        continue;
-                    }
-                    if ('function' == typeof value) {
-                        if (!serialize) to[key] = value;
-                        continue;
-                    }
-                    if (serialize && 'bigint' == typeof value) {
-                        to[key] = `${value}n`;
-                        continue;
-                    }
-                    if (!value || 'object' != typeof value) {
-                        try {
-                            to[key] = value;
-                        } catch  {}
-                        continue;
-                    }
-                    if (!seen.has(value)) {
-                        to[key] = continueDestroyCircular(value);
-                        continue;
-                    }
-                    to[key] = '[Circular]';
-                }
-                if (serialize || to instanceof Error) for (const { property, enumerable } of errorProperties){
-                    const value = from[property];
-                    if (null == value) continue;
-                    const descriptor = Object.getOwnPropertyDescriptor(to, property);
-                    if (descriptor?.configurable === false) continue;
-                    let processedValue = value;
-                    if ('object' == typeof value) processedValue = seen.has(value) ? '[Circular]' : continueDestroyCircular(value);
-                    Object.defineProperty(to, property, {
-                        value: processedValue,
-                        enumerable: forceEnumerable || enumerable,
-                        configurable: true,
-                        writable: true
-                    });
+                    if ('__proto__' === key) continue;
+                    if (copyErrorProperties && errorPropertyNames.has(key)) continue;
+                    const value = destroyValue(from[key], options, depth + 1);
+                    if (value !== skip) setProperty(to, key, value);
                 }
                 seen.delete(from);
                 return to;
             };
             function serializeError(value, options = {}) {
                 const { maxDepth = 1 / 0, useToJSON = true } = options;
-                if ('object' == typeof value && null !== value) return destroyCircular({
-                    from: value,
-                    seen: new Set(),
-                    forceEnumerable: true,
-                    maxDepth,
-                    depth: 0,
-                    useToJSON,
-                    serialize: true
-                });
-                if ('function' == typeof value) value = '<Function>';
+                if ('object' != typeof value || null === value) value = new NonError('function' == typeof value ? '<Function>' : value);
                 return destroyCircular({
-                    from: new NonError(value),
+                    from: value,
                     seen: new Set(),
                     forceEnumerable: true,
                     maxDepth,
@@ -11136,15 +11134,15 @@
                 return new NonError(value);
             }
             function isErrorLike(value) {
-                return Boolean(value) && 'object' == typeof value && 'string' == typeof value.name && 'string' == typeof value.message && 'string' == typeof value.stack;
+                return Boolean(value) && 'object' == typeof value && 'string' == typeof readProperty(value, 'name') && 'string' == typeof readProperty(value, 'message') && 'string' == typeof readProperty(value, 'stack');
             }
             function isMinimumViableSerializedError(value) {
                 return Boolean(value) && 'object' == typeof value && 'string' == typeof value.message && !Array.isArray(value);
             }
             var client = __webpack_require__("Q");
-            var client_default = /*#__PURE__*/ __webpack_require__.n(client);
+            var client_default = __webpack_require__.n(client);
             var package_namespaceObject = {
-                rE: "16.7.0"
+                rE: "16.8.0"
             };
             function isAudioEnabled(options) {
                 return Boolean(options.audio.enabled);
@@ -11157,7 +11155,7 @@
                 return options.enableAutoPause && options.enablePause;
             }
             var util = __webpack_require__("S");
-            var util_default = /*#__PURE__*/ __webpack_require__.n(util);
+            var util_default = __webpack_require__.n(util);
             function getEventDetails(event) {
                 const eventWithErrorDetails = event;
                 const details = {
@@ -11224,7 +11222,7 @@
             }
             const string_pretty = pretty;
             var defined = __webpack_require__("MO");
-            var defined_default = /*#__PURE__*/ __webpack_require__.n(defined);
+            var defined_default = __webpack_require__.n(defined);
             var LIBVERSION = '2.0.10', UA_MAX_LENGTH = 500, USER_AGENT = 'user-agent', EMPTY = '', UNKNOWN = '?', TYPEOF = {
                 FUNCTION: 'function',
                 OBJECT: 'object',
@@ -15534,7 +15532,7 @@
             }
             const src_resource = Resource;
             var cjs = __webpack_require__("HU");
-            var cjs_default = /*#__PURE__*/ __webpack_require__.n(cjs);
+            var cjs_default = __webpack_require__.n(cjs);
             const NodeEnvType = {
                 DEVELOPMENT: "development",
                 PRODUCTION: "production"
@@ -15725,17 +15723,17 @@
             }
             const options_mergeWithDefaultOptions = mergeWithDefaultOptions;
             var injectStylesIntoStyleTag = __webpack_require__("RR");
-            var injectStylesIntoStyleTag_default = /*#__PURE__*/ __webpack_require__.n(injectStylesIntoStyleTag);
+            var injectStylesIntoStyleTag_default = __webpack_require__.n(injectStylesIntoStyleTag);
             var styleDomAPI = __webpack_require__("Bd");
-            var styleDomAPI_default = /*#__PURE__*/ __webpack_require__.n(styleDomAPI);
+            var styleDomAPI_default = __webpack_require__.n(styleDomAPI);
             var insertBySelector = __webpack_require__("uZ");
-            var insertBySelector_default = /*#__PURE__*/ __webpack_require__.n(insertBySelector);
+            var insertBySelector_default = __webpack_require__.n(insertBySelector);
             var setAttributesWithoutAttributes = __webpack_require__("kU");
-            var setAttributesWithoutAttributes_default = /*#__PURE__*/ __webpack_require__.n(setAttributesWithoutAttributes);
+            var setAttributesWithoutAttributes_default = __webpack_require__.n(setAttributesWithoutAttributes);
             var insertStyleElement = __webpack_require__("mK");
-            var insertStyleElement_default = /*#__PURE__*/ __webpack_require__.n(insertStyleElement);
+            var insertStyleElement_default = __webpack_require__.n(insertStyleElement);
             var styleTagTransform = __webpack_require__("snK");
-            var styleTagTransform_default = /*#__PURE__*/ __webpack_require__.n(styleTagTransform);
+            var styleTagTransform_default = __webpack_require__.n(styleTagTransform);
             var main = __webpack_require__("eq");
             var main_options = {};
             main_options.styleTagTransform = styleTagTransform_default();
@@ -15746,8 +15744,8 @@
             injectStylesIntoStyleTag_default()(main.A, main_options);
             main.A && main.A.locals && main.A.locals;
             var document_visibility = __webpack_require__("xF");
-            var document_visibility_default = /*#__PURE__*/ __webpack_require__.n(document_visibility);
-            /*! @license DOMPurify 3.4.17 | (c) Cure53 and other contributors | Released under the Apache license 2.0 and Mozilla Public License 2.0 | github.com/cure53/DOMPurify/blob/3.4.17/LICENSE */ function _OverloadYield(e, d) {
+            var document_visibility_default = __webpack_require__.n(document_visibility);
+            function _OverloadYield(e, d) {
                 this.v = e, this.k = d;
             }
             function _arrayLikeToArray(r, a) {
@@ -15782,7 +15780,7 @@
             function _nonIterableRest() {
                 throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
             }
-            /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ function _slicedToArray(r, e) {
+            function _slicedToArray(r, e) {
                 return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest();
             }
             function _unsupportedIterableToArray(r, a) {
@@ -17892,7 +17890,7 @@
             }
             const dimensions_useFullWidth = useFullWidth;
             var contains = __webpack_require__("FU");
-            var contains_default = /*#__PURE__*/ __webpack_require__.n(contains);
+            var contains_default = __webpack_require__.n(contains);
             function disableElement(element) {
                 if (!element) return;
                 if ("INPUT" === element.tagName || "BUTTON" === element.tagName) element.setAttribute("disabled", "true");
@@ -19008,7 +19006,7 @@
             }
             const string_summarize = summarize;
             var animitter = __webpack_require__("b6");
-            var animitter_default = /*#__PURE__*/ __webpack_require__.n(animitter);
+            var animitter_default = __webpack_require__.n(animitter);
             var typedarray_to_buffer = __webpack_require__("E");
             const canvas_to_buffer_modern_e = "u" > typeof document && "function" == typeof document.createElement, canvas_to_buffer_modern_i = canvas_to_buffer_modern_e ? [
                 "webp",
@@ -19069,7 +19067,7 @@
             }
             canvas_to_buffer_modern_r.atob = void 0;
             var websocket_stream_stream = __webpack_require__("U");
-            var stream_default = /*#__PURE__*/ __webpack_require__.n(websocket_stream_stream);
+            var stream_default = __webpack_require__.n(websocket_stream_stream);
             function isAutomatedUserAgent(userAgent = navigator.userAgent) {
                 return /bot|crawler|spider|headlesschrome|phantomjs|puppeteer|playwright/iu.test(userAgent);
             }
@@ -19122,12 +19120,32 @@
                     reasons: reasons.length > 0 ? reasons.join(",") : "none"
                 };
             }
+            function getConstructorDetails() {
+                const socketConstructor = globalThis.WebSocket;
+                const available = "function" == typeof socketConstructor;
+                let name;
+                let arity;
+                let nativeLike = false;
+                if (available) {
+                    name = socketConstructor.name.slice(0, 80);
+                    arity = socketConstructor.length;
+                    nativeLike = Function.prototype.toString.call(socketConstructor).includes("[native code]");
+                }
+                return {
+                    available,
+                    name,
+                    arity,
+                    nativeLike
+                };
+            }
             function getWebSocketDiagnostic(url2Connect) {
-                const wsCtorFingerprint = String(globalThis.WebSocket).slice(0, 80).replace(/\s+/gu, " ");
-                const wsCtorNative = wsCtorFingerprint.includes("[native code]");
+                const constructor = getConstructorDetails();
                 let urlParsedProtocol = "invalid";
+                let endpoint;
                 try {
-                    urlParsedProtocol = new URL(url2Connect).protocol;
+                    const url = new URL(url2Connect);
+                    urlParsedProtocol = url.protocol;
+                    endpoint = `${url.origin}${url.pathname}`;
                 } catch (_exc) {}
                 const urlHasWhitespace = /\s/u.test(url2Connect);
                 const urlHasControlChars = hasControlCharacters(url2Connect);
@@ -19136,9 +19154,29 @@
                 const probeWithSimpleQuery = probeWebSocketConstructor("wss://videomail.io/?a=b");
                 const languages = getLanguagesValue();
                 const automationSignals = getDiagnosticSignals(probeBase, probeWithSimpleQuery);
+                const details = {
+                    version: 4,
+                    constructor,
+                    endpoint,
+                    urlLength: url2Connect.length,
+                    urlParsedProtocol,
+                    urlHasWhitespace,
+                    urlHasControlChars,
+                    urlHasReplacementChar,
+                    probeBase,
+                    probeSimpleQuery: probeWithSimpleQuery,
+                    locationProtocol: location.protocol,
+                    secureContext: globalThis.isSecureContext,
+                    online: navigator.onLine,
+                    languages,
+                    visibilityState: document.visibilityState,
+                    topLevel: window.top === window
+                };
                 const diagnosticPairs = [
                     `webdriver=${String(navigator.webdriver)}`,
-                    `wsCtorNative=${String(wsCtorNative)}`,
+                    `wsCtorNative=${String(constructor.nativeLike)}`,
+                    `wsCtorName=${constructor.name ?? "unavailable"}`,
+                    `wsCtorArity=${constructor.arity ?? "unavailable"}`,
                     `looksAutomated=${String(automationSignals.looksAutomated)}`,
                     `automationReasons=${automationSignals.reasons}`,
                     `urlLen=${url2Connect.length}`,
@@ -19157,8 +19195,9 @@
                     "ipAsnCheck=server_side_only"
                 ];
                 return {
-                    text: `websocketDiagnostics(v3): ${diagnosticPairs.join("; ")}`,
-                    looksAutomated: automationSignals.looksAutomated
+                    text: `websocketDiagnostics(v4): ${diagnosticPairs.join("; ")}`,
+                    looksAutomated: automationSignals.looksAutomated,
+                    details
                 };
             }
             const error_getWebSocketDiagnostic = getWebSocketDiagnostic;
@@ -19654,7 +19693,9 @@
                     } catch (exc) {
                         this.connecting = this.connected = false;
                         const diagnostic = error_getWebSocketDiagnostic(url2Connect);
-                        const message = diagnostic.looksAutomated ? "Automated crawler: WebSocket not supported in this environment" : `Failed to construct WebSocket to ${url2Connect}`;
+                        const connectionPhase = void 0 === this.connectionOpenedAt ? "initial" : "idle";
+                        let message;
+                        message = diagnostic.looksAutomated ? "Automated crawler: WebSocket not supported in this environment" : `Failed to construct WebSocket to ${url2Connect}`;
                         const explanation = diagnostic.looksAutomated ? "Headless crawlers cannot use Videomail's WebSocket. No action needed." : `Please check your connection and try again. If the problem persists, contact us. Diagnostic: ${diagnostic.text}`;
                         const err = error_createError({
                             message,
@@ -19662,7 +19703,11 @@
                             options: this.options,
                             exc,
                             cause: {
-                                automation
+                                automation,
+                                transportStage: "constructor",
+                                transportPhase: this.mediaTransmissionStarted ? "recording" : connectionPhase,
+                                mediaTransmissionStarted: this.mediaTransmissionStarted,
+                                webSocketDiagnostic: diagnostic.details
                             }
                         });
                         this.emit("ERROR", {
@@ -20772,7 +20817,7 @@
             const esm_src = AudioSample;
             const esm = esm_src;
             var is_power_of_two = __webpack_require__("dZ");
-            var is_power_of_two_default = /*#__PURE__*/ __webpack_require__.n(is_power_of_two);
+            var is_power_of_two_default = __webpack_require__.n(is_power_of_two);
             const AUDIO_RECORDER_PROCESSOR_NAME = "videomail-pcm-recorder";
             function registerAudioRecorderProcessor(name, Processor, register) {
                 class PcmRecorderProcessor extends Processor {
@@ -21762,6 +21807,7 @@
                     if (!this.replayElement) return;
                     const tracks = this.replayElement.getElementsByTagName("track");
                     const firstTrack = tracks[0];
+                    this.replayElement.setAttribute("crossorigin", "anonymous");
                     if (firstTrack) if (src) firstTrack.setAttribute("src", src);
                     else firstTrack.remove();
                     else {
@@ -21771,7 +21817,6 @@
                         track.kind = "captions";
                         track.default = true;
                         this.replayElement.appendChild(track);
-                        this.replayElement.setAttribute("crossorigin", "anonymous");
                     }
                 }
                 setVideoSource(type, src, bustCache) {
