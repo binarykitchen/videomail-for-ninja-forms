@@ -45,6 +45,23 @@
   height: 100%;
 }
 
+.videomail .visuals.fixedAspectRatio > video, .videomail .visuals.fixedAspectRatio > .notifier {
+  position: absolute;
+  inset: 0;
+}
+
+.videomail .visuals.fixedAspectRatio > video {
+  object-fit: contain;
+  min-height: 100%;
+  max-height: 100%;
+}
+
+.videomail .visuals.fixedAspectRatio > .notifier {
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+}
+
 .videomail .countdown, .videomail .recordTimer, .videomail .recordNote, .videomail .pausedHeader, .videomail .pausedHint {
   height: auto;
   margin: 0;
@@ -7781,15 +7798,24 @@
                         for(const key in field)if (hasOwn(field, key)) this.set(key, field[key]);
                         return this;
                     }
-                    this._header[field.toLowerCase()] = value;
+                    const name = field.toLowerCase();
+                    deleteHeader(this.header, name);
+                    this._header[name] = value;
                     this.header[field] = value;
+                    if (this._unset) this._unset.delete(name);
                     return this;
                 };
                 RequestBase.prototype.unset = function(field) {
-                    delete this._header[field.toLowerCase()];
-                    delete this.header[field];
+                    const name = field.toLowerCase();
+                    delete this._header[name];
+                    deleteHeader(this.header, name);
+                    this._unset = this._unset || new Set();
+                    this._unset.add(name);
                     return this;
                 };
+                function deleteHeader(header, name) {
+                    for (const key of Object.keys(header))if (key.toLowerCase() === name) delete header[key];
+                }
                 RequestBase.prototype.field = function(name, value, options) {
                     if (null == name) throw new Error('.field(name, val) name can not be empty');
                     if (this._data) throw new Error(".field() can't be used if .send() is used. Please use only .send() or only .field() & .attach()");
@@ -7891,17 +7917,23 @@
                 };
                 RequestBase.prototype._finalizeQueryString = function() {
                     const query = this._query.join('&');
-                    if (query) this.url += (this.url.includes('?') ? '&' : '?') + query;
                     this._query.length = 0;
+                    if (!query && !this._sort) return;
+                    let url = String(this.url);
+                    const hashIndex = url.indexOf('#');
+                    const fragment = -1 === hashIndex ? '' : url.slice(hashIndex);
+                    if (fragment) url = url.slice(0, hashIndex);
+                    if (query) url += (url.includes('?') ? '&' : '?') + query;
                     if (this._sort) {
-                        const index = this.url.indexOf('?');
+                        const index = url.indexOf('?');
                         if (index >= 0) {
-                            const queryArray = this.url.slice(index + 1).split('&');
+                            const queryArray = url.slice(index + 1).split('&');
                             if ('function' == typeof this._sort) queryArray.sort(this._sort);
                             else queryArray.sort();
-                            this.url = this.url.slice(0, index) + '?' + queryArray.join('&');
+                            url = url.slice(0, index) + '?' + queryArray.join('&');
                         }
                     }
+                    this.url = url + fragment;
                 };
                 RequestBase.prototype._appendQueryString = ()=>{
                     console.warn('Unsupported');
@@ -7979,9 +8011,8 @@
                 exports1.params = (value)=>{
                     const object = {};
                     for (const string_ of value.split(/ *; */)){
-                        const parts = string_.split(/ *= */);
-                        const key = parts.shift();
-                        const value = parts.shift();
+                        const [key, ...rest] = string_.split(/ *= */);
+                        const value = rest.join('=');
                         if (key && value && exports1.isSafeKey(key)) object[key] = value;
                     }
                     return object;
@@ -7994,8 +8025,7 @@
                         for (const part of parts.slice(1)){
                             const [key, keyValue] = part.split(/ *= */, 2);
                             if (key && 'rel' === key.toLowerCase() && keyValue) {
-                                const relationship = keyValue.replace(/^"|"$/g, '');
-                                if (relationship && exports1.isSafeKey(relationship)) object[relationship] = url;
+                                for (const relationship of keyValue.replace(/^"|"$/g, '').split(/ +/))if (relationship && exports1.isSafeKey(relationship)) object[relationship] = url;
                                 break;
                             }
                         }
@@ -10638,7 +10668,7 @@
                     return i[1];
                 };
             },
-            RR (module1) {
+            R (module1) {
                 "use strict";
                 var stylesInDOM = [];
                 function getIndexByIdentifier(identifier) {
@@ -11142,85 +11172,8 @@
             var client = __webpack_require__("Q");
             var client_default = __webpack_require__.n(client);
             var package_namespaceObject = {
-                rE: "16.8.0"
+                rE: "16.11.0"
             };
-            function isAudioEnabled(options) {
-                return Boolean(options.audio.enabled);
-            }
-            function setAudioEnabled(enabled, options) {
-                options.audio.enabled = enabled;
-                return options;
-            }
-            function isAutoPauseEnabled(options) {
-                return options.enableAutoPause && options.enablePause;
-            }
-            var util = __webpack_require__("S");
-            var util_default = __webpack_require__.n(util);
-            function getEventDetails(event) {
-                const eventWithErrorDetails = event;
-                const details = {
-                    constructor: event.constructor.name,
-                    type: event.type,
-                    isTrusted: event.isTrusted,
-                    bubbles: event.bubbles,
-                    cancelable: event.cancelable,
-                    composed: event.composed,
-                    defaultPrevented: event.defaultPrevented,
-                    eventPhase: event.eventPhase,
-                    timeStamp: event.timeStamp,
-                    returnValue: eventWithErrorDetails.returnValue,
-                    cancelBubble: eventWithErrorDetails.cancelBubble
-                };
-                for (const property of [
-                    "message",
-                    "filename",
-                    "lineno",
-                    "colno"
-                ]){
-                    const value = eventWithErrorDetails[property];
-                    if (void 0 !== value) details[property] = value;
-                }
-                if (eventWithErrorDetails.error instanceof Error) details.error = serializeError(eventWithErrorDetails.error);
-                if (event.target) {
-                    const target = event.target;
-                    const targetDetails = {
-                        constructor: target.constructor.name
-                    };
-                    for (const property of [
-                        "url",
-                        "readyState",
-                        "protocol",
-                        "extensions",
-                        "binaryType",
-                        "bufferedAmount"
-                    ]){
-                        const value = target[property];
-                        if (void 0 !== value) targetDetails[property] = value;
-                    }
-                    details.target = targetDetails;
-                }
-                return details;
-            }
-            const error_getEventDetails = getEventDetails;
-            function inspect(element) {
-                return util_default().inspect(element, {
-                    colors: false,
-                    compact: false,
-                    depth: 4,
-                    breakLength: 1 / 0,
-                    showHidden: true
-                }).replace(/\s+/gu, " ").replace(/\r?\n/gu, "");
-            }
-            function pretty(anything) {
-                if (anything instanceof HTMLElement) {
-                    if (anything.id) return `#${anything.id}`;
-                    else if (anything.className) return `.${anything.className}`;
-                    return "(No HTML identifier available)";
-                }
-                if ("u" > typeof Event && anything instanceof Event) return inspect(error_getEventDetails(anything));
-                return inspect(anything);
-            }
-            const string_pretty = pretty;
             var defined = __webpack_require__("MO");
             var defined_default = __webpack_require__.n(defined);
             var LIBVERSION = '2.0.10', UA_MAX_LENGTH = 500, USER_AGENT = 'user-agent', EMPTY = '', UNKNOWN = '?', TYPEOF = {
@@ -14488,89 +14441,83 @@
                 return canPlayType;
             }
             const media_canPlayType = canPlayType_canPlayType;
-            const FALLBACK_VIDEO_TYPE = VideoType.MP4;
-            class Browser {
-                options;
-                result;
-                videoType;
-                constructor(options){
-                    this.options = options;
-                    const ua = defined_default()(options.fakeUaString, window.navigator.userAgent, "");
-                    const userAgentParser = new UAParser(ua);
-                    this.result = userAgentParser.getResult();
+            function isAudioEnabled(options) {
+                return Boolean(options.audio.enabled);
+            }
+            function setAudioEnabled(enabled, options) {
+                options.audio.enabled = enabled;
+                return options;
+            }
+            function isAutoPauseEnabled(options) {
+                return options.enableAutoPause && options.enablePause;
+            }
+            var util = __webpack_require__("S");
+            var util_default = __webpack_require__.n(util);
+            function getEventDetails(event) {
+                const eventWithErrorDetails = event;
+                const details = {
+                    constructor: event.constructor.name,
+                    type: event.type,
+                    isTrusted: event.isTrusted,
+                    bubbles: event.bubbles,
+                    cancelable: event.cancelable,
+                    composed: event.composed,
+                    defaultPrevented: event.defaultPrevented,
+                    eventPhase: event.eventPhase,
+                    timeStamp: event.timeStamp,
+                    returnValue: eventWithErrorDetails.returnValue,
+                    cancelBubble: eventWithErrorDetails.cancelBubble
+                };
+                for (const property of [
+                    "message",
+                    "filename",
+                    "lineno",
+                    "colno"
+                ]){
+                    const value = eventWithErrorDetails[property];
+                    if (void 0 !== value) details[property] = value;
                 }
-                isIOS() {
-                    return "iOS" === this.result.os.name;
-                }
-                getBrowserVersion() {
-                    return this.result.browser.version;
-                }
-                isChrome() {
-                    return "Chrome" === this.result.browser.name;
-                }
-                isChromium() {
-                    return "Chromium" === this.result.browser.name;
-                }
-                isFirefox() {
-                    return "Firefox" === this.result.browser.name;
-                }
-                isSafari() {
-                    if (!this.result.browser.name) return false;
-                    return this.result.browser.name.includes("Safari");
-                }
-                isAndroid() {
-                    if (!this.result.os.name) return false;
-                    return this.result.os.name.includes("Android");
-                }
-                isChromeBased() {
-                    return this.isChrome() || this.isChromium();
-                }
-                isMobile() {
-                    return this.isIOS() || this.isAndroid();
-                }
-                isOkSafari() {
-                    const version = this.getBrowserVersion();
-                    if (!version) return false;
-                    return this.isSafari() && Number.parseFloat(version) >= 11;
-                }
-                getVideoType(video) {
-                    if (!this.videoType) {
-                        if (media_canPlayType(video, VideoType.MP4)) this.videoType = VideoType.MP4;
-                        else if (media_canPlayType(video, VideoType.WebM)) this.videoType = VideoType.WebM;
-                    }
-                    if (this.videoType !== VideoType.WebM && this.videoType !== VideoType.MP4) this.videoType = FALLBACK_VIDEO_TYPE;
-                    if ("" === this.videoType.trim()) this.videoType = FALLBACK_VIDEO_TYPE;
-                    return this.videoType;
-                }
-                getNoAccessIssue() {
-                    const message = "Unable to access webcam";
-                    let explanation;
-                    explanation = this.isChromeBased() ? "Click on the allow button to grant access to your webcam" : this.isFirefox() ? "Please grant Firefox access to your webcam" : "Your system does not let your browser access your webcam";
-                    return error_createError({
-                        message,
-                        explanation,
-                        options: this.options
-                    });
-                }
-                getUsefulData() {
-                    const data = {
-                        ua: this.result.ua,
-                        browser: this.result.browser,
-                        cpu: this.result.cpu,
-                        device: this.result.device,
-                        engine: this.result.engine,
-                        os: this.result.os
+                if (eventWithErrorDetails.error instanceof Error) details.error = serializeError(eventWithErrorDetails.error);
+                if (event.target) {
+                    const target = event.target;
+                    const targetDetails = {
+                        constructor: target.constructor.name
                     };
-                    return data;
+                    for (const property of [
+                        "url",
+                        "readyState",
+                        "protocol",
+                        "extensions",
+                        "binaryType",
+                        "bufferedAmount"
+                    ]){
+                        const value = target[property];
+                        if (void 0 !== value) targetDetails[property] = value;
+                    }
+                    details.target = targetDetails;
                 }
+                return details;
             }
-            const util_Browser = Browser;
-            let getBrowser_browser;
-            function getBrowser(localOptions) {
-                if (!getBrowser_browser) getBrowser_browser = new util_Browser(localOptions);
-                return getBrowser_browser;
+            const error_getEventDetails = getEventDetails;
+            function inspect(element) {
+                return util_default().inspect(element, {
+                    colors: false,
+                    compact: false,
+                    depth: 4,
+                    breakLength: 1 / 0,
+                    showHidden: true
+                }).replace(/\s+/gu, " ").replace(/\r?\n/gu, "");
             }
-            const util_getBrowser = getBrowser;
+            function pretty(anything) {
+                if (anything instanceof HTMLElement) {
+                    if (anything.id) return `#${anything.id}`;
+                    else if (anything.className) return `.${anything.className}`;
+                    return "(No HTML identifier available)";
+                }
+                if ("u" > typeof Event && anything instanceof Event) return inspect(error_getEventDetails(anything));
+                return inspect(anything);
+            }
+            const string_pretty = pretty;
             class HTTPVideomailError extends Error {
                 name = "VideomailError";
                 code;
@@ -14615,7 +14562,7 @@
                     this.logLines = errData?.logLines;
                     this.whitelistKey = options.whitelistKey;
                     this.classList = classList;
-                    const browser = util_getBrowser(options);
+                    const browser = browser_getBrowser(options);
                     const usefulClientData = browser.getUsefulData();
                     this.browser = usefulClientData.browser;
                     if (usefulClientData.cpu.architecture) this.cpu = usefulClientData.cpu;
@@ -14785,6 +14732,89 @@
                 return videomailError;
             }
             const error_createError = createError;
+            const FALLBACK_VIDEO_TYPE = VideoType.MP4;
+            class Browser {
+                options;
+                result;
+                videoType;
+                constructor(options){
+                    this.options = options;
+                    const ua = defined_default()(options.fakeUaString, window.navigator.userAgent, "");
+                    const userAgentParser = new UAParser(ua);
+                    this.result = userAgentParser.getResult();
+                }
+                isIOS() {
+                    return "iOS" === this.result.os.name;
+                }
+                getBrowserVersion() {
+                    return this.result.browser.version;
+                }
+                isChrome() {
+                    return "Chrome" === this.result.browser.name;
+                }
+                isChromium() {
+                    return "Chromium" === this.result.browser.name;
+                }
+                isFirefox() {
+                    return "Firefox" === this.result.browser.name;
+                }
+                isSafari() {
+                    if (!this.result.browser.name) return false;
+                    return this.result.browser.name.includes("Safari");
+                }
+                isAndroid() {
+                    if (!this.result.os.name) return false;
+                    return this.result.os.name.includes("Android");
+                }
+                isChromeBased() {
+                    return this.isChrome() || this.isChromium();
+                }
+                isMobile() {
+                    return this.isIOS() || this.isAndroid();
+                }
+                isOkSafari() {
+                    const version = this.getBrowserVersion();
+                    if (!version) return false;
+                    return this.isSafari() && Number.parseFloat(version) >= 11;
+                }
+                getVideoType(video) {
+                    if (!this.videoType) {
+                        if (media_canPlayType(video, VideoType.MP4)) this.videoType = VideoType.MP4;
+                        else if (media_canPlayType(video, VideoType.WebM)) this.videoType = VideoType.WebM;
+                    }
+                    if (this.videoType !== VideoType.WebM && this.videoType !== VideoType.MP4) this.videoType = FALLBACK_VIDEO_TYPE;
+                    if ("" === this.videoType.trim()) this.videoType = FALLBACK_VIDEO_TYPE;
+                    return this.videoType;
+                }
+                getNoAccessIssue() {
+                    const message = "Unable to access webcam";
+                    let explanation;
+                    explanation = this.isChromeBased() ? "Click on the allow button to grant access to your webcam" : this.isFirefox() ? "Please grant Firefox access to your webcam" : "Your system does not let your browser access your webcam";
+                    return error_createError({
+                        message,
+                        explanation,
+                        options: this.options
+                    });
+                }
+                getUsefulData() {
+                    const data = {
+                        ua: this.result.ua,
+                        browser: this.result.browser,
+                        cpu: this.result.cpu,
+                        device: this.result.device,
+                        engine: this.result.engine,
+                        os: this.result.os
+                    };
+                    return data;
+                }
+            }
+            const util_Browser = Browser;
+            let getBrowser_browser;
+            function getBrowser(localOptions) {
+                if (!getBrowser_browser) getBrowser_browser = new util_Browser(localOptions);
+                return getBrowser_browser;
+            }
+            const browser_getBrowser = getBrowser;
             function findOriginalExc(exc) {
                 if (exc instanceof Error && "response" in exc) {
                     const response = exc.response;
@@ -15485,7 +15515,7 @@
                     if (!newVideomail.versions) newVideomail.versions = {};
                     newVideomail.versions.videomailClient = package_namespaceObject.rE;
                     newVideomail.recordLocation = window.location.href;
-                    const browser = util_getBrowser(this.options);
+                    const browser = browser_getBrowser(this.options);
                     newVideomail.browserStats = browser.getUsefulData();
                     try {
                         let res;
@@ -15672,7 +15702,7 @@
                 options;
                 constructor(options){
                     this.options = options;
-                    this.browser = util_getBrowser(options);
+                    this.browser = browser_getBrowser(options);
                     this.logger = options.logger;
                 }
                 lifo(level, parameters) {
@@ -15722,7 +15752,7 @@
                 return newOptions;
             }
             const options_mergeWithDefaultOptions = mergeWithDefaultOptions;
-            var injectStylesIntoStyleTag = __webpack_require__("RR");
+            var injectStylesIntoStyleTag = __webpack_require__("R");
             var injectStylesIntoStyleTag_default = __webpack_require__.n(injectStylesIntoStyleTag);
             var styleDomAPI = __webpack_require__("Bd");
             var styleDomAPI_default = __webpack_require__.n(styleDomAPI);
@@ -15838,6 +15868,7 @@
                 return this._invoke("return", e);
             };
             const entries = Object.entries;
+            const objectKeys = Object.keys;
             const setPrototypeOf = Object.setPrototypeOf;
             const isFrozen = Object.isFrozen;
             const getPrototypeOf = Object.getPrototypeOf;
@@ -15863,7 +15894,6 @@
                 return new Func(...args);
             };
             const arrayForEach = unapply(Array.prototype.forEach);
-            Array.prototype.indexOf;
             const arrayLastIndexOf = unapply(Array.prototype.lastIndexOf);
             const arrayPop = unapply(Array.prototype.pop);
             const arrayPush = unapply(Array.prototype.push);
@@ -15885,11 +15915,16 @@
             const symbolToString = "u" < typeof Symbol ? null : unapply(Symbol.prototype.toString);
             const objectHasOwnProperty = unapply(Object.prototype.hasOwnProperty);
             const objectToString = unapply(Object.prototype.toString);
-            const regExpTest = unapply(RegExp.prototype.test);
+            const regExpTestRaw = RegExp.prototype.test;
+            const purify_es_regExpTest = function(regExp, value) {
+                if (regExp instanceof RegExp) regExp.lastIndex = 0;
+                return purify_es_apply(regExpTestRaw, regExp, [
+                    value
+                ]);
+            };
             const typeErrorCreate = unconstruct(TypeError);
             function unapply(func) {
                 return function(thisArg) {
-                    if (thisArg instanceof RegExp) thisArg.lastIndex = 0;
                     for(var _len3 = arguments.length, args = new Array(_len3 > 1 ? _len3 - 1 : 0), _key3 = 1; _key3 < _len3; _key3++)args[_key3 - 1] = arguments[_key3];
                     return purify_es_apply(func, thisArg, args);
                 };
@@ -15933,6 +15968,13 @@
                     else newObject[property] = value;
                 }
                 return newObject;
+            }
+            function cloneSet(set) {
+                const newSet = create(null);
+                const keys = objectKeys(set);
+                let l = keys.length;
+                while(l--)newSet[keys[l]] = set[keys[l]];
+                return newSet;
             }
             function stringifyValue(value) {
                 switch(typeof value){
@@ -15987,8 +16029,9 @@
                 return null;
             }
             function isRegex(value) {
+                if (!value) return false;
                 try {
-                    regExpTest(value, "");
+                    purify_es_regExpTest(value, "");
                     return true;
                 } catch (_unused) {
                     return false;
@@ -16129,8 +16172,6 @@
                 "defs",
                 "desc",
                 "ellipse",
-                "enterkeyhint",
-                "exportparts",
                 "filter",
                 "font",
                 "g",
@@ -16138,14 +16179,12 @@
                 "glyphref",
                 "hkern",
                 "image",
-                "inputmode",
                 "line",
                 "lineargradient",
                 "marker",
                 "mask",
                 "metadata",
                 "mpath",
-                "part",
                 "path",
                 "pattern",
                 "polygon",
@@ -16647,6 +16686,7 @@
             const MUSTACHE_EXPR = purify_es_seal(/{{[\w\W]*|^[\w\W]*}}/g);
             const ERB_EXPR = purify_es_seal(/<%[\w\W]*|^[\w\W]*%>/g);
             const TMPLIT_EXPR = purify_es_seal(/\${[\w\W]*/g);
+            const TMPL_MARKER_SERIALIZED = purify_es_seal(/{{|}}|\${|<%|%>|&lt;%|%&gt;/);
             const DATA_ATTR = purify_es_seal(/^data-[\-\w.\u00B7-\uFFFF]+$/);
             const ARIA_ATTR = purify_es_seal(/^aria-[\-\w]+$/);
             const IS_ALLOWED_URI = purify_es_seal(/^(?:(?:(?:f|ht)tps?|mailto|tel|callto|sms|cid|xmpp|matrix):|[^a-z]|[a-z+.\-]+(?:[^a-z+.\-:]|$))/i);
@@ -16658,19 +16698,15 @@
             const COMMENT_MARKUP_PROBE = purify_es_seal(/<[/\w]/g);
             const FALLBACK_TAG_CLOSE = purify_es_seal(/<\/no(script|embed|frames)/i);
             const SELF_CLOSING_TAG = purify_es_seal(/\/>/i);
+            const ATTR_VALUE_BREAKOUT = purify_es_seal(/((--!?|])>)|<\/(style|script|title|xmp|textarea|noscript|iframe|noembed|noframes)/i);
+            const LEADING_WHITESPACE = purify_es_seal(/^[\r\n\t ]+/);
             const NODE_TYPE = {
                 element: 1,
-                attribute: 2,
                 text: 3,
-                cdataSection: 4,
-                entityReference: 5,
-                entityNode: 6,
                 processingInstruction: 7,
                 comment: 8,
                 document: 9,
-                documentType: 10,
-                documentFragment: 11,
-                notation: 12
+                documentFragment: 11
             };
             const LITERAL_TEXT_ELEMENTS = purify_es_freeze(addToSet({}, [
                 "style",
@@ -16719,16 +16755,16 @@
                 };
             };
             const purify_es_resolveSetOption = function(cfg, key, fallback, options) {
-                return objectHasOwnProperty(cfg, key) && arrayIsArray(cfg[key]) ? addToSet(options.base ? clone(options.base) : {}, cfg[key], options.transform) : fallback;
+                return objectHasOwnProperty(cfg, key) && arrayIsArray(cfg[key]) ? addToSet(options.base ? cloneSet(options.base) : {}, cfg[key], options.transform) : fallback;
             };
-            const purify_es_resolveObjectOption = function(cfg, key, makeFallback) {
+            const purify_es_resolveObjectOption = function(cfg, key, fallback) {
                 const value = objectHasOwnProperty(cfg, key) ? cfg[key] : void 0;
-                return value && "object" == typeof value ? clone(value) : makeFallback();
+                return value && "object" == typeof value ? clone(value) : fallback;
             };
             function createDOMPurify() {
                 let window1 = arguments.length > 0 && void 0 !== arguments[0] ? arguments[0] : purify_es_getGlobal();
                 const DOMPurify = (root)=>createDOMPurify(root);
-                DOMPurify.version = "3.4.17";
+                DOMPurify.version = "3.4.18";
                 DOMPurify.removed = [];
                 if (!window1 || !window1.document || window1.document.nodeType !== NODE_TYPE.document || !window1.Element) {
                     DOMPurify.isSupported = false;
@@ -16737,11 +16773,7 @@
                 let document1 = window1.document;
                 const originalDocument = document1;
                 const currentScript = originalDocument.currentScript;
-                window1.DocumentFragment;
-                const HTMLTemplateElement = window1.HTMLTemplateElement, Node = window1.Node, Element1 = window1.Element, NodeFilter = window1.NodeFilter;
-                void 0 === window1.NamedNodeMap && (window1.NamedNodeMap || window1.MozNamedAttrMap);
-                window1.HTMLFormElement;
-                const DOMParser = window1.DOMParser, trustedTypes = window1.trustedTypes;
+                const HTMLTemplateElement = window1.HTMLTemplateElement, Node = window1.Node, Element1 = window1.Element, NodeFilter = window1.NodeFilter, DOMParser = window1.DOMParser, trustedTypes = window1.trustedTypes;
                 const ElementPrototype = Element1.prototype;
                 const cloneNode = lookupGetter(ElementPrototype, "cloneNode");
                 const remove = lookupGetter(ElementPrototype, "remove");
@@ -16785,6 +16817,9 @@
                         IN_TRUSTED_TYPES_POLICY--;
                     }
                 };
+                const _signOutput = function(html) {
+                    return trustedTypesPolicy && RETURN_TRUSTED_TYPE ? _createTrustedHTML(html) : html;
+                };
                 const _createTrustedScriptURL = function(scriptUrl) {
                     _assertNotInTrustedTypesPolicy();
                     IN_TRUSTED_TYPES_POLICY++;
@@ -16822,26 +16857,7 @@
                     ...mathMl,
                     ...xml
                 ]);
-                let CUSTOM_ELEMENT_HANDLING = Object.seal(create(null, {
-                    tagNameCheck: {
-                        writable: true,
-                        configurable: false,
-                        enumerable: true,
-                        value: null
-                    },
-                    attributeNameCheck: {
-                        writable: true,
-                        configurable: false,
-                        enumerable: true,
-                        value: null
-                    },
-                    allowCustomizedBuiltInElements: {
-                        writable: true,
-                        configurable: false,
-                        enumerable: true,
-                        value: false
-                    }
-                }));
+                let CUSTOM_ELEMENT_HANDLING = null;
                 let FORBID_TAGS = null;
                 let FORBID_ATTR = null;
                 const EXTRA_ELEMENT_HANDLING = Object.seal(create(null, {
@@ -16878,7 +16894,7 @@
                 let KEEP_CONTENT = true;
                 let IN_PLACE = false;
                 let IN_PLACE_VISITED = null;
-                let USE_PROFILES = {};
+                let USE_PROFILES = false;
                 let FORBID_CONTENTS = null;
                 const DEFAULT_FORBID_CONTENTS = addToSet({}, [
                     "annotation-xml",
@@ -16945,18 +16961,19 @@
                     SVG_NAMESPACE,
                     HTML_NAMESPACE
                 ], stringToString);
-                const DEFAULT_MATHML_TEXT_INTEGRATION_POINTS = purify_es_freeze([
+                const DEFAULT_MATHML_TEXT_INTEGRATION_POINTS = purify_es_freeze(addToSet({}, [
                     "mi",
                     "mo",
                     "mn",
                     "ms",
                     "mtext"
-                ]);
-                let MATHML_TEXT_INTEGRATION_POINTS = addToSet({}, DEFAULT_MATHML_TEXT_INTEGRATION_POINTS);
-                const DEFAULT_HTML_INTEGRATION_POINTS = purify_es_freeze([
+                ]));
+                let MATHML_TEXT_INTEGRATION_POINTS = null;
+                const DEFAULT_HTML_INTEGRATION_POINTS = purify_es_freeze(addToSet({}, [
                     "annotation-xml"
-                ]);
-                let HTML_INTEGRATION_POINTS = addToSet({}, DEFAULT_HTML_INTEGRATION_POINTS);
+                ]));
+                let HTML_INTEGRATION_POINTS = null;
+                const DEFAULT_CUSTOM_ELEMENT_HANDLING = purify_es_freeze(create(null));
                 const COMMON_SVG_AND_HTML_ELEMENTS = addToSet({}, [
                     "title",
                     "style",
@@ -16978,7 +16995,6 @@
                 };
                 const _parseConfig = function() {
                     let cfg = arguments.length > 0 && void 0 !== arguments[0] ? arguments[0] : {};
-                    if (CONFIG && CONFIG === cfg) return;
                     if (!cfg || "object" != typeof cfg) cfg = {};
                     cfg = clone(cfg);
                     PARSER_MEDIA_TYPE = -1 === SUPPORTED_PARSER_MEDIA_TYPES.indexOf(cfg.PARSER_MEDIA_TYPE) ? DEFAULT_PARSER_MEDIA_TYPE : cfg.PARSER_MEDIA_TYPE;
@@ -17003,10 +17019,10 @@
                     FORBID_CONTENTS = purify_es_resolveSetOption(cfg, "FORBID_CONTENTS", DEFAULT_FORBID_CONTENTS, {
                         transform: transformCaseFunc
                     });
-                    FORBID_TAGS = purify_es_resolveSetOption(cfg, "FORBID_TAGS", clone({}), {
+                    FORBID_TAGS = purify_es_resolveSetOption(cfg, "FORBID_TAGS", create(null), {
                         transform: transformCaseFunc
                     });
-                    FORBID_ATTR = purify_es_resolveSetOption(cfg, "FORBID_ATTR", clone({}), {
+                    FORBID_ATTR = purify_es_resolveSetOption(cfg, "FORBID_ATTR", create(null), {
                         transform: transformCaseFunc
                     });
                     USE_PROFILES = objectHasOwnProperty(cfg, "USE_PROFILES") ? cfg.USE_PROFILES && "object" == typeof cfg.USE_PROFILES ? clone(cfg.USE_PROFILES) : cfg.USE_PROFILES : false;
@@ -17027,9 +17043,9 @@
                     IN_PLACE = cfg.IN_PLACE || false;
                     IS_ALLOWED_URI$1 = isRegex(cfg.ALLOWED_URI_REGEXP) ? cfg.ALLOWED_URI_REGEXP : IS_ALLOWED_URI;
                     NAMESPACE = "string" == typeof cfg.NAMESPACE ? cfg.NAMESPACE : HTML_NAMESPACE;
-                    MATHML_TEXT_INTEGRATION_POINTS = purify_es_resolveObjectOption(cfg, "MATHML_TEXT_INTEGRATION_POINTS", ()=>addToSet({}, DEFAULT_MATHML_TEXT_INTEGRATION_POINTS));
-                    HTML_INTEGRATION_POINTS = purify_es_resolveObjectOption(cfg, "HTML_INTEGRATION_POINTS", ()=>addToSet({}, DEFAULT_HTML_INTEGRATION_POINTS));
-                    const customElementHandling = purify_es_resolveObjectOption(cfg, "CUSTOM_ELEMENT_HANDLING", ()=>create(null));
+                    MATHML_TEXT_INTEGRATION_POINTS = purify_es_resolveObjectOption(cfg, "MATHML_TEXT_INTEGRATION_POINTS", DEFAULT_MATHML_TEXT_INTEGRATION_POINTS);
+                    HTML_INTEGRATION_POINTS = purify_es_resolveObjectOption(cfg, "HTML_INTEGRATION_POINTS", DEFAULT_HTML_INTEGRATION_POINTS);
+                    const customElementHandling = purify_es_resolveObjectOption(cfg, "CUSTOM_ELEMENT_HANDLING", DEFAULT_CUSTOM_ELEMENT_HANDLING);
                     CUSTOM_ELEMENT_HANDLING = create(null);
                     if (objectHasOwnProperty(customElementHandling, "tagNameCheck") && isRegexOrFunction(customElementHandling.tagNameCheck)) CUSTOM_ELEMENT_HANDLING.tagNameCheck = customElementHandling.tagNameCheck;
                     if (objectHasOwnProperty(customElementHandling, "attributeNameCheck") && isRegexOrFunction(customElementHandling.attributeNameCheck)) CUSTOM_ELEMENT_HANDLING.attributeNameCheck = customElementHandling.attributeNameCheck;
@@ -17038,6 +17054,7 @@
                     if (SAFE_FOR_TEMPLATES) ALLOW_DATA_ATTR = false;
                     if (RETURN_DOM_FRAGMENT) RETURN_DOM = true;
                     if (USE_PROFILES) {
+                        if ((objectHasOwnProperty(cfg, "ALLOWED_TAGS") || objectHasOwnProperty(cfg, "ALLOWED_ATTR")) && "u" > typeof console && "function" == typeof console.warn) console.warn("DOMPurify: USE_PROFILES overrides ALLOWED_TAGS and ALLOWED_ATTR. Do not use these options together.");
                         ALLOWED_TAGS = addToSet({}, purify_es_text);
                         ALLOWED_ATTR = create(null);
                         if (true === USE_PROFILES.html) {
@@ -17065,19 +17082,19 @@
                     if (objectHasOwnProperty(cfg, "ADD_TAGS")) {
                         if ("function" == typeof cfg.ADD_TAGS) EXTRA_ELEMENT_HANDLING.tagCheck = cfg.ADD_TAGS;
                         else if (arrayIsArray(cfg.ADD_TAGS)) {
-                            if (ALLOWED_TAGS === DEFAULT_ALLOWED_TAGS) ALLOWED_TAGS = clone(ALLOWED_TAGS);
+                            if (ALLOWED_TAGS === DEFAULT_ALLOWED_TAGS) ALLOWED_TAGS = cloneSet(ALLOWED_TAGS);
                             addToSet(ALLOWED_TAGS, cfg.ADD_TAGS, transformCaseFunc);
                         }
                     }
                     if (objectHasOwnProperty(cfg, "ADD_ATTR")) {
                         if ("function" == typeof cfg.ADD_ATTR) EXTRA_ELEMENT_HANDLING.attributeCheck = cfg.ADD_ATTR;
                         else if (arrayIsArray(cfg.ADD_ATTR)) {
-                            if (ALLOWED_ATTR === DEFAULT_ALLOWED_ATTR) ALLOWED_ATTR = clone(ALLOWED_ATTR);
+                            if (ALLOWED_ATTR === DEFAULT_ALLOWED_ATTR) ALLOWED_ATTR = cloneSet(ALLOWED_ATTR);
                             addToSet(ALLOWED_ATTR, cfg.ADD_ATTR, transformCaseFunc);
                         }
                     }
                     if (objectHasOwnProperty(cfg, "ADD_FORBID_CONTENTS") && arrayIsArray(cfg.ADD_FORBID_CONTENTS)) {
-                        if (FORBID_CONTENTS === DEFAULT_FORBID_CONTENTS) FORBID_CONTENTS = clone(FORBID_CONTENTS);
+                        if (FORBID_CONTENTS === DEFAULT_FORBID_CONTENTS) FORBID_CONTENTS = cloneSet(FORBID_CONTENTS);
                         addToSet(FORBID_CONTENTS, cfg.ADD_FORBID_CONTENTS, transformCaseFunc);
                     }
                     if (KEEP_CONTENT) ALLOWED_TAGS["#text"] = true;
@@ -17087,9 +17104,7 @@
                         "body"
                     ]);
                     if (ALLOWED_TAGS.table) {
-                        addToSet(ALLOWED_TAGS, [
-                            "tbody"
-                        ]);
+                        ALLOWED_TAGS.tbody = true;
                         delete FORBID_TAGS.tbody;
                     }
                     if (cfg.TRUSTED_TYPES_POLICY) {
@@ -17110,8 +17125,7 @@
                         if (void 0 === trustedTypesPolicy) trustedTypesPolicy = _getDefaultTrustedTypesPolicy();
                         if (trustedTypesPolicy && "string" == typeof emptyHTML) emptyHTML = _createTrustedHTML("");
                     }
-                    if (purify_es_freeze) purify_es_freeze(cfg);
-                    CONFIG = cfg;
+                    CONFIG = purify_es_freeze(cfg);
                 };
                 const ALL_SVG_TAGS = addToSet({}, [
                     ...svg$1,
@@ -17122,44 +17136,36 @@
                     ...mathMl$1,
                     ...mathMlDisallowed
                 ]);
-                const _checkSvgNamespace = function(tagName, parent, parentTagName) {
-                    if (parent.namespaceURI === HTML_NAMESPACE) return "svg" === tagName;
-                    if (parent.namespaceURI === MATHML_NAMESPACE) return "svg" === tagName && ("annotation-xml" === parentTagName || MATHML_TEXT_INTEGRATION_POINTS[parentTagName]);
+                const _checkSvgNamespace = function(tagName, parentNamespace, parentTagName) {
+                    if (parentNamespace === HTML_NAMESPACE) return "svg" === tagName;
+                    if (parentNamespace === MATHML_NAMESPACE) return "svg" === tagName && ("annotation-xml" === parentTagName || MATHML_TEXT_INTEGRATION_POINTS[parentTagName]);
                     return Boolean(ALL_SVG_TAGS[tagName]);
                 };
-                const _checkMathMlNamespace = function(tagName, parent, parentTagName) {
-                    if (parent.namespaceURI === HTML_NAMESPACE) return "math" === tagName;
-                    if (parent.namespaceURI === SVG_NAMESPACE) return "math" === tagName && HTML_INTEGRATION_POINTS[parentTagName];
+                const _checkMathMlNamespace = function(tagName, parentNamespace, parentTagName) {
+                    if (parentNamespace === HTML_NAMESPACE) return "math" === tagName;
+                    if (parentNamespace === SVG_NAMESPACE) return "math" === tagName && HTML_INTEGRATION_POINTS[parentTagName];
                     return Boolean(ALL_MATHML_TAGS[tagName]);
                 };
-                const _checkHtmlNamespace = function(tagName, parent, parentTagName) {
-                    if (parent.namespaceURI === SVG_NAMESPACE && !HTML_INTEGRATION_POINTS[parentTagName]) return false;
-                    if (parent.namespaceURI === MATHML_NAMESPACE && !MATHML_TEXT_INTEGRATION_POINTS[parentTagName]) return false;
+                const _checkHtmlNamespace = function(tagName, parentNamespace, parentTagName) {
+                    if (parentNamespace === SVG_NAMESPACE && !HTML_INTEGRATION_POINTS[parentTagName]) return false;
+                    if (parentNamespace === MATHML_NAMESPACE && !MATHML_TEXT_INTEGRATION_POINTS[parentTagName]) return false;
                     return !ALL_MATHML_TAGS[tagName] && (COMMON_SVG_AND_HTML_ELEMENTS[tagName] || !ALL_SVG_TAGS[tagName]);
                 };
                 const _checkValidNamespace = function(element) {
                     const elementNamespace = _readNamespaceURI(element);
                     const tagName = stringToLowerCase(_readNodeName(element));
                     const parentNode = getParentNode(element);
-                    let parent;
-                    let parentTagName;
+                    let parentNamespace = NAMESPACE;
+                    let parentTagName = "template";
                     if (parentNode && _readNodeType(parentNode) === NODE_TYPE.element) {
-                        parent = {
-                            namespaceURI: _readNamespaceURI(parentNode)
-                        };
+                        parentNamespace = _readNamespaceURI(parentNode);
                         parentTagName = stringToLowerCase(_readNodeName(parentNode));
-                    } else {
-                        parent = {
-                            namespaceURI: NAMESPACE
-                        };
-                        parentTagName = "template";
                     }
                     if (!ALLOWED_NAMESPACES[elementNamespace]) return false;
-                    if (elementNamespace === SVG_NAMESPACE) return _checkSvgNamespace(tagName, parent, parentTagName);
-                    if (elementNamespace === MATHML_NAMESPACE) return _checkMathMlNamespace(tagName, parent, parentTagName);
-                    if (elementNamespace === HTML_NAMESPACE) return _checkHtmlNamespace(tagName, parent, parentTagName);
-                    if ("application/xhtml+xml" === PARSER_MEDIA_TYPE && ALLOWED_NAMESPACES[elementNamespace]) return true;
-                    return false;
+                    if (elementNamespace === SVG_NAMESPACE) return _checkSvgNamespace(tagName, parentNamespace, parentTagName);
+                    if (elementNamespace === MATHML_NAMESPACE) return _checkMathMlNamespace(tagName, parentNamespace, parentTagName);
+                    if (elementNamespace === HTML_NAMESPACE) return _checkHtmlNamespace(tagName, parentNamespace, parentTagName);
+                    return "application/xhtml+xml" === PARSER_MEDIA_TYPE;
                 };
                 const _forceRemove = function(node) {
                     arrayPush(DOMPurify.removed, {
@@ -17189,12 +17195,7 @@
                             remove(child);
                         } catch (_) {}
                     });
-                    const attributes = _readNodeType(root) === NODE_TYPE.element ? getAttributes(root) : null;
-                    if (attributes) for(let i = attributes.length - 1; i >= 0; --i){
-                        const attribute = attributes[i];
-                        const name = attribute && attribute.name;
-                        if ("string" == typeof name) _stripAttributeNode(root, attribute, name);
-                    }
+                    if (_readNodeType(root) === NODE_TYPE.element) _stripAttributes(root, false);
                 };
                 const _removeAttribute = function(name, element, attr) {
                     if (!attr) try {
@@ -17206,14 +17207,10 @@
                         attribute: attr || null,
                         from: element
                     });
-                    try {
-                        if (attr) removeAttributeNode(element, attr);
-                        else element.removeAttribute(name);
-                    } catch (_) {
-                        try {
-                            element.removeAttribute(name);
-                        } catch (_) {}
-                    }
+                    if (attr) _stripAttributeNode(element, attr, name);
+                    else try {
+                        element.removeAttribute(name);
+                    } catch (_) {}
                     if ("is" === name) if (RETURN_DOM || RETURN_DOM_FRAGMENT) try {
                         _forceRemove(element);
                     } catch (_) {}
@@ -17221,13 +17218,13 @@
                         element.setAttribute(name, "");
                     } catch (_) {}
                 };
-                const _stripDisallowedAttributes = function(element) {
+                const _stripAttributes = function(element, keepAllowed) {
                     const attributes = getAttributes(element);
                     if (!attributes) return;
                     for(let i = attributes.length - 1; i >= 0; --i){
                         const attribute = attributes[i];
                         const name = attribute && attribute.name;
-                        if ("string" == typeof name && !ALLOWED_ATTR[transformCaseFunc(name)]) _stripAttributeNode(element, attribute, name);
+                        if ("string" == typeof name && !(keepAllowed && ALLOWED_ATTR[transformCaseFunc(name)])) _stripAttributeNode(element, attribute, name);
                     }
                 };
                 const _walkTree = function(root, visit) {
@@ -17248,7 +17245,7 @@
                 };
                 const _neutralizeSubtree = function(root) {
                     _walkTree(root, (node)=>{
-                        if (_readNodeType(node) === NODE_TYPE.element) _stripDisallowedAttributes(node);
+                        if (_readNodeType(node) === NODE_TYPE.element) _stripAttributes(node, true);
                     });
                 };
                 const _collectLiveNodes = function(root) {
@@ -17264,7 +17261,7 @@
                         if (_readNodeType(node) === NODE_TYPE.element) setAdd(reachable, node);
                     });
                     arrayForEach(before, (node)=>{
-                        if (_readNodeType(node) === NODE_TYPE.element && !setHas(reachable, node)) _stripDisallowedAttributes(node);
+                        if (_readNodeType(node) === NODE_TYPE.element && !setHas(reachable, node)) _stripAttributes(node, true);
                     });
                 };
                 const _neutralizeDiscarded = function(root, before) {
@@ -17314,9 +17311,7 @@
                     while(node = iterator.nextNode()){
                         if (!setHas(original, node) || setHas(IN_PLACE_VISITED, node)) continue;
                         if (inShadow) _executeHooks(hooks.uponSanitizeShadowNode, node, null);
-                        _sanitizeElements(node, root);
-                        _sanitizeAttributes(node, root);
-                        if (_isDocumentFragment(node.content)) _sanitizeShadowDOM2(node.content);
+                        _sanitizeNode(node, root);
                     }
                 };
                 const _markVisited = function(node) {
@@ -17331,7 +17326,7 @@
                     if (!SAFE_FOR_XML) return;
                     _walkTree(root, (node)=>{
                         const nodeType = _readNodeType(node);
-                        if (nodeType === NODE_TYPE.processingInstruction || nodeType === NODE_TYPE.comment && regExpTest(COMMENT_MARKUP_PROBE, node.data)) {
+                        if (nodeType === NODE_TYPE.processingInstruction || nodeType === NODE_TYPE.comment && purify_es_regExpTest(COMMENT_MARKUP_PROBE, node.data)) {
                             try {
                                 remove(node);
                             } catch (_) {}
@@ -17353,7 +17348,7 @@
                     let leadingWhitespace = null;
                     if (FORCE_BODY) dirty = "<remove></remove>" + dirty;
                     else {
-                        const matches = stringMatch(dirty, /^[\r\n\t ]+/);
+                        const matches = stringMatch(dirty, LEADING_WHITESPACE);
                         leadingWhitespace = matches && matches[0];
                     }
                     if ("application/xhtml+xml" === PARSER_MEDIA_TYPE && NAMESPACE === HTML_NAMESPACE) dirty = "<html xmlns=\"http://www.w3.org/1999/xhtml\"><head></head><body>" + dirty + "</body></html>";
@@ -17373,8 +17368,9 @@
                     return WHOLE_DOCUMENT ? doc.documentElement : body;
                 };
                 const _createNodeIterator = function(root) {
+                    let characterDataOnly = arguments.length > 1 && void 0 !== arguments[1] ? arguments[1] : false;
                     const doc = getOwnerDocument ? getOwnerDocument(root) : root.ownerDocument;
-                    return createNodeIterator.call(doc || root, root, NodeFilter.SHOW_ELEMENT | NodeFilter.SHOW_COMMENT | NodeFilter.SHOW_TEXT | NodeFilter.SHOW_PROCESSING_INSTRUCTION | NodeFilter.SHOW_CDATA_SECTION, null);
+                    return createNodeIterator.call(doc || root, root, (characterDataOnly ? 0 : NodeFilter.SHOW_ELEMENT) | NodeFilter.SHOW_COMMENT | NodeFilter.SHOW_TEXT | NodeFilter.SHOW_PROCESSING_INSTRUCTION | NodeFilter.SHOW_CDATA_SECTION, null);
                 };
                 const _stripTemplateExpressions = function(value) {
                     value = stringReplace(value, MUSTACHE_EXPR$1, " ");
@@ -17392,8 +17388,7 @@
                 };
                 const _scrubOwnCharacterData = function(node) {
                     node.normalize();
-                    const doc = getOwnerDocument ? getOwnerDocument(node) : node.ownerDocument;
-                    const walker = createNodeIterator.call(doc || node, node, NodeFilter.SHOW_TEXT | NodeFilter.SHOW_COMMENT | NodeFilter.SHOW_CDATA_SECTION | NodeFilter.SHOW_PROCESSING_INSTRUCTION, null);
+                    const walker = _createNodeIterator(node, true);
                     let currentNode = walker.nextNode();
                     while(currentNode){
                         currentNode.data = _stripTemplateExpressions(currentNode.data);
@@ -17406,21 +17401,20 @@
                     if ("form" !== transformCaseFunc(realTagName)) return false;
                     return "string" != typeof element.nodeName || "string" != typeof element.textContent || "function" != typeof element.removeChild || element.attributes !== getAttributes(element) || "function" != typeof element.removeAttribute || "function" != typeof element.removeAttributeNode || "function" != typeof element.getAttributeNode || "function" != typeof element.setAttribute || "string" != typeof element.namespaceURI || "function" != typeof element.insertBefore || "function" != typeof element.hasChildNodes || element.nodeType !== getNodeType(element) || element.childNodes !== getChildNodes(element);
                 };
-                const _isDocumentFragment = function(value) {
-                    if (!getNodeType || "object" != typeof value || null === value) return false;
+                const _nodeTypeOf = function(value) {
+                    if (!getNodeType || "object" != typeof value || null === value) return null;
                     try {
-                        return getNodeType(value) === NODE_TYPE.documentFragment;
+                        const nodeType = getNodeType(value);
+                        return "number" == typeof nodeType ? nodeType : null;
                     } catch (_) {
-                        return false;
+                        return null;
                     }
                 };
+                const _isDocumentFragment = function(value) {
+                    return _nodeTypeOf(value) === NODE_TYPE.documentFragment;
+                };
                 const _isNode = function(value) {
-                    if (!getNodeType || "object" != typeof value || null === value) return false;
-                    try {
-                        return "number" == typeof getNodeType(value);
-                    } catch (_) {
-                        return false;
-                    }
+                    return null !== _nodeTypeOf(value);
                 };
                 function _executeHooks(hooks, currentNode, data) {
                     if (0 === hooks.length) return;
@@ -17428,15 +17422,15 @@
                         hook.call(DOMPurify, currentNode, data, CONFIG);
                     });
                 }
-                const _isUnsafeNode = function(currentNode, tagName) {
-                    if (SAFE_FOR_XML && currentNode.hasChildNodes() && !_isNode(currentNode.firstElementChild) && regExpTest(ELEMENT_MARKUP_PROBE, currentNode.textContent) && regExpTest(ELEMENT_MARKUP_PROBE, currentNode.innerHTML)) return true;
-                    if (SAFE_FOR_XML && LITERAL_TEXT_ELEMENTS[tagName] && _readNodeType(currentNode) === NODE_TYPE.element && _readNamespaceURI(currentNode) === HTML_NAMESPACE && (_isNode(currentNode.firstElementChild) || "string" == typeof currentNode.textContent && regExpTest(ELEMENT_MARKUP_PROBE, currentNode.textContent))) return true;
-                    if (currentNode.nodeType === NODE_TYPE.processingInstruction) return true;
-                    if (SAFE_FOR_XML && currentNode.nodeType === NODE_TYPE.comment && regExpTest(COMMENT_MARKUP_PROBE, currentNode.data)) return true;
+                const _isUnsafeNode = function(currentNode, tagName, nodeType) {
+                    if (SAFE_FOR_XML && nodeType === NODE_TYPE.element && currentNode.hasChildNodes() && !_isNode(currentNode.firstElementChild) && purify_es_regExpTest(ELEMENT_MARKUP_PROBE, currentNode.textContent) && purify_es_regExpTest(ELEMENT_MARKUP_PROBE, currentNode.innerHTML)) return true;
+                    if (SAFE_FOR_XML && LITERAL_TEXT_ELEMENTS[tagName] && nodeType === NODE_TYPE.element && _readNamespaceURI(currentNode) === HTML_NAMESPACE && (_isNode(currentNode.firstElementChild) || "string" == typeof currentNode.textContent && purify_es_regExpTest(ELEMENT_MARKUP_PROBE, currentNode.textContent))) return true;
+                    if (nodeType === NODE_TYPE.processingInstruction) return true;
+                    if (SAFE_FOR_XML && nodeType === NODE_TYPE.comment && purify_es_regExpTest(COMMENT_MARKUP_PROBE, currentNode.data)) return true;
                     return false;
                 };
                 const _matchesNameCheck = function(check, name) {
-                    if (check instanceof RegExp) return regExpTest(check, name);
+                    if (check instanceof RegExp) return purify_es_regExpTest(check, name);
                     if (check instanceof Function) {
                         for(var _len = arguments.length, args = new Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++)args[_key - 2] = arguments[_key];
                         return Boolean(check(name, ...args));
@@ -17461,7 +17455,7 @@
                 };
                 const _forkSharedAllowlist = function(hookList, set, defaultSet, setConfigSet) {
                     if (0 === hookList.length) return set;
-                    return set === defaultSet || set === setConfigSet ? clone(set) : set;
+                    return set === defaultSet || set === setConfigSet ? cloneSet(set) : set;
                 };
                 const _handleHookDetachedNode = function(currentNode, root) {
                     if (currentNode === root || null !== getParentNode(currentNode)) return false;
@@ -17477,13 +17471,14 @@
                         return true;
                     }
                     const tagName = transformCaseFunc(_readNodeName(currentNode));
+                    const nodeType = _readNodeType(currentNode);
                     ALLOWED_TAGS = _forkSharedAllowlist(hooks.uponSanitizeElement, ALLOWED_TAGS, DEFAULT_ALLOWED_TAGS, SET_CONFIG_ALLOWED_TAGS);
                     _executeHooks(hooks.uponSanitizeElement, currentNode, {
                         tagName,
                         allowedTags: ALLOWED_TAGS
                     });
                     if (_handleHookDetachedNode(currentNode, root)) return true;
-                    if (_isUnsafeNode(currentNode, tagName)) {
+                    if (_isUnsafeNode(currentNode, tagName, nodeType)) {
                         _forceRemove(currentNode);
                         return true;
                     }
@@ -17495,17 +17490,18 @@
                         }
                         return removed;
                     }
-                    if (_readNodeType(currentNode) === NODE_TYPE.element && !_checkValidNamespace(currentNode)) {
+                    if (nodeType === NODE_TYPE.element && !_checkValidNamespace(currentNode)) {
                         _forceRemove(currentNode);
                         return true;
                     }
-                    if (("noscript" === tagName || "noembed" === tagName || "noframes" === tagName) && regExpTest(FALLBACK_TAG_CLOSE, currentNode.innerHTML)) {
+                    if (("noscript" === tagName || "noembed" === tagName || "noframes" === tagName) && purify_es_regExpTest(FALLBACK_TAG_CLOSE, currentNode.innerHTML)) {
                         _forceRemove(currentNode);
                         return true;
                     }
-                    if (SAFE_FOR_TEMPLATES && currentNode.nodeType === NODE_TYPE.text) {
-                        const content = _stripTemplateExpressions(currentNode.textContent);
-                        if (currentNode.textContent !== content) {
+                    if (SAFE_FOR_TEMPLATES && nodeType === NODE_TYPE.text) {
+                        const text = currentNode.textContent;
+                        const content = _stripTemplateExpressions(text);
+                        if (text !== content) {
                             arrayPush(DOMPurify.removed, {
                                 element: currentNode.cloneNode()
                             });
@@ -17520,13 +17516,14 @@
                     if (_isPatchLinkageAttribute(lcName, lcTag)) return false;
                     if (SANITIZE_DOM && ("id" === lcName || "name" === lcName) && (value in document1 || value in formElement)) return false;
                     const nameIsPermitted = ALLOWED_ATTR[lcName] || EXTRA_ELEMENT_HANDLING.attributeCheck instanceof Function && EXTRA_ELEMENT_HANDLING.attributeCheck(lcName, lcTag);
-                    if (ALLOW_DATA_ATTR && regExpTest(DATA_ATTR$1, lcName)) return true;
-                    if (ALLOW_ARIA_ATTR && regExpTest(ARIA_ATTR$1, lcName)) return true;
+                    if (ALLOW_DATA_ATTR && purify_es_regExpTest(DATA_ATTR$1, lcName)) return true;
+                    if (ALLOW_ARIA_ATTR && purify_es_regExpTest(ARIA_ATTR$1, lcName)) return true;
                     if (!nameIsPermitted) return _isBasicCustomElement(lcTag) && _matchesNameCheck(CUSTOM_ELEMENT_HANDLING.tagNameCheck, lcTag) && _matchesNameCheck(CUSTOM_ELEMENT_HANDLING.attributeNameCheck, lcName, lcTag) || "is" === lcName && CUSTOM_ELEMENT_HANDLING.allowCustomizedBuiltInElements && _matchesNameCheck(CUSTOM_ELEMENT_HANDLING.tagNameCheck, value);
                     if (URI_SAFE_ATTRIBUTES[lcName]) return true;
-                    if (regExpTest(IS_ALLOWED_URI$1, stringReplace(value, ATTR_WHITESPACE$1, ""))) return true;
+                    const compactValue = stringReplace(value, ATTR_WHITESPACE$1, "");
+                    if (purify_es_regExpTest(IS_ALLOWED_URI$1, compactValue)) return true;
                     if (("src" === lcName || "xlink:href" === lcName || "href" === lcName) && "script" !== lcTag && 0 === stringIndexOf(value, "data:") && DATA_URI_TAGS[lcTag]) return true;
-                    if (ALLOW_UNKNOWN_PROTOCOLS && !regExpTest(IS_SCRIPT_OR_DATA$1, stringReplace(value, ATTR_WHITESPACE$1, ""))) return true;
+                    if (ALLOW_UNKNOWN_PROTOCOLS && !purify_es_regExpTest(IS_SCRIPT_OR_DATA$1, compactValue)) return true;
                     return !value;
                 };
                 const RESERVED_CUSTOM_ELEMENT_NAMES = addToSet({}, [
@@ -17540,7 +17537,7 @@
                     "missing-glyph"
                 ]);
                 const _isBasicCustomElement = function(tagName) {
-                    return !RESERVED_CUSTOM_ELEMENT_NAMES[stringToLowerCase(tagName)] && regExpTest(CUSTOM_ELEMENT$1, tagName);
+                    return !RESERVED_CUSTOM_ELEMENT_NAMES[stringToLowerCase(tagName)] && purify_es_regExpTest(CUSTOM_ELEMENT$1, tagName);
                 };
                 const _applyTrustedTypesToAttribute = function(lcTag, lcName, namespaceURI, value) {
                     if (trustedTypesPolicy && "object" == typeof trustedTypes && "function" == typeof trustedTypes.getAttributeType && !namespaceURI) switch(trustedTypes.getAttributeType(lcTag, lcName)){
@@ -17566,8 +17563,8 @@
                     }
                 };
                 const _isUnsafeAttributeValue = function(name, value) {
-                    if (SAFE_FOR_XML && regExpTest(/((--!?|])>)|<\/(style|script|title|xmp|textarea|noscript|iframe|noembed|noframes)/i, value)) return true;
-                    return "attributename" === stringToLowerCase(name) && null !== stringMatch(value, "href");
+                    if (SAFE_FOR_XML && purify_es_regExpTest(ATTR_VALUE_BREAKOUT, value)) return true;
+                    return "attributename" === stringToLowerCase(name) && -1 !== stringIndexOf(value, "href");
                 };
                 const _sanitizeAttributes = function(currentNode, root) {
                     _executeHooks(hooks.beforeSanitizeAttributes, currentNode, null);
@@ -17583,7 +17580,7 @@
                         forceKeepAttr: void 0
                     };
                     let l = attributes.length;
-                    const lcTag = transformCaseFunc(currentNode.nodeName);
+                    const lcTag = transformCaseFunc(_readNodeName(currentNode));
                     while(l--){
                         const attr = attributes[l];
                         const name = attr.name, namespaceURI = attr.namespaceURI, attrValue = attr.value;
@@ -17611,7 +17608,7 @@
                             _removeAttribute(name, currentNode, attr);
                             continue;
                         }
-                        if (!ALLOW_SELF_CLOSE_IN_ATTR && regExpTest(SELF_CLOSING_TAG, value)) {
+                        if (!ALLOW_SELF_CLOSE_IN_ATTR && purify_es_regExpTest(SELF_CLOSING_TAG, value)) {
                             _removeAttribute(name, currentNode, attr);
                             continue;
                         }
@@ -17628,15 +17625,18 @@
                     _executeHooks(hooks.afterSanitizeAttributes, currentNode, null);
                     _handleHookDetachedNode(currentNode, root);
                 };
+                const _sanitizeNode = function(node, root) {
+                    _sanitizeElements(node, root);
+                    _sanitizeAttributes(node, root);
+                    if (_isDocumentFragment(node.content)) _sanitizeShadowDOM2(node.content);
+                };
                 const _sanitizeShadowDOM2 = function(fragment) {
                     let shadowNode = null;
                     const shadowIterator = _createNodeIterator(fragment);
                     _executeHooks(hooks.beforeSanitizeShadowDOM, fragment, null);
                     while(shadowNode = shadowIterator.nextNode()){
                         _executeHooks(hooks.uponSanitizeShadowNode, shadowNode, null);
-                        _sanitizeElements(shadowNode, fragment);
-                        _sanitizeAttributes(shadowNode, fragment);
-                        if (_isDocumentFragment(shadowNode.content)) _sanitizeShadowDOM2(shadowNode.content);
+                        _sanitizeNode(shadowNode, fragment);
                         if (_readNodeType(shadowNode) === NODE_TYPE.element) {
                             const innerSr = getShadowRoot(shadowNode);
                             if (_isDocumentFragment(innerSr)) {
@@ -17707,8 +17707,6 @@
                         ALLOWED_TAGS = SET_CONFIG_ALLOWED_TAGS;
                         ALLOWED_ATTR = SET_CONFIG_ALLOWED_ATTR;
                     } else _parseConfig(cfg);
-                    if (hooks.uponSanitizeElement.length > 0 || hooks.uponSanitizeAttribute.length > 0) ALLOWED_TAGS = clone(ALLOWED_TAGS);
-                    if (hooks.uponSanitizeAttribute.length > 0) ALLOWED_ATTR = clone(ALLOWED_ATTR);
                     DOMPurify.removed = [];
                     const inPlace = IN_PLACE && "string" != typeof dirty && _isNode(dirty);
                     let inPlaceNodes = [];
@@ -17737,7 +17735,7 @@
                         else body.appendChild(importedNode);
                         _sanitizeAttachedShadowRoots(body);
                     } else {
-                        if (!RETURN_DOM && !SAFE_FOR_TEMPLATES && !WHOLE_DOCUMENT && -1 === dirty.indexOf("<")) return trustedTypesPolicy && RETURN_TRUSTED_TYPE ? _createTrustedHTML(dirty) : dirty;
+                        if (!RETURN_DOM && !SAFE_FOR_TEMPLATES && !WHOLE_DOCUMENT && -1 === dirty.indexOf("<")) return _signOutput(dirty);
                         body = _initDocument(dirty);
                         if (!body) return RETURN_DOM ? null : RETURN_TRUSTED_TYPE ? emptyHTML : "";
                     }
@@ -17746,11 +17744,7 @@
                     try {
                         if (inPlace) _sanitizeAttachedShadowRoots(dirty);
                         const nodeIterator = _createNodeIterator(walkRoot);
-                        while(currentNode = nodeIterator.nextNode()){
-                            _sanitizeElements(currentNode, walkRoot);
-                            _sanitizeAttributes(currentNode, walkRoot);
-                            if (_isDocumentFragment(currentNode.content)) _sanitizeShadowDOM2(currentNode.content);
-                        }
+                        while(currentNode = nodeIterator.nextNode())_sanitizeNode(currentNode, walkRoot);
                         if (inPlace) _sanitizeUnvisitedNodes(dirty, inPlaceNodes);
                     } catch (error) {
                         if (inPlace) {
@@ -17775,10 +17769,14 @@
                         if (ALLOWED_ATTR.shadowroot || ALLOWED_ATTR.shadowrootmode) returnNode = importNode.call(originalDocument, returnNode, true);
                         return returnNode;
                     }
-                    let serializedHTML = WHOLE_DOCUMENT ? body.outerHTML : body.innerHTML;
-                    if (WHOLE_DOCUMENT && ALLOWED_TAGS["!doctype"] && body.ownerDocument && body.ownerDocument.doctype && body.ownerDocument.doctype.name && regExpTest(DOCTYPE_NAME, body.ownerDocument.doctype.name)) serializedHTML = "<!DOCTYPE " + body.ownerDocument.doctype.name + ">\n" + serializedHTML;
-                    if (SAFE_FOR_TEMPLATES) serializedHTML = _stripTemplateExpressions(serializedHTML);
-                    return trustedTypesPolicy && RETURN_TRUSTED_TYPE ? _createTrustedHTML(serializedHTML) : serializedHTML;
+                    const serialize = ()=>WHOLE_DOCUMENT ? body.outerHTML : body.innerHTML;
+                    let serializedHTML = serialize();
+                    if (SAFE_FOR_TEMPLATES && purify_es_regExpTest(TMPL_MARKER_SERIALIZED, serializedHTML)) {
+                        _scrubOwnCharacterData(body);
+                        serializedHTML = serialize();
+                    }
+                    if (WHOLE_DOCUMENT && ALLOWED_TAGS["!doctype"] && body.ownerDocument && body.ownerDocument.doctype && body.ownerDocument.doctype.name && purify_es_regExpTest(DOCTYPE_NAME, body.ownerDocument.doctype.name)) serializedHTML = "<!DOCTYPE " + body.ownerDocument.doctype.name + ">\n" + serializedHTML;
+                    return _signOutput(serializedHTML);
                 };
                 DOMPurify.setConfig = function() {
                     let cfg = arguments.length > 0 && void 0 !== arguments[0] ? arguments[0] : {};
@@ -17799,7 +17797,7 @@
                     if (!CONFIG) _parseConfig({});
                     const lcTag = transformCaseFunc(tag);
                     const lcName = transformCaseFunc(attr);
-                    if ("string" == typeof value && (_isUnsafeAttributeValue(attr, value) || !ALLOW_SELF_CLOSE_IN_ATTR && regExpTest(SELF_CLOSING_TAG, value))) return false;
+                    if ("string" == typeof value && (_isUnsafeAttributeValue(attr, value) || !ALLOW_SELF_CLOSE_IN_ATTR && purify_es_regExpTest(SELF_CLOSING_TAG, value))) return false;
                     return _isValidAttribute(lcTag, lcName, value);
                 };
                 DOMPurify.addHook = function(entryPoint, hookFunction) {
@@ -18075,11 +18073,14 @@
                     html_enableElement(this.submitButton);
                 }
                 adjustButtonsForPause() {
-                    if (!this.isCountingDown()) {
-                        if (this.pauseButton) html_hideElement(this.pauseButton);
-                        html_showElement(this.resumeButton);
-                        html_enableElement(this.resumeButton);
-                        html_hideElement(this.recordButton);
+                    html_hideElement(this.pauseButton);
+                    html_hideElement(this.recordButton);
+                    html_showElement(this.resumeButton);
+                    html_enableElement(this.resumeButton);
+                    if (this.isCountingDown()) {
+                        html_hideElement(this.previewButton);
+                        html_disableElement(this.previewButton);
+                    } else {
                         html_showElement(this.previewButton);
                         html_enableElement(this.previewButton);
                     }
@@ -18119,6 +18120,11 @@
                 }
                 onCountdown() {
                     html_disableElement(this.recordButton);
+                    html_hideElement(this.recordButton);
+                    html_hideElement(this.recordAgainButton);
+                    html_hideElement(this.pauseButton);
+                    html_hideElement(this.resumeButton);
+                    html_hideElement(this.previewButton);
                     html_disableElement(this.audioOffRadioPair);
                     html_disableElement(this.audioOnRadioPair);
                 }
@@ -18658,7 +18664,7 @@
                     super("RecorderInsides", options);
                     this.recordNote = new recorder_recordNote(visuals);
                     this.recordTimer = new recordTimer(visuals, this.recordNote, options);
-                    const browser = util_getBrowser(options);
+                    const browser = browser_getBrowser(options);
                     if (options.video.countdown) this.countdown = new countdown(visuals, options);
                     if (options.video.facingModeButton && browser.isMobile()) this.facingMode = new recorder_facingMode(visuals, options);
                     if (options.enablePause) this.pausedNote = new pausedNote(visuals, options);
@@ -18843,6 +18849,12 @@
                 }
                 correctNotifierDimensions() {
                     if (!this.notifyElement) return;
+                    const { width, height, stretch } = this.options.video;
+                    if (!stretch && width && height) {
+                        this.notifyElement.style.width = "100%";
+                        this.notifyElement.style.height = "100%";
+                        return;
+                    }
                     if (this.options.video.stretch) {
                         const heightDimension = this.visuals.getRecorderHeight(true, true);
                         this.notifyElement.style.width = "auto";
@@ -18887,7 +18899,7 @@
                         blocking,
                         problem: true,
                         classList: err.getClassList(),
-                        removeDimensions: util_getBrowser(this.options).isMobile()
+                        removeDimensions: browser_getBrowser(this.options).isMobile()
                     });
                 }
                 getMessageElement() {
@@ -19066,6 +19078,50 @@
                 }
             }
             canvas_to_buffer_modern_r.atob = void 0;
+            const OPTIONAL_AUDIO_ERRORS = [
+                "NotAllowedError",
+                "PermissionDeniedError",
+                "NotFoundError",
+                "DevicesNotFoundError"
+            ];
+            function isOptionalAudioError(error) {
+                return (error instanceof Error || error instanceof DOMException || isErrorLike(error)) && OPTIONAL_AUDIO_ERRORS.includes(error.name);
+            }
+            function requestCameraOnly(constraints) {
+                return navigator.mediaDevices.getUserMedia({
+                    ...constraints,
+                    audio: false
+                });
+            }
+            function retryCameraOnlyAfterAudioError(error, constraints, isRequestCurrent, audioRequested) {
+                if (!isRequestCurrent()) return;
+                if (!audioRequested || !isOptionalAudioError(error)) throw error;
+                return requestCameraOnly(constraints);
+            }
+            async function requestWithOptionalAudio(params) {
+                const { constraints, getPermission, isRequestCurrent } = params;
+                let audioRequested = Boolean(constraints.audio);
+                try {
+                    if (getPermission) {
+                        const permission = await getPermission();
+                        if (!isRequestCurrent()) return;
+                        audioRequested = "denied" !== permission && Boolean(constraints.audio);
+                        return await navigator.mediaDevices.getUserMedia({
+                            ...constraints,
+                            audio: audioRequested
+                        });
+                    }
+                    return await navigator.mediaDevices.getUserMedia(constraints);
+                } catch (error) {
+                    if (!constraints.audio) throw error;
+                    return retryCameraOnlyAfterAudioError(error, constraints, isRequestCurrent, audioRequested);
+                }
+            }
+            function requestMediaStream(params) {
+                if (!params.followsMicrophonePermission) return navigator.mediaDevices.getUserMedia(params.constraints);
+                return requestWithOptionalAudio(params);
+            }
+            const media_requestMediaStream = requestMediaStream;
             var websocket_stream_stream = __webpack_require__("U");
             var stream_default = __webpack_require__.n(websocket_stream_stream);
             function isAutomatedUserAgent(userAgent = navigator.userAgent) {
@@ -19443,7 +19499,7 @@
                     super(options);
                 }
                 canReconnectAfterStreamClose() {
-                    return Boolean(this.connected && this.userMediaLoaded);
+                    return this.connected || this.reconnecting;
                 }
                 shouldReportStreamClose() {
                     return !this.connecting && !this.blocking;
@@ -19493,6 +19549,24 @@
                     this.clearReconnectTimeout();
                     this.stopPings();
                     this.discardSocket();
+                }
+                suspendConnection() {
+                    this.closeIdleConnection("background");
+                }
+                recoverConnection() {
+                    if (!this.canRecoverConnection()) return;
+                    this.reconnecting = true;
+                    this.reconnectAttempts = 0;
+                    this.initSocket();
+                }
+                canRecoverConnection() {
+                    return this.canReplaceTransport() && !this.validate() && this.isConnectionIdle() && this.isOnline();
+                }
+                canReplaceTransport() {
+                    return !this.mediaTransmissionStarted && !this.unloaded && !this.blocking;
+                }
+                isConnectionIdle() {
+                    return !this.connected && !this.connecting;
                 }
                 handleStreamError(url2Connect, err) {
                     if ("u" > typeof Event && err instanceof Event) this.lastSocketError = error_getEventDetails(err);
@@ -19561,7 +19635,7 @@
                     return true;
                 }
                 canRetryConnection() {
-                    return Boolean(this.reconnecting && this.userMediaLoaded && this.isOnline() && !this.unloaded && !this.blocking);
+                    return this.reconnecting && this.isOnline() && !this.unloaded && !this.blocking;
                 }
                 shouldContinueReconnect() {
                     return this.reconnecting && !this.unloaded && !this.blocking;
@@ -19875,6 +19949,7 @@
                 cameraRecovery;
                 resolveCameraRecovery;
                 resumeAfterCameraRecovery = false;
+                automaticCameraRecoveryAttempted = false;
                 submitting = false;
                 built = false;
                 key;
@@ -19973,8 +20048,24 @@
                         this.cancelCameraRecovery();
                     }
                 }
+                shouldFollowMicrophonePermission() {
+                    return Boolean(this.options.audio.followPermissions && !this.mediaTransmissionStarted);
+                }
+                requestMediaStream(constraints, requestId) {
+                    const followsMicrophonePermission = this.shouldFollowMicrophonePermission();
+                    return media_requestMediaStream({
+                        constraints,
+                        followsMicrophonePermission,
+                        getPermission: followsMicrophonePermission ? this.options.audio.getPermission : void 0,
+                        isRequestCurrent: ()=>this.isRequestCurrent(requestId)
+                    });
+                }
+                isRequestCurrent(requestId) {
+                    return !this.unloaded && requestId === this.mediaRequestId;
+                }
                 loadGenuineUserMedia(params) {
                     this.options.logger.debug(`Recorder: loadGenuineUserMedia(${params ? string_pretty(params) : ""})`);
+                    if (!params?.recovering) this.automaticCameraRecoveryAttempted = false;
                     this.emit("ASKING_WEBCAM_PERMISSION");
                     this.userMediaLoading = true;
                     const requestId = ++this.mediaRequestId;
@@ -19985,19 +20076,30 @@
                         options: this.options,
                         userMediaParams: params
                     });
+                    const followsMicrophonePermission = this.shouldFollowMicrophonePermission();
+                    if (followsMicrophonePermission) constraints.audio = true;
                     this.options.logger.debug(string_summarize("Recorder: our webcam constraints are:", constraints));
                     this.options.logger.debug(string_summarize("Recorder: available webcam constraints are:", navigator.mediaDevices.getSupportedConstraints()));
-                    const streamPromise = navigator.mediaDevices.getUserMedia(constraints);
+                    const streamPromise = this.requestMediaStream(constraints, requestId);
                     streamPromise.then((localStream)=>{
+                        if (!localStream) return;
                         if (this.unloaded || requestId !== this.mediaRequestId) return void localStream.getTracks().forEach((track)=>{
                             track.stop();
                         });
-                        this.getUserMediaCallback(localStream, params, requestId);
+                        if (followsMicrophonePermission) {
+                            const audioEnabled = localStream.getAudioTracks().some((track)=>"live" === track.readyState && track.enabled);
+                            this.options.audio.enabled = audioEnabled;
+                            this.getUserMediaCallback(localStream, {
+                                ...params,
+                                audioEnabled
+                            }, requestId);
+                        } else this.getUserMediaCallback(localStream, params, requestId);
                     }).catch((reason)=>{
                         if (!this.unloaded && requestId === this.mediaRequestId) this.userMediaErrorCallback(reason, constraints);
                     });
                 }
                 loadUserMedia(params) {
+                    if (this.shouldReloadUserMediaForMicrophonePermission(params)) return void this.recoverCamera();
                     if (this.userMediaLoaded) {
                         this.options.logger.debug("Recorder: skipping loadUserMedia() because it is already loaded");
                         this.onUserMediaReady(params);
@@ -20010,7 +20112,7 @@
                         this.userMediaTimeout = window.setTimeout(()=>{
                             if (!this.userMediaLoaded) {
                                 this.userMediaLoading = false;
-                                const err = util_getBrowser(this.options).getNoAccessIssue();
+                                const err = browser_getBrowser(this.options).getNoAccessIssue();
                                 this.userMediaErrorCallback(err, {
                                     audio: isAudioEnabled(this.options)
                                 });
@@ -20032,6 +20134,9 @@
                             throw exc;
                         }
                     }
+                }
+                shouldReloadUserMediaForMicrophonePermission(params) {
+                    return this.userMediaLoaded && this.shouldFollowMicrophonePermission() && !params?.recordWhenReady;
                 }
                 isNotifying() {
                     return this.visuals.isNotifying();
@@ -20088,11 +20193,33 @@
                     });
                 }
                 recoverCamera() {
+                    return this.restoreCamera(false);
+                }
+                recoverCameraAfterStall() {
+                    return this.restoreCamera(true);
+                }
+                restoreCamera(stalled) {
                     if (this.cameraRecovery) return this.cameraRecovery;
                     if (!this.built || this.unloaded || !this.userMedia || this.userMediaLoading || this.submitting || this.key || void 0 !== this.stopTimeout || this.recordingTransportFailed) return Promise.resolve(false);
-                    const liveStream = this.userMedia.hasLiveStream();
+                    if (!stalled) this.automaticCameraRecoveryAttempted = false;
+                    const liveStream = !stalled && !this.shouldFollowMicrophonePermission() && this.userMedia.hasLiveStream();
                     if (liveStream && this.isRecording()) return Promise.resolve(true);
                     if (!liveStream && this.recordingActive && !this.isPaused()) this.pause();
+                    if (!liveStream) {
+                        this.options.logger.debug(`Recorder: replacing camera stream ${string_pretty(this.userMedia.getCharacteristics())}`);
+                        this.userMedia.stop(void 0, {
+                            preserveRecordingState: true
+                        });
+                        this.userMediaLoaded = false;
+                    }
+                    if (stalled) {
+                        if (this.automaticCameraRecoveryAttempted) {
+                            this.failCameraRecovery(new Error("The camera stopped delivering frames after an automatic restart."));
+                            return Promise.resolve(false);
+                        }
+                        this.automaticCameraRecoveryAttempted = true;
+                        this.options.logger.warn("Recorder: camera preview stalled; recovering.");
+                    }
                     const recovery = new Promise((resolve)=>{
                         this.resolveCameraRecovery = resolve;
                     });
@@ -20107,16 +20234,13 @@
                         }).catch((exc)=>{
                             if (this.cameraRecovery === recovery) this.failCameraRecovery(exc);
                         });
-                    } else {
-                        this.userMediaLoaded = false;
-                        this.loadUserMedia({
-                            recovering: true
-                        });
-                    }
+                    } else this.loadUserMedia({
+                        recovering: true
+                    });
                     return recovery;
                 }
                 switchFacingMode() {
-                    if (this.cameraRecovery || !util_getBrowser(this.options).isMobile()) return;
+                    if (this.cameraRecovery || !browser_getBrowser(this.options).isMobile()) return;
                     if ("user" === this.facingMode) this.facingMode = "environment";
                     else if ("environment" === this.facingMode) this.facingMode = "user";
                     else this.options.logger.warn(`Recorder: unsupported facing mode ${string_pretty(this.facingMode)}`);
@@ -20185,7 +20309,6 @@
                 onUserMediaReady(params) {
                     try {
                         this.options.logger.debug(`Recorder: onUserMediaReady(${params ? string_pretty(params) : ""})`);
-                        const switchingFacingMode = params?.switchingFacingMode;
                         if (params?.recovering) {
                             if (!this.userMedia?.hasLiveStream()) return void this.failCameraRecovery(new Error("The restored camera has no live tracks."));
                             if (void 0 !== this.recordingAudioSampleRate && this.userMedia.getAudioSampleRate() !== this.recordingAudioSampleRate) return void this.failCameraRecovery(new Error("The audio sample rate changed during recovery."));
@@ -20193,7 +20316,7 @@
                         this.userMediaLoading = this.blocking = this.unloaded = this.submitting = false;
                         this.userMediaLoaded = true;
                         this.clearUserMediaTimeout();
-                        if (!switchingFacingMode && !params?.recovering) this.loop = this.createLoop();
+                        if (this.shouldCreateNewLoopForMediaReady(params)) this.loop = this.createLoop();
                         this.show();
                         if (params?.recordWhenReady) this.record();
                         this.emit("USER_MEDIA_READY", {
@@ -20209,6 +20332,9 @@
                             exc
                         });
                     }
+                }
+                shouldCreateNewLoopForMediaReady(params) {
+                    return !this.loop || !params?.switchingFacingMode && !params?.recovering;
                 }
                 calculateFrameProgress() {
                     return calculateProgress(this.confirmedFrameNumber, this.framesCount);
@@ -20661,6 +20787,12 @@
                 correctDimensions() {
                     const recorderElement = this.context.getRecorderElement();
                     if (!recorderElement) return;
+                    const { width, height, stretch } = this.context.options.video;
+                    if (!stretch && width && height) {
+                        recorderElement.style.width = "100%";
+                        recorderElement.style.height = "100%";
+                        return;
+                    }
                     const widthDimension = dimensions_useFullWidth(this.context.options.video.mobileBreakPoint);
                     if (this.context.options.video.stretch || widthDimension) {
                         recorderElement.style.width = "100%";
@@ -20789,6 +20921,57 @@
                 "volumechange"
             ];
             const mediaEvents = MEDIA_EVENTS;
+            function isPreviewVisible(video) {
+                if (document.hidden || !video.isConnected || !video.srcObject) return false;
+                const bounds = video.getBoundingClientRect();
+                return bounds.width > 0 && bounds.height > 0 && bounds.bottom > 0 && bounds.right > 0 && bounds.top < window.innerHeight && bounds.left < window.innerWidth;
+            }
+            const media_isPreviewVisible = isPreviewVisible;
+            const CHECK_INTERVAL_MS = 1000;
+            const STALL_TIMEOUT_MS = 3000;
+            function watchCameraPlayback(video, onStalled) {
+                let lastProgressAt = performance.now();
+                let lastCheckAt = lastProgressAt;
+                let lastMediaTime = video.currentTime;
+                let frameRequest;
+                const canWatchFrames = "function" == typeof video.requestVideoFrameCallback;
+                function requestFrame() {
+                    if (canWatchFrames && void 0 === frameRequest) frameRequest = video.requestVideoFrameCallback(()=>{
+                        frameRequest = void 0;
+                        lastProgressAt = performance.now();
+                    });
+                }
+                function stop() {
+                    window.clearInterval(interval);
+                    if (void 0 !== frameRequest) {
+                        video.cancelVideoFrameCallback(frameRequest);
+                        frameRequest = void 0;
+                    }
+                }
+                function check() {
+                    const now = performance.now();
+                    const mediaTime = video.currentTime;
+                    const wasSuspended = now - lastCheckAt > 2 * CHECK_INTERVAL_MS;
+                    lastCheckAt = now;
+                    if (wasSuspended || !media_isPreviewVisible(video)) {
+                        lastProgressAt = now;
+                        lastMediaTime = mediaTime;
+                        return;
+                    }
+                    if (!canWatchFrames && mediaTime !== lastMediaTime) lastProgressAt = now;
+                    lastMediaTime = mediaTime;
+                    if (now - lastProgressAt >= STALL_TIMEOUT_MS) {
+                        stop();
+                        onStalled();
+                        return;
+                    }
+                    requestFrame();
+                }
+                const interval = window.setInterval(check, CHECK_INTERVAL_MS);
+                requestFrame();
+                return stop;
+            }
+            const media_watchCameraPlayback = watchCameraPlayback;
             function _define_property(obj, key, value) {
                 if (key in obj) Object.defineProperty(obj, key, {
                     value: value,
@@ -21044,7 +21227,7 @@
                     if (!context) return;
                     if ("running" !== context.state) await context.resume();
                 }
-                stop() {
+                async stop() {
                     this.options.logger.debug("AudioRecorder: stop()");
                     this.initializationId++;
                     this.disconnect();
@@ -21052,15 +21235,16 @@
                     const context = this.vcAudioContext;
                     this.vcAudioContext = void 0;
                     this.workletReady = void 0;
-                    if (context && "closed" !== context.state) context.close().then(()=>{
+                    if (context && "closed" !== context.state) try {
+                        await context.close();
                         this.options.logger.debug("AudioRecorder: audio context is closed");
-                    }).catch((err)=>{
+                    } catch (err) {
                         if (err instanceof Error) return void this.options.logger.error(error_createError({
                             err,
                             options: this.options
                         }));
                         this.options.logger.error(err);
-                    });
+                    }
                 }
                 getSampleRate() {
                     if ("function" == typeof window.AudioContext) return this.getAudioContext().sampleRate;
@@ -21088,11 +21272,12 @@
                 recording = false;
                 audioRecorder;
                 currentVisualStream;
-                onPlayReached = false;
+                onPlayingReached = false;
                 onLoadedMetaDataReached = false;
                 playingPromiseReached = false;
                 videoTrackLabel;
                 clearInitializationListeners;
+                stopWatchingPlayback;
                 initializationId = 0;
                 outputEvent = (e)=>{
                     this.logEvent(e.type, {
@@ -21137,12 +21322,27 @@
                 }
                 async restorePlayback() {
                     if (!this.rawVisualUserMedia) throw new Error("No camera preview is available.");
+                    const initializationId = this.initializationId;
+                    this.stopWatchingPlayback?.();
+                    this.stopWatchingPlayback = void 0;
                     await this.rawVisualUserMedia.play();
                     await this.audioRecorder?.resume();
+                    if (this.isCurrentInitialization(initializationId)) this.watchPlayback();
+                }
+                isVideoReady() {
+                    const videoReady = this.currentVisualStream?.getVideoTracks().some((track)=>"live" === track.readyState && track.enabled && !track.muted);
+                    return Boolean(videoReady);
+                }
+                isAudioReady() {
+                    const audioReady = !isAudioEnabled(this.options) || this.currentVisualStream?.getAudioTracks().some((track)=>"live" === track.readyState && track.enabled && !track.muted);
+                    return Boolean(audioReady);
+                }
+                isCurrentInitialization(initializationId) {
+                    return initializationId === this.initializationId;
                 }
                 hasLiveStream() {
-                    const videoReady = this.currentVisualStream?.getVideoTracks().some((track)=>"live" === track.readyState && track.enabled && !track.muted);
-                    const audioReady = !isAudioEnabled(this.options) || this.currentVisualStream?.getAudioTracks().some((track)=>"live" === track.readyState && track.enabled && !track.muted);
+                    const videoReady = this.isVideoReady();
+                    const audioReady = this.isAudioReady();
                     return Boolean(this.currentVisualStream?.active && videoReady && audioReady);
                 }
                 hasEnded() {
@@ -21154,12 +21354,17 @@
                     const { videoWidth, videoHeight } = this.rawVisualUserMedia;
                     return videoWidth > 0 && videoWidth < 3 || videoHeight > 0 && videoHeight < 3;
                 }
+                isCameraAvailable() {
+                    return !this.hasEnded() && !this.hasInvalidDimensions();
+                }
                 logEvent(eventType, params) {
                     this.options.logger.debug(`UserMedia: ... ${EVENT_ASCII} event ${eventType}: ${string_pretty(params)}`);
                 }
                 unloadRemainingEventListeners() {
                     this.options.logger.debug("UserMedia: unloadRemainingEventListeners()");
                     this.clearInitializationListeners?.();
+                    this.stopWatchingPlayback?.();
+                    this.stopWatchingPlayback = void 0;
                     mediaEvents.forEach((eventName)=>{
                         this.rawVisualUserMedia?.removeEventListener(eventName, this.outputEvent);
                     });
@@ -21169,6 +21374,19 @@
                     this.removeListener("SENDING_FIRST_FRAME");
                     this.audioRecorder?.record(audioCallback);
                 }
+                getIOSCameraPlaybackTarget() {
+                    if (!this.rawVisualUserMedia || !this.currentVisualStream || !browser_getBrowser(this.options).isIOS()) return;
+                    return this.rawVisualUserMedia;
+                }
+                watchPlayback() {
+                    const videoElement = this.getIOSCameraPlaybackTarget();
+                    if (!videoElement) return;
+                    this.stopWatchingPlayback?.();
+                    this.stopWatchingPlayback = media_watchCameraPlayback(videoElement, ()=>{
+                        this.stopWatchingPlayback = void 0;
+                        this.recorder.recoverCameraAfterStall();
+                    });
+                }
                 init(localMediaStream, videoCallback, audioCallback, endedEarlyCallback, params) {
                     this.clearInitializationListeners?.();
                     this.stop(localMediaStream, {
@@ -21176,41 +21394,44 @@
                         preserveRecordingState: Boolean(params?.switchingFacingMode || params?.recovering)
                     });
                     const initializationId = ++this.initializationId;
-                    this.onPlayReached = false;
+                    this.onPlayingReached = false;
                     this.onLoadedMetaDataReached = false;
                     this.playingPromiseReached = false;
                     this.videoTrackLabel = void 0;
                     if (isAudioEnabled(this.options)) this.audioRecorder ??= new media_AudioRecorder(this, this.options);
+                    else {
+                        this.audioRecorder?.stop();
+                        this.audioRecorder = void 0;
+                    }
                     const unloadAllEventListeners = ()=>{
                         this.options.logger.debug("UserMedia: unloadAllEventListeners()");
                         this.unloadRemainingEventListeners();
                         this.removeListener("SENDING_FIRST_FRAME");
-                        this.rawVisualUserMedia?.removeEventListener("play", onPlay);
+                        this.rawVisualUserMedia?.removeEventListener("playing", onPlaying);
                         this.rawVisualUserMedia?.removeEventListener("loadedmetadata", onLoadedMetaData);
                     };
                     this.clearInitializationListeners = ()=>{
-                        this.rawVisualUserMedia?.removeEventListener("play", onPlay);
+                        this.rawVisualUserMedia?.removeEventListener("playing", onPlaying);
                         this.rawVisualUserMedia?.removeEventListener("loadedmetadata", onLoadedMetaData);
                         this.clearInitializationListeners = void 0;
                     };
                     const play = ()=>{
                         try {
-                            this.rawVisualUserMedia?.load();
                             if (this.rawVisualUserMedia?.paused) {
                                 this.options.logger.debug(`UserMedia: play(): media.readyState=${this.rawVisualUserMedia.readyState}, media.paused=${this.rawVisualUserMedia.paused}, media.ended=${this.rawVisualUserMedia.ended}, media.played=${string_pretty(this.rawVisualUserMedia.played)}`);
                                 this.rawVisualUserMedia.play().then(()=>{
-                                    if (initializationId !== this.initializationId) return;
+                                    if (!this.isCurrentInitialization(initializationId)) return;
                                     if (!this.playingPromiseReached) {
                                         this.options.logger.debug("UserMedia: play promise successful. Playing now.");
                                         this.playingPromiseReached = true;
                                     }
                                 }).catch((exc)=>{
-                                    if (initializationId !== this.initializationId) return;
+                                    if (!this.isCurrentInitialization(initializationId)) return;
                                     if (exc instanceof Error && !params?.recovering) this.options.logger.warn(`Caught pending user media promise exception: ${exc.toString()}`);
                                     else {
                                         unloadAllEventListeners();
                                         endedEarlyCallback(error_createError({
-                                            message: "Failed to play user media upon play event.",
+                                            message: "Failed to start camera playback.",
                                             exc,
                                             options: this.options
                                         }));
@@ -21222,27 +21443,31 @@
                             endedEarlyCallback(exc);
                         }
                     };
+                    const notifyReady = ()=>{
+                        this.clearInitializationListeners?.();
+                        videoCallback();
+                        if (this.isCurrentInitialization(initializationId)) this.watchPlayback();
+                    };
                     const fireCallbacks = ()=>{
                         const readyState = this.rawVisualUserMedia?.readyState;
-                        this.options.logger.debug(`UserMedia: fireCallbacks(readyState=${readyState}, onPlayReached=${this.onPlayReached}, onLoadedMetaDataReached=${this.onLoadedMetaDataReached})`);
-                        if (this.onPlayReached && this.onLoadedMetaDataReached) if (this.audioRecorder) {
+                        this.options.logger.debug(`UserMedia: fireCallbacks(readyState=${readyState}, onPlayingReached=${this.onPlayingReached}, onLoadedMetaDataReached=${this.onLoadedMetaDataReached})`);
+                        if (this.onPlayingReached && this.onLoadedMetaDataReached) if (this.audioRecorder) {
                             const initializeAudio = async (audioRecorder)=>{
                                 try {
                                     await audioRecorder.init(localMediaStream);
-                                    if (initializationId !== this.initializationId || this.currentVisualStream !== localMediaStream) return;
+                                    if (!this.isCurrentInitialization(initializationId) || this.currentVisualStream !== localMediaStream) return;
                                     const onAudioReady = ()=>{
-                                        if (initializationId !== this.initializationId || this.currentVisualStream !== localMediaStream) return;
+                                        if (!this.isCurrentInitialization(initializationId) || this.currentVisualStream !== localMediaStream) return;
                                         if (this.recording) this.audioRecord(audioCallback);
                                         else this.on("SENDING_FIRST_FRAME", ()=>{
                                             this.audioRecord(audioCallback);
                                         });
-                                        this.clearInitializationListeners?.();
-                                        videoCallback();
+                                        notifyReady();
                                     };
                                     if (params?.recovering) await audioRecorder.resume();
                                     onAudioReady();
                                 } catch (exc) {
-                                    if (initializationId !== this.initializationId) return;
+                                    if (!this.isCurrentInitialization(initializationId)) return;
                                     unloadAllEventListeners();
                                     this.stop(void 0, {
                                         preserveRecordingState: Boolean(params?.recovering)
@@ -21251,14 +21476,11 @@
                                 }
                             };
                             initializeAudio(this.audioRecorder);
-                        } else {
-                            this.clearInitializationListeners?.();
-                            videoCallback();
-                        }
+                        } else notifyReady();
                     };
-                    const onPlay = ()=>{
+                    const onPlaying = ()=>{
                         try {
-                            this.logEvent("play", {
+                            this.logEvent("playing", {
                                 readyState: this.rawVisualUserMedia?.readyState,
                                 audio: isAudioEnabled(this.options),
                                 width: this.rawVisualUserMedia?.width,
@@ -21266,16 +21488,15 @@
                                 videoWidth: this.rawVisualUserMedia?.videoWidth,
                                 videoHeight: this.rawVisualUserMedia?.videoHeight
                             });
-                            this.rawVisualUserMedia?.removeEventListener("play", onPlay);
-                            if (this.hasEnded() || this.hasInvalidDimensions()) endedEarlyCallback(error_createError({
+                            this.rawVisualUserMedia?.removeEventListener("playing", onPlaying);
+                            if (this.isCameraAvailable()) {
+                                this.onPlayingReached = true;
+                                fireCallbacks();
+                            } else endedEarlyCallback(error_createError({
                                 message: "Already busy",
                                 explanation: "Probably another browser window is using your webcam?",
                                 options: this.options
                             }));
-                            else {
-                                this.onPlayReached = true;
-                                fireCallbacks();
-                            }
                         } catch (exc) {
                             unloadAllEventListeners();
                             endedEarlyCallback(exc);
@@ -21291,7 +21512,7 @@
                             videoHeight: this.rawVisualUserMedia?.videoHeight
                         });
                         this.rawVisualUserMedia?.removeEventListener("loadedmetadata", onLoadedMetaData);
-                        if (!this.hasEnded() && !this.hasInvalidDimensions()) {
+                        if (this.isCameraAvailable()) {
                             this.emit("LOADED_META_DATA");
                             this.onLoadedMetaDataReached = true;
                             fireCallbacks();
@@ -21318,7 +21539,7 @@
                         });
                         else this.options.logger.debug("UserMedia: detected (but no video tracks exist");
                         this.rawVisualUserMedia?.addEventListener("loadedmetadata", onLoadedMetaData);
-                        this.rawVisualUserMedia?.addEventListener("play", onPlay);
+                        this.rawVisualUserMedia?.addEventListener("playing", onPlaying);
                         this.rawVisualUserMedia?.removeEventListener("error", this.handleMediaError);
                         this.rawVisualUserMedia?.addEventListener("error", this.handleMediaError);
                         this.setVisualStream(localMediaStream);
@@ -21336,6 +21557,8 @@
                 }
                 stop(visualStream, params) {
                     try {
+                        this.stopWatchingPlayback?.();
+                        this.stopWatchingPlayback = void 0;
                         let chosenStream = visualStream;
                         if (!params?.aboutToInitialize) {
                             this.initializationId++;
@@ -21356,12 +21579,28 @@
                         });
                     }
                 }
+                hasVideoDimensions(dimensions) {
+                    return Boolean(dimensions.videoWidth && dimensions.videoHeight);
+                }
                 createCanvas() {
                     const canvas = document.createElement("canvas");
-                    const rawWidthDimension = this.getRawWidth(true);
-                    if (rawWidthDimension.value) canvas.width = rawWidthDimension.value;
-                    const rawHeight = this.getRawHeight(true);
-                    if (rawHeight) canvas.height = rawHeight;
+                    const videoDimensions = {
+                        videoWidth: this.getVideoWidth(),
+                        videoHeight: this.getVideoHeight()
+                    };
+                    if (!this.hasVideoDimensions(videoDimensions)) {
+                        const rawWidthDimension = this.getRawWidth(true);
+                        const rawHeight = this.getRawHeight(true);
+                        if (rawWidthDimension.value) canvas.width = rawWidthDimension.value;
+                        if (rawHeight) canvas.height = rawHeight;
+                        return canvas;
+                    }
+                    const { videoWidth, videoHeight } = videoDimensions;
+                    const captureWidth = this.options.video.width || this.getRawWidth(true).value || videoWidth;
+                    const captureHeight = this.options.video.height || this.getRawHeight(true) || videoHeight;
+                    const scale = Math.min(1, captureWidth / videoWidth, captureHeight / videoHeight);
+                    canvas.width = 2 * Math.floor(videoWidth * scale / 2);
+                    canvas.height = 2 * Math.floor(videoHeight * scale / 2);
                     return canvas;
                 }
                 getVideoHeight() {
@@ -21432,6 +21671,9 @@
                     return {
                         audioSampleRate: this.getAudioSampleRate(),
                         muted: this.rawVisualUserMedia?.muted,
+                        paused: this.rawVisualUserMedia?.paused,
+                        currentTime: this.rawVisualUserMedia?.currentTime,
+                        readyState: this.rawVisualUserMedia?.readyState,
                         width: this.rawVisualUserMedia?.width,
                         height: this.rawVisualUserMedia?.height,
                         videoWidth: this.rawVisualUserMedia?.videoWidth,
@@ -21595,6 +21837,8 @@
                     if (!this.recorderElement) throw new Error(`There is still no video element with class ${this.options.selectors.userMediaClass}`);
                     this.correctDimensions();
                     this.recorderElement.muted = true;
+                    this.recorderElement.defaultMuted = true;
+                    this.recorderElement.autoplay = true;
                     this.recorderElement.setAttribute("playsinline", "true");
                     this.recorderElement.setAttribute("webkit-playsinline", "webkit-playsinline");
                     this.recorderElement.style.transform = "rotateY(180deg)";
@@ -21732,7 +21976,11 @@
                     if (this.isShown()) return;
                     this.options.logger.debug(`Replay: show(playerOnly=${playerOnly})`);
                     const hasMedia = Boolean(this.videomail?.webm) || Boolean(this.videomail?.mp4) || Boolean(this.videomail?.poster);
-                    if (hasMedia) this.correctDimensions(true, videomailWidth ?? this.replayElement.videoWidth, videomailHeight ?? this.replayElement.videoHeight);
+                    const { width, height, stretch } = this.options.video;
+                    if (!playerOnly && !stretch && width && height) {
+                        this.replayElement.style.width = "100%";
+                        this.replayElement.style.height = "100%";
+                    } else if (hasMedia) this.correctDimensions(true, videomailWidth ?? this.replayElement.videoWidth, videomailHeight ?? this.replayElement.videoHeight);
                     if (playerOnly) {
                         if (hasMedia) html_showElement(this.replayElement);
                     } else html_showElement(this.replayElement);
@@ -21756,6 +22004,7 @@
                     this.replayElement = this.visuals.getElement()?.querySelector(`video.${this.options.selectors.replayClass}`);
                     if (!this.replayElement) this.buildElement(replayParentElement);
                     if (!this.replayElement) throw new Error("There is no replayElement to build on");
+                    if (!this.replayElement.hasAttribute("crossorigin")) this.replayElement.crossOrigin = "anonymous";
                     this.hide();
                     if (this.options.video.autoPlay) this.replayElement.setAttribute("autoplay", this.options.video.autoPlay.toString());
                     this.replayElement.setAttribute("autostart", "true");
@@ -21807,7 +22056,6 @@
                     if (!this.replayElement) return;
                     const tracks = this.replayElement.getElementsByTagName("track");
                     const firstTrack = tracks[0];
-                    this.replayElement.setAttribute("crossorigin", "anonymous");
                     if (firstTrack) if (src) firstTrack.setAttribute("src", src);
                     else firstTrack.remove();
                     else {
@@ -21843,7 +22091,7 @@
                 }
                 getVideoType() {
                     if (!this.replayElement) return;
-                    return util_getBrowser(this.options).getVideoType(this.replayElement);
+                    return browser_getBrowser(this.options).getVideoType(this.replayElement);
                 }
                 pause(cb) {
                     window.setTimeout(()=>{
@@ -21897,6 +22145,7 @@
                 notifier;
                 visualsElement;
                 built = false;
+                playerOnly = false;
                 cameraRecoveryFailed = false;
                 constructor(container, options){
                     super("Visuals", options);
@@ -21956,7 +22205,7 @@
                             this.correctDimensions();
                         });
                         this.on("ERROR", ()=>{
-                            if (util_getBrowser(this.options).isMobile()) this.removeDimensions();
+                            if (browser_getBrowser(this.options).isMobile()) this.removeDimensions();
                         });
                         this.on("WINDOW_RESIZE", ()=>{
                             this.correctDimensions();
@@ -21966,6 +22215,17 @@
                 correctDimensions() {
                     if (this.options.video.stretch) this.removeDimensions();
                     else if (this.visualsElement) {
+                        const { width, height } = this.options.video;
+                        if (!this.playerOnly && width && height) {
+                            const fullWidth = dimensions_useFullWidth(this.options.video.mobileBreakPoint);
+                            this.visualsElement.classList.add("fixedAspectRatio");
+                            this.visualsElement.style.width = fullWidth ? "100%" : `${width}px`;
+                            this.visualsElement.style.maxWidth = "100%";
+                            this.visualsElement.style.height = "auto";
+                            this.visualsElement.style.aspectRatio = `${width} / ${height}`;
+                            return;
+                        }
+                        this.removeDimensions();
                         let heightDimension;
                         let widthDimension = dimensions_useFullWidth(this.options.video.mobileBreakPoint);
                         if (!widthDimension) {
@@ -21984,6 +22244,9 @@
                     if (!this.visualsElement) return;
                     this.visualsElement.style.width = "auto";
                     this.visualsElement.style.height = "auto";
+                    this.visualsElement.style.removeProperty("max-width");
+                    this.visualsElement.style.removeProperty("aspect-ratio");
+                    this.visualsElement.classList.remove("fixedAspectRatio");
                 }
                 getRatio() {
                     if (this.visualsElement?.clientWidth) return this.visualsElement.clientHeight / this.visualsElement.clientWidth;
@@ -21996,6 +22259,7 @@
                     return this.recorderInsides.isCountingDown();
                 }
                 build(playerOnly = false, parentElement) {
+                    this.playerOnly = playerOnly;
                     const parentElementInfo = parentElement ? `, parentElement="${string_pretty(parentElement)}"` : "";
                     this.options.logger.debug(`Visuals: build (playerOnly = ${playerOnly}${parentElementInfo})`);
                     if (parentElement) this.visualsElement = parentElement.querySelector(`.${this.options.selectors.visualsClass}`);
@@ -22095,6 +22359,7 @@
                     this.recorder.resumeMediaForCountdown();
                     this.recorderInsides.resumeCountdown();
                     this.recorderInsides.hidePause();
+                    this.emit("COUNTDOWN");
                 }
                 async resume() {
                     this.clearCameraRecoveryNotice();
@@ -22112,7 +22377,9 @@
                     });
                 }
                 pauseOrResume() {
-                    if (this.cameraRecoveryFailed && this.recorder.isPaused()) this.resumeFromControl();
+                    if (this.isCountingDown()) if (this.recorder.isPaused()) this.resumeFromControl();
+                    else this.pause();
+                    else if (this.cameraRecoveryFailed && this.recorder.isPaused()) this.resumeFromControl();
                     else if (this.isRecordable()) {
                         if (this.isRecording()) this.pause();
                         else if (this.recorder.isPaused()) this.resumeFromControl();
@@ -22359,7 +22626,8 @@
                     });
                     if (!playerOnly) this.stopListeningToVisibility = this.visibility.onChange((visible)=>{
                         if (this.built) if (visible) {
-                            if (isAutoPauseEnabled(this.options)) this.recoverCamera();
+                            this.recoverConnection();
+                            if (this.shouldRecoverCameraWhenVisible()) this.recoverCamera();
                             this.emit("VISIBLE");
                         } else {
                             if (isAutoPauseEnabled(this.options)) this.suspend();
@@ -22372,7 +22640,7 @@
                     this.on("ERROR", (params)=>{
                         this.processError(params);
                         this.endWaiting();
-                        const browser = util_getBrowser(this.options);
+                        const browser = browser_getBrowser(this.options);
                         if (browser.isMobile()) this.removeDimensions();
                     });
                     this.on("WINDOW_RESIZE", ()=>{
@@ -22381,6 +22649,9 @@
                     if (!playerOnly) this.on("LOADED_META_DATA", ()=>{
                         this.correctDimensions();
                     });
+                }
+                shouldRecoverCameraWhenVisible() {
+                    return isAutoPauseEnabled(this.options) && (!this.options.loadUserMediaOnRecord || this.visuals.isUserMediaLoaded() || this.isPaused());
                 }
                 correctDimensions() {
                     if (this.options.video.stretch) this.removeDimensions();
@@ -22551,11 +22822,22 @@
                     this.visuals.pause(params);
                 }
                 suspend() {
-                    if (this.built && (this.isCountingDown() || this.isRecording() || this.isPaused())) this.pause();
+                    if (!this.built) return;
+                    this.visuals.getRecorder().suspendConnection();
+                    if (this.shouldPauseForConnectionSuspension()) this.pause();
+                }
+                shouldPauseForConnectionSuspension() {
+                    return this.isCountingDown() || this.isRecording() || this.isPaused();
+                }
+                recoverConnection() {
+                    if (this.canRecover()) this.visuals.getRecorder().recoverConnection();
                 }
                 recoverCamera() {
-                    if (!this.built || this.hasError || this.submitted) return Promise.resolve(false);
+                    if (!this.canRecover()) return Promise.resolve(false);
                     return this.visuals.recoverCamera();
+                }
+                canRecover() {
+                    return this.built && !this.hasError && !this.submitted;
                 }
                 validate(event, force = false) {
                     let runValidation = true;
@@ -22869,6 +23151,9 @@
                 }
                 pause() {
                     this.container.suspend();
+                }
+                recoverConnection() {
+                    this.container.recoverConnection();
                 }
                 recoverCamera() {
                     return this.container.recoverCamera();
