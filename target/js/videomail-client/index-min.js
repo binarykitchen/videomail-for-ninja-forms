@@ -11172,7 +11172,7 @@
             var client = __webpack_require__("Q");
             var client_default = __webpack_require__.n(client);
             var package_namespaceObject = {
-                rE: "16.11.0"
+                rE: "16.11.2"
             };
             var defined = __webpack_require__("MO");
             var defined_default = __webpack_require__.n(defined);
@@ -20287,6 +20287,8 @@
                 recordingAudioSampleRate;
                 frameProgress;
                 sampleProgress;
+                recordingElapsedTimeMs = 0;
+                recordingStartedAtMs;
                 canvas;
                 ctx;
                 stopTime;
@@ -20334,7 +20336,7 @@
                     }
                 }
                 shouldCreateNewLoopForMediaReady(params) {
-                    return !this.loop || !params?.switchingFacingMode && !params?.recovering;
+                    return !this.loop || !this.recordingActive && !params?.switchingFacingMode && !params?.recovering;
                 }
                 calculateFrameProgress() {
                     return calculateProgress(this.confirmedFrameNumber, this.framesCount);
@@ -20401,16 +20403,20 @@
                     this.loop?.dispose();
                 }
                 getIntervalSum() {
-                    if (!this.loop) return;
-                    return this.loop.getElapsedTime();
+                    const activeTimeMs = void 0 === this.recordingStartedAtMs ? 0 : performance.now() - this.recordingStartedAtMs;
+                    return this.recordingElapsedTimeMs + activeTimeMs;
+                }
+                pauseRecordingClock() {
+                    this.recordingElapsedTimeMs = this.getIntervalSum();
+                    this.recordingStartedAtMs = void 0;
                 }
                 getAvgInterval() {
-                    const intervalSum = this.getIntervalSum() ?? 0;
+                    const intervalSum = this.getIntervalSum();
                     if (!this.hasValidInterval(intervalSum)) return;
                     return intervalSum / this.framesCount;
                 }
                 getAvgFps() {
-                    const intervalSum = this.getIntervalSum() ?? 0;
+                    const intervalSum = this.getIntervalSum();
                     if (!this.hasValidInterval(intervalSum)) return;
                     return this.framesCount / intervalSum * 1000;
                 }
@@ -20427,6 +20433,8 @@
                     this.cancelCameraRecovery();
                     if (!this.userMedia) throw new Error("No user media defined, unable to stop");
                     this.options.logger.debug(`Recorder: stop(${params ? string_pretty(params) : ""})`);
+                    this.pauseRecordingClock();
+                    this.userMedia.pause();
                     this.recordingActive = false;
                     const limitReached = params?.limitReached;
                     this.emit("STOPPING", {
@@ -20479,6 +20487,7 @@
                 }
                 reset() {
                     this.cancelCameraRecovery();
+                    this.pauseRecordingClock();
                     if (!this.unloaded) {
                         this.options.logger.debug("Recorder: reset()");
                         this.emit("RESETTING");
@@ -20499,6 +20508,7 @@
                     if (params) this.options.logger.debug(`pause() at frame ${this.framesCount} with ${string_pretty(params)}`);
                     else this.options.logger.debug(`pause() at frame ${this.framesCount}`);
                     this.userMedia?.pause();
+                    this.pauseRecordingClock();
                     loop.stop();
                     this.emit("PAUSED");
                     this.sendPings();
@@ -20515,6 +20525,7 @@
                     this.stopPings();
                     this.emit("RESUMING");
                     this.userMedia.resume();
+                    this.recordingStartedAtMs ??= performance.now();
                     if (this.streamBackpressured) this.resumeAfterDrain = true;
                     else loop.start();
                 }
@@ -20525,7 +20536,7 @@
                     const frameNumber = opts.frameNumber;
                     if (1 === frameNumber) this.emit("FIRST_FRAME_SENT");
                 }
-                draw(_deltaTime, elapsedTime) {
+                draw(_deltaTime, _elapsedTime) {
                     if (this.recordingTransportFailed) return;
                     if (!this.userMedia) throw new Error("No user media defined, unable to draw on canvas");
                     try {
@@ -20551,7 +20562,7 @@
                                         frameNumber: this.framesCount,
                                         onFlushedCallback: this.onFlushed.bind(this)
                                     });
-                                    this.visuals.checkTimer(elapsedTime);
+                                    this.visuals.checkTimer(this.getIntervalSum());
                                 }
                             } else throw error_createError({
                                 message: "Failed to extract webcam data.",
@@ -20644,6 +20655,10 @@
                     };
                     this.frame = new canvas_to_buffer_modern_r(this.canvas, this.options.image.types, this.options.image.quality);
                     this.options.logger.debug("Recorder: record()");
+                    if (!this.recordingActive) {
+                        this.recordingElapsedTimeMs = 0;
+                        this.recordingStartedAtMs = performance.now();
+                    }
                     this.recordingActive = true;
                     this.recordingTransportFailed = false;
                     this.mediaTransmissionStarted = false;
@@ -20652,7 +20667,8 @@
                     this.emit("RECORDING", {
                         framesCount: this.framesCount
                     });
-                    loop.on("update", (_deltaTime, elapsedTime)=>{
+                    loop.on("update", ()=>{
+                        const elapsedTime = this.getIntervalSum();
                         let avgFPS;
                         avgFPS = 0 !== elapsedTime ? Math.round(this.framesCount / elapsedTime * 1000) : void 0;
                         this.options.logger.debug(`Recorder updates avgFps = ${avgFPS} at frame ${this.framesCount}`);
