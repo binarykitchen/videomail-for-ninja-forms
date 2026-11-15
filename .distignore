@@ -20,7 +20,7 @@ yarn.lock
 package-lock.json
 scripts
 tests
-doc
+docs
 videomail-for-ninja-forms.code-workspace
 .github
 .eslintignore

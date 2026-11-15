@@ -1,5 +1,6 @@
 ---
 description: "Use when: writing user-facing copy, documentation tone, or terminology"
+applyTo: "**/*.md"
 ---
 
 # Language

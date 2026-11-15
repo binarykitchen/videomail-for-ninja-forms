@@ -1,5 +1,6 @@
 ---
 description: "Use when: creating or editing JavaScript or TypeScript source files"
+applyTo: "**/*.js,**/*.jsx,**/*.ts,**/*.tsx"
 ---
 
 # Coding Standards

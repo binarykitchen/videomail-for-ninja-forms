@@ -1,5 +1,6 @@
 ---
 description: "Use when: creating or editing unit tests"
+applyTo: "tests/**"
 ---
 
 # Unit tests

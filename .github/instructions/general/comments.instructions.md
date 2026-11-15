@@ -1,5 +1,6 @@
 ---
 description: "Use when: adding or editing comments in source code"
+applyTo: "**/*.js,**/*.jsx,**/*.ts,**/*.tsx,**/*.php"
 ---
 
 # Comments
