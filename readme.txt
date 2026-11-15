@@ -3,7 +3,7 @@ Contributors: michael.heuberger, kbjohnson90
 Tags: video, email, recorder, sign language
 Requires at least: 6.0
 Tested up to: 6.9.5
-Stable tag: 13.6.0
+Stable tag: 13.7.0
 Requires PHP: 8.1.0
 Donate link: https://videomail.io/faq
 License: CC0-1.0
@@ -25,7 +25,7 @@ Latest version (zip file) also can be downloaded for free anytime from GitHub:
 [https://github.com/binarykitchen/videomail-for-ninja-forms/blob/master/dist/videomail-for-ninja-forms.zip](https://github.com/binarykitchen/videomail-for-ninja-forms/blob/master/dist/videomail-for-ninja-forms.zip)
 
 More documentation on setup and configuration see:
-[https://github.com/binarykitchen/videomail-for-ninja-forms/tree/master/doc/faq/videomail-for-ninja-forms-faq.pdf](https://github.com/binarykitchen/videomail-for-ninja-forms/tree/master/doc/faq/videomail-for-ninja-forms-faq.pdf)
+[https://github.com/binarykitchen/videomail-for-ninja-forms/blob/master/docs/faq/videomail-for-ninja-forms-faq.pdf](https://github.com/binarykitchen/videomail-for-ninja-forms/blob/master/docs/faq/videomail-for-ninja-forms-faq.pdf)
 
 == Installation ==
 This section describes how to install the plugin and get it working.
@@ -42,12 +42,12 @@ Probably you also want to whitelist additional domains besides localhost. See wh
 That would be awesome :) Scroll to bottom of https://videomail.io/faq
 
 = Where is the documentation? =
-Check out that pretty online PDF at [https://github.com/binarykitchen/videomail-for-ninja-forms/blob/master/doc/faq/videomail-for-ninja-forms-faq.pdf](https://github.com/binarykitchen/videomail-for-ninja-forms/blob/master/doc/faq/videomail-for-ninja-forms-faq.pdf)
+Check out that pretty online PDF at [https://github.com/binarykitchen/videomail-for-ninja-forms/blob/master/docs/faq/videomail-for-ninja-forms-faq.pdf](https://github.com/binarykitchen/videomail-for-ninja-forms/blob/master/docs/faq/videomail-for-ninja-forms-faq.pdf)
 
 = What options are there? =
 That new recordable video field comes with many options you can configure yourself such as duration, width, audio on/off and much more.
 
-Each option is explained well at bottom of this PDF file: [Videomail FAQ](https://github.com/binarykitchen/videomail-for-ninja-forms/tree/master/doc/faq/videomail-for-ninja-forms-faq.pdf)
+Each option is explained well at bottom of this PDF file: [Videomail FAQ](https://github.com/binarykitchen/videomail-for-ninja-forms/blob/master/docs/faq/videomail-for-ninja-forms-faq.pdf)
 
 = How does whitelisting work? =
 For local development, everything will work right away because the localhost URL is already whitelisted on the videomail server.
@@ -71,6 +71,16 @@ To get help, just use any of these contacts at [https://binarykitchen.com](https
 2. Once you have assembled a form and preview it, any browser will ask for webcam access first.
 
 == Changelog ==
+
+= 13.7.0 (15 Nov 2026) =
+
+**Improvmeent**
+* Big one, video & audio quality is now sharper
+* While recording on mobile, recording pauses and resumes the intelligent way
+
+**Change:**
+* Automated captions now support any language
+* Better support for mobiles in landscape and portrait format
 
 = 13.6.0 (6 Nov 2026) =
 

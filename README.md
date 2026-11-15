@@ -28,11 +28,11 @@ There you always get a fresh WordPress installation where you can install & acti
 
 ### Playground Notes
 
-More detailed instructions can be found in [doc/PLAYGROUND.md](doc/PLAYGROUND.md).
+More detailed instructions can be found in [PLAYGROUND.md](docs/PLAYGROUND.md).
 
 ## Development (Local)
 
-For local development, follow the instructions in [doc/LOCAL.md](doc/LOCAL.md).
+For local development, follow the instructions in [LOCAL.md](docs/LOCAL.md).
 
 ## Directory structure
 
@@ -44,7 +44,7 @@ In `dist` you can find a latest version in a zip file for easier distribution. C
 
 ## Documentation
 
-In the `/doc` folder we place in all text and images for the public documentation.
+The `docs` folder contains the public documentation and development guides.
 
 ## Report bugs
 
@@ -52,11 +52,11 @@ In the `/doc` folder we place in all text and images for the public documentatio
 
 ## Releasing
 
-See [RELEASING.md](doc/RELEASING.md) for detailed instructions on how to release a new version.
+See [RELEASING.md](docs/RELEASING.md) for detailed instructions on how to release a new version.
 
 ## Quality checks and tests
 
-For tests and checks, go to [doc/QUALITY.md](doc/QUALITY.md).
+For tests and checks, go to [QUALITY.md](docs/QUALITY.md).
 
 ## Ask for help
 
