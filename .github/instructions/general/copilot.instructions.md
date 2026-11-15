@@ -1,6 +1,5 @@
 ---
 description: "Use when: giving command-line guidance or explaining setup steps that need user action"
-applyTo: "**"
 ---
 
 # Copilot (you) 😎
