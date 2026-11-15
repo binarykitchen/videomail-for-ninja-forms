@@ -1,5 +1,6 @@
 ---
 description: "Use when: managing npm dependencies, package manifests, or peer dependency conflicts"
+applyTo: "**/package.json,**/package-lock.json"
 ---
 
 # Package management

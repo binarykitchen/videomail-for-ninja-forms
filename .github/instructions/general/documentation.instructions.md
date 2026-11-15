@@ -1,5 +1,6 @@
 ---
 description: "Use when: creating or editing Markdown documentation, READMEs, or instructions"
+applyTo: "**/*.md"
 ---
 
 # Documentation 📚

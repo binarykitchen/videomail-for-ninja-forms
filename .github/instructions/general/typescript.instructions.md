@@ -1,5 +1,6 @@
 ---
 description: "Use when: creating or editing TypeScript or TSX files"
+applyTo: "**/*.ts,**/*.tsx"
 ---
 
 # TypeScript
