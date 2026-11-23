@@ -45,6 +45,19 @@
   height: 100%;
 }
 
+.videomail .visuals > canvas.cameraPreviewCanvas {
+  z-index: 1;
+  border-radius: inherit;
+  object-fit: contain;
+  pointer-events: none;
+  background: #e4e7e7;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  inset: 0;
+  transform: scaleX(-1);
+}
+
 .videomail .visuals.fixedAspectRatio > video, .videomail .visuals.fixedAspectRatio > .notifier {
   position: absolute;
   inset: 0;
@@ -1656,15 +1669,6 @@
                 Emitter.prototype.hasListeners = function(event) {
                     return !!this.listeners(event).length;
                 };
-            },
-            FU (module1) {
-                var DOCUMENT_POSITION_CONTAINED_BY = 16;
-                module1.exports = contains;
-                function contains(container, elem) {
-                    if (container.contains) return container.contains(elem);
-                    var comparison = container.compareDocumentPosition(elem);
-                    return 0 === comparison || comparison & DOCUMENT_POSITION_CONTAINED_BY;
-                }
             },
             T (__unused_rspack_module, exports1, __webpack_require__) {
                 function isArray(arg) {
@@ -8858,7 +8862,7 @@
                 var EElistenerCount = function(emitter, type) {
                     return emitter.listeners(type).length;
                 };
-                var Stream = __webpack_require__("O");
+                var Stream = __webpack_require__("OK");
                 var Buffer = __webpack_require__("CX").Buffer;
                 var OurUint8Array = (void 0 !== __webpack_require__.g ? __webpack_require__.g : "u" > typeof window ? window : "u" > typeof self ? self : {}).Uint8Array || function() {};
                 function _uint8ArrayToBuffer(chunk) {
@@ -9599,7 +9603,7 @@
                 var internalUtil = {
                     deprecate: __webpack_require__("NQ")
                 };
-                var Stream = __webpack_require__("O");
+                var Stream = __webpack_require__("OK");
                 var Buffer = __webpack_require__("CX").Buffer;
                 var OurUint8Array = (void 0 !== __webpack_require__.g ? __webpack_require__.g : "u" > typeof window ? window : "u" > typeof self ? self : {}).Uint8Array || function() {};
                 function _uint8ArrayToBuffer(chunk) {
@@ -10117,7 +10121,7 @@
                     undestroy: undestroy
                 };
             },
-            O (module1, __unused_rspack_exports, __webpack_require__) {
+            OK (module1, __unused_rspack_exports, __webpack_require__) {
                 module1.exports = __webpack_require__("q").EventEmitter;
             },
             Fo (module1, exports1, __webpack_require__) {
@@ -11065,11 +11069,11 @@
                 const ErrorConstructor = errorConstructors.get(name) ?? Error;
                 return ErrorConstructor === AggregateError ? new ErrorConstructor([]) : new ErrorConstructor();
             };
-            const skip = Symbol('skip');
+            const serialize_error_skip = Symbol('skip');
             const destroyValue = (value, options, depth)=>{
                 if (value && value instanceof Uint8Array && value.constructor?.name === 'Buffer') return options.serialize ? '[object Buffer]' : value;
                 if (null !== value && 'object' == typeof value && 'function' == typeof value.pipe && 'function' == typeof value.on) return options.serialize ? '[object Stream]' : value;
-                if ('function' == typeof value) return options.serialize ? skip : value;
+                if ('function' == typeof value) return options.serialize ? serialize_error_skip : value;
                 if (options.serialize && 'bigint' == typeof value) return `${value}n`;
                 if (!value || 'object' != typeof value) return value;
                 if (options.seen.has(value)) return '[Circular]';
@@ -11115,7 +11119,7 @@
                     const rawValue = readProperty(from, property);
                     if (rawValue === unreadable || isAbsent(from, property, rawValue)) continue;
                     const value = destroyValue(rawValue, options, depth + 1);
-                    if (value !== skip) {
+                    if (value !== serialize_error_skip) {
                         if (!canRedefine(to, property)) {
                             setProperty(to, property, value);
                             continue;
@@ -11132,7 +11136,7 @@
                     if ('__proto__' === key) continue;
                     if (copyErrorProperties && errorPropertyNames.has(key)) continue;
                     const value = destroyValue(from[key], options, depth + 1);
-                    if (value !== skip) setProperty(to, key, value);
+                    if (value !== serialize_error_skip) setProperty(to, key, value);
                 }
                 seen.delete(from);
                 return to;
@@ -11172,7 +11176,7 @@
             var client = __webpack_require__("Q");
             var client_default = __webpack_require__.n(client);
             var package_namespaceObject = {
-                rE: "16.11.2"
+                rE: "16.14.0"
             };
             var defined = __webpack_require__("MO");
             var defined_default = __webpack_require__.n(defined);
@@ -14746,6 +14750,9 @@
                 isIOS() {
                     return "iOS" === this.result.os.name;
                 }
+                shouldUseCanvasCameraPreview() {
+                    return this.isIOS() && "WebKit" === this.result.engine.name && 27 === Number.parseInt(this.result.os.version ?? "", 10);
+                }
                 getBrowserVersion() {
                     return this.result.browser.version;
                 }
@@ -14815,25 +14822,24 @@
                 return getBrowser_browser;
             }
             const browser_getBrowser = getBrowser;
+            function isRecord(value) {
+                return "object" == typeof value && null !== value && !Array.isArray(value);
+            }
             function findOriginalExc(exc) {
-                if (exc instanceof Error && "response" in exc) {
-                    const response = exc.response;
-                    const body = response.body;
-                    if ("error" in body) {
-                        const message = body.error.message;
-                        const cause = body.error.cause;
-                        const error = new error_HTTPVideomailError(message, {
-                            cause
-                        });
-                        if (body.error.name) error.name = body.error.name;
-                        if (body.error.explanation) error.explanation = body.error.explanation;
-                        if (body.error.stack) error.stack = body.error.stack;
-                        if (body.error.status) error.status = body.error.status;
-                        if (body.error.code) error.code = body.error.code;
-                        return error;
-                    }
-                }
-                return exc;
+                if (!(exc instanceof Error) || !("response" in exc)) return exc;
+                const response = exc.response;
+                if (!isRecord(response) || !isRecord(response.body)) return exc;
+                const serverError = response.body.error;
+                if (!isRecord(serverError) || "string" != typeof serverError.message) return exc;
+                const error = new error_HTTPVideomailError(serverError.message, {
+                    cause: serverError.cause
+                });
+                if ("string" == typeof serverError.name && serverError.name) error.name = serverError.name;
+                if ("string" == typeof serverError.explanation && serverError.explanation) error.explanation = serverError.explanation;
+                if ("string" == typeof serverError.stack && serverError.stack) error.stack = serverError.stack;
+                if ("number" == typeof serverError.status && serverError.status) error.status = serverError.status;
+                if ("string" == typeof serverError.code && serverError.code) error.code = serverError.code;
+                return error;
             }
             const error_findOriginalExc = findOriginalExc;
             const REDACTED = "[redacted]";
@@ -14997,16 +15003,11 @@
             class Despot {
                 name;
                 emitter;
+                subscriptions = new Set();
                 options;
-                static emitters = new WeakMap();
-                constructor(name, options){
+                constructor(name, options, emitter = createNanoEvents()){
                     this.name = name;
                     this.options = options;
-                    let emitter = Despot.emitters.get(options);
-                    if (!emitter) {
-                        emitter = createNanoEvents();
-                        Despot.emitters.set(options, emitter);
-                    }
                     this.emitter = emitter;
                 }
                 emit(eventName, ...params) {
@@ -15026,7 +15027,16 @@
                     }
                 }
                 on(eventName, callback) {
-                    return this.emitter.on(eventName, callback);
+                    const unsubscribeFromEmitter = this.emitter.on(eventName, callback);
+                    const subscription = {
+                        eventName,
+                        unsubscribe: ()=>{
+                            unsubscribeFromEmitter();
+                            this.subscriptions.delete(subscription);
+                        }
+                    };
+                    this.subscriptions.add(subscription);
+                    return subscription.unsubscribe;
                 }
                 once(eventName, listener) {
                     const callback = (...params)=>{
@@ -15040,21 +15050,17 @@
                     return this.emitter.events[eventName];
                 }
                 removeListener(eventName) {
-                    delete this.emitter.events[eventName];
+                    this.subscriptions.forEach((subscription)=>{
+                        if (subscription.eventName === eventName) subscription.unsubscribe();
+                    });
                 }
                 removeAllListeners() {
-                    this.emitter.events = {};
+                    Array.from(this.subscriptions).forEach(({ unsubscribe })=>{
+                        unsubscribe();
+                    });
                 }
             }
             const util_Despot = Despot;
-            const EMAIL_SEPARATOR_REGEX = /[ ,]+/gu;
-            function trimEmail(email) {
-                return email.replace(EMAIL_SEPARATOR_REGEX, "");
-            }
-            function trimEmails(emails) {
-                const trimmedEmails = emails.split(EMAIL_SEPARATOR_REGEX).map((item)=>item.trim()).filter(Boolean);
-                return trimmedEmails;
-            }
             function getValidity(element) {
                 const validity = "validity" in element ? element.validity : void 0;
                 return validity;
@@ -15074,6 +15080,96 @@
                 element.style.removeProperty("display");
             }
             const html_showElement = showElement;
+            const FORM_FIELDS = [
+                "subject",
+                "from",
+                "to",
+                "cc",
+                "bcc",
+                "body",
+                "key",
+                "parentKey",
+                "sendCopy"
+            ];
+            function getFormFieldMappings(selectors) {
+                return FORM_FIELDS.map((field)=>[
+                        field,
+                        selectors[`${field}InputName`]
+                    ]);
+            }
+            const form_getFormFieldMappings = getFormFieldMappings;
+            function getVideomailFieldName(inputName, fieldMappings) {
+                return fieldMappings.find(([, name])=>name === inputName)?.[0];
+            }
+            const form_getVideomailFieldName = getVideomailFieldName;
+            function setFormControlValue(control, value, options) {
+                if (null == value) return;
+                const { tagName } = control;
+                switch(tagName){
+                    case "INPUT":
+                        {
+                            const input = control;
+                            input.value = Array.isArray(value) ? value.join(", ") : value;
+                            break;
+                        }
+                    case "TEXTAREA":
+                    case "SELECT":
+                        {
+                            const field = control;
+                            field.value = String(value);
+                            break;
+                        }
+                    default:
+                        throw error_createError({
+                            message: `Unsupported form control tag name ${tagName} found`,
+                            options
+                        });
+                }
+            }
+            const form_setFormControlValue = setFormControlValue;
+            function populateFormFields(form, videomail, fieldMappings, options) {
+                const { selectors, callbacks } = options;
+                for (const control of form.elements){
+                    const name = control.getAttribute("name");
+                    const fieldName = form_getVideomailFieldName(name, fieldMappings);
+                    if (name && fieldName) {
+                        const storedValue = videomail[fieldName];
+                        const value = callbacks.adjustFormValueBeforePopulating ? callbacks.adjustFormValueBeforePopulating(name, storedValue, videomail) : storedValue;
+                        form_setFormControlValue(control, value, options);
+                        if (name === selectors.toInputName || name === selectors.subjectInputName || name === selectors.bodyInputName) control.setAttribute("disabled", "disabled");
+                    }
+                }
+            }
+            const form_populateFormFields = populateFormFields;
+            const EMAIL_SEPARATOR_REGEX = /[ ,]+/gu;
+            function trimEmail(email) {
+                return email.replace(EMAIL_SEPARATOR_REGEX, "");
+            }
+            function trimEmails(emails) {
+                const trimmedEmails = emails.split(EMAIL_SEPARATOR_REGEX).map((item)=>item.trim()).filter(Boolean);
+                return trimmedEmails;
+            }
+            function transformFormFields(formInputs, fieldMappings) {
+                const videomail = {};
+                fieldMappings.forEach(([field, inputName])=>{
+                    const value = inputName in formInputs ? formInputs[inputName] : void 0;
+                    if (void 0 === value) return;
+                    switch(field){
+                        case "from":
+                            videomail[field] = trimEmail(value);
+                            break;
+                        case "to":
+                        case "cc":
+                        case "bcc":
+                            videomail[field] = trimEmails(value);
+                            break;
+                        default:
+                            videomail[field] = value;
+                    }
+                });
+                return videomail;
+            }
+            const form_transformFormFields = transformFormFields;
             const FormMethod = {
                 POST: "post",
                 PUT: "put",
@@ -15089,22 +15185,12 @@
                 generatedFormId;
                 isSubmitting = false;
                 submissionDisabledStates = new Map();
-                FORM_FIELDS = {};
-                constructor(container, formElement, options){
-                    super("Form", options);
+                fieldMappings;
+                constructor(container, formElement, options, emitter){
+                    super("Form", options, emitter);
                     this.container = container;
                     this.formElement = formElement;
-                    this.FORM_FIELDS = {
-                        subject: options.selectors.subjectInputName,
-                        from: options.selectors.fromInputName,
-                        to: options.selectors.toInputName,
-                        cc: options.selectors.ccInputName,
-                        bcc: options.selectors.bccInputName,
-                        body: options.selectors.bodyInputName,
-                        key: options.selectors.keyInputName,
-                        parentKey: options.selectors.parentKeyInputName,
-                        sendCopy: options.selectors.sendCopyInputName
-                    };
+                    this.fieldMappings = form_getFormFieldMappings(options.selectors);
                 }
                 validate = (event)=>{
                     this.container.validate(event);
@@ -15118,26 +15204,7 @@
                     });
                 }
                 transformFormData(formInputs) {
-                    const transformedVideomail = {};
-                    Object.keys(this.FORM_FIELDS).forEach((key)=>{
-                        const formFieldValue = this.FORM_FIELDS[key];
-                        if (formFieldValue in formInputs) {
-                            const value = formInputs[formFieldValue];
-                            if (void 0 !== value) switch(key){
-                                case "from":
-                                    transformedVideomail[key] = trimEmail(value);
-                                    break;
-                                case "to":
-                                case "cc":
-                                case "bcc":
-                                    transformedVideomail[key] = trimEmails(value);
-                                    break;
-                                default:
-                                    transformedVideomail[key] = value;
-                            }
-                        }
-                    });
-                    return transformedVideomail;
+                    return form_transformFormFields(formInputs, this.fieldMappings);
                 }
                 getRecipients() {
                     const partialVideomail = this.getData();
@@ -15150,41 +15217,7 @@
                 }
                 loadVideomail(videomail) {
                     this.options.logger.debug("Form: loadVideomail()");
-                    for (const formControl of this.formElement.elements){
-                        const name = formControl.getAttribute("name");
-                        if (name && this.isRegisteredFormField(formControl)) {
-                            let value = videomail[name];
-                            const tagName = formControl.tagName;
-                            if (this.options.callbacks.adjustFormValueBeforePopulating) value = this.options.callbacks.adjustFormValueBeforePopulating(name, value, videomail);
-                            if (null != value) switch(tagName){
-                                case "INPUT":
-                                    {
-                                        const inputControl = formControl;
-                                        if (Array.isArray(value)) inputControl.value = value.join(", ");
-                                        else inputControl.value = String(value);
-                                        break;
-                                    }
-                                case "TEXTAREA":
-                                    {
-                                        const textArea = formControl;
-                                        textArea.value = String(value);
-                                        break;
-                                    }
-                                case "SELECT":
-                                    {
-                                        const select = formControl;
-                                        select.value = String(value);
-                                        break;
-                                    }
-                                default:
-                                    throw error_createError({
-                                        message: `Unsupported form control tag name ${tagName} found`,
-                                        options: this.options
-                                    });
-                            }
-                            if (name === this.options.selectors.toInputName || name === this.options.selectors.subjectInputName || name === this.options.selectors.bodyInputName) formControl.setAttribute("disabled", "disabled");
-                        }
-                    }
+                    form_populateFormFields(this.formElement, videomail, this.fieldMappings, this.options);
                     this.formElement.setAttribute("method", FormMethod.PUT);
                 }
                 setDisabled(disabled, buttonsToo) {
@@ -15195,16 +15228,10 @@
                     for (const formElement of this.formElement.elements)html_hideElement(formElement);
                     if (!this.formElement.classList.contains(this.options.selectors.containerClass)) html_hideElement(this.formElement);
                 }
-                isRegisteredFormField(formElement) {
-                    const formElementName = formElement.getAttribute("name");
-                    const registeredFormFieldNames = Object.values(this.FORM_FIELDS);
-                    const isRegistered = registeredFormFieldNames.includes(formElementName);
-                    return isRegistered;
-                }
                 getRegisteredFormElements() {
                     const elements = this.formElement.querySelectorAll("input, textarea, select");
                     const registeredElements = [];
-                    for (const element of elements)if (this.isRegisteredFormField(element)) registeredElements.push(element);
+                    for (const element of elements)if (form_getVideomailFieldName(element.getAttribute("name"), this.fieldMappings)) registeredElements.push(element);
                     return registeredElements;
                 }
                 disable(buttonsToo) {
@@ -17887,14 +17914,18 @@
                 }
             }
             const dimensions_useFullWidth = useFullWidth;
-            var contains = __webpack_require__("FU");
-            var contains_default = __webpack_require__.n(contains);
             function disableElement(element) {
                 if (!element) return;
                 if ("INPUT" === element.tagName || "BUTTON" === element.tagName) element.setAttribute("disabled", "true");
                 else element.classList.add("disabled");
             }
             const html_disableElement = disableElement;
+            function enableElement(element) {
+                if (!element) return;
+                if ("INPUT" === element.tagName || "BUTTON" === element.tagName) element.removeAttribute("disabled");
+                else element.classList.remove("disabled");
+            }
+            const html_enableElement = enableElement;
             function adjustButton(buttonElement, show, type, disabled) {
                 if (disabled) html_disableElement(buttonElement);
                 if (type) buttonElement.type = type;
@@ -17902,18 +17933,105 @@
                 return buttonElement;
             }
             const html_adjustButton = adjustButton;
-            function enableElement(element) {
-                if (!element) return;
-                if ("INPUT" === element.tagName || "BUTTON" === element.tagName) element.removeAttribute("disabled");
-                else element.classList.remove("disabled");
+            function insertControl(container, control, submitButton) {
+                if (submitButton?.parentElement === container) container.insertBefore(control, submitButton);
+                else container.appendChild(control);
             }
-            const html_enableElement = enableElement;
-            function isShown(element) {
-                if (!element) return false;
-                const display = element.style.getPropertyValue("display");
-                return !display.includes("none");
+            const buttons_insertControl = insertControl;
+            function getOrCreateButton(container, options, submitButton) {
+                const { className, text, sharedClass, id, selector, show, type = "button", disabled = true } = options;
+                let existing;
+                existing = id ? document.querySelector(`#${id}`) : selector ? document.querySelector(selector) : container.querySelector(`.${className}`);
+                if (existing) return html_adjustButton(existing, show, type, disabled);
+                const button = document.createElement("button");
+                button.classList.add(className);
+                if (sharedClass) button.classList.add(sharedClass);
+                html_adjustButton(button, show, type, disabled);
+                button.textContent = text;
+                buttons_insertControl(container, button, submitButton);
+                return button;
             }
-            const html_isShown = isShown;
+            const buttons_getOrCreateButton = getOrCreateButton;
+            function getOrCreateRadioButtonPair(container, options, submitButton) {
+                const { id, name, value, label, checked, changeHandler } = options;
+                let radio = id ? document.querySelector(`#${id}`) : null;
+                if (!radio) {
+                    radio = document.createElement("input");
+                    radio.id = id;
+                    radio.type = "radio";
+                    radio.name = name;
+                    radio.value = value;
+                    radio.checked = checked;
+                    const group = document.createElement("span");
+                    group.classList.add("radioGroup");
+                    group.appendChild(radio);
+                    const radioLabel = document.createElement("label");
+                    radioLabel.htmlFor = id;
+                    radioLabel.textContent = label;
+                    group.appendChild(radioLabel);
+                    buttons_insertControl(container, group, submitButton);
+                }
+                radio.onchange = changeHandler;
+                html_disableElement(radio);
+                return radio;
+            }
+            const buttons_getOrCreateRadioButtonPair = getOrCreateRadioButtonPair;
+            const VISIBLE_ACTIONS = {
+                unready: [],
+                idle: [
+                    "record"
+                ],
+                countdown: [
+                    "record"
+                ],
+                starting: [
+                    "record"
+                ],
+                recording: [
+                    "pause",
+                    "preview"
+                ],
+                pausedCountdown: [
+                    "resume"
+                ],
+                pausedTake: [
+                    "resume",
+                    "preview"
+                ],
+                stopping: [
+                    "preview"
+                ],
+                preview: [
+                    "recordAgain"
+                ]
+            };
+            function getRecorderControlView(state) {
+                const { phase, shown, locked } = state;
+                const isPaused = "pausedCountdown" === phase || "pausedTake" === phase;
+                function present(control, enabled) {
+                    return {
+                        visible: shown && ("audio" === control || VISIBLE_ACTIONS[phase].includes(control)),
+                        enabled: locked ? false : enabled
+                    };
+                }
+                return {
+                    record: present("record", "idle" === phase && state.recordReady),
+                    pause: present("pause", "recording" === phase),
+                    resume: present("resume", isPaused ? true : void 0),
+                    preview: present("preview", "recording" === phase || "pausedTake" === phase),
+                    recordAgain: present("recordAgain", "preview" === phase && !state.previewLocked),
+                    audio: present("audio", "idle" === phase && state.audioReady)
+                };
+            }
+            const buttons_getRecorderControlView = getRecorderControlView;
+            const INITIAL_CONTROLS = {
+                phase: "unready",
+                shown: true,
+                recordReady: false,
+                audioReady: false,
+                locked: false,
+                previewLocked: false
+            };
             class Buttons extends util_Despot {
                 container;
                 buttonsElement;
@@ -17926,8 +18044,9 @@
                 audioOnRadioPair;
                 audioOffRadioPair;
                 built = false;
-                constructor(container, options){
-                    super("Buttons", options);
+                controlState = INITIAL_CONTROLS;
+                constructor(container, options, emitter){
+                    super("Buttons", options, emitter);
                     this.container = container;
                 }
                 replaceClickHandler(element, clickHandler) {
@@ -17945,329 +18064,254 @@
                     };
                     element.onclick = wrappedClickHandler;
                 }
-                makeRadioButtonPair(options) {
-                    let radioButtonElement;
-                    let radioButtonGroup;
-                    if (options.id) radioButtonElement = document.querySelector(`#${options.id}`);
-                    if (!radioButtonElement) {
-                        radioButtonElement = document.createElement("input");
-                        radioButtonElement.id = options.id;
-                        radioButtonElement.type = "radio";
-                        radioButtonElement.name = options.name;
-                        radioButtonElement.value = options.value;
-                        radioButtonElement.checked = options.checked;
-                        radioButtonGroup = document.createElement("span");
-                        radioButtonGroup.classList.add("radioGroup");
-                        radioButtonGroup.appendChild(radioButtonElement);
-                        const radioLabel = document.createElement("label");
-                        radioLabel.htmlFor = options.id;
-                        radioLabel.textContent = options.label;
-                        radioButtonGroup.appendChild(radioLabel);
-                        if (this.submitButton && contains_default()(this.buttonsElement, this.submitButton)) this.buttonsElement?.insertBefore(radioButtonGroup, this.submitButton);
-                        else this.buttonsElement?.appendChild(radioButtonGroup);
-                    }
-                    radioButtonElement.onchange = options.changeHandler;
-                    html_disableElement(radioButtonElement);
-                    return radioButtonElement;
-                }
-                makeButton(buttonClass, text, clickHandler, show, id, type = "button", selector, disabled = true) {
-                    let buttonElement;
-                    buttonElement = id ? document.querySelector(`#${id}`) : selector ? document.querySelector(selector) : this.buttonsElement?.querySelector(`.${buttonClass}`);
-                    if (buttonElement) buttonElement = html_adjustButton(buttonElement, show, type, disabled);
-                    else {
-                        buttonElement = document.createElement("button");
-                        buttonElement.classList.add(buttonClass);
-                        if (this.options.selectors.buttonClass) buttonElement.classList.add(this.options.selectors.buttonClass);
-                        buttonElement = html_adjustButton(buttonElement, show, type, disabled);
-                        buttonElement.textContent = text;
-                        if (this.submitButton && contains_default()(this.buttonsElement, this.submitButton)) this.buttonsElement?.insertBefore(buttonElement, this.submitButton);
-                        else this.buttonsElement?.appendChild(buttonElement);
-                    }
-                    if (clickHandler) this.replaceClickHandler(buttonElement, clickHandler);
-                    return buttonElement;
-                }
-                buildButtons() {
-                    if (!this.options.disableSubmit) {
+                buildButtons(buttonsElement) {
+                    const { selectors, text, disableSubmit, enableAutoValidation, enablePause, audio } = this.options;
+                    if (!disableSubmit) {
                         if (this.submitButton) html_disableElement(this.submitButton);
-                        else this.submitButton = this.makeButton(this.options.selectors.submitButtonClass, "Submit", void 0, true, this.options.selectors.submitButtonId, "submit", this.options.selectors.submitButtonSelector, this.options.enableAutoValidation);
+                        else this.submitButton = buttons_getOrCreateButton(buttonsElement, {
+                            className: selectors.submitButtonClass,
+                            text: "Submit",
+                            sharedClass: selectors.buttonClass,
+                            show: true,
+                            id: selectors.submitButtonId,
+                            type: "submit",
+                            selector: selectors.submitButtonSelector,
+                            disabled: enableAutoValidation
+                        });
                         if (!this.container.hasForm()) this.replaceClickHandler(this.submitButton, this.submit.bind(this));
                     }
-                    this.recordButton = this.makeButton(this.options.selectors.recordButtonClass, this.options.text.buttons.record, this.record.bind(this), false);
-                    if (this.options.enablePause) this.pauseButton = this.makeButton(this.options.selectors.pauseButtonClass, this.options.text.buttons.pause, this.container.pause.bind(this.container), false);
-                    if (this.options.enablePause) this.resumeButton = this.makeButton(this.options.selectors.resumeButtonClass, this.options.text.buttons.resume, this.container.resume.bind(this.container), false);
-                    this.previewButton = this.makeButton(this.options.selectors.previewButtonClass, this.options.text.buttons.preview, this.container.stop.bind(this.container), false);
-                    this.recordAgainButton = this.makeButton(this.options.selectors.recordAgainButtonClass, this.options.text.buttons.recordAgain, this.recordAgain.bind(this), false);
-                    if (this.options.audio.switch) {
-                        this.audioOffRadioPair = this.makeRadioButtonPair({
+                    const addButton = (className, label, clickHandler)=>{
+                        const button = buttons_getOrCreateButton(buttonsElement, {
+                            className,
+                            text: label,
+                            sharedClass: selectors.buttonClass
+                        }, this.submitButton);
+                        this.replaceClickHandler(button, clickHandler);
+                        return button;
+                    };
+                    this.recordButton = addButton(selectors.recordButtonClass, text.buttons.record, this.record.bind(this));
+                    if (enablePause) {
+                        this.pauseButton = addButton(selectors.pauseButtonClass, text.buttons.pause, this.container.pause.bind(this.container));
+                        this.resumeButton = addButton(selectors.resumeButtonClass, text.buttons.resume, this.container.resume.bind(this.container));
+                    }
+                    this.previewButton = addButton(selectors.previewButtonClass, text.buttons.preview, this.container.stop.bind(this.container));
+                    this.recordAgainButton = addButton(selectors.recordAgainButtonClass, text.buttons.recordAgain, this.recordAgain.bind(this));
+                    if (audio.switch) {
+                        this.audioOffRadioPair = buttons_getOrCreateRadioButtonPair(buttonsElement, {
                             id: "audioOffOption",
                             name: "audio",
                             value: "off",
-                            label: this.options.text.audioOff,
+                            label: text.audioOff,
                             checked: !isAudioEnabled(this.options),
                             changeHandler: ()=>{
                                 this.container.disableAudio();
                             }
-                        });
-                        this.audioOnRadioPair = this.makeRadioButtonPair({
+                        }, this.submitButton);
+                        this.audioOnRadioPair = buttons_getOrCreateRadioButtonPair(buttonsElement, {
                             id: "audioOnOption",
                             name: "audio",
                             value: "on",
-                            label: this.options.text.audioOn,
+                            label: text.audioOn,
                             checked: isAudioEnabled(this.options),
                             changeHandler: ()=>{
                                 this.container.enableAudio();
                             }
-                        });
+                        }, this.submitButton);
                     }
+                }
+                renderControls(previous) {
+                    const view = buttons_getRecorderControlView(this.controlState);
+                    const elements = {
+                        record: [
+                            this.recordButton
+                        ],
+                        pause: [
+                            this.pauseButton
+                        ],
+                        resume: [
+                            this.resumeButton
+                        ],
+                        preview: [
+                            this.previewButton
+                        ],
+                        recordAgain: [
+                            this.recordAgainButton
+                        ],
+                        audio: [
+                            this.audioOnRadioPair,
+                            this.audioOffRadioPair
+                        ]
+                    };
+                    for (const control of Object.keys(elements)){
+                        const { visible, enabled } = view[control];
+                        for (const element of elements[control]){
+                            if (previous?.[control].visible !== visible) (visible ? html_showElement : html_hideElement)(element);
+                            if (void 0 !== enabled && previous?.[control].enabled !== enabled) (enabled ? html_enableElement : html_disableElement)(element);
+                        }
+                    }
+                }
+                updateControls(changes) {
+                    const previous = buttons_getRecorderControlView(this.controlState);
+                    this.controlState = {
+                        ...this.controlState,
+                        ...changes
+                    };
+                    this.renderControls(previous);
+                }
+                setPhase(phase) {
+                    this.updateControls({
+                        phase,
+                        locked: false
+                    });
+                }
+                getPausedPhase() {
+                    return this.container.isCountingDown() ? "pausedCountdown" : "pausedTake";
                 }
                 onFormReady(params) {
-                    if (!html_isShown(this.recordAgainButton)) {
-                        if (!params?.paused) html_showElement(this.recordButton);
-                    }
-                    if (!params?.paused) {
-                        html_disableElement(this.previewButton);
-                        html_hideElement(this.previewButton);
-                    }
+                    if (params?.paused) this.setPhase(this.getPausedPhase());
+                    else if ("unready" === this.controlState.phase) this.setPhase("idle");
                     if (!this.options.enableAutoValidation) html_enableElement(this.submitButton);
-                }
-                onGoingBack() {
-                    html_hideElement(this.recordAgainButton);
-                    html_showElement(this.recordButton);
-                    html_showElement(this.submitButton);
-                }
-                onReplayShown() {
-                    this.hide();
                 }
                 onUserMediaReady(params) {
+                    if (params.switchingFacingMode) return;
                     this.onFormReady(params);
                     html_showElement(this.buttonsElement);
-                    if (params.recovering && params.paused) {
-                        html_hideElement(this.recordButton);
-                        html_disableElement(this.recordButton);
-                        return;
-                    }
-                    html_showElement(this.audioOnRadioPair);
-                    html_showElement(this.audioOffRadioPair);
-                    if (html_isShown(this.recordButton) && !params.recordWhenReady) html_enableElement(this.recordButton);
-                    else if (html_isShown(this.recordAgainButton) && !params.recordWhenReady) html_enableElement(this.recordAgainButton);
-                    if (this.options.enableAutoValidation) html_disableElement(this.submitButton);
-                    if (!params.recordWhenReady) {
-                        if (html_isShown(this.audioOnRadioPair)) html_enableElement(this.audioOnRadioPair);
-                        if (html_isShown(this.audioOffRadioPair)) html_enableElement(this.audioOffRadioPair);
-                    }
-                }
-                onResetting() {
-                    html_disableElement(this.submitButton);
-                    this.reset();
-                }
-                onPreview() {
-                    html_hideElement(this.recordButton);
-                    html_hideElement(this.previewButton);
-                    html_disableElement(this.audioOnRadioPair);
-                    html_disableElement(this.audioOffRadioPair);
-                    html_showElement(this.recordAgainButton);
-                    html_enableElement(this.recordAgainButton);
-                    if (!this.options.enableAutoValidation) html_enableElement(this.submitButton);
-                }
-                enableSubmit() {
-                    html_enableElement(this.submitButton);
-                }
-                adjustButtonsForPause() {
-                    html_hideElement(this.pauseButton);
-                    html_hideElement(this.recordButton);
-                    html_showElement(this.resumeButton);
-                    html_enableElement(this.resumeButton);
-                    if (this.isCountingDown()) {
-                        html_hideElement(this.previewButton);
-                        html_disableElement(this.previewButton);
-                    } else {
-                        html_showElement(this.previewButton);
-                        html_enableElement(this.previewButton);
-                    }
-                }
-                onFirstFrameSent() {
-                    html_hideElement(this.recordButton);
-                    html_hideElement(this.recordAgainButton);
-                    if (this.pauseButton) {
-                        html_showElement(this.pauseButton);
-                        html_enableElement(this.pauseButton);
-                    }
-                    html_enableElement(this.previewButton);
-                    html_showElement(this.previewButton);
-                }
-                onRecording(params) {
-                    if (params.framesCount > 1) this.onFirstFrameSent();
-                    else {
-                        html_disableElement(this.audioOffRadioPair);
-                        html_disableElement(this.audioOnRadioPair);
-                        html_disableElement(this.recordAgainButton);
-                        html_disableElement(this.recordButton);
-                    }
-                }
-                onResuming() {
-                    html_hideElement(this.resumeButton);
-                    html_hideElement(this.recordButton);
-                    if (this.pauseButton) {
-                        html_enableElement(this.pauseButton);
-                        html_showElement(this.pauseButton);
-                    }
-                }
-                onStopping() {
-                    html_disableElement(this.previewButton);
-                    html_disableElement(this.recordButton);
-                    html_hideElement(this.pauseButton);
-                    html_hideElement(this.resumeButton);
-                }
-                onCountdown() {
-                    html_disableElement(this.recordButton);
-                    html_hideElement(this.recordButton);
-                    html_hideElement(this.recordAgainButton);
-                    html_hideElement(this.pauseButton);
-                    html_hideElement(this.resumeButton);
-                    html_hideElement(this.previewButton);
-                    html_disableElement(this.audioOffRadioPair);
-                    html_disableElement(this.audioOnRadioPair);
-                }
-                onSubmitting() {
-                    this.options.logger.debug("Buttons: onSubmitting()");
-                    html_disableElement(this.submitButton);
-                    html_disableElement(this.recordAgainButton);
-                }
-                onSubmitted() {
-                    html_disableElement(this.previewButton);
-                    html_disableElement(this.recordAgainButton);
-                    html_disableElement(this.recordButton);
-                    html_disableElement(this.submitButton);
-                }
-                onInvalid() {
+                    if (params.recovering && params.paused) return void this.lockRecordAndAudio();
+                    const ready = !params.recordWhenReady;
+                    this.updateControls({
+                        recordReady: ready,
+                        audioReady: ready,
+                        locked: false
+                    });
                     if (this.options.enableAutoValidation) html_disableElement(this.submitButton);
                 }
-                onValid() {
-                    if (this.options.enableAutoValidation) html_enableElement(this.submitButton);
+                updateSubmitForValidation(valid) {
+                    if (this.options.enableAutoValidation) (valid ? html_enableElement : html_disableElement)(this.submitButton);
                 }
-                onHidden() {
-                    html_hideElement(this.recordButton);
-                    html_hideElement(this.previewButton);
-                    html_hideElement(this.recordAgainButton);
-                    html_hideElement(this.resumeButton);
-                    html_hideElement(this.audioOnRadioPair);
-                    html_hideElement(this.audioOffRadioPair);
-                }
-                onEnablingAudio() {
-                    this.options.logger.debug("Buttons: onEnablingAudio()");
-                    html_disableElement(this.recordButton);
-                    html_disableElement(this.audioOnRadioPair);
-                    html_disableElement(this.audioOffRadioPair);
-                }
-                onDisablingAudio() {
-                    this.options.logger.debug("Buttons: onDisablingAudio()");
-                    html_disableElement(this.recordButton);
-                    html_disableElement(this.audioOnRadioPair);
-                    html_disableElement(this.audioOffRadioPair);
+                lockRecordAndAudio() {
+                    this.updateControls({
+                        recordReady: false,
+                        audioReady: false
+                    });
                 }
                 recordAgain() {
-                    html_disableElement(this.recordAgainButton);
+                    this.updateControls({
+                        previewLocked: true
+                    });
                     this.container.beginWaiting();
                     this.container.recordAgain();
-                }
-                onStartingOver() {
-                    html_showElement(this.submitButton);
                 }
                 submit() {
                     this.container.submit();
                 }
                 record() {
-                    html_disableElement(this.recordButton);
+                    this.updateControls({
+                        recordReady: false
+                    });
                     this.container.record();
                 }
                 initEvents() {
                     this.options.logger.debug("Buttons: initEvents()");
-                    this.on("USER_MEDIA_READY", (params)=>{
-                        if (!params.switchingFacingMode) this.onUserMediaReady(params);
-                    });
+                    this.on("USER_MEDIA_READY", this.onUserMediaReady.bind(this));
                     this.on("PREVIEW", ()=>{
-                        this.onPreview();
+                        this.updateControls({
+                            phase: "preview",
+                            locked: false,
+                            previewLocked: false,
+                            recordReady: false,
+                            audioReady: false
+                        });
+                        if (!this.options.enableAutoValidation) html_enableElement(this.submitButton);
                     });
                     this.on("PAUSED", ()=>{
-                        this.adjustButtonsForPause();
+                        this.setPhase(this.getPausedPhase());
                     });
-                    this.on("RECORDING", (params)=>{
-                        this.onRecording(params);
+                    this.on("RECORDING", ({ framesCount })=>{
+                        this.updateControls({
+                            phase: framesCount > 1 ? "recording" : "starting",
+                            locked: false,
+                            recordReady: false,
+                            audioReady: false
+                        });
                     });
                     this.on("FIRST_FRAME_SENT", ()=>{
-                        this.onFirstFrameSent();
+                        if ("starting" === this.controlState.phase) this.setPhase("recording");
                     });
                     this.on("RESUMING", ()=>{
-                        this.onResuming();
+                        this.setPhase("recording");
                     });
                     this.on("STOPPING", ()=>{
-                        this.onStopping();
+                        this.setPhase("stopping");
                     });
                     this.on("COUNTDOWN", ()=>{
-                        this.onCountdown();
+                        this.updateControls({
+                            phase: "countdown",
+                            locked: false,
+                            recordReady: false,
+                            audioReady: false
+                        });
                     });
                     this.on("SUBMITTING", ()=>{
-                        this.onSubmitting();
+                        html_disableElement(this.submitButton);
+                        this.updateControls({
+                            previewLocked: true
+                        });
                     });
                     this.on("RESETTING", ()=>{
-                        this.onResetting();
+                        html_disableElement(this.submitButton);
+                        this.reset("stopping" === this.controlState.phase ? "stopping" : "unready");
                     });
                     this.on("INVALID", ()=>{
-                        this.onInvalid();
+                        this.updateSubmitForValidation(false);
                     });
                     this.on("VALID", ()=>{
-                        this.onValid();
+                        this.updateSubmitForValidation(true);
                     });
                     this.on("SUBMITTED", ()=>{
-                        this.onSubmitted();
+                        html_disableElement(this.submitButton);
+                        this.reset();
                     });
                     this.on("HIDE", ()=>{
-                        this.onHidden();
+                        this.updateControls({
+                            shown: false
+                        });
                     });
-                    this.on("FORM_READY", (params)=>{
-                        this.onFormReady(params);
-                    });
+                    this.on("FORM_READY", this.onFormReady.bind(this));
                     this.on("REPLAY_SHOWN", ()=>{
-                        this.onReplayShown();
+                        this.hide();
                     });
                     this.on("GOING_BACK", ()=>{
-                        this.onGoingBack();
-                    });
-                    this.on("ENABLING_AUDIO", ()=>{
-                        this.onEnablingAudio();
-                    });
-                    this.on("DISABLING_AUDIO", ()=>{
-                        this.onDisablingAudio();
+                        this.setPhase("idle");
+                        html_showElement(this.submitButton);
                     });
                     this.on("STARTING_OVER", ()=>{
-                        this.onStartingOver();
+                        html_showElement(this.submitButton);
                     });
                     this.on("CONNECTED", ()=>{
-                        if (this.options.loadUserMediaOnRecord) {
-                            if (html_isShown(this.recordButton)) html_enableElement(this.recordButton);
-                        }
+                        if (this.options.loadUserMediaOnRecord) this.updateControls({
+                            recordReady: true
+                        });
                     });
-                    this.on("DISCONNECTED", ()=>{
-                        html_disableElement(this.recordButton);
-                        html_disableElement(this.audioOnRadioPair);
-                        html_disableElement(this.audioOffRadioPair);
-                    });
-                    this.on("ERROR", (params)=>{
-                        if (params.err?.isBrowserProblem() && this.options.adjustFormOnBrowserError) this.hide();
+                    const lockRecordAndAudio = this.lockRecordAndAudio.bind(this);
+                    this.on("ENABLING_AUDIO", lockRecordAndAudio);
+                    this.on("DISABLING_AUDIO", lockRecordAndAudio);
+                    this.on("DISCONNECTED", lockRecordAndAudio);
+                    this.on("ERROR", ({ err, recoverable })=>{
+                        if (recoverable) this.updateControls({
+                            previewLocked: false
+                        });
+                        if (err?.isBrowserProblem() && this.options.adjustFormOnBrowserError) this.hide();
                     });
                 }
-                reset() {
-                    this.options.logger.debug("Buttons: reset()");
-                    html_disableElement(this.pauseButton);
-                    html_disableElement(this.resumeButton);
-                    html_disableElement(this.recordButton);
-                    html_disableElement(this.previewButton);
-                    html_disableElement(this.recordAgainButton);
-                    html_disableElement(this.audioOnRadioPair);
-                    html_disableElement(this.audioOffRadioPair);
-                }
-                isRecordAgainButtonEnabled() {
-                    return !this.recordAgainButton?.disabled;
+                reset(phase = this.controlState.phase) {
+                    this.controlState = {
+                        ...this.controlState,
+                        phase,
+                        locked: true,
+                        recordReady: false,
+                        audioReady: false
+                    };
+                    this.renderControls();
                 }
                 isReady() {
                     if (!this.recordButton) return false;
@@ -18290,7 +18334,9 @@
                         this.container.appendChild(this.buttonsElement);
                     }
                     html_hideElement(this.buttonsElement);
-                    this.buildButtons();
+                    this.buildButtons(this.buttonsElement);
+                    this.controlState = INITIAL_CONTROLS;
+                    this.renderControls();
                     if (!this.built) this.initEvents();
                     this.built = true;
                 }
@@ -18306,24 +18352,67 @@
                 hide(deep = false) {
                     html_hideElement(this.buttonsElement);
                     if (deep) {
-                        html_hideElement(this.recordButton);
-                        html_hideElement(this.pauseButton);
-                        html_hideElement(this.resumeButton);
-                        html_hideElement(this.previewButton);
-                        html_hideElement(this.recordAgainButton);
+                        this.updateControls({
+                            shown: false
+                        });
                         html_hideElement(this.submitButton);
-                        html_hideElement(this.audioOnRadioPair);
-                        html_hideElement(this.audioOffRadioPair);
                     }
                 }
                 show() {
+                    this.updateControls({
+                        shown: true
+                    });
                     html_showElement(this.buttonsElement);
-                }
-                isCountingDown() {
-                    return this.container.isCountingDown();
                 }
             }
             const buttons = Buttons;
+            function getValidationSkip(gate) {
+                if (!gate.built || !gate.autoValidate) return {
+                    allowManualSubmit: gate.built && !gate.autoValidate
+                };
+                if (gate.forced) return;
+                const waitingForMedia = gate.connected && !gate.cameraLoaded && !gate.replayShown;
+                if (gate.notifying || waitingForMedia || !gate.connected && gate.connecting) return {
+                    allowManualSubmit: false
+                };
+            }
+            function evaluateValidation({ form, videoValid, videoRequired }) {
+                if (!form) return videoValid ? {
+                    status: "valid"
+                } : {
+                    status: "invalid",
+                    whyInvalid: "Because visuals aren't valid"
+                };
+                const input = form.invalidInput;
+                if (input) {
+                    if (!input.name) return {
+                        status: "invalid"
+                    };
+                    return input.missing ? {
+                        status: "invalid",
+                        whyInvalid: `Please fill out field "${input.name}" ⚠️`
+                    } : {
+                        status: "invalid",
+                        whyInvalid: `Input "${input.name}" seems wrong 🤔`,
+                        invalidData: {
+                            [input.name]: input.value
+                        }
+                    };
+                }
+                if (videoRequired && !videoValid) return {
+                    status: "invalid",
+                    whyInvalid: "Don't forget to record a video 😉",
+                    invalidData: {
+                        key: void 0
+                    }
+                };
+                return form.recipientsValid ? {
+                    status: "valid"
+                } : {
+                    status: "invalid",
+                    whyInvalid: "At least one recipient is required"
+                };
+            }
             function isHidden(element) {
                 if (!element) return true;
                 const display = element.style.getPropertyValue("display");
@@ -18407,8 +18496,8 @@
             class FacingMode extends util_Despot {
                 visuals;
                 facingModeElement;
-                constructor(visuals, options){
-                    super("Facing Mode", options);
+                constructor(visuals, options, emitter){
+                    super("Facing Mode", options, emitter);
                     this.visuals = visuals;
                 }
                 initEvents() {
@@ -18443,6 +18532,9 @@
                 }
                 show() {
                     html_showElement(this.facingModeElement);
+                }
+                unload() {
+                    this.removeAllListeners();
                 }
             }
             const recorder_facingMode = FacingMode;
@@ -18660,13 +18752,13 @@
                 facingMode;
                 pausedNote;
                 built = false;
-                constructor(visuals, options){
-                    super("RecorderInsides", options);
+                constructor(visuals, options, emitter){
+                    super("RecorderInsides", options, emitter);
                     this.recordNote = new recorder_recordNote(visuals);
                     this.recordTimer = new recordTimer(visuals, this.recordNote, options);
                     const browser = browser_getBrowser(options);
                     if (options.video.countdown) this.countdown = new countdown(visuals, options);
-                    if (options.video.facingModeButton && browser.isMobile()) this.facingMode = new recorder_facingMode(visuals, options);
+                    if (options.video.facingModeButton && browser.isMobile()) this.facingMode = new recorder_facingMode(visuals, options, this.emitter);
                     if (options.enablePause) this.pausedNote = new pausedNote(visuals, options);
                 }
                 startRecording() {
@@ -18731,6 +18823,8 @@
                 }
                 unload() {
                     this.countdown?.unload();
+                    this.facingMode?.unload();
+                    this.removeAllListeners();
                     this.built = false;
                 }
                 showPause() {
@@ -18760,7 +18854,7 @@
                 }
             }
             const recorderInsides = RecorderInsides;
-            const NOTIFIER_MESSAGE_ID = "notifierMessage";
+            const NOTIFIER_MESSAGE_CLASS = "notifierMessage";
             class Notifier extends util_Despot {
                 visuals;
                 notifyElement;
@@ -18769,8 +18863,8 @@
                 entertainTimeoutId;
                 entertaining = false;
                 built = false;
-                constructor(visuals, options){
-                    super("Notifier", options);
+                constructor(visuals, options, emitter){
+                    super("Notifier", options, emitter);
                     this.visuals = visuals;
                 }
                 onStopping(limitReached = false) {
@@ -18904,14 +18998,14 @@
                 }
                 getMessageElement() {
                     if (this.messageElement) return this.messageElement;
-                    this.messageElement = document.querySelector(`#${NOTIFIER_MESSAGE_ID}`);
+                    this.messageElement = this.notifyElement?.querySelector(`.${NOTIFIER_MESSAGE_CLASS}`);
                     return this.messageElement;
                 }
                 setMessage(message, messageOptions) {
                     this.options.logger.debug(`Notifier: setMessage(${message})`);
                     if (!this.getMessageElement()) {
                         this.messageElement = document.createElement("h2");
-                        this.messageElement.id = NOTIFIER_MESSAGE_ID;
+                        this.messageElement.classList.add(NOTIFIER_MESSAGE_CLASS);
                         if (this.notifyElement) if (this.explanationElement) this.notifyElement.insertBefore(this.messageElement, this.explanationElement);
                         else this.notifyElement.appendChild(this.messageElement);
                         else this.options.logger.warn(`Unable to show message ${message} because notifyElement is empty`);
@@ -18946,6 +19040,11 @@
                     if (!this.built) this.initEvents();
                     this.built = true;
                 }
+                unload() {
+                    this.cancelEntertainment();
+                    this.removeAllListeners();
+                    this.built = false;
+                }
                 hideMessage() {
                     html_hideElement(this.getMessageElement());
                 }
@@ -18963,7 +19062,7 @@
                 }
                 isVisible() {
                     if (!this.built) return false;
-                    return this.notifyElement && !html_isHidden(this.notifyElement);
+                    return Boolean(this.notifyElement && !html_isHidden(this.notifyElement));
                 }
                 isBuilt() {
                     return this.built;
@@ -19019,109 +19118,6 @@
             const string_summarize = summarize;
             var animitter = __webpack_require__("b6");
             var animitter_default = __webpack_require__.n(animitter);
-            var typedarray_to_buffer = __webpack_require__("E");
-            const canvas_to_buffer_modern_e = "u" > typeof document && "function" == typeof document.createElement, canvas_to_buffer_modern_i = canvas_to_buffer_modern_e ? [
-                "webp",
-                "jpeg"
-            ] : [
-                "png"
-            ];
-            let canvas_to_buffer_modern_s;
-            class canvas_to_buffer_modern_r {
-                constructor(t, e = canvas_to_buffer_modern_i, s = .5){
-                    if (this.quality = void 0, this.types = void 0, this.canvas = void 0, e.length > 2) throw new Error("Too many image types are specified!");
-                    this.canvas = t, this.quality = s, this.types = e;
-                }
-                composeMimeType(t) {
-                    let e;
-                    return this.types[t] && (e = "image/" + this.types[t]), e;
-                }
-                isMatch(t, e) {
-                    return t.match(e);
-                }
-                getTestCanvas() {
-                    let t;
-                    return canvas_to_buffer_modern_e ? (t = document.createElement("canvas"), t.width = t.height = 1) : t = this.canvas, t;
-                }
-                canvasSupportsMimeType(t) {
-                    try {
-                        const e = this.getTestCanvas(), i = e.toDataURL && e.toDataURL(t);
-                        return this.isMatch(i, t);
-                    } catch (t) {
-                        return !1;
-                    }
-                }
-                figureMimeType() {
-                    let t = this.composeMimeType(0);
-                    return t && this.canvasSupportsMimeType(t) || (this.types[1] ? (t = this.composeMimeType(1), t && !this.canvasSupportsMimeType(t) && (t = void 0)) : t = void 0), t;
-                }
-                uriToBuffer(i) {
-                    const s = i.split(",")[1];
-                    let o;
-                    if (!s) throw new Error("Empty uri string given!");
-                    if (o = canvas_to_buffer_modern_e ? window.atob(s) : null == canvas_to_buffer_modern_r.atob ? void 0 : canvas_to_buffer_modern_r.atob(s), !o) throw new Error("Byte are empty, something within atob went wrong.");
-                    const n = new Uint8Array(o.length);
-                    for(let t = 0, e = o.length; t < e; t++)n[t] = o.charCodeAt(t);
-                    return typedarray_to_buffer(n);
-                }
-                toBuffer() {
-                    const t = this.getMimeType();
-                    let e;
-                    if (t) {
-                        const i = this.canvas.toDataURL(t, this.quality);
-                        e = this.uriToBuffer(i);
-                    }
-                    return e;
-                }
-                getMimeType() {
-                    return canvas_to_buffer_modern_s && canvas_to_buffer_modern_e || (canvas_to_buffer_modern_s = this.figureMimeType()), canvas_to_buffer_modern_s;
-                }
-            }
-            canvas_to_buffer_modern_r.atob = void 0;
-            const OPTIONAL_AUDIO_ERRORS = [
-                "NotAllowedError",
-                "PermissionDeniedError",
-                "NotFoundError",
-                "DevicesNotFoundError"
-            ];
-            function isOptionalAudioError(error) {
-                return (error instanceof Error || error instanceof DOMException || isErrorLike(error)) && OPTIONAL_AUDIO_ERRORS.includes(error.name);
-            }
-            function requestCameraOnly(constraints) {
-                return navigator.mediaDevices.getUserMedia({
-                    ...constraints,
-                    audio: false
-                });
-            }
-            function retryCameraOnlyAfterAudioError(error, constraints, isRequestCurrent, audioRequested) {
-                if (!isRequestCurrent()) return;
-                if (!audioRequested || !isOptionalAudioError(error)) throw error;
-                return requestCameraOnly(constraints);
-            }
-            async function requestWithOptionalAudio(params) {
-                const { constraints, getPermission, isRequestCurrent } = params;
-                let audioRequested = Boolean(constraints.audio);
-                try {
-                    if (getPermission) {
-                        const permission = await getPermission();
-                        if (!isRequestCurrent()) return;
-                        audioRequested = "denied" !== permission && Boolean(constraints.audio);
-                        return await navigator.mediaDevices.getUserMedia({
-                            ...constraints,
-                            audio: audioRequested
-                        });
-                    }
-                    return await navigator.mediaDevices.getUserMedia(constraints);
-                } catch (error) {
-                    if (!constraints.audio) throw error;
-                    return retryCameraOnlyAfterAudioError(error, constraints, isRequestCurrent, audioRequested);
-                }
-            }
-            function requestMediaStream(params) {
-                if (!params.followsMicrophonePermission) return navigator.mediaDevices.getUserMedia(params.constraints);
-                return requestWithOptionalAudio(params);
-            }
-            const media_requestMediaStream = requestMediaStream;
             var websocket_stream_stream = __webpack_require__("U");
             var stream_default = __webpack_require__.n(websocket_stream_stream);
             function isAutomatedUserAgent(userAgent = navigator.userAgent) {
@@ -19304,8 +19300,8 @@
                 connecting = false;
                 connected = false;
                 reconnecting = false;
-                constructor(options){
-                    super("Recorder", options);
+                constructor(options, emitter){
+                    super("Recorder", options, emitter);
                 }
                 hasExceededWebSocketSendBuffer(buffer, opts) {
                     return buffer.length > 0 && !this.pendingWrites.enqueue(buffer, opts);
@@ -19495,8 +19491,8 @@
                 lastSocketError;
                 pingInterval;
                 connectionOpenedAt;
-                constructor(options){
-                    super(options);
+                constructor(options, emitter){
+                    super(options, emitter);
                 }
                 canReconnectAfterStreamClose() {
                     return this.connected || this.reconnecting;
@@ -19945,7 +19941,6 @@
                 userMediaTimeout;
                 retryTimeout;
                 stopTimeout;
-                mediaRequestId = 0;
                 cameraRecovery;
                 resolveCameraRecovery;
                 resumeAfterCameraRecovery = false;
@@ -19954,13 +19949,14 @@
                 built = false;
                 key;
                 facingMode;
-                constructor(visuals, options){
-                    super(options);
+                constructor(visuals, options, emitter){
+                    super(options, emitter);
                     this.visuals = visuals;
                     this.facingMode = options.video.facingMode;
                 }
                 show() {
                     html_showElement(this.recorderElement);
+                    this.userMedia?.showCanvasPreview();
                 }
                 clearRetryTimeout() {
                     if (void 0 === this.retryTimeout) return;
@@ -20010,7 +20006,7 @@
                         });
                     }
                 }
-                getUserMediaCallback(localStream, params, requestId = this.mediaRequestId) {
+                getUserMediaCallback(localStream, params) {
                     if (!this.userMedia) {
                         localStream.getTracks().forEach((track)=>{
                             track.stop();
@@ -20023,9 +20019,9 @@
                     this.options.logger.debug(`Recorder: getUserMediaCallback(${params ? string_pretty(params) : ""})`);
                     if (this.showUserMedia()) try {
                         this.userMedia.init(localStream, ()=>{
-                            if (!this.unloaded && requestId === this.mediaRequestId) this.onUserMediaReady(params);
+                            if (!this.unloaded) this.onUserMediaReady(params);
                         }, this.onAudioSample.bind(this), (err)=>{
-                            if (!this.unloaded && requestId === this.mediaRequestId) this.userMediaErrorCallback(err, {
+                            if (!this.unloaded) this.userMediaErrorCallback(err, {
                                 audio: isAudioEnabled(this.options)
                             });
                         }, params);
@@ -20051,24 +20047,11 @@
                 shouldFollowMicrophonePermission() {
                     return Boolean(this.options.audio.followPermissions && !this.mediaTransmissionStarted);
                 }
-                requestMediaStream(constraints, requestId) {
-                    const followsMicrophonePermission = this.shouldFollowMicrophonePermission();
-                    return media_requestMediaStream({
-                        constraints,
-                        followsMicrophonePermission,
-                        getPermission: followsMicrophonePermission ? this.options.audio.getPermission : void 0,
-                        isRequestCurrent: ()=>this.isRequestCurrent(requestId)
-                    });
-                }
-                isRequestCurrent(requestId) {
-                    return !this.unloaded && requestId === this.mediaRequestId;
-                }
                 loadGenuineUserMedia(params) {
                     this.options.logger.debug(`Recorder: loadGenuineUserMedia(${params ? string_pretty(params) : ""})`);
                     if (!params?.recovering) this.automaticCameraRecoveryAttempted = false;
                     this.emit("ASKING_WEBCAM_PERMISSION");
                     this.userMediaLoading = true;
-                    const requestId = ++this.mediaRequestId;
                     const limitedWidth = this.options.video.width ? void 0 : this.visuals.limitWidth();
                     const constraints = mediaConstraints({
                         facingMode: this.facingMode,
@@ -20080,22 +20063,29 @@
                     if (followsMicrophonePermission) constraints.audio = true;
                     this.options.logger.debug(string_summarize("Recorder: our webcam constraints are:", constraints));
                     this.options.logger.debug(string_summarize("Recorder: available webcam constraints are:", navigator.mediaDevices.getSupportedConstraints()));
-                    const streamPromise = this.requestMediaStream(constraints, requestId);
-                    streamPromise.then((localStream)=>{
-                        if (!localStream) return;
-                        if (this.unloaded || requestId !== this.mediaRequestId) return void localStream.getTracks().forEach((track)=>{
-                            track.stop();
-                        });
-                        if (followsMicrophonePermission) {
-                            const audioEnabled = localStream.getAudioTracks().some((track)=>"live" === track.readyState && track.enabled);
-                            this.options.audio.enabled = audioEnabled;
-                            this.getUserMediaCallback(localStream, {
-                                ...params,
-                                audioEnabled
-                            }, requestId);
-                        } else this.getUserMediaCallback(localStream, params, requestId);
-                    }).catch((reason)=>{
-                        if (!this.unloaded && requestId === this.mediaRequestId) this.userMediaErrorCallback(reason, constraints);
+                    const userMedia = this.userMedia;
+                    if (!userMedia) throw error_createError({
+                        message: "No user media is defined",
+                        options: this.options
+                    });
+                    userMedia.acquire(constraints, {
+                        timeout: this.options.timeouts.userMedia,
+                        followsMicrophonePermission,
+                        getPermission: followsMicrophonePermission ? this.options.audio.getPermission : void 0
+                    }, {
+                        onStream: (localStream)=>{
+                            if (followsMicrophonePermission) {
+                                const audioEnabled = localStream.getAudioTracks().some((track)=>"live" === track.readyState && track.enabled);
+                                this.options.audio.enabled = audioEnabled;
+                                this.getUserMediaCallback(localStream, {
+                                    ...params,
+                                    audioEnabled
+                                });
+                            } else this.getUserMediaCallback(localStream, params);
+                        },
+                        onError: (reason)=>{
+                            if (!this.unloaded) this.userMediaErrorCallback(reason, constraints);
+                        }
                     });
                 }
                 loadUserMedia(params) {
@@ -20109,15 +20099,6 @@
                     this.emit("LOADING_USER_MEDIA");
                     try {
                         if (!navigator.mediaDevices) throw new Error("No media devices are available.");
-                        this.userMediaTimeout = window.setTimeout(()=>{
-                            if (!this.userMediaLoaded) {
-                                this.userMediaLoading = false;
-                                const err = browser_getBrowser(this.options).getNoAccessIssue();
-                                this.userMediaErrorCallback(err, {
-                                    audio: isAudioEnabled(this.options)
-                                });
-                            }
-                        }, this.options.timeouts.userMedia);
                         this.userMediaLoading = true;
                         this.loadGenuineUserMedia(params);
                     } catch (exc) {
@@ -20171,7 +20152,6 @@
                 }
                 cancelCameraRecovery() {
                     if (!this.cameraRecovery) return;
-                    this.mediaRequestId++;
                     this.userMediaLoading = false;
                     this.userMediaLoaded = false;
                     this.clearUserMediaTimeout();
@@ -20249,6 +20229,7 @@
                     });
                 }
                 hide() {
+                    this.userMedia?.hideCanvasPreview();
                     if (!this.isHidden()) {
                         if (this.recorderElement) html_hideElement(this.recorderElement);
                         this.clearUserMediaTimeout();
@@ -20289,18 +20270,22 @@
                 sampleProgress;
                 recordingElapsedTimeMs = 0;
                 recordingStartedAtMs;
+                captureGeneration = 0;
+                frameEncoding;
+                stopAfterFrameEncoding = false;
                 canvas;
                 ctx;
                 stopTime;
                 waitingTime;
-                frame;
-                recordingBuffer;
-                constructor(visuals, replay, options){
-                    super(visuals, options);
+                constructor(visuals, replay, options, emitter){
+                    super(visuals, options, emitter);
                     this.replay = replay;
                 }
+                shouldSkipAudioSample() {
+                    return !this.recordingActive || this.recordingTransportFailed || Boolean(this.cameraRecovery) || this.isUserMediaPaused();
+                }
                 onAudioSample(audioSample) {
-                    if (this.recordingTransportFailed || this.cameraRecovery) return;
+                    if (this.shouldSkipAudioSample()) return;
                     const sampleRate = this.userMedia?.getAudioSampleRate();
                     if (sampleRate && sampleRate > 0) this.recordingAudioSampleRate ??= sampleRate;
                     this.samplesCount++;
@@ -20322,6 +20307,7 @@
                         this.show();
                         if (params?.recordWhenReady) this.record();
                         this.emit("USER_MEDIA_READY", {
+                            audioEnabled: params?.audioEnabled,
                             switchingFacingMode: params?.switchingFacingMode,
                             recovering: params?.recovering,
                             paused: this.isPaused(),
@@ -20376,6 +20362,7 @@
                         options: this.options
                     });
                     const hasAudio = this.samplesCount > 0;
+                    this.captureGeneration++;
                     this.mediaTransmissionStarted = false;
                     this.recordingActive = false;
                     this.recordingTransportFailed = false;
@@ -20442,31 +20429,35 @@
                     });
                     this.loop?.complete?.();
                     this.stopTimeout = window.setTimeout(()=>{
-                        this.stopTimeout = void 0;
-                        this.stopTime = Date.now();
-                        const videoType = this.replay.getVideoType();
-                        if (!videoType) throw new Error("Unable to video record when no video type is defined.");
-                        this.recordingStats = {
-                            avgFps: this.getAvgFps(),
-                            wantedFps: this.options.video.fps,
-                            avgInterval: this.getAvgInterval(),
-                            wantedInterval: 1e3 / this.options.video.fps,
-                            intervalSum: this.getIntervalSum(),
-                            framesCount: this.framesCount,
-                            videoType
-                        };
-                        if (this.userMedia) this.recordingStats.videoTrackLabel = this.userMedia.getVideoTrackLabel();
-                        if (isAudioEnabled(this.options) && this.userMedia) {
-                            this.recordingStats.samplesCount = this.samplesCount;
-                            this.recordingStats.sampleRate = this.recordingAudioSampleRate ?? this.userMedia.getAudioSampleRate();
-                        }
-                        this.writeCommand("stop", this.recordingStats, ()=>{
-                            this.emit("STOPPED", {
-                                recordingStats: this.recordingStats
-                            });
-                        });
-                        this.reset();
+                        this.clearStopTimeout();
+                        if (this.frameEncoding) this.stopAfterFrameEncoding = true;
+                        else this.finishStop();
                     }, 60);
+                }
+                finishStop() {
+                    this.stopTime = Date.now();
+                    const videoType = this.replay.getVideoType();
+                    if (!videoType) throw new Error("Unable to video record when no video type is defined.");
+                    this.recordingStats = {
+                        avgFps: this.getAvgFps(),
+                        wantedFps: this.options.video.fps,
+                        avgInterval: this.getAvgInterval(),
+                        wantedInterval: 1e3 / this.options.video.fps,
+                        intervalSum: this.getIntervalSum(),
+                        framesCount: this.framesCount,
+                        videoType
+                    };
+                    if (this.userMedia) this.recordingStats.videoTrackLabel = this.userMedia.getVideoTrackLabel();
+                    if (isAudioEnabled(this.options) && this.userMedia) {
+                        this.recordingStats.samplesCount = this.samplesCount;
+                        this.recordingStats.sampleRate = this.recordingAudioSampleRate ?? this.userMedia.getAudioSampleRate();
+                    }
+                    this.writeCommand("stop", this.recordingStats, ()=>{
+                        this.emit("STOPPED", {
+                            recordingStats: this.recordingStats
+                        });
+                    });
+                    this.reset();
                 }
                 back(cb) {
                     this.emit("GOING_BACK");
@@ -20486,15 +20477,21 @@
                     this.loadUserMedia();
                 }
                 reset() {
+                    this.captureGeneration++;
+                    this.stopAfterFrameEncoding = false;
+                    this.clearStopTimeout();
                     this.cancelCameraRecovery();
+                    this.clearUserMediaTimeout();
+                    this.userMediaLoading = false;
                     this.pauseRecordingClock();
+                    this.recordingActive = false;
                     if (!this.unloaded) {
                         this.options.logger.debug("Recorder: reset()");
                         this.emit("RESETTING");
                         this.cancelAnimationFrame();
                         this.userMedia?.stop();
                         this.replay.reset();
-                        this.userMediaLoaded = this.key = this.canvas = this.ctx = this.recordingBuffer = void 0;
+                        this.userMediaLoaded = this.key = this.canvas = this.ctx = void 0;
                     }
                 }
                 validate() {
@@ -20511,7 +20508,7 @@
                     this.pauseRecordingClock();
                     loop.stop();
                     this.emit("PAUSED");
-                    this.sendPings();
+                    if (this.connected) this.sendPings();
                 }
                 resume() {
                     if (this.cameraRecovery || !this.userMedia?.hasLiveStream()) {
@@ -20530,44 +20527,90 @@
                     else loop.start();
                 }
                 resumeMediaForCountdown() {
+                    const cameraReady = !this.cameraRecovery && this.userMedia?.hasLiveStream();
+                    if (!this.connected || !cameraReady) {
+                        this.options.logger.debug("Recorder: countdown remains paused until connected and the camera is ready.");
+                        return false;
+                    }
+                    this.stopPings();
                     this.userMedia?.resume();
+                    return true;
                 }
                 onFlushed(opts) {
                     const frameNumber = opts.frameNumber;
                     if (1 === frameNumber) this.emit("FIRST_FRAME_SENT");
                 }
+                async getFrameBlob(canvas, generation, typeIndex = 0, lastError) {
+                    if (generation !== this.captureGeneration) return;
+                    const imageType = this.options.image.types[typeIndex];
+                    if (void 0 === imageType) throw error_createError({
+                        message: "Failed to extract webcam data.",
+                        explanation: `The browser could not encode a frame as ${this.options.image.types.map((type)=>`image/${type}`).join(" or ")}.`,
+                        options: this.options,
+                        exc: lastError
+                    });
+                    const mimeType = `image/${imageType}`;
+                    try {
+                        const blob = await new Promise((resolve)=>{
+                            canvas.toBlob(resolve, mimeType, this.options.image.quality);
+                        });
+                        if (generation !== this.captureGeneration) return;
+                        if (blob?.type === mimeType) return blob;
+                    } catch (exc) {
+                        return this.getFrameBlob(canvas, generation, typeIndex + 1, exc);
+                    }
+                    return this.getFrameBlob(canvas, generation, typeIndex + 1, lastError);
+                }
+                async encodeFrame(canvas, frameNumber, generation) {
+                    try {
+                        const blob = await this.getFrameBlob(canvas, generation);
+                        if (!blob) return;
+                        const recordingBuffer = capture_Buffer.from(await blob.arrayBuffer());
+                        if (generation !== this.captureGeneration) return;
+                        const frameControlBuffer = capture_Buffer.from(JSON.stringify({
+                            frameNumber
+                        }));
+                        const frameBuffer = capture_Buffer.concat([
+                            recordingBuffer,
+                            frameControlBuffer
+                        ]);
+                        this.framesCount = frameNumber;
+                        this.mediaTransmissionStarted = true;
+                        this.writeStream(frameBuffer, {
+                            frameNumber,
+                            onFlushedCallback: this.onFlushed.bind(this)
+                        });
+                        this.visuals.checkTimer(this.getIntervalSum());
+                    } catch (exc) {
+                        if (generation === this.captureGeneration) this.emit("ERROR", {
+                            exc
+                        });
+                    }
+                }
+                startFrameEncoding(canvas, frameNumber) {
+                    const generation = this.captureGeneration;
+                    this.frameEncoding = this.encodeFrame(canvas, frameNumber, generation).finally(()=>{
+                        this.frameEncoding = void 0;
+                        if (this.stopAfterFrameEncoding) {
+                            this.stopAfterFrameEncoding = false;
+                            this.finishStop();
+                        }
+                    });
+                }
                 draw(_deltaTime, _elapsedTime) {
-                    if (this.recordingTransportFailed) return;
+                    if (!this.recordingActive || this.recordingTransportFailed || this.frameEncoding) return;
                     if (!this.userMedia) throw new Error("No user media defined, unable to draw on canvas");
                     try {
                         if (!this.isPaused() && this.stream && this.ctx) {
+                            const canvas = this.canvas;
+                            const context = this.ctx;
+                            if (!canvas) throw new Error("Unable to draw without a canvas");
                             if (0 === this.framesCount) this.emit("SENDING_FIRST_FRAME");
-                            this.framesCount++;
+                            const frameNumber = this.framesCount + 1;
                             const imageSource = this.userMedia.getRawVisuals();
-                            if (this.canvas && imageSource) this.ctx.drawImage(imageSource, 0, 0, this.canvas.width, this.canvas.height);
-                            else throw new Error("Unable to draw an image without a defined canvas");
-                            this.recordingBuffer = this.frame?.toBuffer();
-                            const recordingBufferLength = this.recordingBuffer?.length;
-                            if (recordingBufferLength) {
-                                if (this.recordingBuffer) {
-                                    const frameControlBuffer = capture_Buffer.from(JSON.stringify({
-                                        frameNumber: this.framesCount
-                                    }));
-                                    const frameBuffer = capture_Buffer.concat([
-                                        this.recordingBuffer,
-                                        frameControlBuffer
-                                    ]);
-                                    this.mediaTransmissionStarted = true;
-                                    this.writeStream(frameBuffer, {
-                                        frameNumber: this.framesCount,
-                                        onFlushedCallback: this.onFlushed.bind(this)
-                                    });
-                                    this.visuals.checkTimer(this.getIntervalSum());
-                                }
-                            } else throw error_createError({
-                                message: "Failed to extract webcam data.",
-                                options: this.options
-                            });
+                            if (!imageSource) throw new Error("Unable to draw an image without a defined canvas");
+                            context.drawImage(imageSource, 0, 0, canvas.width, canvas.height);
+                            this.startFrameEncoding(canvas, frameNumber);
                         }
                     } catch (exc) {
                         this.emit("ERROR", {
@@ -20653,7 +20696,6 @@
                         width: this.canvas.width,
                         height: this.canvas.height
                     };
-                    this.frame = new canvas_to_buffer_modern_r(this.canvas, this.options.image.types, this.options.image.quality);
                     this.options.logger.debug("Recorder: record()");
                     if (!this.recordingActive) {
                         this.recordingElapsedTimeMs = 0;
@@ -20937,6 +20979,93 @@
                 "volumechange"
             ];
             const mediaEvents = MEDIA_EVENTS;
+            const OPTIONAL_AUDIO_ERRORS = [
+                "NotAllowedError",
+                "PermissionDeniedError",
+                "NotFoundError",
+                "DevicesNotFoundError"
+            ];
+            function isOptionalAudioError(error) {
+                return (error instanceof Error || error instanceof DOMException || isErrorLike(error)) && OPTIONAL_AUDIO_ERRORS.includes(error.name);
+            }
+            function requestCameraOnly(constraints) {
+                return navigator.mediaDevices.getUserMedia({
+                    ...constraints,
+                    audio: false
+                });
+            }
+            function retryCameraOnlyAfterAudioError(error, constraints, isRequestCurrent, audioRequested) {
+                if (!isRequestCurrent()) return;
+                if (!audioRequested || !isOptionalAudioError(error)) throw error;
+                return requestCameraOnly(constraints);
+            }
+            async function requestWithOptionalAudio(params) {
+                const { constraints, getPermission, isRequestCurrent } = params;
+                let audioRequested = Boolean(constraints.audio);
+                try {
+                    if (getPermission) {
+                        const permission = await getPermission();
+                        if (!isRequestCurrent()) return;
+                        audioRequested = "denied" !== permission && Boolean(constraints.audio);
+                        return await navigator.mediaDevices.getUserMedia({
+                            ...constraints,
+                            audio: audioRequested
+                        });
+                    }
+                    return await navigator.mediaDevices.getUserMedia(constraints);
+                } catch (error) {
+                    if (!constraints.audio) throw error;
+                    return retryCameraOnlyAfterAudioError(error, constraints, isRequestCurrent, audioRequested);
+                }
+            }
+            function requestMediaStream(params) {
+                if (!params.followsMicrophonePermission) return navigator.mediaDevices.getUserMedia(params.constraints);
+                return requestWithOptionalAudio(params);
+            }
+            const media_requestMediaStream = requestMediaStream;
+            function startCanvasCameraPreview(video, warn) {
+                if ("function" != typeof video.requestVideoFrameCallback || "function" != typeof video.cancelVideoFrameCallback) return void warn("Video frame callbacks are unavailable; using the native camera preview.");
+                const canvas = document.createElement("canvas");
+                const context = canvas.getContext("2d");
+                if (!context) return void warn("Unable to create a canvas camera preview; using the native preview.");
+                let frameRequest;
+                let hasRetriedMissingFrame = false;
+                function stop() {
+                    if (void 0 === frameRequest) return;
+                    video.cancelVideoFrameCallback(frameRequest);
+                    frameRequest = void 0;
+                    canvas.remove();
+                    canvas.width = canvas.height = 0;
+                }
+                const drawFrame = ()=>{
+                    if (void 0 === frameRequest) return;
+                    const { videoWidth, videoHeight, readyState } = video;
+                    if (readyState >= HTMLMediaElement.HAVE_CURRENT_DATA && videoWidth && videoHeight) {
+                        if (canvas.width !== videoWidth || canvas.height !== videoHeight) {
+                            canvas.width = videoWidth;
+                            canvas.height = videoHeight;
+                        }
+                        try {
+                            context.drawImage(video, 0, 0, videoWidth, videoHeight);
+                            hasRetriedMissingFrame = false;
+                        } catch (error) {
+                            if (hasRetriedMissingFrame || !(error instanceof DOMException) || "InvalidStateError" !== error.name) {
+                                stop();
+                                warn(`Canvas camera preview failed; using the native preview: ${String(error)}`);
+                                return;
+                            }
+                            hasRetriedMissingFrame = true;
+                        }
+                    }
+                    frameRequest = video.requestVideoFrameCallback(drawFrame);
+                };
+                canvas.className = "cameraPreviewCanvas";
+                canvas.setAttribute("aria-hidden", "true");
+                video.after(canvas);
+                frameRequest = video.requestVideoFrameCallback(drawFrame);
+                return stop;
+            }
+            const media_startCanvasCameraPreview = startCanvasCameraPreview;
             function isPreviewVisible(video) {
                 if (document.hidden || !video.isConnected || !video.srcObject) return false;
                 const bounds = video.getBoundingClientRect();
@@ -20988,6 +21117,7 @@
                 return stop;
             }
             const media_watchCameraPlayback = watchCameraPlayback;
+            var typedarray_to_buffer = __webpack_require__("E");
             function _define_property(obj, key, value) {
                 if (key in obj) Object.defineProperty(obj, key, {
                     value: value,
@@ -21076,8 +21206,8 @@
                 initializationId = 0;
                 recordingSequence = 0;
                 recordingId = 0;
-                constructor(userMedia, options){
-                    super("AudioRecorder", options);
+                constructor(userMedia, options, emitter){
+                    super("AudioRecorder", options, emitter);
                     this.userMedia = userMedia;
                 }
                 getAudioContext() {
@@ -21294,7 +21424,10 @@
                 videoTrackLabel;
                 clearInitializationListeners;
                 stopWatchingPlayback;
+                stopCanvasPreview;
                 initializationId = 0;
+                acquisitionId = 0;
+                acquisitionTimeout;
                 outputEvent = (e)=>{
                     this.logEvent(e.type, {
                         readyState: this.rawVisualUserMedia?.readyState
@@ -21304,8 +21437,8 @@
                 handleMediaError = (event)=>{
                     this.options.logger.warn(`Caught video element error event: ${string_pretty(event)}`);
                 };
-                constructor(recorder, options){
-                    super("UserMedia", options);
+                constructor(recorder, options, emitter){
+                    super("UserMedia", options, emitter);
                     this.recorder = recorder;
                     this.rawVisualUserMedia = recorder.getRawVisualUserMedia();
                     mediaEvents.forEach((eventName)=>{
@@ -21317,6 +21450,7 @@
                         this.rawVisualUserMedia.srcObject = stream;
                         const previousStream = this.currentVisualStream;
                         this.currentVisualStream = stream;
+                        if (!html_isHidden(this.rawVisualUserMedia)) this.showCanvasPreview();
                         if (previousStream && previousStream !== stream) previousStream.getTracks().forEach((track)=>{
                             track.stop();
                         });
@@ -21336,6 +21470,17 @@
                         this.currentVisualStream = void 0;
                     }
                 }
+                showCanvasPreview() {
+                    const video = this.rawVisualUserMedia;
+                    if (this.stopCanvasPreview || !video || !this.currentVisualStream) return;
+                    if (video.parentElement?.matches(".videomail .visuals.fixedAspectRatio") && browser_getBrowser(this.options).shouldUseCanvasCameraPreview()) this.stopCanvasPreview = media_startCanvasCameraPreview(video, (message)=>{
+                        this.options.logger.warn(message);
+                    });
+                }
+                hideCanvasPreview() {
+                    this.stopCanvasPreview?.();
+                    this.stopCanvasPreview = void 0;
+                }
                 async restorePlayback() {
                     if (!this.rawVisualUserMedia) throw new Error("No camera preview is available.");
                     const initializationId = this.initializationId;
@@ -21344,6 +21489,43 @@
                     await this.rawVisualUserMedia.play();
                     await this.audioRecorder?.resume();
                     if (this.isCurrentInitialization(initializationId)) this.watchPlayback();
+                }
+                clearAcquisitionTimeout() {
+                    if (void 0 === this.acquisitionTimeout) return;
+                    window.clearTimeout(this.acquisitionTimeout);
+                    this.acquisitionTimeout = void 0;
+                }
+                cancelAcquisition() {
+                    this.acquisitionId++;
+                    this.clearAcquisitionTimeout();
+                }
+                isCurrentAcquisition(acquisitionId) {
+                    return acquisitionId === this.acquisitionId;
+                }
+                acquire(constraints, options, callbacks) {
+                    this.cancelAcquisition();
+                    const acquisitionId = ++this.acquisitionId;
+                    this.acquisitionTimeout = window.setTimeout(()=>{
+                        if (!this.isCurrentAcquisition(acquisitionId)) return;
+                        this.cancelAcquisition();
+                        callbacks.onError(browser_getBrowser(this.options).getNoAccessIssue());
+                    }, options.timeout);
+                    media_requestMediaStream({
+                        constraints,
+                        followsMicrophonePermission: options.followsMicrophonePermission,
+                        getPermission: options.getPermission,
+                        isRequestCurrent: ()=>this.isCurrentAcquisition(acquisitionId)
+                    }).then((stream)=>{
+                        if (!this.isCurrentAcquisition(acquisitionId)) return void stream?.getTracks().forEach((track)=>{
+                            track.stop();
+                        });
+                        this.clearAcquisitionTimeout();
+                        if (stream) callbacks.onStream(stream);
+                    }, (reason)=>{
+                        if (!this.isCurrentAcquisition(acquisitionId)) return;
+                        this.clearAcquisitionTimeout();
+                        callbacks.onError(reason);
+                    });
                 }
                 isVideoReady() {
                     const videoReady = this.currentVisualStream?.getVideoTracks().some((track)=>"live" === track.readyState && track.enabled && !track.muted);
@@ -21378,6 +21560,7 @@
                 }
                 unloadRemainingEventListeners() {
                     this.options.logger.debug("UserMedia: unloadRemainingEventListeners()");
+                    this.hideCanvasPreview();
                     this.clearInitializationListeners?.();
                     this.stopWatchingPlayback?.();
                     this.stopWatchingPlayback = void 0;
@@ -21414,7 +21597,7 @@
                     this.onLoadedMetaDataReached = false;
                     this.playingPromiseReached = false;
                     this.videoTrackLabel = void 0;
-                    if (isAudioEnabled(this.options)) this.audioRecorder ??= new media_AudioRecorder(this, this.options);
+                    if (isAudioEnabled(this.options)) this.audioRecorder ??= new media_AudioRecorder(this, this.options, this.emitter);
                     else {
                         this.audioRecorder?.stop();
                         this.audioRecorder = void 0;
@@ -21573,6 +21756,9 @@
                 }
                 stop(visualStream, params) {
                     try {
+                        this.hideCanvasPreview();
+                        this.cancelAcquisition();
+                        this.removeListener("SENDING_FIRST_FRAME");
                         this.stopWatchingPlayback?.();
                         this.stopWatchingPlayback = void 0;
                         let chosenStream = visualStream;
@@ -21700,8 +21886,8 @@
             const visuals_userMedia = UserMedia;
             class Recorder extends capture {
                 dimensions;
-                constructor(visuals, replay, options){
-                    super(visuals, replay, options);
+                constructor(visuals, replay, options, emitter){
+                    super(visuals, replay, options, emitter);
                     this.dimensions = new recorder_dimensions({
                         options,
                         visuals,
@@ -21792,6 +21978,7 @@
                     this.reconnecting = false;
                     this.reconnectAttempts = 0;
                     if (this.userMedia) this.userMedia.unloadRemainingEventListeners();
+                    this.removeAllListeners();
                     this.unloaded = true;
                     this.discardSocket();
                     this.built = this.connecting = this.connected = false;
@@ -21860,7 +22047,7 @@
                     this.recorderElement.style.transform = "rotateY(180deg)";
                     this.recorderElement.style["-webkit-transform"] = "rotateY(180deg)";
                     this.recorderElement.style["-moz-transform"] = "rotateY(180deg)";
-                    this.userMedia ??= new visuals_userMedia(this, this.options);
+                    this.userMedia ??= new visuals_userMedia(this, this.options, this.emitter);
                     this.show();
                     if (this.built) {
                         if (this.options.loadUserMediaOnRecord) this.loadUserMedia();
@@ -21913,6 +22100,7 @@
                 togglePlayback = (e)=>{
                     e.preventDefault();
                     if (this.replayElement?.paused) this.replayElement.play().catch((exc)=>{
+                        if (exc instanceof DOMException && "AbortError" === exc.name && !this.isShown()) return;
                         const err = error_createError({
                             message: `Failed to play replay video upon ${e.type} event.`,
                             exc,
@@ -21924,8 +22112,8 @@
                     });
                     else this.replayElement?.pause();
                 };
-                constructor(visuals, options){
-                    super("Replay", options);
+                constructor(visuals, options, emitter){
+                    super("Replay", options, emitter);
                     this.visuals = visuals;
                 }
                 buildElement(replayParentElement) {
@@ -22005,7 +22193,7 @@
                     if (hasAudio) this.replayElement.volume = 1;
                     else if (!isAudioEnabled(this.options)) this.replayElement.setAttribute("muted", "true");
                     this.replayElement.load();
-                    if (this.canPlayThroughHandler) this.replayElement.removeEventListener("canplaythrough", this.canPlayThroughHandler);
+                    this.removeCanPlayThroughHandler();
                     const eventName = this.videomail ? "REPLAY_SHOWN" : "PREVIEW_SHOWN";
                     this.canPlayThroughHandler = ()=>{
                         this.canPlayThroughHandler = void 0;
@@ -22039,12 +22227,15 @@
                     this.built = true;
                     this.options.logger.debug("Replay: built.");
                 }
-                unload(params) {
-                    this.options.logger.debug("Replay: unload()");
+                removeCanPlayThroughHandler() {
                     if (this.canPlayThroughHandler) {
                         this.replayElement?.removeEventListener("canplaythrough", this.canPlayThroughHandler);
                         this.canPlayThroughHandler = void 0;
                     }
+                }
+                unload(params) {
+                    this.options.logger.debug("Replay: unload()");
+                    this.removeCanPlayThroughHandler();
                     this.replayElement?.removeEventListener("touchstart", this.togglePlayback);
                     this.replayElement?.removeEventListener("click", this.togglePlayback);
                     this.removeAllListeners();
@@ -22129,17 +22320,23 @@
                         cb?.();
                     });
                 }
-                hide() {
-                    if (this.replayElement) {
-                        this.replayElement.pause();
-                        this.replayElement.removeAttribute("controls");
-                        if (this.replayElement.hasAttribute("src")) {
-                            this.replayElement.removeAttribute("src");
-                            this.replayElement.load();
-                        }
-                        html_hideElement(this.replayElement);
-                        html_hideElement(this.replayElement.parentElement);
+                hide({ discardPreview = false } = {}) {
+                    const video = this.replayElement;
+                    if (!video) return;
+                    video.pause();
+                    video.removeAttribute("controls");
+                    if (discardPreview) {
+                        this.removeCanPlayThroughHandler();
+                        this.videomail = void 0;
                     }
+                    const sources = discardPreview ? video.querySelectorAll("source") : [];
+                    if (video.hasAttribute("src") || sources.length > 0 || discardPreview && video.currentSrc) {
+                        video.removeAttribute("src");
+                        sources.forEach((source)=>source.remove());
+                        video.load();
+                    }
+                    html_hideElement(video);
+                    html_hideElement(video.parentElement);
                 }
                 isShown() {
                     if (!this.replayElement) return false;
@@ -22163,13 +22360,13 @@
                 built = false;
                 playerOnly = false;
                 cameraRecoveryFailed = false;
-                constructor(container, options){
-                    super("Visuals", options);
+                constructor(container, options, emitter){
+                    super("Visuals", options, emitter);
                     this.container = container;
-                    this.replay = new visuals_replay(this, options);
-                    this.recorder = new visuals_recorder(this, this.replay, options);
-                    this.recorderInsides = new recorderInsides(this, options);
-                    this.notifier = new notifier(this, options);
+                    this.replay = new visuals_replay(this, options, this.emitter);
+                    this.recorder = new visuals_recorder(this, this.replay, options, this.emitter);
+                    this.recorderInsides = new recorderInsides(this, options, this.emitter);
+                    this.notifier = new notifier(this, options, this.emitter);
                 }
                 buildNoScriptTag() {
                     let noScriptElement = this.container.querySelector("noscript");
@@ -22319,12 +22516,17 @@
                 back(keepHidden = false, cb) {
                     this.options.logger.debug(`Visuals: back(keepHidden = ${keepHidden})`);
                     this.cameraRecoveryFailed = false;
-                    this.replay.hide();
+                    this.replay.hide({
+                        discardPreview: true
+                    });
                     this.notifier.hide();
                     if (keepHidden) {
                         this.recorder.hide();
                         cb?.();
-                    } else this.recorder.back(cb);
+                    } else {
+                        this.showVisuals();
+                        this.recorder.back(cb);
+                    }
                 }
                 recordAgain() {
                     this.back(false, ()=>{
@@ -22344,6 +22546,8 @@
                     this.recorder.unload(params);
                     this.recorderInsides.unload();
                     this.replay.unload(params);
+                    this.notifier.unload();
+                    this.removeAllListeners();
                     e instanceof Error || this.hide();
                     this.built = false;
                 }
@@ -22554,10 +22758,10 @@
                     if (this.options.enablePause) this.visuals.pauseOrResume();
                     else this.visuals.recordOrStop();
                 };
-                constructor(options){
-                    super("Container", options);
-                    this.visuals = new wrappers_visuals(this, options);
-                    this.buttons = new buttons(this, options);
+                constructor(options, emitter){
+                    super("Container", options, emitter);
+                    this.visuals = new wrappers_visuals(this, options, this.emitter);
+                    this.buttons = new buttons(this, options, this.emitter);
                     this.resource = new src_resource(options);
                 }
                 buildChildren(playerOnly = false, parentElement) {
@@ -22616,7 +22820,7 @@
                     if (this.form) return;
                     const formElement = this.getFormElement();
                     if (formElement) {
-                        this.form = new wrappers_form(this, formElement, this.options);
+                        this.form = new wrappers_form(this, formElement, this.options, this.emitter);
                         const submitButton = this.form.findSubmitButton();
                         if (submitButton) this.buttons.setSubmitButton(submitButton);
                         this.form.build();
@@ -22727,9 +22931,6 @@
                 limitHeight(height) {
                     return dimensions_limitHeight(height, this.options, "containers limitHeight fn");
                 }
-                areVisualsHidden() {
-                    return this.visuals.isHidden();
-                }
                 hasElement() {
                     return Boolean(this.containerElement);
                 }
@@ -22782,7 +22983,6 @@
                     this.visuals.show(params);
                     if (!this.hasError) {
                         const paused = this.isPaused();
-                        if (paused) this.buttons.adjustButtonsForPause();
                         this.buttons.show();
                         if (this.isReplayShown()) this.emit("PREVIEW");
                         else this.emit("FORM_READY", {
@@ -22855,76 +23055,71 @@
                 canRecover() {
                     return this.built && !this.hasError && !this.submitted;
                 }
+                emitValidating(event) {
+                    const target = event?.target;
+                    const targetName = target instanceof Element ? target.getAttribute("name") : null;
+                    if (targetName) this.emit("VALIDATING", {
+                        targetName
+                    });
+                    else if (event) this.emit("VALIDATING", {
+                        event
+                    });
+                    else this.emit("VALIDATING");
+                }
+                getFormValidationFacts() {
+                    if (!this.form) return;
+                    const input = this.form.getInvalidElement();
+                    if (input) return {
+                        invalidInput: {
+                            name: input.getAttribute("name"),
+                            value: input.getAttribute("value"),
+                            missing: util_getValidity(input)?.valueMissing ?? false
+                        },
+                        recipientsValid: false
+                    };
+                    return {
+                        recipientsValid: email_isRecipientSelectionValid(this.form.getRecipients())
+                    };
+                }
+                isVideoRequired(cameraLoaded, connected) {
+                    const cameraAvailable = cameraLoaded || this.options.loadUserMediaOnRecord && connected;
+                    return !this.visuals.isHidden() && (cameraAvailable || this.isRecording() || this.isPaused() || this.isCountingDown());
+                }
                 validate(event, force = false) {
-                    let runValidation = true;
-                    let valid = true;
-                    if (this.built) if (this.options.enableAutoValidation) {
-                        if (force) runValidation = force;
-                        else if (this.isNotifying()) runValidation = false;
-                        else if (this.visuals.isConnected()) runValidation = this.visuals.isUserMediaLoaded() ?? this.visuals.isReplayShown();
-                        else if (this.visuals.isConnecting()) runValidation = false;
-                    } else {
-                        runValidation = false;
-                        this.lastValidation = true;
+                    const cameraLoaded = this.visuals.isUserMediaLoaded();
+                    const connected = this.visuals.isConnected();
+                    const skip = getValidationSkip({
+                        built: this.built,
+                        autoValidate: this.options.enableAutoValidation,
+                        forced: force,
+                        notifying: this.isNotifying(),
+                        connected,
+                        connecting: this.visuals.isConnecting(),
+                        cameraLoaded,
+                        replayShown: this.isReplayShown()
+                    });
+                    if (skip) {
+                        this.lastValidation ||= skip.allowManualSubmit;
+                        return true;
                     }
-                    else runValidation = false;
-                    if (runValidation) {
-                        const target = event?.target;
-                        const targetName = target instanceof Element ? target.getAttribute("name") : void 0;
-                        if (targetName) this.emit("VALIDATING", {
-                            targetName
-                        });
-                        else if (event) this.emit("VALIDATING", {
-                            event
-                        });
-                        else this.emit("VALIDATING");
-                        let whyInvalid;
-                        const isRecordAgainButtonEnabled = this.buttons.isRecordAgainButtonEnabled();
-                        const visualsValid = this.visuals.validate() && isRecordAgainButtonEnabled;
-                        let invalidData;
-                        if (this.form) {
-                            const invalidInput = this.form.getInvalidElement();
-                            if (invalidInput) {
-                                const name = invalidInput.getAttribute("name");
-                                const validity = util_getValidity(invalidInput);
-                                valid = false;
-                                if (name) if (validity?.valueMissing) whyInvalid = `Please fill out field "${name}" ⚠️`;
-                                else {
-                                    whyInvalid = `Input "${name}" seems wrong 🤔`;
-                                    invalidData = {
-                                        [name]: invalidInput.getAttribute("value")
-                                    };
-                                }
-                            } else if (!this.areVisualsHidden() && !visualsValid) {
-                                if (this.buttonsAreReady() || this.isRecording() || this.isPaused() || this.isCountingDown()) {
-                                    valid = false;
-                                    whyInvalid = "Don't forget to record a video 😉";
-                                    invalidData = {
-                                        key: void 0
-                                    };
-                                }
-                            }
-                            if (valid) {
-                                if (!email_isRecipientSelectionValid(this.form.getRecipients())) {
-                                    valid = false;
-                                    whyInvalid = "At least one recipient is required";
-                                }
-                            }
-                        } else {
-                            valid = visualsValid;
-                            whyInvalid = "Because visuals aren't valid";
-                        }
-                        if (valid) this.emit("VALID");
-                        else if (invalidData) this.emit("INVALID", {
+                    this.emitValidating(event);
+                    const result = evaluateValidation({
+                        videoValid: this.visuals.validate(),
+                        videoRequired: Boolean(this.form && this.isVideoRequired(cameraLoaded, connected)),
+                        form: this.getFormValidationFacts()
+                    });
+                    if ("valid" === result.status) this.emit("VALID");
+                    else {
+                        const { whyInvalid, invalidData } = result;
+                        this.emit("INVALID", invalidData ? {
                             whyInvalid,
                             invalidData
-                        });
-                        else this.emit("INVALID", {
+                        } : {
                             whyInvalid
                         });
-                        this.lastValidation = valid;
                     }
-                    return valid;
+                    this.lastValidation = "valid" === result.status;
+                    return this.lastValidation;
                 }
                 disableForm(buttonsToo) {
                     this.form?.disable(buttonsToo);
@@ -22934,9 +23129,6 @@
                 }
                 hasForm() {
                     return Boolean(this.form);
-                }
-                buttonsAreReady() {
-                    return this.buttons.isReady();
                 }
                 getPendingHostSubmissionResponse(key) {
                     return this.pendingHostSubmission?.key === key ? this.pendingHostSubmission?.response : void 0;
@@ -23075,7 +23267,7 @@
                 constructor(options = {}){
                     super("VideomailClient", options_mergeWithDefaultOptions(options));
                     this.validateOptions();
-                    this.container = new wrappers_container(this.options);
+                    this.container = new wrappers_container(this.options, this.emitter);
                 }
                 validateOptions() {
                     const width = this.options.video.width;
