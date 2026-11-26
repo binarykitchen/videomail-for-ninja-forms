@@ -1,29 +1,46 @@
 ---
+applyTo: "**/*.{ts,tsx}"
 description: "Use when: creating or editing TypeScript or TSX files"
-applyTo: "**/*.ts,**/*.tsx"
 ---
 
 # TypeScript
 
+- The root `tsconfig.json` is the base TypeScript configuration. Other configs, such as a build config, may extend it.
+
 ## Type safety
 
-- Keep types strict; do not silence errors by weakening types.
-- Avoid explicit and implicit `any`. Use `unknown` for untrusted or unspecified data, then narrow or validate it before use.
+- Keep TypeScript strict and type-safe at all times; do not silently loosen types.
+- Avoid introducing explicit or implicit `any`. Use `unknown` or proper type annotations instead.
 - Prefer inference for local values and contextually typed callbacks.
-- Add parameter types when inference is unavailable or a public boundary benefits from a stable contract.
-- Do not annotate callback parameters when the receiving API already provides their types.
-- Type API boundaries, including library generics that otherwise default to `any`. Static types do not replace runtime validation of untrusted input.
-- Prefer public types exported by direct dependencies over transitive or lower-level types.
-- Prefer simple named types and literal unions for known shapes. Avoid deeply nested or generic abstractions without a concrete need.
-- Use runtime type guards or validation to narrow values. Type-only utility libraries cannot validate values at runtime.
-- Use type assertions only when a value's correctness is established but the compiler cannot express it; do not use assertions to bypass validation or hide an unclear contract.
+- Keep `unknown` for genuinely untrusted input, caught errors, and unspecified external data. Narrow or validate it before use; do not replace it with a guessed type or assertion.
+- Prefer inference, annotations, narrowing, or runtime validation over type assertions. Use assertions or `satisfies` only when they express a contract that cannot be represented clearly another way, and keep them narrow.
+- Add explicit parameter types where inference is unavailable or a public boundary benefits from a stable contract.
+- Do not annotate callback parameters when the receiving API already defines them. Prefer `emails.map((email, index) => ...)`; improve the source type if inference is wrong.
+- Type API request and response boundaries, including library generics that otherwise default to `any`. Static payload types do not replace runtime validation of untrusted input.
+- Prefer public types exported by a direct dependency. Avoid coupling to transitive or lower-level type packages when a type can be derived from the public API signature.
+- Prefer simple named types and literal unions for known shapes and closed sets of values. Avoid deeply nested types or generic abstractions without a concrete need.
+- When a contract is unclear or would need a larger refactor, leave a concise `TODO(types)` describing the missing contract or validation instead of hiding the gap with an assertion.
+- Prefer a named type or interface when it makes a function's parameter contract clearer or reusable. Use intersections when they accurately model the combined type.
+- Use type guards for repeated or complex narrowing logic; avoid redundant `typeof` checks.
 
 ## Functions
 
-- Let TypeScript infer return types when possible.
-- Describe parameters by the fields a function actually consumes; use a small named interface or `Pick` when that makes the contract clearer.
+- Give them nice, cool names, easily to remember for us humans.
+- Don’t add function return annotations on function level. For example if it's a `sum` function, you shall not annotate it as `function sum(a: number, b: number): number`. Let TypeScript infer the return type.
+- Describe function parameters by the fields the function actually consumes. Use `Pick` or a small named interface when a helper needs only part of a larger request, response, or model; use the full type when the function relies on its full contract.
+
+## Useful libraries
+
+- Reuse the installed [type-fest](https://github.com/sindresorhus/type-fest) utilities instead of handwritten mapped types when they describe the contract accurately.
+- Useful examples include `Except`, `SetOptional`, `SetRequired`, `PartialDeep`, `ValueOf`, and `EmptyObject`. Use `Jsonify` only for values actually transported as JSON.
+- Prefer the simplest accurate utility. Do not stack helpers merely to make a type look stricter.
 
 ## Validation
 
-- Use the repository's configured type checker after TypeScript changes, especially when shared types or public contracts change.
-- Run focused tests when a type narrowing or validation change also affects runtime behavior.
+- Run the type check (`npm run types`) after typing changes, especially ones that cross module or package boundaries.
+- Run focused tests when narrowing or validation changes runtime behaviour, and format and lint touched files according to the coding standards.
+
+## Duplicate types
+
+- Avoid duplicating type definitions across different layers of the application. Centralise shared types in a common location and reference them using `import type`.
+- When creating new types, check if an existing type can be reused or extended instead of defining a new one.

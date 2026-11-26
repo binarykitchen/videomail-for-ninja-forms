@@ -2,8 +2,8 @@
 Contributors: michael.heuberger, kbjohnson90
 Tags: video, email, recorder, sign language
 Requires at least: 6.0
-Tested up to: 6.9.5
-Stable tag: 13.8.1
+Tested up to: 7.2
+Stable tag: 13.9.0
 Requires PHP: 8.1.0
 Donate link: https://videomail.io/faq
 License: CC0-1.0
@@ -71,6 +71,17 @@ To get help, just use any of these contacts at [https://binarykitchen.com](https
 2. Once you have assembled a form and preview it, any browser will ask for webcam access first.
 
 == Changelog ==
+
+= 13.9.0 (26 Nov 2026) =
+
+**Change:**
+* Faster video recording :)
+* Improved suppport for mobile devices for any orientation
+
+**Fixes:**
+* Error reports now include mobile device details
+* Video recording quality now matches with your network
+* Wherever you go, your network connection will be adjusted properly
 
 = 13.8.1 (23 Nov 2026) =
 
