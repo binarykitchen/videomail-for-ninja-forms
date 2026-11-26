@@ -73,11 +73,6 @@
     "stylus": "0.64.0"
   },
   "prettier": "./prettier.config.js",
-  "overrides": {
-    "websocket-stream": {
-      "ws": "8.22.0"
-    }
-  },
   "allowScripts": {
     "esbuild@0.28.2": true
   }
