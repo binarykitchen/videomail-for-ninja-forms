@@ -1,15 +1,16 @@
 ---
+applyTo: "**/*.{js,cjs,mjs,jsx,ts,tsx}"
 description: "Use when: creating or editing JavaScript or TypeScript classes"
-applyTo: "**/*.js,**/*.jsx,**/*.ts,**/*.tsx"
 ---
 
 # Classes
 
-Objected-oriented programming (OOP) is welcome in some places, although we prefer functional programming and composition over heavy class hierarchies. But here are some guidelines:
+Object-oriented programming (OOP) is welcome where it fits, although we prefer functional programming and composition over heavy class hierarchies.
 
 ## Class names
 
 - Name classes in PascalCase.
+  - And in their file names too.
 - Follow the existing file-naming convention; class and file names do not need to match.
 
 ## Class attributes
@@ -19,15 +20,15 @@ Objected-oriented programming (OOP) is welcome in some places, although we prefe
 
 ## Class constructor
 
-- Keep the constructor simple and focused on initializing the class attributes.
+- Keep the constructor simple and focused on initialising the class attributes.
 - Avoid putting complex logic or side effects in the constructor.
-- If initialization requires asynchronous operations, consider using an `init` method instead of doing it in the constructor.
+- If initialisation requires asynchronous operations, consider using an `init` method instead of doing it in the constructor.
 
 ## Class methods
 
 - Keep methods focused on a single responsibility.
 - The naming convention for functions applies to class methods as well.
 - If there are functions, utilities doing the same job, ensure the method delegates to them rather than duplicating logic.
-- Extract complex conditional logic into clearly named private methods. Keep simple guards inline.
+- Extract complex conditional logic into private methods when that improves clarity. Keep straightforward conditions in place.
 - If a public method is nowhere else used, consider making it private to limit the class's public API surface.
-- Prefer composition over inheritance; favor small, focused classes that can be combined rather than large hierarchies.
+- Prefer composition over inheritance; favour small, focused classes that can be combined rather than large hierarchies.

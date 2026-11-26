@@ -1,6 +1,6 @@
 ---
-description: "Use when: editing Markdown structure, formatting, headings, lists, or validation"
 applyTo: "**/*.md"
+description: "Use when: editing Markdown structure, formatting, headings, lists, or validation"
 ---
 
 # Markdown
@@ -14,4 +14,4 @@ applyTo: "**/*.md"
 
 ## Validation
 
-When changing Markdown files, run the repository's configured Markdown linter or formatter, if available. If none is configured, review the changed Markdown for formatting issues and report that no automated check was available.
+When changing Markdown files, run the repository's Markdown linter or formatter before handover so documentation changes do not introduce lint or formatting errors.

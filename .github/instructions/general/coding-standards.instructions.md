@@ -1,6 +1,6 @@
 ---
+applyTo: "**/*.{js,cjs,mjs,jsx,ts,tsx}"
 description: "Use when: creating or editing JavaScript or TypeScript source files"
-applyTo: "**/*.js,**/*.jsx,**/*.ts,**/*.tsx"
 ---
 
 # Coding Standards
@@ -14,24 +14,23 @@ applyTo: "**/*.js,**/*.jsx,**/*.ts,**/*.tsx"
 Keep it simple. KISS.
 
 - Prefer TypeScript for automation scripts when the repository supports it. Use JavaScript or MJS when a tool requires it or TypeScript cannot run in that environment.
-- Prefer the smallest working change, avoid premature abstraction and optimization.
+- Prefer the smallest working change, avoid premature abstraction and optimisation.
 - Keep functions short and shallow when practical.
 
 ### Functions
 
 In general: let's keep them **pure, immutable and reusable**.
 
-Never change function parameters inside the function.
+Never change function parameters inside the function. Return a new value instead and let the caller decide what to do with it.
 
 - Keep each module focused on a primary responsibility. Keep small, cohesive helpers near their callers; extract a helper into its own module when reuse, complexity, or ownership makes that clearer.
 - Keep callbacks and closures local when only their owning function uses them. Do not create files solely for inline callbacks.
 - Keep constants near their use unless they are shared or represent configuration that belongs in a dedicated module.
-- Add focused tests when behavior changes or regression risk warrants them; follow the repository's unit test guidance for test placement and naming.
+- Add focused tests when behaviour changes or regression risk warrants them; follow the repository's unit test guidance for test placement and naming.
 - Keep reusable functions self-contained.
 - Put shared code in the repository's established shared module and keep other helpers in the layer that owns them. Check for an existing suitable module before creating one; ask when ownership is unclear.
 - A function may return a value or deliberately perform a side effect.
   - Name accessors with verbs such as `get` and side-effecting operations with verbs that describe the action.
-  - If it modifies a parameter, then this is not acceptable. Functions should not have side effects on their parameters. Instead, return a new value and let the caller decide what to do with it.
   - In short, it's about staying pure functional all the way.
 - Name functions very well, so that the name clearly describes what the function does.
   - Function names should be verbs, not nouns. For example, `getUser()` is better than `user()`.
@@ -57,26 +56,35 @@ This makes functions easier to reuse and test. They are also easier to read when
 - Prefer declarations for named functions when either form is equally clear.
 - Use arrow functions for inline callbacks when they are clearer and do not create `this` ambiguity.
 
-#### Function arguments
+#### Function parameters
 
-- Keep argument lists small. Group related values in a named object only when it clarifies the function's contract.
-- Many arguments can signal that a function has too many responsibilities; consider splitting it into focused helpers.
+- Keep parameter lists small. Group related values in a named object only when it clarifies the function's contract.
+- Too many parameters can signal that a function has too many responsibilities; consider splitting it into focused helpers.
+- Do not remove obsolete function parameters.
+  - But prefix them with an underscore (_) to indicate that they are obsolete.
+  - Because they might become necessary again in the future or are required for backward compatibility.
+  - Also because we humans do not always remember the full context, and keeping the parameter helps maintain clarity and intent.
 
 ## If-else conditions
 
 We have plenty of those and they reflect our business logic which is crucial. At the same time, too many if-else statements can make the code harder to read and maintain. So:
 
+### Business logic
+
+Move complex inline conditions _with more than two operands_ out to separate functions or methods with descriptive names. Keep simple guards and obvious combinations inline; do not add a helper for every operator.
+
+Why? It's about splitting down business logic into smaller pieces. In the long run, this will enable us to simplify the main flow and make the business logic easier to understand and maintain. And mostly, it enables us to reuse these pieces across the codebase more effectively.
+
 ### General
 
 - Avoid deeply nested conditionals.
-- Keep each `if` condition understandable at a glance. Do not leave conditions that make readers mentally combine several business rules, nested groups, or negated clauses.
-  - Extract complex decisions into clearly named boolean helpers (`should...`, `can...`, `is...`, or `has...`), or use named boolean variables for a one-off local decision.
-  - Keep simple guards and obvious combinations inline; do not add a helper for every operator.
+- Keep each `if` condition understandable at a glance, by:
+  - a good self-explanatory function name or variable name that makes the condition clear without needing to mentally combine multiple rules.
+  - Extract complex decisions into clearly named boolean helpers, or use named boolean variables for a one-off local decision.
 - Very short ternary expressions are acceptable for simple value choices.
 - Use guard clauses when they reduce nesting or avoid unnecessary work.
 - Do not compute a value before an if-else if it is needed only in one branch.
-- Extract compound conditions into a clearly named helper when that improves readability.
-  - Why? With a good function name, no comment is needed to explain the condition ;)
+- Despite of having a good helper name, still add a brief comment explaining the condition for future readers.
 
 ### Multi-step branches
 
@@ -102,8 +110,8 @@ We have plenty of those and they reflect our business logic which is crucial. At
 
 ### Defaults and options
 
-- Do not pass explicit default parameters or options when omitting them keeps the code simpler and the behavior stays the same.
-- Prefer the library's built-in defaults unless the code needs to override them for a concrete behavior change.
+- Do not pass explicit default parameters or options when omitting them keeps the code simpler and the behaviour stays the same.
+- Prefer the library's built-in defaults unless the code needs to override them for a concrete behaviour change.
 
 ### Formatting and validation before handover
 
@@ -117,3 +125,4 @@ We have plenty of those and they reflect our business logic which is crucial. At
 - Always uppercase constants with underscores when they represent fixed configuration, e.g. `const MAX_RETRIES = 5`.
 - Always give constants very self-explanatory names that clearly indicate their purpose and usage.
   - If they represent unit values, include the unit in the constant name, e.g., `const TIMEOUT_MS = 5000`.
+  - If they represent configuration flags, use a clear and descriptive name, e.g., `const ENABLE_FEATURE_X = true`.
