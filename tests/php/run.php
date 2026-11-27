@@ -38,7 +38,7 @@ function contains($needle, $haystack) {
 test_case('plugin instance is singleton and registers hooks', function () use ($plugin) {
   same($plugin, NF_Videomail::instance('ignored', 'ignored', 'ignored'));
   new NF_Videomail();
-  same(3, count($GLOBALS['calls']['add_action']));
+  same(2, count($GLOBALS['calls']['add_action']));
   same(4, count($GLOBALS['calls']['add_filter']));
   same('ninja_forms_register_fields', $GLOBALS['calls']['add_filter'][0][0]);
 });
@@ -76,9 +76,10 @@ test_case('updates stored version only for a newer plugin', function () use ($pl
   same(1, count($GLOBALS['calls']['update_option']));
 });
 
-test_case('license setup tolerates an absent optional updater', function () use ($plugin) {
-  $plugin->setup_license();
-  same(array(), $GLOBALS['calls']);
+// WordPress.org delivers updates; Ninja Forms' commercial updater must never be wired up again
+test_case('never registers with the Ninja Forms licence updater', function () {
+  new NF_Videomail();
+  same(false, in_array('admin_init', array_column($GLOBALS['calls']['add_action'], 0), true));
 });
 
 test_case('merge tags store and return server values', function () {
