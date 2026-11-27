@@ -52,8 +52,11 @@ border-radius = 2px
             padding 0.6em
             cursor pointer
 
-            &:focus
-              outline 0
+            // Keyboard users must always see where they are (WCAG 2.4.7), so never hide the ring.
+            // :focus-visible keeps it off mouse clicks, and our own style survives themes that reset outlines.
+            &:focus-visible
+              outline 2px solid currentColor
+              outline-offset 2px
 
             &:disabled
               cursor not-allowed
