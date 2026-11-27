@@ -55,7 +55,7 @@ test_case('registers the video field and merge tags', function () use ($plugin) 
 test_case('loads filtered settings and custom template paths', function () use ($plugin) {
   $settings = NF_Videomail::config('videomail-field-settings');
   same(40, $settings['image_quality']['value']);
-  same('false', $settings['media_library']['value']);
+  same(false, $settings['media_library']['value']);
   same('ninja_forms_videomail_field_settings', $GLOBALS['calls']['apply_filters'][0][0]);
   same(array('existing', NF_Videomail::$templatesDir), $plugin->custom_template_path(array('existing')));
 });
@@ -133,6 +133,39 @@ test_case('handles incomplete server metadata without PHP warnings', function ()
   same('', Ninja_Forms()->merge_tags['video']->alias());
 });
 
+// Records media library hand-overs instead of registering a real shutdown download
+function media_library_spy() {
+  return new class extends NF_Videomail_Fields_Videomail {
+    public $deferred = array();
+    protected function deferMediaLibraryDownload($videomail) {
+      $this->deferred[] = $videomail;
+    }
+  };
+}
+
+function process_with_media_library($field, $settings) {
+  $field->process($settings + array('id' => 7), array(
+    'extra' => array('videomail' => array(
+      'url' => 'https://videomail.io/videomail/example', 'alias' => 'example', 'key' => 'key-1'
+    )),
+    'fields' => array(7 => array())
+  ));
+  return count($field->deferred);
+}
+
+foreach (array(
+  'true' => array(true, 1), '1' => array(1, 1), '"1"' => array('1', 1), '"true"' => array('true', 1),
+  'false' => array(false, 0), '0' => array(0, 0), '"0"' => array('0', 0), '"false"' => array('false', 0)
+) as $label => $case) {
+  test_case('media library toggle ' . $label . ($case[1] ? ' saves the video' : ' skips it'), function () use ($case) {
+    same($case[1], process_with_media_library(media_library_spy(), array('media_library' => $case[0])));
+  });
+}
+
+test_case('media library stays off when older forms lack the setting', function () {
+  same(0, process_with_media_library(media_library_spy(), array()));
+});
+
 foreach (array('', 'http://videomail.io/video', 'https://videomail.io.evil.test/video',
   'https://evilvideomail.io/video', '/relative/video') as $url) {
   test_case('rejects untrusted download URL: ' . $url, function () use ($url) {
@@ -169,14 +202,14 @@ foreach (array(
   });
 }
 
-test_case('prefers WebM and propagates download errors without sideloading', function () {
+test_case('prefers MP4 and propagates download errors without sideloading', function () {
   $error = new WP_Error('download_failed');
   $GLOBALS['download_result'] = $error;
   $field = new NF_Videomail_Fields_Videomail();
   same($error, $field->downloadVideomailToMediaLibrary(array(
     'webm' => 'https://videomail.io/webm', 'mp4' => 'https://videomail.io/mp4'
   )));
-  same('https://videomail.io/webm', $GLOBALS['calls']['download_url'][0][0]);
+  same('https://videomail.io/mp4', $GLOBALS['calls']['download_url'][0][0]);
   same(false, isset($GLOBALS['calls']['media_handle_sideload']));
 });
 

@@ -86,10 +86,8 @@ class NF_Videomail_Fields_Videomail extends NF_Abstracts_Field {
     Ninja_Forms()->merge_tags['video']->setAlias(sanitize_text_field($videomail['alias'] ?? ''));
     Ninja_Forms()->merge_tags['video']->setReplyUrl(sanitize_text_field($videomail['replyUrl'] ?? ''));
 
-    $enableMediaLibrary = $field['media_library'];
-
-    if ($enableMediaLibrary === "true" || $enableMediaLibrary === 1 || $enableMediaLibrary === true) {
-      register_shutdown_function(array($this, 'downloadVideomailToMediaLibrary'), $videomail);
+    if ($this->isMediaLibraryEnabled($field)) {
+      $this->deferMediaLibraryDownload($videomail);
     }
 
     $data['fields'][$videomailFieldId]['value'] = esc_url_raw($videomail['url'] ?? '');
@@ -97,16 +95,29 @@ class NF_Videomail_Fields_Videomail extends NF_Abstracts_Field {
     return $data;
   }
 
+  // Ninja Forms hands toggles over as true, 1, "1" or "true" (its meta table and imported forms
+  // use strings). Forms saved before this option existed, like the bundled example, lack it entirely.
+  private function isMediaLibraryEnabled($field) {
+    return wp_validate_boolean($field['media_library'] ?? false);
+  }
+
+  // Downloads at the end of this request, so the video is saved long before it can expire on
+  // videomail.io. Protected, so tests can check the hand-over without a real shutdown download.
+  protected function deferMediaLibraryDownload($videomail) {
+    register_shutdown_function(array($this, 'downloadVideomailToMediaLibrary'), $videomail);
+  }
+
   public function downloadVideomailToMediaLibrary($videomail) {
     $videoUrl = '';
     $videoType = '';
 
-    if (!empty($videomail['webm'])) {
-      $videoUrl = $videomail['webm'];
-      $videoType = 'webm';
-    } else if (!empty($videomail['mp4'])) {
+    // MP4 first: it plays everywhere, including Safari and WordPress' own media player
+    if (!empty($videomail['mp4'])) {
       $videoUrl = $videomail['mp4'];
       $videoType = 'mp4';
+    } else if (!empty($videomail['webm'])) {
+      $videoUrl = $videomail['webm'];
+      $videoType = 'webm';
     }
 
     if (!$videoUrl || !$this->isTrustedVideomailUrl($videoUrl)) {

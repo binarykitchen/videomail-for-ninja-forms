@@ -48,6 +48,12 @@ function apply_filters($name, $value) {
   return $value;
 }
 function __($text, $domain) { return $text; }
+// Same rules as WordPress core: only false, 0, '', '0' and 'false' (any case) count as off
+function wp_validate_boolean($value) {
+  if (is_bool($value)) return $value;
+  if (is_string($value) && 'false' === strtolower($value)) return false;
+  return (bool) $value;
+}
 function sanitize_text_field($text) { return trim(strip_tags($text)); }
 function sanitize_file_name($name) { return str_replace(' ', '-', $name); }
 function esc_url_raw($url) {
