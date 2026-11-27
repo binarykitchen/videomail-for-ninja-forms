@@ -1,7 +1,16 @@
 # Local Development
 
 1. Install WordPress locally or use [Local by Flywheel](https://local.getflywheel.com/)
-2. Log into Local 2.1 If there is a blueprint under ./env/dev/local/videomail_for_ninja_forms_blueprint_local.zip import it 2.2 Or else configure it manually as following: 2.2.1 Install Ninja Forms Plugin and activate it 2.2.2 `git clone git@github.com:binarykitchen/videomail-for-ninja-forms.git` 2.2.3 Symlink videomail-for-ninja-forms like that: `ln -s ~/code/binarykitchen/videomail-for-ninja-forms ~/Local\ Sites/videomail-for-ninja-forms/app/public/wp-content/plugins/videomail-for-ninja-forms` 2.2.4. Activate it on WP admin side 2.2.5 Import the template form from ./examples/nf_form_video_contact_us.nff 2.2.6 Download the PHP Error Log plugin from <https://wordpress.org/plugins/error-log-monitor> and install it locally 2.2.7. Activate it on WP admin side
+2. Log into Local and set up the site in one of two ways:
+   1. **From the blueprint:** ask a maintainer for the private `videomail_for_ninja_forms_blueprint_local.zip`, save it under `./env/dev/local/` and import it in Local. Git ignores zip files in that folder on purpose. A blueprint holds passwords, keys and personal data, so share it privately and never commit it. To refresh it, export the site from Local and pass the new zip on privately.
+   2. **Manually:**
+      1. Install Ninja Forms Plugin and activate it
+      2. `git clone git@github.com:binarykitchen/videomail-for-ninja-forms.git`
+      3. Symlink videomail-for-ninja-forms like that: `ln -s ~/code/binarykitchen/videomail-for-ninja-forms ~/Local\ Sites/videomail-for-ninja-forms/app/public/wp-content/plugins/videomail-for-ninja-forms`
+      4. Activate it on WP admin side
+      5. Import the template form from ./examples/nf_form_video_contact_us.nff
+      6. Download the PHP Error Log plugin from <https://wordpress.org/plugins/error-log-monitor> and install it locally
+      7. Activate it on WP admin side
 3. Install latest nodejs, best with [nvm](https://github.com/creationix/nvm)
 4. `npm install` to install dependencies
 5. `gulp watch --host x --port y` which will open Google Chrome and automatically reloads upon changes (PHP, JS and CSS). Defaults to <https://localhost:8890>
