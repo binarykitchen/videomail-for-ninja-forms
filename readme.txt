@@ -76,7 +76,7 @@ To get help, just use any of these contacts at [https://binarykitchen.com](https
 
 **Change:**
 * Faster video recording :)
-* Improved suppport for mobile devices for any orientation
+* Improved support for mobile devices for any orientation
 
 **Fixes:**
 * Error reports now include mobile device details
@@ -138,7 +138,7 @@ To get help, just use any of these contacts at [https://binarykitchen.com](https
 
 **Improvement:**
 * Better audio quality, we switched and tested to the latest Audio Web Standards
-* Extra support and labels for the blind people 
+* Extra support and labels for the blind people
 
 **Change:**
 * Mobile recording now honours your phone preferences when it comes to orientation.
