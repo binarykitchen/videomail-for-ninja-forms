@@ -4,6 +4,10 @@ const PLUGIN_VERSION = "13.9.0";
 // Manual switch to have more stuff printed to console
 let DEBUG = false;
 
+// Every {field:key} merge tag in a setting. It stops at the first "}", so
+// "{field:name} <{field:email}>" yields two tags instead of one greedy blob.
+const FIELD_MERGE_TAG_PATTERN = /\{field:([^}]+)\}/gi;
+
 // Good documentation on backbone event handling
 // http://backbonejs.org/#Events
 
@@ -220,32 +224,31 @@ const VideomailFieldController = Marionette.Object.extend({
   },
 
   getMergeTagValue: function (fieldKey, formValues) {
-    let value = this.fieldModel.get(fieldKey);
+    const value = this.fieldModel.get(fieldKey);
 
     // it can happen that the user has configured something wrong,
     // i.E. an empty email_from. in that case just ignore ...
-    if (value) {
-      // admin email localized from backend, a bit ugly
-      // todo ask for an endpoint to process those special merge tags
-      // https://github.com/binarykitchen/videomail-for-ninja-forms/issues/30
-      if (value === "{wp:admin_email}") {
-        value = window.nfVideomail.admin_email;
-      } else {
-        const rawFieldKeyMatches = value.match(/{field:(.*)}/i);
-        const rawFieldKey = rawFieldKeyMatches && rawFieldKeyMatches[1];
-
-        if (rawFieldKey !== value) {
-          // yes it was a merge tag, so use it
-          value = value.replace(/{field:(.*)}/i, formValues[rawFieldKey]);
-        }
-      }
+    if (!value) {
+      return value;
     }
 
-    if (value === "undefined") {
-      return undefined;
+    // admin email localized from backend, a bit ugly
+    // todo ask for an endpoint to process those special merge tags
+    // https://github.com/binarykitchen/videomail-for-ninja-forms/issues/30
+    if (value === "{wp:admin_email}") {
+      return window.nfVideomail.admin_email;
     }
 
-    return value;
+    // A replacer function on purpose: with a plain string, "$&" or "$'" typed by
+    // visitors would be expanded as replacement patterns and mangle their message.
+    const resolvedValue = value.replace(
+      FIELD_MERGE_TAG_PATTERN,
+      (_tag, key) => formValues[key] ?? "",
+    );
+
+    // Only blanks left means every tag pointed at an empty or unknown field,
+    // so leave the setting out instead of sending an empty value.
+    return resolvedValue.trim() ? resolvedValue : undefined;
   },
 
   // returns a map like this:

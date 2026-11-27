@@ -304,6 +304,33 @@ test("merge tags preserve literals and omit unset or missing fields", () => {
   assert.equal(controller.getMergeTagValue("missing", {}), undefined);
 });
 
+test("merge tags resolve every field tag in a value", () => {
+  const { controller } = registered({
+    sender: "{field:name} <{field:email}>",
+    subject: "Video from {field:name} ({field:email})",
+  });
+  const values = { name: "Alice", email: "alice@example.test" };
+  assert.equal(
+    controller.getMergeTagValue("sender", values),
+    "Alice <alice@example.test>",
+  );
+  assert.equal(
+    controller.getMergeTagValue("subject", values),
+    "Video from Alice (alice@example.test)",
+  );
+});
+
+test("merge tags keep dollar signs typed by visitors", () => {
+  const { controller } = registered({ body: "Message: {field:message}" });
+  const message = "Costs $& less, $' or $`";
+  assert.equal(controller.getMergeTagValue("body", { message }), `Message: ${message}`);
+});
+
+test("merge tags blank out unknown fields inside text", () => {
+  const { controller } = registered({ subject: "Hi {field:absent}!" });
+  assert.equal(controller.getMergeTagValue("subject", {}), "Hi !");
+});
+
 test("destroy handles both unloaded and active controllers", () => {
   const { controller, clients } = registered();
   controller.onBeforeDestroy();
