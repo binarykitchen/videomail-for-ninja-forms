@@ -93,6 +93,10 @@ const VideomailFieldController = Marionette.Object.extend({
 
     const verbose = this.fieldModel.get("verbose") || DEBUG;
 
+    // Translated on the server, see config/videomail-texts.php. Pages cached before this
+    // release lack them, so videomail-client then keeps its own English texts.
+    const texts = this.fieldModel.get("texts") || {};
+
     // late overrides
     DEBUG = DEBUG || verbose;
     Backbone.Radio.DEBUG = Backbone.Radio.DEBUG || verbose;
@@ -113,6 +117,8 @@ const VideomailFieldController = Marionette.Object.extend({
       image: {
         quality: imageQualityPercentage / 100, // must be a float
       },
+      // Only when present: an undefined `text` would wipe videomail-client's defaults
+      ...(texts.recorder && { text: texts.recorder }),
       selectors: { containerId: "videomail", submitButtonSelector: ".submit-wrap input" },
       callbacks: {
         adjustFormDataBeforePosting:
@@ -189,12 +195,14 @@ const VideomailFieldController = Marionette.Object.extend({
   },
 
   invalidate: function () {
-    // override default behavior so that we can set our own error text here
+    const texts = this.fieldModel.get("texts") || {};
+
+    // override default behavior so that we can set our own, translated error text here
     Backbone.Radio.channel("fields").request(
       "add:error",
       this.fieldModel.get("id"),
       "required-error",
-      "Record and click on stop to see a preview video.",
+      texts.requiredError,
     );
   },
 

@@ -67,7 +67,7 @@ class NF_Videomail_Fields_Videomail extends NF_Abstracts_Field {
   public function __construct () {
     parent::__construct();
 
-    $this->_nicename = __('Videomail', 'ninja-forms');
+    $this->_nicename = __('Videomail', 'videomail-for-ninja-forms');
 
     $settings = NF_Videomail::config('videomail-field-settings');
     $this->_settings = array_merge($this->_settings, $settings);
@@ -82,6 +82,9 @@ class NF_Videomail_Fields_Videomail extends NF_Abstracts_Field {
 
   public function localizeSettings($settings) {
     $this->enqueueScripts();
+
+    // Translated texts for the template and the recorder, see config/videomail-texts.php
+    $settings['texts'] = NF_Videomail::config('videomail-texts');
 
     return $this->resolveWordPressMergeTags($settings);
   }

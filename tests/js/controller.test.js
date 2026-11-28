@@ -190,6 +190,29 @@ test("supports legacy whitelist keys", () => {
   assert.equal(clients[0].options.whitelistKey, "legacy-key");
 });
 
+test("passes translated texts to the recorder and the required error", () => {
+  const texts = {
+    recorder: { buttons: { record: "Aufnehmen" } },
+    requiredError: "Bitte zuerst ein Video aufnehmen.",
+  };
+  const { controller, channel, clients } = registered({ texts });
+  controller.loadVideomailClient();
+  assert.equal(clients[0].options.text, texts.recorder);
+  controller.invalidate();
+  assert.deepEqual(channel("fields").requests.at(-1), [
+    "add:error",
+    7,
+    "required-error",
+    texts.requiredError,
+  ]);
+});
+
+test("keeps the recorder's own texts when a cached page lacks translations", () => {
+  const { controller, clients } = registered();
+  controller.loadVideomailClient();
+  assert.equal("text" in clients[0].options, false);
+});
+
 test("preview and going back update required validation and errors", () => {
   const { controller, field, channel, clients } = registered();
   controller.loadVideomailClient();

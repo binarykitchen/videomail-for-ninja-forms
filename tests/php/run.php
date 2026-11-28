@@ -303,7 +303,7 @@ test_case('loads assets only while Ninja Forms renders a Videomail field', funct
   same(false, in_array('wp_enqueue_scripts', array_column($GLOBALS['calls']['add_action'] ?? array(), 0), true));
   same(false, isset($GLOBALS['calls']['wp_enqueue_style']));
   $localize = registered_filter('ninja_forms_localize_field_settings_videomail');
-  same(array('label' => 'Video'), call_user_func($localize, array('label' => 'Video')));
+  same('Video', call_user_func($localize, array('label' => 'Video'))['label']);
   same(NF_Videomail::VERSION, $GLOBALS['calls']['wp_enqueue_style'][0][3]);
   same(NF_Videomail::$jsUrl . 'videomail-client/index-min.js', $GLOBALS['calls']['wp_register_script'][0][1]);
   same(array('nf-front-end', 'nf-videomail-client'), $GLOBALS['calls']['wp_enqueue_script'][0][2]);
@@ -333,6 +333,31 @@ test_case('resolves WordPress merge tags on the server and leaves field tags to 
   } finally {
     unset($ninjaForms->merge_tags['wp']);
   }
+});
+
+test_case('sends translated recorder texts with the field settings', function () {
+  $field = new NF_Videomail_Fields_Videomail();
+  $texts = $field->localizeSettings(array())['texts'];
+  same('Record', $texts['recorder']['buttons']['record']);
+  same('Record video', $texts['buttonTitles']['record']);
+  // The browser and the server-side check show the very same, translatable message
+  $errors = $field->validate(array('id' => 7, 'required' => 1, 'value' => 'any text'), array());
+  same($texts['requiredError'], $errors['message']);
+});
+
+test_case('every translatable string uses the plugin text domain', function () {
+  $field = new NF_Videomail_Fields_Videomail();
+  $field->localizeSettings(array());
+  new NF_Videomail_Tags_Merge_Video();
+  $GLOBALS['submission'] = new class {
+    public function get_extra_value($key) { return array('alias' => 'example'); }
+  };
+  rendered(function () { (new NF_Videomail_Admin_Metaboxes_Submission())->render_metabox(null, null); });
+  $domains = array();
+  foreach (array('__', '_x', 'esc_html__', 'esc_html_e') as $function) {
+    foreach ($GLOBALS['calls'][$function] ?? array() as $call) $domains[] = end($call);
+  }
+  same(array('videomail-for-ninja-forms'), array_values(array_unique($domains)));
 });
 
 test_case('submission columns preserve other fields and escape video links', function () {
@@ -400,6 +425,32 @@ test_case('metabox hides posters of older submissions that are not on videomail.
   $html = rendered(function () use ($metabox) { $metabox->render_metabox(null, null); });
   same(false, strpos($html, 'evil.example'));
   contains('example/type/mp4', $html);
+});
+
+test_case('metabox captions spoken videomails and lists MP4 first', function () {
+  $GLOBALS['submission'] = new class {
+    public function get_extra_value($key) {
+      return array('alias' => 'example', 'vtt' => 'https://videomail.io/videomail/example/vtt');
+    }
+  };
+  $metabox = new NF_Videomail_Admin_Metaboxes_Submission();
+  $html = rendered(function () use ($metabox) { $metabox->render_metabox(null, null); });
+  contains('<track kind="captions" src="https://videomail.io/videomail/example/vtt" label="Captions" default>', $html);
+  contains('crossorigin="anonymous"', $html);
+  same(true, strpos($html, 'video/mp4') < strpos($html, 'video/webm'));
+});
+
+test_case('metabox leaves out captions it cannot trust', function () {
+  $GLOBALS['submission'] = new class {
+    public function get_extra_value($key) {
+      return array('alias' => 'example', 'vtt' => 'https://evil.example/captions.vtt');
+    }
+  };
+  $metabox = new NF_Videomail_Admin_Metaboxes_Submission();
+  $html = rendered(function () use ($metabox) { $metabox->render_metabox(null, null); });
+  same(false, strpos($html, '<track'));
+  same(false, strpos($html, 'crossorigin'));
+  contains('Your browser does not support the video tag.', $html);
 });
 
 echo "\nPHP tests: $passed passed, $failed failed.\n";
