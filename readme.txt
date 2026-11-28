@@ -3,7 +3,7 @@ Contributors: michael.heuberger, kbjohnson90
 Tags: video, email, recorder, sign language
 Requires at least: 6.0
 Tested up to: 7.2
-Stable tag: 14.0.0
+Stable tag: 14.0.1
 Requires PHP: 8.1.0
 Donate link: https://videomail.io/faq
 License: CC0-1.0
@@ -72,6 +72,11 @@ To get help, just use any of these contacts at [https://binarykitchen.com](https
 
 == Changelog ==
 
+= 14.0.1 (28 Nov 2026) =
+
+**Bugfix:**
+* Correct one gh action plugin version
+
 = 14.0.0 (28 Nov 2026) =
 
 **Improvement:**
@@ -119,7 +124,7 @@ To get help, just use any of these contacts at [https://binarykitchen.com](https
 
 = 13.7.0 (15 Nov 2026) =
 
-**Improvmeent**
+**Improvement**
 * Big one, video & audio quality is now sharper
 * While recording on mobile, recording pauses and resumes the intelligent way
 
