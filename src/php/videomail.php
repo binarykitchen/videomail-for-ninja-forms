@@ -1,7 +1,7 @@
 <?php
 final class NF_Videomail {
 
-  const VERSION = '13.9.0';
+  const VERSION = '14.0.0';
   const PREFIX = 'NF_Videomail';
 
   private static $instance;
