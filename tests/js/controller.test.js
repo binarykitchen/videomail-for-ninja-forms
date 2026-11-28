@@ -85,7 +85,6 @@ function setup(values = {}) {
         },
       },
       VideomailClient: { VideomailClient: Client },
-      window: { nfVideomail: { admin_email: "admin@example.test" } },
       document: {},
       jQuery: () => ({ ready: (callback) => callback() }),
       console,
@@ -262,7 +261,8 @@ for (const legacy of [false, true]) {
   test(`builds server payload using form fields and merge tags (legacy=${legacy})`, () => {
     const { controller, field, channel, clients } = registered({
       email_from: "{field:sender}",
-      email_to: "{wp:admin_email}",
+      // The server resolves {wp:admin_email} before the settings reach the browser
+      email_to: "admin@example.test",
       email_subject: "Message from {field:name}",
       email_body: "{field:message}",
     });

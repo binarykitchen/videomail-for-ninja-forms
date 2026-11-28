@@ -61,6 +61,9 @@ class NF_Videomail_Fields_Videomail extends NF_Abstracts_Field {
   // URLs in the browser's Videomail payload that we store, show or download
   private const URL_KEYS = array('url', 'replyUrl', 'poster', 'webm', 'mp4', 'vtt');
 
+  // Settings the browser passes on to videomail.io for its emails
+  private const EMAIL_SETTINGS = array('email_from', 'email_to', 'email_subject', 'email_body');
+
   public function __construct () {
     parent::__construct();
 
@@ -71,8 +74,34 @@ class NF_Videomail_Fields_Videomail extends NF_Abstracts_Field {
 
     $this->_settings['label']['value'] = __('Video Message', 'videomail-for-ninja-forms');
 
-    add_action('wp_enqueue_scripts', array($this, 'enqueueScripts'));
+    // Ninja Forms runs this filter only while it renders a Videomail field. Hooking in here instead
+    // of wp_enqueue_scripts keeps the recorder off every other page and form.
+    add_filter('ninja_forms_localize_field_settings_' . $this->_type, array($this, 'localizeSettings'));
     add_filter('ninja_forms_custom_columns', array($this, 'customColumns' ), 10, 2);
+  }
+
+  public function localizeSettings($settings) {
+    $this->enqueueScripts();
+
+    return $this->resolveWordPressMergeTags($settings);
+  }
+
+  // {wp:…} tags only exist on the server, so resolve them before the settings reach the browser.
+  // This way the admin email only shows up in a page when a form really sends to it.
+  private function resolveWordPressMergeTags($settings) {
+    $wordPressMergeTags = Ninja_Forms()->merge_tags['wp'] ?? null;
+
+    if (!$wordPressMergeTags) {
+      return $settings;
+    }
+
+    foreach (self::EMAIL_SETTINGS as $key) {
+      if (!empty($settings[$key]) && is_string($settings[$key])) {
+        $settings[$key] = $wordPressMergeTags->replace($settings[$key]);
+      }
+    }
+
+    return $settings;
   }
 
   // Ninja Forms only checks that the browser sent some field value, and a forged post can send any
@@ -242,7 +271,7 @@ class NF_Videomail_Fields_Videomail extends NF_Abstracts_Field {
     NF_Videomail::template('admin-form-element.html.php', compact('value'));
   }
 
-  public function enqueueScripts() {
+  private function enqueueScripts() {
     wp_enqueue_style(
       'nf-videomail-main',
       NF_Videomail::$cssUrl . 'main-min.css',
@@ -267,10 +296,6 @@ class NF_Videomail_Fields_Videomail extends NF_Abstracts_Field {
       array('nf-front-end', 'nf-videomail-client'),
       NF_Videomail::VERSION
     );
-
-    wp_localize_script('nf-videomail-main', 'nfVideomail', array(
-      'admin_email' => get_option('admin_email')
-    ));
   }
 
   public function customColumns($value, $field) {

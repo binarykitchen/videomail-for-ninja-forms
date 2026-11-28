@@ -289,15 +289,50 @@ test_case('cleans temporary files and propagates sideload errors', function () {
   }
 });
 
-test_case('enqueues versioned assets in dependency order and localizes admin email', function () {
-  $GLOBALS['options']['admin_email'] = 'admin@example.test';
+// The callback the code under test hooked into a WordPress filter
+function registered_filter($name) {
+  foreach ($GLOBALS['calls']['add_filter'] ?? array() as $call) {
+    if ($call[0] === $name) return $call[1];
+  }
+  return null;
+}
+
+test_case('loads assets only while Ninja Forms renders a Videomail field', function () {
   $field = new NF_Videomail_Fields_Videomail();
-  $field->enqueueScripts();
+  // Every request builds the field, so pages without a Videomail field must stay untouched
+  same(false, in_array('wp_enqueue_scripts', array_column($GLOBALS['calls']['add_action'] ?? array(), 0), true));
+  same(false, isset($GLOBALS['calls']['wp_enqueue_style']));
+  $localize = registered_filter('ninja_forms_localize_field_settings_videomail');
+  same(array('label' => 'Video'), call_user_func($localize, array('label' => 'Video')));
   same(NF_Videomail::VERSION, $GLOBALS['calls']['wp_enqueue_style'][0][3]);
   same(NF_Videomail::$jsUrl . 'videomail-client/index-min.js', $GLOBALS['calls']['wp_register_script'][0][1]);
   same(array('nf-front-end', 'nf-videomail-client'), $GLOBALS['calls']['wp_enqueue_script'][0][2]);
   same(NF_Videomail::VERSION, $GLOBALS['calls']['wp_enqueue_script'][0][3]);
-  same(array('admin_email' => 'admin@example.test'), $GLOBALS['calls']['wp_localize_script'][0][2]);
+  same(false, isset($GLOBALS['calls']['wp_localize_script']));
+});
+
+test_case('resolves WordPress merge tags on the server and leaves field tags to the browser', function () {
+  $ninjaForms = Ninja_Forms();
+  $ninjaForms->merge_tags['wp'] = new class {
+    public function replace($subject) {
+      return str_replace('{wp:admin_email}', 'admin@example.test', $subject);
+    }
+  };
+  try {
+    $field = new NF_Videomail_Fields_Videomail();
+    $settings = $field->localizeSettings(array(
+      'email_to' => 'Admin <{wp:admin_email}>',
+      'email_subject' => 'Video from {field:name}',
+      'email_body' => '',
+      'label' => '{wp:admin_email}'
+    ));
+    same('Admin <admin@example.test>', $settings['email_to']);
+    same('Video from {field:name}', $settings['email_subject']);
+    same('', $settings['email_body']);
+    same('{wp:admin_email}', $settings['label']);
+  } finally {
+    unset($ninjaForms->merge_tags['wp']);
+  }
 });
 
 test_case('submission columns preserve other fields and escape video links', function () {

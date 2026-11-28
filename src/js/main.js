@@ -232,13 +232,8 @@ const VideomailFieldController = Marionette.Object.extend({
       return value;
     }
 
-    // admin email localized from backend, a bit ugly
-    // todo ask for an endpoint to process those special merge tags
-    // https://github.com/binarykitchen/videomail-for-ninja-forms/issues/30
-    if (value === "{wp:admin_email}") {
-      return window.nfVideomail.admin_email;
-    }
-
+    // {wp:…} tags arrive already resolved by the server (localizeSettings() in
+    // fields/videomail.php), so only {field:…} tags need this visitor's input.
     // A replacer function on purpose: with a plain string, "$&" or "$'" typed by
     // visitors would be expanded as replacement patterns and mangle their message.
     const resolvedValue = value.replace(
