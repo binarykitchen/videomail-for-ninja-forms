@@ -1,22 +1,24 @@
 ---
 name: analyze-and-write-top-ten-issues
-description: "Analyze the code and write the top ten issues"
+description: "Analyse the code and write the top ten issues"
 disable-model-invocation: true
 ---
 
 # Top Ten Issues Analysis Instructions
 
-When analyzing all tracked project files, like code, documentation, workflow, configuration, stories, instructions, basically _everything_ in this repository, follow these guidelines:
+When analysing all tracked project files, like code, documentation, workflow, configuration, stories, instructions, basically _everything_ in this repository, follow these guidelines:
 
-1. Re-read the existing `TODO.md` document when it exists, to understand the current state of identified issues.
-2. Start the review by re-reading all relevant files and documentation to get a comprehensive understanding of the current state.
+1. (Optional) Re-read the existing `TODO.md` document when it exists, to understand the current state of identified issues.
+2. Start the review by re-reading all relevant files (like [AGENTS.md](./../../../AGENTS.md), [README.md](./../../../README.md)), code, instructions, documentation, latest Node.js API documentation and any related resources to get a comprehensive understanding of the current state.
 
    - to identify potential issues, including bugs, performance problems, accessibility issues, security vulnerabilities, and code smells.
    - figure if parts can be replaced with a well-maintained library
    - consider merging duplicate code to a new single function for reuse.
    - check for outdated dependencies and suggest updates if necessary.
+   - ensure [general instructions](./../../instructions/general/) are upheld throughout the codebase.
+   - avoid reinventing the wheel by leveraging existing libraries, public npm packages, and [Node.js API](https://nodejs.org/docs/latest/api/)
 
-3. Prioritize the issues based on their impact and severity.
+3. Prioritise the issues based on their impact and severity.
 4. In a `TODO.md` document, which is ignored by git, document the identified issues following these guidelines:
 
    - write a concise description for each issue, explaining why it is a problem and how it can be fixed.
@@ -42,3 +44,4 @@ When analyzing all tracked project files, like code, documentation, workflow, co
 - Regarding completed TODO items:
   - stay in the list as completed items, remain flagged as completed with a checkbox and skip them.
   - it is up to us humans humans to decide based on the context and relevance of the issues.
+  - When summarising completed work, say the resolved item was checked off in the local TODO list. Do not present its ignored status as a problem or caveat; ignoring it is intentional.

@@ -85,7 +85,6 @@ function setup(values = {}) {
         },
       },
       VideomailClient: { VideomailClient: Client },
-      window: { nfVideomail: { admin_email: "admin@example.test" } },
       document: {},
       jQuery: () => ({ ready: (callback) => callback() }),
       console,
@@ -191,6 +190,29 @@ test("supports legacy whitelist keys", () => {
   assert.equal(clients[0].options.whitelistKey, "legacy-key");
 });
 
+test("passes translated texts to the recorder and the required error", () => {
+  const texts = {
+    recorder: { buttons: { record: "Aufnehmen" } },
+    requiredError: "Bitte zuerst ein Video aufnehmen.",
+  };
+  const { controller, channel, clients } = registered({ texts });
+  controller.loadVideomailClient();
+  assert.equal(clients[0].options.text, texts.recorder);
+  controller.invalidate();
+  assert.deepEqual(channel("fields").requests.at(-1), [
+    "add:error",
+    7,
+    "required-error",
+    texts.requiredError,
+  ]);
+});
+
+test("keeps the recorder's own texts when a cached page lacks translations", () => {
+  const { controller, clients } = registered();
+  controller.loadVideomailClient();
+  assert.equal("text" in clients[0].options, false);
+});
+
 test("preview and going back update required validation and errors", () => {
   const { controller, field, channel, clients } = registered();
   controller.loadVideomailClient();
@@ -262,7 +284,8 @@ for (const legacy of [false, true]) {
   test(`builds server payload using form fields and merge tags (legacy=${legacy})`, () => {
     const { controller, field, channel, clients } = registered({
       email_from: "{field:sender}",
-      email_to: "{wp:admin_email}",
+      // The server resolves {wp:admin_email} before the settings reach the browser
+      email_to: "admin@example.test",
       email_subject: "Message from {field:name}",
       email_body: "{field:message}",
     });
@@ -302,6 +325,33 @@ test("merge tags preserve literals and omit unset or missing fields", () => {
   assert.equal(controller.getMergeTagValue("empty", {}), "");
   assert.equal(controller.getMergeTagValue("unset", {}), undefined);
   assert.equal(controller.getMergeTagValue("missing", {}), undefined);
+});
+
+test("merge tags resolve every field tag in a value", () => {
+  const { controller } = registered({
+    sender: "{field:name} <{field:email}>",
+    subject: "Video from {field:name} ({field:email})",
+  });
+  const values = { name: "Alice", email: "alice@example.test" };
+  assert.equal(
+    controller.getMergeTagValue("sender", values),
+    "Alice <alice@example.test>",
+  );
+  assert.equal(
+    controller.getMergeTagValue("subject", values),
+    "Video from Alice (alice@example.test)",
+  );
+});
+
+test("merge tags keep dollar signs typed by visitors", () => {
+  const { controller } = registered({ body: "Message: {field:message}" });
+  const message = "Costs $& less, $' or $`";
+  assert.equal(controller.getMergeTagValue("body", { message }), `Message: ${message}`);
+});
+
+test("merge tags blank out unknown fields inside text", () => {
+  const { controller } = registered({ subject: "Hi {field:absent}!" });
+  assert.equal(controller.getMergeTagValue("subject", {}), "Hi !");
 });
 
 test("destroy handles both unloaded and active controllers", () => {

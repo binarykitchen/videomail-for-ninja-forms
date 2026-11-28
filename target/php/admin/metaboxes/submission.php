@@ -21,15 +21,23 @@ final class NF_Videomail_Admin_Metaboxes_Submission extends NF_Abstracts_Submiss
     }
 
     $alias = rawurlencode(sanitize_text_field($videomail['alias']));
+    $poster = $videomail['poster'] ?? '';
+    $captions = $videomail['vtt'] ?? '';
 
     $data = array(
-      'poster' => $videomail['poster'] ?? '',
+      // Submissions saved before the server-side checks may hold any poster URL from the browser
+      'poster' => NF_Videomail::isTrustedVideomailUrl($poster) ? $poster : '',
+      // Captions for spoken videomails, so Deaf admins can follow them as well
+      'captions' => NF_Videomail::isTrustedVideomailUrl($captions) ? $captions : '',
+      // MP4 first: browsers pick the first source they can play, and MP4 plays everywhere
       'source' => array(
-        'video/webm' => 'https://videomail.io/videomail/' . $alias . '/type/webm',
         'video/mp4'  => 'https://videomail.io/videomail/' . $alias . '/type/mp4',
+        'video/webm' => 'https://videomail.io/videomail/' . $alias . '/type/webm',
       ),
       'text' => array(
-        'download' => __('Download', 'videomail-for-ninja-forms')
+        'download' => __('Download', 'videomail-for-ninja-forms'),
+        'captions' => __('Captions', 'videomail-for-ninja-forms'),
+        'unsupported' => __('Your browser does not support the video tag.', 'videomail-for-ninja-forms'),
       )
     );
 

@@ -29,3 +29,10 @@ eslint.config.js
 .nvmrc
 .prettierrc
 prettier.config.js
+
+# Developer-only files that every site would otherwise download. assets/ holds the banner,
+# icon and screenshots: the release workflow sends those to SVN's assets/ via ASSETS_DIR.
+.vscode
+AGENTS.md
+assets
+examples

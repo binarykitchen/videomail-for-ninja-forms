@@ -1,12 +1,13 @@
+<!-- Labels arrive translated with the field settings (config/videomail-texts.php). {{ }} escapes them. -->
 <script id="tmpl-nf-field-videomail" type="text/template">
   <div id='nf-field-{{{ data.id }}}' name='nf-field-{{{ data.id }}}' class='{{{ data.classes }}} nf-element videomail'>
     <div id='videomail'>
       <section class='buttons' style='display:none'>
-        <input class='record' disabled='' type='button' title='Record video' value='Record' />
-        <input class='pause' disabled='' type='button' title='Pause recording' value='Pause' />
-        <input class='resume' disabled='' type='button' title='Resume recording' value='Resume' />
-        <input class='preview' disabled='' type='button' title='Stop recording and check video' value='Stop' />
-        <input class='recordAgain' disabled='' type='button' title='Record video again' value='Record again' />
+        <input class='record' disabled='' type='button' title='{{ data.texts.buttonTitles.record }}' value='{{ data.texts.recorder.buttons.record }}' />
+        <input class='pause' disabled='' type='button' title='{{ data.texts.buttonTitles.pause }}' value='{{ data.texts.recorder.buttons.pause }}' />
+        <input class='resume' disabled='' type='button' title='{{ data.texts.buttonTitles.resume }}' value='{{ data.texts.recorder.buttons.resume }}' />
+        <input class='preview' disabled='' type='button' title='{{ data.texts.buttonTitles.preview }}' value='{{ data.texts.recorder.buttons.preview }}' />
+        <input class='recordAgain' disabled='' type='button' title='{{ data.texts.buttonTitles.recordAgain }}' value='{{ data.texts.recorder.buttons.recordAgain }}' />
       </section>
     </div>
     <div id='viewVideo' style='display:none'>

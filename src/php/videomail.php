@@ -1,14 +1,10 @@
 <?php
 final class NF_Videomail {
 
-  const NAME = 'Videomail';
-  const VERSION = '13.9.0';
-  const AUTHOR = 'Michael Heuberger + Kyle B. Johnson';
-  const SLUG = 'videomail';
+  const VERSION = '14.0.0';
   const PREFIX = 'NF_Videomail';
 
   private static $instance;
-  private static $entryFile = '';
 
   public static $targetDir = '';
   public static $phpDir = '';
@@ -22,11 +18,12 @@ final class NF_Videomail {
    *
    * Ensures that only one instance of a plugin class exists in memory at any one
    * time. Also prevents needing to define globals all over the place.
+   *
+   * $_entryFile only fed the old Ninja Forms updater. It stays so the entry file's call keeps working.
    */
-  public static function instance($entryFile, $targetDir, $url) {
+  public static function instance($_entryFile, $targetDir, $url) {
     if (!isset(self::$instance) && !(self::$instance instanceof NF_Videomail)) {
       self::$instance = new NF_Videomail();
-      self::$entryFile = $entryFile;
       self::$targetDir = $targetDir;
       self::$phpDir = $targetDir . 'php' . DIRECTORY_SEPARATOR;
       self::$templatesDir = self::$phpDir . 'templates' . DIRECTORY_SEPARATOR;
@@ -56,7 +53,8 @@ final class NF_Videomail {
   }
 
   public function __construct() {
-    add_action('admin_init', array($this, 'setup_license'));
+    // No Ninja Forms licence or updater on purpose: WordPress.org ships our updates, and checks
+    // against other servers would share site URLs with a third party (plugin guidelines 7 and 8).
     add_action('plugins_loaded', array($this, 'plugin_update_check'));
     add_action('ninja_forms_loaded', array($this, 'ninja_forms_loaded'));
     add_filter('ninja_forms_register_fields', array($this, 'register_fields'));
@@ -111,21 +109,24 @@ final class NF_Videomail {
     return include self::$phpDir . 'config' . DIRECTORY_SEPARATOR . $file_name . '.php';
   }
 
-  /**
-   * Setup License
-   *
-   * Registers the plugin with the extension updater.
-   */
-  public function setup_license() {
-      if (!class_exists('NF_Extension_Updater')) return;
+  // URLs from the browser only count when they point to videomail.io over HTTPS. Shared by the
+  // field (processing and downloads) and the submission metabox, so both apply the same rule.
+  // Forged submissions can send arrays or numbers too, hence the string check first.
+  public static function isTrustedVideomailUrl($url) {
+    if (!is_string($url) || '' === $url) {
+      return false;
+    }
 
-      new NF_Extension_Updater(
-        self::NAME,
-        self::VERSION,
-        self::AUTHOR,
-        self::$entryFile,
-        self::SLUG
-      );
+    $parsedUrl = wp_parse_url($url);
+
+    if (!$parsedUrl || empty($parsedUrl['scheme']) || empty($parsedUrl['host'])) {
+      return false;
+    }
+
+    $host = strtolower($parsedUrl['host']);
+
+    return 'https' === strtolower($parsedUrl['scheme']) &&
+      ('videomail.io' === $host || str_ends_with($host, '.videomail.io'));
   }
 
   // See https://github.com/litespeedtech/lscache_wp/issues/895

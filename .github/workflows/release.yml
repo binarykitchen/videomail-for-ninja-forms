@@ -21,15 +21,18 @@ jobs:
     environment: live
     steps:
       - name: 🛒 Checkout code
-        uses: actions/checkout@v7
+        uses: actions/checkout@v7.0.1
+        with:
+          # Keep the write token out of .git/config while npm ci runs third-party code
+          persist-credentials: false
 
-      - uses: actions/setup-node@v7
+      - uses: actions/setup-node@v7.1.0
         with:
           node-version-file: .nvmrc
           cache: npm
 
       - name: Set up PHP
-        uses: shivammathur/setup-php@v2
+        uses: shivammathur/setup-php@2.40.0
         with:
           php-version: "8.1"
           coverage: none
@@ -47,17 +50,19 @@ jobs:
 
       - name: WordPress Plugin Deploy
         id: deploy
-        uses: 10up/action-wordpress-plugin-deploy@stable
+        uses: 10up/action-wordpress-plugin-deploy@v2.3.0
         with:
           generate-zip: true
         env:
           SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
           SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
           SLUG: videomail-for-ninja-forms
+          # Banner, icon and screenshots go to SVN's top-level assets/, not into the plugin itself
+          ASSETS_DIR: assets
 
       # After the deploy, we also want to create a zip and upload it to the release on Github. We don't want
       # users to have to go to the repository to find our plugin :).
       - name: Upload release asset
-        uses: softprops/action-gh-release@v3
+        uses: softprops/action-gh-release@v3.0.4
         with:
           files: ${{ github.workspace }}/videomail-for-ninja-forms.zip

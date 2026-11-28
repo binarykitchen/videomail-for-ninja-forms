@@ -1,6 +1,5 @@
 ---
 description: "Use when: changing user interfaces, HTML semantics, interaction patterns, or responsive styles"
-applyTo: "**/*.html,**/*.php,**/*.js,**/*.jsx,**/*.ts,**/*.tsx,**/*.css,**/*.scss,**/*.styl"
 ---
 
 # Accessibility

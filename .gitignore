@@ -2,3 +2,7 @@ node_modules
 .DS_Store
 *.code-workspace
 .idea
+TODO.md
+
+# Local site exports hold passwords, keys and personal data. Share them privately, never via git.
+env/dev/local/*.zip

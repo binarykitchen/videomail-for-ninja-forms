@@ -5,7 +5,8 @@ return apply_filters('ninja_forms_videomail_field_settings', array(
   'media_library' => array(
     'name'  => 'media_library',
     'type'  => 'toggle',
-    'value' => 'false',
+    // A real boolean like the other toggles. The string 'false' used to be truthy in JavaScript.
+    'value' => false,
     'label' => __('Save to Media Library', 'videomail-for-ninja-forms'),
     'group' => 'primary',
     'width' => 'one-half',

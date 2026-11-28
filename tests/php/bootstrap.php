@@ -10,6 +10,13 @@ class NF_Abstracts_Input {}
 class NF_Abstracts_Field {
   protected $_nicename;
   public function __construct() {}
+  // Mirrors Ninja Forms' own required check, which the Videomail field builds on
+  public function validate($field, $data) {
+    if (1 == intval($field['required'] ?? 0) && '' === trim((string) ($field['value'] ?? ''))) {
+      return array('slug' => 'required-error', 'message' => 'This field is required.');
+    }
+    return array();
+  }
 }
 class NF_Abstracts_MergeTags {
   public $title;
@@ -47,7 +54,21 @@ function apply_filters($name, $value) {
   record_call('apply_filters', $name, $value);
   return $value;
 }
-function __($text, $domain) { return $text; }
+// Translation doubles record their text domain, so tests can spot strings in the wrong one
+function __($text, $domain) {
+  record_call('__', $text, $domain);
+  return $text;
+}
+function _x($text, $context, $domain) {
+  record_call('_x', $text, $context, $domain);
+  return $text;
+}
+// Same rules as WordPress core: only false, 0, '', '0' and 'false' (any case) count as off
+function wp_validate_boolean($value) {
+  if (is_bool($value)) return $value;
+  if (is_string($value) && 'false' === strtolower($value)) return false;
+  return (bool) $value;
+}
 function sanitize_text_field($text) { return trim(strip_tags($text)); }
 function sanitize_file_name($name) { return str_replace(' ', '-', $name); }
 function esc_url_raw($url) {
@@ -57,8 +78,14 @@ function esc_url_raw($url) {
 function esc_url($url) { return htmlspecialchars(esc_url_raw($url), ENT_QUOTES, 'UTF-8'); }
 function esc_html($text) { return htmlspecialchars($text, ENT_QUOTES, 'UTF-8'); }
 function esc_attr($text) { return esc_html($text); }
-function esc_html__($text, $domain) { return esc_html($text); }
-function esc_html_e($text, $domain) { echo esc_html($text); }
+function esc_html__($text, $domain) {
+  record_call('esc_html__', $text, $domain);
+  return esc_html($text);
+}
+function esc_html_e($text, $domain) {
+  record_call('esc_html_e', $text, $domain);
+  echo esc_html($text);
+}
 function wp_parse_url($url) { return parse_url($url); }
 function is_wp_error($result) { return $result instanceof WP_Error; }
 function download_url($url, $timeout) {

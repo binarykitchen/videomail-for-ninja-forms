@@ -3,7 +3,7 @@ Contributors: michael.heuberger, kbjohnson90
 Tags: video, email, recorder, sign language
 Requires at least: 6.0
 Tested up to: 7.2
-Stable tag: 13.9.0
+Stable tag: 14.0.0
 Requires PHP: 8.1.0
 Donate link: https://videomail.io/faq
 License: CC0-1.0
@@ -72,11 +72,28 @@ To get help, just use any of these contacts at [https://binarykitchen.com](https
 
 == Changelog ==
 
+= 14.0.0 (28 Nov 2026) =
+
+**Improvement:**
+* Make the recorder translatable and caption the admin player
+
+**Change:**
+* Validate the Videomail data on the server
+
+** Bugfix:**
+* Load Videomail assets only where a Videomail field appears
+* Make "Save to Media Library" reliable
+* Harden the WordPress.org release and ship only runtime files
+* Fix merge tags in the Videomail email settings
+* Bring back the focus ring on the recorder buttons
+* Stop registering with Ninja Forms' commercial updater
+* Remove the public Local site export
+
 = 13.9.0 (26 Nov 2026) =
 
 **Change:**
 * Faster video recording :)
-* Improved suppport for mobile devices for any orientation
+* Improved support for mobile devices for any orientation
 
 **Fixes:**
 * Error reports now include mobile device details
@@ -138,7 +155,7 @@ To get help, just use any of these contacts at [https://binarykitchen.com](https
 
 **Improvement:**
 * Better audio quality, we switched and tested to the latest Audio Web Standards
-* Extra support and labels for the blind people 
+* Extra support and labels for the blind people
 
 **Change:**
 * Mobile recording now honours your phone preferences when it comes to orientation.

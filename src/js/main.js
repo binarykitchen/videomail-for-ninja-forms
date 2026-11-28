@@ -1,8 +1,12 @@
 // Remember, you can't use any import/require statements here
-const PLUGIN_VERSION = "13.9.0";
+const PLUGIN_VERSION = "14.0.0";
 
 // Manual switch to have more stuff printed to console
 let DEBUG = false;
+
+// Every {field:key} merge tag in a setting. It stops at the first "}", so
+// "{field:name} <{field:email}>" yields two tags instead of one greedy blob.
+const FIELD_MERGE_TAG_PATTERN = /\{field:([^}]+)\}/gi;
 
 // Good documentation on backbone event handling
 // http://backbonejs.org/#Events
@@ -89,6 +93,10 @@ const VideomailFieldController = Marionette.Object.extend({
 
     const verbose = this.fieldModel.get("verbose") || DEBUG;
 
+    // Translated on the server, see config/videomail-texts.php. Pages cached before this
+    // release lack them, so videomail-client then keeps its own English texts.
+    const texts = this.fieldModel.get("texts") || {};
+
     // late overrides
     DEBUG = DEBUG || verbose;
     Backbone.Radio.DEBUG = Backbone.Radio.DEBUG || verbose;
@@ -109,6 +117,8 @@ const VideomailFieldController = Marionette.Object.extend({
       image: {
         quality: imageQualityPercentage / 100, // must be a float
       },
+      // Only when present: an undefined `text` would wipe videomail-client's defaults
+      ...(texts.recorder && { text: texts.recorder }),
       selectors: { containerId: "videomail", submitButtonSelector: ".submit-wrap input" },
       callbacks: {
         adjustFormDataBeforePosting:
@@ -185,12 +195,14 @@ const VideomailFieldController = Marionette.Object.extend({
   },
 
   invalidate: function () {
-    // override default behavior so that we can set our own error text here
+    const texts = this.fieldModel.get("texts") || {};
+
+    // override default behavior so that we can set our own, translated error text here
     Backbone.Radio.channel("fields").request(
       "add:error",
       this.fieldModel.get("id"),
       "required-error",
-      "Record and click on stop to see a preview video.",
+      texts.requiredError,
     );
   },
 
@@ -220,32 +232,26 @@ const VideomailFieldController = Marionette.Object.extend({
   },
 
   getMergeTagValue: function (fieldKey, formValues) {
-    let value = this.fieldModel.get(fieldKey);
+    const value = this.fieldModel.get(fieldKey);
 
     // it can happen that the user has configured something wrong,
     // i.E. an empty email_from. in that case just ignore ...
-    if (value) {
-      // admin email localized from backend, a bit ugly
-      // todo ask for an endpoint to process those special merge tags
-      // https://github.com/binarykitchen/videomail-for-ninja-forms/issues/30
-      if (value === "{wp:admin_email}") {
-        value = window.nfVideomail.admin_email;
-      } else {
-        const rawFieldKeyMatches = value.match(/{field:(.*)}/i);
-        const rawFieldKey = rawFieldKeyMatches && rawFieldKeyMatches[1];
-
-        if (rawFieldKey !== value) {
-          // yes it was a merge tag, so use it
-          value = value.replace(/{field:(.*)}/i, formValues[rawFieldKey]);
-        }
-      }
+    if (!value) {
+      return value;
     }
 
-    if (value === "undefined") {
-      return undefined;
-    }
+    // {wp:…} tags arrive already resolved by the server (localizeSettings() in
+    // fields/videomail.php), so only {field:…} tags need this visitor's input.
+    // A replacer function on purpose: with a plain string, "$&" or "$'" typed by
+    // visitors would be expanded as replacement patterns and mangle their message.
+    const resolvedValue = value.replace(
+      FIELD_MERGE_TAG_PATTERN,
+      (_tag, key) => formValues[key] ?? "",
+    );
 
-    return value;
+    // Only blanks left means every tag pointed at an empty or unknown field,
+    // so leave the setting out instead of sending an empty value.
+    return resolvedValue.trim() ? resolvedValue : undefined;
   },
 
   // returns a map like this:

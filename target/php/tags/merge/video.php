@@ -12,7 +12,7 @@ class NF_Videomail_Tags_Merge_Video extends NF_Abstracts_MergeTags {
   public function __construct() {
     parent::__construct();
 
-    $this->title = __('Videomail', 'ninja-forms');
+    $this->title = __('Videomail', 'videomail-for-ninja-forms');
 
     $this->merge_tags = array(
       'alias' => array(

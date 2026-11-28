@@ -24,17 +24,21 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # Actions are pinned to full commit SHAs (version in the comment), bumped by Dependabot
       - name: 🛒 Checkout code
-        uses: actions/checkout@v7
+        uses: actions/checkout@v7.0.1
+        with:
+          # Keep the token out of .git/config while npm ci runs third-party code
+          persist-credentials: false
 
       - name: 🪛 Set up Node.js
-        uses: actions/setup-node@v7
+        uses: actions/setup-node@v7.1.0
         with:
           node-version-file: .nvmrc
           cache: npm
 
       - name: Set up PHP
-        uses: shivammathur/setup-php@v2
+        uses: shivammathur/setup-php@2.40.0
         with:
           php-version: "8.1"
           coverage: none
