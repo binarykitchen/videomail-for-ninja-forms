@@ -109,6 +109,26 @@ final class NF_Videomail {
     return include self::$phpDir . 'config' . DIRECTORY_SEPARATOR . $file_name . '.php';
   }
 
+  // URLs from the browser only count when they point to videomail.io over HTTPS. Shared by the
+  // field (processing and downloads) and the submission metabox, so both apply the same rule.
+  // Forged submissions can send arrays or numbers too, hence the string check first.
+  public static function isTrustedVideomailUrl($url) {
+    if (!is_string($url) || '' === $url) {
+      return false;
+    }
+
+    $parsedUrl = wp_parse_url($url);
+
+    if (!$parsedUrl || empty($parsedUrl['scheme']) || empty($parsedUrl['host'])) {
+      return false;
+    }
+
+    $host = strtolower($parsedUrl['host']);
+
+    return 'https' === strtolower($parsedUrl['scheme']) &&
+      ('videomail.io' === $host || str_ends_with($host, '.videomail.io'));
+  }
+
   // See https://github.com/litespeedtech/lscache_wp/issues/895
   public function plugin_update_check() {
       // Check if current version is newer.

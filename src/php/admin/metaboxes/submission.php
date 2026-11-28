@@ -21,9 +21,11 @@ final class NF_Videomail_Admin_Metaboxes_Submission extends NF_Abstracts_Submiss
     }
 
     $alias = rawurlencode(sanitize_text_field($videomail['alias']));
+    $poster = $videomail['poster'] ?? '';
 
     $data = array(
-      'poster' => $videomail['poster'] ?? '',
+      // Submissions saved before the server-side checks may hold any poster URL from the browser
+      'poster' => NF_Videomail::isTrustedVideomailUrl($poster) ? $poster : '',
       'source' => array(
         'video/webm' => 'https://videomail.io/videomail/' . $alias . '/type/webm',
         'video/mp4'  => 'https://videomail.io/videomail/' . $alias . '/type/mp4',

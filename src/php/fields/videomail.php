@@ -58,6 +58,9 @@ class NF_Videomail_Fields_Videomail extends NF_Abstracts_Field {
   protected $_templates = 'videomail';
   protected $_settings = array('label', 'label_pos', 'required', 'key');
 
+  // URLs in the browser's Videomail payload that we store, show or download
+  private const URL_KEYS = array('url', 'replyUrl', 'poster', 'webm', 'mp4', 'vtt');
+
   public function __construct () {
     parent::__construct();
 
@@ -72,27 +75,90 @@ class NF_Videomail_Fields_Videomail extends NF_Abstracts_Field {
     add_filter('ninja_forms_custom_columns', array($this, 'customColumns' ), 10, 2);
   }
 
-  public function process ($field, $data) {
-    if (empty($data['extra']['videomail']) || !is_array($data['extra']['videomail'])) {
-      return $data;
+  // Ninja Forms only checks that the browser sent some field value, and a forged post can send any
+  // text. So a required Videomail field also needs a genuine recording in the submission.
+  public function validate($field, $data) {
+    $errors = parent::validate($field, $data);
+
+    // Ninja Forms' own required check already complained
+    if ($errors) {
+      return $errors;
     }
 
-    $videomail = $data['extra']['videomail'];
+    if ($this->isRequired($field) && !$this->getTrustedVideomail($data)) {
+      return array(
+        'slug' => 'required-error',
+        'message' => __('Record and click on stop to see a preview video.', 'videomail-for-ninja-forms'),
+      );
+    }
 
-    $videomailFieldId = $field['id'];
+    return $errors;
+  }
 
-    // now set some merge tag values for the videomail object itself
-    Ninja_Forms()->merge_tags['video']->setUrl(esc_url_raw($videomail['url'] ?? ''));
-    Ninja_Forms()->merge_tags['video']->setAlias(sanitize_text_field($videomail['alias'] ?? ''));
-    Ninja_Forms()->merge_tags['video']->setReplyUrl(sanitize_text_field($videomail['replyUrl'] ?? ''));
+  public function process ($field, $data) {
+    $videomail = $this->getTrustedVideomail($data);
 
-    if ($this->isMediaLibraryEnabled($field)) {
+    // now set some merge tag values for the videomail object itself, empty without a recording
+    Ninja_Forms()->merge_tags['video']->setUrl($videomail['url'] ?? '');
+    Ninja_Forms()->merge_tags['video']->setAlias($videomail['alias'] ?? '');
+    Ninja_Forms()->merge_tags['video']->setReplyUrl($videomail['replyUrl'] ?? '');
+
+    // Never keep the browser's own field value. It's only a recording key, or any text when forged.
+    $data['fields'][$field['id']]['value'] = $videomail['url'] ?? '';
+
+    // Ninja Forms saves this extra data with the submission, so swap in the checked payload
+    // (or nothing). The metabox then only ever sees trusted URLs.
+    if (isset($data['extra']['videomail'])) {
+      $data['extra']['videomail'] = $videomail;
+    }
+
+    if ($videomail && $this->isMediaLibraryEnabled($field)) {
       $this->deferMediaLibraryDownload($videomail);
     }
 
-    $data['fields'][$videomailFieldId]['value'] = esc_url_raw($videomail['url'] ?? '');
-
     return $data;
+  }
+
+  private function isRequired($field) {
+    return 1 === intval($field['required'] ?? 0);
+  }
+
+  // Returns the browser's Videomail payload with every URL checked, or null unless it describes a
+  // real recording on videomail.io. Anyone can post anything here, so nothing is taken on trust.
+  private function getTrustedVideomail($data) {
+    $videomail = $data['extra']['videomail'] ?? null;
+
+    if (!is_array($videomail)) {
+      return null;
+    }
+
+    // videomail.io sends relative reply URLs like "/reply/alias", so anchor them to its origin first
+    $videomail['replyUrl'] = $this->getAbsoluteVideomailUrl($videomail['replyUrl'] ?? '');
+
+    foreach (self::URL_KEYS as $key) {
+      // Keep trusted URLs only. Anything else, javascript: links included, gets dropped.
+      if (NF_Videomail::isTrustedVideomailUrl($videomail[$key] ?? '')) {
+        $videomail[$key] = esc_url_raw($videomail[$key]);
+      } else {
+        unset($videomail[$key]);
+      }
+    }
+
+    $videomail['alias'] = sanitize_text_field($videomail['alias'] ?? '');
+    $videomail['key'] = sanitize_text_field($videomail['key'] ?? '');
+
+    $isRecording = isset($videomail['url']) && '' !== $videomail['alias'] && '' !== $videomail['key'];
+
+    return $isRecording ? $videomail : null;
+  }
+
+  // Leaves protocol-relative URLs like "//evil.example" alone, so the trust check rejects them
+  private function getAbsoluteVideomailUrl($url) {
+    if (is_string($url) && str_starts_with($url, '/') && !str_starts_with($url, '//')) {
+      return 'https://videomail.io' . $url;
+    }
+
+    return $url;
   }
 
   // Ninja Forms hands toggles over as true, 1, "1" or "true" (its meta table and imported forms
@@ -120,7 +186,7 @@ class NF_Videomail_Fields_Videomail extends NF_Abstracts_Field {
       $videoType = 'webm';
     }
 
-    if (!$videoUrl || !$this->isTrustedVideomailUrl($videoUrl)) {
+    if (!$videoUrl || !NF_Videomail::isTrustedVideomailUrl($videoUrl)) {
       return new WP_Error(
         'invalid_videomail_url',
         __('The video URL is invalid.', 'videomail-for-ninja-forms')
@@ -166,19 +232,6 @@ class NF_Videomail_Fields_Videomail extends NF_Abstracts_Field {
     }
 
     return $results;
-  }
-
-  private function isTrustedVideomailUrl($url) {
-    $parsedUrl = wp_parse_url($url);
-
-    if (!$parsedUrl || empty($parsedUrl['scheme']) || empty($parsedUrl['host'])) {
-      return false;
-    }
-
-    $host = strtolower($parsedUrl['host']);
-
-    return 'https' === strtolower($parsedUrl['scheme']) &&
-      ('videomail.io' === $host || str_ends_with($host, '.videomail.io'));
   }
 
   public function admin_form_element($id, $value) {

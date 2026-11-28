@@ -96,30 +96,43 @@ test_case('merge tags store and return server values', function () {
   same('{videomail:url}', $tags->merge_tags['url']['tag']);
 });
 
+// A complete recording as videomail.io hands it to the browser after the upload
+function recording($overrides = array()) {
+  return $overrides + array(
+    'url' => 'https://videomail.io/videomail/example', 'alias' => 'example', 'key' => 'key-1'
+  );
+}
+
 foreach (array(null, '', 'invalid', array()) as $extra) {
-  test_case('ignores missing or malformed submission extra: ' . gettype($extra), function () use ($extra) {
+  test_case('blanks the field without a usable recording: ' . gettype($extra), function () use ($extra) {
     $field = new NF_Videomail_Fields_Videomail();
-    $data = array('extra' => array('videomail' => $extra), 'fields' => array());
-    same($data, $field->process(array('id' => 7, 'media_library' => false), $data));
+    $result = $field->process(array('id' => 7), array(
+      'extra' => array('videomail' => $extra),
+      'fields' => array(7 => array('value' => 'any text from the browser'))
+    ));
+    same('', $result['fields'][7]['value']);
+    same(null, $result['extra']['videomail']);
+    same('', Ninja_Forms()->merge_tags['video']->url());
   });
 }
 
-test_case('processes a videomail URL and sanitizes merge tag values', function () {
+test_case('processes a recording and keeps only checked, sanitised values', function () {
   $field = new NF_Videomail_Fields_Videomail();
-  $data = array(
-    'extra' => array('videomail' => array(
-      'url' => 'https://videomail.io/videomail/example',
+  $result = $field->process(array('id' => 7), array(
+    'extra' => array('videomail' => recording(array(
       'alias' => '<b>example</b>',
-      'replyUrl' => '<i>/reply/example</i>'
-    )),
-    'fields' => array(7 => array('value' => 'old'), 8 => array('value' => 'untouched'))
-  );
-  $result = $field->process(array('id' => 7, 'media_library' => false), $data);
+      'replyUrl' => '/reply/example',
+      'poster' => 'https://videomail.io/videomail/example/poster',
+      'subject' => 'Hello'
+    ))),
+    'fields' => array(7 => array('value' => 'key-1'), 8 => array('value' => 'untouched'))
+  ));
   same('https://videomail.io/videomail/example', $result['fields'][7]['value']);
   same('untouched', $result['fields'][8]['value']);
   same('example', Ninja_Forms()->merge_tags['video']->alias());
-  same('/reply/example', Ninja_Forms()->merge_tags['video']->replyUrl());
-  same(2, count($GLOBALS['calls']['esc_url_raw']));
+  same('https://videomail.io/reply/example', Ninja_Forms()->merge_tags['video']->replyUrl());
+  same('https://videomail.io/videomail/example/poster', $result['extra']['videomail']['poster']);
+  same('Hello', $result['extra']['videomail']['subject']);
   same(false, isset($GLOBALS['calls']['download_url']));
 });
 
@@ -131,6 +144,57 @@ test_case('handles incomplete server metadata without PHP warnings', function ()
   ));
   same('', $result['fields'][7]['value']);
   same('', Ninja_Forms()->merge_tags['video']->alias());
+});
+
+foreach (array('https://evil.example/phish', 'javascript:alert(1)', array('https://videomail.io/x')) as $url) {
+  test_case('rejects a forged recording URL: ' . json_encode($url), function () use ($url) {
+    $field = new NF_Videomail_Fields_Videomail();
+    $result = $field->process(array('id' => 7), array(
+      'extra' => array('videomail' => recording(array('url' => $url))),
+      'fields' => array(7 => array('value' => 'key-1'))
+    ));
+    same('', $result['fields'][7]['value']);
+    same('', Ninja_Forms()->merge_tags['video']->url());
+  });
+}
+
+test_case('drops forged reply, poster and video URLs from a real recording', function () {
+  $field = new NF_Videomail_Fields_Videomail();
+  $result = $field->process(array('id' => 7), array(
+    'extra' => array('videomail' => recording(array(
+      'replyUrl' => 'javascript:alert(1)',
+      'poster' => 'https://evil.example/pixel.png',
+      'mp4' => 'http://videomail.io/insecure.mp4',
+      'webm' => '//evil.example/video.webm'
+    ))),
+    'fields' => array(7 => array())
+  ));
+  same('https://videomail.io/videomail/example', $result['fields'][7]['value']);
+  same('', Ninja_Forms()->merge_tags['video']->replyUrl());
+  foreach (array('replyUrl', 'poster', 'mp4', 'webm') as $key) {
+    same(false, isset($result['extra']['videomail'][$key]));
+  }
+});
+
+test_case('required Videomail fields need a real recording, not just any value', function () {
+  $field = new NF_Videomail_Fields_Videomail();
+  $required = array('id' => 7, 'required' => '1', 'value' => 'any text from the browser');
+  same('required-error', $field->validate($required, array('extra' => array()))['slug']);
+  same('required-error', $field->validate($required, array(
+    'extra' => array('videomail' => recording(array('url' => 'https://evil.example/phish')))
+  ))['slug']);
+  same(array(), $field->validate($required, array('extra' => array('videomail' => recording()))));
+});
+
+test_case('optional Videomail fields pass without a recording', function () {
+  $field = new NF_Videomail_Fields_Videomail();
+  same(array(), $field->validate(array('id' => 7, 'value' => ''), array('extra' => array())));
+});
+
+test_case("Ninja Forms' own required check runs first", function () {
+  $field = new NF_Videomail_Fields_Videomail();
+  $errors = $field->validate(array('id' => 7, 'required' => 1, 'value' => ''), array());
+  same('This field is required.', $errors['message']);
 });
 
 // Records media library hand-overs instead of registering a real shutdown download
@@ -145,9 +209,7 @@ function media_library_spy() {
 
 function process_with_media_library($field, $settings) {
   $field->process($settings + array('id' => 7), array(
-    'extra' => array('videomail' => array(
-      'url' => 'https://videomail.io/videomail/example', 'alias' => 'example', 'key' => 'key-1'
-    )),
+    'extra' => array('videomail' => recording()),
     'fields' => array(7 => array())
   ));
   return count($field->deferred);
@@ -291,6 +353,18 @@ test_case('metabox encodes alias, escapes poster and renders both video formats'
   contains('&quot;poster', $html);
   contains('video/webm', $html);
   contains('video/mp4', $html);
+});
+
+test_case('metabox hides posters of older submissions that are not on videomail.io', function () {
+  $GLOBALS['submission'] = new class {
+    public function get_extra_value($key) {
+      return array('alias' => 'example', 'poster' => 'https://evil.example/pixel.png');
+    }
+  };
+  $metabox = new NF_Videomail_Admin_Metaboxes_Submission();
+  $html = rendered(function () use ($metabox) { $metabox->render_metabox(null, null); });
+  same(false, strpos($html, 'evil.example'));
+  contains('example/type/mp4', $html);
 });
 
 echo "\nPHP tests: $passed passed, $failed failed.\n";

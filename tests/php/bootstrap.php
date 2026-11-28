@@ -10,6 +10,13 @@ class NF_Abstracts_Input {}
 class NF_Abstracts_Field {
   protected $_nicename;
   public function __construct() {}
+  // Mirrors Ninja Forms' own required check, which the Videomail field builds on
+  public function validate($field, $data) {
+    if (1 == intval($field['required'] ?? 0) && '' === trim((string) ($field['value'] ?? ''))) {
+      return array('slug' => 'required-error', 'message' => 'This field is required.');
+    }
+    return array();
+  }
 }
 class NF_Abstracts_MergeTags {
   public $title;
