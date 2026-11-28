@@ -119,7 +119,7 @@ To get help, just use any of these contacts at [https://binarykitchen.com](https
 
 = 13.7.0 (15 Nov 2026) =
 
-**Improvmeent**
+**Improvement**
 * Big one, video & audio quality is now sharper
 * While recording on mobile, recording pauses and resumes the intelligent way
 
